@@ -32,3 +32,9 @@ cabal.project.local
 
 # Node modules
 node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
