@@ -1,0 +1,54 @@
+diff --git a/src/Popopx/Messaging/Agent.hs b/src/Popopx/Messaging/Agent.hs
+index 371e1fac..8c6dce88 100644
+--- a/src/Popopx/Messaging/Agent.hs
++++ b/src/Popopx/Messaging/Agent.hs
+@@ -2052,9 +2052,11 @@ sendMessagesB_ :: forall t. Traversable t => AgentClient -> t (Either AgentError
+ sendMessagesB_ c reqs connIds = withConnLocks c connIds "sendMessages" $ do
+   prev <- newTVarIO Nothing
+   reqs' <- withStoreBatch c $ \db -> fmap (mapM $ getConn_ db prev) reqs
+-  let (toEnable, reqs'') = mapAccumL prepareConn [] reqs'
++  -- Upgrade CRcv connections to Duplex if possible (e.g. ICAllowSecure didn't complete)
++  reqs'' <- mapM (\case Right (req, conn_) -> fmap (Right . (req,)) (upgradeCrv conn_); Left e -> pure (Left e)) reqs'
++  let (toEnable, reqs''') = mapAccumL prepareConn [] reqs''
+   void $ withStoreBatch' c $ \db -> map (\connId -> setConnPQSupport db connId PQSupportOn) $ S.toList toEnable
+-  enqueueMessagesB c reqs''
++  enqueueMessagesB c reqs'''
+   where
+     getConn_ :: DB.Connection -> TVar (Maybe (Either AgentErrorType SomeConn)) -> MsgReq -> IO (MsgReq, Either AgentErrorType SomeConn)
+     getConn_ db prev req@(connId, _, _, _) =
+@@ -2064,6 +2066,35 @@ sendMessagesB_ c reqs connIds = withConnLocks c connIds "sendMessages" $ do
+           else do
+             conn <- first storeError <$> getConn db connId
+             conn <$ atomically (writeTVar prev $ Just conn)
++    -- Attempt to upgrade CRcv connection to Duplex using accepted confirmation's reply queues.
++    -- This handles the case where the contact sent CONF with reply queues but ICAllowSecure
++    -- didn't complete the upgrade (e.g. async command processing was interrupted).
++    upgradeCrv :: Either AgentErrorType SomeConn -> AM' (Either AgentErrorType SomeConn)
++    upgradeCrv (Right (SomeConn SCRcv (RcvConnection cData@ConnData {connId, userId} _))) = do
++      result <- runAM_ $ do
++        AcceptedConfirmation {senderConf, ownConnInfo} <- withStore c (`getAcceptedConfirmation` connId)
++        case L.nonEmpty $ smpReplyQueues senderConf of
++          Nothing -> pure $ Left (CONN ONE_WAY "sendMessagesB_: CRcv, no reply queues")
++          Just (qInfo :| _) -> do
++            clientVRange <- asks $ smpClientVRange . config
++            case qInfo `proveCompatible` clientVRange of
++              Nothing -> pure $ Left (AGENT A_VERSION)
++              Just qInfo' -> do
++                (sq, _) <- lift $ newSndQueue userId connId qInfo' Nothing
++                sq' <- withStore c $ \db -> upgradeRcvConnToDuplex db connId sq
++                void $ agentSecureSndQueue c NRMBackground cData sq'
++                enqueueConfirmation c cData sq' ownConnInfo Nothing
++                pure $ Right sq'
++      case result of
++        Left e -> pure $ Left e
++        Right _sq -> do
++          upgraded <- first storeError <$> unsafeWithStore c (`getConn` connId)
++          pure upgraded
++    upgradeCrv x = pure x
++    runAM_ :: AM a -> AM' (Either AgentErrorType a)
++    runAM_ action = do
++      env <- ask
++      liftIO $ runReaderT (runExceptT action) env
+     prepareConn :: Set ConnId -> Either AgentErrorType (MsgReq, Either AgentErrorType SomeConn) -> (Set ConnId, Either AgentErrorType (Either AgentErrorType (ConnData, NonEmpty SndQueue), Maybe PQEncryption, MsgFlags, ValueOrRef AMessage))
+     prepareConn s (Left e) = (s, Left e)
+     prepareConn s (Right ((_, pqEnc, msgFlags, msgOrRef), conn_)) = case conn_ of

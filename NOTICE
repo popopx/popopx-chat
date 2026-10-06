@@ -1,0 +1,8 @@
+POPOPX Chat 二次开发版本
+Copyright (C) 2026 POPOPX Team <chat@popopx.chat>
+
+本仓库包含对 SimpleX Team 原始代码的修改。
+根据 AGPL v3 协议第 5(a) 条规定，所有被修改的源码文件均已添加显著的修改标记与日期。
+
+原始项目: SimpleX Chat (https://github.com/simplex-chat/simplex-chat)
+原始版权: Copyright (C) 2020-2022 simplex.chat

@@ -1,0 +1,31 @@
+# Build artifacts
+dist-newstyle/
+result
+result-*
+
+# Excluded from commit
+bots/voucher-bot/
+MEMBERSHIP_SYSTEM.md
+REBRANDING_CHANGELOG.md
+REBRANDING_SUMMARY.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Binary libraries (compiled)
+*.so
+*.dylib
+
+# Cabal local config
+cabal.project.local
+
+# Qoder local settings
+.qoder/

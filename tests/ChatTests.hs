@@ -1,0 +1,29 @@
+-- Original Work Copyright (C) 2020-2022 simplex.chat
+--
+-- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
+-- This file was modified by POPOPX Team in 2026.
+-- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
+
+module ChatTests where
+
+import ChatTests.ChatList
+import ChatTests.ChatRelays
+import ChatTests.DBUtils
+import ChatTests.Direct
+import ChatTests.Files
+import ChatTests.Forward
+import ChatTests.Groups
+import ChatTests.Local
+import ChatTests.Profiles
+import Test.Hspec hiding (it)
+
+chatTests :: SpecWith TestParams
+chatTests = do
+  describe "direct tests" chatDirectTests
+  describe "forward tests" chatForwardTests
+  describe "group tests" chatGroupTests
+  describe "chat relay tests" chatRelayTests
+  describe "local chats tests" chatLocalChatsTests
+  describe "file tests" chatFileTests
+  describe "profile tests" chatProfileTests
+  describe "chat list pagination tests" chatListTests

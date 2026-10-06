@@ -1,0 +1,10 @@
+import { Mutex } from "async-mutex";
+import { api } from "popopx-chat";
+import { T } from "@popopx-chat/types";
+export declare const profileMutex: Mutex;
+export declare function isChatNotFound(err: unknown, kind: "group" | "contact"): boolean;
+export declare function getGroupInfo(chat: api.ChatApi, groupId: number): Promise<T.GroupInfo | null>;
+export declare function getContact(chat: api.ChatApi, contactId: number): Promise<T.Contact | null>;
+export declare function isWeekend(timezone: string): boolean;
+export declare function log(msg: string, ...args: unknown[]): void;
+export declare function logError(msg: string, err: unknown): void;

@@ -1,0 +1,22 @@
+diff --git a/src/Popopx/Messaging/Encoding/String.hs b/src/Popopx/Messaging/Encoding/String.hs
+index 4e4e5e1..9eb6d7d 100644
+--- a/src/Popopx/Messaging/Encoding/String.hs
++++ b/src/Popopx/Messaging/Encoding/String.hs
+@@ -76,7 +76,7 @@ class StrEncoding a where
+ instance StrEncoding ByteString where
+   strEncode = U.encode
+   {-# INLINE strEncode #-}
+-  strDecode = U.decode
++  strDecode = Right . U.decodeLenient
+   {-# INLINE strDecode #-}
+   strP = base64urlP
+   {-# INLINE strP #-}
+@@ -85,7 +85,7 @@ base64urlP :: Parser ByteString
+ base64urlP = do
+   str <- A.takeWhile1 (\c -> isAlphaNum c || c == '-' || c == '_')
+   pad <- A.takeWhile (== '=')
+-  either fail pure $ U.decode (str <> pad)
++  pure $ U.decodeLenient (str <> pad)
+ 
+ newtype Str = Str {unStr :: ByteString}
+   deriving (Eq, Show)

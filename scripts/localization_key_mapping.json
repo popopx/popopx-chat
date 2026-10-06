@@ -1,0 +1,306 @@
+{
+  "%1$@ supported POPOPX Chat. The badge expired on %2$@.": {
+    "new_key": "%1$@ supported POPOPX Chat. The badge expired on %2$@.",
+    "value": "%1$@ hat POPOPX Chat unterstuetzt. Das Badge ist am %2$@ abgelaufen."
+  },
+  "%@ invested in POPOPX Chat crowdfunding.": {
+    "new_key": "%@ invested in POPOPX Chat crowdfunding.",
+    "value": "%@ hat POPOPX Chat Crowdfunding investiert."
+  },
+  "%@ supports POPOPX Chat.": {
+    "new_key": "%@ supports POPOPX Chat.",
+    "value": "%@ unterstuetzt POPOPX Chat."
+  },
+  "**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app.": {
+    "new_key": "**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app.",
+    "value": "**Am privatesten**: POPOPX Chat Push-Server nicht verwenden. Die App prueft Nachrichten im Hintergrund, wenn das System es zulaesst, abhaengig davon, wie oft du die App nutzt."
+  },
+  "**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from.": {
+    "new_key": "**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from.",
+    "value": "**Empfohlen**: Geraetetoken und Ende-zu-Ende-verschluesselte Benachrichtigungen werden an den POPOPX Chat Push-Server gesendet, aber er sieht nicht den Nachrichteninhalt, die Groesse oder den Absender."
+  },
+  ">Connect to me via POPOPX Chat</a></p>": {
+    "new_key": ">Connect to me via POPOPX Chat</a></p>",
+    "value": "<p>Hallo!</p>\\n<p><a href=\\"
+  },
+  "About POPOPX Chat": {
+    "new_key": "About POPOPX Chat",
+    "value": "Ueber POPOPX Chat"
+  },
+  "Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts.": {
+    "new_key": "Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts.",
+    "value": "Fuege eine Adresse zu deinem Profil hinzu, damit deine POPOPX-Kontakte sie mit anderen teilen koennen. Profilupdate wird an deine POPOPX-Kontakte gesendet."
+  },
+  "Allow to send POPOPX links.": {
+    "new_key": "Allow to send POPOPX links.",
+    "value": "Senden von POPOPX-Links erlauben."
+  },
+  "Connect to yourself?\\nThis is your own POPOPX address!": {
+    "new_key": "Connect to yourself?\\nThis is your own POPOPX address!",
+    "value": "Mit sich selbst verbinden?\\nDas ist Ihre eigene POPOPX-Adresse!"
+  },
+  "Create POPOPX address": {
+    "new_key": "Create POPOPX address",
+    "value": "POPOPX-Adresse erstellen"
+  },
+  "Disable POPOPX Lock": {
+    "new_key": "Disable POPOPX Lock",
+    "value": "POPOPX-Sperre deaktivieren"
+  },
+  "Do NOT use POPOPX for emergency calls.": {
+    "new_key": "Do NOT use POPOPX for emergency calls.",
+    "value": "POPOPX NICHT fuer Notrufe verwenden."
+  },
+  "Enable POPOPX Lock": {
+    "new_key": "Enable POPOPX Lock",
+    "value": "POPOPX-Sperre aktivieren"
+  },
+  "For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server.": {
+    "new_key": "For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server.",
+    "value": "Wenn zum Beispiel dein Kontakt Nachrichten ueber einen POPOPX Chat-Server erhaelt, liefert deine App sie ueber einen Flux-Server."
+  },
+  "How POPOPX works": {
+    "new_key": "How POPOPX works",
+    "value": "Wie POPOPX funktioniert"
+  },
+  "Install POPOPX Chat for terminal": {
+    "new_key": "Install POPOPX Chat for terminal",
+    "value": "POPOPX Chat fuer Terminal installieren"
+  },
+  "Let people connect to you via name registered with your POPOPX address.": {
+    "new_key": "Let people connect to you via name registered with your POPOPX address.",
+    "value": "Lassen Sie Leute sich ueber den bei Ihrer POPOPX-Adresse registrierten Namen mit Ihnen verbinden."
+  },
+  "Let's talk in POPOPX Chat": {
+    "new_key": "Let's talk in POPOPX Chat",
+    "value": "Lass uns in POPOPX Chat sprechen"
+  },
+  "Members can send POPOPX links.": {
+    "new_key": "Members can send POPOPX links.",
+    "value": "Mitglieder koennen POPOPX-Links senden."
+  },
+  "None of your servers are set to resolve POPOPX names. Configure servers, or use a connection link.": {
+    "new_key": "None of your servers are set to resolve POPOPX names. Configure servers, or use a connection link.",
+    "value": "Keiner Ihrer Server ist zum Aufloesen von POPOPX-Namen eingestellt. Server konfigurieren oder einen Verbindungslink verwenden."
+  },
+  "Profile update will be sent to your POPOPX contacts.": {
+    "new_key": "Profile update will be sent to your POPOPX contacts.",
+    "value": "Profilupdate wird an deine POPOPX-Kontakte gesendet."
+  },
+  "Prohibit sending POPOPX links.": {
+    "new_key": "Prohibit sending POPOPX links.",
+    "value": "Senden von POPOPX-Links verbieten."
+  },
+  "Search or paste POPOPX link": {
+    "new_key": "Search or paste POPOPX link",
+    "value": "POPOPX-Link suchen oder einfuegen"
+  },
+  "Send the link via any messenger - it's secure. Ask to paste into POPOPX.": {
+    "new_key": "Send the link via any messenger - it's secure. Ask to paste into POPOPX.",
+    "value": "Sende den Link ueber einen beliebigen Messenger - er ist sicher. Bitte, ihn in POPOPX einzufuegen."
+  },
+  "Share POPOPX address on social media.": {
+    "new_key": "Share POPOPX address on social media.",
+    "value": "POPOPX-Adresse in sozialen Medien teilen."
+  },
+  "Share address with POPOPX contacts?": {
+    "new_key": "Share address with POPOPX contacts?",
+    "value": "Adresse mit POPOPX-Kontakten teilen?"
+  },
+  "Share to POPOPX": {
+    "new_key": "Share to POPOPX",
+    "value": "An POPOPX teilen"
+  },
+  "Share with POPOPX contacts": {
+    "new_key": "Share with POPOPX contacts",
+    "value": "Mit POPOPX-Kontakten teilen"
+  },
+  "Short POPOPX address": {
+    "new_key": "Short POPOPX address",
+    "value": "Kurze POPOPX-Adresse"
+  },
+  "POPOPX Address": {
+    "new_key": "POPOPX Address",
+    "value": "POPOPX-Adresse"
+  },
+  "POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app.": {
+    "new_key": "POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app.",
+    "value": "POPOPX Chat und Flux haben eine Vereinbarung getroffen, Flux-betriebene Server in die App aufzunehmen."
+  },
+  "POPOPX Chat security was audited by Trail of Bits.": {
+    "new_key": "POPOPX Chat security was audited by Trail of Bits.",
+    "value": "Die Sicherheit von POPOPX Chat wurde von Trail of Bits ueberprueft."
+  },
+  "POPOPX Lock": {
+    "new_key": "POPOPX Lock",
+    "value": "POPOPX-Sperre"
+  },
+  "POPOPX Lock mode": {
+    "new_key": "POPOPX Lock mode",
+    "value": "POPOPX-Sperrmodus"
+  },
+  "POPOPX Lock not enabled!": {
+    "new_key": "POPOPX Lock not enabled!",
+    "value": "POPOPX-Sperre nicht aktiviert!"
+  },
+  "POPOPX Lock turned on": {
+    "new_key": "POPOPX Lock turned on",
+    "value": "POPOPX-Sperre eingeschaltet"
+  },
+  "POPOPX address": {
+    "new_key": "POPOPX address",
+    "value": "POPOPX-Adresse"
+  },
+  "POPOPX address and 1-time links are safe to share via any messenger.": {
+    "new_key": "POPOPX address and 1-time links are safe to share via any messenger.",
+    "value": "POPOPX-Adresse und Einmallinks koennen sicher ueber jeden Messenger geteilt werden."
+  },
+  "POPOPX address or 1-time link?": {
+    "new_key": "POPOPX address or 1-time link?",
+    "value": "POPOPX-Adresse oder Einmallink?"
+  },
+  "POPOPX address settings": {
+    "new_key": "POPOPX address settings",
+    "value": "POPOPX-Adress-Einstellungen"
+  },
+  "POPOPX channel link": {
+    "new_key": "POPOPX channel link",
+    "value": "POPOPX-Kanallink"
+  },
+  "POPOPX contact address": {
+    "new_key": "POPOPX contact address",
+    "value": "POPOPX-Kontaktadresse"
+  },
+  "POPOPX encrypted message or connection event": {
+    "new_key": "POPOPX encrypted message or connection event",
+    "value": "POPOPX-verschluesselte Nachricht oder Verbindungsereignis"
+  },
+  "POPOPX group link": {
+    "new_key": "POPOPX group link",
+    "value": "POPOPX-Gruppenlink"
+  },
+  "POPOPX links": {
+    "new_key": "POPOPX links",
+    "value": "POPOPX-Links"
+  },
+  "POPOPX links are prohibited.": {
+    "new_key": "POPOPX links are prohibited.",
+    "value": "POPOPX-Links sind verboten."
+  },
+  "POPOPX links not allowed": {
+    "new_key": "POPOPX links not allowed",
+    "value": "POPOPX-Links nicht erlaubt"
+  },
+  "POPOPX name": {
+    "new_key": "POPOPX name",
+    "value": "POPOPX-Name"
+  },
+  "POPOPX name error": {
+    "new_key": "POPOPX name error",
+    "value": "POPOPX-Namensfehler"
+  },
+  "POPOPX name not verified": {
+    "new_key": "POPOPX name not verified",
+    "value": "POPOPX-Name nicht verifiziert"
+  },
+  "POPOPX one-time invitation": {
+    "new_key": "POPOPX one-time invitation",
+    "value": "POPOPX-Einmallink-Einladung"
+  },
+  "POPOPX protocols reviewed by Trail of Bits.": {
+    "new_key": "POPOPX protocols reviewed by Trail of Bits.",
+    "value": "POPOPX-Protokolle von Trail of Bits ueberprueft."
+  },
+  "POPOPX relay address": {
+    "new_key": "POPOPX relay address",
+    "value": "POPOPX-Relaisadresse"
+  },
+  "Stop POPOPX": {
+    "new_key": "Stop POPOPX",
+    "value": "POPOPX stoppen"
+  },
+  "Subscribers can send POPOPX links.": {
+    "new_key": "Subscribers can send POPOPX links.",
+    "value": "Abonnenten koennen POPOPX-Links senden."
+  },
+  "Thank you for installing POPOPX Chat!": {
+    "new_key": "Thank you for installing POPOPX Chat!",
+    "value": "Danke, dass du POPOPX Chat installiert hast!"
+  },
+  "The code you scanned is not a POPOPX link QR code.": {
+    "new_key": "The code you scanned is not a POPOPX link QR code.",
+    "value": "Der gescannte Code ist kein POPOPX-Link-QR-Code."
+  },
+  "The text you pasted is not a POPOPX link.": {
+    "new_key": "The text you pasted is not a POPOPX link.",
+    "value": "Der eingefuegte Text ist kein POPOPX-Link."
+  },
+  "To make POPOPX Network last.": {
+    "new_key": "To make POPOPX Network last.",
+    "value": "Damit das POPOPX-Netzwerk besteht."
+  },
+  "To protect your information, turn on POPOPX Lock.\\nYou will be prompted to complete authentication before this feature is enabled.": {
+    "new_key": "To protect your information, turn on POPOPX Lock.\\nYou will be prompted to complete authentication before this feature is enabled.",
+    "value": "Zum Schutz Ihrer Informationen aktivieren Sie POPOPX-Sperre.\\nSie werden aufgefordert, die Authentifizierung abzuschliessen, bevor diese Funktion aktiviert wird."
+  },
+  "To protect your privacy, POPOPX uses separate IDs for each of your contacts.": {
+    "new_key": "To protect your privacy, POPOPX uses separate IDs for each of your contacts.",
+    "value": "Um deine Privatsphaere zu schuetzen, verwendet POPOPX separate IDs fuer jeden deiner Kontakte."
+  },
+  "Use POPOPX Chat servers?": {
+    "new_key": "Use POPOPX Chat servers?",
+    "value": "POPOPX Chat-Server verwenden?"
+  },
+  "Using POPOPX Chat servers.": {
+    "new_key": "Using POPOPX Chat servers.",
+    "value": "POPOPX Chat-Server werden verwendet."
+  },
+  "Why POPOPX is built.": {
+    "new_key": "Why POPOPX is built.",
+    "value": "Warum POPOPX entwickelt wurde."
+  },
+  "You can make it visible to your POPOPX contacts via Settings.": {
+    "new_key": "You can make it visible to your POPOPX contacts via Settings.",
+    "value": "Du kannst sie ueber die Einstellungen fuer deine POPOPX-Kontakte sichtbar machen."
+  },
+  "You can support POPOPX starting from v7 of the app.": {
+    "new_key": "You can support POPOPX starting from v7 of the app.",
+    "value": "Du kannst POPOPX ab App-Version v7 unterstuetzen."
+  },
+  "Your POPOPX address": {
+    "new_key": "Your POPOPX address",
+    "value": "Ihre POPOPX-Adresse"
+  },
+  "Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile.": {
+    "new_key": "Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile.",
+    "value": "Ihr Profil wird auf Ihrem Geraet gespeichert und nur mit Ihren Kontakten geteilt. POPOPX-Server koennen Ihr Profil nicht sehen."
+  },
+  "connect to POPOPX Chat developers.": {
+    "new_key": "connect to POPOPX Chat developers.",
+    "value": "Verbindung zu POPOPX Chat-Entwicklern."
+  },
+  "Get POPOPX name (BETA)": {
+    "new_key": "Get POPOPX name (BETA)",
+    "value": "Get POPOPX name (BETA)"
+  },
+  "POPOPX name sale starts in": {
+    "new_key": "POPOPX name sale starts in",
+    "value": "POPOPX name sale starts in"
+  },
+  "Update the app to register a POPOPX domain": {
+    "new_key": "Update the app to register a POPOPX domain",
+    "value": "Update the app to register a POPOPX domain"
+  },
+  "Verify POPOPX names": {
+    "new_key": "Verify POPOPX names",
+    "value": "Verify POPOPX names"
+  },
+  "Your POPOPX name": {
+    "new_key": "Your POPOPX name",
+    "value": "Your POPOPX name"
+  },
+  "until you can register a POPOPX domain": {
+    "new_key": "until you can register a POPOPX domain",
+    "value": "until you can register a POPOPX domain"
+  }
+}

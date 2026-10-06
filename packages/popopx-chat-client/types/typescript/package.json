@@ -1,0 +1,42 @@
+{
+  "name": "@popopx-chat/types",
+  "version": "0.10.3",
+  "description": "TypeScript types for POPOPX Chat bot libraries",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepublishOnly": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/popopx/popopx-chat.git",
+    "directory": "/packages/popopx-chat-client/types/typescript"
+  },
+  "keywords": [
+    "popopx",
+    "messenger",
+    "chat",
+    "privacy",
+    "security",
+    "bots",
+    "types"
+  ],
+  "author": "POPOPX Chat",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/popopx/popopx-chat/issues"
+  },
+  "homepage": "https://github.com/popopx/popopx-chat/tree/stable/packages/popopx-chat-client/types/typescript#readme",
+  "dependencies": {
+    "typescript": "^5.9.2"
+  }
+}

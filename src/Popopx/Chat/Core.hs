@@ -1,0 +1,224 @@
+-- Original Work Copyright (C) 2020-2022 simplex.chat
+--
+-- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
+-- This file was modified by POPOPX Team in 2026.
+-- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
+
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -fno-warn-ambiguous-fields #-}
+
+module Popopx.Chat.Core
+  ( popopxChatCore,
+    runPopopxChat,
+    sendChatCmdStr,
+    sendChatCmd,
+    printResponseEvent,
+  )
+where
+
+import Control.Logger.Simple
+import Control.Monad
+import Control.Monad.Except
+import Control.Monad.Reader
+import qualified Data.ByteString.Char8 as B
+import Data.List (find)
+import Data.Text (Text)
+import qualified Data.Text as T
+import Data.Text.Encoding (encodeUtf8)
+import Data.Time.Clock (getCurrentTime)
+import Data.Time.LocalTime (getCurrentTimeZone)
+import Popopx.Chat
+import Popopx.Chat.Controller
+import Popopx.Chat.Library.Commands
+import Popopx.Chat.Options (ChatOpts (..), CoreChatOpts (..), CreateBotOpts (..))
+import Popopx.Chat.Remote.Types (RemoteHostId)
+import Popopx.Chat.Store.Profiles
+import Popopx.Chat.Store.Shared (StoreError (..))
+import Popopx.Chat.Types
+import Popopx.Chat.Types.Preferences (FeatureAllowed (..), FilesPreference (..), Preferences (..), emptyChatPrefs)
+import Popopx.Chat.View (ChatResponseEvent, serializeChatError, serializeChatResponse, popopxChatContact)
+import Popopx.Messaging.Agent.Protocol
+import Popopx.Messaging.Agent.Store.Common (DBStore, withTransaction)
+import Popopx.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..))
+import Popopx.Messaging.Encoding.String
+import System.Exit (exitFailure)
+import System.IO (hFlush, stdout)
+import Text.Read (readMaybe)
+import UnliftIO.Async
+
+popopxChatCore :: ChatConfig -> ChatOpts -> (User -> ChatController -> IO ()) -> IO ()
+popopxChatCore cfg@ChatConfig {confirmMigrations, testView, chatHooks} opts@ChatOpts {coreOptions = coreOptions@CoreChatOpts {dbOptions, logAgent, yesToUpMigrations, migrationBackupPath, maintenance}, createBot, userDisplayName, userImageFile} chat =
+  case logAgent of
+    Just level -> do
+      setLogLevel level
+      withGlobalLogging logCfg initRun
+    _ -> initRun
+  where
+    initRun = createChatDatabase dbOptions migrationConfig >>= either exit run
+    migrationConfig = MigrationConfig (if confirmMigrations == MCConsole && yesToUpMigrations then MCYesUp else confirmMigrations) migrationBackupPath
+    exit e = do
+      putStrLn $ "Error opening database: " <> show e
+      exitFailure
+    run db@ChatDatabase {chatStore} = do
+      users <- withTransaction chatStore getUsers
+      u_ <- selectActiveUser coreOptions chatStore users
+      let backgroundMode = maintenance
+      newChatController db u_ cfg opts backgroundMode >>= \case
+        Left e -> do
+          putStrLn $ "Error starting chat: " <> show e
+          exitFailure
+        Right cc -> do
+          forM_ (preStartHook chatHooks) ($ cc)
+          u <- case u_ of
+            Nothing -> do
+              noMaintenance
+              img_ <- mapM loadImageFile userImageFile
+              createActiveUser cc coreOptions createBot userDisplayName img_
+            Just u@User {localDisplayName} -> do
+              forM_ userDisplayName $ \name ->
+                when (localDisplayName /= name) $ do
+                  putStrLn $ "Active user display name " <> show localDisplayName <> " does not match --user-display-name " <> show name
+                  exitFailure
+              -- --user-image-file only applies when the profile is created; ignore it for an existing user
+              forM_ userImageFile $ \_ ->
+                putStrLn "Note: --user-image-file is ignored for an existing user (it only sets the image on profile creation); use \"/set profile image file <path>\" to change it"
+              pure u
+          unless testView $ putStrLn $ "Current user: " <> userStr u
+          runPopopxChat cfg opts u cc chat
+    noMaintenance = when maintenance $ do
+      putStrLn "exiting: no active user in maintenance mode"
+      exitFailure
+
+runPopopxChat :: ChatConfig -> ChatOpts -> User -> ChatController -> (User -> ChatController -> IO ()) -> IO ()
+runPopopxChat ChatConfig {testView} ChatOpts {coreOptions = CoreChatOpts {chatRelay, chatRelayServer, headless, maintenance}} u cc@ChatController {config = ChatConfig {chatHooks}} chat
+  | maintenance = wait =<< async (chat u cc)
+  | otherwise = do
+      a1 <- runReaderT (startChatController True True) cc
+      when (chatRelay && not testView) $ askCreateRelayAddress cc u chatRelayServer headless
+      forM_ (postStartHook chatHooks) ($ cc)
+      a2 <- async $ chat u cc
+      waitEither_ a1 a2
+
+sendChatCmdStr :: ChatController -> String -> IO (Either ChatError ChatResponse)
+sendChatCmdStr cc s = runReaderT (execChatCommand Nothing (encodeUtf8 $ T.pack s) 0) cc
+
+sendChatCmd :: ChatController -> ChatCommand -> IO (Either ChatError ChatResponse)
+sendChatCmd cc cmd = runReaderT (execChatCommand' cmd 0) cc
+
+selectActiveUser :: CoreChatOpts -> DBStore -> [User] -> IO (Maybe User)
+selectActiveUser CoreChatOpts {chatRelay} st users
+  | chatRelay =
+      case find (\User {userChatRelay} -> isTrue userChatRelay) users of
+        Just u
+          | activeUser u -> pure $ Just u
+          | otherwise -> Just <$> withTransaction st (`setActiveUser` u)
+        Nothing -> pure Nothing
+  | otherwise =
+      case find activeUser users of
+        Just u -> pure $ Just u
+        Nothing -> selectUser
+  where
+    selectUser :: IO (Maybe User)
+    selectUser = case users of
+      [] -> pure Nothing
+      [user] -> Just <$> withTransaction st (`setActiveUser` user)
+      _users -> do
+        putStrLn "Select user profile:"
+        forM_ (zip [1 :: Int ..] users) $ \(n, user) -> putStrLn $ show n <> ": " <> userStr user
+        loop
+        where
+          loop = do
+            nStr <- withPrompt ("user number (1 .. " <> show (length users) <> "): ") getLine
+            case readMaybe nStr :: Maybe Int of
+              Nothing -> putStrLn "not a number" >> loop
+              Just n
+                | n <= 0 || n > length users -> putStrLn "invalid user number" >> loop
+                | otherwise ->
+                    let user = users !! (n - 1)
+                     in Just <$> withTransaction st (`setActiveUser` user)
+
+createActiveUser :: ChatController -> CoreChatOpts -> Maybe CreateBotOpts -> Maybe Text -> Maybe ImageData -> IO User
+createActiveUser cc CoreChatOpts {chatRelay, headless} createBot_ userDisplayName_ img_ = case createBot_ of
+  Just CreateBotOpts {botDisplayName, allowFiles, clientService} -> do
+    let preferences = if allowFiles then Nothing else Just emptyChatPrefs {files = Just FilesPreference {allow = FANo}}
+    createUser exitFailure clientService $ (mkProfile botDisplayName) {peerType = Just CPTBot, preferences}
+  Nothing -> case userDisplayName_ of
+    Just displayName -> createUser exitFailure False $ (mkProfile displayName :: Profile) {image = img_}
+    Nothing
+      | headless -> putStrLn "No user profile found and no --user-display-name provided (required with --headless)" >> exitFailure
+      | otherwise -> putStrLn prompt >> loop
+      where
+        prompt
+          | chatRelay =
+              "No chat relay user profile found, it will be created now.\n\
+              \Please choose chat relay display name."
+          | otherwise =
+              "No user profiles found, it will be created now.\n\
+              \Please choose your display name.\n\
+              \It will be sent to your contacts when you connect.\n\
+              \It is only stored on your device and you can change it later."
+  where
+    loop = do
+      displayName <- T.pack <$> withPrompt "display name: " getLine
+      createUser loop False $ mkProfile displayName
+    mkProfile displayName = Profile {displayName, fullName = "", shortDescr = Nothing, description = Nothing, image = Nothing, contactLink = Nothing, peerType = Nothing, preferences = Nothing, badge = Nothing, contactDomain = Nothing}
+    createUser onError clientService p =
+      execChatCommand' (CreateActiveUser NewUser {profile = Just p, pastTimestamp = False, userChatRelay = BoolDef chatRelay, clientService = BoolDef clientService}) 0 `runReaderT` cc >>= \case
+        Right (CRActiveUser user) -> pure user
+        r -> printResponseEvent (Nothing, Nothing) (config cc) r >> onError
+
+askCreateRelayAddress :: ChatController -> User -> Maybe SMPServerWithAuth -> Bool -> IO ()
+askCreateRelayAddress cc@ChatController {chatStore} user@User {userId} server_ headless =
+  withTransaction chatStore (\db -> runExceptT $ getUserAddress db user) >>= \case
+    Right _ -> pure ()
+    Left SEUserContactLinkNotFound -> promptCreate
+    Left e -> printChatError (config cc) $ ChatErrorStore e
+  where
+    promptCreate :: IO ()
+    promptCreate = do
+      ok <- if headless then pure True else onOffPrompt "Create relay address" True
+      when ok $
+        execChatCommand' (APICreateMyAddress userId server_) 0 `runReaderT` cc >>= \case
+          Right (CRUserContactLinkCreated _ address _) -> do
+            putStrLn "Chat relay address is created:"
+            putStrLn $ addressStr address
+          r -> printResponseEvent (Nothing, Nothing) (config cc) r
+    addressStr :: CreatedLinkContact -> String
+    addressStr (CCLink cReq shortLink) = B.unpack $ maybe cReqStr strEncode shortLink
+      where
+        cReqStr = strEncode $ popopxChatContact cReq
+
+printResponseEvent :: ChatResponseEvent r => (Maybe RemoteHostId, Maybe User) -> ChatConfig -> Either ChatError r -> IO ()
+printResponseEvent hu cfg = \case
+  Right r -> do
+    ts <- getCurrentTime
+    tz <- getCurrentTimeZone
+    putStrLn $ serializeChatResponse hu cfg ts tz (fst hu) r
+  Left e -> printChatError cfg e
+
+printChatError :: ChatConfig -> ChatError -> IO ()
+printChatError cfg e = putStrLn $ serializeChatError True cfg e
+
+withPrompt :: String -> IO a -> IO a
+withPrompt s a = putStr s >> hFlush stdout >> a
+
+onOffPrompt :: String -> Bool -> IO Bool
+onOffPrompt prompt def =
+  withPrompt (prompt <> if def then " (Yn): " else " (yN): ") $
+    getLine >>= \case
+      "" -> pure def
+      "y" -> pure True
+      "Y" -> pure True
+      "n" -> pure False
+      "N" -> pure False
+      _ -> putStrLn "Invalid input, please enter 'y' or 'n'" >> onOffPrompt prompt def
+
+loadImageFile :: FilePath -> IO ImageData
+loadImageFile path = loadImageData path >>= either (\e -> putStrLn ("--user-image-file: " <> e) >> exitFailure) pure
+
+userStr :: User -> String
+userStr User {localDisplayName, profile = LocalProfile {fullName}} =
+  T.unpack $ localDisplayName <> if T.null fullName || localDisplayName == fullName then "" else " (" <> fullName <> ")"

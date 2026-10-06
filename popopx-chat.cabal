@@ -1,0 +1,727 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.35.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           popopx-chat
+version:        7.1.0.3
+category:       Web, System, Services, Cryptography
+homepage:       https://github.com/popopx/popopx-chat#readme
+author:         popopx.chat
+maintainer:     chat@popopx.chat
+copyright:      2020-22 popopx.chat
+license:        AGPL-3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    PRIVACY.md
+    cabal.project
+
+flag swift
+  description: Enable swift JSON format
+  manual: True
+  default: False
+
+flag client_library
+  description: Don't build server- and CLI-related code.
+  manual: True
+  default: False
+
+flag client_postgres
+  description: Build with PostgreSQL instead of SQLite.
+  manual: True
+  default: False
+
+library
+  exposed-modules:
+      Popopx.Chat
+      Popopx.Chat.AppSettings
+      Popopx.Chat.Badges
+      Popopx.Chat.Badges.CLI
+      Popopx.Chat.Names
+      Popopx.Chat.Call
+      Popopx.Chat.Controller
+      Popopx.Chat.Delivery
+      Popopx.Chat.Files
+      Popopx.Chat.Library.Commands
+      Popopx.Chat.Library.Internal
+      Popopx.Chat.Library.Subscriber
+      Popopx.Chat.Markdown
+      Popopx.Chat.Messages
+      Popopx.Chat.Messages.Batch
+      Popopx.Chat.Messages.CIContent
+      Popopx.Chat.Messages.CIContent.Events
+      Popopx.Chat.Mobile
+      Popopx.Chat.Mobile.Badges
+      Popopx.Chat.Mobile.File
+      Popopx.Chat.Mobile.Shared
+      Popopx.Chat.Mobile.WebRTC
+      Popopx.Chat.LinkEncryption
+      Popopx.Chat.RemoteConfig
+      Popopx.Chat.Operators
+      Popopx.Chat.Operators.Conditions
+      Popopx.Chat.Operators.Presets
+      Popopx.Chat.Options
+      Popopx.Chat.Options.DB
+      Popopx.Chat.ProfileGenerator
+      Popopx.Chat.Protocol
+      Popopx.Chat.Remote
+      Popopx.Chat.Remote.AppVersion
+      Popopx.Chat.Remote.Multicast
+      Popopx.Chat.Remote.Protocol
+      Popopx.Chat.Remote.RevHTTP
+      Popopx.Chat.Remote.Transport
+      Popopx.Chat.Remote.Types
+      Popopx.Chat.Stats
+      Popopx.Chat.Store
+      Popopx.Chat.Store.AppSettings
+      Popopx.Chat.Store.Connections
+      Popopx.Chat.Store.ContactRequest
+      Popopx.Chat.Store.Delivery
+      Popopx.Chat.Store.Direct
+      Popopx.Chat.Store.Files
+      Popopx.Chat.Store.Groups
+      Popopx.Chat.Store.Messages
+      Popopx.Chat.Store.NoteFolders
+      Popopx.Chat.Store.Profiles
+      Popopx.Chat.Store.RelayRequests
+      Popopx.Chat.Store.Remote
+      Popopx.Chat.Store.Shared
+      Popopx.Chat.Styled
+      Popopx.Chat.Types
+      Popopx.Chat.Types.MemberRelations
+      Popopx.Chat.Types.Preferences
+      Popopx.Chat.Types.Shared
+      Popopx.Chat.Types.UITheme
+      Popopx.Chat.Util
+      Popopx.Chat.Web
+  if !flag(client_library)
+      exposed-modules:
+          Popopx.Chat.Bot
+          Popopx.Chat.Bot.KnownContacts
+          Popopx.Chat.Core
+          Popopx.Chat.Help
+          Popopx.Chat.Terminal
+          Popopx.Chat.Terminal.Input
+          Popopx.Chat.Terminal.Main
+          Popopx.Chat.Terminal.Notification
+          Popopx.Chat.Terminal.Output
+          Popopx.Chat.View
+  if flag(client_postgres)
+      exposed-modules:
+          Popopx.Chat.Options.Postgres
+          Popopx.Chat.Store.Postgres.Migrations
+          Popopx.Chat.Store.Postgres.Migrations.M20241220_initial
+          Popopx.Chat.Store.Postgres.Migrations.M20250402_short_links
+          Popopx.Chat.Store.Postgres.Migrations.M20250512_member_admission
+          Popopx.Chat.Store.Postgres.Migrations.M20250513_group_scope
+          Popopx.Chat.Store.Postgres.Migrations.M20250526_short_links
+          Popopx.Chat.Store.Postgres.Migrations.M20250702_contact_requests_remove_cascade_delete
+          Popopx.Chat.Store.Postgres.Migrations.M20250704_groups_conn_link_prepared_connection
+          Popopx.Chat.Store.Postgres.Migrations.M20250709_profile_short_descr
+          Popopx.Chat.Store.Postgres.Migrations.M20250721_indexes
+          Popopx.Chat.Store.Postgres.Migrations.M20250729_member_contact_requests
+          Popopx.Chat.Store.Postgres.Migrations.M20250801_via_group_link_uri
+          Popopx.Chat.Store.Postgres.Migrations.M20250802_chat_peer_type
+          Popopx.Chat.Store.Postgres.Migrations.M20250813_delivery_tasks
+          Popopx.Chat.Store.Postgres.Migrations.M20250919_group_summary
+          Popopx.Chat.Store.Postgres.Migrations.M20250922_remove_unused_connections
+          Popopx.Chat.Store.Postgres.Migrations.M20251007_connections_sync
+          Popopx.Chat.Store.Postgres.Migrations.M20251017_chat_tags_cascade
+          Popopx.Chat.Store.Postgres.Migrations.M20251117_member_relations_vector
+          Popopx.Chat.Store.Postgres.Migrations.M20251128_migrate_member_relations
+          Popopx.Chat.Store.Postgres.Migrations.M20251230_strict_tables
+          Popopx.Chat.Store.Postgres.Migrations.M20260108_chat_indices
+          Popopx.Chat.Store.Postgres.Migrations.M20260122_has_link
+          Popopx.Chat.Store.Postgres.Migrations.M20260222_chat_relays
+          Popopx.Chat.Store.Postgres.Migrations.M20260403_item_viewed
+          Popopx.Chat.Store.Postgres.Migrations.M20260429_relay_request_retries
+          Popopx.Chat.Store.Postgres.Migrations.M20260507_relay_inactive_at
+          Popopx.Chat.Store.Postgres.Migrations.M20260514_relay_request_group_link_index
+          Popopx.Chat.Store.Postgres.Migrations.M20260515_public_group_access
+          Popopx.Chat.Store.Postgres.Migrations.M20260516_supporter_badges
+          Popopx.Chat.Store.Postgres.Migrations.M20260529_delivery_job_senders
+          Popopx.Chat.Store.Postgres.Migrations.M20260530_client_services
+          Popopx.Chat.Store.Postgres.Migrations.M20260531_member_removed_at
+          Popopx.Chat.Store.Postgres.Migrations.M20260601_relay_sent_web_domain
+          Popopx.Chat.Store.Postgres.Migrations.M20260602_group_roster
+          Popopx.Chat.Store.Postgres.Migrations.M20260603_popopx_name
+          Popopx.Chat.Store.Postgres.Migrations.M20260629_roster_catchup
+          Popopx.Chat.Store.Postgres.Migrations.M20260707_file_digest
+          Popopx.Chat.Store.Postgres.Migrations.M20260714_member_security_code
+          Popopx.Chat.Store.Postgres.Migrations.M20260715_profile_description
+          Popopx.Chat.Store.Postgres.Migrations.M20260716_signed_history
+          Popopx.Chat.Store.Postgres.Migrations.M20260720_server_roles
+  else
+      exposed-modules:
+          Popopx.Chat.Archive
+          Popopx.Chat.Options.SQLite
+          Popopx.Chat.Store.SQLite.Migrations
+          Popopx.Chat.Store.SQLite.Migrations.M20220101_initial
+          Popopx.Chat.Store.SQLite.Migrations.M20220122_v1_1
+          Popopx.Chat.Store.SQLite.Migrations.M20220205_chat_item_status
+          Popopx.Chat.Store.SQLite.Migrations.M20220210_deduplicate_contact_requests
+          Popopx.Chat.Store.SQLite.Migrations.M20220224_messages_fks
+          Popopx.Chat.Store.SQLite.Migrations.M20220301_smp_servers
+          Popopx.Chat.Store.SQLite.Migrations.M20220302_profile_images
+          Popopx.Chat.Store.SQLite.Migrations.M20220304_msg_quotes
+          Popopx.Chat.Store.SQLite.Migrations.M20220321_chat_item_edited
+          Popopx.Chat.Store.SQLite.Migrations.M20220404_files_status_fields
+          Popopx.Chat.Store.SQLite.Migrations.M20220514_profiles_user_id
+          Popopx.Chat.Store.SQLite.Migrations.M20220626_auto_reply
+          Popopx.Chat.Store.SQLite.Migrations.M20220702_calls
+          Popopx.Chat.Store.SQLite.Migrations.M20220715_groups_chat_item_id
+          Popopx.Chat.Store.SQLite.Migrations.M20220811_chat_items_indices
+          Popopx.Chat.Store.SQLite.Migrations.M20220812_incognito_profiles
+          Popopx.Chat.Store.SQLite.Migrations.M20220818_chat_notifications
+          Popopx.Chat.Store.SQLite.Migrations.M20220822_groups_host_conn_custom_user_profile_id
+          Popopx.Chat.Store.SQLite.Migrations.M20220823_delete_broken_group_event_chat_items
+          Popopx.Chat.Store.SQLite.Migrations.M20220824_profiles_local_alias
+          Popopx.Chat.Store.SQLite.Migrations.M20220909_commands
+          Popopx.Chat.Store.SQLite.Migrations.M20220926_connection_alias
+          Popopx.Chat.Store.SQLite.Migrations.M20220928_settings
+          Popopx.Chat.Store.SQLite.Migrations.M20221001_shared_msg_id_indices
+          Popopx.Chat.Store.SQLite.Migrations.M20221003_delete_broken_integrity_error_chat_items
+          Popopx.Chat.Store.SQLite.Migrations.M20221004_idx_msg_deliveries_message_id
+          Popopx.Chat.Store.SQLite.Migrations.M20221011_user_contact_links_group_id
+          Popopx.Chat.Store.SQLite.Migrations.M20221012_inline_files
+          Popopx.Chat.Store.SQLite.Migrations.M20221019_unread_chat
+          Popopx.Chat.Store.SQLite.Migrations.M20221021_auto_accept__group_links
+          Popopx.Chat.Store.SQLite.Migrations.M20221024_contact_used
+          Popopx.Chat.Store.SQLite.Migrations.M20221025_chat_settings
+          Popopx.Chat.Store.SQLite.Migrations.M20221029_group_link_id
+          Popopx.Chat.Store.SQLite.Migrations.M20221112_server_password
+          Popopx.Chat.Store.SQLite.Migrations.M20221115_server_cfg
+          Popopx.Chat.Store.SQLite.Migrations.M20221129_delete_group_feature_items
+          Popopx.Chat.Store.SQLite.Migrations.M20221130_delete_item_deleted
+          Popopx.Chat.Store.SQLite.Migrations.M20221209_verified_connection
+          Popopx.Chat.Store.SQLite.Migrations.M20221210_idxs
+          Popopx.Chat.Store.SQLite.Migrations.M20221211_group_description
+          Popopx.Chat.Store.SQLite.Migrations.M20221212_chat_items_timed
+          Popopx.Chat.Store.SQLite.Migrations.M20221214_live_message
+          Popopx.Chat.Store.SQLite.Migrations.M20221222_chat_ts
+          Popopx.Chat.Store.SQLite.Migrations.M20221223_idx_chat_items_item_status
+          Popopx.Chat.Store.SQLite.Migrations.M20221230_idxs
+          Popopx.Chat.Store.SQLite.Migrations.M20230107_connections_auth_err_counter
+          Popopx.Chat.Store.SQLite.Migrations.M20230111_users_agent_user_id
+          Popopx.Chat.Store.SQLite.Migrations.M20230117_fkey_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20230118_recreate_smp_servers
+          Popopx.Chat.Store.SQLite.Migrations.M20230129_drop_chat_items_group_idx
+          Popopx.Chat.Store.SQLite.Migrations.M20230206_item_deleted_by_group_member_id
+          Popopx.Chat.Store.SQLite.Migrations.M20230303_group_link_role
+          Popopx.Chat.Store.SQLite.Migrations.M20230317_hidden_profiles
+          Popopx.Chat.Store.SQLite.Migrations.M20230318_file_description
+          Popopx.Chat.Store.SQLite.Migrations.M20230321_agent_file_deleted
+          Popopx.Chat.Store.SQLite.Migrations.M20230328_files_protocol
+          Popopx.Chat.Store.SQLite.Migrations.M20230402_protocol_servers
+          Popopx.Chat.Store.SQLite.Migrations.M20230411_extra_xftp_file_descriptions
+          Popopx.Chat.Store.SQLite.Migrations.M20230420_rcv_files_to_receive
+          Popopx.Chat.Store.SQLite.Migrations.M20230422_profile_contact_links
+          Popopx.Chat.Store.SQLite.Migrations.M20230504_recreate_msg_delivery_events_cleanup_messages
+          Popopx.Chat.Store.SQLite.Migrations.M20230505_chat_item_versions
+          Popopx.Chat.Store.SQLite.Migrations.M20230511_reactions
+          Popopx.Chat.Store.SQLite.Migrations.M20230519_item_deleted_ts
+          Popopx.Chat.Store.SQLite.Migrations.M20230526_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20230529_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20230608_deleted_contacts
+          Popopx.Chat.Store.SQLite.Migrations.M20230618_favorite_chats
+          Popopx.Chat.Store.SQLite.Migrations.M20230621_chat_item_moderations
+          Popopx.Chat.Store.SQLite.Migrations.M20230705_delivery_receipts
+          Popopx.Chat.Store.SQLite.Migrations.M20230721_group_snd_item_statuses
+          Popopx.Chat.Store.SQLite.Migrations.M20230814_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20230827_file_encryption
+          Popopx.Chat.Store.SQLite.Migrations.M20230829_connections_chat_vrange
+          Popopx.Chat.Store.SQLite.Migrations.M20230903_connections_to_subscribe
+          Popopx.Chat.Store.SQLite.Migrations.M20230913_member_contacts
+          Popopx.Chat.Store.SQLite.Migrations.M20230914_member_probes
+          Popopx.Chat.Store.SQLite.Migrations.M20230926_contact_status
+          Popopx.Chat.Store.SQLite.Migrations.M20231002_conn_initiated
+          Popopx.Chat.Store.SQLite.Migrations.M20231009_via_group_link_uri_hash
+          Popopx.Chat.Store.SQLite.Migrations.M20231010_member_settings
+          Popopx.Chat.Store.SQLite.Migrations.M20231019_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20231030_xgrplinkmem_received
+          Popopx.Chat.Store.SQLite.Migrations.M20231107_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20231113_group_forward
+          Popopx.Chat.Store.SQLite.Migrations.M20231114_remote_control
+          Popopx.Chat.Store.SQLite.Migrations.M20231126_remote_ctrl_address
+          Popopx.Chat.Store.SQLite.Migrations.M20231207_chat_list_pagination
+          Popopx.Chat.Store.SQLite.Migrations.M20231214_item_content_tag
+          Popopx.Chat.Store.SQLite.Migrations.M20231215_recreate_msg_deliveries
+          Popopx.Chat.Store.SQLite.Migrations.M20240102_note_folders
+          Popopx.Chat.Store.SQLite.Migrations.M20240104_members_profile_update
+          Popopx.Chat.Store.SQLite.Migrations.M20240115_block_member_for_all
+          Popopx.Chat.Store.SQLite.Migrations.M20240122_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20240214_redirect_file_id
+          Popopx.Chat.Store.SQLite.Migrations.M20240222_app_settings
+          Popopx.Chat.Store.SQLite.Migrations.M20240226_users_restrict
+          Popopx.Chat.Store.SQLite.Migrations.M20240228_pq
+          Popopx.Chat.Store.SQLite.Migrations.M20240313_drop_agent_ack_cmd_id
+          Popopx.Chat.Store.SQLite.Migrations.M20240324_custom_data
+          Popopx.Chat.Store.SQLite.Migrations.M20240402_item_forwarded
+          Popopx.Chat.Store.SQLite.Migrations.M20240430_ui_theme
+          Popopx.Chat.Store.SQLite.Migrations.M20240501_chat_deleted
+          Popopx.Chat.Store.SQLite.Migrations.M20240510_chat_items_via_proxy
+          Popopx.Chat.Store.SQLite.Migrations.M20240515_rcv_files_user_approved_relays
+          Popopx.Chat.Store.SQLite.Migrations.M20240528_quota_err_counter
+          Popopx.Chat.Store.SQLite.Migrations.M20240827_calls_uuid
+          Popopx.Chat.Store.SQLite.Migrations.M20240920_user_order
+          Popopx.Chat.Store.SQLite.Migrations.M20241008_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20241010_contact_requests_contact_id
+          Popopx.Chat.Store.SQLite.Migrations.M20241023_chat_item_autoincrement_id
+          Popopx.Chat.Store.SQLite.Migrations.M20241027_server_operators
+          Popopx.Chat.Store.SQLite.Migrations.M20241125_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20241128_business_chats
+          Popopx.Chat.Store.SQLite.Migrations.M20241205_business_chat_members
+          Popopx.Chat.Store.SQLite.Migrations.M20241222_operator_conditions
+          Popopx.Chat.Store.SQLite.Migrations.M20241223_chat_tags
+          Popopx.Chat.Store.SQLite.Migrations.M20241230_reports
+          Popopx.Chat.Store.SQLite.Migrations.M20250105_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20250115_chat_ttl
+          Popopx.Chat.Store.SQLite.Migrations.M20250122_chat_items_include_in_history
+          Popopx.Chat.Store.SQLite.Migrations.M20250126_mentions
+          Popopx.Chat.Store.SQLite.Migrations.M20250129_delete_unused_contacts
+          Popopx.Chat.Store.SQLite.Migrations.M20250130_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20250402_short_links
+          Popopx.Chat.Store.SQLite.Migrations.M20250512_member_admission
+          Popopx.Chat.Store.SQLite.Migrations.M20250513_group_scope
+          Popopx.Chat.Store.SQLite.Migrations.M20250526_short_links
+          Popopx.Chat.Store.SQLite.Migrations.M20250702_contact_requests_remove_cascade_delete
+          Popopx.Chat.Store.SQLite.Migrations.M20250704_groups_conn_link_prepared_connection
+          Popopx.Chat.Store.SQLite.Migrations.M20250709_profile_short_descr
+          Popopx.Chat.Store.SQLite.Migrations.M20250721_indexes
+          Popopx.Chat.Store.SQLite.Migrations.M20250729_member_contact_requests
+          Popopx.Chat.Store.SQLite.Migrations.M20250801_via_group_link_uri
+          Popopx.Chat.Store.SQLite.Migrations.M20250802_chat_peer_type
+          Popopx.Chat.Store.SQLite.Migrations.M20250813_delivery_tasks
+          Popopx.Chat.Store.SQLite.Migrations.M20250919_group_summary
+          Popopx.Chat.Store.SQLite.Migrations.M20250922_remove_unused_connections
+          Popopx.Chat.Store.SQLite.Migrations.M20251007_connections_sync
+          Popopx.Chat.Store.SQLite.Migrations.M20251017_chat_tags_cascade
+          Popopx.Chat.Store.SQLite.Migrations.M20251117_member_relations_vector
+          Popopx.Chat.Store.SQLite.Migrations.M20251128_migrate_member_relations
+          Popopx.Chat.Store.SQLite.Migrations.M20251230_strict_tables
+          Popopx.Chat.Store.SQLite.Migrations.M20260108_chat_indices
+          Popopx.Chat.Store.SQLite.Migrations.M20260122_has_link
+          Popopx.Chat.Store.SQLite.Migrations.M20260222_chat_relays
+          Popopx.Chat.Store.SQLite.Migrations.M20260403_item_viewed
+          Popopx.Chat.Store.SQLite.Migrations.M20260429_relay_request_retries
+          Popopx.Chat.Store.SQLite.Migrations.M20260507_relay_inactive_at
+          Popopx.Chat.Store.SQLite.Migrations.M20260514_relay_request_group_link_index
+          Popopx.Chat.Store.SQLite.Migrations.M20260515_public_group_access
+          Popopx.Chat.Store.SQLite.Migrations.M20260516_supporter_badges
+          Popopx.Chat.Store.SQLite.Migrations.M20260529_delivery_job_senders
+          Popopx.Chat.Store.SQLite.Migrations.M20260530_client_services
+          Popopx.Chat.Store.SQLite.Migrations.M20260531_member_removed_at
+          Popopx.Chat.Store.SQLite.Migrations.M20260601_relay_sent_web_domain
+          Popopx.Chat.Store.SQLite.Migrations.M20260602_group_roster
+          Popopx.Chat.Store.SQLite.Migrations.M20260603_popopx_name
+          Popopx.Chat.Store.SQLite.Migrations.M20260629_roster_catchup
+          Popopx.Chat.Store.SQLite.Migrations.M20260707_file_digest
+          Popopx.Chat.Store.SQLite.Migrations.M20260714_member_security_code
+          Popopx.Chat.Store.SQLite.Migrations.M20260715_profile_description
+          Popopx.Chat.Store.SQLite.Migrations.M20260716_signed_history
+          Popopx.Chat.Store.SQLite.Migrations.M20260720_server_roles
+          Popopx.Chat.Store.SQLite.Migrations.M20260905_binthere_bots
+          Popopx.Chat.Store.SQLite.Migrations.M20260906_bot_directory
+  other-modules:
+      Paths_popopx_chat
+  hs-source-dirs:
+      src
+  default-extensions:
+      StrictData
+  ghc-options: -O2 -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-safe-haskell-mode -Wno-missing-export-lists -Wno-partial-fields -Wcompat -Werror=incomplete-record-updates -Werror=incomplete-patterns -Werror=missing-methods -Werror=incomplete-uni-patterns -Werror=tabs -Wredundant-constraints -Wincomplete-record-updates -Wunused-type-patterns -Werror=name-shadowing
+  build-depends:
+      aeson >=2.2 && <2.4
+    , ansi-terminal >=0.10 && <0.12
+    , async ==2.2.*
+    , attoparsec ==0.14.*
+    , base >=4.7 && <5
+    , base64-bytestring >=1.0 && <1.3
+    , composition ==1.0.*
+    , constraints >=0.12 && <0.14
+    , containers ==0.6.*
+    , crypton ==0.34.*
+    , crypton-x509 ==1.7.*
+    , data-default ==0.7.*
+    , directory ==1.3.*
+    , email-validate ==2.3.*
+    , exceptions ==0.10.*
+    , file-embed ==0.0.15.*
+    , filepath ==1.4.*
+    , http-types ==0.12.*
+    , http2 >=4.2.2 && <4.3
+    , memory ==0.18.*
+    , mtl >=2.3.1 && <3.0
+    , network >=3.1.2.7 && <3.2
+    , network-transport ==0.5.6
+    , optparse-applicative >=0.15 && <0.17
+    , random >=1.1 && <1.3
+    , record-hasfield ==1.0.*
+    , simple-logger ==0.1.*
+    , popopxmq >=7.0
+    , socks ==0.6.*
+    , stm ==2.5.*
+    , terminal ==0.2.*
+    , time ==1.12.*
+    , tls >=1.9.0 && <1.10
+    , unliftio ==0.2.*
+    , unliftio-core ==0.2.*
+    , uri-bytestring >=0.3.3.1 && <0.4
+    , uuid ==1.3.*
+    , zip ==2.2.*
+    , zstd ==0.1.3.*
+  default-language: Haskell2010
+  if flag(swift)
+    cpp-options: -DswiftJSON
+  if flag(client_postgres)
+    build-depends:
+        postgresql-libpq >=0.10.0.0
+      , postgresql-simple ==0.7.*
+      , raw-strings-qq ==1.1.*
+    cpp-options: -DdbPostgres
+  else
+    build-depends:
+        direct-sqlcipher ==2.3.*
+      , sqlcipher-simple ==0.4.*
+  if impl(ghc >= 9.10)
+    build-depends:
+        bytestring ==0.11.*
+      , process ==1.6.*
+      , template-haskell ==2.21.*
+      , text >=2.0.1 && <2.2
+  if impl(ghc >= 9.6.2 && < 9.10)
+    build-depends:
+        bytestring ==0.11.*
+      , process ==1.6.*
+      , template-haskell ==2.20.*
+      , text >=2.0.1 && <2.2
+  if impl(ghc >= 9.4.2 && < 9.6.2)
+    build-depends:
+        bytestring ==0.11.*
+      , process ==1.6.*
+      , template-haskell ==2.19.*
+      , text >=2.0.1 && <2.2
+  if impl(ghc < 9.4.2)
+    build-depends:
+        bytestring ==0.10.*
+      , process >=1.6 && <1.6.18
+      , template-haskell ==2.16.*
+      , text >=1.2.4.0 && <1.3
+
+executable popopx-bot
+  if flag(client_library)
+      buildable: False
+  main-is: Main.hs
+  other-modules:
+      Paths_popopx_chat
+  hs-source-dirs:
+      apps/popopx-bot
+  default-extensions:
+      StrictData
+  ghc-options: -O2 -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-safe-haskell-mode -Wno-missing-export-lists -Wno-partial-fields -Wcompat -Werror=incomplete-record-updates -Werror=incomplete-patterns -Werror=missing-methods -Werror=incomplete-uni-patterns -Werror=tabs -Wredundant-constraints -Wincomplete-record-updates -Wunused-type-patterns -Werror=name-shadowing -threaded
+  build-depends:
+      base >=4.7 && <5
+    , directory ==1.3.*
+    , popopx-chat
+  default-language: Haskell2010
+  if flag(client_postgres)
+    cpp-options: -DdbPostgres
+
+executable popopx-bot-advanced
+  if flag(client_library)
+      buildable: False
+  main-is: Main.hs
+  other-modules:
+      Paths_popopx_chat
+  hs-source-dirs:
+      apps/popopx-bot-advanced
+  default-extensions:
+      StrictData
+  ghc-options: -O2 -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-safe-haskell-mode -Wno-missing-export-lists -Wno-partial-fields -Wcompat -Werror=incomplete-record-updates -Werror=incomplete-patterns -Werror=missing-methods -Werror=incomplete-uni-patterns -Werror=tabs -Wredundant-constraints -Wincomplete-record-updates -Wunused-type-patterns -Werror=name-shadowing -threaded
+  build-depends:
+      async ==2.2.*
+    , base >=4.7 && <5
+    , directory ==1.3.*
+    , popopx-chat
+    , popopxmq >=7.0
+    , stm ==2.5.*
+  default-language: Haskell2010
+  if flag(client_postgres)
+    cpp-options: -DdbPostgres
+  if impl(ghc >= 9.4.2)
+    build-depends:
+        text >=2.0.1 && <2.2
+  if impl(ghc < 9.4.2)
+    build-depends:
+        text >=1.2.4.0 && <1.3
+
+executable popopx-broadcast-bot
+  if flag(client_library)
+      buildable: False
+  main-is: Main.hs
+  hs-source-dirs:
+      apps/popopx-broadcast-bot
+      apps/popopx-broadcast-bot/src
+  default-extensions:
+      StrictData
+  other-modules:
+      Broadcast.Bot
+      Broadcast.Options
+      Paths_popopx_chat
+  ghc-options: -O2 -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-safe-haskell-mode -Wno-missing-export-lists -Wno-partial-fields -Wcompat -Werror=incomplete-record-updates -Werror=incomplete-patterns -Werror=missing-methods -Werror=incomplete-uni-patterns -Werror=tabs -Wredundant-constraints -Wincomplete-record-updates -Wunused-type-patterns -Werror=name-shadowing -threaded
+  build-depends:
+      async ==2.2.*
+    , base >=4.7 && <5
+    , directory ==1.3.*
+    , optparse-applicative >=0.15 && <0.17
+    , popopx-chat
+    , popopxmq >=7.0
+    , stm ==2.5.*
+  default-language: Haskell2010
+  if flag(client_postgres)
+    cpp-options: -DdbPostgres
+  if impl(ghc >= 9.4.2)
+    build-depends:
+        text >=2.0.1 && <2.2
+  if impl(ghc < 9.4.2)
+    build-depends:
+        text >=1.2.4.0 && <1.3
+
+executable popopx-chat
+  if flag(client_library)
+      buildable: False
+  main-is: Main.hs
+  other-modules:
+      Server
+      Paths_popopx_chat
+  hs-source-dirs:
+      apps/popopx-chat
+  default-extensions:
+      StrictData
+  ghc-options: -O2 -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-safe-haskell-mode -Wno-missing-export-lists -Wno-partial-fields -Wcompat -Werror=incomplete-record-updates -Werror=incomplete-patterns -Werror=missing-methods -Werror=incomplete-uni-patterns -Werror=tabs -Wredundant-constraints -Wincomplete-record-updates -Wunused-type-patterns -Werror=name-shadowing -threaded
+  build-depends:
+      aeson >=2.2 && <2.4
+    , base >=4.7 && <5
+    , directory ==1.3.*
+    , mtl >=2.3.1 && <3.0
+    , network >=3.1.2.7 && <3.2
+    , popopx-chat
+    , popopxmq >=7.0
+    , stm ==2.5.*
+    , unliftio ==0.2.*
+    , websockets ==0.12.*
+  default-language: Haskell2010
+  if flag(client_postgres)
+    cpp-options: -DdbPostgres
+  if impl(ghc >= 9.4.2)
+    build-depends:
+        text >=2.0.1 && <2.2
+  if impl(ghc < 9.4.2)
+    build-depends:
+        text >=1.2.4.0 && <1.3
+
+executable popopx-directory-service
+  if flag(client_library)
+      buildable: False
+  main-is: Main.hs
+  hs-source-dirs:
+      apps/popopx-directory-service
+      apps/popopx-directory-service/src
+  default-extensions:
+      StrictData
+  other-modules:
+      Directory.BlockedWords
+      Directory.Captcha
+      Directory.Events
+      Directory.Listing
+      Directory.Options
+      Directory.Search
+      Directory.Service
+      Directory.Store
+      Directory.Store.Migrate
+      Directory.Util
+      Paths_popopx_chat
+  ghc-options: -O2 -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-safe-haskell-mode -Wno-missing-export-lists -Wno-partial-fields -Wcompat -Werror=incomplete-record-updates -Werror=incomplete-patterns -Werror=missing-methods -Werror=incomplete-uni-patterns -Werror=tabs -Wredundant-constraints -Wincomplete-record-updates -Wunused-type-patterns -Werror=name-shadowing -threaded -rtsopts
+  build-depends:
+      aeson >=2.2 && <2.4
+    , async ==2.2.*
+    , attoparsec ==0.14.*
+    , base >=4.7 && <5
+    , base64-bytestring >=1.0 && <1.3
+    , composition ==1.0.*
+    , containers ==0.6.*
+    , crypton ==0.34.*
+    , directory ==1.3.*
+    , filepath ==1.4.*
+    , memory ==0.18.*
+    , mtl >=2.3.1 && <3.0
+    , optparse-applicative >=0.15 && <0.17
+    , process >=1.6 && <1.6.18
+    , random >=1.1 && <1.3
+    , simple-logger ==0.1.*
+    , popopx-chat
+    , popopxmq >=7.0
+    , stm ==2.5.*
+    , time ==1.12.*
+    , unicode-transforms ==0.4.*
+  default-language: Haskell2010
+  if flag(client_postgres)
+    other-modules:
+        Directory.Store.Postgres.Migrations
+    build-depends:
+        postgresql-simple ==0.7.*
+        , raw-strings-qq ==1.1.*
+    cpp-options: -DdbPostgres
+  else
+    other-modules:
+        Directory.Store.SQLite.Migrations
+    build-depends:
+        sqlcipher-simple ==0.4.*
+  if impl(ghc >= 9.4.2)
+    build-depends:
+        bytestring ==0.11.*
+      , text >=2.0.1 && <2.2
+  if impl(ghc < 9.4.2)
+    build-depends:
+        bytestring ==0.10.*
+      , text >=1.2.4.0 && <1.3
+
+test-suite popopx-chat-test
+  if flag(swift)
+    cpp-options: -DswiftJSON
+  if flag(client_library)
+      buildable: False
+  type: exitcode-stdio-1.0
+  main-is: Test.hs
+  other-modules:
+      APIDocs
+      BadgeTests
+      Bots.BroadcastTests
+      Bots.DirectoryTests
+      ChatClient
+      ChatTests
+      ChatTests.ChatList
+      ChatTests.ChatRelays
+      ChatTests.Direct
+      ChatTests.DBUtils
+      ChatTests.Files
+      ChatTests.Forward
+      ChatTests.Groups
+      ChatTests.Local
+      ChatTests.Names
+      ChatTests.Profiles
+      ChatTests.Utils
+      JSONFixtures
+      JSONTests
+      MarkdownTests
+      MemberRelationsTests
+      NameResolver
+      MessageBatching
+      OperatorTests
+      ProtocolTests
+      RandomServers
+      RemoteTests
+      ValidNames
+      ViewTests
+      API.Docs.Commands
+      API.Docs.Events
+      API.Docs.Generate
+      API.Docs.Generate.Python
+      API.Docs.Generate.TypeScript
+      API.Docs.Responses
+      API.Docs.Syntax
+      API.Docs.Syntax.Types
+      API.Docs.Types
+      API.TypeInfo
+      Broadcast.Bot
+      Broadcast.Options
+      Directory.BlockedWords
+      Directory.Captcha
+      Directory.Events
+      Directory.Listing
+      Directory.Options
+      Directory.Search
+      Directory.Service
+      Directory.Store
+      Directory.Store.Migrate
+      Directory.Util
+      Paths_popopx_chat
+  if flag(client_postgres)
+      other-modules:
+          ChatTests.DBUtils.Postgres
+          PostgresSchemaDump
+  else
+      other-modules:
+          ChatTests.DBUtils.SQLite
+          MobileTests
+          SchemaDump
+          WebRTCTests
+  hs-source-dirs:
+      bots/src
+      tests
+      apps/popopx-broadcast-bot/src
+      apps/popopx-directory-service/src
+  default-extensions:
+      StrictData
+  -- add -fhpc to ghc-options below to run tests with coverage
+  ghc-options: -O2 -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-safe-haskell-mode -Wno-missing-export-lists -Wno-partial-fields -Wcompat -Werror=incomplete-record-updates -Werror=incomplete-patterns -Werror=missing-methods -Werror=incomplete-uni-patterns -Werror=tabs -Wredundant-constraints -Wincomplete-record-updates -Wunused-type-patterns -Werror=name-shadowing -threaded
+  build-depends:
+      QuickCheck ==2.14.*
+    , aeson ==2.2.*
+    , ansi-terminal >=0.10 && <0.12
+    , async ==2.2.*
+    , attoparsec ==0.14.*
+    , base >=4.7 && <5
+    , base64-bytestring >=1.0 && <1.3
+    , composition ==1.0.*
+    , containers ==0.6.*
+    , crypton ==0.34.*
+    , deepseq ==1.4.*
+    , directory ==1.3.*
+    , filepath ==1.4.*
+    , generic-random ==1.5.*
+    , http-types ==0.12.*
+    , memory ==0.18.*
+    , mtl >=2.3.1 && <3.0
+    , network >=3.1.2.7 && <3.2
+    , optparse-applicative >=0.15 && <0.17
+    , random >=1.1 && <1.3
+    , silently ==1.2.*
+    , simple-logger ==0.1.*
+    , popopx-chat
+    , popopxmq >=7.0
+    , stm ==2.5.*
+    , terminal ==0.2.*
+    , time ==1.12.*
+    , unicode-transforms ==0.4.*
+    , unliftio ==0.2.*
+    , uri-bytestring >=0.3.3.1 && <0.4
+    , wai ==3.2.*
+    , warp ==3.3.*
+  default-language: Haskell2010
+  if flag(client_postgres)
+    other-modules:
+        Directory.Store.Postgres.Migrations
+    build-depends:
+        postgresql-simple ==0.7.*
+        , raw-strings-qq ==1.1.*
+    cpp-options: -DdbPostgres
+  else
+    other-modules:
+        Directory.Store.SQLite.Migrations
+    build-depends:
+        sqlcipher-simple ==0.4.*
+  if impl(ghc >= 9.4.2)
+    build-depends:
+        bytestring ==0.11.*
+      , hspec ==2.11.*
+      , process ==1.6.*
+      , text >=2.0.1 && <2.2
+  if impl(ghc < 9.4.2)
+    build-depends:
+        bytestring ==0.10.*
+      , hspec ==2.7.*
+      , process >=1.6 && <1.6.18
+      , text >=1.2.4.0 && <1.3

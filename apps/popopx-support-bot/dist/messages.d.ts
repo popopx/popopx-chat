@@ -1,0 +1,11 @@
+export declare const welcomeMessage = "Hello! This is a *POPOPX team* support bot - not an AI.\n*Join public groups* at https://popopx.chat/directory or [via directory bot](https://smp4.simplex.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok)\n\nWe just launched [equity crowdfunding on Wefunder](https://wefunder.com/popopx.chat)!\n\nPlease ask any questions about POPOPX Chat and about our crowdfunding.";
+export declare function queueMessage(timezone: string, grokEnabled: boolean): string;
+export declare const grokActivatedMessage = "*You are now chatting with Grok* - use any language.";
+export declare function teamAddedMessage(timezone: string, grokPresent: boolean): string;
+export declare const teamAlreadyInvitedMessage = "A team member was invited to this conversation and will reply when available.";
+export declare const teamLockedMessage = "Only the team will now receive your messages.";
+export declare function noTeamMembersMessage(grokEnabled: boolean): string;
+export declare const grokInvitingMessage = "Inviting Grok, please wait...";
+export declare const grokUnavailableMessage = "Grok is temporarily unavailable. Please try again later or send /team for a human team member.";
+export declare const grokErrorMessage = "Sorry, I couldn't process that. Please try again or send /team for a human team member.";
+export declare const grokNoHistoryMessage = "I just joined but couldn't see your earlier messages. Could you repeat your question?";
