@@ -2,8 +2,6 @@
 [![GitHub downloads](https://img.shields.io/github/downloads/popopx/popopx-chat/total)](https://github.com/popopx/popopx-chat/releases)
 [![GitHub release](https://img.shields.io/github/v/release/popopx/popopx-chat)](https://github.com/popopx/popopx-chat/releases)
 
-<img src="images/github-banner.jpg" alt="POPOPX logo" width="100%">
-
 # POPOPX Chat
 
 Privacy-focused messaging platform with no user identifiers of any kind - 100% private by design.
