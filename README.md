@@ -1,427 +1,122 @@
 [![build](https://github.com/popopx/popopx-chat/actions/workflows/build.yml/badge.svg?branch=stable)](https://github.com/popopx/popopx-chat/actions/workflows/build.yml)
 [![GitHub downloads](https://img.shields.io/github/downloads/popopx/popopx-chat/total)](https://github.com/popopx/popopx-chat/releases)
 [![GitHub release](https://img.shields.io/github/v/release/popopx/popopx-chat)](https://github.com/popopx/popopx-chat/releases)
-[![Join on Reddit](https://img.shields.io/reddit/subreddit-subscribers/POPOPXChat?style=social)](https://www.reddit.com/r/POPOPXChat)
-<a rel="me" href="https://mastodon.social/@popopx">![Follow on Mastodon](https://img.shields.io/mastodon/follow/108619463746856738?domain=https%3A%2F%2Fmastodon.social&style=social)</a>
-
-| 30/03/2023 | EN, [FR](/docs/lang/fr/README.md), [CZ](/docs/lang/cs/README.md), [PL](/docs/lang/pl/README.md) |
 
 <img src="images/github-banner.jpg" alt="POPOPX logo" width="100%">
 
-Invest in POPOPX Chat. [Learn more on Wefunder](https://wefunder.com/popopxchat).
+# POPOPX Chat
 
-# POPOPX - the first messaging platform that has no user identifiers of any kind - 100% private by design!
+Privacy-focused messaging platform with no user identifiers of any kind - 100% private by design.
 
-[<img src="./images/trail-of-bits.jpg" height="80">](http://popopx.chat/blog/20221108-popopx-chat-v4.2-security-audit-new-website.html) &nbsp;&nbsp;&nbsp; [<img src="./images/privacy-guides.jpg" height="64">](https://www.privacyguides.org/en/real-time-communication/#popopx-chat) &nbsp;&nbsp;&nbsp; [<img src="./images/whonix-logo.jpg" height="64">](https://www.whonix.org/wiki/Chat#Recommendation) &nbsp;&nbsp;&nbsp; [<img src="./images/kuketz-blog.jpg" height="64">](https://www.kuketz-blog.de/popopx-eindruecke-vom-messenger-ohne-identifier/)
+## Features
 
-**[Why we are building POPOPX Network](./docs/WHY.md)**
+- No user identifiers - not even random numbers
+- Double ratchet end-to-end encryption with post-quantum resistance
+- Additional encryption layer for transport
+- Mobile apps for iOS (SwiftUI) and Android (Kotlin Multiplatform)
+- Terminal CLI client on Linux, MacOS, Windows
+- Chat bots and directory services
+- Node.js, Python, and WebRTC packages
 
-## Welcome to POPOPX Chat!
+## Install
 
-1. 📲 [Install the app](#install-the-app).
-2. ↔️ [Connect to the team](#connect-to-the-team), [join user groups](#join-user-groups) and [follow our updates](#follow-our-updates).
-3. 🤝 [Make a private connection](#make-a-private-connection) with a friend.
-4. 🔤 [Help translating POPOPX Chat](#help-translating-popopx-chat).
-5. ⚡️ [Contribute](#contribute) and [support us with donations](#please-support-us-with-your-donations).
-
-[Learn more about POPOPX Chat](#contents).
-
-## Install the app
-
-[<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/apple_store.svg" alt="iOS app" height="42">](https://apps.apple.com/us/app/popopx-chat/id1605771084)
-&nbsp;
-[![Android app](https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/google_play.svg)](https://play.google.com/store/apps/details?id=chat.popopx.app)
-&nbsp;
-[<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/f_droid.svg" alt="F-Droid" height="41">](https://app.popopx.chat)
-&nbsp;
-[<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/testflight.png" alt="iOS TestFlight" height="41">](https://testflight.apple.com/join/DWuT2LQu)
-&nbsp;
-[<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/apk_icon.png" alt="APK" height="41">](https://github.com/popopx/popopx-chat/releases/latest/download/popopx-aarch64.apk)
-
-- 🖲 Protects your messages and metadata - who you talk to and when.
-- 🔐 Double ratchet end-to-end encryption, with additional encryption layer.
-- 📱 Mobile apps for Android ([Google Play](https://play.google.com/store/apps/details?id=chat.popopx.app), [APK](https://github.com/popopx/popopx-chat/releases/latest/download/popopx-aarch64.apk)) and [iOS](https://apps.apple.com/us/app/popopx-chat/id1605771084).
-- 🚀 [TestFlight preview for iOS](https://testflight.apple.com/join/DWuT2LQu) with the new features 1-2 weeks earlier - **limited to 10,000 users**!
-- 🖥 Available as a terminal (console) [app / CLI](#zap-quick-installation-of-a-terminal-app) on Linux, MacOS, Windows.
-
-## Connect to the team
-
-You can connect to the team via the app using "chat with the developers button" available when you have no conversations in the profile, "Send questions and ideas" in the app settings or via our [POPOPX address](https://smp6.popopx.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw). Please connect to:
-
-- to ask any questions
-- to suggest any improvements
-- to share anything relevant
-
-We are replying the questions manually, so it is not instant – it can take up to 24 hours.
-
-If you are interested in helping us to integrate open-source language models, and in [joining our team](./docs/JOIN_TEAM.md), please get in touch.
-
-## Join user groups
-
-You can find the groups created by users in [POPOPX Directory](https://popopx.chat/directory/). It is also available as [POPOPX bot](https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) that allows to add your own groups and communities to the directory. We are not responsible for the content shared in these groups.
-
-**Please note**: The groups below are created for the users to be able to ask questions, make suggestions and ask questions about POPOPX Chat only.
-
-You can join an English-speaking users group if you want to ask any questions: [#POPOPX users group](https://smp4.popopx.im/g#hr4lvFeBmndWMKTwqiodPz3VBo_6UmdGWocXd1SupsM)
-
-There is also a group [#popopx-devs](https://smp6.popopx.im/g#Drx3efC-n418AuSpzTspw9SER0iJwrQTmKBafQHwkKM) for developers who build on POPOPX platform:
-
-- chat bots and automations
-- integrations with other apps
-- social apps and services
-- etc.
-
-You can join these and other groups by opening these links in the app or by opening them in a desktop browser and scanning the QR code.
-
-## Follow our updates
-
-We publish our updates and releases via:
-
-- [Reddit](https://www.reddit.com/r/POPOPXChat/), [Twitter](https://twitter.com/POPOPXChat), [Lemmy](https://lemmy.ml/c/popopx), [Mastodon](https://mastodon.social/@popopx) and [Nostr](https://snort.social/p/npub1exv22uulqnmlluszc4yk92jhs2e5ajcs6mu3t00a6avzjcalj9csm7d828).
-- POPOPX Chat [team profile](#connect-to-the-team).
-- [blog](https://popopx.chat/blog/) and [RSS feed](https://popopx.chat/feed.rss).
-- [mailing list](https://popopx.chat/#join-popopx), very rarely.
-
-## Make a private connection
-
-You need to share a link with your friend or scan a QR code from their phone, in person or during a video call, to make a connection and start messaging.
-
-The channel through which you share the link does not have to be secure - it is enough that you can confirm who sent you the message and that your POPOPX connection is established.
-
-<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/app1.png" alt="Make a private connection" height="360"> <img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/arrow.png" height="360"> <img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/app2.png" alt="Conversation" height="360"> <img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/arrow.png" height="360"> <img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/app3.png" alt="Video call" height="360">
-
-After you connect, you can [verify connection security code](./blog/20230103-popopx-chat-v4.4-disappearing-messages.md#connection-security-verification).
-
-## User guide (NEW)
-
-Read about the app features and settings in the new [User guide](./docs/guide/README.md).
-
-## Contribute
-
-We would love to have you join the development! You can help us with:
-
-- [develop a chat bot](#develop-a-chat-bot) for POPOPX Chat!
-- writing a tutorial or recipes about hosting servers, chat bots, etc.
-- developing features - please connect to us via chat so we can help you get started.
-
-## Help translating POPOPX Chat
-
-Thanks to our users and [Weblate](https://hosted.weblate.org/engage/popopx-chat/), POPOPX Chat apps, website and documents are translated to many other languages.
-
-Join our translators to help POPOPX grow!
-
-|locale|language |contributor|[Android](https://play.google.com/store/apps/details?id=chat.popopx.app) and [iOS](https://apps.apple.com/us/app/popopx-chat/id1605771084)|[website](https://popopx.chat)|Github docs|
-|:----:|:-------:|:---------:|:---------:|:---------:|:---------:|
-|🇬🇧 en|English   | |✓|✓|✓|✓|
-|ar|العربية   |[jermanuts](https://github.com/jermanuts)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/ar/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/ar/)<br>-|[![website](https://hosted.weblate.org/widgets/popopx-chat/ar/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/ar/)||
-|🇧🇬 bg|Български | |[![android app](https://hosted.weblate.org/widgets/popopx-chat/bg/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/bg/)<br>[![ios app](https://hosted.weblate.org/widget/popopx-chat/ios/bg/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/bg/)|||
-|🇨🇿 cs|Čeština   |[zen0bit](https://github.com/zen0bit)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/cs/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/cs/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/cs/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/cs/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/cs/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/cs/)|[✓](https://github.com/popopx/popopx-chat/tree/master/docs/lang/cs)|
-|🇩🇪 de|Deutsch   |[mlanp](https://github.com/mlanp)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/de/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/de/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/de/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/de/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/de/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/de/)||
-|🇪🇸 es|Español   |[Mateyhv](https://github.com/Mateyhv)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/es/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/es/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/es/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/es/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/es/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/es/)||
-|🇫🇮 fi|Suomi     | |[![android app](https://hosted.weblate.org/widgets/popopx-chat/fi/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/fi/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/fi/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/fi/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/fi/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/fi/)||
-|🇫🇷 fr|Français  |[ishi_sama](https://github.com/ishi-sama)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/fr/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/fr/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/fr/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/fr/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/fr/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/fr/)|[✓](https://github.com/popopx/popopx-chat/tree/master/docs/lang/fr)|
-|🇮🇱 he|עִברִית     | |[![android app](https://hosted.weblate.org/widgets/popopx-chat/he/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/he/)<br>-|||
-|🇭🇺 hu|Magyar    | |[![android app](https://hosted.weblate.org/widgets/popopx-chat/hu/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/hu/)<br>-|||
-|🇮🇹 it|Italiano  |[unbranched](https://github.com/unbranched)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/it/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/it/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/it/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/it/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/it/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/it/)||
-|🇯🇵 ja|日本語     | |[![android app](https://hosted.weblate.org/widgets/popopx-chat/ja/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/ja/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/ja/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/ja/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/ja/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/ja/)||
-|🇳🇱 nl|Nederlands|[mika-nl](https://github.com/mika-nl)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/nl/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/nl/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/nl/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/nl/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/nl/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/nl/)||
-|🇵🇱 pl|Polski    |[BxOxSxS](https://github.com/BxOxSxS)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/pl/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/pl/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/pl/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/pl/)|||
-|🇧🇷 pt-BR|Português||[![android app](https://hosted.weblate.org/widgets/popopx-chat/pt_BR/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/pt_BR/)<br>-|[![website](https://hosted.weblate.org/widgets/popopx-chat/pt_BR/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/pt_BR/)||
-|🇷🇺 ru|Русский   ||[![android app](https://hosted.weblate.org/widgets/popopx-chat/ru/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/ru/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/ru/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/ru/)|||
-|🇹🇭 th|ภาษาไทย   |[titapa-punpun](https://github.com/titapa-punpun)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/th/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/th/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/th/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/th/)|||
-|🇹🇷 tr|Türkçe   | |[![android app](https://hosted.weblate.org/widgets/popopx-chat/tr/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/tr/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/tr/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/tr/)|||
-|🇺🇦 uk|Українська| |[![android app](https://hosted.weblate.org/widgets/popopx-chat/uk/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/uk/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/uk/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/uk/)|[![website](https://hosted.weblate.org/widgets/popopx-chat/uk/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/uk/)||
-|🇨🇳 zh-CHS|简体中文|[sith-on-mars](https://github.com/sith-on-mars)<br><br>[Float-hu](https://github.com/Float-hu)|[![android app](https://hosted.weblate.org/widgets/popopx-chat/zh_Hans/android/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/android/zh_Hans/)<br>[![ios app](https://hosted.weblate.org/widgets/popopx-chat/zh_Hans/ios/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/ios/zh_Hans/)<br>&nbsp;|<br><br>[![website](https://hosted.weblate.org/widgets/popopx-chat/zh_Hans/website/svg-badge.svg)](https://hosted.weblate.org/projects/popopx-chat/website/zh_Hans/)||
-
-Languages in progress: Arabic, Japanese, Korean, Portuguese and [others](https://hosted.weblate.org/projects/popopx-chat/#languages). We will be adding more languages as some of the already added are completed – please suggest new languages, review the [translation guide](./docs/TRANSLATIONS.md) and get in touch with us!
-
-## Please support us with your donations
-
-Huge thank you to everybody who donated to POPOPX Chat!
-
-We are prioritizing users privacy and security - it would be impossible without your support.
-
-Our pledge to our users is that POPOPX protocols are and will remain open, and in public domain, - so anybody can build the future implementations of the clients and the servers. We are building POPOPX platform based on the same principles as email and web, but much more private and secure.
-
-Your donations help us raise more funds - any amount, even the price of the cup of coffee, would make a big difference for us.
-
-It is possible to donate via:
-
-- [GitHub](https://github.com/sponsors/popopx-chat) (commission-free) or [OpenCollective](https://opencollective.com/popopx-chat) (~10% commission).
-- BTC: bc1q2gy6f02nn6vvcxs0pnu29tpnpyz0qf66505d4u
-- XMR: 8A3ZWAXrrQddvnT1fPrtbK86ZAoM4nai3Gjg1LEow3JWcryJtovMnHYZnxTJpCLmAbfWbnPMeTzPmMBjAhyd4xoM89hYq1c
-- BCH: bitcoincash:qq6c8vfvxqrk6rhdysgvkhqc24sggkfsx5nqvdlqcg
-- ETH/USDT (Ethereum, Arbitrum One): 0xD7047Fe3Eecb2f2FF78d839dD927Be27Bc12c86a (donate.popopxchat.eth)
-- ZEC: t1fwjQW5gpFhDqXNhxqDWyF9j9WeKvVS5Jg
-- ZEC shielded: u16rnvkflumf5uw9frngc2lymvmzgdr2mmc9unyu0l44unwfmdcpfm0axujd2w34ct3ye709azxsqge45705lpvvqu264ltzvfay55ygyq
-- DOGE: D99pV4n9TrPxBPCkQGx4w4SMSa6QjRBxPf
-- SOL: 7JCf5m3TiHmYKZVr6jCu1KeZVtb9Y1jRMQDU69p5ARnu
-- please ask if you want to donate any other coins.
-
-Thank you,
-
-Evgeny
-
-POPOPX Chat founder
-
-## Contents
-
-- [Why privacy matters](#why-privacy-matters)
-- [POPOPX approach to privacy and security](#popopx-approach-to-privacy-and-security)
-  - [Complete privacy](#complete-privacy-of-your-identity-profile-contacts-and-metadata)
-  - [Protection against spam and abuse](#the-best-protection-against-spam-and-abuse)
-  - [Ownership and security of your data](#complete-ownership-control-and-security-of-your-data)
-  - [Users own POPOPX network](#users-own-popopx-network)
-- [Frequently asked questions](#frequently-asked-questions)
-- [News and updates](#news-and-updates)
-- [Quick installation of a terminal app](#zap-quick-installation-of-a-terminal-app)
-- [POPOPX Platform design](#popopx-platform-design)
-- [Privacy and security: technical details and limitations](#privacy-and-security-technical-details-and-limitations)
-- [For developers](#for-developers)
-- [Develop a chat bot](#develop-a-chat-bot)
-- [Roadmap](#roadmap)
-- [Disclaimers, Security contact, License](#disclaimers)
-
-## Why privacy matters
-
-Everyone should care about privacy and security of their communications - innocuous conversations can put you in danger even if there is nothing to hide.
-
-One of the most shocking stories is the experience of [Mohamedou Ould Salahi](https://en.wikipedia.org/wiki/Mohamedou_Ould_Slahi) that he wrote about in his memoir and that is shown in The Mauritanian movie. He was put into Guantanamo camp, without trial, and was tortured there for 15 years after a phone call to his relative in Afghanistan, under suspicion of being involved in 9/11 attacks, even though he lived in Germany for the 10 years prior to the attacks.
-
-It is not enough to use an end-to-end encrypted messenger, we all should use the messengers that protect the privacy of our personal networks - who we are connected with.
-
-## POPOPX approach to privacy and security
-
-### Complete privacy of your identity, profile, contacts and metadata
-
-**Unlike any other existing messaging platform, POPOPX has no identifiers assigned to the users** - not even random numbers. This protects the privacy of who are you communicating with, hiding it from POPOPX platform servers and from any observers. [Read more](./docs/POPOPX.md#full-privacy-of-your-identity-profile-contacts-and-metadata).
-
-### The best protection against spam and abuse
-
-As you have no identifier on POPOPX platform, you cannot be contacted unless you share a one-time invitation link or an optional temporary user address. [Read more](./docs/POPOPX.md#the-best-protection-against-spam-and-abuse).
-
-### Complete ownership, control and security of your data
-
-POPOPX stores all user data on client devices, the messages are only held temporarily on POPOPX relay servers until they are received. [Read more](./docs/POPOPX.md#complete-ownership-control-and-security-of-your-data).
-
-### Users own POPOPX network
-
-You can use POPOPX with your own servers and still communicate with people using the servers that are pre-configured in the apps or any other POPOPX servers. [Read more](./docs/POPOPX.md#users-own-popopx-network).
-
-## Frequently asked questions
-
-1. _How POPOPX can deliver messages without any user identifiers?_ See [v2 release announcement](./blog/20220511-popopx-chat-v2-images-files.md#the-first-messaging-platform-without-user-identifiers) explaining how POPOPX works.
-
-2. _Why should I not just use Signal?_ Signal is a centralized platform that uses phone numbers to identify its users and their contacts. It means that while the content of your messages on Signal is protected with robust end-to-end encryption, there is a large amount of meta-data visible to Signal - who you talk with and when.
-
-3. _How is it different from Matrix, Session, Ricochet, Cwtch, etc., that also don't require user identities?_ Although these platforms do not require a _real identity_, they do rely on anonymous user identities to deliver messages – it can be, for example, an identity key or a random number. Using a persistent user identity, even anonymous, creates a risk that user's connection graph becomes known to the observers and/or service providers, and it can lead to de-anonymizing some users. If the same user profile is used to connect to two different people via any messenger other than POPOPX, these two people can confirm if they are connected to the same person - they would use the same user identifier in the messages. With POPOPX there is no meta-data in common between your conversations with different contacts - the quality that no other messaging platform has.
-
-## News and updates
-
-Recent and important updates:
-
-[Jul 22, 2026. POPOPX Public Names — a Name Nobody Can Take From You](./blog/20260722-popopx-public-names.md)
-
-[Apr 30, 2026. POPOPX Channels, POPOPX Network Consortium and Community Crowdfunding - to Preserve Freedom of Speech](./blog/20260430-popopx-channels-v6-5-consortium-crowdfunding-freedom-of-speech.md)
-
-[Jul 29, 2025. POPOPX Chat v6.4.1: welcome your contacts, review members to protect groups, and more.](./blog/20250729-popopx-chat-v6-4-1-welcome-contacts-protect-groups-app-security.md)
-
-[Jul 3, 2025 POPOPX network: new experience of connecting with people &mdash; available in POPOPX Chat v6.4-beta.4](./blog/20250703-popopx-network-protocol-extension-for-securely-connecting-people.md)
-
-[Jan 14, 2025. POPOPX network: large groups and privacy-preserving content moderation](./blog/20250114-popopx-network-large-groups-privacy-preserving-content-moderation.md)
-
-[Dec 10, 2024. POPOPX network: preset servers operated by Flux, business chats and more with v6.2 of the apps](./20241210-popopx-network-v6-2-servers-by-flux-business-chats.md)
-
-[Oct 14, 2024. POPOPX network: security review of protocols design by Trail of Bits, v6.1 released with better calls and user experience.](./blog/20241014-popopx-network-v6-1-security-review-better-calls-user-experience.md)
-
-[Aug 14, 2024. POPOPX network: the investment from Jack Dorsey and Asymmetric, v6.0 released with the new user experience and private message routing](./blog/20240814-popopx-chat-vision-funding-v6-private-routing-new-user-experience.md)
-
-[Jun 4, 2024. POPOPX network: private message routing, v5.8 released with IP address protection and chat themes](./blog/20240604-popopx-chat-v5.8-private-message-routing-chat-themes.md)
-
-[Mar 14, 2024. POPOPX Chat v5.6 beta: adding quantum resistance to Signal double ratchet algorithm.](./blog/20240314-popopx-chat-v5-6-quantum-resistance-signal-double-ratchet-algorithm.md)
-
-[Nov 25, 2023. POPOPX Chat v5.4 released: link mobile and desktop apps via quantum resistant protocol, and much better groups](./blog/20231125-popopx-chat-v5-4-link-mobile-desktop-quantum-resistant-better-groups.md).
-
-[Apr 22, 2023. POPOPX Chat: vision and funding, v5.0 released with videos and files up to 1gb](./blog/20230422-popopx-chat-vision-funding-v5-videos-files-passcode.md).
-
-[All updates](./blog)
-
-## :zap: Quick installation of a terminal app
+### Terminal CLI
 
 ```sh
 curl -o- https://raw.githubusercontent.com/popopx/popopx-chat/stable/install.sh | bash
 ```
 
-Once the chat client is installed, simply run `popopx-chat` from your terminal.
+Then run `popopx-chat` from your terminal.
 
-![popopx-chat](./images/connection.gif)
+### Mobile Apps
 
-Read more about [installing and using the terminal app](./docs/CLI.md).
+- **iOS**: [App Store](https://apps.apple.com/us/app/popopx-chat/id1605771084) | [TestFlight](https://testflight.apple.com/join/DWuT2LQu)
+- **Android**: [Google Play](https://play.google.com/store/apps/details?id=chat.popopx.app) | [APK](https://github.com/popopx/popopx-chat/releases/latest/download/popopx-aarch64.apk) | [F-Droid](https://app.popopx.chat)
 
-## POPOPX Platform design
+## Project Structure
 
-POPOPX is a client-server network with a unique network topology that uses redundant, disposable message relay nodes to asynchronously pass messages via unidirectional (popopx) message queues, providing recipient and sender anonymity.
+```
+popopx-chat/
+├── src/                    # Haskell core library (Popopx.Chat.*)
+├── apps/
+│   ├── popopx-chat/        # Main chat server/CLI
+│   ├── popopx-bot/         # Simple chat bot
+│   ├── popopx-bot-advanced/# Advanced chat bot
+│   ├── popopx-broadcast-bot/  # Broadcast bot
+│   ├── popopx-directory-service/  # Directory service
+│   └── popopx-support-bot/ # Support bot (Node.js)
+├── packages/
+│   ├── popopx-chat-nodejs/ # Node.js bindings
+│   ├── popopx-chat-python/ # Python bindings
+│   ├── popopx-chat-client/ # TypeScript client
+│   └── popopx-chat-webrtc/ # WebRTC support
+├── backend/                # PHP backend
+├── tests/                  # Test suite
+├── scripts/                # Build and utility scripts
+└── install.sh              # CLI installer
+```
 
-Unlike P2P networks, all messages are passed through one or several server nodes, that do not even need to have persistence. In fact, the current [SMP server implementation](https://github.com/popopx-chat/popopxmq#smp-server) uses in-memory message storage, persisting only the queue records. POPOPX provides better metadata protection than P2P designs, as no global participant identifiers are used to deliver messages, and avoids [the problems of P2P networks](./docs/POPOPX.md#comparison-with-p2p-messaging-protocols).
+## Build
 
-Unlike federated networks, the server nodes **do not have records of the users**, **do not communicate with each other** and **do not store messages** after they are delivered to the recipients. There is no way to discover the full list of servers participating in POPOPX network. This design avoids the problem of metadata visibility that all federated networks have and better protects from the network-wide attacks.
+### Haskell Core
 
-Only the client devices have information about users, their contacts and groups.
+```bash
+cabal build          # Build all
+cabal test           # Run tests
+cabal build --flag swift           # Enable Swift JSON format
+cabal build --flag client_library  # Client-only build
+```
 
-See [POPOPX whitepaper](https://github.com/popopx-chat/popopxmq/blob/stable/protocol/overview-tjr.md) for more information on platform objectives and technical design.
+### iOS App
 
-See [POPOPX Chat Protocol](./docs/protocol/popopx-chat.md) for the format of messages sent between chat clients over [POPOPX Messaging Protocol](https://github.com/popopx-chat/popopxmq/blob/stable/protocol/popopx-messaging.md).
+```bash
+cd apps/ios
+xcodebuild -project POPOPX.xcodeproj \
+  -scheme "POPOPX (iOS)" \
+  -destination 'platform=iOS Simulator,id=<DEVICE_ID>' \
+  -configuration Debug \
+  CODE_SIGNING_ALLOWED=YES \
+  CODE_SIGN_IDENTITY="" \
+  CODE_SIGNING_REQUIRED=NO \
+  build
+```
 
-## Privacy and security: technical details and limitations
+### Backend (PHP)
 
-POPOPX Chat is a work in progress – we are releasing improvements as they are ready. You have to decide if the current state is good enough for your usage scenario.
+```bash
+cd backend
+composer install
+composer test
+```
 
-We compiled a [glossary of terms](./docs/GLOSSARY.md) used to describe communication systems to help understand some terms below and to help compare advantages and disadvantages of various communication systems.
+## Architecture
 
-What is already implemented:
+POPOPX is a client-server network using redundant, disposable message relay nodes to asynchronously pass messages via unidirectional message queues, providing recipient and sender anonymity.
 
-1. Instead of user profile identifiers used by all other platforms, even the most private ones, POPOPX uses [pairwise per-queue identifiers](./docs/GLOSSARY.md#pairwise-pseudonymous-identifier) (2 addresses for each unidirectional message queue, with an optional 3rd address for push notifications on iOS, 2 queues in each connection between the users). It makes observing the network graph on the application level more difficult, as for `n` users there can be up to `n * (n-1)` message queues.
-2. [End-to-end encryption](./docs/GLOSSARY.md#end-to-end-encryption) in each message queue using [NaCl cryptobox](https://nacl.cr.yp.to/box.html). This is added to allow redundancy in the future (passing each message via several servers), to avoid having the same ciphertext in different queues (that would only be visible to the attacker if TLS is compromised). The encryption keys used for this encryption are not rotated, instead we are planning to rotate the queues. Curve25519 keys are used for key negotiation.
-3. [Double ratchet](./docs/GLOSSARY.md#double-ratchet-algorithm) end-to-end encryption in each conversation between two users (or group members). This is the same algorithm that is used in Signal and many other messaging apps; it provides OTR messaging with [forward secrecy](./docs/GLOSSARY.md#forward-secrecy) (each message is encrypted by its own ephemeral key) and [break-in recovery](./docs/GLOSSARY.md#post-compromise-security) (the keys are frequently re-negotiated as part of the message exchange). Two pairs of Curve448 keys are used for the initial [key agreement](./docs/GLOSSARY.md#key-agreement-protocol), initiating party passes these keys via the connection link, accepting side - in the header of the confirmation message.
-4. [Post-quantum resistant key exchange](./docs/GLOSSARY.md#post-quantum-cryptography) in double ratchet protocol *on every ratchet step*. Read more in [this post](./blog/20240314-popopx-chat-v5-6-quantum-resistance-signal-double-ratchet-algorithm.md) and also see this [publication by Apple]( https://security.apple.com/blog/imessage-pq3/) explaining the need for post-quantum key rotation.
-5. Additional layer of encryption using NaCL cryptobox for the messages delivered from the server to the recipient. This layer avoids having any ciphertext in common between sent and received traffic of the server inside TLS (and there are no identifiers in common as well).
-6. Several levels of [content padding](./docs/GLOSSARY.md#message-padding) to frustrate message size attacks.
-7. All message metadata, including the time when the message was received by the server (rounded to a second) is sent to the recipients inside an encrypted envelope, so even if TLS is compromised it cannot be observed.
-8. Only TLS 1.2/1.3 are allowed for client-server connections, limited to cryptographic algorithms: CHACHA20POLY1305_SHA256, Ed25519/Ed448, Curve25519/Curve448.
-9. To protect against replay attacks POPOPX servers require [tlsunique channel binding](https://www.rfc-editor.org/rfc/rfc5929.html) as session ID in each client command signed with per-queue ephemeral key.
-10. To protect your IP address from unknown messaging relays, and for per-message transport anonymity (compared with Tor/VPN per-connection anonymity), from v6.0 all POPOPX Chat clients use private message routing by default. Read more in [this post](./blog/20240604-popopx-chat-v5.8-private-message-routing-chat-themes.md#private-message-routing).
-11. To protect your IP address from unknown file relays, when SOCKS proxy is not enabled POPOPX Chat clients ask for a confirmation before downloading the files from unknown servers.
-12. To protect your IP address from known servers all POPOPX Chat clients support accessing messaging servers via Tor - see [v3.1 release announcement](./blog/20220808-popopx-chat-v3.1-chat-groups.md) for more details.
-13. Local database encryption with passphrase - your contacts, groups and all sent and received messages are stored encrypted. If you used POPOPX Chat before v4.0 you need to enable the encryption via the app settings.
-14. Transport isolation - different TCP connections and Tor circuits are used for traffic of different user profiles, optionally - for different contacts and group member connections.
-15. Manual messaging queue rotations to move conversation to another SMP relay.
-16. Sending end-to-end encrypted files using [XFTP protocol](https://popopx.chat/blog/20230301-popopx-file-transfer-protocol.html).
-17. Local files encryption.
-18. [Reproducible server builds](./docs/SERVER.md#reproduce-builds).
+Key components:
+- **Haskell core library**: Cryptography, messaging protocol, FFI exports
+- **SMP protocol**: SimpleX Messaging Protocol for queue-based message delivery
+- **XFTP protocol**: End-to-end encrypted file transfer
+- **Double ratchet**: Signal-compatible E2E encryption with post-quantum key exchange
+- **No identifiers**: Pairwise per-queue identifiers instead of user IDs
 
-We plan to add:
+## Privacy & Security
 
-1. Automatic message queue rotation and redundancy. Currently the queues created between two users are used until the queue is manually changed by the user or contact is deleted. We are planning to add automatic queue rotation to make these identifiers temporary and rotate based on some schedule TBC (e.g., every X messages, or every X hours/days).
-2. Message "mixing" - adding latency to message delivery, to protect against traffic correlation by message time.
-3. Reproducible clients builds – this is a complex problem, but we are aiming to have it in 2025 at least partially.
-4. Recipients' XFTP relays to reduce traffic and conceal IP addresses from the relays chosen, and potentially controlled, by another party.
+- End-to-end encryption with double ratchet (forward secrecy, break-in recovery)
+- Post-quantum resistant key exchange
+- No user identifiers - protects metadata and contact graph
+- Local database encryption with passphrase
+- Transport isolation per user profile
+- TLS 1.2/1.3 only with strong cipher suites
+- Content padding to prevent message size attacks
+- Optional Tor support for server connections
 
-## For developers
+## For Developers
 
-You can:
-
-- [create chat bots and services](#develop-a-chat-bot).
-- run [popopx-chat terminal CLI](./docs/CLI.md) to execute individual chat commands, e.g. to send messages as part of shell script execution.
-- use POPOPX Chat library to integrate chat functionality into your mobile apps.
-- create chat bots and services in Haskell - see [simple](./apps/popopx-bot/) and more [advanced chat bot example](./apps/popopx-bot-advanced/).
-
-If you are considering developing with POPOPX platform please get in touch for any advice and support.
-
-Please also join [#popopx-devs](https://popopx.chat/contact#/?v=1-2&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopx.im%2F6eHqy7uAbZPOcA6qBtrQgQquVlt4Ll91%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAqV_pg3FF00L98aCXp4D3bOs4Sxv_UmSd-gb0juVoQVs%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22XonlixcHBIb2ijCehbZoiw%3D%3D%22%7D) group to ask any questions and share your success stories.
-
-## Develop a chat bot
-
-You can create a chat bot or any chat-based service in any language running POPOPX Chat terminal CLI as a local WebSocket server.
-
-See [our new bot API reference](./bots/README.md). Most of it is automatically generated from core library types, so it stays up to date.
-
-Also see [TypeScript POPOPX Chat client](./packages/popopx-chat-client/) and [JavaScript chat bot example](./packages/popopx-chat-client/typescript/examples/squaring-bot.js).
-
-## Roadmap
-
-- ✅ Easy to deploy POPOPX server with in-memory message storage, without any dependencies.
-- ✅ Terminal (console) client with groups and files support.
-- ✅ One-click POPOPX server deployment on Linode.
-- ✅ End-to-end encryption using double-ratchet protocol with additional encryption layer.
-- ✅ Mobile apps v1 for Android and iOS.
-- ✅ Private instant notifications for Android using background service.
-- ✅ Haskell chat bot templates.
-- ✅ v2.0 - supporting images and files in mobile apps.
-- ✅ Manual chat history deletion.
-- ✅ End-to-end encrypted WebRTC audio and video calls via the mobile apps.
-- ✅ Privacy preserving instant notifications for iOS using Apple Push Notification service.
-- ✅ Chat database export and import.
-- ✅ Chat groups in mobile apps.
-- ✅ Connecting to messaging servers via Tor.
-- ✅ Dual server addresses to access messaging servers as v3 hidden services.
-- ✅ Chat server and TypeScript client SDK to develop chat interfaces, integrations and chat bots (ready for announcement).
-- ✅ Incognito mode to share a new random name with each contact.
-- ✅ Chat database encryption.
-- ✅ Automatic chat history deletion.
-- ✅ Links to join groups and improve groups stability.
-- ✅ Voice messages (with recipient opt-out per contact).
-- ✅ Basic authentication for SMP servers (to authorize creating new queues).
-- ✅ View deleted messages, full message deletion by sender (with recipient opt-in per contact).
-- ✅ Block screenshots and view in recent apps.
-- ✅ Advanced server configuration.
-- ✅ Disappearing messages (with recipient opt-in per-contact).
-- ✅ "Live" messages.
-- ✅ Contact verification via a separate out-of-band channel.
-- ✅ Multiple user profiles in the same chat database.
-- ✅ Optionally avoid re-using the same TCP session for multiple connections.
-- ✅ Preserve message drafts.
-- ✅ File server to optimize for efficient and private sending of large files.
-- ✅ Improved audio & video calls.
-- ✅ Support older Android OS and 32-bit CPUs.
-- ✅ Hidden chat profiles.
-- ✅ Sending and receiving large files via [XFTP protocol](./blog/20230301-popopx-file-transfer-protocol.md).
-- ✅ Video messages.
-- ✅ App access passcode.
-- ✅ Improved Android app UI design.
-- ✅ Optional alternative access password.
-- ✅ Message reactions
-- ✅ Message editing history
-- ✅ Reduced battery and traffic usage in large groups.
-- ✅ Message delivery confirmation (with sender opt-out per contact).
-- ✅ Desktop client.
-- ✅ Encryption of local files stored in the app.
-- ✅ Using mobile profiles from the desktop app.
-- ✅ Private notes.
-- ✅ Improve sending videos (including encryption of locally stored videos).
-- ✅ Post-quantum resistant key exchange in double ratchet protocol.
-- ✅ Message delivery relay for senders (to conceal IP address from the recipients' servers and to reduce the traffic).
-- ✅ Support multiple network operators in the app.
-- 🏗 Large groups, communities and public channels.
-- 🏗 Short links to connect and join groups.
-- 🏗 Improve stability and reduce battery usage.
-- 🏗 Improve experience for the new users.
-- Privacy & security slider - a simple way to set all settings at once.
-- SMP queue redundancy and rotation (manual is supported).
-- Include optional message into connection request sent via contact address.
-- Improved navigation and search in the conversation (expand and scroll to quoted message, scroll to search results, etc.).
-- Feeds/broadcasts.
-- Ephemeral/disappearing/OTR conversations with the existing contacts.
-- Privately share your location.
-- Web widgets for custom interactivity in the chats.
-- Programmable chat automations / rules (automatic replies/forward/deletion/sending, reminders, etc.).
-- Privacy-preserving identity server for optional DNS-based contact/group addresses to simplify connection and discovery, but not used to deliver messages:
-  - keep all your contacts and groups even if you lose the domain.
-  - the server doesn't have information about your contacts and groups.
-- High capacity multi-node SMP relays.
-
-## Disclaimers
-
-[POPOPX protocols and security model](https://github.com/popopx-chat/popopxmq/blob/master/protocol/overview-tjr.md) was reviewed, and had many breaking changes and improvements in v1.0.0.
-
-The implementation security assessment of POPOPX cryptography and networking was done in October 2022 by [Trail of Bits](https://www.trailofbits.com/about) – see [the announcement](./blog/20221108-popopx-chat-v4.2-security-audit-new-website.md).
-
-The cryptographic review of POPOPX protocols was done in July 2024 by Trail of Bits – see [the announcement](./blog/20241014-popopx-network-v6-1-security-review-better-calls-user-experience.md).
-
-POPOPX Chat is still a relatively early stage platform (the mobile apps were released in March 2022), so you may discover some bugs and missing features. We would really appreciate if you let us know anything that needs to be fixed or improved.
-
-The default servers configured in the app are provided on the best effort basis. We are currently not guaranteeing any SLAs, although historically our servers had over 99.9% uptime each.
-
-We have never provided or have been requested access to our servers or any information from our servers by any third parties. If we are ever requested to provide such access or information, we will be following due legal process.
-
-We do not log IP addresses of the users and we do not perform any traffic correlation on our servers. If transport level security is critical you must use Tor or some other similar network to access messaging servers. We will be improving the client applications to reduce the opportunities for traffic correlation.
-
-Please read more in [Privacy Policy](./PRIVACY.md).
-
-## Security contact
-
-Please see our [Security Policy](./docs/SECURITY.md) on how to report security vulnerabilities to us. We will coordinate the fix and disclosure.
-
-Please do NOT report security vulnerabilities via GitHub issues.
+- Create chat bots in Haskell: see [apps/popopx-bot/](./apps/popopx-bot/) and [apps/popopx-bot-advanced/](./apps/popopx-bot-advanced/)
+- Use Node.js/Python/TypeScript packages for integrations
+- Run terminal CLI for scripting: `popopx-chat --help`
+- Bot API reference: [bots/README.md](./bots/README.md)
 
 ## ⚖️ 二次开发与修改声明 (Derivative Work)
 
@@ -435,16 +130,6 @@ Please do NOT report security vulnerabilities via GitHub issues.
 
 ## License
 
-This software is licensed under the GNU Affero General Public License version 3 (AGPLv3). See the [LICENSE](./LICENSE) file for details. The POPOPX and POPOPX Chat name, logo, associated branding materials, and application and website graphic assets (illustrations, images, visual designs, etc.) are not covered by this license and are subject to the terms outlined in the [TRADEMARK](./docs/TRADEMARK.md) and [ASSETS_LICENSE](./assets/ASSETS_LICENSE.md) files respectively.
+This software is licensed under the GNU Affero General Public License version 3 (AGPLv3). See the [LICENSE](./LICENSE) file for details.
 
-If you want to use any graphic assets in your publications, please ask for permission. Texts can be used as direct quotes, referencing the source.
-
-[<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/apple_store.svg" alt="iOS app" height="42">](https://apps.apple.com/us/app/popopx-chat/id1605771084)
-&nbsp;
-[![Android app](https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/google_play.svg)](https://play.google.com/store/apps/details?id=chat.popopx.app)
-&nbsp;
-[<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/f_droid.svg" alt="F-Droid" height="41">](https://app.popopx.chat)
-&nbsp;
-[<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/testflight.png" alt="iOS TestFlight" height="41">](https://testflight.apple.com/join/DWuT2LQu)
-&nbsp;
-[<img src="https://raw.githubusercontent.com/popopx-chat/.github/refs/heads/master/profile/images/apk_icon.png" alt="APK" height="41">](https://github.com/popopx/popopx-chat/releases/latest/download/popopx-aarch64.apk)
+The POPOPX and POPOPX Chat name, logo, associated branding materials, and application and website graphic assets are not covered by this license and are subject to the terms outlined in the [ASSETS_LICENSE](./assets/ASSETS_LICENSE.md) file.
