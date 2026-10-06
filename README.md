@@ -29,7 +29,7 @@ Then run `popopx-chat` from your terminal.
 ### Mobile Apps
 
 - **iOS**: [App Store](https://apps.apple.com/us/app/popopx-chat/id1605771084) | [TestFlight](https://testflight.apple.com/join/DWuT2LQu)
-- **Android**: [Google Play](https://play.google.com/store/apps/details?id=chat.popopx.app) | [APK](https://github.com/popopx/popopx-chat/releases/latest/download/popopx-aarch64.apk) | [F-Droid](https://app.popopx.chat)
+- **Android**: [Google Play](https://play.google.com/store/apps/details?id=chat.popopx.app) | [F-Droid](https://app.popopx.chat)
 
 ## Project Structure
 
