@@ -76,11 +76,16 @@ cd backend && composer install && composer test
 
 排除项:
 - `dist-newstyle/` - 编译产物
+- `result`, `result-*` - Nix 构建产物
 - `node_modules/` - Node 依赖
+- `__pycache__/`, `*.pyc`, `*.pyo`, `*.egg-info/` - Python 缓存
 - `*.so`, `*.dylib` - 二进制库
+- `cabal.project.local` - Cabal 本地配置
 - `.qoder/` - 本地设置
+- `.DS_Store`, `Thumbs.db` - OS 文件
+- `*.swp`, `*.swo`, `*~`, `.idea/`, `.vscode/` - IDE 文件
 - `bots/voucher-bot/` - 排除的机器人
-- `MEMBERSHIP_SYSTEM.md`, `REBRANDING_*.md` - 排除的文档
+- `MEMBERSHIP_SYSTEM.md`, `REBRANDING_CHANGELOG.md`, `REBRANDING_SUMMARY.md` - 排除的文档
 
 ## 已完成工作 (2026-10-06)
 
@@ -97,7 +102,6 @@ cd backend && composer install && composer test
 
 - [ ] 构建并上传 macOS 二进制 (`popopx-chat-macos-x86-64`)
 - [ ] 构建并上传 Android APK (`popopx-aarch64.apk`)
-- [ ] 补充 .gitignore Python 缓存规则 (`__pycache__/`, `*.pyc`)
 - [ ] 配置 git 用户信息（当前使用默认 ubuntu@localhost）
 
 ## 关键文件
