@@ -26,11 +26,6 @@ curl -o- https://raw.githubusercontent.com/popopx/popopx-chat/stable/install.sh 
 
 Then run `popopx-chat` from your terminal.
 
-### Mobile Apps
-
-- **iOS**: [App Store](https://apps.apple.com/us/app/popopx-chat/id1605771084) | [TestFlight](https://testflight.apple.com/join/DWuT2LQu)
-- **Android**: [Google Play](https://play.google.com/store/apps/details?id=chat.popopx.app) | [F-Droid](https://app.popopx.chat)
-
 ## Project Structure
 
 ```
@@ -48,7 +43,6 @@ popopx-chat/
 │   ├── popopx-chat-python/ # Python bindings
 │   ├── popopx-chat-client/ # TypeScript client
 │   └── popopx-chat-webrtc/ # WebRTC support
-├── backend/                # PHP backend
 ├── tests/                  # Test suite
 ├── scripts/                # Build and utility scripts
 └── install.sh              # CLI installer
@@ -63,28 +57,6 @@ cabal build          # Build all
 cabal test           # Run tests
 cabal build --flag swift           # Enable Swift JSON format
 cabal build --flag client_library  # Client-only build
-```
-
-### iOS App
-
-```bash
-cd apps/ios
-xcodebuild -project POPOPX.xcodeproj \
-  -scheme "POPOPX (iOS)" \
-  -destination 'platform=iOS Simulator,id=<DEVICE_ID>' \
-  -configuration Debug \
-  CODE_SIGNING_ALLOWED=YES \
-  CODE_SIGN_IDENTITY="" \
-  CODE_SIGNING_REQUIRED=NO \
-  build
-```
-
-### Backend (PHP)
-
-```bash
-cd backend
-composer install
-composer test
 ```
 
 ## Architecture
