@@ -1,14 +1,8 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Local HTTP names resolver for chat tests, copied from simplexmq's
--- NamesResolverServer and made dynamic: it answers /resolve/<domain> from a
+-- | Local HTTP names resolver for chat tests, copied from popopxmq's
+-- NamesResolverServer and made dynamic: it answers /v2/resolve/<query> from a
 -- mutable name -> NameRecord registry, so a test can resolve a name to the
 -- address it just created.
 module NameResolver
@@ -27,17 +21,19 @@ import qualified Data.Aeson as J
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as M
 import Data.Text (Text)
+import Data.Text.Encoding (decodeLatin1)
 import Network.HTTP.Types (hContentType, notFound404, ok200)
 import Network.Wai (Application, pathInfo, responseLBS)
 import qualified Network.Wai.Handler.Warp as Warp
-import Simplex.Messaging.Names.Record (NameRecord (..))
-import Simplex.Messaging.Server.Names (NamesConfig (..))
-import Simplex.Messaging.SimplexName (SimplexNameInfo (..), fullDomainName)
+import Popopx.Messaging.Encoding.String (strEncode)
+import Popopx.Messaging.Names.Record (NamePricing (..), NameRecord (..), NameRegistration (..), NameResponse (..), USDCents (..))
+import Popopx.Messaging.Server.Names (NamesConfig (..))
+import Popopx.Messaging.PopopxName (PopopxDomain (..), PopopxNameInfo (..), labelHash)
 
 type NameRegistry = TVar (Map Text NameRecord)
 
 -- | Run an action with a local resolver on a free port and its registry (keyed
--- by full domain name, what the resolver looks the name up by).
+-- by the query the resolver looks the name up by).
 withNameResolver :: (Int -> TVar (Map Text NameRecord) -> IO a) -> IO a
 withNameResolver action = do
   reg <- newTVarIO M.empty
@@ -47,25 +43,27 @@ withNameResolver action = do
     app reg req send = do
       (st, body) <- case pathInfo req of
         ["health"] -> pure (ok200, "{}")
-        ["resolve", d] -> maybe (notFound404, "{}") (\r -> (ok200, J.encode r)) . M.lookup d <$> readTVarIO reg
+        ["v2", "resolve", q] -> (\r -> (ok200, J.encode $ nameResponse r)) . M.lookup q <$> readTVarIO reg
         _ -> pure (notFound404, "{}")
       send $ responseLBS st [(hContentType, "application/json")] body
+    nameResponse (Just nameRecord) = NameResponse {lastBlockTs = Nothing, registration = NRRegistered {expires = Nothing, graceUntil = Nothing, reservedReason_ = Nothing, nameRecord}}
+    nameResponse Nothing = NameResponse {lastBlockTs = Nothing, registration = NRAvailable {pricing = NamePricing {registrationPrices = M.empty, basePrice = USDCents 1000, minLabelLength = 1}}}
 
 -- | Register a name's domain to resolve to the given record.
-registerName :: TVar (Map Text NameRecord) -> SimplexNameInfo -> NameRecord -> IO ()
-registerName reg SimplexNameInfo {nameDomain} r =
-  atomically $ modifyTVar' reg $ M.insert (fullDomainName nameDomain) r
+registerName :: TVar (Map Text NameRecord) -> PopopxNameInfo -> NameRecord -> IO ()
+registerName reg PopopxNameInfo {nameDomain = PopopxDomain {nameTLD, domain}} r =
+  atomically $ modifyTVar' reg $ M.insert (decodeLatin1 $ strEncode (labelHash domain) <> strEncode nameTLD) r
 
 contactNameRecord :: Text -> Text -> NameRecord
-contactNameRecord name link = (emptyRecord name) {nrSimplexContact = [link]}
+contactNameRecord name link = (emptyRecord name) {nrPopopxContact = [link]}
 
 channelNameRecord :: Text -> Text -> NameRecord
-channelNameRecord name link = (emptyRecord name) {nrSimplexChannel = [link]}
+channelNameRecord name link = (emptyRecord name) {nrPopopxChannel = [link]}
 
 -- | A record whose domain resolves to both a direct contact link and a channel link.
 contactAndChannelNameRecord :: Text -> Text -> Text -> NameRecord
 contactAndChannelNameRecord name contactLink channelLink =
-  (emptyRecord name) {nrSimplexContact = [contactLink], nrSimplexChannel = [channelLink]}
+  (emptyRecord name) {nrPopopxContact = [contactLink], nrPopopxChannel = [channelLink]}
 
 emptyRecord :: Text -> NameRecord
 emptyRecord name =
@@ -74,8 +72,8 @@ emptyRecord name =
       nrNickname = "",
       nrWebsite = "",
       nrLocation = "",
-      nrSimplexContact = [],
-      nrSimplexChannel = [],
+      nrPopopxContact = [],
+      nrPopopxChannel = [],
       nrEth = Nothing,
       nrBtc = Nothing,
       nrXmr = Nothing,

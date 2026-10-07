@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
@@ -68,7 +62,7 @@ runInputLoop ct@ChatTerminal {termState, liveMessageState} cc = forever $ do
       cmd = parseChatCommand bs
       rh' = if either (const False) allowRemoteCommand cmd then rh else Nothing
   unless (isMessage cmd) $ echo s
-  r <- execChatCommand rh' bs 0 `runReaderT` cc
+  r <- execChatCommand (maybe CSLocal CSRemoteHost rh') bs 0 `runReaderT` cc
   case r of
     Right r' -> processResp cmd rh r'
     Left _ -> when (isMessage cmd) $ echo s
@@ -86,7 +80,7 @@ runInputLoop ct@ChatTerminal {termState, liveMessageState} cc = forever $ do
       CRChatItemUpdated u (AChatItem _ SMDSnd cInfo _) -> whenCurrUser cc u $ setActiveChat ct cInfo
       CRChatItemsDeleted u ((ChatItemDeletion (AChatItem _ _ cInfo _) _) : _) _ _ -> whenCurrUser cc u $ setActiveChat ct cInfo
       CRContactDeleted u c -> whenCurrUser cc u $ unsetActiveContact ct c
-      CRGroupDeletedUser u g _ -> whenCurrUser cc u $ unsetActiveGroup ct g
+      CRGroupDeletedUser u g _ _ -> whenCurrUser cc u $ unsetActiveGroup ct g
       CRSentGroupInvitation u g _ _ -> whenCurrUser cc u $ setActiveGroup ct g
       CRCmdOk _ -> case cmd of
         Right APIDeleteUser {} -> setActive ct ""
@@ -160,7 +154,7 @@ sendUpdatedLiveMessage cc sentMsg LiveMessage {chatName, chatItemId} live = do
 
 runTerminalInput :: ChatTerminal -> ChatController -> IO ()
 runTerminalInput ct cc = withChatTerm ct $ do
-  updateInput ct
+  withTermLock ct $ updateInput ct
   receiveFromTTY cc ct
 
 receiveFromTTY :: forall m. MonadTerminal m => ChatController -> ChatTerminal -> m ()

@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
@@ -130,11 +124,15 @@ deleteStorage = do
   fs <- lift storageFiles
   liftIO $ closeDBStore `withStores` fs
   remove `withDBs` fs
+  removeExported `withDBs` fs
+  removeBackup `withDBs` fs
   mapM_ removeDir $ filesPath fs
   mapM_ removeDir $ assetsPath fs
   mapM_ removeDir =<< chatReadVar tempDirectory
   where
     remove f = whenM (doesFileExist f) $ removeFile f
+    removeExported f = remove $ f <> ".exported"
+    removeBackup f = remove $ f <> ".bak"
     removeDir d = whenM (doesDirectoryExist d) $ removePathForcibly d
 
 data StorageFiles = StorageFiles

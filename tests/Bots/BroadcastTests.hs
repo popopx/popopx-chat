@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
@@ -18,11 +12,11 @@ import ChatTests.DBUtils
 import ChatTests.Utils
 import Control.Concurrent (forkIO, killThread, threadDelay)
 import Control.Exception (bracket)
-import Simplex.Chat.Bot.KnownContacts
-import Simplex.Chat.Core
-import Simplex.Chat.Options (CoreChatOpts (..))
-import Simplex.Chat.Options.DB
-import Simplex.Chat.Types (ChatPeerType (..), Profile (..))
+import Popopx.Chat.Bot.KnownContacts
+import Popopx.Chat.Core
+import Popopx.Chat.Options (ChatOpts (..), CoreChatOpts (..))
+import Popopx.Chat.Options.DB
+import Popopx.Chat.Types (ChatPeerType (..), Profile (..))
 import Test.Hspec hiding (it)
 #if !defined(dbPostgres)
 import System.FilePath ((</>))
@@ -32,11 +26,11 @@ broadcastBotTests :: SpecWith TestParams
 broadcastBotTests = do
   it "should broadcast message" testBroadcastMessages
 
-withBroadcastBot :: BroadcastBotOpts -> IO () -> IO ()
-withBroadcastBot opts test =
+withBroadcastBot :: TestParams -> BroadcastBotOpts -> IO () -> IO ()
+withBroadcastBot ps opts test =
   bracket (forkIO bot) killThread (\_ -> threadDelay 500000 >> test)
   where
-    bot = simplexChatCore testCfg (mkChatOpts opts) $ broadcastBot opts
+    bot = popopxChatCore (fst $ testPortsCfg ps testCfg testOpts) (mkChatOpts opts) $ broadcastBot opts
 
 broadcastBotProfile :: Profile
 broadcastBotProfile = Profile {displayName = "broadcast_bot", fullName = "Broadcast Bot", shortDescr = Nothing, description = Nothing, image = Nothing, contactLink = Nothing, peerType = Just CPTBot, preferences = Nothing, badge = Nothing, contactDomain = Nothing}
@@ -45,11 +39,11 @@ mkBotOpts :: TestParams -> [KnownContact] -> BroadcastBotOpts
 mkBotOpts ps publishers =
   BroadcastBotOpts
     { coreOptions =
-        testCoreOpts
+        coreOpts
           { dbOptions =
               (dbOptions testCoreOpts)
 #if defined(dbPostgres)
-                {dbSchemaPrefix = "client_" <> botDbPrefix}
+                {dbSchemaPrefix = testSchemaPrefix ps botDbPrefix}
 #else
                 {dbFilePrefix = tmpPath ps </> botDbPrefix}
 #endif
@@ -60,6 +54,8 @@ mkBotOpts ps publishers =
       welcomeMessage = defaultWelcomeMessage publishers,
       prohibitedMessage = defaultWelcomeMessage publishers
     }
+  where
+    (_, ChatOpts {coreOptions = coreOpts}) = testPortsCfg ps testCfg testOpts
 
 botDbPrefix :: FilePath
 botDbPrefix = "broadcast_bot"
@@ -73,7 +69,7 @@ testBroadcastMessages ps = do
         bc_bot ##> "/ad"
         getContactLink bc_bot True
   let botOpts = mkBotOpts ps [KnownContact 2 "alice"]
-  withBroadcastBot botOpts $
+  withBroadcastBot ps botOpts $
     withTestChat ps "alice" $ \alice ->
       withNewTestChat ps "bob" bobProfile $ \bob ->
         withNewTestChat ps "cath" cathProfile $ \cath -> do

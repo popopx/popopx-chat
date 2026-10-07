@@ -1,17 +1,14 @@
 packages: 
   .
-  /home/ubuntu/popopxmq
+  /Users/elliot/POPOPX/popopxmq
 
 index-state: 2023-12-12T00:00:00Z
 
---package popopxmq
---    flags: +client_library +swift +commoncrypto
+package popopxmq
+    flags: +client_library +swift +commoncrypto
 
---package popopx-chat
---    flags: -client_library +swift +commoncrypto
-
---package direct-sqlcipher
---    flags: +openssl
+package popopx-chat
+    flags: +client_library +swift +commoncrypto
 
 package cryptostore
     flags: +use_crypton
@@ -20,38 +17,38 @@ constraints: zip +disable-bzip2 +disable-zstd
 
 source-repository-package
     type: git
-    location: https://github.com/popopx/hs-socks.git
+    location: https://github.com/simplex-chat/hs-socks.git
     tag: a30cc7a79a08d8108316094f8f2f82a0c5e1ac51
 
 source-repository-package
     type: git
-    location: https://github.com/popopx/direct-sqlcipher.git
-    tag: f814ee68b16a9447fbb467ccc8f29bdd3546bfd9
+    location: https://github.com/simplex-chat/direct-sqlcipher.git
+    tag: 2330df3dc8c4b660674d3c02d76bb86f66c2abee
 
 source-repository-package
     type: git
-    location: https://github.com/popopx/sqlcipher-simple.git
+    location: https://github.com/simplex-chat/sqlcipher-simple.git
     tag: a46bd361a19376c5211f1058908fc0ae6bf42446
 
 source-repository-package
     type: git
-    location: https://github.com/popopx/aeson.git
+    location: https://github.com/simplex-chat/aeson.git
     tag: aab7b5a14d6c5ea64c64dcaee418de1bb00dcc2b
 
 source-repository-package
     type: git
-    location: https://github.com/popopx/haskell-terminal.git
+    location: https://github.com/simplex-chat/haskell-terminal.git
     tag: f708b00009b54890172068f168bf98508ffcd495
 
 source-repository-package
     type: git
-    location: https://github.com/popopx/android-support.git
+    location: https://github.com/simplex-chat/android-support.git
     tag: 9aa09f148089d6752ce563b14c2df1895718d806
 
 -- TODO this fork is only needed to compile with GHC 8.10.7 - it allows previous base version
 source-repository-package
     type: git
-    location: https://github.com/popopx/zip.git
+    location: https://github.com/simplex-chat/zip.git
     tag: 2eff156c3aac389e35d38bf10a52733d7061640a
 
 -- waiting for published warp-tls-3.4.7
@@ -64,6 +61,6 @@ source-repository-package
 -- backported fork due http-5.0
 source-repository-package
     type: git
-    location: https://github.com/popopx/wai.git
+    location: https://github.com/simplex-chat/wai.git
     tag: 2f6e5aa5f05ba9140ac99e195ee647b4f7d926b0
     subdir: warp

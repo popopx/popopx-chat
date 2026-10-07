@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
@@ -46,7 +40,8 @@ import Popopx.Chat.Controller
 import Popopx.Chat.Remote.Transport
 import Popopx.Chat.Remote.Types
 import Popopx.Chat.Types (BoolDef (..))
-import Popopx.FileTransfer.Description (FileDigest (..))
+import Popopx.FileTransfer.Description (FileDigest (..), mb)
+import Popopx.Messaging.Compression (limitDecompress')
 import qualified Popopx.Messaging.Crypto as C
 import Popopx.Messaging.Crypto.File (CryptoFile (..))
 import Popopx.Messaging.Crypto.Lazy (LazyByteString)
@@ -186,7 +181,7 @@ sendRemoteCommand RemoteHostClient {httpClient, hostEncoding, encryption} file_ 
   encFile_ <- mapM (prepareEncryptedFile sfKN) file_
   let req = httpRequest encFile_ encCmd
   HTTP2Response {response, respBody} <- liftError' (RPEHTTP2 . tshow) $ sendRequestDirect httpClient req Nothing
-  (rfKN, header, getNext) <- parseDecryptHTTP2Body encryption response respBody
+  (rfKN, header, getNext) <- parseDecryptHTTP2Body maxResponseBodySize encryption response respBody
   rr <- liftEitherWith (RPEInvalidJSON . fromString) $ J.eitherDecodeStrict header >>= JT.parseEither J.parseJSON . convertJSON hostEncoding localEncoding
   pure (rfKN, getNext, rr)
   where
@@ -255,7 +250,7 @@ pattern OwsfTag = (SingleFieldJSONTag, J.Bool True)
 -- encLength32 = 4*4 OCTET ; uint32, includes authTag
 -- ```
 
--- See https://github.com/po-popox/popopxmq/blob/master/rfcs/2023-10-25-remote-control.md for encoding
+-- See https://github.com/simplex-chat/simplexmq/blob/master/rfcs/2023-10-25-remote-control.md for encoding
 
 encryptEncodeHTTP2Body :: Word32 -> C.SbKeyNonce -> RemoteCrypto -> LazyByteString -> ExceptT RemoteProtocolError IO Builder
 encryptEncodeHTTP2Body corrId cmdKN RemoteCrypto {sessionCode, signatures, compression} s = do
@@ -279,9 +274,15 @@ encryptEncodeHTTP2Body corrId cmdKN RemoteCrypto {sessionCode, signatures, compr
     sign :: C.PrivateKeyEd25519 -> CH.Context SHA512 -> ByteString
     sign k = C.signatureBytes . C.sign' k . BA.convert . CH.hashFinalize
 
+maxCommandBodySize :: Int
+maxCommandBodySize = mb 64
+
+maxResponseBodySize :: Int
+maxResponseBodySize = mb 512
+
 -- | Parse and decrypt HTTP2 request/response
-parseDecryptHTTP2Body :: HTTP2BodyChunk a => RemoteCrypto -> a -> HTTP2Body -> ExceptT RemoteProtocolError IO (C.SbKeyNonce, ByteString, Int -> IO ByteString)
-parseDecryptHTTP2Body rc@RemoteCrypto {sessionCode, signatures, compression} hr HTTP2Body {bodyBuffer} = do
+parseDecryptHTTP2Body :: HTTP2BodyChunk a => Int -> RemoteCrypto -> a -> HTTP2Body -> ExceptT RemoteProtocolError IO (C.SbKeyNonce, ByteString, Int -> IO ByteString)
+parseDecryptHTTP2Body maxSize rc@RemoteCrypto {sessionCode, signatures, compression} hr HTTP2Body {bodyBuffer} = do
   (corrId, ct) <- getBody
   (cmdKN, rfKN) <- ExceptT $ atomically $ getRemoteRcvKeys rc corrId
   s <- liftError PRERemoteControl $ RC.rcDecryptBody cmdKN ct
@@ -293,7 +294,7 @@ parseDecryptHTTP2Body rc@RemoteCrypto {sessionCode, signatures, compression} hr 
       corrIdStr <- liftIO $ getNext 4
       ctLenStr <- liftIO $ getNext 4
       let ctLen = decodeWord32 ctLenStr
-      when (ctLen > fromIntegral (maxBound :: Int)) $ throwError RPEInvalidSize
+      when (ctLen > fromIntegral maxSize) $ throwError RPEInvalidSize
       chunks <- liftIO $ getLazy $ fromIntegral ctLen
       let hc = CH.hashUpdates (CH.hashInit @SHA512) [corrIdStr, ctLenStr]
           hc' = CH.hashUpdates hc chunks
@@ -336,8 +337,5 @@ parseDecryptHTTP2Body rc@RemoteCrypto {sessionCode, signatures, compression} hr 
     getNext sz = getBuffered bodyBuffer sz Nothing $ getBodyChunk hr
     decompress :: LazyByteString -> ExceptT RemoteProtocolError IO ByteString
     decompress s
-      | compression = case Z1.decompress $ LB.toStrict s of
-          Z1.Error e -> throwError $ RPEInvalidBody e
-          Z1.Skip -> pure B.empty
-          Z1.Decompress s' -> pure s'
+      | compression = liftEitherWith RPEInvalidBody $ limitDecompress' maxSize $ LB.toStrict s
       | otherwise = pure $ LB.toStrict s

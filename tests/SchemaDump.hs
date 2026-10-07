@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -11,7 +5,6 @@
 
 module SchemaDump where
 
-import ChatClient (withTmpFiles)
 import ChatTests.DBUtils
 import Control.Concurrent.STM
 import Control.DeepSeq
@@ -24,17 +17,17 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import Database.SQLite.Simple (Only (..), Query (..))
-import Simplex.Chat.Options.SQLite (chatDBFunctions)
-import Simplex.Chat.Store (createChatStore)
-import qualified Simplex.Chat.Store as Store
-import Simplex.Messaging.Agent.Env.SQLite (createAgentStore)
-import Simplex.Messaging.Agent.Store.Common (withConnection)
-import Simplex.Messaging.Agent.Store.DB (TrackQueries (..))
-import qualified Simplex.Messaging.Agent.Store.DB as DB
-import Simplex.Messaging.Agent.Store.Interface
-import qualified Simplex.Messaging.Agent.Store.SQLite.Migrations as Migrations
-import Simplex.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationConfirmation (..), MigrationsToRun (..), toDownMigration)
-import Simplex.Messaging.Util (ifM, tshow, whenM)
+import Popopx.Chat.Options.SQLite (chatDBFunctions)
+import Popopx.Chat.Store (createChatStore)
+import qualified Popopx.Chat.Store as Store
+import Popopx.Messaging.Agent.Env.SQLite (createAgentStore)
+import Popopx.Messaging.Agent.Store.Common (withConnection)
+import Popopx.Messaging.Agent.Store.DB (TrackQueries (..))
+import qualified Popopx.Messaging.Agent.Store.DB as DB
+import Popopx.Messaging.Agent.Store.Interface
+import qualified Popopx.Messaging.Agent.Store.SQLite.Migrations as Migrations
+import Popopx.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationConfirmation (..), MigrationsToRun (..), toDownMigration)
+import Popopx.Messaging.Util (ifM, tshow, whenM)
 import System.Directory (doesFileExist, removeFile)
 import System.Process (readCreateProcess, shell)
 import Test.Hspec
@@ -68,7 +61,7 @@ schemaDumpTest = do
   it "verify strict tables" testVerifyStrict
 
 testVerifySchemaDump :: IO ()
-testVerifySchemaDump = withTmpFiles $ do
+testVerifySchemaDump = do
   savedSchema <- ifM (doesFileExist appSchema) (readFile appSchema) (pure "")
   savedSchema `deepseq` pure ()
   void $ createChatStore (DBOpts testDB chatDBFunctions "" False True TQOff) (MigrationConfig MCError Nothing)
@@ -76,7 +69,7 @@ testVerifySchemaDump = withTmpFiles $ do
   removeFile testDB
 
 testVerifyLintFKeyIndexes :: IO ()
-testVerifyLintFKeyIndexes = withTmpFiles $ do
+testVerifyLintFKeyIndexes = do
   savedLint <- ifM (doesFileExist appLint) (readFile appLint) (pure "")
   savedLint `deepseq` pure ()
   void $ createChatStore (DBOpts testDB chatDBFunctions "" False True TQOff) (MigrationConfig MCError Nothing)
@@ -84,7 +77,7 @@ testVerifyLintFKeyIndexes = withTmpFiles $ do
   removeFile testDB
 
 testSchemaMigrations :: IO ()
-testSchemaMigrations = withTmpFiles $ do
+testSchemaMigrations = do
   let noDownMigrations = dropWhileEnd (\Migration {down} -> isJust down) Store.migrations
   Right st <- createDBStore (DBOpts testDB chatDBFunctions "" False True TQOff) noDownMigrations (MigrationConfig MCError Nothing)
   mapM_ (testDownMigration st) $ drop (length noDownMigrations) Store.migrations
@@ -153,7 +146,7 @@ skipComparisonForDownMigrations =
     -- appends; CREATE INDEX appends).
     "20260529_delivery_job_senders",
     -- group_domain is removed
-    "20260603_simplex_name"
+    "20260603_popopx_name"
   ]
 
 getSchema :: FilePath -> FilePath -> IO String

@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE AllowAmbiguousTypes #-}
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
@@ -47,9 +41,12 @@ import Numeric (showFFloat)
 import Popopx.Chat.Call
 import Popopx.Chat.Controller
 import Popopx.Chat.Help
-import Popopx.Chat.Library.Commands (maxImageSize)
+import Popopx.Chat.Library.Commands (badgeServiceErrorText, maxImageSize)
 import Popopx.Chat.Markdown
 import Popopx.Chat.Badges (BadgeInfo (..), BadgeStatus (..), BadgeType (..), LocalBadge, localBadgeInfo, localBadgeStatus)
+import Popopx.Chat.Badges.Ledger (creditTypeTag, debitTypeTag)
+import Popopx.Chat.Badges.Service (StatementEntry (..), StatementEntryType (..))
+import Popopx.Chat.Badges.Types (BadgeAlert (..), BadgeIssueError (..), BadgeState (..))
 import Popopx.Chat.Messages hiding (NewChatItem (..))
 import Popopx.Chat.Messages.CIContent
 import Popopx.Chat.Operators
@@ -78,7 +75,6 @@ import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Parsers (dropPrefix, taggedObjectJSON)
 import Popopx.Messaging.Protocol (AProtoServerWithAuth (..), AProtocolType, BlockingInfo (..), BlockingReason (..), NetworkError (..), ProtocolServer (..), ProtocolTypeI, SProtocolType (..), UserProtocol)
 import qualified Popopx.Messaging.Protocol as SMP
-import Popopx.Messaging.ServiceScheme (ServiceScheme (..))
 import Popopx.Messaging.Transport.Client (TransportHost (..))
 import Popopx.Messaging.Util (safeDecodeUtf8, tshow)
 import Popopx.Messaging.Version hiding (version)
@@ -119,7 +115,7 @@ chatErrorToView :: Bool -> ChatConfig -> ChatError -> [StyledString]
 chatErrorToView isCmd ChatConfig {logLevel, testView} = viewChatError isCmd logLevel testView
 
 chatResponseToView :: (Maybe RemoteHostId, Maybe User) -> ChatConfig -> Bool -> CurrentTime -> TimeZone -> Maybe RemoteHostId -> ChatResponse -> [StyledString]
-chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, testView} liveItems ts tz outputRH = \case
+chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, showFullLinks, testView} liveItems ts tz outputRH = \case
   CRActiveUser User {profile = p@LocalProfile {localBadge}, uiThemes} -> viewUserProfile localBadge (fromLocalProfile p) <> viewUITheme uiThemes
   CRUsersList users -> viewUsersList users
   CRChatStarted -> ["chat started"]
@@ -133,11 +129,14 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, testView} liveIte
   CRApiChat u chat _ -> ttyUser u $ if testView then testViewChat chat else [viewJSON chat]
   CRChatContentTypes cts -> [plain $ "Chat content types: " <> T.intercalate ", " (map (safeDecodeUtf8 . strEncode) cts)]
   CRChatTags u tags -> ttyUser u [viewJSON tags]
-  CRServerTestResult u srv testFailure -> ttyUser u $ viewServerTestResult srv testFailure
+  CRServerTestResult u srv testFailure info -> ttyUser u $ viewServerTestResult srv testFailure <> maybe [] viewServerInfo info
+    where
+      viewServerInfo = \case
+        Left e -> [plain $ "Server Info Error: " <> T.pack e]
+        Right i -> [plain $ "Server Info: " <> tshow i]
   CRChatRelayTestResult u relayProfile_ relayTestFailure_ -> ttyUser u $ viewRelayTestResult relayProfile_ relayTestFailure_
   CRServerOperatorConditions (ServerOperatorConditions ops _ ca) -> viewServerOperators ops ca
   CRUserServers u uss -> ttyUser u $ concatMap viewUserServers uss <> (if testView then [] else serversUserHelp)
-  CRBinThereBots u bots -> ttyUser u [viewJSON bots]
   CRUserServersValidation {} -> []
   CRUsageConditions current _ accepted_ -> viewUsageConditions current accepted_
   CRChatItemTTL u ttl -> ttyUser u $ viewChatItemTTL ttl
@@ -187,9 +186,15 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, testView} liveIte
     HSDatabase -> databaseHelpInfo
   CRWelcome user -> chatWelcome user
   CRContactsList u cs -> ttyUser u $ viewContactsList cs
-  CRUserContactLink u UserContactLink {connLinkContact, addressSettings} -> ttyUser u $ connReqContact_ "Your chat address:" connLinkContact <> viewAddressSettings addressSettings
+  CRUserContactLink u UserContactLink {connLinkContact, addressSettings} -> ttyUser u $ connReqContact_ showFullLinks "Your chat address:" connLinkContact <> viewAddressSettings addressSettings
   CRUserContactLinkUpdated u UserContactLink {addressSettings} -> ttyUser u $ viewAddressSettings addressSettings
   CRContactRequestRejected u UserContactRequest {localDisplayName = c} _ct_ -> ttyUser u [ttyContact c <> ": contact request rejected"]
+  CRServiceResponse u resp -> ttyUser u ["service response: " <> viewJSON resp]
+  CRServiceReplyAccepted u (AgentConnId cId) -> ttyUser u [plain $ "service reply accepted, connection id: " <> safeDecodeUtf8 (strEncode cId)]
+  -- the badge is only shown when it is the one now on the profile; a replayed code's badge may not be
+  CRBadgeRedeemed u badge newBadge _ -> ttyUser u $ if newBadge then "badge redeemed" : viewContactBadge (Just badge) else ["badge already redeemed"]
+  CRBadgeState u st -> ttyUser u $ viewUserBadgeState st
+  CRBadgeLedger u entries -> ttyUser u $ viewBadgeLedger entries
   CRGroupCreated u g -> ttyUser u $ viewGroupCreated g testView
   CRPublicGroupCreated u g _groupLink _relays -> ttyUser u $ viewGroupCreated g testView
   CRPublicGroupCreationFailed u results -> ttyUser u $ viewPublicGroupCreationFailed results
@@ -209,9 +214,9 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, testView} liveIte
   CRUserProfileNoChange u -> ttyUser u ["user profile did not change"]
   CRUserPrivacy u u' -> ttyUserPrefix hu outputRH u $ viewUserPrivacy u u'
   CRVersionInfo info _ _ -> viewVersionInfo logLevel info
-  CRInvitation u ccLink _ _ -> ttyUser u $ viewConnReqInvitation ccLink
+  CRInvitation u ccLink _ -> ttyUser u $ viewConnReqInvitation showFullLinks ccLink
   CRConnectionIncognitoUpdated u c customUserProfile -> ttyUser u $ viewConnectionIncognitoUpdated c customUserProfile testView
-  CRConnectionUserChanged u c c' nu -> ttyUser u $ viewConnectionUserChanged u c nu c'
+  CRConnectionUserChanged u c c' nu -> ttyUser u $ viewConnectionUserChanged showFullLinks u c nu c'
   CRConnectionPlan u connLink _ otherPopopxName connectionPlan -> ttyUser u $ viewConnectionPlan cfg connLink connectionPlan <> otherPopopxNameNote otherPopopxName
   CRNewPreparedChat u (AChat _ (Chat cInfo _ _)) -> ttyUser u $ case cInfo of
     DirectChat ct -> [ttyContact' ct <> ": contact is prepared"]
@@ -229,7 +234,7 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, testView} liveIte
   CRChatCleared u chatInfo -> ttyUser u $ viewChatCleared chatInfo
   CRAcceptingContactRequest u c -> ttyUser u $ viewAcceptingContactRequest c
   CRContactAlreadyExists u c -> ttyUser u [ttyFullContact c <> ": contact already exists"]
-  CRUserContactLinkCreated u ccLink _ -> ttyUser u $ connReqContact_ "Your new chat address is created!" ccLink
+  CRUserContactLinkCreated u ccLink -> ttyUser u $ connReqContact_ showFullLinks "Your new chat address is created!" ccLink
   CRUserContactLinkDeleted u -> ttyUser u viewUserContactLinkDeleted
   CRUserAcceptedGroupSent u _g _ -> ttyUser u [] -- [ttyGroup' g <> ": joining the group..."]
   CRUserDeletedMembers u g members wm signed -> case members of
@@ -243,7 +248,7 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, testView} liveIte
             "use " <> highlight ("/d #" <> viewGroupName g) <> " to delete the group (also clears the rejection)"
           ]
     | otherwise -> ttyUser u $ [ttyGroup' g <> ": you left the group"] <> groupPreserved g
-  CRGroupDeletedUser u g signed -> ttyUser u [ttyGroup' g <> ": you deleted the group" <> signedStr signed]
+  CRGroupDeletedUser u g signed local -> ttyUser u [ttyGroup' g <> (if local then ": you deleted your local copy of the group" else ": you deleted the group" <> signedStr signed)]
   CRForwardPlan u count itemIds fc -> ttyUser u $ viewForwardPlan count itemIds fc
   CRChatMsgContent u mc -> ttyUser u $ ttyMsgContent mc <> viewMsgTestInfo testView mc
   CRRcvFileAccepted u ci -> ttyUser u $ savingFile' ci
@@ -268,8 +273,8 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, testView} liveIte
   CRGroupUpdated u g g' m signed -> ttyUser u $ viewGroupUpdated g g' m (if signed then Just MSSVerified else Nothing)
   CRGroupProfile u g -> ttyUser u $ viewGroupProfile g
   CRGroupDescription u g -> ttyUser u $ viewGroupDescription g
-  CRGroupLinkCreated u g gLink -> ttyUser u $ groupLink_ "Group link is created!" g gLink
-  CRGroupLink u g gLink -> ttyUser u $ groupLink_ "Group link:" g gLink
+  CRGroupLinkCreated u g gLink -> ttyUser u $ groupLink_ showFullLinks "Group link is created!" g gLink
+  CRGroupLink u g gLink -> ttyUser u $ groupLink_ showFullLinks "Group link:" g gLink
   CRGroupLinkDeleted u g -> ttyUser u $ viewGroupLinkDeleted g
   CRNewMemberContact u _ g m -> ttyUser u ["contact for member " <> ttyGroup' g <> " " <> ttyMember m <> " is created"]
   CRNewMemberContactSentInv u _ct g m -> ttyUser u ["sent invitation to connect directly to member " <> ttyGroup' g <> " " <> ttyMember m]
@@ -453,7 +458,6 @@ chatEventToView hu ChatConfig {logLevel, showReactions, showReceipts, testView} 
   CEvtGroupChatItemsDeleted u g ciIds byUser member_ -> ttyUser u $ viewGroupChatItemsDeleted g ciIds byUser member_
   CEvtChatItemDeletedNotFound u Contact {localDisplayName = c} _ -> ttyUser u [ttyFrom $ c <> "> [deleted - original message not found]"]
   CEvtUserAcceptedGroupSent u _g _ -> ttyUser u [] -- [ttyGroup' g <> ": joining the group..."]
-  CEvtSentGroupInvitation u g c _ -> ttyUser u $ viewSentGroupInvitation g c
   CEvtContactDeletedByContact u c -> ttyUser u [ttyFullContact c <> " deleted contact with you"]
   CEvtAcceptingContactRequest u c -> ttyUser u $ viewAcceptingContactRequest c
   CEvtAcceptingBusinessRequest u g -> ttyUser u $ viewAcceptingBusinessRequest g
@@ -471,6 +475,15 @@ chatEventToView hu ChatConfig {logLevel, showReactions, showReceipts, testView} 
   CEvtContactUpdated {user = u, fromContact = c, toContact = c'} -> ttyUser u $ viewContactUpdated c c' <> viewContactPrefsUpdated u c c'
   CEvtGroupMemberUpdated {} -> []
   CEvtReceivedContactRequest u UserContactRequest {localDisplayName = c, profile} _chat -> ttyUser u $ viewReceivedContactRequest c (fromLocalProfile profile)
+  CEvtServiceRequest u reqId sigKey_ req ->
+    ttyUser u $
+      [plain $ "service request " <> safeDecodeUtf8 (strEncode reqId)]
+        <> maybe [] (\k -> [plain $ "signed by " <> safeDecodeUtf8 (strEncode k)]) sigKey_
+        <> ["request: " <> viewJSON req]
+  CEvtServiceReplySent (AgentConnId cId) -> [plain $ "service reply sent, connection id: " <> safeDecodeUtf8 (strEncode cId)]
+  CEvtBadgeChanged u st -> ttyUser u $ viewUserBadgeState st
+  CEvtBadgeAlert u alert -> ttyUser u $ viewBadgeAlert alert
+  CEvtContactRequestRejected u Contact {localDisplayName = c} _reason -> ttyUser u [ttyContact c <> ": contact request rejected"]
   CEvtRcvFileStart u ci -> ttyUser u $ receivingFile_' hu testView "started" ci
   CEvtRcvFileComplete u ci -> ttyUser u $ receivingFile_' hu testView "completed" ci
   CEvtRcvStandaloneFileComplete u _ ft -> ttyUser u $ receivingFileStandalone "completed" ft
@@ -786,7 +799,7 @@ viewChatItem chat ci@ChatItem {chatDir, meta = meta@CIMeta {itemForwarded, forwa
     prohibited = styled (colored Red) ("[unexpected chat item created, please report to developers]" :: String)
 
 viewChatItemInfo :: AChatItem -> ChatItemInfo -> TimeZone -> [StyledString]
-viewChatItemInfo (AChatItem _ msgDir _ ChatItem {meta = CIMeta {itemTs, itemTimed, createdAt}}) ChatItemInfo {itemVersions, forwardedFromChatItem} tz =
+viewChatItemInfo (AChatItem _ msgDir _ ChatItem {meta = CIMeta {itemTs, itemTimed, createdAt, itemForwarded}}) ChatItemInfo {itemVersions, forwardedFromChatItem} tz =
   ["sent at: " <> ts itemTs]
     <> receivedAt
     <> toBeDeletedAt
@@ -818,7 +831,10 @@ viewChatItemInfo (AChatItem _ msgDir _ ChatItem {meta = CIMeta {itemTs, itemTime
               (SMDRcv, GroupChat gInfo _scopeInfo) -> Just $ "#" <> viewGroupName gInfo
               _ -> Nothing
             fwdItemId = "chat item id: " <> (T.pack . show $ aChatItemId fwdACI)
-        _ -> []
+        _ -> case itemForwarded of
+          Just (CIFFGroup g _ _ _ _ _ _) -> ["forwarded from: #" <> (plain . viewName) g]
+          Just (CIFFGroupLink g _ _ _ _ _ _) -> ["forwarded from: #" <> (plain . viewName) g]
+          _ -> []
 
 localTs :: TimeZone -> UTCTime -> String
 localTs tz ts = do
@@ -1006,8 +1022,9 @@ forwardedFrom = \case
   CIFFUnknown -> ["-> forwarded"]
   CIFFContact c MDSnd _ _ -> ["<- you @" <> (plain . viewName) c]
   CIFFContact c MDRcv _ _ -> ["<- @" <> (plain . viewName) c]
-  CIFFGroup g MDSnd _ _ -> ["<- you #" <> (plain . viewName) g]
-  CIFFGroup g MDRcv _ _ -> ["<- #" <> (plain . viewName) g]
+  CIFFGroup g MDSnd _ _ _ _ _ -> ["<- you #" <> (plain . viewName) g]
+  CIFFGroup g MDRcv _ _ _ _ _ -> ["<- #" <> (plain . viewName) g]
+  CIFFGroupLink g _ _ _ _ _ _ -> ["<- #" <> (plain . viewName) g]
 
 sentByMember :: GroupInfo -> CIQDirection 'CTGroup -> Maybe GroupMember
 sentByMember GroupInfo {membership} = \case
@@ -1047,8 +1064,8 @@ viewInvalidConnReq =
     plain updateStr
   ]
 
-viewConnReqInvitation :: CreatedLinkInvitation -> [StyledString]
-viewConnReqInvitation (CCLink cReq shortLink) =
+viewConnReqInvitation :: Bool -> CreatedLinkInvitation -> [StyledString]
+viewConnReqInvitation showFullLinks (CCLink cReq shortLink) =
   [ "pass this invitation link to your contact (via another channel): ",
     "",
     plain $ maybe cReqStr strEncode shortLink,
@@ -1056,7 +1073,7 @@ viewConnReqInvitation (CCLink cReq shortLink) =
     "and ask them to connect: " <> highlight' "/c <invitation_link_above>"
   ]
     <>
-      if isJust shortLink
+      if showFullLinks && isJust shortLink
         then
           [ "The invitation link for old clients:",
             plain cReqStr
@@ -1119,8 +1136,8 @@ viewForwardPlan count itemIds = maybe [forwardCount] $ \fc -> [confirmation fc, 
       | otherwise = plain $ show len <> " message(s) out of " <> show count <> " can be forwarded"
     len = length itemIds
 
-connReqContact_ :: StyledString -> CreatedLinkContact -> [StyledString]
-connReqContact_ intro (CCLink cReq shortLink) =
+connReqContact_ :: Bool -> StyledString -> CreatedLinkContact -> [StyledString]
+connReqContact_ showFullLinks intro (CCLink cReq shortLink) =
   [ intro,
     "",
     plain $ maybe cReqStr strEncode shortLink,
@@ -1130,16 +1147,16 @@ connReqContact_ intro (CCLink cReq shortLink) =
     "to share with your contacts: " <> highlight' "/profile_address on",
     "to delete it: " <> highlight' "/da" <> " (accepted contacts will remain connected)"
   ]
-    <> ["The contact link for old clients: " <> plain cReqStr | isJust shortLink]
+    <> ["The contact link for old clients: " <> plain cReqStr | showFullLinks, isJust shortLink]
   where
     cReqStr = strEncode $ popopxChatContact cReq
 
 popopxChatContact :: ConnReqContact -> ConnReqContact
-popopxChatContact (CRContactUri crData) = CRContactUri crData {crScheme = SSPopopx}
+popopxChatContact (CRContactUri crData e2e) = CRContactUri crData {crScheme = SSPopopx} e2e
 
 popopxChatContact' :: ConnLinkContact -> ConnLinkContact
 popopxChatContact' = \case
-  CLFull (CRContactUri crData) -> CLFull $ CRContactUri crData {crScheme = SSPopopx}
+  CLFull (CRContactUri crData e2e) -> CLFull $ CRContactUri crData {crScheme = SSPopopx} e2e
   l@(CLShort _) -> l
 
 groupPopopxDomain :: GroupInfo -> Maybe PopopxDomain
@@ -1148,7 +1165,7 @@ groupPopopxDomain GroupInfo {groupProfile = GroupProfile {publicGroup}} =
 
 viewDomainVerified :: PopopxNameType -> Maybe PopopxDomain -> Maybe Text -> [StyledString]
 viewDomainVerified nameType domain_ result =
-  let nameStr = maybe "name" (\d -> "POPOPX name " <> shortNameInfoStr (PopopxNameInfo nameType d)) domain_
+  let nameStr = maybe "name" (\d -> "Popopx name " <> shortNameInfoStr (PopopxNameInfo nameType d)) domain_
    in case result of
         Nothing -> [plain nameStr <> " verified"]
         Just reason -> [plain nameStr <> " not verified: " <> plain reason]
@@ -1165,7 +1182,7 @@ popopxDomainLine nameType (Just PopopxDomainClaim {domain, proof}) status = case
     | isJust proof -> [line "unverified"]
     | otherwise -> []
   where
-    line s = plain $ "POPOPX name: " <> shortNameInfoStr (PopopxNameInfo nameType (unStrJSON domain)) <> " (" <> s <> ")"
+    line s = plain $ "Popopx name: " <> shortNameInfoStr (PopopxNameInfo nameType (unStrJSON domain)) <> " (" <> s <> ")"
 
 -- TODO [short links] show all settings
 viewAddressSettings :: AddressSettings -> [StyledString]
@@ -1180,19 +1197,19 @@ viewAddressSettings AddressSettings {businessAddress, autoAccept, autoReply} = c
         | otherwise = ""
   _ -> ["auto_accept off"]
 
-groupLink_ :: StyledString -> GroupInfo -> GroupLink -> [StyledString]
-groupLink_ intro g GroupLink {connLinkContact = CCLink cReq shortLink, acceptMemberRole} =
+groupLink_ :: Bool -> StyledString -> GroupInfo -> GroupLink -> [StyledString]
+groupLink_ showFullLinks intro g GroupLink {connLinkContact = CCLink cReq shortLink, acceptMemberRole} =
   [ intro,
     "",
     plain $ maybe cReqStr strEncode shortLink
   ]
-    <> [plain ("POPOPX name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
+    <> [plain ("Popopx name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
     <> [ "",
          "Anybody can connect to you and join group as " <> showRole acceptMemberRole <> " with: " <> highlight' "/c <group_link_above>",
          "to show it again: " <> highlight ("/show link #" <> viewGroupName g),
          "to delete it: " <> highlight ("/delete link #" <> viewGroupName g) <> " (joined members will remain connected to you)"
        ]
-    <> ["The group link for old clients: " <> plain cReqStr | isJust shortLink]
+    <> ["The group link for old clients: " <> plain cReqStr | showFullLinks, isJust shortLink]
   where
     cReqStr = strEncode $ popopxChatContact cReq
 
@@ -1267,7 +1284,7 @@ viewGroupLinkRelaysUpdated g groupLink relays =
       [ "group link:",
         plain $ maybe cReqStr strEncode shortLink
       ]
-    <> [plain ("POPOPX name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
+    <> [plain ("Popopx name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
   where
     GroupLink {connLinkContact = CCLink cReq shortLink} = groupLink
     cReqStr = strEncode $ popopxChatContact cReq
@@ -1819,8 +1836,49 @@ viewContactBadge = maybe [] $ \lb ->
         BSExpiredOld -> "expired (old)"
         BSFailed -> "verification failed"
         BSUnknownKey -> "unknown key"
-      expiry = maybe "no expiry" (("expires " <>) . T.pack . formatTime defaultTimeLocale "%Y-%m-%d") badgeExpiry
+      expiry = "expires " <> day badgeExpiry
    in [plain (textEncode badgeType <> " badge - " <> st), plain expiry]
+
+viewUserBadgeState :: Maybe BadgeState -> [StyledString]
+viewUserBadgeState = maybe [] viewBadge
+  where
+    viewBadge BadgeState {badgePurchaseId, badgeType, monthsLeft, paidThrough, alert, issueError, nextWakeAt} =
+      plain
+        ( tshow badgePurchaseId
+            <> ": "
+            <> textEncode badgeType
+            <> ", "
+            <> tshow monthsLeft
+            <> " months left, paid through "
+            <> day paidThrough
+            <> maybe "" ((", next check " <>) . dayTime) nextWakeAt
+        )
+        : maybe [] viewBadgeIssueError issueError
+          <> maybe [] viewBadgeAlert alert
+
+viewBadgeIssueError :: BadgeIssueError -> [StyledString]
+viewBadgeIssueError BadgeIssueError {failedSince, lastAttemptAt, reason} =
+  [plain $ "renewal failing since " <> day failedSince <> ", last " <> dayTime lastAttemptAt <> ": " <> safeDecodeUtf8 (strEncode reason)]
+
+viewBadgeAlert :: BadgeAlert -> [StyledString]
+viewBadgeAlert BadgeAlert {kind, date} = [plain $ "badge alert: " <> textEncode kind <> " " <> day date]
+
+viewBadgeLedger :: [StatementEntry] -> [StyledString]
+viewBadgeLedger [] = ["no ledger entries"]
+viewBadgeLedger entries = map viewEntry entries
+  where
+    viewEntry StatementEntry {createdAt, entryType, changeMonths, balanceMonths, balanceStartTs} =
+      plain $ day createdAt <> " " <> entryKind entryType <> " " <> withSign changeMonths <> " -> " <> tshow balanceMonths <> ", from " <> day balanceStartTs
+    entryKind = \case
+      SECredit c -> creditTypeTag c
+      SEDebit d -> debitTypeTag d
+    withSign n = (if n >= 0 then "+" else "") <> tshow n
+
+day :: UTCTime -> Text
+day = T.pack . formatTime defaultTimeLocale "%Y-%m-%d"
+
+dayTime :: UTCTime -> Text
+dayTime = T.pack . formatTime defaultTimeLocale "%Y-%m-%d %H:%M"
 
 viewContactInfo :: Contact -> Maybe ConnectionStats -> Maybe Profile -> [StyledString]
 viewContactInfo ct@Contact {contactId, profile = LocalProfile {localAlias, contactLink, localBadge, contactDomain, contactDomainVerified, description}, activeConn, uiThemes, customData} stats incognitoProfile =
@@ -1913,6 +1971,8 @@ viewSndQueuesInfo = plain . T.intercalate ", " . map showQueueInfo
     showSwitchStatus = \case
       SSSendingQKEY -> "switch started"
       SSSendingQTEST -> "switch secured"
+      SSSecuringQueue -> "switch confirmed"
+      SSSendingQEND -> "switch secured"
 
 viewContactSwitch :: Contact -> SwitchProgress -> [StyledString]
 viewContactSwitch _ (SwitchProgress _ SPConfirmed _) = []
@@ -2124,8 +2184,8 @@ viewConnectionIncognitoUpdated PendingContactConnection {pccConnId, customUserPr
         Nothing -> ["unexpected response when changing connection, please report to developers"]
   | otherwise = ["connection " <> sShow pccConnId <> " changed to non incognito"]
 
-viewConnectionUserChanged :: User -> PendingContactConnection -> User -> PendingContactConnection -> [StyledString]
-viewConnectionUserChanged User {localDisplayName = n} PendingContactConnection {pccConnId} User {localDisplayName = n'} PendingContactConnection {connLinkInv = connLinkInv'} =
+viewConnectionUserChanged :: Bool -> User -> PendingContactConnection -> User -> PendingContactConnection -> [StyledString]
+viewConnectionUserChanged showFullLinks User {localDisplayName = n} PendingContactConnection {pccConnId} User {localDisplayName = n'} PendingContactConnection {connLinkInv = connLinkInv'} =
   case connLinkInv' of
     Just ccLink' -> [userChangedStr <> ", new link:"] <> newLink ccLink'
     _ -> [userChangedStr]
@@ -2137,7 +2197,7 @@ viewConnectionUserChanged User {localDisplayName = n} PendingContactConnection {
         ""
       ]
         <>
-          if isJust shortLink
+          if showFullLinks && isJust shortLink
             then
               [ "The invitation link for old clients:",
                 plain cReqStr
@@ -2443,11 +2503,25 @@ viewReceivedFileInvitation :: StyledString -> CIFile d -> CurrentTime -> TimeZon
 viewReceivedFileInvitation from file ts tz meta = receivedWithTime_ ts tz from [] meta (receivedFileInvitation_ file) False
 
 receivedFileInvitation_ :: CIFile d -> [StyledString]
-receivedFileInvitation_ CIFile {fileId, fileName, fileSize, fileStatus} =
+receivedFileInvitation_ CIFile {fileId, fileName, fileSize, fileStatus, fileProhibited} =
   ["sends file " <> ttyFilePath fileName <> " (" <> humanReadableSize fileSize <> " / " <> sShow fileSize <> " bytes)"]
-    <> case fileStatus of
-      CIFSRcvAccepted -> []
-      _ -> ["use " <> highlight ("/fr " <> show fileId <> " [<dir>/ | <path>]") <> " to receive it"]
+    <> case fileProhibited of
+      Just fp -> [prohibitedFileReason fp]
+      Nothing -> case fileStatus of
+        CIFSRcvAccepted -> []
+        _ -> ["use " <> highlight ("/fr " <> show fileId <> " [<dir>/ | <path>]") <> " to receive it"]
+
+prohibitedFileReason :: FileProhibited -> StyledString
+prohibitedFileReason FileProhibited {maxSize, badgeStatus} =
+  "file is above the limit of " <> sShow maxSize <> " bytes: " <> reason
+  where
+    reason = case badgeStatus of
+      Nothing -> "sender has no badge"
+      Just BSActive -> "above the limit of the sender badge"
+      Just BSExpired -> "sender badge expired"
+      Just BSExpiredOld -> "sender badge expired"
+      Just BSFailed -> "sender badge did not verify"
+      Just BSUnknownKey -> "sender badge key is not known"
 
 humanReadableSize :: Integer -> StyledString
 humanReadableSize size
@@ -2583,7 +2657,7 @@ viewCallInvitation ct@Contact {contactId} callType@CallType {media} sharedKey =
   [ ttyContact' ct <> " wants to connect with you via WebRTC " <> callMediaStr callType <> " call " <> encryptedCallText callType,
     "To accept the call, please open the link below in your browser" <> supporedBrowsers callType,
     "",
-    "https://popopxchat.com/call#" <> plain queryString
+    "https://popopx.chat/call#" <> plain queryString
   ]
   where
     aesKey = B.unpack . strEncode . C.unKey <$> sharedKey
@@ -2599,7 +2673,7 @@ viewCallOffer ct@Contact {contactId} callType@CallType {media} WebRTCSession {rt
   [ ttyContact' ct <> " accepted your WebRTC " <> callMediaStr callType <> " call " <> encryptedCallText callType,
     "To connect, please open the link below in your browser" <> supporedBrowsers callType,
     "",
-    "https://popopxchat.com/call#" <> plain queryString
+    "https://popopx.chat/call#" <> plain queryString
   ]
   where
     aesKey = B.unpack . strEncode . C.unKey <$> sharedKey
@@ -2724,7 +2798,7 @@ viewChatError isCmd logLevel testView = \case
       let reason = case domainErr of
             SDENoValidLink -> "has no valid connection link"
             SDEUnknownDomain -> "is not included in the connection link's profile"
-       in [plain $ "POPOPX name " <> strEncode domain <> " " <> reason]
+       in [plain $ "Popopx name " <> strEncode domain <> " " <> reason]
     CENotResolvedLocally -> ["no matching chat found, name resolution is disabled"]
     CEUnsupportedConnReq -> [ "", "Connection link is not supported by the your app version, please ugrade it.", plain updateStr]
     CEInvalidChatMessage Connection {connId} msgMeta_ msg e ->
@@ -2790,6 +2864,16 @@ viewChatError isCmd logLevel testView = \case
     CEAgentNoSubResult connId -> ["no subscription result for connection: " <> sShow connId]
     CEServerProtocol p -> [plain $ "Servers for protocol " <> strEncode p <> " cannot be configured by the users"]
     CECommandError e -> ["bad chat command: " <> plain e]
+    CEBadgeRedeemError e ->
+      let reason = case e of
+            BREInvalidCode -> "invalid code"
+            BREServiceNotConfigured -> "badge service not configured"
+            BREBadgeActive -> "badge already active"
+            BREServiceError code -> "badge service error: " <> T.unpack (badgeServiceErrorText code)
+            BREInvalidResponse m -> "invalid service response: " <> m
+            BREUnknownKeyIndex -> "credential names an unknown badge key index"
+            BRECredentialNotVerified -> "credential does not verify against configured key"
+       in ["cannot redeem badge code: " <> plain reason]
     CEAgentCommandError e -> ["agent command error: " <> plain e]
     CEInvalidFileDescription e -> ["invalid file description: " <> plain e]
     CEConnectionIncognitoChangeProhibited -> ["incognito mode change prohibited"]

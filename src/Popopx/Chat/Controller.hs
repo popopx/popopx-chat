@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE DataKinds #-}
@@ -69,13 +63,14 @@ import Popopx.Chat.Protocol
 import Popopx.Chat.Remote.AppVersion
 import Popopx.Chat.Remote.Types
 import Popopx.Chat.Stats (PresentedServersSummary)
-import Popopx.Chat.Store (AddressSettings, BinThereBot (..), ChatLockEntity, GroupLinkInfo, StoreError (..), UserContactLink, UserMsgReceiptSettings)
+import Popopx.Chat.Store (AddressSettings, ChatLockEntity, GroupLinkInfo, StoreError (..), UserContactLink, UserMsgReceiptSettings)
 import Popopx.Chat.Types
 import Popopx.Chat.Types.Preferences
 import Popopx.Chat.Types.Shared
 import Popopx.Chat.Types.UITheme
 import Popopx.Chat.Util (liftIOEither)
 import Popopx.FileTransfer.Description (FileDescriptionURI)
+import Popopx.Messaging.Server.Information (ServerPublicInfo)
 import Popopx.Messaging.Agent (AgentClient, DatabaseDiff, SubscriptionsInfo)
 import Popopx.Messaging.Agent.Client (AgentLocks, AgentQueuesInfo (..), AgentWorkersDetails (..), AgentWorkersSummary (..), ProtocolTestFailure, SMPServerSubs, ServerQueueInfo, UserNetworkInfo)
 import Popopx.Messaging.Agent.Env.SQLite (AgentConfig, NetworkConfig, ServerCfg, Worker)
@@ -88,7 +83,9 @@ import Popopx.Messaging.Agent.Store.DB (SQLError)
 import qualified Popopx.Messaging.Agent.Store.DB as DB
 import Popopx.Messaging.Client (HostMode (..), SMPProxyFallback (..), SMPProxyMode (..), SMPWebPortServers (..), SocksMode (..))
 import qualified Popopx.Messaging.Crypto as C
-import Popopx.Chat.Badges (BadgeCredential)
+import Popopx.Chat.Badges (BadgeCredential, FileSizeLimits, LocalBadge)
+import Popopx.Chat.Badges.Service (BadgeServiceErrorCode, StatementEntry)
+import Popopx.Chat.Badges.Types (BadgeAlert (..), BadgeAlertKind, BadgeState (..))
 import Popopx.Messaging.Crypto.BBS (BBSPublicKey)
 import Popopx.Messaging.Crypto.File (CryptoFile (..))
 import qualified Popopx.Messaging.Crypto.File as CF
@@ -96,11 +93,12 @@ import Popopx.Messaging.Crypto.Ratchet (PQEncryption)
 import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Notifications.Protocol (DeviceToken (..), NtfTknStatus)
 import Popopx.Messaging.Parsers (defaultJSON, dropPrefix, enumJSON, parseAll, parseString, sumTypeJSON)
-import Popopx.Messaging.Protocol (AProtoServerWithAuth, AProtocolType (..), MsgId, NMsgMeta (..), NtfServer, ProtocolType (..), QueueId, SMPMsgMeta (..), SMPServerWithAuth, SubscriptionMode (..), XFTPServer)
+import Popopx.Messaging.Protocol (AProtoServerWithAuth, AProtocolType (..), MsgId, NMsgMeta (..), NtfServer, ProtocolType (..), QueueId, SMPMsgMeta (..), SubscriptionMode (..), XFTPServer)
+import Popopx.Messaging.Session (SessionVar)
 import Popopx.Messaging.TMap (TMap)
 import Popopx.Messaging.Transport (TLS, TransportPeer (..), popopxMQVersion)
 import Popopx.Messaging.Transport.Client (SocksProxyWithAuth, TransportHost)
-import Popopx.Messaging.Util (AnyError (..), catchAllErrors, (<$$>))
+import Popopx.Messaging.Util (AnyError (..), catchAllErrors, catchOwn', (<$$>))
 import Popopx.RemoteControl.Client
 import Popopx.RemoteControl.Invitation (RCSignedInvitation, RCVerifiedInvitation)
 import Popopx.RemoteControl.Types
@@ -116,13 +114,24 @@ versionNumber :: String
 versionNumber = showVersion SC.version
 
 versionString :: String -> String
-versionString ver = "POPOPX v" <> ver
+versionString ver = "SimpleX Chat v" <> ver
 
 updateStr :: String
-updateStr = "To update visit: https://popopxchat.com"
+updateStr = "To update run: curl -o- https://raw.githubusercontent.com/popopx-chat/popopx-chat/master/install.sh | bash"
 
 popopxmqCommitQ :: Q Exp
-popopxmqCommitQ = [|fromString "local"|]
+popopxmqCommitQ = do
+  s <- either (const "") B.unpack . A.parseOnly commitHashP <$> runIO (B.readFile "./cabal.project")
+  [|fromString s|]
+  where
+    commitHashP :: A.Parser ByteString
+    commitHashP =
+      A.manyTill' A.anyChar "location: https://github.com/simplex-chat/simplexmq.git"
+        *> A.takeWhile (== ' ')
+        *> A.endOfLine
+        *> A.takeWhile (== ' ')
+        *> "tag: "
+        *> A.takeWhile (A.notInClass " \r\n")
 
 coreVersionInfo :: String -> CoreVersionInfo
 coreVersionInfo popopxmqCommit =
@@ -135,18 +144,28 @@ coreVersionInfo popopxmqCommit =
 data ChatConfig = ChatConfig
   { agentConfig :: AgentConfig,
     chatVRange :: VersionRangeChat,
+    callVRange :: VersionRangeCall,
     -- issuer public keys by index: credentials and proofs name the key that signed them, for rotation
     badgePublicKeys :: Map Int BBSPublicKey,
+    -- Nothing until the badge service is deployed
+    badgeServiceAddress :: Maybe (ConnectTarget 'CMContact),
+    -- the only clock badge code reads, so tests can shift it; production arithmetic is unchanged
+    badgeCurrentTime :: IO UTCTime,
+    -- how long a badge worker waits before repeating a renewal that failed for a passing reason
+    badgeRetryInterval :: RetryInterval,
     confirmMigrations :: MigrationConfirmation,
     presetServers :: PresetServers,
     shortLinkPresetServers :: NonEmpty SMPServer,
     presetDomains :: [HostName],
     tbqSize :: Natural,
+    maxChats :: Int,
     fileChunkSize :: Integer,
     xftpDescrPartSize :: Int,
     inlineFiles :: InlineFilesConfig,
     autoAcceptFileSize :: Integer,
+    fileSizeLimits :: FileSizeLimits,
     showReactions :: Bool,
+    showFullLinks :: Bool,
     showReceipts :: Bool,
     subscriptionEvents :: Bool,
     hostEvents :: Bool,
@@ -156,6 +175,7 @@ data ChatConfig = ChatConfig
     cleanupManagerInterval :: NominalDiffTime,
     cleanupManagerStepDelay :: Int64,
     ciExpirationInterval :: Int64, -- microseconds
+    callInvitationTTL :: NominalDiffTime,
     deliveryWorkerDelay :: Int64, -- microseconds
     deliveryBucketSize :: Int,
     webPreviewConfig :: Maybe WebPreviewConfig,
@@ -210,9 +230,9 @@ newWebPreviewState = do
 
 -- | Builds the read-only context threaded through store functions from chat config.
 -- The single construction point, so new store-wide config (e.g. server keys) is added in one place.
-mkStoreCxt :: ChatConfig -> StoreCxt
-mkStoreCxt ChatConfig {chatVRange, badgePublicKeys} = StoreCxt chatVRange badgePublicKeys
-{-# INLINE mkStoreCxt #-}
+storeCxt :: ChatController -> StoreCxt
+storeCxt ChatController {config = ChatConfig {chatVRange, badgePublicKeys}, random} = StoreCxt chatVRange badgePublicKeys random
+{-# INLINE storeCxt #-}
 
 data RandomAgentServers = RandomAgentServers
   { smpServers :: NonEmpty (ServerCfg 'PSMP),
@@ -269,6 +289,12 @@ defaultInlineFilesConfig =
 
 data ChatDatabase = ChatDatabase {chatStore :: DBStore, agentStore :: DBStore}
 
+-- | Signalling badgeWork wakes the worker from its own wait; a full var means it has work to do.
+data BadgeWorker = BadgeWorker
+  { badgeWorkerAsync :: Async (),
+    badgeWork :: TMVar ()
+  }
+
 data ChatController = ChatController
   { currentUser :: TVar (Maybe User),
     randomPresetServers :: NonEmpty PresetOperator,
@@ -284,6 +310,7 @@ data ChatController = ChatController
     inputQ :: TBQueue String,
     outputQ :: TBQueue (Maybe RemoteHostId, Either ChatError ChatEvent),
     subscriptionMode :: TVar SubscriptionMode,
+    processServiceRequests :: TVar Bool,
     chatLock :: Lock,
     entityLocks :: TMap ChatLockEntity Lock,
     sndFiles :: TVar (Map Int64 Handle),
@@ -300,6 +327,9 @@ data ChatController = ChatController
     deliveryTaskWorkers :: TMap DeliveryWorkerKey Worker,
     deliveryJobWorkers :: TMap DeliveryWorkerKey Worker,
     relayRequestWorkers :: TMap Int Worker, -- single global worker with key 1 is used to fit into existing worker management framework
+    -- one badge worker per user: badge state is per profile, and one profile must not stall another
+    badgeWorkers :: TMap UserId (SessionVar BadgeWorker),
+    badgeSeq :: TVar Int,
     relayGroupLinkChecksAsync :: TVar (Maybe (Async ())),
     webPreviewState :: Maybe WebPreviewState,
     chatRelayTests :: TMap ConnId RelayTest,
@@ -332,6 +362,8 @@ data ChatCommand
   | SetUserGroupReceipts UserMsgReceiptSettings
   | APISetUserAutoAcceptMemberContacts {userId :: UserId, onOff :: Bool}
   | SetUserAutoAcceptMemberContacts Bool
+  | APISetUserAutoAcceptGroupInvitations {userId :: UserId, onOff :: Bool}
+  | SetUserAutoAcceptGroupInvitations Bool
   | APIHideUser UserId UserPwd
   | APIUnhideUser UserId UserPwd
   | APIMuteUser UserId
@@ -343,7 +375,7 @@ data ChatCommand
   | SetClientService UserId ContactName Bool
   | APIDeleteUser {userId :: UserId, delSMPQueues :: Bool, viewPwd :: Maybe UserPwd}
   | DeleteUser UserName Bool (Maybe UserPwd)
-  | StartChat {mainApp :: Bool, enableSndFiles :: Bool} -- enableSndFiles has no effect when mainApp is True
+  | StartChat {mainApp :: Bool, enableSndFiles :: Bool, serviceRequests :: Bool} -- enableSndFiles has no effect when mainApp is True
   | CheckChatRunning
   | APIStopChat
   | APIActivateChat {restoreChat :: Bool}
@@ -370,7 +402,7 @@ data ChatCommand
   | APISaveAppSettings AppSettings
   | APIGetAppSettings (Maybe AppSettings)
   | APIGetChatTags UserId
-  | APIGetChats {userId :: UserId, pendingConnections :: Bool, pagination :: PaginationByTime, query :: ChatListQuery}
+  | APIGetChats {userId :: UserId, pendingConnections :: Bool, pagination :: Maybe PaginationByTime, query :: ChatListQuery}
   | APIGetChat {chatRef :: ChatRef, contentTag :: Maybe MsgContentTag, chatPagination :: ChatPagination, search :: Maybe Text}
   | APIGetChatContentTypes ChatRef
   | APIGetChatItems {chatPagination :: ChatPagination, search :: Maybe Text}
@@ -403,7 +435,9 @@ data ChatCommand
   | APIDeleteChat {chatRef :: ChatRef, chatDeleteMode :: ChatDeleteMode} -- currently delete mode settings are only applied to direct chats
   | APIClearChat {chatRef :: ChatRef}
   | APIAcceptContact {incognito :: IncognitoEnabled, contactReqId :: Int64}
-  | APIRejectContact {contactReqId :: Int64}
+  | APIRejectContact {contactReqId :: Int64, notify :: Bool}
+  | APISendServiceRequest {userId :: UserId, sendTarget :: ConnectTarget 'CMContact, requestTimeout :: Maybe NominalDiffTime, signKey :: Maybe (C.StoredPrivateKey 'C.Ed25519), request :: J.Object}
+  | APISendServiceResponse {userId :: UserId, requestId :: AgentInvId, responseData :: J.Object}
   | APISendCallInvitation ContactId CallType
   | SendCallInvitation ContactName CallType
   | APIRejectCall ContactId
@@ -414,7 +448,7 @@ data ChatCommand
   | APIGetCallInvitations
   | APICallStatus ContactId WebRTCCallStatus
   | APIUpdateProfile {userId :: UserId, profile :: Profile}
-  | APISetUserDomain {userId :: UserId, popopxDomain :: Maybe PopopxDomain}
+  | APISetUserDomain {userId :: UserId, popopxDomain :: Maybe (StrJSON "PopopxDomain" PopopxDomain)}
   | APISetContactPrefs {contactId :: ContactId, preferences :: Preferences}
   | APISetContactAlias {contactId :: ContactId, localAlias :: LocalAlias}
   | APISetGroupAlias {groupId :: GroupId, localAlias :: LocalAlias}
@@ -461,13 +495,8 @@ data ChatCommand
   | APIGetServerOperators
   | APISetServerOperators (NonEmpty ServerOperator)
   | SetServerOperators (NonEmpty ServerOperatorRoles)
-  | APIGetBinThereBots UserId Text  -- userId, botType filter
-  | APIInsertBinThereBot UserId Text (Maybe Text) Text  -- userId, address, name, botType
-  | APIReportBinThereBotUse UserId Int64  -- userId, botId
-  | APISyncBotDirectory UserId ByteString  -- userId, JSON-encoded [BotDirectoryEntry]
   | APIGetUserServers UserId
   | APISetUserServers UserId (NonEmpty UpdatedUserOperatorServers)
-  | APIUpdateRemoteConfig ByteString
   | APIValidateServers UserId [UpdatedUserOperatorServers] -- response is CRUserServersValidation
   | APIGetUsageConditions
   | APISetConditionsNotified Int64
@@ -548,19 +577,20 @@ data ChatCommand
   | ClearContact ContactName
   | APIListContacts {userId :: UserId}
   | ListContacts
-  | APICreateMyAddress {userId :: UserId, server_ :: Maybe SMPServerWithAuth}
-  | CreateMyAddress
+  | APICreateMyAddress {userId :: UserId, server_ :: Maybe SMPServerWithAuth, pqRatchet :: Maybe Bool}
+  | CreateMyAddress {pqRatchet :: Maybe Bool}
   | APIDeleteMyAddress {userId :: UserId}
   | DeleteMyAddress
   | APIShowMyAddress {userId :: UserId}
   | ShowMyAddress
-  | APIAddMyAddressShortLink UserId
+  | APIAddMyAddressShortLink {userId :: UserId, pqRatchet :: Maybe Bool}
+  | APIRotateAddressRatchetKeys UserId
   | APISetProfileAddress {userId :: UserId, enable :: Bool}
   | SetProfileAddress Bool
-  | APISetAddressSettings {userId :: UserId, settings :: AddressSettings}
-  | SetAddressSettings AddressSettings
+  | APISetAddressSettings {userId :: UserId, pqRatchet :: Maybe Bool, settings :: AddressSettings}
+  | SetAddressSettings {pqRatchet :: Maybe Bool, settings :: AddressSettings}
   | AcceptContact IncognitoEnabled ContactName
-  | RejectContact ContactName
+  | RejectContact ContactName Bool
   | ForwardMessage {toChatName :: ChatName, fromContactName :: ContactName, forwardedMsg :: Text}
   | ForwardGroupMessage {toChatName :: ChatName, fromGroupName :: GroupName, fromMemberName_ :: Maybe ContactName, forwardedMsg :: Text}
   | ForwardLocalMessage {toChatName :: ChatName, forwardedMsg :: Text}
@@ -630,6 +660,12 @@ data ChatCommand
   | UpdateProfileImage (Maybe ImageData) -- UserId (not used in UI)
   | UpdateProfileImageFromFile FilePath -- set profile image from a .png/.jpg/.jpeg file
   | AddBadge BadgeCredential -- attach an issued badge credential (testing; credential from `popopx-chat badge sign`)
+  | APIRedeemBadgeCode {userId :: UserId, code :: Text} -- redeem a badge code with the configured badge service
+  | APIGetBadgeState {userId :: UserId} -- the user's badges, their balances and any current alert
+  | APIGetBadgeLedger {userId :: UserId, badgePurchaseId :: Int64} -- the purchase's ledger, oldest first
+  -- episode is last because it is free text: it is the value that makes one occurrence of an
+  -- alert distinct from the next, and the app returns whatever it was given
+  | APIAckBadgeAlert {userId :: UserId, badgePurchaseId :: Int64, alertKind :: BadgeAlertKind, snooze :: Bool, episode :: Text}
   | ShowProfileImage
   | SetUserFeature AChatFeature FeatureAllowed -- UserId (not used in UI)
   | SetContactFeature AChatFeature ContactName (Maybe FeatureAllowed)
@@ -647,10 +683,10 @@ data ChatCommand
   | DeleteRemoteHost RemoteHostId -- Unregister remote host and remove its data
   | StoreRemoteFile {remoteHostId :: RemoteHostId, storeEncrypted :: Maybe Bool, localPath :: FilePath}
   | GetRemoteFile {remoteHostId :: RemoteHostId, file :: RemoteFile}
-  | ConnectRemoteCtrl RCSignedInvitation -- Connect new or existing controller via OOB data
+  | ConnectRemoteCtrl {remoteInvitation :: RCSignedInvitation} -- Connect new or existing controller via OOB data
   | FindKnownRemoteCtrl -- Start listening for announcements from all existing controllers
   | ConfirmRemoteCtrl RemoteCtrlId -- Confirm the connection with found controller
-  | VerifyRemoteCtrlSession Text -- Verify remote controller session
+  | VerifyRemoteCtrlSession {sessionCode :: Text} -- Verify remote controller session
   | ListRemoteCtrls
   | StopRemoteCtrl -- Stop listening for announcements or terminate an active session
   | DeleteRemoteCtrl RemoteCtrlId -- Remove all local data associated with a remote controller session
@@ -689,6 +725,11 @@ planResolveModeP =
     "off" -> pure PRMUnknown
     "never" -> pure PRMNever
     _ -> fail "bad PlanResolveMode"
+
+data CommandSource
+  = CSLocal -- entered on this device
+  | CSRemoteHost RemoteHostId -- forwarded to a paired remote host
+  | CSRemoteCtrl -- received from a paired remote controller
 
 allowRemoteCommand :: ChatCommand -> Bool -- XXX: consider using Relay/Block/ForceLocal
 allowRemoteCommand = \case
@@ -777,11 +818,10 @@ data ChatResponse
   | CRChatItems {user :: User, chatName_ :: Maybe ChatName, chatItems :: [AChatItem]}
   | CRChatItemInfo {user :: User, chatItem :: AChatItem, chatItemInfo :: ChatItemInfo}
   | CRChatItemId User (Maybe ChatItemId)
-  | CRServerTestResult {user :: User, testServer :: AProtoServerWithAuth, testFailure :: Maybe ProtocolTestFailure}
+  | CRServerTestResult {user :: User, testServer :: AProtoServerWithAuth, testFailure :: Maybe ProtocolTestFailure, serverInfo :: Maybe (Either String ServerPublicInfo)}
   | CRChatRelayTestResult {user :: User, relayProfile :: Maybe RelayProfile, relayTestFailure :: Maybe RelayTestFailure}
   | CRServerOperatorConditions {conditions :: ServerOperatorConditions}
   | CRUserServers {user :: User, userServers :: [UserOperatorServers]}
-  | CRBinThereBots {user :: User, bots :: [BinThereBot]}
   | CRUserServersValidation {user :: User, serverErrors :: [UserServersError], serverWarnings :: [UserServersWarning]}
   | CRUsageConditions {usageConditions :: UsageConditions, conditionsText :: Text, acceptedConditions :: Maybe UsageConditions}
   | CRChatItemTTL {user :: User, chatItemTTL :: Maybe Int64}
@@ -828,6 +868,11 @@ data ChatResponse
   | CRUserContactLink {user :: User, contactLink :: UserContactLink}
   | CRUserContactLinkUpdated {user :: User, contactLink :: UserContactLink}
   | CRContactRequestRejected {user :: User, contactRequest :: UserContactRequest, contact_ :: Maybe Contact}
+  | CRServiceResponse {user :: User, responseData :: J.Object}
+  | CRServiceReplyAccepted {user :: User, connectionId :: AgentConnId}
+  | CRBadgeRedeemed {user :: User, redeemedBadge :: LocalBadge, newBadge :: Bool, badgeState :: Maybe BadgeState}
+  | CRBadgeState {user :: User, badgeState :: Maybe BadgeState}
+  | CRBadgeLedger {user :: User, badgeLedger :: [StatementEntry]}
   | CRUserAcceptedGroupSent {user :: User, groupInfo :: GroupInfo, hostContact :: Maybe Contact}
   | CRUserDeletedMembers {user :: User, groupInfo :: GroupInfo, members :: [GroupMember], withMessages :: Bool, msgSigned :: Bool}
   | CRGroupsList {user :: User, groups :: [GroupInfo]}
@@ -838,7 +883,7 @@ data ChatResponse
   | CRUserProfileNoChange {user :: User}
   | CRUserPrivacy {user :: User, updatedUser :: User}
   | CRVersionInfo {versionInfo :: CoreVersionInfo, chatMigrations :: [UpMigration], agentMigrations :: [UpMigration]}
-  | CRInvitation {user :: User, connLinkInvitation :: CreatedLinkInvitation, encryptedConnLink :: Maybe Text, connection :: PendingContactConnection}
+  | CRInvitation {user :: User, connLinkInvitation :: CreatedLinkInvitation, connection :: PendingContactConnection}
   | CRConnectionIncognitoUpdated {user :: User, toConnection :: PendingContactConnection, customUserProfile :: Maybe Profile}
   | CRConnectionUserChanged {user :: User, fromConnection :: PendingContactConnection, toConnection :: PendingContactConnection, newUser :: User}
   | CRConnectionPlan {user :: User, connLink :: ACreatedConnLink, planPopopxName :: Maybe PopopxNameInfo, otherPopopxName :: Maybe PopopxNameInfo, connectionPlan :: ConnectionPlan}
@@ -853,12 +898,12 @@ data ChatResponse
   | CRItemsReadForChat {user :: User, chatInfo :: AChatInfo}
   | CRContactDeleted {user :: User, contact :: Contact}
   | CRChatCleared {user :: User, chatInfo :: AChatInfo}
-  | CRUserContactLinkCreated {user :: User, connLinkContact :: CreatedLinkContact, encryptedConnLink :: Maybe Text}
+  | CRUserContactLinkCreated {user :: User, connLinkContact :: CreatedLinkContact}
   | CRUserContactLinkDeleted {user :: User}
   | CRAcceptingContactRequest {user :: User, contact :: Contact}
   | CRContactAlreadyExists {user :: User, contact :: Contact}
   | CRLeftMemberUser {user :: User, groupInfo :: GroupInfo}
-  | CRGroupDeletedUser {user :: User, groupInfo :: GroupInfo, msgSigned :: Bool}
+  | CRGroupDeletedUser {user :: User, groupInfo :: GroupInfo, msgSigned :: Bool, localDeletion :: Bool}
   | CRForwardPlan {user :: User, itemsCount :: Int, chatItemIds :: [ChatItemId], forwardConfirmation :: Maybe ForwardConfirmation}
   | CRChatMsgContent {user :: User, msgContent :: MsgContent}
   | CRRcvFileAccepted {user :: User, chatItem :: AChatItem}
@@ -939,11 +984,15 @@ data ChatEvent
   | CEvtUserAcceptedGroupSent {user :: User, groupInfo :: GroupInfo, hostContact :: Maybe Contact} -- there is the same command response
   | CEvtGroupLinkConnecting {user :: User, groupInfo :: GroupInfo, hostMember :: GroupMember}
   | CEvtBusinessLinkConnecting {user :: User, groupInfo :: GroupInfo, hostMember :: GroupMember, fromContact :: Contact}
-  | CEvtSentGroupInvitation {user :: User, groupInfo :: GroupInfo, contact :: Contact, member :: GroupMember} -- there is the same command response
   | CEvtContactUpdated {user :: User, fromContact :: Contact, toContact :: Contact}
   | CEvtGroupMemberUpdated {user :: User, groupInfo :: GroupInfo, fromMember :: GroupMember, toMember :: GroupMember}
   | CEvtContactDeletedByContact {user :: User, contact :: Contact}
   | CEvtReceivedContactRequest {user :: User, contactRequest :: UserContactRequest, chat_ :: Maybe AChat}
+  | CEvtServiceRequest {user :: User, requestId :: AgentInvId, signerKey :: Maybe C.PublicKeyEd25519, requestData :: J.Object}
+  | CEvtServiceReplySent {connectionId :: AgentConnId}
+  | CEvtBadgeChanged {user :: User, badgeState :: Maybe BadgeState} -- badge state changed, including a renewal that arrived without a command
+  | CEvtBadgeAlert {user :: User, badgeAlert :: BadgeAlert}
+  | CEvtContactRequestRejected {user :: User, contact :: Contact, rejectionReason :: Maybe ContactRejectionReason}
   | CEvtAcceptingContactRequest {user :: User, contact :: Contact} -- there is the same command response
   | CEvtAcceptingBusinessRequest {user :: User, groupInfo :: GroupInfo}
   | CEvtContactRequestAlreadyAccepted {user :: User, contact :: Contact}
@@ -1426,10 +1475,20 @@ data ChatError
   | ChatErrorRemoteHost {rhKey :: RHKey, remoteHostError :: RemoteHostError}
   deriving (Show, Exception)
 
--- why a resolved POPOPX name could not be used (the name itself resolved; an unregistered name is the agent's NAME NOT_FOUND)
+-- why a resolved Popopx name could not be used (the name itself resolved; an unregistered name is the agent's NAME NOT_FOUND)
 data PopopxDomainError
   = SDENoValidLink -- the name's record has no usable contact/channel link
   | SDEUnknownDomain -- the resolved link's profile has no name, or a different name
+  deriving (Eq, Show)
+
+data BadgeRedeemError
+  = BREInvalidCode -- format or check character
+  | BREServiceNotConfigured
+  | BREBadgeActive
+  | BREServiceError {serviceError :: BadgeServiceErrorCode}
+  | BREInvalidResponse {message :: String}
+  | BREUnknownKeyIndex
+  | BRECredentialNotVerified
   deriving (Eq, Show)
 
 data ChatErrorType
@@ -1504,6 +1563,7 @@ data ChatErrorType
   | CEAgentVersion
   | CEAgentNoSubResult {agentConnId :: AgentConnId}
   | CECommandError {message :: String}
+  | CEBadgeRedeemError {badgeRedeemError :: BadgeRedeemError}
   | CEServerProtocol {serverProtocol :: AProtocolType}
   | CEAgentCommandError {message :: String}
   | CEInvalidFileDescription {message :: String}
@@ -1737,12 +1797,12 @@ withFastStore = withStorePriority True
 withStorePriority :: Bool -> (DB.Connection -> ExceptT StoreError IO a) -> CM a
 withStorePriority priority action = do
   ChatController {chatStore} <- ask
-  liftIOEither $ withTransactionPriority chatStore priority (runExceptT . withExceptT ChatErrorStore . action) `E.catch` handleDBErrors
+  liftIOEither $ withTransactionPriority chatStore priority (runExceptT . withExceptT ChatErrorStore . action) `catchOwn'` handleDBErrors
 
 withStoreBatch :: Traversable t => (DB.Connection -> t (IO (Either ChatError a))) -> CM' (t (Either ChatError a))
 withStoreBatch actions = do
   ChatController {chatStore} <- ask
-  liftIO $ withTransaction chatStore $ mapM (`E.catch` handleDBErrors) . actions
+  liftIO $ withTransaction chatStore $ mapM (`catchOwn'` handleDBErrors) . actions
 
 handleDBErrors :: E.SomeException -> IO (Either ChatError a)
 handleDBErrors e = pure $ Left $ ChatErrorStore $ case E.fromException e of
@@ -1787,6 +1847,8 @@ $(JQ.deriveJSON (sumTypeJSON $ dropPrefix "GLP") ''GroupLinkPlan)
 $(JQ.deriveJSON (sumTypeJSON $ dropPrefix "FC") ''ForwardConfirmation)
 
 $(JQ.deriveJSON (sumTypeJSON $ dropPrefix "SDE") ''PopopxDomainError)
+
+$(JQ.deriveJSON (sumTypeJSON $ dropPrefix "BRE") ''BadgeRedeemError)
 
 $(JQ.deriveJSON (sumTypeJSON $ dropPrefix "CE") ''ChatErrorType)
 

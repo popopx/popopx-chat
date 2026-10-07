@@ -1,4 +1,4 @@
-export declare const welcomeMessage = "Hello! This is a *POPOPX team* support bot - not an AI.\n*Join public groups* at https://popopx.chat/directory or [via directory bot](https://smp4.simplex.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok)\n\nWe just launched [equity crowdfunding on Wefunder](https://wefunder.com/popopx.chat)!\n\nPlease ask any questions about POPOPX Chat and about our crowdfunding.";
+export declare const welcomeMessage = "Hello! This is a *POPOPX team* support bot - not an AI.\n*Join public groups* at https://popopx.chat/directory or [via directory bot](https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok)\n\nWe just launched [equity crowdfunding on Wefunder](https://wefunder.com/popopx.chat)!\n\nPlease ask any questions about POPOPX Chat and about our crowdfunding.";
 export declare function queueMessage(timezone: string, grokEnabled: boolean): string;
 export declare const grokActivatedMessage = "*You are now chatting with Grok* - use any language.";
 export declare function teamAddedMessage(timezone: string, grokPresent: boolean): string;

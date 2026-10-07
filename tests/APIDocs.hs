@@ -1,8 +1,8 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
+-- Original Work Copyright (C) 2020-2022 popopx.chat
 --
 -- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
 -- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
+-- Changes: Rebranded from Popopx Chat to POPOPX Chat.
 
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE LambdaCase #-}
@@ -25,7 +25,7 @@ import Data.List (foldl', intercalate, sort, (\\))
 import qualified Data.Set as S
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
-import Simplex.Messaging.Util (ifM)
+import Popopx.Messaging.Util (ifM)
 import System.Directory (doesFileExist)
 import Test.Hspec
 

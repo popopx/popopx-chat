@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
@@ -31,32 +25,34 @@ import qualified Data.ByteString.Lazy.Char8 as LB
 import Data.Time.Clock (getCurrentTime)
 import Data.Word (Word8, Word32)
 import Foreign.C
-import Foreign.Marshal.Alloc (mallocBytes)
+import Foreign.Marshal.Alloc (alloca, mallocBytes)
 import Foreign.Marshal.Utils (copyBytes)
 import Foreign.Ptr
 import Foreign.StablePtr
 import Foreign.Storable (peek)
 import GHC.IO.Encoding (setLocaleEncoding, setFileSystemEncoding, setForeignEncoding)
 import JSONFixtures
-import Simplex.Chat
-import Simplex.Chat.Badges (BadgeInfo (..), BadgeRequest (..), BadgeType (..), generateMasterKey, verifyCredential)
-import Simplex.Chat.Controller (ChatController (..), ChatDatabase (..))
-import Simplex.Chat.Mobile hiding (error)
-import Simplex.Chat.Mobile.Badges hiding (error)
-import Simplex.Chat.Mobile.File
-import Simplex.Chat.Mobile.Shared
-import Simplex.Chat.Mobile.WebRTC
-import Simplex.Chat.Options.DB
-import Simplex.Chat.Store
-import Simplex.Chat.Store.Profiles
-import Simplex.Chat.Types (AgentUserId (..), Profile (..))
-import Simplex.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..))
-import qualified Simplex.Messaging.Agent.Store.SQLite.DB as DB
-import qualified Simplex.Messaging.Crypto as C
-import Simplex.Messaging.Crypto.File (CryptoFile(..), CryptoFileArgs (..))
-import qualified Simplex.Messaging.Crypto.File as CF
-import Simplex.Messaging.Encoding.String
-import Simplex.Messaging.Parsers (dropPrefix, sumTypeJSON)
+import Popopx.Chat
+import Popopx.Chat.Badges (BadgeInfo (..), BadgeRequest (..), BadgeType (..), generateMasterKey, verifyCredential)
+import Popopx.Chat.Controller (ChatConfig (..), ChatController (..), ChatDatabase (..))
+import Popopx.Chat.Mobile hiding (error)
+import Popopx.Chat.Mobile.Badges hiding (error)
+import Popopx.Chat.Mobile.File
+import Popopx.Chat.Mobile.Shared
+import Popopx.Chat.Mobile.WebRTC
+import Popopx.Chat.Options.DB
+import Popopx.Chat.Store
+import Popopx.Chat.Store.Profiles
+import Popopx.Chat.Types (AgentUserId (..), Profile (..))
+import Popopx.Messaging.Agent.Client (AgentClient (..))
+import Popopx.Messaging.Agent.Env.SQLite (AgentConfig (..), Env (..))
+import Popopx.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..))
+import qualified Popopx.Messaging.Agent.Store.SQLite.DB as DB
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.File (CryptoFile(..), CryptoFileArgs (..))
+import qualified Popopx.Messaging.Crypto.File as CF
+import Popopx.Messaging.Encoding.String
+import Popopx.Messaging.Parsers (dropPrefix, sumTypeJSON)
 import System.Directory (copyFile)
 import System.FilePath ((</>))
 import System.IO (utf8)
@@ -71,6 +67,7 @@ mobileTests = do
       setForeignEncoding utf8
     it "start new chat without user" testChatApiNoUser
     it "start new chat with existing user" testChatApi
+    it "should set queue size via C API" testChatMigrateInitQueueCApi
     it "should encrypt/decrypt WebRTC frames" testMediaApi
     it "should encrypt/decrypt WebRTC frames via C API" testMediaCApi
     describe "should read/write encrypted files via C API" $ do
@@ -170,6 +167,22 @@ testChatApi ps = do
   chatRecvMsgWait cc 10000 `shouldReturn` ""
   chatParseMarkdown "hello" `shouldBe` "{}"
   chatParseMarkdown "*hello*" `shouldBe` parsedMarkdown
+
+testChatMigrateInitQueueCApi :: TestParams -> IO ()
+testChatMigrateInitQueueCApi ps = do
+  cPath <- newCString $ tmpPath ps </> "1"
+  cKey <- newCString ""
+  cConfirm <- newCString "yesUp"
+  alloca $ \ctrlPtr -> do
+    let migrateInit queueSize = peekCAString =<< cChatMigrateInitQueue cPath cKey cConfirm queueSize ctrlPtr
+    migrateInit 0 `shouldReturn` jsonStr DBMInvalidQueueSize
+    migrateInit (-1) `shouldReturn` jsonStr DBMInvalidQueueSize
+    migrateInit 65536 `shouldReturn` jsonStr DBMOk
+    ChatController {config = ChatConfig {tbqSize}, smpAgent = AgentClient {agentEnv = Env {config = AgentConfig {tbqSize = agentQSize}}}} <- deRefStablePtr =<< peek ctrlPtr
+    tbqSize `shouldBe` 65536
+    agentQSize `shouldBe` 65536
+  where
+    jsonStr = LB.unpack . J.encode
 
 testMediaApi :: HasCallStack => TestParams -> IO ()
 testMediaApi ps = do
@@ -328,7 +341,8 @@ testBadgeKeygenIssueCApi _ = do
   g <- C.newRandom
   IssuerKeyPair {publicKey, secretKey} <- ffiResult =<< (peekCString =<< cChatBadgeKeygen)
   mk <- generateMasterKey g
-  let req = BadgeIssueReq {badgeKeyIdx = 1, secretKey, request = BadgeRequest {masterKey = mk, badgeInfo = BadgeInfo {badgeType = BTSupporter, badgeExpiry = Nothing, badgeExtra = ""}}}
+  badgeExpiry <- getCurrentTime
+  let req = BadgeIssueReq {badgeKeyIdx = 1, secretKey, request = BadgeRequest {masterKey = mk, badgeInfo = BadgeInfo {badgeType = BTSupporter, badgeExpiry, badgeExtra = ""}}}
   cred <- ffiResult =<< (peekCString =<< cChatBadgeIssue =<< newCString (LB.unpack (J.encode req)))
   verifyCredential publicKey cred `shouldReturn` True
 

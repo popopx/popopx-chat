@@ -1,8 +1,8 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
+-- Original Work Copyright (C) 2020-2022 popopx.chat
 --
 -- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
 -- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
+-- Changes: Rebranded from Popopx Chat to POPOPX Chat.
 
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -13,9 +13,9 @@ import Crypto.Random (getRandomBytes)
 import qualified Data.ByteString.Base64.URL as U
 import qualified Data.ByteString.Char8 as B
 import Foreign.StablePtr
-import Simplex.Chat.Mobile
-import Simplex.Chat.Mobile.WebRTC
-import qualified Simplex.Messaging.Crypto as C
+import Popopx.Chat.Mobile
+import Popopx.Chat.Mobile.WebRTC
+import qualified Popopx.Messaging.Crypto as C
 import System.FilePath ((</>))
 import Test.Hspec
 

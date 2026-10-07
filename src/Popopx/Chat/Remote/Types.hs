@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
@@ -24,6 +18,7 @@ import Control.Monad (when)
 import qualified Data.Aeson.TH as J
 import Data.ByteString (ByteString)
 import Data.Int (Int64)
+import qualified Data.Map.Strict as M
 import Data.Text (Text)
 import Data.Word (Word16, Word32)
 import Popopx.Chat.Remote.AppVersion
@@ -79,8 +74,10 @@ getRemoteRcvKeys RemoteCrypto {rcvCounter, chainKeys = TSbChainKeys {rcvKey}, sk
       | otherwise = do -- prevCorrId < corrId
           writeTVar rcvCounter corrId
           skipKeys (prevCorrId + 1)
+          modifyTVar' skippedKeys $ \m -> M.drop (M.size m - maxSkippedKeys) m
           Right <$> getKeys
     maxSkip = 256
+    maxSkippedKeys = 1024
     getKeys = (,) <$> stateTVar rcvKey C.sbcHkdf <*> stateTVar rcvKey C.sbcHkdf
     skipKeys !cId =
       when (cId < corrId) $ do

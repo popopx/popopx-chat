@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE GADTs #-}
@@ -203,7 +197,7 @@ hasObfuscatedPopopxLink t =
   fromRight False $ AB.parseOnly findLinkP $ encodeUtf8 $ T.filter (not . isSpace) t
   where
     findLinkP = do
-      AB.skipWhile (\c -> c /= 'p' && c /= 's' && c /= 'h') -- links start only with "popopx:" or "https://"
+      AB.skipWhile (\c -> c /= 's' && c /= 'h') -- links start only with "popopx:" or "https://"
       (True <$ (strP :: AB.Parser AConnectionLink))
         <|> (AB.anyChar *> findLinkP)
         <|> pure False
@@ -217,7 +211,7 @@ markdownP = mconcat <$> A.many' fragmentP
         Just c -> case c of
           ' ' -> unmarked <$> A.takeWhile (== ' ')
           '+' -> phoneP <|> wordP
-          '*' -> formattedP '*' Bold
+          '*' -> boldP <|> formattedP '*' Bold
           '_' -> formattedP '_' Italic
           '~' -> formattedP '~' StrikeThrough
           '`' -> formattedP '`' Snippet
@@ -239,6 +233,12 @@ markdownP = mconcat <$> A.many' fragmentP
       | T.null s || T.head s == ' ' || T.last s == ' ' =
           unmarked $ c `T.cons` s `T.snoc` c
       | otherwise = markdown f s
+    boldP :: Parser Markdown
+    boldP = do
+      s <- A.string "**" *> A.takeTill (== '*') <* A.string "**"
+      if T.null s || T.head s == ' ' || T.last s == ' '
+        then fail "not bold"
+        else pure $ markdown Bold s
     secretP :: Parser Markdown
     secretP = secret <$?> ((,,) <$> A.takeWhile (== '#') <*> A.takeTill (== '#') <*> A.takeWhile1 (== '#'))
     secret :: (Text, Text, Text) -> Either String Markdown
@@ -286,7 +286,7 @@ markdownP = mconcat <$> A.many' fragmentP
       f <- case strDecode $ encodeUtf8 l of
         Right lnk@(ACL _ cLink) -> case cLink of
           CLShort _ -> pure $ popopxUriFormat (Just t) lnk
-          CLFull _ -> fail "full POPOPX link in hyperlink"
+          CLFull _ -> fail "full SimpleX link in hyperlink"
         Left _ -> case parseUri $ encodeUtf8 l of
           Right _ -> pure $ HyperLink (Just t) l
           Left e -> fail $ "not uri: " <> T.unpack e
@@ -355,7 +355,7 @@ markdownP = mconcat <$> A.many' fragmentP
     popopxUriFormat :: Maybe Text -> AConnectionLink -> Format
     popopxUriFormat showText = \case
       ACL m (CLFull cReq) -> case cReq of
-        CRContactUri crData -> PopopxLink showText (linkType' crData) cLink $ uriHosts crData
+        CRContactUri crData _ -> PopopxLink showText (linkType' crData) cLink $ uriHosts crData
         CRInvitationUri crData _ -> PopopxLink showText XLInvitation cLink $ uriHosts crData
         where
           cLink = ACL m $ CLFull $ popopxConnReqUri cReq
@@ -518,11 +518,11 @@ displayNameTextP_ = (,"") <$> quoted '\'' <|> splitPunctuation <$> takeNameTill 
     refChar c = c > ' ' && c /= '#' && c /= '@' && c /= '\''
 
 commandTextP :: Parser (Text, Text)
-commandTextP = do
-  (cmd, punct) <- displayNameTextP_
-  case T.words cmd of
-    (keyword : _) | T.all (\c -> isAlpha c || isDigit c || c == '_') keyword -> pure (cmd, punct)
-    _ -> fail "invalid command keyword"
+commandTextP = commandText <$> displayNameTextP_
+  where
+    commandText (cmd, punct)
+      | T.null cmd = (punct, "")
+      | otherwise = (cmd, punct)
 
 splitPunctuation :: Text -> (Text, Text)
 splitPunctuation s = (T.dropWhileEnd isPunctuation s, T.takeWhileEnd isPunctuation s)

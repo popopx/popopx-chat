@@ -30,8 +30,8 @@
       # `appendOverlays` with a singleton is identical to `extend`.
       let pkgs = haskellNix.legacyPackages.${system}.appendOverlays [android26]; in
       let drv' = { extra-modules, pkgs', ... }: pkgs'.haskell-nix.project {
-        compiler-nix-name = "ghc966";
-        index-state = "2026-09-30T00:00:00Z";
+        compiler-nix-name = "ghc963";
+        index-state = "2023-12-12T00:00:00Z";
         # We need this, to specify we want the cabal project.
         # If the stack.yaml was dropped, this would not be necessary.
         projectFileName = "cabal.project";
@@ -46,13 +46,6 @@
               # Override ghcOptions for ALL packages
               ghcOptions = lib.mkDefault [
                 "-j1"
-              ];
-              # Use local GHC source instead of fetching from GitHub
-              nonReinstallablePkgs = [ "rts" "ghc-heap" "ghc-prim" "integer-gmp" "integer-simple" "base"
-                "deepseq" "array" "ghc-boot-th" "pretty" "template-haskell"
-                "ghc-boot" "ghc" "Win32" "xhtml" "Cabal" "containers"
-                "binary" "filepath" "time" "unix" "directory"
-                "transformers" "mtl" "process" "parsec" "haskeline"
               ];
             }
           )
@@ -345,7 +338,7 @@
                 '';
               });
               # The android-support package is at
-              # https://github.com/popopx/android-support
+              # https://github.com/simplex-chat/android-support
               "aarch64-android:lib:support" = (drv androidPkgs).android-support.components.library.override (p: {
                 smallAddressSpace = true;
                 # no -dynamic

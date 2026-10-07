@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
@@ -19,12 +13,15 @@ module Popopx.Chat.Core
   )
 where
 
+import Control.Concurrent (forkIO)
+import Control.Exception (fromException, mask, onException, throwTo)
 import Control.Logger.Simple
 import Control.Monad
 import Control.Monad.Except
 import Control.Monad.Reader
 import qualified Data.ByteString.Char8 as B
 import Data.List (find)
+import Data.Maybe (isNothing)
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Text.Encoding (encodeUtf8)
@@ -48,6 +45,7 @@ import System.Exit (exitFailure)
 import System.IO (hFlush, stdout)
 import Text.Read (readMaybe)
 import UnliftIO.Async
+import UnliftIO.Exception (finally)
 
 popopxChatCore :: ChatConfig -> ChatOpts -> (User -> ChatController -> IO ()) -> IO ()
 popopxChatCore cfg@ChatConfig {confirmMigrations, testView, chatHooks} opts@ChatOpts {coreOptions = coreOptions@CoreChatOpts {dbOptions, logAgent, yesToUpMigrations, migrationBackupPath, maintenance}, createBot, userDisplayName, userImageFile} chat =
@@ -96,14 +94,24 @@ runPopopxChat :: ChatConfig -> ChatOpts -> User -> ChatController -> (User -> Ch
 runPopopxChat ChatConfig {testView} ChatOpts {coreOptions = CoreChatOpts {chatRelay, chatRelayServer, headless, maintenance}} u cc@ChatController {config = ChatConfig {chatHooks}} chat
   | maintenance = wait =<< async (chat u cc)
   | otherwise = do
-      a1 <- runReaderT (startChatController True True) cc
-      when (chatRelay && not testView) $ askCreateRelayAddress cc u chatRelayServer headless
-      forM_ (postStartHook chatHooks) ($ cc)
-      a2 <- async $ chat u cc
-      waitEither_ a1 a2
+      a1 <- runReaderT (startChatController True True False) cc `onException` stopChatController cc
+      flip finally (stopUnlessCancelled a1) $ do
+        when (chatRelay && not testView) $ askCreateRelayAddress cc u chatRelayServer headless
+        forM_ (postStartHook chatHooks) ($ cc)
+        -- throwTo waits while the callback is masked, so an outside interrupt cancels it from a forked thread.
+        -- A /_stop sent from the callback ends a1 first, which leaves the callback running.
+        mask $ \restore -> do
+          a2 <- asyncWithUnmask $ \unmask -> unmask (chat u cc)
+          let cancelCallback = poll a1 >>= \r -> when (isNothing r) $ void $ forkIO $ throwTo (asyncThreadId a2) AsyncCancelled
+          restore (waitEither_ a1 a2) `onException` cancelCallback
+  where
+    stopUnlessCancelled a1 =
+      poll a1 >>= \case
+        Just (Left e) | fromException e == Just AsyncCancelled -> pure ()
+        _ -> stopChatController cc
 
 sendChatCmdStr :: ChatController -> String -> IO (Either ChatError ChatResponse)
-sendChatCmdStr cc s = runReaderT (execChatCommand Nothing (encodeUtf8 $ T.pack s) 0) cc
+sendChatCmdStr cc s = runReaderT (execChatCommand CSLocal (encodeUtf8 $ T.pack s) 0) cc
 
 sendChatCmd :: ChatController -> ChatCommand -> IO (Either ChatError ChatResponse)
 sendChatCmd cc cmd = runReaderT (execChatCommand' cmd 0) cc
@@ -181,8 +189,8 @@ askCreateRelayAddress cc@ChatController {chatStore} user@User {userId} server_ h
     promptCreate = do
       ok <- if headless then pure True else onOffPrompt "Create relay address" True
       when ok $
-        execChatCommand' (APICreateMyAddress userId server_) 0 `runReaderT` cc >>= \case
-          Right (CRUserContactLinkCreated _ address _) -> do
+        execChatCommand' (APICreateMyAddress userId server_ Nothing) 0 `runReaderT` cc >>= \case
+          Right (CRUserContactLinkCreated _ address) -> do
             putStrLn "Chat relay address is created:"
             putStrLn $ addressStr address
           r -> printResponseEvent (Nothing, Nothing) (config cc) r

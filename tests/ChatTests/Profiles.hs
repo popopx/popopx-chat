@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DuplicateRecordFields #-}
@@ -26,25 +20,25 @@ import qualified Data.Attoparsec.ByteString.Char8 as A
 import qualified Data.ByteString.Char8 as B
 import qualified Data.Text as T
 import Data.Time.Clock (UTCTime, addUTCTime, getCurrentTime, nominalDay)
-import Data.Time.Clock.POSIX (posixSecondsToUTCTime)
+import Data.Time.Clock.POSIX (posixSecondsToUTCTime, utcTimeToPOSIXSeconds)
 import Data.Time.Format (defaultTimeLocale, formatTime)
 import qualified Data.Map.Strict as M
-import Simplex.Chat.Badges (BadgeCredential, BadgeInfo (..), BadgePurchase (..), BadgeRequest (..), BadgeType (..), generateMasterKey, issueBadge, verifyPayment)
-import Simplex.Chat.Controller (ChatConfig (..), ChatController (..), ChatHooks (..), defaultChatHooks, mkStoreCxt)
-import Simplex.Chat.Options (ChatOpts (..), CoreChatOpts (..))
-import Simplex.Chat.Protocol (LinkOwnerSig, MsgChatLink (..), MsgContent (..), currentChatVersion)
-import Simplex.Chat.Store.Shared (createContact)
-import Simplex.Chat.Types (ConnStatus (..), Profile (..), GroupRejectionReason (..), profileFromName)
-import qualified Simplex.Messaging.Crypto as C
-import Simplex.Messaging.Crypto.BBS (BBSPublicKey, BBSSecretKey, bbsKeyGen)
-import Simplex.Chat.Types.Shared (GroupMemberRole (..))
-import Simplex.Chat.Types.UITheme
-import Simplex.Messaging.Agent.Env.SQLite
-import Simplex.Messaging.Agent.RetryInterval
-import Simplex.Messaging.Encoding.String (StrEncoding (..))
-import Simplex.Messaging.Server.Env.STM hiding (subscriptions)
-import Simplex.Messaging.Transport
-import Simplex.Messaging.Util (decodeJSON, encodeJSON)
+import Popopx.Chat.Badges (BadgeCredential, BadgeInfo (..), BadgePurchase (..), BadgeRequest (..), BadgeType (..), generateMasterKey, issueBadge, verifyPayment)
+import Popopx.Chat.Controller (ChatConfig (..), ChatHooks (..), defaultChatHooks, storeCxt)
+import Popopx.Chat.Options (ChatOpts (..), CoreChatOpts (..))
+import Popopx.Chat.Protocol (LinkOwnerSig, MsgChatLink (..), MsgContent (..))
+import Popopx.Chat.Store.Shared (createContact)
+import Popopx.Chat.Types (ConnStatus (..), Profile (..), GroupRejectionReason (..), profileFromName)
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.BBS (BBSPublicKey, BBSSecretKey, bbsKeyGen)
+import Popopx.Chat.Types.Shared (GroupMemberRole (..))
+import Popopx.Chat.Types.UITheme
+import Popopx.Messaging.Agent.Env.SQLite
+import Popopx.Messaging.Agent.RetryInterval
+import Popopx.Messaging.Encoding.String (StrEncoding (..))
+import Popopx.Messaging.Server.Env.STM hiding (subscriptions)
+import Popopx.Messaging.Transport
+import Popopx.Messaging.Util (decodeJSON, encodeJSON)
 import System.Directory (copyFile, createDirectoryIfMissing)
 import Test.Hspec hiding (it)
 
@@ -58,6 +52,9 @@ chatProfileTests = do
     it "reject profile image that is too large" testSetProfileImageTooLarge
     it "set profile image from file" testSetProfileImageFromFile
     it "use multiword profile names" testMultiWordProfileNames
+    it "auto-accept group invitations" testAutoAcceptGroupInvitations
+    it "auto-accept group invitations on a second profile" testAutoAcceptGroupInvitationsSecondProfile
+    it "auto-accept group invitations on an inactive profile" testAutoAcceptGroupInvitationsInactiveProfile
     it "present supporter badge to contacts" testUserBadgeBroadcast
     it "supporter badge sent to contact connecting after attach" testUserBadgeOnConnect
     it "supporter badge sent to member joining via group link" testUserBadgeGroupLink
@@ -67,8 +64,10 @@ chatProfileTests = do
     it "supporter badge sent to contact connecting via address" testUserBadgeContactAddress
   describe "user contact link" $ do
     it "create and connect via contact link" testUserContactLink
+    it "rotate address ratchet keys" testRotateAddressRatchetKeys
     it "create address on specified server" testCreateAddressOnServer
     it "retry connecting via contact link" testRetryConnectingViaContactLink
+    it "retry connecting via address in contact profile after address keys rotation" testRetryConnectingContactViaAddress
     it "add contact link to profile" testProfileLink
     it "auto accept contact requests" testUserContactLinkAutoAccept
     it "deduplicate contact requests" testDeduplicateContactRequests
@@ -124,7 +123,7 @@ chatProfileTests = do
     describe "group preferences for specific member role" $ do
       it "direct messages" testGroupPrefsDirectForRole
       it "files & media" testGroupPrefsFilesForRole
-      it "SimpleX links" testGroupPrefsSimplexLinksForRole
+      it "SimpleX links" testGroupPrefsPopopxLinksForRole
     it "set user, contact and group UI theme" testSetUITheme
   describe "short links" $ do
     it "should connect via one-time invitation" testShortLinkInvitation
@@ -220,7 +219,7 @@ testProfileDescriptionShown =
       alice ##> "/i @bob"
       alice <## "contact ID: 2"
       alice <## "description:"
-      alice <## "check [this link](https://smp4.simplex.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) out"
+      alice <## "check [this link](https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) out"
       alice <##. "receiving messages via"
       alice <##. "sending messages via"
       alice <## "you've shared main profile with this contact"
@@ -228,7 +227,7 @@ testProfileDescriptionShown =
       alice <## "quantum resistant end-to-end encryption"
       alice <##. "peer chat protocol version range"
   where
-    bobWithDescr = bobProfile {description = Just "check [this link](https://smp4.simplex.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) out"}
+    bobWithDescr = bobProfile {description = Just "check [this link](https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) out"}
 
 -- for a member without a direct contact, the description is redacted per the group's link/name policy
 testMemberDescriptionRedacted :: HasCallStack => TestParams -> IO ()
@@ -240,7 +239,7 @@ testMemberDescriptionRedacted =
       alice ##> "/g team"
       alice <## "group #team is created"
       alice <## "to add members use /a team <name> or /create link #team"
-      -- prohibit direct messages (and thus simplex links) before members join
+      -- prohibit direct messages (and thus popopx links) before members join
       alice ##> "/set direct #team off"
       alice <## "updated group preferences:"
       alice <## "Direct messages: off"
@@ -272,23 +271,31 @@ testMemberDescriptionRedacted =
       bob <## "connection not verified, use /code command to see security code"
       bob <##. "peer chat protocol version range"
   where
-    cathWithDescr = cathProfile {description = Just "check [this link](https://smp4.simplex.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) out"}
+    cathWithDescr = cathProfile {description = Just "check [this link](https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) out"}
 
 -- the test issuer key under index 1 in the test config
 testBadgeKeys :: BBSPublicKey -> M.Map Int BBSPublicKey
 testBadgeKeys = M.singleton 1
 
+futureDate :: UTCTime
+futureDate = posixSecondsToUTCTime 4102444800 -- 2100-01-01
+
 -- issue a supporter badge credential with the given expiry (test issuer)
-issueTestBadge :: BBSSecretKey -> Maybe UTCTime -> IO BadgeCredential
-issueTestBadge sk badgeExpiry = do
+issueTestBadge :: BBSSecretKey -> UTCTime -> IO BadgeCredential
+issueTestBadge sk = issueTestBadgeType sk BTSupporter
+
+-- The expiry is signed as written but PostgreSQL stores it to the microsecond, so it is cut to whole seconds, as the service issues it.
+issueTestBadgeType :: BBSSecretKey -> BadgeType -> UTCTime -> IO BadgeCredential
+issueTestBadgeType sk badgeType expiry = do
   drg <- C.newRandom
   mk <- generateMasterKey drg
-  let info = BadgeInfo {badgeType = BTSupporter, badgeExpiry, badgeExtra = ""}
+  let badgeExpiry = posixSecondsToUTCTime $ fromInteger $ truncate $ utcTimeToPOSIXSeconds expiry
+      info = BadgeInfo {badgeType, badgeExpiry, badgeExtra = ""}
   Just vreq <- verifyPayment (BPRedeemCode "TEST") BadgeRequest {masterKey = mk, badgeInfo = info}
   Right cred <- issueBadge 1 sk vreq
   pure cred
 
--- the same single-line JSON `simplex-chat badge sign` prints, pasted into the app
+-- the same single-line JSON `popopx-chat badge sign` prints, pasted into the app
 addTestBadge :: HasCallStack => TestCC -> BadgeCredential -> IO ()
 addTestBadge cc cred = do
   cc ##> ("/badge add " <> T.unpack (encodeJSON cred))
@@ -301,7 +308,7 @@ testUserBadgeBroadcast ps = do
   where
     test sk alice bob = do
       connectUsers alice bob
-      addTestBadge alice =<< issueTestBadge sk Nothing
+      addTestBadge alice =<< issueTestBadge sk futureDate
       -- own badge is shown (add succeeded)
       alice ##> "/p"
       alice <## "user profile: alice (Alice, * supporter)"
@@ -316,7 +323,7 @@ testUserBadgeOnConnect ps = do
   testChatCfg2 (testCfg {badgePublicKeys = testBadgeKeys pk}) aliceProfile bobProfile (test sk) ps
   where
     test sk alice bob = do
-      addTestBadge alice =<< issueTestBadge sk Nothing
+      addTestBadge alice =<< issueTestBadge sk futureDate
       -- a contact connecting after the badge is attached receives it in the connection handshake
       alice ##> "/c"
       inv <- getInvitation alice
@@ -328,7 +335,7 @@ testUserBadgeOnConnect ps = do
       bob ##> "/i alice"
       bob <## "contact ID: 2"
       bob <## "supporter badge - active"
-      bob <## "no expiry"
+      bob <## "expires 2100-01-01"
       bob <## "receiving messages via: localhost"
       bob <## "sending messages via: localhost"
       bob <## "you've shared main profile with this contact"
@@ -342,7 +349,7 @@ testUserBadgeGroupLink ps = do
   testChatCfg2 (testCfg {badgePublicKeys = testBadgeKeys pk}) aliceProfile bobProfile (test sk) ps
   where
     test sk alice bob = do
-      addTestBadge alice =<< issueTestBadge sk Nothing
+      addTestBadge alice =<< issueTestBadge sk futureDate
       alice ##> "/g team"
       alice <## "group #team is created"
       alice <## "to add members use /a team <name> or /create link #team"
@@ -366,7 +373,7 @@ testUserBadgeGroupLink ps = do
       bob <## "group ID: 1"
       bob <##. "member ID: "
       bob <## "supporter badge - active"
-      bob <## "no expiry"
+      bob <## "expires 2100-01-01"
       bob <## "receiving messages via: localhost"
       bob <## "sending messages via: localhost"
       bob <## "connection not verified, use /code command to see security code"
@@ -378,7 +385,7 @@ testUserBadgeContactAddress ps = do
   testChatCfg2 (testCfg {badgePublicKeys = testBadgeKeys pk}) aliceProfile bobProfile (test sk) ps
   where
     test sk alice bob = do
-      addTestBadge alice =<< issueTestBadge sk Nothing
+      addTestBadge alice =<< issueTestBadge sk futureDate
       alice ##> "/ad"
       (shortLink, cLink) <- getContactLinks alice True
       -- the address link data carries the badge proof; the connect plan returns it verified, without crypto
@@ -398,7 +405,7 @@ testUserBadgeContactAddress ps = do
       bob ##> "/i alice"
       bob <## "contact ID: 2"
       bob <## "supporter badge - active"
-      bob <## "no expiry"
+      bob <## "expires 2100-01-01"
       bob <## "receiving messages via: localhost"
       bob <## "sending messages via: localhost"
       bob <## "you've shared main profile with this contact"
@@ -409,12 +416,12 @@ testUserBadgeContactAddress ps = do
 testUserBadgeExpired :: HasCallStack => TestParams -> IO ()
 testUserBadgeExpired ps = do
   Right (pk, sk) <- bbsKeyGen
-  -- expired recently (within 31 days), so the badge is still presented and shown as expired
-  expiry <- addUTCTime (-2 * nominalDay) <$> getCurrentTime
+  -- expired past the grace period but within the old interval, so the badge is still presented and shown as expired
+  expiry <- addUTCTime (-10 * nominalDay) <$> getCurrentTime
   testChatCfg2 (testCfg {badgePublicKeys = testBadgeKeys pk}) aliceProfile bobProfile (test sk expiry) ps
   where
     test sk expiry alice bob = do
-      addTestBadge alice =<< issueTestBadge sk (Just expiry)
+      addTestBadge alice =<< issueTestBadge sk expiry
       -- expired badge: no star
       alice ##> "/p"
       alice <## "user profile: alice (Alice)"
@@ -437,7 +444,7 @@ testUserBadgeExpiredOld ps = do
   testChatCfg2 (testCfg {badgePublicKeys = testBadgeKeys pk}) aliceProfile bobProfile (test sk) ps
   where
     test sk alice bob = do
-      addTestBadge alice =<< issueTestBadge sk (Just pastDate)
+      addTestBadge alice =<< issueTestBadge sk pastDate
       -- a badge that expired over a month ago is not presented to contacts at all
       connectUsers alice bob
       bob ##> "/i alice"
@@ -456,7 +463,7 @@ testUserBadgeIncognito ps = do
   testChatCfg2 (testCfg {badgePublicKeys = testBadgeKeys pk}) aliceProfile bobProfile (test sk) ps
   where
     test sk alice bob = do
-      addTestBadge alice =<< issueTestBadge sk Nothing
+      addTestBadge alice =<< issueTestBadge sk futureDate
       -- an incognito identity must not carry the badge
       bob ##> "/connect"
       inv <- getInvitation bob
@@ -544,6 +551,61 @@ testSetProfileImageFromFile ps = testChat aliceProfile test ps
       alice ##> ("/set profile image file " <> emptyPath)
       alice <##. "bad chat command: image file is empty"
 
+testAutoAcceptGroupInvitations :: HasCallStack => TestParams -> IO ()
+testAutoAcceptGroupInvitations =
+  testChat2 aliceProfile bobProfile $
+    \alice bob -> do
+      connectUsers alice bob
+      bob ##> "/set accept group invitations on"
+      bob <## "ok"
+      alice ##> "/g team"
+      alice <## "group #team is created"
+      alice <## "to add members use /a team <name> or /create link #team"
+      alice ##> "/a team bob admin"
+      alice <## "invitation to join the group #team sent to bob"
+      concurrently_
+        (alice <## "#team: bob joined the group")
+        (bob <## "#team: you joined the group")
+
+testAutoAcceptGroupInvitationsSecondProfile :: HasCallStack => TestParams -> IO ()
+testAutoAcceptGroupInvitationsSecondProfile =
+  testChat2 aliceProfile bobProfile $
+    \alice bob -> do
+      bob ##> "/create user bob2"
+      showActiveUser bob "bob2"
+      bob ##> "/set accept group invitations on"
+      bob <## "ok"
+      connectUsers alice bob
+      alice ##> "/g team"
+      alice <## "group #team is created"
+      alice <## "to add members use /a team <name> or /create link #team"
+      alice ##> "/a team bob2 admin"
+      alice <## "invitation to join the group #team sent to bob2"
+      concurrently_
+        (alice <## "#team: bob2 joined the group")
+        (bob <## "#team: you joined the group")
+
+testAutoAcceptGroupInvitationsInactiveProfile :: HasCallStack => TestParams -> IO ()
+testAutoAcceptGroupInvitationsInactiveProfile =
+  testChat2 aliceProfile bobProfile $
+    \alice bob -> do
+      bob ##> "/create user bob2"
+      showActiveUser bob "bob2"
+      bob ##> "/set accept group invitations on"
+      bob <## "ok"
+      connectUsers alice bob
+      -- switch away: bob2 now has auto-accept on but is NOT the active profile
+      bob ##> "/user bob"
+      showActiveUser bob "bob (Bob)"
+      alice ##> "/g team"
+      alice <## "group #team is created"
+      alice <## "to add members use /a team <name> or /create link #team"
+      alice ##> "/a team bob2 admin"
+      alice <## "invitation to join the group #team sent to bob2"
+      concurrently_
+        (alice <## "#team: bob2 joined the group")
+        (bob <## "[user: bob2] #team: you joined the group")
+
 testMultiWordProfileNames :: HasCallStack => TestParams -> IO ()
 testMultiWordProfileNames =
   testChat3 aliceProfile' bobProfile' cathProfile' $
@@ -622,10 +684,11 @@ testMultiWordProfileNames =
 
 testUserContactLink :: HasCallStack => TestParams -> IO ()
 testUserContactLink =
-  testChat3 aliceProfile bobProfile cathProfile $
+  testChatOpts3 testOptsNoFullLinks aliceProfile bobProfile cathProfile $
     \alice bob cath -> do
       alice ##> "/ad"
-      cLink <- getContactLink alice True
+      cLink <- getContactLink_ alice True
+      alice <// 100000 -- the "contact link for old clients" line is dropped when showFullLinks is off
       bob ##> ("/c " <> cLink)
       alice <#? bob
       alice @@@ [("@bob", "Audio/video calls: enabled")]
@@ -650,30 +713,53 @@ testUserContactLink =
       alice @@@ [("@cath", lastChatFeature), ("@bob", "hey")]
       alice <##> cath
 
+testRotateAddressRatchetKeys :: HasCallStack => TestParams -> IO ()
+testRotateAddressRatchetKeys =
+  testChatOpts2 testOptsNoFullLinks aliceProfile bobProfile $ \alice bob -> do
+    alice ##> "/ad"
+    sLink1 <- getContactLink_ alice True
+    alice ##> ("/_connect plan 1 " <> sLink1)
+    alice <## "contact address: own address"
+    alice ##> "/_rotate_address_keys 1"
+    sLink2 <- getContactLink_ alice False
+    alice <## "auto_accept off"
+    -- rotated address keeps the same identity (still recognized as own address)
+    alice ##> ("/_connect plan 1 " <> sLink2)
+    alice <## "contact address: own address"
+    -- and it still works for connecting
+    bob ##> ("/c " <> sLink2)
+    alice <#? bob
+    alice ##> "/ac bob"
+    alice <## "bob (Bob): accepting contact request, you can send messages to contact"
+    concurrently_
+      (bob <## "alice (Alice): contact is connected")
+      (alice <## "bob (Bob): contact is connected")
+    alice <##> bob
+
 testCreateAddressOnServer :: HasCallStack => TestParams -> IO ()
 testCreateAddressOnServer ps = testChat aliceProfile test ps
   where
     tmp = tmpPath ps
-    -- second SMP server, distinct from alice's configured server (localhost:7001)
-    altServer = "smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=:server_password@localhost:7003"
+    -- second SMP server, distinct from alice's configured server
+    altServer = smpServer2Str ps
     altServerCfg =
-      smpServerCfg
-        { transports = [("7003", transport @TLS, False)],
+      (smpServerCfg ps)
+        { transports = [(smpTestPort2 ps, transport @TLS, False)],
           serverStoreCfg = persistentServerStoreCfg tmp
         }
     test alice = do
       withSmpServer' altServerCfg $ do
-        -- without a server the address is created on the configured server (7001)
+        -- without a server the address is created on the configured server
         alice ##> "/_address 1"
         (_, defaultLink) <- getContactLinks alice True
-        defaultLink `shouldContain` "localhost%3A7001" -- server is URL-encoded in the link
+        defaultLink `shouldContain` ("localhost%3A" <> smpTestPort ps) -- server is URL-encoded in the link
         alice ##> "/_delete_address 1"
         alice <## "Your chat address is deleted - accepted contacts will remain connected."
         alice <## "To create a new chat address use /ad"
-        -- with a server the address is pinned to the requested server (7003)
+        -- with a server the address is pinned to the requested server
         alice ##> ("/_address 1 " <> altServer)
         (_, pinnedLink) <- getContactLinks alice True
-        pinnedLink `shouldContain` "localhost%3A7003"
+        pinnedLink `shouldContain` ("localhost%3A" <> smpTestPort2 ps)
       alice <## "disconnected 1 connections on server localhost"
 
 testRetryConnectingViaContactLink :: HasCallStack => TestParams -> IO ()
@@ -717,8 +803,8 @@ testRetryConnectingViaContactLink ps = testChatCfgOpts2 cfg' opts' aliceProfile 
       alice <## "disconnected 2 connections on server localhost"
       bob <## "disconnected 1 connections on server localhost"
     serverCfg' =
-      smpServerCfg
-        { transports = [("7003", transport @TLS, False)],
+      (smpServerCfg ps)
+        { transports = [(smpTestPort2 ps, transport @TLS, False)],
           msgQueueQuota = 2,
           serverStoreCfg = persistentServerStoreCfg tmp
         }
@@ -728,9 +814,54 @@ testRetryConnectingViaContactLink ps = testChatCfgOpts2 cfg' opts' aliceProfile 
         { agentConfig =
             testAgentCfg
               { quotaExceededTimeout = 1,
-                messageRetryInterval = RetryInterval2 {riFast = fastRetryInterval, riSlow = fastRetryInterval}
+                messageRetryInterval = RetryInterval2 {riFast = fastRetryInterval, riSlow = fastRetryInterval},
+                persistErrorInterval = 0
               }
         }
+    opts' =
+      testOpts
+        { coreOptions =
+            testCoreOpts
+              { smpServers = ["smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=:server_password@localhost:7003"]
+              }
+        }
+
+testRetryConnectingContactViaAddress :: HasCallStack => TestParams -> IO ()
+testRetryConnectingContactViaAddress ps =
+  withNewTestChatOpts ps testOptsNoFullLinks "alice" aliceProfile $ \alice ->
+    withNewTestChatCfgOpts ps cfg' opts' "bob" bobProfile $ \bob -> do
+      alice ##> "/ad"
+      sLink <- getContactLink_ alice True
+      alice ##> "/pa on"
+      alice <## "new contact address set"
+      rotateAddressKeys alice
+      case A.parseOnly strP (B.pack sLink) of
+        Left _ -> error "error parsing contact link"
+        Right shortLink -> do
+          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> runExceptT $ createContact db (storeCxt $ chatController bob) user aliceProfile {contactLink = Just shortLink}
+          bob ##> "/_connect contact 1 2"
+          bob <##. "smp agent error: BROKER"
+          rotateAddressKeys alice
+          withSmpServer' serverCfg' $ do
+            bob ##> "/_connect contact 1 2"
+            bob <## "connection request sent!"
+            alice <## "bob (Bob) wants to connect to you!"
+            alice <## "to accept: /ac bob"
+            alice <## "to reject: /rc bob (the sender will NOT be notified)"
+            alice ##> "/ac bob"
+            alice <## "bob (Bob): accepting contact request, you can send messages to contact"
+            concurrently_
+              (bob <## "alice (Alice): contact is connected")
+              (alice <## "bob (Bob): contact is connected")
+            alice <##> bob
+          bob <## "disconnected 1 connections on server localhost"
+  where
+    rotateAddressKeys alice = do
+      alice ##> "/_rotate_address_keys 1"
+      _ <- getContactLink_ alice False
+      alice <## "auto_accept off"
+    serverCfg' = (smpServerCfg ps) {transports = [(smpTestPort2 ps, transport @TLS, False)]}
+    cfg' = testCfg {agentConfig = testAgentCfg {persistErrorInterval = 0}}
     opts' =
       testOpts
         { coreOptions =
@@ -1132,9 +1263,10 @@ testAutoReplyMessage = testChat2 aliceProfile bobProfile $
     alice <## "bob (Bob): you can send messages to contact"
     alice <# "@bob hello!"
     concurrentlyN_
-      [ do
-          bob <# "alice> hello!"
-          bob <## "alice (Alice): contact is connected",
+      [ bob
+          <### [ WithTime "alice> hello!",
+                 "alice (Alice): contact is connected"
+               ],
         alice <## "bob (Bob): contact is connected"
       ]
 
@@ -1154,11 +1286,8 @@ testBusinessAddress = testChat3 businessProfile aliceProfile {fullName = "Alice 
     bob <## "contact address: connecting, allowed to reconnect"
     biz <## "#bob (Bob): accepting business address request..."
     bob <## "#biz: joining the group..."
-    -- the next command can be prone to race conditions
-    bob ##> ("/_connect plan 1 " <> cLink)
-    bob <## "business address: connecting to business #biz"
+    checkBusinessPlanWhileJoining bob cLink
     biz <## "#bob: bob_1 joined the group"
-    bob <## "#biz: you joined the group"
     biz #> "#bob hi"
     bob <# "#biz biz_1> hi"
     bob #> "#biz hello"
@@ -1192,6 +1321,19 @@ testBusinessAddress = testChat3 businessProfile aliceProfile {fullName = "Alice 
       (alice <# "#bob bob_1> hey there")
       (biz <# "#bob bob_1> hey there")
 
+checkBusinessPlanWhileJoining :: HasCallStack => TestCC -> String -> IO ()
+checkBusinessPlanWhileJoining cc link = do
+  let cmd = "/_connect plan 1 " <> link
+      joined = "#biz: you joined the group"
+      known = "business address: known business #biz"
+  cc `send` cmd
+  ls <- replicateM 3 $ getTermLine cc
+  if known `elem` ls
+    then do
+      l <- getTermLine cc
+      (l : ls) `shouldMatchList` [cmd, joined, known, "use #biz <message> to send messages"]
+    else ls `shouldMatchList` [cmd, joined, "business address: connecting to business #biz"]
+
 testBusinessUpdateProfiles :: HasCallStack => TestParams -> IO ()
 testBusinessUpdateProfiles = testChat4 businessProfile aliceProfile bobProfile cathProfile $
   \biz alice bob cath -> do
@@ -1219,13 +1361,13 @@ testBusinessUpdateProfiles = testChat4 businessProfile aliceProfile bobProfile c
     alice ##> "/p alisa"
     alice <## "user profile is changed to alisa (your 0 contacts are notified)"
     alice #> "#biz hello again" -- profile update is sent with message
-    biz <## "alice_1 updated group #alice:"
+    biz <## "alice_1 updated group #alice: (signed)"
     biz <## "changed to #alisa"
     biz <# "#alisa alisa_1> hello again"
     -- customer can invite members too, if business allows
     biz ##> "/mr alisa alisa_1 admin"
-    biz <## "#alisa: you changed the role of alisa_1 to admin"
-    alice <## "#biz: biz_1 changed your role from member to admin"
+    biz <## "#alisa: you changed the role of alisa_1 to admin (signed)"
+    alice <## "#biz: biz_1 changed your role from member to admin (signed)"
     connectUsers alice bob
     alice ##> "/a #biz bob"
     alice <## "invitation to join the group #biz sent to bob"
@@ -1274,8 +1416,10 @@ testBusinessUpdateProfiles = testChat4 businessProfile aliceProfile bobProfile c
                 WithTime "#alisa alisa_1> hello again [>>]",
                 WithTime "#alisa robert> hi there [>>]"
               ]
-          cath <## "#alisa: member alisa_1 is connected"
-          cath <## "#alisa: member robert is connected",
+          cath
+            <### [ "#alisa: member alisa_1 is connected",
+                   "#alisa: member robert is connected"
+                 ],
         biz <## "#alisa: cath joined the group",
         do
           alice <## "#biz: biz_1 added cath (Catherine) to the group (connecting...)"
@@ -1287,35 +1431,34 @@ testBusinessUpdateProfiles = testChat4 businessProfile aliceProfile bobProfile c
     -- both customers receive business profile change
     biz ##> "/p business"
     biz <## "user profile is changed to business (your 1 contacts are notified)"
+    cath <## "contact biz changed to business"
+    cath <## "use @business <message> to send messages"
     biz #> "#alisa hey"
     concurrentlyN_
       [ do
-          alice <## "biz_1 updated group #biz:"
+          alice <## "biz_1 updated group #biz: (signed)"
           alice <## "changed to #business"
           alice <# "#business business_1> hey",
         do
-          bob <## "biz_1 updated group #biz:"
+          bob <## "biz_1 updated group #biz: (signed)"
           bob <## "changed to #business"
           bob <# "#business business_1> hey",
-        do
-          cath <## "contact biz changed to business"
-          cath <## "use @business <message> to send messages"
-          cath <# "#alisa business> hey"
+        cath <# "#alisa business> hey"
       ]
     biz ##> "/set delete #alisa on"
     biz <## "updated group preferences:"
     biz <## "Full deletion: on"
     concurrentlyN_
       [ do
-          alice <## "business_1 updated group #business:"
+          alice <## "business_1 updated group #business: (signed)"
           alice <## "updated group preferences:"
           alice <## "Full deletion: on",
         do
-          bob <## "business_1 updated group #business:"
+          bob <## "business_1 updated group #business: (signed)"
           bob <## "updated group preferences:"
           bob <## "Full deletion: on",
         do
-          cath <## "business updated group #alisa:"
+          cath <## "business updated group #alisa: (signed)"
           cath <## "updated group preferences:"
           cath <## "Full deletion: on"
       ]
@@ -1372,10 +1515,12 @@ testPlanAddressOwn ps =
     alice <## "contact address: own address"
 
     alice ##> ("/c " <> cLink)
-    alice <## "connection request sent!"
-    alice <## "alice_1 (Alice) wants to connect to you!"
-    alice <## "to accept: /ac alice_1"
-    alice <## "to reject: /rc alice_1 (the sender will NOT be notified)"
+    alice
+      <### [ "connection request sent!",
+             "alice_1 (Alice) wants to connect to you!",
+             "to accept: /ac alice_1",
+             "to reject: /rc alice_1 (the sender will NOT be notified)"
+           ]
     alice @@@ [("@alice_1", "Audio/video calls: enabled"), (":2", "")]
     alice ##> "/ac alice_1"
     alice <## "alice_1 (Alice): accepting contact request, you can send messages to contact"
@@ -1424,16 +1569,19 @@ testPlanAddressConnecting ps = do
 
     threadDelay 100000
   withTestChat ps "alice" $ \alice -> do
-    alice <## "subscribed 1 connections on server localhost"
-    alice <## "bob (Bob) wants to connect to you!"
-    alice <## "to accept: /ac bob"
-    alice <## "to reject: /rc bob (the sender will NOT be notified)"
+    alice
+      <### [ "subscribed 1 connections on server localhost",
+             "bob (Bob) wants to connect to you!",
+             "to accept: /ac bob",
+             "to reject: /rc bob (the sender will NOT be notified)"
+           ]
     alice ##> "/ac bob"
     alice <## "bob (Bob): accepting contact request, you can send messages to contact"
   withTestChat ps "bob" $ \bob -> do
     threadDelay 500000
     bob <## "subscribed 1 connections on server localhost"
     bob <## "alice (Alice): contact is connected"
+    threadDelay 100000
     bob @@@ [("@alice", "Audio/video calls: enabled")]
     bob ##> ("/_connect plan 1 " <> cLink)
     bob <## "contact address: known contact alice"
@@ -1527,13 +1675,13 @@ testPlanAddressContactViaAddress =
         Left _ -> error "error parsing contact link"
         Right cReq -> do
           let profile = aliceProfile {contactLink = Just cReq}
-          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> let TestCC {chatController = ChatController {config}} = bob in runExceptT $ createContact db (mkStoreCxt config) user profile
+          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> runExceptT $ createContact db (storeCxt $ chatController bob) user profile
           bob @@@ [("@alice", "")]
 
           bob ##> "/delete @alice"
           bob <## "alice: contact is deleted"
 
-          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> let TestCC {chatController = ChatController {config}} = bob in runExceptT $ createContact db (mkStoreCxt config) user profile
+          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> runExceptT $ createContact db (storeCxt $ chatController bob) user profile
           bob @@@ [("@alice", "")]
 
           bob ##> ("/_connect plan 1 " <> cLink)
@@ -1543,12 +1691,12 @@ testPlanAddressContactViaAddress =
           bob ##> ("/c " <> cLink)
           connecting alice bob
 
-          bob ##> "/delete @alice"
+          bob ##> "/delete @alice notify=off"
           bob <## "alice: contact is deleted"
           alice ##> "/delete @bob"
           alice <## "bob: contact is deleted"
 
-          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> let TestCC {chatController = ChatController {config}} = bob in runExceptT $ createContact db (mkStoreCxt config) user profile
+          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> runExceptT $ createContact db (storeCxt $ chatController bob) user profile
           bob @@@ [("@alice", "")]
 
           -- GUI api
@@ -1589,13 +1737,13 @@ testPlanAddressContactViaShortAddress =
         Left _ -> error "error parsing contact link"
         Right shortLink -> do
           let profile = aliceProfile {contactLink = Just shortLink}
-          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> let TestCC {chatController = ChatController {config}} = bob in runExceptT $ createContact db (mkStoreCxt config) user profile
+          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> runExceptT $ createContact db (storeCxt $ chatController bob) user profile
           bob @@@ [("@alice", "")]
 
           bob ##> "/delete @alice"
           bob <## "alice: contact is deleted"
 
-          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> let TestCC {chatController = ChatController {config}} = bob in runExceptT $ createContact db (mkStoreCxt config) user profile
+          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> runExceptT $ createContact db (storeCxt $ chatController bob) user profile
           bob @@@ [("@alice", "")]
 
           bob ##> ("/_connect plan 1 " <> sLink)
@@ -1605,12 +1753,12 @@ testPlanAddressContactViaShortAddress =
           bob ##> ("/c " <> sLink)
           connecting alice bob
 
-          bob ##> "/delete @alice"
+          bob ##> "/delete @alice notify=off"
           bob <## "alice: contact is deleted"
           alice ##> "/delete @bob"
           alice <## "bob: contact is deleted"
 
-          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> let TestCC {chatController = ChatController {config}} = bob in runExceptT $ createContact db (mkStoreCxt config) user profile
+          void $ withCCUser bob $ \user -> withCCTransaction bob $ \db -> runExceptT $ createContact db (storeCxt $ chatController bob) user profile
           bob @@@ [("@alice", "")]
 
           -- GUI api
@@ -1803,8 +1951,10 @@ testSetConnectionIncognitoProhibitedDuringNegotiation ps = do
     alice ##> "/_set incognito :1 on"
     alice <## "chat db error: SEPendingConnectionNotFound {connId = 1}"
     withTestChat ps "bob" $ \bob -> do
-      bob <## "subscribed 1 connections on server localhost"
-      bob <## "alice (Alice): contact is connected"
+      bob
+        <### [ "subscribed 1 connections on server localhost",
+               "alice (Alice): contact is connected"
+             ]
       alice <##> bob
       alice `hasContactProfiles` ["alice", "bob"]
       bob `hasContactProfiles` ["alice", "bob"]
@@ -2012,11 +2162,11 @@ testJoinGroupIncognito =
       -- remove member
       alice ##> ("/rm secret_club " <> cathIncognito)
       concurrentlyN_
-        [ alice <## ("#secret_club: you removed " <> cathIncognito <> " from the group"),
-          bob <## ("#secret_club: alice removed " <> cathIncognito <> " from the group"),
-          dan <## ("#secret_club: alice removed " <> cathIncognito <> " from the group"),
+        [ alice <## ("#secret_club: you removed " <> cathIncognito <> " from the group (signed)"),
+          bob <## ("#secret_club: alice removed " <> cathIncognito <> " from the group (signed)"),
+          dan <## ("#secret_club: alice removed " <> cathIncognito <> " from the group (signed)"),
           do
-            cath <## "#secret_club: alice removed you from the group"
+            cath <## "#secret_club: alice removed you from the group (signed)"
             cath <## "use /d #secret_club to delete the group"
         ]
       bob #> "#secret_club hi"
@@ -2155,10 +2305,10 @@ testDeleteContactThenGroupDeletesIncognitoProfile = testChat2 aliceProfile bobPr
       [ do
           bob <## "#team: you left the group"
           bob <## "use /d #team to delete the group",
-        alice <## ("#team: " <> bobIncognito <> " left the group")
+        alice <## ("#team: " <> bobIncognito <> " left the group (signed)")
       ]
     bob ##> "/d #team"
-    bob <## "#team: you deleted the group"
+    bob <## "#team: you deleted your local copy of the group"
     bob `hasContactProfiles` ["bob"]
 
 testDeleteGroupThenContactDeletesIncognitoProfile :: HasCallStack => TestParams -> IO ()
@@ -2200,10 +2350,10 @@ testDeleteGroupThenContactDeletesIncognitoProfile = testChat2 aliceProfile bobPr
       [ do
           bob <## "#team: you left the group"
           bob <## "use /d #team to delete the group",
-        alice <## ("#team: " <> bobIncognito <> " left the group")
+        alice <## ("#team: " <> bobIncognito <> " left the group (signed)")
       ]
     bob ##> "/d #team"
-    bob <## "#team: you deleted the group"
+    bob <## "#team: you deleted your local copy of the group"
     bob `hasContactProfiles` ["alice", "bob", T.pack bobIncognito]
     -- delete contact
     bob ##> "/d alice"
@@ -2383,12 +2533,12 @@ testChangePCCUserDiffSrv ps = do
         alice ##> "/smp"
         alice <## "Your servers"
         alice <## "  SMP servers"
-        alice <## "    smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=:server_password@localhost:7001"
-        alice #$> ("/smp smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=:server_password@127.0.0.1:7003", id, "ok")
+        alice <## ("    " <> smpServerStr ps)
+        alice #$> ("/smp " <> altServer, id, "ok")
         alice ##> "/smp"
         alice <## "Your servers"
         alice <## "  SMP servers"
-        alice <## "    smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=:server_password@127.0.0.1:7003"
+        alice <## ("    " <> altServer)
         alice ##> "/user alice"
         showActiveUser alice "alice (Alice)"
         -- Change connection to newly created user and use the newly created connection
@@ -2410,9 +2560,10 @@ testChangePCCUserDiffSrv ps = do
           (bob <## "alisa: contact is connected")
         alice <##> bob
   where
+    altServer = "smp://" <> testServerKeyHash <> ":server_password@127.0.0.1:" <> smpTestPort2 ps
     serverCfg' =
-      smpServerCfg
-        { transports = [("7003", transport @TLS, False), ("7002", transport @TLS, False)],
+      (smpServerCfg ps)
+        { transports = [(smpTestPort2 ps, transport @TLS, False), (xftpTestPort ps, transport @TLS, False)],
           msgQueueQuota = 2
         }
 
@@ -2450,13 +2601,13 @@ testSetGroupAlias = testChat2 aliceProfile bobProfile $
 
 testSetContactPrefs :: HasCallStack => TestParams -> IO ()
 testSetContactPrefs = testChat2 aliceProfile bobProfile $
-  \alice bob -> withXFTPServer $ do
-    alice #$> ("/_files_folder ./tests/tmp/alice", id, "ok")
-    bob #$> ("/_files_folder ./tests/tmp/bob", id, "ok")
-    createDirectoryIfMissing True "./tests/tmp/alice"
-    createDirectoryIfMissing True "./tests/tmp/bob"
-    copyFile "./tests/fixtures/test.txt" "./tests/tmp/alice/test.txt"
-    copyFile "./tests/fixtures/test.txt" "./tests/tmp/bob/test.txt"
+  \alice bob -> withXFTPServer alice $ do
+    alice #$> ("/_files_folder " <> tmpFile alice "alice", id, "ok")
+    bob #$> ("/_files_folder " <> tmpFile bob "bob", id, "ok")
+    createDirectoryIfMissing True $ tmpFile alice "alice"
+    createDirectoryIfMissing True $ tmpFile bob "bob"
+    copyFile "./tests/fixtures/test.txt" $ tmpFile alice "alice/test.txt"
+    copyFile "./tests/fixtures/test.txt" $ tmpFile bob "bob/test.txt"
     bob ##> "/_profile 1 {\"displayName\": \"bob\", \"fullName\": \"\", \"shortDescr\": \"Bob\", \"preferences\": {\"voice\": {\"allow\": \"no\"}, \"receipts\": {\"allow\": \"yes\", \"activated\": true}}}"
     bob <## "profile image removed"
     bob <## "updated preferences:"
@@ -2572,31 +2723,28 @@ testUpdateGroupPrefs =
       alice <## "updated group preferences:"
       alice <## "Full deletion: on"
       alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Full deletion: on")])
-      bob <## "alice updated group #team:"
+      bob <## "alice updated group #team: (signed)"
       bob <## "updated group preferences:"
       bob <## "Full deletion: on"
-      threadDelay 500000
-      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Full deletion: on")])
+      (bob ##> "/_get chat #1 count=100" >> chat <$> getTermLine bob) `shouldEventuallyReturn` (groupFeatures <> [(0, "connected"), (0, "Full deletion: on")])
       alice ##> "/_group_profile #1 {\"displayName\": \"team\", \"fullName\": \"\", \"groupPreferences\": {\"fullDelete\": {\"enable\": \"off\"}, \"voice\": {\"enable\": \"off\"}, \"directMessages\": {\"enable\": \"on\"}, \"history\": {\"enable\": \"on\"}}}"
       alice <## "updated group preferences:"
       alice <## "Full deletion: off"
       alice <## "Voice messages: off"
       alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Full deletion: on"), (1, "Full deletion: off"), (1, "Voice messages: off")])
-      bob <## "alice updated group #team:"
+      bob <## "alice updated group #team: (signed)"
       bob <## "updated group preferences:"
       bob <## "Full deletion: off"
       bob <## "Voice messages: off"
-      threadDelay 500000
-      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Full deletion: on"), (0, "Full deletion: off"), (0, "Voice messages: off")])
+      (bob ##> "/_get chat #1 count=100" >> chat <$> getTermLine bob) `shouldEventuallyReturn` (groupFeatures <> [(0, "connected"), (0, "Full deletion: on"), (0, "Full deletion: off"), (0, "Voice messages: off")])
       alice ##> "/set voice #team on"
       alice <## "updated group preferences:"
       alice <## "Voice messages: on"
       alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Full deletion: on"), (1, "Full deletion: off"), (1, "Voice messages: off"), (1, "Voice messages: on")])
-      bob <## "alice updated group #team:"
+      bob <## "alice updated group #team: (signed)"
       bob <## "updated group preferences:"
       bob <## "Voice messages: on"
-      threadDelay 500000
-      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Full deletion: on"), (0, "Full deletion: off"), (0, "Voice messages: off"), (0, "Voice messages: on")])
+      (bob ##> "/_get chat #1 count=100" >> chat <$> getTermLine bob) `shouldEventuallyReturn` (groupFeatures <> [(0, "connected"), (0, "Full deletion: on"), (0, "Full deletion: off"), (0, "Voice messages: off"), (0, "Voice messages: on")])
       threadDelay 500000
       alice ##> "/_group_profile #1 {\"displayName\": \"team\", \"fullName\": \"\", \"groupPreferences\": {\"fullDelete\": {\"enable\": \"off\"}, \"voice\": {\"enable\": \"on\"}, \"directMessages\": {\"enable\": \"on\"}, \"history\": {\"enable\": \"on\"}}}"
       -- no update
@@ -2645,11 +2793,11 @@ testAllowFullDeletionGroup =
       alice ##> "/set delete #team on"
       alice <## "updated group preferences:"
       alice <## "Full deletion: on"
-      bob <## "alice updated group #team:"
+      bob <## "alice updated group #team: (signed)"
       bob <## "updated group preferences:"
       bob <## "Full deletion: on"
       alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "hi"), (0, "hey"), (1, "Full deletion: on")])
-      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "hi"), (1, "hey"), (0, "Full deletion: on")])
+      (bob ##> "/_get chat #1 count=100" >> chat <$> getTermLine bob) `shouldEventuallyReturn` (groupFeatures <> [(0, "connected"), (0, "hi"), (1, "hey"), (0, "Full deletion: on")])
       bob #$> ("/_delete item #1 " <> msgItemId <> " broadcast", id, "message deleted")
       alice <# "#team bob> [deleted] hey"
       alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "hi"), (1, "Full deletion: on")])
@@ -2709,7 +2857,7 @@ testProhibitDirectMessages =
   where
     directProhibited :: HasCallStack => TestCC -> IO ()
     directProhibited cc = do
-      cc <## "alice updated group #team:"
+      cc <## "alice updated group #team: (signed)"
       cc <## "updated group preferences:"
       cc <## "Direct messages: off"
 
@@ -2718,41 +2866,41 @@ testEnableTimedMessagesContact =
   testChat2 aliceProfile bobProfile $
     \alice bob -> do
       connectUsers alice bob
-      alice ##> "/_set prefs @2 {\"timedMessages\": {\"allow\": \"yes\", \"ttl\": 1}}"
+      alice ##> "/_set prefs @2 {\"timedMessages\": {\"allow\": \"yes\", \"ttl\": 3}}"
       alice <## "you updated preferences for bob:"
-      alice <## "Disappearing messages: enabled (you allow: yes (1 sec), contact allows: yes)"
+      alice <## "Disappearing messages: enabled (you allow: yes (3 sec), contact allows: yes)"
       bob <## "alice updated preferences for you:"
-      bob <## "Disappearing messages: enabled (you allow: yes (1 sec), contact allows: yes (1 sec))"
+      bob <## "Disappearing messages: enabled (you allow: yes (3 sec), contact allows: yes (3 sec))"
       bob ##> "/set disappear @alice yes"
       bob <## "your preferences for alice did not change"
       alice <##> bob
       threadDelay 500000
-      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (1 sec)"), (1, "hi"), (0, "hey")])
-      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (1 sec)"), (0, "hi"), (1, "hey")])
-      threadDelay 1000000
+      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (3 sec)"), (1, "hi"), (0, "hey")])
+      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (3 sec)"), (0, "hi"), (1, "hey")])
+      threadDelay 3000000
       alice <### ["timed message deleted: hi", "timed message deleted: hey"]
       bob <### ["timed message deleted: hi", "timed message deleted: hey"]
-      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (1 sec)")])
-      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (1 sec)")])
+      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (3 sec)")])
+      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (3 sec)")])
       -- turn off, messages are not disappearing
       bob ##> "/set disappear @alice no"
       bob <## "you updated preferences for alice:"
-      bob <## "Disappearing messages: off (you allow: no, contact allows: yes (1 sec))"
+      bob <## "Disappearing messages: off (you allow: no, contact allows: yes (3 sec))"
       alice <## "bob updated preferences for you:"
-      alice <## "Disappearing messages: off (you allow: yes (1 sec), contact allows: no)"
+      alice <## "Disappearing messages: off (you allow: yes (3 sec), contact allows: no)"
       alice <##> bob
       threadDelay 1500000
-      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (1 sec)"), (0, "Disappearing messages: off"), (1, "hi"), (0, "hey")])
-      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (1 sec)"), (1, "Disappearing messages: off"), (0, "hi"), (1, "hey")])
+      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (3 sec)"), (0, "Disappearing messages: off"), (1, "hi"), (0, "hey")])
+      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (3 sec)"), (1, "Disappearing messages: off"), (0, "hi"), (1, "hey")])
       -- test api
       bob ##> "/set disappear @alice yes 30s"
       bob <## "you updated preferences for alice:"
-      bob <## "Disappearing messages: enabled (you allow: yes (30 sec), contact allows: yes (1 sec))"
+      bob <## "Disappearing messages: enabled (you allow: yes (30 sec), contact allows: yes (3 sec))"
       alice <## "bob updated preferences for you:"
       alice <## "Disappearing messages: enabled (you allow: yes (30 sec), contact allows: yes (30 sec))"
       bob ##> "/set disappear @alice week" -- "yes" is optional
       bob <## "you updated preferences for alice:"
-      bob <## "Disappearing messages: enabled (you allow: yes (1 week), contact allows: yes (1 sec))"
+      bob <## "Disappearing messages: enabled (you allow: yes (1 week), contact allows: yes (3 sec))"
       alice <## "bob updated preferences for you:"
       alice <## "Disappearing messages: enabled (you allow: yes (1 week), contact allows: yes (1 week))"
 
@@ -2762,47 +2910,47 @@ testEnableTimedMessagesGroup =
     \alice bob -> do
       createGroup2 "team" alice bob
       threadDelay 1000000
-      alice ##> "/_group_profile #1 {\"displayName\": \"team\", \"fullName\": \"\", \"groupPreferences\": {\"timedMessages\": {\"enable\": \"on\", \"ttl\": 1}, \"directMessages\": {\"enable\": \"on\"}, \"history\": {\"enable\": \"on\"}}}"
+      alice ##> "/_group_profile #1 {\"displayName\": \"team\", \"fullName\": \"\", \"groupPreferences\": {\"timedMessages\": {\"enable\": \"on\", \"ttl\": 3}, \"directMessages\": {\"enable\": \"on\"}, \"history\": {\"enable\": \"on\"}}}"
       alice <## "updated group preferences:"
-      alice <## "Disappearing messages: on (1 sec)"
-      bob <## "alice updated group #team:"
+      alice <## "Disappearing messages: on (3 sec)"
+      bob <## "alice updated group #team: (signed)"
       bob <## "updated group preferences:"
-      bob <## "Disappearing messages: on (1 sec)"
+      bob <## "Disappearing messages: on (3 sec)"
       threadDelay 1000000
       alice #> "#team hi"
       bob <# "#team alice> hi"
       threadDelay 500000
-      alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Disappearing messages: on (1 sec)"), (1, "hi")])
-      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Disappearing messages: on (1 sec)"), (0, "hi")])
-      threadDelay 1000000
+      alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Disappearing messages: on (3 sec)"), (1, "hi")])
+      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Disappearing messages: on (3 sec)"), (0, "hi")])
+      threadDelay 3000000
       alice <## "timed message deleted: hi"
       bob <## "timed message deleted: hi"
-      alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Disappearing messages: on (1 sec)")])
-      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Disappearing messages: on (1 sec)")])
+      alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Disappearing messages: on (3 sec)")])
+      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Disappearing messages: on (3 sec)")])
       -- turn off, messages are not disappearing
       alice ##> "/set disappear #team off"
       alice <## "updated group preferences:"
       alice <## "Disappearing messages: off"
-      bob <## "alice updated group #team:"
+      bob <## "alice updated group #team: (signed)"
       bob <## "updated group preferences:"
       bob <## "Disappearing messages: off"
       threadDelay 1000000
       alice #> "#team hey"
       bob <# "#team alice> hey"
       threadDelay 1500000
-      alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Disappearing messages: on (1 sec)"), (1, "Disappearing messages: off"), (1, "hey")])
-      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Disappearing messages: on (1 sec)"), (0, "Disappearing messages: off"), (0, "hey")])
+      alice #$> ("/_get chat #1 count=100", chat, sndGroupFeatures <> [(0, "connected"), (1, "Disappearing messages: on (3 sec)"), (1, "Disappearing messages: off"), (1, "hey")])
+      bob #$> ("/_get chat #1 count=100", chat, groupFeatures <> [(0, "connected"), (0, "Disappearing messages: on (3 sec)"), (0, "Disappearing messages: off"), (0, "hey")])
       -- test api
       alice ##> "/set disappear #team on 30s"
       alice <## "updated group preferences:"
       alice <## "Disappearing messages: on (30 sec)"
-      bob <## "alice updated group #team:"
+      bob <## "alice updated group #team: (signed)"
       bob <## "updated group preferences:"
       bob <## "Disappearing messages: on (30 sec)"
       alice ##> "/set disappear #team week" -- "on" is optional
       alice <## "updated group preferences:"
       alice <## "Disappearing messages: on (1 week)"
-      bob <## "alice updated group #team:"
+      bob <## "alice updated group #team: (signed)"
       bob <## "updated group preferences:"
       bob <## "Disappearing messages: on (1 week)"
 
@@ -2813,20 +2961,20 @@ testTimedMessagesEnabledGlobally =
       alice ##> "/set disappear yes"
       alice <## "user profile did not change"
       connectUsers alice bob
-      bob ##> "/_set prefs @2 {\"timedMessages\": {\"allow\": \"yes\", \"ttl\": 1}}"
+      bob ##> "/_set prefs @2 {\"timedMessages\": {\"allow\": \"yes\", \"ttl\": 3}}"
       bob <## "you updated preferences for alice:"
-      bob <## "Disappearing messages: enabled (you allow: yes (1 sec), contact allows: yes)"
+      bob <## "Disappearing messages: enabled (you allow: yes (3 sec), contact allows: yes)"
       alice <## "bob updated preferences for you:"
-      alice <## "Disappearing messages: enabled (you allow: yes (1 sec), contact allows: yes (1 sec))"
+      alice <## "Disappearing messages: enabled (you allow: yes (3 sec), contact allows: yes (3 sec))"
       alice <##> bob
       threadDelay 500000
-      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (1 sec)"), (1, "hi"), (0, "hey")])
-      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (1 sec)"), (0, "hi"), (1, "hey")])
-      threadDelay 1000000
+      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (3 sec)"), (1, "hi"), (0, "hey")])
+      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (3 sec)"), (0, "hi"), (1, "hey")])
+      threadDelay 3000000
       alice <### ["timed message deleted: hi", "timed message deleted: hey"]
       bob <### ["timed message deleted: hi", "timed message deleted: hey"]
-      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (1 sec)")])
-      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (1 sec)")])
+      alice #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(0, "Disappearing messages: enabled (3 sec)")])
+      bob #$> ("/_get chat @2 count=100", chat, chatFeatures <> [(1, "Disappearing messages: enabled (3 sec)")])
 
 testUpdateMultipleUserPrefs :: HasCallStack => TestParams -> IO ()
 testUpdateMultipleUserPrefs = testChat3 aliceProfile bobProfile cathProfile $
@@ -2920,19 +3068,19 @@ testGroupPrefsDirectForRole = testChat4 aliceProfile bobProfile cathProfile danP
   where
     directForOwners :: HasCallStack => TestCC -> IO ()
     directForOwners cc = do
-      cc <## "alice updated group #team:"
+      cc <## "alice updated group #team: (signed)"
       cc <## "updated group preferences:"
       cc <## "Direct messages: on for owners"
 
 testGroupPrefsFilesForRole :: HasCallStack => TestParams -> IO ()
 testGroupPrefsFilesForRole = testChat3 aliceProfile bobProfile cathProfile $
-  \alice bob cath -> withXFTPServer $ do
-    alice #$> ("/_files_folder ./tests/tmp/alice", id, "ok")
-    bob #$> ("/_files_folder ./tests/tmp/bob", id, "ok")
-    createDirectoryIfMissing True "./tests/tmp/alice"
-    createDirectoryIfMissing True "./tests/tmp/bob"
-    copyFile "./tests/fixtures/test.txt" "./tests/tmp/alice/test1.txt"
-    copyFile "./tests/fixtures/test.txt" "./tests/tmp/bob/test2.txt"
+  \alice bob cath -> withXFTPServer alice $ do
+    alice #$> ("/_files_folder " <> tmpFile alice "alice", id, "ok")
+    bob #$> ("/_files_folder " <> tmpFile bob "bob", id, "ok")
+    createDirectoryIfMissing True $ tmpFile alice "alice"
+    createDirectoryIfMissing True $ tmpFile bob "bob"
+    copyFile "./tests/fixtures/test.txt" $ tmpFile alice "alice/test1.txt"
+    copyFile "./tests/fixtures/test.txt" $ tmpFile bob "bob/test2.txt"
     createGroup3 "team" alice bob cath
     threadDelay 1000000
     alice ##> "/set files #team on owner"
@@ -2955,13 +3103,13 @@ testGroupPrefsFilesForRole = testChat3 aliceProfile bobProfile cathProfile $
   where
     filesForOwners :: HasCallStack => TestCC -> IO ()
     filesForOwners cc = do
-      cc <## "alice updated group #team:"
+      cc <## "alice updated group #team: (signed)"
       cc <## "updated group preferences:"
       cc <## "Files and media: on for owners"
 
-testGroupPrefsSimplexLinksForRole :: HasCallStack => TestParams -> IO ()
-testGroupPrefsSimplexLinksForRole = testChat3 aliceProfile bobProfile cathProfile $
-  \alice bob cath -> withXFTPServer $ do
+testGroupPrefsPopopxLinksForRole :: HasCallStack => TestParams -> IO ()
+testGroupPrefsPopopxLinksForRole = testChat3 aliceProfile bobProfile cathProfile $
+  \alice bob cath -> withXFTPServer alice $ do
     createGroup3 "team" alice bob cath
     threadDelay 1000000
     alice ##> "/set links #team on owner"
@@ -2989,7 +3137,7 @@ testGroupPrefsSimplexLinksForRole = testChat3 aliceProfile bobProfile cathProfil
     bob <## "test"
     alice <# ("bob> " <> inv)
     alice <## "test"
-    bob ##> "#team <- @alice https://simplex.chat"
+    bob ##> "#team <- @alice https://popopx.chat"
     bob <## "bad chat command: feature not allowed SimpleX links"
     alice #> ("#team " <> inv)
     bob <# ("#team alice> " <> inv)
@@ -2997,7 +3145,7 @@ testGroupPrefsSimplexLinksForRole = testChat3 aliceProfile bobProfile cathProfil
   where
     linksForOwners :: HasCallStack => TestCC -> IO ()
     linksForOwners cc = do
-      cc <## "alice updated group #team:"
+      cc <## "alice updated group #team: (signed)"
       cc <## "updated group preferences:"
       cc <## "SimpleX links: on for owners"
 
@@ -3046,16 +3194,17 @@ testSetUITheme =
       a <## "you've shared main profile with this contact"
       a <## "connection not verified, use /code command to see security code"
       a <## "quantum resistant end-to-end encryption"
-      a <## ("peer chat protocol version range: (Version 1, " <> show currentChatVersion <> ")")
+      a <## currentChatVRangeInfo
     groupInfo a = do
       a <## "group ID: 1"
       a <## "current members: 1"
 
 testShortLinkInvitation :: HasCallStack => TestParams -> IO ()
 testShortLinkInvitation =
-  testChat2 aliceProfile bobProfile $ \alice bob -> do
+  testChatOpts2 testOptsNoFullLinks aliceProfile bobProfile $ \alice bob -> do
     alice ##> "/c"
-    (inv, _) <- getInvitations alice
+    inv <- getInvitation_ alice
+    alice <// 100000 -- the "invitation link for old clients" line is dropped when showFullLinks is off
     bob ##> ("/c " <> inv)
     bob <## "confirmation sent!"
     concurrently_
@@ -3087,7 +3236,7 @@ testPlanShortLinkInvitation =
     bob ##> ("/_connect plan 1 " <> inv)
     bob <## "invitation link: ok to connect"
     _sLinkData <- getTermLine bob
-    -- with simplex: scheme too
+    -- with popopx: scheme too
     bob ##> ("/_connect plan 1 " <> slSimplexScheme inv)
     bob <## "invitation link: ok to connect"
     _sLinkData <- getTermLine bob
@@ -3106,7 +3255,7 @@ testPlanShortLinkInvitation =
     alice <##. "error: connection authorization failed" -- short_link_inv and conn_req_inv are removed after connection
 
 slSimplexScheme :: String -> String
-slSimplexScheme sl = T.unpack $ T.replace "https://localhost/" "simplex:/" (T.pack sl) <> "?h=localhost"
+slSimplexScheme sl = T.unpack $ T.replace "https://localhost/" "popopx:/" (T.pack sl) <> "?h=localhost"
 
 testShareAddressViaChat :: HasCallStack => TestParams -> IO ()
 testShareAddressViaChat =
@@ -3223,9 +3372,10 @@ testShortLinkJoinGroup =
         do
           cath <## "#team: alice added dan (Daniel) to the group (connecting...)"
           cath <## "#team: new member dan is connected",
-        do
-          dan <## "#team: member bob (Bob) is connected"
-          dan <## "#team: member cath (Catherine) is connected"
+        dan
+          <### [ "#team: member bob (Bob) is connected",
+                 "#team: member cath (Catherine) is connected"
+               ]
       ]
     dan ##> ("/_connect plan 1 " <> fullLink)
     dan <## "group link: known group #team"
@@ -3265,10 +3415,13 @@ testShortLinkInvitationPrepareContact = testChat2 aliceProfile bobProfile test
         <### [ "alice: connection started",
                WithTime "@alice hello"
              ]
-      alice <# "bob> hello"
       concurrently_
         (bob <## "alice (Alice): contact is connected")
-        (alice <## "bob (Bob): contact is connected")
+        ( alice
+            <### [ WithTime "bob> hello",
+                   "bob (Bob): contact is connected"
+                 ]
+        )
       alice <##> bob
       bob ##> ("/_connect plan 1 " <> shortLink)
       bob <## "invitation link: known contact alice"
@@ -3295,15 +3448,19 @@ testShortLinkInvitationImage = testChat2 aliceProfile bobProfile test
         <### [ "bob: connection started",
                 WithTime "@bob hello"
               ]
-      bob <# "alice> hello"
       concurrently_
         (alice <## "bob (Bob): contact is connected")
-        (bob <## "alice (Alice): contact is connected")
+        ( bob
+            <### [ WithTime "alice> hello",
+                   "alice (Alice): contact is connected"
+                 ]
+        )
       bob <##> alice
 
 testShortLinkInvitationConnectRetry :: HasCallStack => TestParams -> IO ()
-testShortLinkInvitationConnectRetry ps = testChatOpts2 opts' aliceProfile bobProfile test ps
+testShortLinkInvitationConnectRetry ps = testChatCfgOpts2 cfg' opts' aliceProfile bobProfile test ps
   where
+    cfg' = testCfg {agentConfig = testAgentCfg {persistErrorInterval = 0}}
     test alice bob = do
       shortLink <- withSmpServer' serverCfg' $ do
         alice ##> "/_connect 1"
@@ -3327,17 +3484,20 @@ testShortLinkInvitationConnectRetry ps = testChatOpts2 opts' aliceProfile bobPro
           <### [ "alice: connection started",
                 WithTime "@alice hello"
               ]
-        alice <# "bob> hello"
         concurrently_
           (bob <## "alice (Alice): contact is connected")
-          (alice <## "bob (Bob): contact is connected")
+          ( alice
+              <### [ WithTime "bob> hello",
+                     "bob (Bob): contact is connected"
+                   ]
+          )
         alice <##> bob
       alice <## "disconnected 1 connections on server localhost"
       bob <## "disconnected 1 connections on server localhost"
     tmp = tmpPath ps
     serverCfg' =
-      smpServerCfg
-        { transports = [("7003", transport @TLS, False)],
+      (smpServerCfg ps)
+        { transports = [(smpTestPort2 ps, transport @TLS, False)],
           serverStoreCfg = persistentServerStoreCfg tmp
         }
     opts' =
@@ -3509,8 +3669,8 @@ testShortLinkAddressConnectRetry ps =
   where
     tmp = tmpPath ps
     serverCfg' =
-      smpServerCfg
-        { transports = [("7003", transport @TLS, False)],
+      (smpServerCfg ps)
+        { transports = [(smpTestPort2 ps, transport @TLS, False)],
           serverStoreCfg = persistentServerStoreCfg tmp
         }
     opts' =
@@ -3543,11 +3703,11 @@ testShortLinkAddressConnectRetryIncognito ps =
         bob ##> ("/_connect plan 1 " <> shortLink)
         bob <## "contact address: known prepared contact alice"
         bob ##> "/_connect contact @2 incognito=on text hello"
-        bobIncognito <- getTermLine bob
-        bob
-          <### [ "alice: connection started incognito",
-                 WithTime "i @alice hello"
-               ]
+        line <- getTermLine bob
+        let helloFirst = dropTime_ line == Just "i @alice hello"
+        bobIncognito <- if helloFirst then getTermLine bob else pure line
+        bob <## "alice: connection started incognito"
+        unless helloFirst $ bob <# "i @alice hello"
         alice
           <### [ ConsoleString (bobIncognito <> " wants to connect to you!"),
                  WithTime (bobIncognito <> "> hello")
@@ -3572,8 +3732,8 @@ testShortLinkAddressConnectRetryIncognito ps =
   where
     tmp = tmpPath ps
     serverCfg' =
-      smpServerCfg
-        { transports = [("7003", transport @TLS, False)],
+      (smpServerCfg ps)
+        { transports = [(smpTestPort2 ps, transport @TLS, False)],
           serverStoreCfg = persistentServerStoreCfg tmp
         }
     opts' =
@@ -3603,11 +3763,8 @@ testShortLinkAddressPrepareBusiness = testChat3 businessProfile aliceProfile {fu
       bob <## "#biz: connection started"
       biz <## "#bob (Bob): accepting business address request..."
       bob <## "#biz: joining the group..."
-      -- the next command can be prone to race conditions
-      bob ##> ("/_connect plan 1 " <> shortLink)
-      bob <## "business address: connecting to business #biz"
+      checkBusinessPlanWhileJoining bob shortLink
       biz <## "#bob: bob_1 joined the group"
-      bob <## "#biz: you joined the group"
       biz #> "#bob hi"
       bob <# "#biz biz_1> hi"
       bob #> "#biz hello"
@@ -3642,10 +3799,10 @@ testShortLinkAddressPrepareBusiness = testChat3 businessProfile aliceProfile {fu
       bob <## "business address: known business #biz"
       bob <## "use #biz <message> to send messages"
       biz ##> "/d #bob"
-      biz <## "#bob: you deleted the group"
-      alice <## "#bob: biz deleted the group"
+      biz <## "#bob: you deleted the group (signed)"
+      alice <## "#bob: biz deleted the group (signed)"
       alice <## "use /d #bob to delete the local copy of the group"
-      bob <## "#biz: biz_1 deleted the group"
+      bob <## "#biz: biz_1 deleted the group (signed)"
       bob <## "use /d #biz to delete the local copy of the group"
       bob ##> ("/_connect plan 1 " <> shortLink)
       bob <## "business address: ok to connect"
@@ -3738,8 +3895,8 @@ testShortLinkPrepareGroup = testChat3 aliceProfile bobProfile cathProfile test
       bob ##> "/l #team"
       bob <## "#team: you left the group"
       bob <## "use /d #team to delete the group"
-      alice <## "#team: bob left the group"
-      cath <## "#team: bob left the group"
+      alice <## "#team: bob left the group (signed)"
+      cath <## "#team: bob left the group (signed)"
       bob ##> ("/_connect plan 1 " <> shortLink)
       bob <## "group link: ok to connect directly"
       void $ getTermLine bob
@@ -3828,10 +3985,10 @@ testShortLinkGroupRetry ps = testChatOpts2 opts' aliceProfile bobProfile test ps
       bob ##> "/_connect group #1"
       bob <##. "smp agent error: BROKER"
       withSmpServer' serverCfg' $ do
-        bob ##> ("/_connect plan 1 " <> shortLink)
-        bob <## "group link: known prepared group #team"
         alice <## "subscribed 2 connections on server localhost"
         bob <## "subscribed 1 connections on server localhost"
+        bob ##> ("/_connect plan 1 " <> shortLink)
+        bob <## "group link: known prepared group #team"
         threadDelay 250000
         bob ##> "/_connect group #1"
         bob <## "#team: connection started"
@@ -3854,8 +4011,8 @@ testShortLinkGroupRetry ps = testChatOpts2 opts' aliceProfile bobProfile test ps
       bob <## "disconnected 2 connections on server localhost"
     tmp = tmpPath ps
     serverCfg' =
-      smpServerCfg
-        { transports = [("7003", transport @TLS, False)],
+      (smpServerCfg ps)
+        { transports = [(smpTestPort2 ps, transport @TLS, False)],
           serverStoreCfg = persistentServerStoreCfg tmp
         }
     opts' =
@@ -3952,10 +4109,13 @@ testShortLinkChangePreparedContactUser = testChat2 aliceProfile bobProfile test
         <### [ "alice: connection started",
                WithTime "@alice hello"
              ]
-      alice <# "robert> hello"
       concurrently_
         (bob <## "alice (Alice): contact is connected")
-        (alice <## "robert: contact is connected")
+        ( alice
+            <### [ WithTime "robert> hello",
+                   "robert: contact is connected"
+                 ]
+        )
 
       alice <##> bob
 
@@ -4004,10 +4164,13 @@ testShortLinkChangePreparedContactUserDuplicate = testChat2 aliceProfile bobProf
         <### [ "alice_1: connection started",
                WithTime "@alice_1 hello"
              ]
-      alice <# "robert_1> hello"
       concurrently_
         (bob <## "alice_1 (Alice): contact is connected")
-        (alice <## "robert_1: contact is connected")
+        ( alice
+            <### [ WithTime "robert_1> hello",
+                   "robert_1: contact is connected"
+                 ]
+        )
 
       alice #> "@robert_1 hi"
       bob <# "alice_1> hi"
@@ -4208,13 +4371,13 @@ testShortLinkChangePreparedGroupUserDuplicate = testChat3 aliceProfile bobProfil
              ]
       cath <# "#team alice> 4"
 
-      bob #> "#team_1 5"
+      bob `send` "#team_1 5"
+      bob <### [WithTime "#team_1 5", WithTime "#team robert_2> 5"]
       [alice, cath] *<# "#team robert> 5"
-      bob <# "#team robert_2> 5"
 
-      bob #> "#team 6"
+      bob `send` "#team 6"
+      bob <### [WithTime "#team 6", WithTime "#team_1 robert_1> 6"]
       [alice, cath] *<# "#team robert_1> 6"
-      bob <# "#team_1 robert_1> 6"
 
       threadDelay 1000000
       cath #> "#team 7"
@@ -4255,13 +4418,14 @@ testShortLinkInvitationSetIncognito = testChat2 aliceProfile bobProfile test
         <### [ ConsoleString (aliceIncognito <> ": connection started"),
                WithTime ("@" <> aliceIncognito <> " hello")
              ]
-      alice ?<# "bob> hello"
-      _ <- getTermLine alice
       concurrentlyN_
         [ bob <## (aliceIncognito <> ": contact is connected"),
-          do
-            alice <## ("bob (Bob): contact is connected, your incognito profile for this contact is " <> aliceIncognito)
-            alice <## "use /i bob to print out this incognito profile again"
+          alice
+            <### [ WithTime "i bob> hello",
+                   ConsoleString aliceIncognito,
+                   ConsoleString ("bob (Bob): contact is connected, your incognito profile for this contact is " <> aliceIncognito),
+                   "use /i bob to print out this incognito profile again"
+                 ]
         ]
       alice ?#> ("@bob hi")
       bob <# (aliceIncognito <> "> hi")
@@ -4300,10 +4464,13 @@ testShortLinkInvitationChangeUser = testChat2 aliceProfile bobProfile test
         <### [ "alisa: connection started",
                WithTime "@alisa hello"
              ]
-      alice <# "bob> hello"
       concurrently_
         (bob <## "alisa: contact is connected")
-        (alice <## "bob (Bob): contact is connected")
+        ( alice
+            <### [ WithTime "bob> hello",
+                   "bob (Bob): contact is connected"
+                 ]
+        )
       alice <##> bob
 
 testShortLinkAddressChangeProfile :: HasCallStack => TestParams -> IO ()
@@ -4401,7 +4568,7 @@ testShortLinkGroupChangeProfile = testChat3 aliceProfile bobProfile cathProfile 
 
       alice ##> "/gp team club"
       alice <## "changed to #club"
-      cath <## "alice updated group #team:"
+      cath <## "alice updated group #team: (signed)"
       cath <## "changed to #club"
 
       bob ##> ("/_connect plan 1 " <> shortLink)
@@ -4439,13 +4606,15 @@ testShortLinkGroupChangeProfileReceived = testChat3 aliceProfile bobProfile cath
 
       cath ##> "/gp team club"
       cath <## "changed to #club"
-      alice <## "cath updated group #team:"
+      alice <## "cath updated group #team: (signed)"
       alice <## "changed to #club"
-      threadDelay 250000
 
-      bob ##> ("/_connect plan 1 " <> shortLink)
-      bob <## "group link: ok to connect directly"
-      groupSLinkData <- getTermLine bob
+      let planGroupLinkData = do
+            bob ##> ("/_connect plan 1 " <> shortLink)
+            bob <## "group link: ok to connect directly"
+            getTermLine bob
+      (T.isInfixOf "\"displayName\":\"club\"" . T.pack <$> planGroupLinkData) `shouldEventuallyReturn` True
+      groupSLinkData <- planGroupLinkData
       bob ##> ("/_prepare group 1 " <> fullLink <> " " <> shortLink <> " " <> groupSLinkData)
       bob <## "#club: group is prepared"
       bob ##> "/_connect group #1"

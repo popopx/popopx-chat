@@ -1,0 +1,33 @@
+-- Original Work Copyright (C) 2020-2022 simplex.chat
+--
+-- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
+-- This file was modified by POPOPX Team in 2026.
+-- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
+
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE QuasiQuotes #-}
+
+module Popopx.Chat.Store.Postgres.Migrations.M20260822_forward_link where
+
+import Data.Text (Text)
+import Text.RawString.QQ (r)
+
+m20260822_forward_link :: Text
+m20260822_forward_link =
+  [r|
+ALTER TABLE chat_items ADD COLUMN fwd_from_group_type TEXT;
+ALTER TABLE chat_items ADD COLUMN fwd_from_group_link BYTEA;
+ALTER TABLE chat_items ADD COLUMN fwd_from_public_group_id BYTEA;
+ALTER TABLE chat_items ADD COLUMN fwd_from_member_id BYTEA;
+ALTER TABLE chat_items ADD COLUMN fwd_from_shared_msg_id BYTEA;
+|]
+
+down_m20260822_forward_link :: Text
+down_m20260822_forward_link =
+  [r|
+ALTER TABLE chat_items DROP COLUMN fwd_from_group_type;
+ALTER TABLE chat_items DROP COLUMN fwd_from_group_link;
+ALTER TABLE chat_items DROP COLUMN fwd_from_public_group_id;
+ALTER TABLE chat_items DROP COLUMN fwd_from_member_id;
+ALTER TABLE chat_items DROP COLUMN fwd_from_shared_msg_id;
+|]

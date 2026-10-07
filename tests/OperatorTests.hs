@@ -1,8 +1,8 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
+-- Original Work Copyright (C) 2020-2022 popopx.chat
 --
 -- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
 -- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
+-- Changes: Rebranded from Popopx Chat to POPOPX Chat.
 
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DuplicateRecordFields #-}
@@ -22,17 +22,17 @@ module OperatorTests (operatorTests) where
 
 import Data.Bifunctor (second)
 import qualified Data.List.NonEmpty as L
-import Simplex.Chat
-import Simplex.Chat.Controller (ChatConfig (..), PresetServers (..))
-import Simplex.Chat.Operators
-import Simplex.Chat.Operators.Presets
-import Simplex.Chat.Protocol (RelayProfile (..), mkRelayProfile)
-import Simplex.Chat.Types
-import Simplex.FileTransfer.Client.Presets (defaultXFTPServers)
-import Simplex.Messaging.Agent.Env.SQLite (ServerCfg (..), ServerRoles (..), allRoles)
-import Simplex.Messaging.Agent.Store.Entity
-import Simplex.Messaging.Encoding.String
-import Simplex.Messaging.Protocol
+import Popopx.Chat
+import Popopx.Chat.Controller (ChatConfig (..), PresetServers (..))
+import Popopx.Chat.Operators
+import Popopx.Chat.Operators.Presets
+import Popopx.Chat.Protocol (RelayProfile (..), mkRelayProfile)
+import Popopx.Chat.Types
+import Popopx.FileTransfer.Client.Presets (defaultXFTPServers)
+import Popopx.Messaging.Agent.Env.SQLite (ServerCfg (..), ServerRoles (..), allRoles)
+import Popopx.Messaging.Agent.Store.Entity
+import Popopx.Messaging.Encoding.String
+import Popopx.Messaging.Protocol
 import Test.Hspec
 
 operatorTests :: Spec
@@ -52,8 +52,8 @@ validateServersTest = describe "validate user servers" $ do
     validateUserServers [invalidNoStorage] [] `shouldBe` ([USEStorageMissing aSMP Nothing], [])
   it "should fail with duplicate host" $ do
     validateUserServers [invalidDuplicateSrv] []
-      `shouldBe` ( [ USEDuplicateServer aSMP "smp://0YuTwO05YJWS8rkjn9eLJDjQhFKvIYd8d4xG8X1blIU=@smp8.simplex.im,beccx4yfxxbvyhqypaavemqurytl6hozr47wfc7uuecacjqdvwpw2xid.onion" "smp8.simplex.im",
-                     USEDuplicateServer aSMP "smp://abcd@smp8.simplex.im" "smp8.simplex.im"
+      `shouldBe` ( [ USEDuplicateServer aSMP "smp://0YuTwO05YJWS8rkjn9eLJDjQhFKvIYd8d4xG8X1blIU=@smp8.popopx.im,beccx4yfxxbvyhqypaavemqurytl6hozr47wfc7uuecacjqdvwpw2xid.onion" "smp8.popopx.im",
+                     USEDuplicateServer aSMP "smp://abcd@smp8.popopx.im" "smp8.popopx.im"
                    ],
                    []
                  )
@@ -63,7 +63,7 @@ validateServersTest = describe "validate user servers" $ do
     validateUserServers [duplicateChatRelayName] [] `shouldBe` ([], [])
   it "should fail with duplicate chat relay address" $ do
     validateUserServers [invalidDuplicateChatRelayAddress] []
-      `shouldBe` ( [ USEDuplicateChatRelayAddress "SimpleX Chat Relay 2" duplicateAddr,
+      `shouldBe` ( [ USEDuplicateChatRelayAddress "Popopx Chat Relay 2" duplicateAddr,
                      USEDuplicateChatRelayAddress "chat_relay_4" duplicateAddr
                    ],
                    []
@@ -100,9 +100,9 @@ updatedServersTest = describe "validate user servers" $ do
     uss <-
       groupByOperator'
         ( ops'',
-          saveSrvs $ take 3 simplexChatSMPServers <> [newUserServer "smp://abcd@smp.example.im"],
+          saveSrvs $ take 3 popopxChatSMPServers <> [newUserServer "smp://abcd@smp.example.im"],
           saveSrvs $ map (presetServer True) $ L.take 3 defaultXFTPServers,
-          saveRelays $ take 2 simplexChatRelays <> [newChatRelay (mkRelayProfile "custom_relay" Nothing) ["example.im"] customRelayAddr]
+          saveRelays $ take 2 popopxChatRelays <> [newChatRelay (mkRelayProfile "custom_relay" Nothing) ["example.im"] customRelayAddr]
         )
     [op1, op2, op3, op4] <- pure $ map updatedUserServers uss
     [p1, p2, p3] <- pure operators -- presets
@@ -197,9 +197,9 @@ perServerRolesTest = describe "per-server roles" $ do
     -- host matches no operator domain -> self-hosted
     selfHostedSMP :: ServerRolesOverride -> NewUserServer 'PSMP
     selfHostedSMP r = (newUserServer "smp://abcd@self.example.com" :: NewUserServer 'PSMP) {roles = r}
-    -- host matches operator domain simplex.im
+    -- host matches operator domain popopx.im
     opMatchedSMP :: ServerRolesOverride -> NewUserServer 'PSMP
-    opMatchedSMP r = (newUserServer "smp://abcd@smp8.simplex.im" :: NewUserServer 'PSMP) {roles = r}
+    opMatchedSMP r = (newUserServer "smp://abcd@smp8.popopx.im" :: NewUserServer 'PSMP) {roles = r}
     selfHostedUser :: ServerRolesOverride -> UpdatedUserOperatorServers
     selfHostedUser r =
       UpdatedUserOperatorServers
@@ -221,9 +221,9 @@ valid :: UpdatedUserOperatorServers
 valid =
   UpdatedUserOperatorServers
     { operator = Just operatorSimpleXChat {operatorId = DBEntityId 1},
-      smpServers = map (AUS SDBNew) simplexChatSMPServers,
+      smpServers = map (AUS SDBNew) popopxChatSMPServers,
       xftpServers = map (AUS SDBNew . presetServer True) $ L.toList defaultXFTPServers,
-      chatRelays = map (AUCR SDBNew) simplexChatRelays
+      chatRelays = map (AUCR SDBNew) popopxChatRelays
     }
 
 invalidNoServers :: UpdatedUserOperatorServers
@@ -232,7 +232,7 @@ invalidNoServers = (valid :: UpdatedUserOperatorServers) {smpServers = []}
 invalidDisabled :: UpdatedUserOperatorServers
 invalidDisabled =
   (valid :: UpdatedUserOperatorServers)
-    { smpServers = map (AUS SDBNew . (\srv -> (srv :: NewUserServer 'PSMP) {enabled = False})) simplexChatSMPServers
+    { smpServers = map (AUS SDBNew . (\srv -> (srv :: NewUserServer 'PSMP) {enabled = False})) popopxChatSMPServers
     }
 
 invalidDisabledOp :: UpdatedUserOperatorServers
@@ -250,7 +250,7 @@ invalidNoStorage =
 invalidDuplicateSrv :: UpdatedUserOperatorServers
 invalidDuplicateSrv =
   (valid :: UpdatedUserOperatorServers)
-    { smpServers = map (AUS SDBNew) $ simplexChatSMPServers <> [presetServer True "smp://abcd@smp8.simplex.im"]
+    { smpServers = map (AUS SDBNew) $ popopxChatSMPServers <> [presetServer True "smp://abcd@smp8.popopx.im"]
     }
 
 invalidNoChatRelays :: UpdatedUserOperatorServers
@@ -259,14 +259,14 @@ invalidNoChatRelays = (valid :: UpdatedUserOperatorServers) {chatRelays = []}
 duplicateChatRelayName :: UpdatedUserOperatorServers
 duplicateChatRelayName =
   (valid :: UpdatedUserOperatorServers)
-    { chatRelays = map (AUCR SDBNew) $ simplexChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_1" Nothing) ["simplex.im"] (either error id $ strDecode "https://smp444.simplex.im/r#Pz9qz7ZVljMofoRxiDDpL_w2DZSazK8IgafxqnWKv6Y")]
+    { chatRelays = map (AUCR SDBNew) $ popopxChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_1" Nothing) ["popopx.im"] (either error id $ strDecode "https://smp444.popopx.im/r#Pz9qz7ZVljMofoRxiDDpL_w2DZSazK8IgafxqnWKv6Y")]
     }
 
 invalidDuplicateChatRelayAddress :: UpdatedUserOperatorServers
 invalidDuplicateChatRelayAddress =
   (valid :: UpdatedUserOperatorServers)
-    { chatRelays = map (AUCR SDBNew) $ simplexChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_4" Nothing) ["simplex.im"] duplicateAddr]
+    { chatRelays = map (AUCR SDBNew) $ popopxChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_4" Nothing) ["popopx.im"] duplicateAddr]
     }
 
 duplicateAddr :: ShortLinkContact
-duplicateAddr = either error id $ strDecode "https://smp6.simplex.im/r#_qlQfogHGDJ8MAF2wKmkglRBM-xHR142gDJstKiGRQQ"
+duplicateAddr = either error id $ strDecode "https://smp6.popopx.im/r#_qlQfogHGDJ8MAF2wKmkglRBM-xHR142gDJstKiGRQQ"

@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PostfixOperators #-}
 
@@ -15,7 +9,7 @@ import ChatTests.DBUtils
 import ChatTests.Utils
 import Data.Time (getCurrentTime)
 import Data.Time.Format.ISO8601 (iso8601Show)
-import Simplex.Chat.Controller (ChatConfig (..), InlineFilesConfig (..), defaultInlineFilesConfig)
+import Popopx.Chat.Controller (ChatConfig (..), InlineFilesConfig (..), defaultInlineFilesConfig)
 import System.Directory (copyFile, doesFileExist)
 import System.FilePath ((</>))
 import Test.Hspec hiding (it)
@@ -127,7 +121,7 @@ testFiles :: TestParams -> IO ()
 testFiles ps = withNewTestChat ps "alice" aliceProfile $ \alice -> do
   -- setup
   createCCNoteFolder alice
-  let files = "./tests/tmp/app_files"
+  let files = tmpFile ps "app_files"
   alice ##> ("/_files_folder " <> files)
   alice <## "ok"
 
@@ -176,10 +170,10 @@ testFiles ps = withNewTestChat ps "alice" aliceProfile $ \alice -> do
 
 testOtherFiles :: TestParams -> IO ()
 testOtherFiles =
-  testChatCfg2 cfg aliceProfile bobProfile $ \alice bob -> withXFTPServer $ do
+  testChatCfg2 cfg aliceProfile bobProfile $ \alice bob -> withXFTPServer alice $ do
     connectUsers alice bob
     createCCNoteFolder bob
-    bob ##> "/_files_folder ./tests/tmp/"
+    bob ##> ("/_files_folder " <> tmpDir bob)
     bob <## "ok"
 
     alice #> "/f @bob ./tests/fixtures/test.jpg"
@@ -203,7 +197,7 @@ testOtherFiles =
     bob ##> "/tail *"
     bob ##> "/fs 1"
     bob <## "receiving file 1 (test.jpg) complete, path: test.jpg"
-    doesFileExist "./tests/tmp/test.jpg" `shouldReturn` True
+    doesFileExist (tmpFile bob "test.jpg") `shouldReturn` True
   where
     cfg = testCfg {inlineFiles = defaultInlineFilesConfig {offerChunks = 100, sendChunks = 100, receiveChunks = 100}}
 
@@ -218,9 +212,10 @@ testCreateMulti ps = withNewTestChat ps "alice" aliceProfile $ \alice -> do
 testCreateMultiFiles :: TestParams -> IO ()
 testCreateMultiFiles ps = withNewTestChat ps "alice" aliceProfile $ \alice -> do
   createCCNoteFolder alice
-  alice #$> ("/_files_folder ./tests/tmp/alice_app_files", id, "ok")
-  copyFile "./tests/fixtures/test.jpg" "./tests/tmp/alice_app_files/test.jpg"
-  copyFile "./tests/fixtures/test.pdf" "./tests/tmp/alice_app_files/test.pdf"
+  let files = tmpFile ps "alice_app_files"
+  alice #$> ("/_files_folder " <> files, id, "ok")
+  copyFile "./tests/fixtures/test.jpg" (files </> "test.jpg")
+  copyFile "./tests/fixtures/test.pdf" (files </> "test.pdf")
 
   let cm1 = "{\"msgContent\": {\"type\": \"text\", \"text\": \"message without file\"}}"
       cm2 = "{\"filePath\": \"test.jpg\", \"msgContent\": {\"type\": \"text\", \"text\": \"sending file 1\"}}"
@@ -233,8 +228,8 @@ testCreateMultiFiles ps = withNewTestChat ps "alice" aliceProfile $ \alice -> do
   alice <# "* sending file 2"
   alice <# "* file 2 (test.pdf)"
 
-  doesFileExist "./tests/tmp/alice_app_files/test.jpg" `shouldReturn` True
-  doesFileExist "./tests/tmp/alice_app_files/test.pdf" `shouldReturn` True
+  doesFileExist (files </> "test.jpg") `shouldReturn` True
+  doesFileExist (files </> "test.pdf") `shouldReturn` True
 
   alice ##> "/_get chat *1 count=3"
   r <- chatF <$> getTermLine alice
@@ -244,13 +239,13 @@ testLinkContentFilter :: TestParams -> IO ()
 testLinkContentFilter ps = withNewTestChat ps "alice" aliceProfile $ \alice -> do
   createCCNoteFolder alice
 
-  let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://simplex.chat\", \"preview\": {\"uri\": \"https://simplex.chat\", \"title\": \"SimpleX Chat\", \"description\": \"SimpleX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
+  let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://popopx.chat\", \"preview\": {\"uri\": \"https://popopx.chat\", \"title\": \"Popopx Chat\", \"description\": \"Popopx Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
   alice ##> ("/_create *1 json [" <> linkPreview <> "]")
-  alice <# "* https://simplex.chat"
+  alice <# "* https://popopx.chat"
 
   alice >* "check out https://example.com"
   alice >* "hello, no links here"
 
   alice ##> "/_get content types *1"
   alice <## "Chat content types: link, text"
-  alice #$> ("/_get chat *1 content=link count=100", chat, [(1, "https://simplex.chat"), (1, "check out https://example.com")])
+  alice #$> ("/_get chat *1 content=link count=100", chat, [(1, "https://popopx.chat"), (1, "check out https://example.com")])

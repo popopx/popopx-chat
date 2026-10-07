@@ -6,7 +6,7 @@ exports.teamAddedMessage = teamAddedMessage;
 exports.noTeamMembersMessage = noTeamMembersMessage;
 const util_js_1 = require("./util.js");
 exports.welcomeMessage = `Hello! This is a *POPOPX team* support bot - not an AI.
-*Join public groups* at https://popopx.chat/directory or [via directory bot](https://smp4.simplex.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok)
+*Join public groups* at https://popopx.chat/directory or [via directory bot](https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok)
 
 We just launched [equity crowdfunding on Wefunder](https://wefunder.com/popopx.chat)!
 

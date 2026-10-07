@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
@@ -71,21 +65,21 @@ import Popopx.Messaging.Util
 import Popopx.RemoteControl.Client
 import Popopx.RemoteControl.Invitation (RCInvitation (..), RCSignedInvitation (..), RCVerifiedInvitation (..), verifySignedInvitation)
 import Popopx.RemoteControl.Types
-import System.FilePath (takeFileName, (</>))
+import System.FilePath (takeDirectory, takeFileName, (</>))
 import UnliftIO
 import UnliftIO.Concurrent (forkIO)
-import UnliftIO.Directory (copyFile, createDirectoryIfMissing, doesDirectoryExist, removeDirectoryRecursive, renameFile)
+import UnliftIO.Directory (canonicalizePath, copyFile, createDirectoryIfMissing, doesDirectoryExist, removeDirectoryRecursive, renameFile)
 
 remoteFilesFolder :: String
 remoteFilesFolder = "popopx_v1_files"
 
 -- when acting as host
 minRemoteCtrlVersion :: AppVersion
-minRemoteCtrlVersion = AppVersion [6, 5, 0, 12]
+minRemoteCtrlVersion = AppVersion [7, 1, 0, 9]
 
 -- when acting as controller
 minRemoteHostVersion :: AppVersion
-minRemoteHostVersion = AppVersion [6, 5, 0, 12]
+minRemoteHostVersion = AppVersion [7, 1, 0, 9]
 
 currentAppVersion :: AppVersion
 currentAppVersion = AppVersion SC.version
@@ -523,7 +517,7 @@ handleRemoteCommand execCC encryption remoteOutputQ HTTP2Request {request, reqBo
   where
     parseRequest :: ExceptT RemoteProtocolError IO (C.SbKeyNonce, GetChunk, RemoteCommand)
     parseRequest = do
-      (rfKN, header, getNext) <- parseDecryptHTTP2Body encryption request reqBody
+      (rfKN, header, getNext) <- parseDecryptHTTP2Body maxCommandBodySize encryption request reqBody
       (rfKN,getNext,) <$> liftEitherWith RPEInvalidJSON (J.eitherDecodeStrict header)
     replyError = reply . RRChatResponse . RRError
     processCommand :: User -> C.SbKeyNonce -> GetChunk -> RemoteCommand -> CM ()
@@ -559,7 +553,7 @@ liftRC = liftError (ChatErrorRemoteCtrl . RCEProtocolError)
 handleSend :: (ByteString -> Int -> CM' (Either ChatError ChatResponse)) -> Text -> Int -> CM' RemoteResponse
 handleSend execCC command retryNum = do
   logDebug $ "Send: " <> tshow command
-  -- execCC checks for remote-allowed commands
+  -- execCC is execChatCommand CSRemoteCtrl, which checks allowRemoteCommand
   -- convert errors thrown in execCC into error responses to prevent aborting the protocol wrapper
   RRChatResponse . eitherToResult <$> execCC (encodeUtf8 command) retryNum
 
@@ -580,9 +574,18 @@ handleStoreFile rfKN fileName fileSize fileDigest getChunk =
       Nothing -> storeFileTo =<< getDefaultFilesFolder
     storeFileTo :: FilePath -> CM' (Either RemoteProtocolError FilePath)
     storeFileTo dir = liftIO . tryAllErrors' $ do
+      unless (validRemoteFileName fileName) $ throwError $ RPEInvalidBody "invalid file name"
       filePath <- liftIO $ dir `uniqueCombine` fileName
+      -- resolves symlinks, so it also catches a final component linking outside the folder
+      canonPath <- liftIO $ canonicalizePath filePath
+      inDir <- liftIO $ (takeDirectory canonPath ==) <$> canonicalizePath dir
+      unless inDir $ throwError $ RPEInvalidBody "file path outside of files folder"
       receiveEncryptedFile rfKN getChunk fileSize fileDigest filePath
       pure filePath
+
+-- The controller only ever sends a bare file name (see storeRemoteFile), so a path is a protocol violation.
+validRemoteFileName :: FilePath -> Bool
+validRemoteFileName fName = fName == takeFileName fName && fName `notElem` (["", ".", ".."] :: [FilePath])
 
 handleGetFile :: User -> RemoteFile -> Respond -> CM ()
 handleGetFile User {userId} RemoteFile {userId = commandUserId, fileId, sent, fileSource = cf'@CryptoFile {filePath}} reply = do
