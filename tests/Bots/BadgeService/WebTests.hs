@@ -945,7 +945,7 @@ outsideMarker :: LB.ByteString
 outsideMarker = "SECRET-OUTSIDE-STATIC-DIR"
 
 shellHtml :: LB.ByteString
-shellHtml = "<!doctype html><title>SimpleX badges</title><meta id=\"stripe-publishable-key\" name=\"stripe-publishable-key\" content=\"\">"
+shellHtml = "<!doctype html><title>POPOPX badges</title><meta id=\"stripe-publishable-key\" name=\"stripe-publishable-key\" content=\"\">"
 
 assetJs :: LB.ByteString
 assetJs = "export const build = \"d95503da54ee228f\";"

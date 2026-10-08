@@ -1608,8 +1608,8 @@ processChatCommand cxt nm = \case
             UserContactLink {shortLinkDataSet, connLinkContact = CCLink _ sl_} <- withFastStore (`getUserAddress` user)
             case sl_ of
               Just sl | shortLinkDataSet -> do
-                NameRecord {nrSimplexContact} <- resolveNameRecord user nm domain
-                unless (nameResolvesTo sl nrSimplexContact) $ throwChatError $ CEPopopxDomainNotReady domain SDENoValidLink
+                NameRecord {nrPopopxContact} <- resolveNameRecord user nm domain
+                unless (nameResolvesTo sl nrPopopxContact) $ throwChatError $ CEPopopxDomainNotReady domain SDENoValidLink
                 pure $ Just (CLShort sl)
               _ -> throwCmdError "create the address short link and add it to name"
         let p' = (fromLocalProfile p :: Profile) {contactDomain = mkDomainClaim <$> domain_, contactLink = cl'}
@@ -2422,8 +2422,8 @@ processChatCommand cxt nm = \case
     -- checks the profile link, not the link we joined through (which may have rotated)
     (verified, reason) <-
       tryAllErrors (resolveNameRecord user nm (claimDomain claim)) >>= \case
-        Right NameRecord {nrSimplexChannel}
-          | nameResolvesTo groupLink nrSimplexChannel -> pure (True, Nothing)
+        Right NameRecord {nrPopopxChannel}
+          | nameResolvesTo groupLink nrPopopxChannel -> pure (True, Nothing)
           | otherwise -> pure (False, Just "the name does not resolve to the link in the group profile")
         Left (ChatErrorAgent {agentError = SMP _ (NAME SMP.NOT_FOUND)}) -> pure (False, Just "the name is not registered")
         Left e -> throwError e
@@ -3301,8 +3301,8 @@ processChatCommand cxt nm = \case
         let domainChanged = (claimDomain <$> newClaim) /= (claimDomain <$> (existingAccess >>= groupDomainClaim))
         forM_ (claimDomain <$> newClaim) $ \newDomain ->
           when domainChanged $ do
-            NameRecord {nrSimplexChannel} <- resolveNameRecord user nm newDomain
-            unless (nameResolvesTo groupLink nrSimplexChannel) $ throwChatError $ CEPopopxDomainNotReady newDomain SDENoValidLink
+            NameRecord {nrPopopxChannel} <- resolveNameRecord user nm newDomain
+            unless (nameResolvesTo groupLink nrPopopxChannel) $ throwChatError $ CEPopopxDomainNotReady newDomain SDENoValidLink
         runUpdateGroupProfile user gInfo p {publicGroup = Just pg {publicGroupAccess = Just access}} (isJust newClaim && domainChanged)
       Nothing -> throwChatError $ CECommandError "not a public group"
   APICreateGroupLink groupId mRole -> withUser $ \user -> withGroupLock "createGroupLink" groupId $ do
@@ -4425,10 +4425,10 @@ processChatCommand cxt nm = \case
         | otherwise ->
             tryAllErrors (resolveNameRecord user nm d) >>= \case
               Right nr
-                | isJust (firstNameLink CCTChannel (nrSimplexChannel nr)) ->
+                | isJust (firstNameLink CCTChannel (nrPopopxChannel nr)) ->
                     (addOther nr <$> connectPlanName NTPublicGroup (Right nr)) `catchAllErrors` \e ->
                       (addOther nr <$> connectPlanName NTContact (Right nr) `catchAllErrors` \_ -> throwError e)
-                | isJust (firstNameLink CCTContact (nrSimplexContact nr)) ->
+                | isJust (firstNameLink CCTContact (nrPopopxContact nr)) ->
                     addOther nr <$> connectPlanName NTContact (Right nr)
                 | otherwise -> connectPlanNoName $ ChatError $ CEPopopxDomainNotReady d SDENoValidLink
               Left e -> connectPlanNoName e
@@ -4444,8 +4444,8 @@ processChatCommand cxt nm = \case
           addOther nr (l, planName, _, p) = (l, planName, otherName, p)
             where
               otherName = case planName of
-                Just (PopopxNameInfo NTContact _) | isJust (firstNameLink CCTChannel (nrSimplexChannel nr)) -> Just $ PopopxNameInfo NTPublicGroup d
-                Just (PopopxNameInfo NTPublicGroup _) | isJust (firstNameLink CCTContact (nrSimplexContact nr)) -> Just $ PopopxNameInfo NTContact d
+                Just (PopopxNameInfo NTContact _) | isJust (firstNameLink CCTChannel (nrPopopxChannel nr)) -> Just $ PopopxNameInfo NTPublicGroup d
+                Just (PopopxNameInfo NTPublicGroup _) | isJust (firstNameLink CCTContact (nrPopopxContact nr)) -> Just $ PopopxNameInfo NTContact d
                 _ -> Nothing
       CTFullContact cReq -> do
         plan <- contactOrGroupRequestPlan user cReq `catchAllErrors` (pure . CPError)
@@ -4574,10 +4574,10 @@ processChatCommand cxt nm = \case
           -- resolve a name to its first contact/channel short link
           resolveNameLink :: PopopxNameInfo -> CM (ConnShortLink 'CMContact)
           resolveNameLink PopopxNameInfo {nameType, nameDomain} = do
-            NameRecord {nrSimplexContact, nrSimplexChannel} <- maybe (resolveNameRecord user nm nameDomain) (ExceptT . pure) nameRec
+            NameRecord {nrPopopxContact, nrPopopxChannel} <- maybe (resolveNameRecord user nm nameDomain) (ExceptT . pure) nameRec
             let (candidates, ctType') = case nameType of
-                  NTContact -> (nrSimplexContact, CCTContact)
-                  NTPublicGroup -> (nrSimplexChannel, CCTChannel)
+                  NTContact -> (nrPopopxContact, CCTContact)
+                  NTPublicGroup -> (nrPopopxChannel, CCTChannel)
             maybe (throwChatError $ CEPopopxDomainNotReady nameDomain SDENoValidLink) pure $ firstNameLink ctType' candidates
     connectWithPlan :: User -> IncognitoEnabled -> ACreatedConnLink -> Maybe PopopxNameInfo -> Maybe PopopxNameInfo -> ConnectionPlan -> CM ChatResponse
     connectWithPlan user@User {userId} incognito ccLink planPopopxName otherPopopxName plan
@@ -5096,10 +5096,10 @@ verifyEntityDomain user nm nameType PopopxDomainClaim {domain = StrJSON domain, 
   (Nothing, _) -> pure (Nothing, Just "no name proof to verify")
   (_, Nothing) -> pure (Nothing, Just "no connection link to check the name against")
   (Just proof, Just (ACSL SCMContact profileSLnk)) -> do
-    NameRecord {nrSimplexContact, nrSimplexChannel} <- resolveNameRecord user nm domain
+    NameRecord {nrPopopxContact, nrPopopxChannel} <- resolveNameRecord user nm domain
     let resolvedLinks = case nameType of
-          NTContact -> nrSimplexContact
-          NTPublicGroup -> nrSimplexChannel
+          NTContact -> nrPopopxContact
+          NTPublicGroup -> nrPopopxChannel
     if not (nameResolvesTo profileSLnk resolvedLinks)
       then pure (Just False, Just "the name does not resolve to this address")
       else do
@@ -5726,7 +5726,7 @@ sendServiceRequestBytes nm user sendTarget requestTimeout signKey request = do
       CTDomain d -> resolveDomain d
     resolveDomain d = do
       nr <- resolveNameRecord user nm d
-      case firstNameLink CCTContact (nrSimplexContact nr) of
+      case firstNameLink CCTContact (nrPopopxContact nr) of
         Just sLnk -> resolveShortLink sLnk
         Nothing -> throwChatError $ CEPopopxDomainNotReady d SDENoValidLink
     resolveShortLink sLnk = (\(_, _, cReq) -> cReq) <$> getShortLinkConnReq nm user sLnk

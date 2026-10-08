@@ -37,8 +37,8 @@ badgeServiceOpts appDir defaultDbName = do
     strOption
       ( long "service-name"
           <> metavar "SERVICE_NAME"
-          <> help "The display name of the badge service bot, without *'s and spaces (SimpleX Badges)"
-          <> value "SimpleX Badges"
+          <> help "The display name of the badge service bot, without *'s and spaces (POPOPX Badges)"
+          <> value "POPOPX Badges"
       )
   clientService <-
     switch
@@ -99,7 +99,7 @@ getBadgeServiceOpts appDir defaultDbName =
   execParser $
     info
       (helper <*> versionOption <*> badgeServiceOpts appDir defaultDbName)
-      (header versionStr <> fullDesc <> progDesc "Start SimpleX Badge Service with DB_FILE options")
+      (header versionStr <> fullDesc <> progDesc "Start POPOPX Badge Service with DB_FILE options")
   where
     versionStr = versionString versionNumber
     versionOption = infoOption versionAndUpdate (long "version" <> short 'v' <> help "Show version")

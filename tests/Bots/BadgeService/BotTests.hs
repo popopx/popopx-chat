@@ -121,7 +121,7 @@ badgeServiceTests = do
   it "should present the month already issued when a previous pass did not" testPresentationCatchesUp
 
 badgeBotName :: Text
-badgeBotName = "SimpleX Badges"
+badgeBotName = "POPOPX Badges"
 
 badgeProfile :: Profile
 badgeProfile = Profile {displayName = badgeBotName, fullName = "", shortDescr = Nothing, description = Nothing, image = Nothing, contactLink = Nothing, peerType = Just CPTBot, preferences = Nothing, badge = Nothing, contactDomain = Nothing}

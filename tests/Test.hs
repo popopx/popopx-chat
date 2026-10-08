@@ -66,7 +66,7 @@ main = do
           postgresSchemaDumpTest
             migrations
             schemaDumpDBOpts
-            "src/Simplex/Chat/Store/Postgres/Migrations/chat_schema.sql"
+            "src/Popopx/Chat/Store/Postgres/Migrations/chat_schema.sql"
 #else
       sequential $ describe "Schema dump" schemaDumpTest
 #if MIN_VERSION_base(4,18,0)
@@ -75,7 +75,7 @@ main = do
       around tmpBracket $ describe "WebRTC encryption" webRTCTests
 #endif
       describe "Supporter badges" badgeTests
-      describe "SimpleX badge service" $ do
+      describe "POPOPX badge service" $ do
         badgeConfigTests
         badgeWebTests
         badgeCatalogTests
@@ -83,18 +83,18 @@ main = do
         badgeWaitersTests
         badgeBTCPayTests
         badgeStripeTests
-      describe "SimpleX chat markdown" markdownTests
+      describe "POPOPX chat markdown" markdownTests
       describe "JSON Tests" jsonTests
       describe "Member relations" memberRelationsTests
-      describe "SimpleX chat view" viewTests
-      describe "SimpleX chat protocol" protocolTests
+      describe "POPOPX chat view" viewTests
+      describe "POPOPX chat protocol" protocolTests
       describe "Valid names" validNameTests
       describe "Message batching" batchingTests
       describe "Operators" operatorTests
       describe "Random servers" randomServersTests
 #if !defined(dbPostgres)
       around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "names tests" chatNamesTests
-      around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "SimpleX Directory names" directoryNameTests
+      around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "POPOPX Directory names" directoryNameTests
 #endif
 #if defined(dbPostgres)
       around (testBracket portBases)
@@ -105,10 +105,10 @@ main = do
 #if !defined(dbPostgres)
           describe "Mobile API Tests" mobileTests
 #endif
-          describe "SimpleX chat client" chatTests
-          xdescribe'' "SimpleX Broadcast bot" broadcastBotTests
-          describe "SimpleX Directory service bot" directoryServiceTests
-          describe "SimpleX badge service e2e" $ do
+          describe "POPOPX chat client" chatTests
+          xdescribe'' "POPOPX Broadcast bot" broadcastBotTests
+          describe "POPOPX Directory service bot" directoryServiceTests
+          describe "POPOPX badge service e2e" $ do
             badgeServiceTests
             describe "managed group" badgeGroupIntegrationTests
           describe "Remote session" remoteTests

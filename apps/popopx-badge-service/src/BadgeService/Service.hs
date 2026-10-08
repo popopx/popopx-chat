@@ -88,7 +88,7 @@ welcomeGetOpts = do
   appDir <- getAppUserDataDirectory "popopx"
   opts@BadgeServiceOpts {coreOptions, testing, serviceName} <- getBadgeServiceOpts appDir "popopx_badge_service"
   unless testing $ do
-    putStrLn $ "SimpleX Badge Service v" ++ versionNumber
+    putStrLn $ "POPOPX Badge Service v" ++ versionNumber
     printDbOpts coreOptions
     putStrLn $ "Service name: " ++ T.unpack serviceName
   pure opts

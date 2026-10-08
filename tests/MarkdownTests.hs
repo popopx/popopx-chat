@@ -273,7 +273,7 @@ textWithUri = describe "text with Uri" do
     ".com" <==> ".com"
     "example.academytoolong" <==> "example.academytoolong"
     "popopx:/example" <==> "popopx:/example"
-  it "SimpleX links" do
+  it "POPOPX links" do
     let inv = "/invitation#/?v=1&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.popopx.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D&e2e=v%3D2%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
     ("https://popopx.chat" <> inv) <==> popopxLink XLInvitation ("popopx:" <> inv) ["smp.popopx.im"] ("https://popopx.chat" <> inv)
     ("popopx:" <> inv) <==> popopxLink XLInvitation ("popopx:" <> inv) ["smp.popopx.im"] ("popopx:" <> inv)
@@ -307,7 +307,7 @@ textWithHyperlink = describe "text with HyperLink without link text" do
     "[click here](https://example.com )" <==> "[click here](https://example.com )"
 
 obfuscatedPopopxLinks :: Spec
-obfuscatedPopopxLinks = describe "SimpleX links obfuscated with whitespace" do
+obfuscatedPopopxLinks = describe "POPOPX links obfuscated with whitespace" do
   let addr = "https://smp6.popopx.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw"
       inv = "/invitation#/?v=1&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.popopx.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D&e2e=v%3D2%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
   let spaced s = T.replace "://" ":// " s -- insert a space right after the scheme
@@ -319,7 +319,7 @@ obfuscatedPopopxLinks = describe "SimpleX links obfuscated with whitespace" do
     hasObfuscatedPopopxLink (T.intercalate " " $ T.chunksOf 8 $ "https://popopx.chat" <> inv) `shouldBe` True
   it "detects a split link followed by other text" do
     hasObfuscatedPopopxLink (spaced addr <> "\nplease connect") `shouldBe` True
-  it "ignores text without a SimpleX link" do
+  it "ignores text without a POPOPX link" do
     hasObfuscatedPopopxLink "" `shouldBe` False
     hasObfuscatedPopopxLink "hello there, this is a normal message" `shouldBe` False
     hasObfuscatedPopopxLink "see https://example.com/page?ref=123 for details" `shouldBe` False

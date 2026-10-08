@@ -38,7 +38,7 @@ runBadgeCommand args =
     Sign keyIdx sk ms badgeType badgeExpiry -> sign keyIdx sk ms badgeType badgeExpiry
   where
     badgeInfo = info (helper <*> hsubparser badgeCmd) fullDesc
-    badgeCmd = command "badge" (info (helper <*> badgeCommandP) (progDesc "SimpleX supporter badge tooling"))
+    badgeCmd = command "badge" (info (helper <*> badgeCommandP) (progDesc "POPOPX supporter badge tooling"))
 
 badgeCommandP :: Parser BadgeCommand
 badgeCommandP =

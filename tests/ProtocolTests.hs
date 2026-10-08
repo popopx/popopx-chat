@@ -137,7 +137,7 @@ testForwardLink :: ForwardLink
 testForwardLink =
   ForwardLink
     { displayName = "team",
-      groupLink = CSLContact SLSSimplex CCTChannel srv (LinkKey "\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8"),
+      groupLink = CSLContact SLSPopopx CCTChannel srv (LinkKey "\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8"),
       publicGroupId = B64UrlByteString "\1\2\3\4",
       memberId = Just $ MemberId "\1\2\3\4",
       msgId = SharedMsgId "\5\6\7\8"

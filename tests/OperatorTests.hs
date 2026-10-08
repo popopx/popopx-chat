@@ -192,7 +192,7 @@ perServerRolesTest = describe "per-server roles" $ do
       let (_errs, warns) = validateUserServers [selfHostedUser (ServerRolesOverride Nothing Nothing (Just True))] []
       warns `shouldSatisfy` notElem (USWNoNamesServers Nothing)
   where
-    testOp = operatorSimpleXChat {operatorId = DBEntityId 1}
+    testOp = operatorPopopXChat {operatorId = DBEntityId 1}
     opDomains = operatorDomains [testOp]
     -- host matches no operator domain -> self-hosted
     selfHostedSMP :: ServerRolesOverride -> NewUserServer 'PSMP
@@ -220,7 +220,7 @@ deriving instance Eq UserServersWarning
 valid :: UpdatedUserOperatorServers
 valid =
   UpdatedUserOperatorServers
-    { operator = Just operatorSimpleXChat {operatorId = DBEntityId 1},
+    { operator = Just operatorPopopXChat {operatorId = DBEntityId 1},
       smpServers = map (AUS SDBNew) popopxChatSMPServers,
       xftpServers = map (AUS SDBNew . presetServer True) $ L.toList defaultXFTPServers,
       chatRelays = map (AUCR SDBNew) popopxChatRelays
@@ -238,13 +238,13 @@ invalidDisabled =
 invalidDisabledOp :: UpdatedUserOperatorServers
 invalidDisabledOp =
   (valid :: UpdatedUserOperatorServers)
-    { operator = Just operatorSimpleXChat {operatorId = DBEntityId 1, enabled = False}
+    { operator = Just operatorPopopXChat {operatorId = DBEntityId 1, enabled = False}
     }
 
 invalidNoStorage :: UpdatedUserOperatorServers
 invalidNoStorage =
   (valid :: UpdatedUserOperatorServers)
-    { operator = Just operatorSimpleXChat {operatorId = DBEntityId 1, smpRoles = allRoles {storage = False}}
+    { operator = Just operatorPopopXChat {operatorId = DBEntityId 1, smpRoles = allRoles {storage = False}}
     }
 
 invalidDuplicateSrv :: UpdatedUserOperatorServers

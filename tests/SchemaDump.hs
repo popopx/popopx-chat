@@ -39,16 +39,16 @@ testAgentDB :: FilePath
 testAgentDB = "tests/tmp/test_agent.db"
 
 appSchema :: FilePath
-appSchema = "src/Simplex/Chat/Store/SQLite/Migrations/chat_schema.sql"
+appSchema = "src/Popopx/Chat/Store/SQLite/Migrations/chat_schema.sql"
 
 appLint :: FilePath
-appLint = "src/Simplex/Chat/Store/SQLite/Migrations/chat_lint.sql"
+appLint = "src/Popopx/Chat/Store/SQLite/Migrations/chat_lint.sql"
 
 appChatQueryPlans :: FilePath
-appChatQueryPlans = "src/Simplex/Chat/Store/SQLite/Migrations/chat_query_plans.txt"
+appChatQueryPlans = "src/Popopx/Chat/Store/SQLite/Migrations/chat_query_plans.txt"
 
 appAgentQueryPlans :: FilePath
-appAgentQueryPlans = "src/Simplex/Chat/Store/SQLite/Migrations/agent_query_plans.txt"
+appAgentQueryPlans = "src/Popopx/Chat/Store/SQLite/Migrations/agent_query_plans.txt"
 
 testSchema :: FilePath
 testSchema = "tests/tmp/test_agent_schema.sql"

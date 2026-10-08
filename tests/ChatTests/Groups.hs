@@ -1768,7 +1768,7 @@ testGroupDescription = testChat4 aliceProfile bobProfile cathProfile danProfile 
       alice <## "Message reactions: on"
       alice <## "Voice messages: on"
       alice <## "Files and media: on"
-      alice <## "SimpleX links: on"
+      alice <## "POPOPX links: on"
       alice <## "Member reports: on"
       alice <## "Recent history: on"
       alice <## "Chat with admins: on"

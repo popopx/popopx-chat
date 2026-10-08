@@ -286,7 +286,7 @@ markdownP = mconcat <$> A.many' fragmentP
       f <- case strDecode $ encodeUtf8 l of
         Right lnk@(ACL _ cLink) -> case cLink of
           CLShort _ -> pure $ popopxUriFormat (Just t) lnk
-          CLFull _ -> fail "full SimpleX link in hyperlink"
+          CLFull _ -> fail "full POPOPX link in hyperlink"
         Left _ -> case parseUri $ encodeUtf8 l of
           Right _ -> pure $ HyperLink (Just t) l
           Left e -> fail $ "not uri: " <> T.unpack e
