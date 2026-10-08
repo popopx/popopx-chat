@@ -55,7 +55,7 @@ import Popopx.Messaging.Crypto.File (CryptoFile (..))
 import qualified Popopx.Messaging.Crypto.File as CF
 import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Parsers (defaultJSON, dropPrefix, enumJSON, parseAll, sumTypeJSON)
-import Popopx.Messaging.Protocol (BlockingInfo, MsgBody, XFTPServer)
+import Popopx.Messaging.Protocol (BlockingInfo, MsgBody, MsgId (..), XFTPServer)
 import Popopx.Messaging.Util (eitherToMaybe, safeDecodeUtf8, (<$?>))
 
 data ChatType = CTDirect | CTGroup | CTLocal | CTContactRequest | CTContactConnection
@@ -1228,7 +1228,7 @@ msgMetaToJson MsgMeta {integrity, recipient = (rcvId, rcvTs), broker = (serverId
     { integrity = (decodeLatin1 . strEncode) integrity,
       rcvId,
       rcvTs,
-      serverId = (decodeLatin1 . B64.encode) serverId,
+      serverId = (decodeLatin1 . B64.encode . unMsgId) serverId,
       serverTs,
       sndId
     }

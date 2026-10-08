@@ -1,4 +1,4 @@
-# SimpleX badge codes — web
+# POPOPX badge codes — web
 
 The buyer-facing page for badge codes: choose a tier and duration, pay by
 card, BTC or XMR, and receive a code. Design and rationale are in
@@ -132,7 +132,7 @@ polling, partial payment, expiry, late settlement and replay, all against a
 fake Greenfield — is `tests/Bots/BadgeService/WebTests.hs`:
 
 ```
-cabal test --test-options='-m "/SimpleX badge service/"'
+cabal test --test-options='-m "/POPOPX badge service/"'
 ```
 
 ## Running the mock

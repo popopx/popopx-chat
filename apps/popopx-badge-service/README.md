@@ -1,7 +1,7 @@
-# SimpleX badge service
+# POPOPX badge service
 
 `popopx-badge-service` runs the whole supporter-badge service as one process, two
-lanes: a SimpleX chat bot that answers service RPC over a double-ratchet contact
+lanes: a POPOPX chat bot that answers service RPC over a double-ratchet contact
 address, and — only when `--service-config` names a `badge_service.ini` — the badge-codes
 web checkout (BTCPay and Stripe payment, code issuance, the poller). **Without
 `--service-config` the web listener does not start at all**; the process still runs the
@@ -23,7 +23,7 @@ At this stage the service:
 - listens for service requests (`CEvtServiceRequest`) on that address, rejects a request whose `purchaseKey` is not the key the agent verified the signature against, and answers `redeemBadgeCode`,
 - issues redemption codes, storing only their `SHA-256` in its code table,
 - does not accept contact requests: the address is for RPC only,
-- in service mode with `[group]` in the ini, manages one SimpleX group and serves `/issue`, `/bulk`
+- in service mode with `[group]` in the ini, manages one POPOPX group and serves `/issue`, `/bulk`
   and `/revoke` in it (see [Issuing codes](#issuing-codes)),
 - in service mode with `--service-config`, also serves the built web app (`npm run build` in `web/`), `POST /api/invoice` and `GET /api/invoice/:id`, the BTCPay and Stripe webhook routes, and a payment poller, seeding its price/offer catalog on every start,
 - owns the `sx_badge_service_`-prefixed tables and its own migrations table (`sx_badge_service_migrations`).
@@ -85,9 +85,9 @@ Other options:
   only; the process never starts a web listener without it, and never starts one under
   `--run-cli`, which parses and validates the whole file (`[listener] static_dir` included) but
   uses only its `[issuer]` section. An issuer key is still required either way.
-- `--service-name NAME`: the bot's display name, without `*`s or spaces (default `SimpleX Badges`).
+- `--service-name NAME`: the bot's display name, without `*`s or spaces (default `POPOPX Badges`).
 - `--client-service`: use the client service certificate.
-- also accepts the standard SimpleX Chat core options — database path, SMP/XFTP servers,
+- also accepts the standard POPOPX Chat core options — database path, SMP/XFTP servers,
   `--socks-proxy`, `--log-level`/`-l`, and the rest — run `popopx-badge-service --help`
   for the complete list.
 

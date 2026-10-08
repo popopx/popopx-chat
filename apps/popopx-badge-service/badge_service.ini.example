@@ -58,5 +58,5 @@ idle_seconds = 60
 ; display_name must be a name the chat core accepts unchanged: one it would spell
 ; differently stops the whole service, payments included, from starting.
 ;[group]
-;display_name = SimpleX Badges
+;display_name = POPOPX Badges
 ;description = Welcome to the badges group
