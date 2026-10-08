@@ -55,7 +55,7 @@ testConnectByName ps = withSmpServerAndNames ps $ \reg ->
       bob <## "receiving messages via: localhost"
       bob <## "sending messages via: localhost"
       _ <- getTermLine bob
-      bob <## "Popopx name: @alice.popopx (verified)"
+      bob <## "PopopX name: @alice.popopx (verified)"
       bob <## "you've shared main profile with this contact"
       bob <## "connection not verified, use /code command to see security code"
       bob <## "quantum resistant end-to-end encryption"
@@ -73,7 +73,7 @@ testConnectByNameNotClaimed ps = withSmpServerAndNames ps $ \reg ->
       (shortLink, _) <- getContactLinks alice True
       registerName reg aliceName (contactNameRecord "alice.popopx" (T.pack shortLink))
       bob ##> "/c @alice.popopx"
-      bob <## "Popopx name alice.popopx is not included in the connection link's profile"
+      bob <## "PopopX name alice.popopx is not included in the connection link's profile"
 
 testConnectByNameKnownContactNotClaimed :: HasCallStack => TestParams -> IO ()
 testConnectByNameKnownContactNotClaimed ps = withSmpServerAndNames ps $ \reg ->
@@ -96,7 +96,7 @@ testConnectByNameKnownContactNotClaimed ps = withSmpServerAndNames ps $ \reg ->
         (alice <## "bob (Bob): contact is connected")
       registerName reg aliceName (contactNameRecord "alice.popopx" (T.pack shortLink))
       bob ##> "/c @alice.popopx"
-      bob <## "Popopx name alice.popopx is not included in the connection link's profile"
+      bob <## "PopopX name alice.popopx is not included in the connection link's profile"
 
 testConnectByNameNotFound :: HasCallStack => TestParams -> IO ()
 testConnectByNameNotFound ps = withSmpServerAndNames ps $ \_reg ->
@@ -120,7 +120,7 @@ testSetNameNotOwnAddress ps = withSmpServerAndNames ps $ \reg ->
       alice ##> "/ad"
       _ <- getContactLinks alice True
       alice ##> "/_set domain 1 alice.popopx"
-      alice <## "Popopx name alice.popopx has no valid connection link"
+      alice <## "PopopX name alice.popopx has no valid connection link"
 
 -- a self-claimed name is never auto-verified from link data: the claim is not proof of ownership
 testChannelDomainLinkJoinUnverified :: HasCallStack => TestParams -> IO ()
@@ -139,7 +139,7 @@ testChannelDomainLinkJoinUnverified ps = withSmpServerAndNames ps $ \reg ->
         -- a link-data refresh must not mark the self-claimed name verified
         bob ##> ("/_connect plan 1 " <> shortLink <> " resolve=allGroups")
         bob <## "group link: known group #team"
-        bob <## "use #team <message> to send messages" -- no "Popopx name" line: status stays unknown
+        bob <## "use #team <message> to send messages" -- no "PopopX name" line: status stays unknown
   where
     teamName = PopopxNameInfo NTPublicGroup (PopopxDomain TLDPopopx "team" [])
 
@@ -157,18 +157,18 @@ testChannelDomainVerify ps = withSmpServerAndNames ps $ \reg ->
         cath <## "updated public group access: domain=team.popopx"
         -- setting the name resolved it, so the owner's channel is verified
         alice ##> "/_verify domain #1"
-        alice <## "Popopx name #team verified"
+        alice <## "PopopX name #team verified"
         memberJoinChannel "team" [cath] [alice] shortLink fullLink bob
         bob ##> "/_verify domain #1"
-        bob <## "Popopx name #team verified"
+        bob <## "PopopX name #team verified"
         -- the name is re-pointed to a different link: verification fails
         registerName reg teamName (channelNameRecord "team.popopx" "https://popopx.chat/other")
         bob ##> "/_verify domain #1"
-        bob <## "Popopx name #team not verified: the name does not resolve to the link in the group profile"
+        bob <## "PopopX name #team not verified: the name does not resolve to the link in the group profile"
         -- a link-data refresh keeps the failed status, not overwritten with verified
         bob ##> ("/_connect plan 1 " <> shortLink <> " resolve=allGroups")
         bob <## "group link: known group #team"
-        bob <## "Popopx name: #team (verification failed)"
+        bob <## "PopopX name: #team (verification failed)"
         bob <## "use #team <message> to send messages"
   where
     teamName = PopopxNameInfo NTPublicGroup (PopopxDomain TLDPopopx "team" [])
@@ -199,7 +199,7 @@ testConnectByChannelName ps = withSmpServerAndNames ps $ \reg ->
           ]
         bob ##> ("/_connect plan 1 " <> shortLink)
         bob <## "group link: known group #team"
-        bob <## "Popopx name: #team (verified)"
+        bob <## "PopopX name: #team (verified)"
         bob <## "use #team <message> to send messages"
   where
     teamName = PopopxNameInfo NTPublicGroup (PopopxDomain TLDPopopx "team" [])
@@ -235,7 +235,7 @@ testConnectByNameChannelAndContact ps = withSmpServerAndNames ps $ \reg ->
           ]
         bob ##> "/_connect plan 1 team.popopx"
         bob <## "group link: known group #team"
-        bob <## "Popopx name: #team (verified)"
+        bob <## "PopopX name: #team (verified)"
         bob <## "use #team <message> to send messages"
         bob <## "You can also connect to @team.popopx in direct chat"
   where
@@ -305,6 +305,6 @@ testConnectByNameBusinessAndChannel ps = withSmpServerAndNames ps $ \reg ->
         bob ##> "/i #alice"
         bob <## "group ID: 1"
         bob <## "current members: 2"
-        bob <## "Popopx name: @biz.popopx (verified)"
+        bob <## "PopopX name: @biz.popopx (verified)"
   where
     bizName = PopopxNameInfo NTContact (PopopxDomain TLDPopopx "biz" [])

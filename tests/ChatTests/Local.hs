@@ -239,7 +239,7 @@ testLinkContentFilter :: TestParams -> IO ()
 testLinkContentFilter ps = withNewTestChat ps "alice" aliceProfile $ \alice -> do
   createCCNoteFolder alice
 
-  let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://popopx.chat\", \"preview\": {\"uri\": \"https://popopx.chat\", \"title\": \"Popopx Chat\", \"description\": \"Popopx Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
+  let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://popopx.chat\", \"preview\": {\"uri\": \"https://popopx.chat\", \"title\": \"PopopX Chat\", \"description\": \"PopopX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
   alice ##> ("/_create *1 json [" <> linkPreview <> "]")
   alice <# "* https://popopx.chat"
 

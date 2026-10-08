@@ -20,7 +20,6 @@ module Popopx.Chat.Store.Profiles
     UserMsgReceiptSettings (..),
     UserContactLink (..),
     GroupLinkInfo (..),
-    BinThereBot (..),
     createUserRecordAt,
     getUsersInfo,
     getUsers,
@@ -519,23 +518,6 @@ data AddressSettings = AddressSettings
 
 data AutoAccept = AutoAccept
   { acceptIncognito :: IncognitoEnabled -- "incognito" is allowed onle for old addresses without short link data
-  }
-  deriving (Eq, Show)
-
-data BinThereBot = BinThereBot
-  { botId :: Int64,
-    botAddress :: Text,
-    botName :: Maybe Text,
-    botType :: Text,
-    enabled :: Bool,
-    usageCount :: Int64,
-    createdAt :: Text,
-    updatedAt :: Text,
-    description :: Maybe Text,
-    iconUrl :: Maybe Text,
-    tokenCount :: Int64,
-    pricingUnit :: Maybe Text,
-    pricingAmount :: Int64
   }
   deriving (Eq, Show)
 

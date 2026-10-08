@@ -320,7 +320,7 @@ groupFeatures_ dir isChannel =
     <> [((dir, "Message reactions: on"), Nothing, Nothing)]
     <> [((dir, "Voice messages: on"), Nothing, Nothing) | not isChannel]
     <> [((dir, "Files and media: on"), Nothing, Nothing) | not isChannel]
-    <> [((dir, "POPOPX links: on"), Nothing, Nothing) | not isChannel]
+    <> [((dir, "PopopX links: on"), Nothing, Nothing) | not isChannel]
     <> [((dir, "Member reports: on"), Nothing, Nothing) | not isChannel]
     <> [((dir, "Recent history: on"), Nothing, Nothing)]
     <> [((dir, "Chat with admins: " <> (if isChannel then "off" else "on")), Nothing, Nothing)]
@@ -339,7 +339,7 @@ businessGroupFeatures'' dir =
     ((dir, "Message reactions: on"), Nothing, Nothing),
     ((dir, "Voice messages: on"), Nothing, Nothing),
     ((dir, "Files and media: on"), Nothing, Nothing),
-    ((dir, "POPOPX links: on"), Nothing, Nothing),
+    ((dir, "PopopX links: on"), Nothing, Nothing),
     ((dir, "Member reports: off"), Nothing, Nothing),
     ((dir, "Recent history: on"), Nothing, Nothing),
     ((dir, "Chat with admins: on"), Nothing, Nothing)

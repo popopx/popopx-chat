@@ -114,7 +114,7 @@ versionNumber :: String
 versionNumber = showVersion SC.version
 
 versionString :: String -> String
-versionString ver = "POPOPX Chat v" <> ver
+versionString ver = "PopopX Chat v" <> ver
 
 updateStr :: String
 updateStr = "To update run: curl -o- https://raw.githubusercontent.com/popopx-chat/popopx-chat/master/install.sh | bash"
@@ -126,7 +126,7 @@ popopxmqCommitQ = do
   where
     commitHashP :: A.Parser ByteString
     commitHashP =
-      A.manyTill' A.anyChar "location: https://github.com/simplex-chat/simplexmq.git"
+      A.manyTill' A.anyChar "location: https://github.com/popopx-chat/popopxmq.git"
         *> A.takeWhile (== ' ')
         *> A.endOfLine
         *> A.takeWhile (== ' ')
@@ -1475,7 +1475,7 @@ data ChatError
   | ChatErrorRemoteHost {rhKey :: RHKey, remoteHostError :: RemoteHostError}
   deriving (Show, Exception)
 
--- why a resolved Popopx name could not be used (the name itself resolved; an unregistered name is the agent's NAME NOT_FOUND)
+-- why a resolved PopopX name could not be used (the name itself resolved; an unregistered name is the agent's NAME NOT_FOUND)
 data PopopxDomainError
   = SDENoValidLink -- the name's record has no usable contact/channel link
   | SDEUnknownDomain -- the resolved link's profile has no name, or a different name

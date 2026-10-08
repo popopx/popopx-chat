@@ -1083,7 +1083,7 @@ viewConnReqInvitation showFullLinks (CCLink cReq shortLink) =
     cReqStr = strEncode $ popopxChatInvitation cReq
 
 popopxChatInvitation :: ConnReqInvitation -> ConnReqInvitation
-popopxChatInvitation (CRInvitationUri crData e2e) = CRInvitationUri crData {crScheme = SSPopopx} e2e
+popopxChatInvitation (CRInvitationUri crData e2e) = CRInvitationUri crData {crScheme = popopxChat} e2e
 
 viewContactNotFound :: ContactName -> Maybe (GroupInfo, GroupMember) -> [StyledString]
 viewContactNotFound cName suspectedMember =
@@ -1152,11 +1152,11 @@ connReqContact_ showFullLinks intro (CCLink cReq shortLink) =
     cReqStr = strEncode $ popopxChatContact cReq
 
 popopxChatContact :: ConnReqContact -> ConnReqContact
-popopxChatContact (CRContactUri crData e2e) = CRContactUri crData {crScheme = SSPopopx} e2e
+popopxChatContact (CRContactUri crData e2e) = CRContactUri crData {crScheme = popopxChat} e2e
 
 popopxChatContact' :: ConnLinkContact -> ConnLinkContact
 popopxChatContact' = \case
-  CLFull (CRContactUri crData e2e) -> CLFull $ CRContactUri crData {crScheme = SSPopopx} e2e
+  CLFull (CRContactUri crData e2e) -> CLFull $ CRContactUri crData {crScheme = popopxChat} e2e
   l@(CLShort _) -> l
 
 groupPopopxDomain :: GroupInfo -> Maybe PopopxDomain
@@ -1165,7 +1165,7 @@ groupPopopxDomain GroupInfo {groupProfile = GroupProfile {publicGroup}} =
 
 viewDomainVerified :: PopopxNameType -> Maybe PopopxDomain -> Maybe Text -> [StyledString]
 viewDomainVerified nameType domain_ result =
-  let nameStr = maybe "name" (\d -> "Popopx name " <> shortNameInfoStr (PopopxNameInfo nameType d)) domain_
+  let nameStr = maybe "name" (\d -> "PopopX name " <> shortNameInfoStr (PopopxNameInfo nameType d)) domain_
    in case result of
         Nothing -> [plain nameStr <> " verified"]
         Just reason -> [plain nameStr <> " not verified: " <> plain reason]
@@ -1182,7 +1182,7 @@ popopxDomainLine nameType (Just PopopxDomainClaim {domain, proof}) status = case
     | isJust proof -> [line "unverified"]
     | otherwise -> []
   where
-    line s = plain $ "Popopx name: " <> shortNameInfoStr (PopopxNameInfo nameType (unStrJSON domain)) <> " (" <> s <> ")"
+    line s = plain $ "PopopX name: " <> shortNameInfoStr (PopopxNameInfo nameType (unStrJSON domain)) <> " (" <> s <> ")"
 
 -- TODO [short links] show all settings
 viewAddressSettings :: AddressSettings -> [StyledString]
@@ -1203,7 +1203,7 @@ groupLink_ showFullLinks intro g GroupLink {connLinkContact = CCLink cReq shortL
     "",
     plain $ maybe cReqStr strEncode shortLink
   ]
-    <> [plain ("Popopx name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
+    <> [plain ("PopopX name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
     <> [ "",
          "Anybody can connect to you and join group as " <> showRole acceptMemberRole <> " with: " <> highlight' "/c <group_link_above>",
          "to show it again: " <> highlight ("/show link #" <> viewGroupName g),
@@ -1284,7 +1284,7 @@ viewGroupLinkRelaysUpdated g groupLink relays =
       [ "group link:",
         plain $ maybe cReqStr strEncode shortLink
       ]
-    <> [plain ("Popopx name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
+    <> [plain ("PopopX name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
   where
     GroupLink {connLinkContact = CCLink cReq shortLink} = groupLink
     cReqStr = strEncode $ popopxChatContact cReq
@@ -1961,6 +1961,7 @@ viewRcvQueuesInfo = plain . T.intercalate ", " . map showQueueInfo
       RSSendingQADD -> "switch started"
       RSSendingQUSE -> "switch confirmed"
       RSReceivedMessage -> "switch secured"
+      RSReceivedQEND -> "switch completed"
 
 viewSndQueuesInfo :: [SndQueueInfo] -> StyledString
 viewSndQueuesInfo = plain . T.intercalate ", " . map showQueueInfo
@@ -2798,7 +2799,7 @@ viewChatError isCmd logLevel testView = \case
       let reason = case domainErr of
             SDENoValidLink -> "has no valid connection link"
             SDEUnknownDomain -> "is not included in the connection link's profile"
-       in [plain $ "Popopx name " <> strEncode domain <> " " <> reason]
+       in [plain $ "PopopX name " <> strEncode domain <> " " <> reason]
     CENotResolvedLocally -> ["no matching chat found, name resolution is disabled"]
     CEUnsupportedConnReq -> [ "", "Connection link is not supported by the your app version, please ugrade it.", plain updateStr]
     CEInvalidChatMessage Connection {connId} msgMeta_ msg e ->

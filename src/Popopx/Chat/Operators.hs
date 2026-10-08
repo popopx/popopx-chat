@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
@@ -77,7 +71,7 @@ usageConditionsText =
       in [|stripFrontMatter $(lift (safeDecodeUtf8 s))|]
    )
 
-data OperatorTag = OTPopopx
+data OperatorTag = OTPopopx | OTFlux
   deriving (Eq, Ord, Show)
 
 instance FromField OperatorTag where fromField = fromTextField_ textDecode
@@ -94,9 +88,11 @@ instance ToJSON OperatorTag where
 instance TextEncoding OperatorTag where
   textDecode = \case
     "popopx" -> Just OTPopopx
+    "flux" -> Just OTFlux
     _ -> Nothing
   textEncode = \case
     OTPopopx -> "popopx"
+    OTFlux -> "flux"
 
 data UsageConditions = UsageConditions
   { conditionsId :: Int64,

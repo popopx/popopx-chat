@@ -1158,6 +1158,13 @@ testGetSetSMPServers =
       alice <## "  SMP servers"
       alice <## "    smp://2345-w==@smp2.example.im"
       alice <## "    smp://3456-w==@smp3.example.im:5224"
+      alice #$> ("/smp smp://2345-w==@smp2.example.im,smp4.example.im", id, "ok")
+      alice ##> "/smp smp://2345-w==@smp2.example.im,smp4.example.im,smp5.example.im"
+      alice <##. "bad chat command: user servers validation error(s): [USETooManyHosts"
+      alice ##> "/smp"
+      alice <## "Your servers"
+      alice <## "  SMP servers"
+      alice <## "    smp://2345-w==@smp2.example.im,smp4.example.im"
 
 testTestSMPServerConnection :: HasCallStack => TestParams -> IO ()
 testTestSMPServerConnection =
@@ -1224,24 +1231,24 @@ testOperators =
       alice ##> "/_conditions"
       alice <##. "Current conditions: 2."
       alice ##> "/_operators"
-      alice <##. "1 (popopx). Popopx Chat (Popopx Chat Ltd), domains: popopx.im, servers: enabled, conditions: required"
+      alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: required"
       alice <## "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: required"
-      alice <##. "The new conditions will be accepted for Popopx Chat Ltd, InFlux Technologies Limited at "
+      alice <##. "The new conditions will be accepted for PopopX Chat Ltd, InFlux Technologies Limited at "
       -- set conditions notified
       alice ##> "/_conditions_notified 2"
       alice <## "ok"
       alice ##> "/_operators"
-      alice <##. "1 (popopx). Popopx Chat (Popopx Chat Ltd), domains: popopx.im, servers: enabled, conditions: required"
+      alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: required"
       alice <## "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: required"
       alice ##> "/_conditions"
       alice <##. "Current conditions: 2 (notified)."
       -- accept conditions
       alice ##> "/_accept_conditions 2 1,2"
-      alice <##. "1 (popopx). Popopx Chat (Popopx Chat Ltd), domains: popopx.im, servers: enabled, conditions: accepted ("
+      alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: accepted ("
       alice <##. "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: accepted ("
       -- update operators
       alice ##> "/operators 2:on:smp=proxy:xftp=off"
-      alice <##. "1 (popopx). Popopx Chat (Popopx Chat Ltd), domains: popopx.im, servers: enabled, conditions: accepted ("
+      alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: accepted ("
       alice <##. "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP disabled (servers known), conditions: accepted ("
   where
     opts' = testOpts {coreOptions = testCoreOpts {smpServers = [], xftpServers = []}}
@@ -2130,14 +2137,14 @@ testMultipleUserAddresses =
       cLinkAlisa <- getContactLink alice True
       bob ##> ("/c " <> cLinkAlisa)
       alice <#? bob
-      alice #$> ("/_get chats 2 pcc=on", chats, [("@bob", "Audio/video calls: enabled"), ("@Ask POPOPX Team", ""), ("*", "")])
+      alice #$> ("/_get chats 2 pcc=on", chats, [("@bob", "Audio/video calls: enabled"), ("@Ask PopopX Team", ""), ("*", "")])
       alice ##> "/ac bob"
       alice <## "bob (Bob): accepting contact request, you can send messages to contact"
       concurrently_
         (bob <## "alisa: contact is connected")
         (alice <## "bob (Bob): contact is connected")
       threadDelay 100000
-      alice #$> ("/_get chats 2 pcc=on", chats, [("@bob", lastChatFeature), ("@Ask POPOPX Team", ""), ("*", "")])
+      alice #$> ("/_get chats 2 pcc=on", chats, [("@bob", lastChatFeature), ("@Ask PopopX Team", ""), ("*", "")])
       alice <##> bob
 
       bob #> "@alice hey alice"
@@ -2168,7 +2175,7 @@ testMultipleUserAddresses =
         (cath <## "alisa: contact is connected")
         (alice <## "cath (Catherine): contact is connected")
       threadDelay 100000
-      alice #$> ("/_get chats 2 pcc=on", chats, [("@cath", lastChatFeature), ("@bob", "hey"), ("@Ask POPOPX Team", ""), ("*", "")])
+      alice #$> ("/_get chats 2 pcc=on", chats, [("@cath", lastChatFeature), ("@bob", "hey"), ("@Ask PopopX Team", ""), ("*", "")])
       alice <##> cath
 
       -- first user doesn't have cath as contact
@@ -3553,7 +3560,7 @@ testLinkContentFilter =
       alice ##> "/c"
       popopxLink <- getInvitation alice
 
-      let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://popopx.chat\", \"preview\": {\"uri\": \"https://popopx.chat\", \"title\": \"Popopx Chat\", \"description\": \"Popopx Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
+      let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://popopx.chat\", \"preview\": {\"uri\": \"https://popopx.chat\", \"title\": \"PopopX Chat\", \"description\": \"PopopX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
       alice ##> ("/_send @2 json [" <> linkPreview <> "]")
       alice <# "@bob https://popopx.chat"
       bob <# "alice> https://popopx.chat"

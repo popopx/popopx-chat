@@ -75,7 +75,7 @@ main = do
       around tmpBracket $ describe "WebRTC encryption" webRTCTests
 #endif
       describe "Supporter badges" badgeTests
-      describe "POPOPX badge service" $ do
+      describe "PopopX badge service" $ do
         badgeConfigTests
         badgeWebTests
         badgeCatalogTests
@@ -83,18 +83,18 @@ main = do
         badgeWaitersTests
         badgeBTCPayTests
         badgeStripeTests
-      describe "POPOPX chat markdown" markdownTests
+      describe "PopopX chat markdown" markdownTests
       describe "JSON Tests" jsonTests
       describe "Member relations" memberRelationsTests
-      describe "POPOPX chat view" viewTests
-      describe "POPOPX chat protocol" protocolTests
+      describe "PopopX chat view" viewTests
+      describe "PopopX chat protocol" protocolTests
       describe "Valid names" validNameTests
       describe "Message batching" batchingTests
       describe "Operators" operatorTests
       describe "Random servers" randomServersTests
 #if !defined(dbPostgres)
       around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "names tests" chatNamesTests
-      around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "POPOPX Directory names" directoryNameTests
+      around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "PopopX Directory names" directoryNameTests
 #endif
 #if defined(dbPostgres)
       around (testBracket portBases)
@@ -105,10 +105,10 @@ main = do
 #if !defined(dbPostgres)
           describe "Mobile API Tests" mobileTests
 #endif
-          describe "POPOPX chat client" chatTests
-          xdescribe'' "POPOPX Broadcast bot" broadcastBotTests
-          describe "POPOPX Directory service bot" directoryServiceTests
-          describe "POPOPX badge service e2e" $ do
+          describe "PopopX chat client" chatTests
+          xdescribe'' "PopopX Broadcast bot" broadcastBotTests
+          describe "PopopX Directory service bot" directoryServiceTests
+          describe "PopopX badge service e2e" $ do
             badgeServiceTests
             describe "managed group" badgeGroupIntegrationTests
           describe "Remote session" remoteTests

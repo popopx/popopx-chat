@@ -81,7 +81,7 @@ newtype CallVersionRange = CallVersionRange {fromCallVRange :: VersionRangeCall}
 
 callMediaKey :: VersionCall -> CallId -> C.PublicKeyX25519 -> C.PrivateKeyX25519 -> C.Key
 callMediaKey v (CallId salt) peerPubKey privKey
-  | v >= callMediaKdfVersion = C.Key $ C.hkdf salt dhSecret "POPOPXCallMediaKey" callMediaKeySize
+  | v >= callMediaKdfVersion = C.Key $ C.hkdf salt dhSecret "PopopXCallMediaKey" callMediaKeySize
   | otherwise = C.Key dhSecret
   where
     dhSecret = C.dhBytes' $ C.dh' peerPubKey privKey

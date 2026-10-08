@@ -3839,7 +3839,7 @@ processChatCommand cxt nm = \case
                 pure (conn', incognitoProfile)
               cReqs =
                 ( CRInvitationUri crData {crScheme = SSPopopx} e2e,
-                  CRInvitationUri crData {crScheme = SSPopopx} e2e
+                  CRInvitationUri crData {crScheme = popopxChat} e2e
                 )
     connectViaContact :: User -> Maybe PreparedChatEntity -> IncognitoEnabled -> CreatedLinkContact -> Maybe SharedMsgId -> Maybe (SharedMsgId, MsgContent) -> CM ConnectViaContactResult
     connectViaContact user@User {userId} preparedEntity_ incognito (CCLink cReq@(CRContactUri crData@ConnReqUriData {crClientData} e2e) sLnk) welcomeSharedMsgId msg_ = withInvitationLock "connectViaContact" (strEncode cReq) $ do
@@ -3875,7 +3875,7 @@ processChatCommand cxt nm = \case
               Nothing -> connect' groupLinkId Nothing (groupLinkId $> Nothing)
       where
         cReqHash1 = contactCReqHash $ CRContactUri crData {crScheme = SSPopopx} e2e
-        cReqHash2 = contactCReqHash $ CRContactUri crData {crScheme = SSPopopx} e2e
+        cReqHash2 = contactCReqHash $ CRContactUri crData {crScheme = popopxChat} e2e
         -- relay-group joins (only via connectToRelay) carry the target relay member in preparedEntity_;
         -- its memberId binds the join signature so a sibling relay can't replay it
         relayMemberId_ = case preparedEntity_ of
@@ -4623,7 +4623,7 @@ processChatCommand cxt nm = \case
         invCReqSchemas :: ConnReqInvitation -> (ConnReqInvitation, ConnReqInvitation)
         invCReqSchemas (CRInvitationUri crData e2e) =
           ( CRInvitationUri crData {crScheme = SSPopopx} e2e,
-            CRInvitationUri crData {crScheme = SSPopopx} e2e
+            CRInvitationUri crData {crScheme = popopxChat} e2e
           )
     invitationEntityPlan :: Maybe ContactShortLinkData -> Maybe OwnerVerification -> ConnectionEntity -> ConnectionPlan
     invitationEntityPlan cld ov = \case
@@ -4696,7 +4696,7 @@ processChatCommand cxt nm = \case
     contactCReqSchemas :: ConnReqContact -> (ConnReqContact, ConnReqContact)
     contactCReqSchemas (CRContactUri crData e2e) =
       ( CRContactUri crData {crScheme = SSPopopx} e2e,
-        CRContactUri crData {crScheme = SSPopopx} e2e
+        CRContactUri crData {crScheme = popopxChat} e2e
       )
     -- This function is needed, as UI uses popopx:/ schema in message view, so that the links can be handled without browser,
     -- and short links are stored with server hostname schema, so they wouldn't match without it.

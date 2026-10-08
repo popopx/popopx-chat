@@ -228,8 +228,8 @@ decodeChatMessageTest = describe "Chat message encoding/decoding" $ do
     "{\"v\":\"9\",\"event\":\"x.msg.new\",\"params\":{\"content\":{\"text\":\"hello\",\"type\":\"text\"},\"live\":true}}"
       #==# XMsgNew ((mcSimple (MCText "hello")) {live = Just True})
   it "x.msg.new simple link" $
-    "{\"v\":\"9\",\"event\":\"x.msg.new\",\"params\":{\"content\":{\"text\":\"https://popopx.chat\",\"type\":\"link\",\"preview\":{\"description\":\"Popopx Chat\",\"image\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgA\",\"title\":\"Popopx Chat\",\"uri\":\"https://popopx.chat\"}}}}"
-      #==# XMsgNew (mcSimple (MCLink "https://popopx.chat" $ LinkPreview {uri = "https://popopx.chat", title = "Popopx Chat", description = "Popopx Chat", image = ImageData "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgA", content = Nothing}))
+    "{\"v\":\"9\",\"event\":\"x.msg.new\",\"params\":{\"content\":{\"text\":\"https://popopx.chat\",\"type\":\"link\",\"preview\":{\"description\":\"PopopX Chat\",\"image\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgA\",\"title\":\"PopopX Chat\",\"uri\":\"https://popopx.chat\"}}}}"
+      #==# XMsgNew (mcSimple (MCLink "https://popopx.chat" $ LinkPreview {uri = "https://popopx.chat", title = "PopopX Chat", description = "PopopX Chat", image = ImageData "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgA", content = Nothing}))
   it "x.msg.new simple image" $
     "{\"v\":\"9\",\"event\":\"x.msg.new\",\"params\":{\"content\":{\"text\":\"\",\"type\":\"image\",\"image\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
       #==# XMsgNew (mcSimple (MCImage "" $ ImageData "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII="))

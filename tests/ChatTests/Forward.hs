@@ -128,10 +128,10 @@ testForwardChannelLinkRemoved ps =
           createGroup2 "club" cath dan
           cath ##> "/set links #club off"
           cath <## "updated group preferences:"
-          cath <## "POPOPX links: off"
+          cath <## "PopopX links: off"
           dan <## "cath updated group #club: (signed)"
           dan <## "updated group preferences:"
-          dan <## "POPOPX links: off"
+          dan <## "PopopX links: off"
           alice #> "#team hi"
           bob <# "#team> hi"
           cath <# "#team> hi [>>]"
