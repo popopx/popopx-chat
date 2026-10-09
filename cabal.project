@@ -1,6 +1,5 @@
 packages: 
   .
-  ../popopxmq
 
 index-state: 2023-12-12T00:00:00Z
 
@@ -14,6 +13,11 @@ package cryptostore
     flags: +use_crypton
 
 constraints: zip +disable-bzip2 +disable-zstd
+
+source-repository-package
+    type: git
+    location: https://github.com/popopx/popopxmq.git
+    tag: d92e968378225d9fa16f840916307e3ede268ef3
 
 source-repository-package
     type: git

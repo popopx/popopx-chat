@@ -1,8 +1,6 @@
-diff --git a/src/Popopx/Messaging/Agent.hs b/src/Popopx/Messaging/Agent.hs
-index 371e1fac..8c6dce88 100644
 --- a/src/Popopx/Messaging/Agent.hs
 +++ b/src/Popopx/Messaging/Agent.hs
-@@ -2052,9 +2052,11 @@ sendMessagesB_ :: forall t. Traversable t => AgentClient -> t (Either AgentError
+@@ -2104,9 +2104,11 @@
  sendMessagesB_ c reqs connIds = withConnLocks c connIds "sendMessages" $ do
    prev <- newTVarIO Nothing
    reqs' <- withStoreBatch c $ \db -> fmap (mapM $ getConn_ db prev) reqs
@@ -16,7 +14,7 @@ index 371e1fac..8c6dce88 100644
    where
      getConn_ :: DB.Connection -> TVar (Maybe (Either AgentErrorType SomeConn)) -> MsgReq -> IO (MsgReq, Either AgentErrorType SomeConn)
      getConn_ db prev req@(connId, _, _, _) =
-@@ -2064,6 +2066,35 @@ sendMessagesB_ c reqs connIds = withConnLocks c connIds "sendMessages" $ do
+@@ -2116,6 +2118,36 @@
            else do
              conn <- first storeError <$> getConn db connId
              conn <$ atomically (writeTVar prev $ Just conn)
@@ -28,7 +26,7 @@ index 371e1fac..8c6dce88 100644
 +      result <- runAM_ $ do
 +        AcceptedConfirmation {senderConf, ownConnInfo} <- withStore c (`getAcceptedConfirmation` connId)
 +        case L.nonEmpty $ smpReplyQueues senderConf of
-+          Nothing -> pure $ Left (CONN ONE_WAY "sendMessagesB_: CRcv, no reply queues")
++          Nothing -> pure $ Left (CONN POPOPX "sendMessagesB_: CRcv, no reply queues")
 +          Just (qInfo :| _) -> do
 +            clientVRange <- asks $ smpClientVRange . config
 +            case qInfo `proveCompatible` clientVRange of
@@ -37,7 +35,8 @@ index 371e1fac..8c6dce88 100644
 +                (sq, _) <- lift $ newSndQueue userId connId qInfo' Nothing
 +                sq' <- withStore c $ \db -> upgradeRcvConnToDuplex db connId sq
 +                void $ agentSecureSndQueue c NRMBackground cData sq'
-+                enqueueConfirmation c cData sq' ownConnInfo Nothing
++                storeConfirmation c Nothing cData sq' Nothing $ AgentConnInfo ownConnInfo
++                lift $ submitPendingMsg c sq'
 +                pure $ Right sq'
 +      case result of
 +        Left e -> pure $ Left e
