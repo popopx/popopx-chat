@@ -98,7 +98,7 @@ import Popopx.Chat.Store.Shared
 import Popopx.Chat.Types
 import Popopx.Chat.Types.Preferences
 import Popopx.Chat.Types.Shared
-import Popopx.Chat.Util (liftIOEither, zipWith3')
+import Popopx.Chat.Util (encryptFile, liftIOEither, zipWith3')
 import qualified Popopx.Chat.Util as U
 import Popopx.Chat.Web (webPreviewWorker)
 import Popopx.FileTransfer.Description (FileDescriptionURI (..), maxFileSizeHard)
@@ -746,11 +746,11 @@ processChatCommand cxt nm = \case
           -- TODO [knocking] getAChatItem doesn't differentiate how to read based on scope - it should, instead of using group filter
           Just <$> withFastStore (\db -> getAChatItem db cxt user (ChatRef CTGroup gId Nothing) fwdItemId)
         _ -> pure Nothing
-  APISendMessages sendRef live itemTTL sign cms -> withUser $ \user -> mapM_ assertAllowedContent' cms >> case sendRef of
+  APISendMessages sendRef live itemTTL sign bar cms -> withUser $ \user -> mapM_ assertAllowedContent' cms >> case sendRef of
     SRDirect chatId -> do
       mapM_ assertNoMentions cms
       withContactLock "sendMessage" chatId $
-        sendContactContentMessages user chatId live itemTTL (L.map composedMessageReq cms)
+        sendContactContentMessages user chatId live itemTTL bar (L.map composedMessageReq cms)
     SRGroup chatId gsScope asGroup -> do
       case gsScope of
         Just (GCSMemberSupport _) -> when asGroup $ throwCmdError "cannot send as group in support scope"
@@ -759,7 +759,7 @@ processChatCommand cxt nm = \case
         (gInfo, cmrs) <- withFastStore $ \db -> do
           gik@(GIK g _) <- getGroupInfoKeys db cxt user chatId
           (gik,) <$> mapM (composedMessageReqMentions db user g) cms
-        sendGroupContentMessages user gInfo gsScope asGroup live itemTTL sign cmrs
+        sendGroupContentMessages user gInfo gsScope asGroup live itemTTL sign bar cmrs
   APICreateChatTag (ChatTagData emoji text) -> withUser $ \user -> withFastStore' $ \db -> do
     _ <- createChatTag db user emoji text
     CRChatTags user <$> getUserChatTags db user
@@ -790,7 +790,7 @@ processChatCommand cxt nm = \case
       gInfo <- withFastStore $ \db -> getGroupInfoKeys db cxt user gId
       let mc = MCReport reportText reportReason
           cm = ComposedMessage {fileSource = Nothing, quotedItemId = Just reportedItemId, msgContent = mc, mentions = M.empty}
-      sendGroupContentMessages user gInfo (Just $ GCSMemberSupport Nothing) False False Nothing False [composedMessageReq cm]
+      sendGroupContentMessages user gInfo (Just $ GCSMemberSupport Nothing) False False Nothing False False [composedMessageReq cm]
   ReportMessage {groupName, contactName_, reportReason, reportedMessage} -> withUser $ \user -> do
     gId <- withFastStore $ \db -> getGroupIdByName db user groupName
     reportedItemId <- withFastStore $ \db -> getGroupChatItemIdByText db user gId contactName_ reportedMessage
@@ -1086,7 +1086,7 @@ processChatCommand cxt nm = \case
       case L.nonEmpty cmrs of
         Just cmrs' ->
           withContactLock "forwardChatItem, to contact" toChatId $
-            sendContactContentMessages user toChatId False itemTTL cmrs'
+            sendContactContentMessages user toChatId False itemTTL False cmrs'
         Nothing -> pure $ CRNewChatItems user []
     CTGroup -> do
       cmrs <- prepareForward user
@@ -1094,7 +1094,7 @@ processChatCommand cxt nm = \case
         Just cmrs' ->
           withGroupLock "forwardChatItem, to group" toChatId $ do
             gInfo <- withFastStore $ \db -> getGroupInfoKeys db cxt user toChatId
-            sendGroupContentMessages user gInfo toScope sendAsGroup False itemTTL False cmrs'
+            sendGroupContentMessages user gInfo toScope sendAsGroup False itemTTL False False cmrs'
         Nothing -> pure $ CRNewChatItems user []
     CTLocal -> do
       cmrs <- prepareForward user
@@ -2565,7 +2565,7 @@ processChatCommand cxt nm = \case
       _ -> throwCmdError "unsupported share target"
     processChatCommand cxt nm (APIShareChatMsgContent (ChatRef CTGroup groupId Nothing) sendRef) >>= \case
       CRChatMsgContent _ mc ->
-        processChatCommand cxt nm $ APISendMessages sendRef False Nothing False [composedMessage Nothing mc]
+        processChatCommand cxt nm $ APISendMessages sendRef False Nothing False False [composedMessage Nothing mc]
       r -> pure r
   ShareMyAddress toChatName -> withUser $ \user -> do
     toChatRef <- getChatRef user toChatName
@@ -2577,7 +2577,7 @@ processChatCommand cxt nm = \case
       _ -> throwCmdError "unsupported share target"
     processChatCommand cxt nm (APIShareMyAddress sendRef) >>= \case
       CRChatMsgContent _ mc ->
-        processChatCommand cxt nm $ APISendMessages sendRef False Nothing False [composedMessage Nothing mc]
+        processChatCommand cxt nm $ APISendMessages sendRef False Nothing False False [composedMessage Nothing mc]
       r -> pure r
   SendMessage sendName msg -> withUser $ \user -> do
     let mc = MCText msg
@@ -2586,7 +2586,7 @@ processChatCommand cxt nm = \case
         withFastStore' (\db -> runExceptT $ getContactIdByName db user name) >>= \case
           Right ctId -> do
             let sendRef = SRDirect ctId
-            processChatCommand cxt nm $ APISendMessages sendRef False Nothing False [composedMessage Nothing mc]
+            processChatCommand cxt nm $ APISendMessages sendRef False Nothing False False [composedMessage Nothing mc]
           Left _ ->
             withFastStore' (\db -> runExceptT $ getActiveMembersByName db cxt user name) >>= \case
               Right [(gInfo, member)] -> do
@@ -2606,7 +2606,7 @@ processChatCommand cxt nm = \case
               GCSMemberSupport <$> mapM (getGroupMemberIdByName db user gId) mName_
           (gInfo, cScope_,) <$> liftIO (getMessageMentions db user gId msg)
         let sendRef = SRGroup (groupId' gInfo) cScope_ (sendAsGroup' gInfo cScope_)
-        processChatCommand cxt nm $ APISendMessages sendRef False Nothing False [ComposedMessage Nothing Nothing mc mentions]
+        processChatCommand cxt nm $ APISendMessages sendRef False Nothing False False [ComposedMessage Nothing Nothing mc mentions]
       SNLocal -> do
         folderId <- withFastStore (`getUserNoteFolderId` user)
         processChatCommand cxt nm $ APICreateChatItems folderId [composedMessage Nothing mc]
@@ -2626,7 +2626,7 @@ processChatCommand cxt nm = \case
           cr -> pure cr
       Just ctId -> do
         let sendRef = SRDirect ctId
-        processChatCommand cxt nm $ APISendMessages sendRef False Nothing False [composedMessage Nothing mc]
+        processChatCommand cxt nm $ APISendMessages sendRef False Nothing False False [composedMessage Nothing mc]
   AcceptMemberContact cName -> withUser $ \user -> do
     contactId <- withFastStore $ \db -> getContactIdByName db user cName
     processChatCommand cxt nm $ APIAcceptMemberContact contactId
@@ -2634,7 +2634,7 @@ processChatCommand cxt nm = \case
     (chatRef, mentions) <- getChatRefAndMentions user chatName msg
     withSendRef user chatRef $ \sendRef -> do
       let mc = MCText msg
-      processChatCommand cxt nm $ APISendMessages sendRef True Nothing False [ComposedMessage Nothing Nothing mc mentions]
+      processChatCommand cxt nm $ APISendMessages sendRef True Nothing False False [ComposedMessage Nothing Nothing mc mentions]
   SendMessageBroadcast mc -> withUser $ \user -> do
     contacts <- withFastStore' $ \db -> getUserContacts db cxt user
     withChatLock "sendMessageBroadcast" $ do
@@ -2674,12 +2674,12 @@ processChatCommand cxt nm = \case
       combineResults _ _ (Left e) = Left e
       createCI :: DB.Connection -> User -> Bool -> UTCTime -> (Contact, SndMessage) -> IO ()
       createCI db user hasLink createdAt (ct, sndMsg) =
-        void $ createNewSndChatItem db user (CDDirectSnd ct) False sndMsg (CISndMsgContent mc) Nothing Nothing Nothing False hasLink createdAt
+        void $ createNewSndChatItem db user (CDDirectSnd ct) False sndMsg (CISndMsgContent mc) Nothing Nothing Nothing False hasLink False createdAt
   SendMessageQuote cName (AMsgDirection msgDir) quotedMsg msg -> withUser $ \user@User {userId} -> do
     contactId <- withFastStore $ \db -> getContactIdByName db user cName
     quotedItemId <- withFastStore $ \db -> getDirectChatItemIdByText db userId contactId msgDir quotedMsg
     let mc = MCText msg
-    processChatCommand cxt nm $ APISendMessages (SRDirect contactId) False Nothing False [ComposedMessage Nothing (Just quotedItemId) mc M.empty]
+    processChatCommand cxt nm $ APISendMessages (SRDirect contactId) False Nothing False False [ComposedMessage Nothing (Just quotedItemId) mc M.empty]
   DeleteMessage chatName deletedMsg -> withUser $ \user -> do
     chatRef <- getChatRef user chatName
     deletedItemId <- getSentChatItemIdByText user chatRef deletedMsg
@@ -3017,7 +3017,7 @@ processChatCommand cxt nm = \case
           (msgs_, _gsr) <- sendGroupMessages user (GIK gInfo gks) Nothing False recipients False events
           let signed = any (either (const False) (\SndMessage {signedMsg_} -> isJust signedMsg_)) msgs_
               itemsData = zipWith (fmap . sndItemData) memsToChange (L.toList msgs_)
-          cis_ <- saveSndChatItems user (CDGroupSnd gInfo Nothing) False itemsData Nothing False
+          cis_ <- saveSndChatItems user (CDGroupSnd gInfo Nothing) False itemsData Nothing False False
           when (length cis_ /= length memsToChange) $ logError "changeRoleCurrentMems: memsToChange and cis_ length mismatch"
           let acis = map (AChatItem SCTGroup SMDSnd (GroupChat gInfo Nothing)) $ rights cis_
           (errs, changed) <- lift $ partitionEithers <$> withStoreBatch' (\db -> map (updMember db) memsToChange)
@@ -3065,7 +3065,7 @@ processChatCommand cxt nm = \case
           (msgs_, _gsr) <- sendGroupMessages_ user g recipients False events
           let msgSigned = any (either (const False) (\SndMessage {signedMsg_} -> isJust signedMsg_)) msgs_
               itemsData = zipWith (fmap . sndItemData) blockMems (L.toList msgs_)
-          cis_ <- saveSndChatItems user (CDGroupSnd gInfo Nothing) False itemsData Nothing False
+          cis_ <- saveSndChatItems user (CDGroupSnd gInfo Nothing) False itemsData Nothing False False
           when (length cis_ /= length blockMems) $ logError "blockMembers: blockMems and cis_ length mismatch"
           let acis = map (AChatItem SCTGroup SMDSnd (GroupChat gInfo Nothing)) $ rights cis_
           unless (null acis) $ toView $ CEvtNewChatItems user acis
@@ -3163,7 +3163,7 @@ processChatCommand cxt nm = \case
                 Right (Just a) -> Just $ Right a
                 Left e -> Just $ Left e
               itemsData = mapMaybe skipUnwantedItem itemsData_
-          cis_ <- saveSndChatItems user (CDGroupSnd gInfo chatScopeInfo) False itemsData Nothing False
+          cis_ <- saveSndChatItems user (CDGroupSnd gInfo chatScopeInfo) False itemsData Nothing False False
           -- MUST run before delMember so getGroupMemberFileInfo can still resolve file info under fullDelete.
           when withMessages $ deleteMessages user gInfo memsToDelete
           deleteMembersConnections' user memsToDelete True
@@ -3443,7 +3443,7 @@ processChatCommand cxt nm = \case
         qiId <- getGroupChatItemIdByText db user gId cName quotedMsg
         (gInfo, qiId,) <$> liftIO (getMessageMentions db user gId msg)
     let mc = MCText msg
-    processChatCommand cxt nm $ APISendMessages (SRGroup (groupId' gInfo) Nothing (sendAsGroup' gInfo Nothing)) False Nothing False [ComposedMessage Nothing (Just quotedItemId) mc mentions]
+    processChatCommand cxt nm $ APISendMessages (SRGroup (groupId' gInfo) Nothing (sendAsGroup' gInfo Nothing)) False Nothing False False [ComposedMessage Nothing (Just quotedItemId) mc mentions]
   ClearNoteFolder -> withUser $ \user -> do
     folderId <- withFastStore (`getUserNoteFolderId` user)
     processChatCommand cxt nm $ APIClearChat (ChatRef CTLocal folderId Nothing)
@@ -3485,7 +3485,7 @@ processChatCommand cxt nm = \case
     chatRef <- getChatRef user chatName
     case chatRef of
       ChatRef CTLocal folderId _ -> processChatCommand cxt nm $ APICreateChatItems folderId [composedMessage (Just f) (MCFile "")]
-      _ -> withSendRef user chatRef $ \sendRef -> processChatCommand cxt nm $ APISendMessages sendRef False Nothing False [composedMessage (Just f) (MCFile "")]
+      _ -> withSendRef user chatRef $ \sendRef -> processChatCommand cxt nm $ APISendMessages sendRef False Nothing False False [composedMessage (Just f) (MCFile "")]
   SendImage chatName f@(CryptoFile fPath _) -> withUser $ \user -> do
     chatRef <- getChatRef user chatName
     withSendRef user chatRef $ \sendRef -> do
@@ -3494,7 +3494,7 @@ processChatCommand cxt nm = \case
       fileSize <- getFileSize filePath
       unless (fileSize <= maxImageSize) $ throwChatError CEFileImageSize {filePath}
       -- TODO include file description for preview
-      processChatCommand cxt nm $ APISendMessages sendRef False Nothing False [composedMessage (Just f) (MCImage "" fixedImagePreview)]
+      processChatCommand cxt nm $ APISendMessages sendRef False Nothing False False [composedMessage (Just f) (MCImage "" fixedImagePreview)]
   ForwardFile chatName fileId -> forwardFile chatName fileId SendFile
   ForwardImage chatName fileId -> forwardFile chatName fileId SendImage
   SendFileDescription _chatName _f -> throwCmdError "TODO"
@@ -3584,6 +3584,17 @@ processChatCommand cxt nm = \case
     -- after the write, so the pass it signals arms a wake for the snooze rather than raising again
     lift $ startBadgeWork user
     CRBadgeState user <$> getUserBadgeState user
+  APIListBinThereBots userId -> withUserId userId $ \user ->
+    CRBinThereBotsList user <$> withStore' getBinThereBots
+  APIAddBinThereBot userId bot -> withUserId userId $ \user -> do
+    botId <- withStore' (`createBinThereBot` bot)
+    let newBot :: BinThereBot
+        newBot = bot {botId}
+    pure $ CRBinThereBotAdded user newBot
+  APIUpdateBinThereBot userId bot -> withUserId userId $ \user ->
+    withStore' (`updateBinThereBot` bot) $> CRBinThereBotUpdated user bot
+  APIDeleteBinThereBot userId botId -> withUserId userId $ \user ->
+    withStore' (`deleteBinThereBot` botId) $> CRBinThereBotDeleted user botId
   SetBotCommands commands -> withUserProfileLock "updateProfile" $ withUser $ \user@User {profile} -> do
     let LocalProfile {preferences} = profile
         prefs = Just (fromMaybe emptyChatPrefs preferences :: Preferences) {commands = Just commands}
@@ -4782,14 +4793,26 @@ processChatCommand cxt nm = \case
     assertNoMentions ComposedMessage {mentions}
       | null mentions = pure ()
       | otherwise = throwCmdError "mentions are not supported in this chat"
-    sendContactContentMessages :: User -> ContactId -> Bool -> Maybe Int -> NonEmpty ComposedMessageReq -> CM ChatResponse
-    sendContactContentMessages user contactId live itemTTL cmrs = do
+    sendContactContentMessages :: User -> ContactId -> Bool -> Maybe Int -> Bool -> NonEmpty ComposedMessageReq -> CM ChatResponse
+    sendContactContentMessages user contactId live itemTTL burnAfterRead cmrs = do
       assertMultiSendable live cmrs
       ct <- withFastStore $ \db -> getContact db cxt user contactId
       assertDirectAllowed user MDSnd ct XMsgNew_
       assertVoiceAllowed ct
+      when burnAfterRead $ incrementBotUsageForContact ct
       processComposedMessages ct
       where
+        incrementBotUsageForContact :: Contact -> CM ()
+        incrementBotUsageForContact Contact {profile = LocalProfile {contactLink}} =
+          case contactLink of
+            Just contactLink' -> do
+              let botAddress = safeDecodeUtf8 $ strEncode contactLink'
+              withFastStore' $ \db -> do
+                bot_ <- getBinThereBotByAddress db botAddress
+                case bot_ of
+                  Just BinThereBot {botId, enabled} | enabled -> incrementBotUsage db botId
+                  _ -> pure ()
+            Nothing -> pure ()
         assertVoiceAllowed :: Contact -> CM ()
         assertVoiceAllowed ct =
           when (not (featureAllowed SCFVoice forUser ct) && any (\(ComposedMessage {msgContent}, _, _, _) -> isVoice msgContent) cmrs) $
@@ -4802,7 +4825,7 @@ processChatCommand cxt nm = \case
           msgs_ <- sendDirectContactMessages user ct $ L.map XMsgNew msgContainers
           let itemsData = prepareSndItemsData (L.toList cmrs) (L.toList ciFiles_) (L.toList quotedItems_) msgs_
           when (length itemsData /= length cmrs) $ logError "sendContactContentMessages: cmrs and itemsData length mismatch"
-          r@(_, cis) <- partitionEithers <$> saveSndChatItems user (CDDirectSnd ct) False itemsData timed_ live
+          r@(_, cis) <- partitionEithers <$> saveSndChatItems user (CDDirectSnd ct) False itemsData timed_ live burnAfterRead
           processSendErrs r
           forM_ (timed_ >>= timedDeleteAt') $ \deleteAt ->
             forM_ cis $ \ci ->
@@ -4812,11 +4835,23 @@ processChatCommand cxt nm = \case
             setupSndFileTransfers :: CM (NonEmpty (Maybe FileInvitation, Maybe (CIFile 'MDSnd)))
             setupSndFileTransfers =
               forM cmrs $ \(ComposedMessage {fileSource = file_}, _, _, _) -> case file_ of
-                Just file -> do
+                Just file@(CryptoFile filePath cfArgs) -> do
                   let User {profile = LocalProfile {localBadge}} = user
                   fileSize <- checkSndFile (if contactConnIncognito ct then Nothing else localBadge) file
+                  file' <- if burnAfterRead && isNothing cfArgs
+                    then do
+                      cfArgs' <- atomically . CF.randomArgs =<< asks random
+                      let tmpPath = filePath ++ ".enc"
+                      encResult <- liftIO $ runExceptT $ encryptFile filePath tmpPath cfArgs'
+                      case encResult of
+                        Right () -> do
+                          liftIO $ removeFile filePath
+                          liftIO $ renameFile tmpPath filePath
+                          pure $ CryptoFile filePath (Just cfArgs')
+                        Left _ -> pure file
+                    else pure file
                   binding_ <- ifM ((not (contactConnIncognito ct) &&) <$> fileNeedsBadge fileSize) (directChatBinding ct) (pure Nothing)
-                  (fInv, ciFile) <- xftpSndFileTransfer user file fileSize 1 (CGContact ct) binding_
+                  (fInv, ciFile) <- xftpSndFileTransfer user file' fileSize 1 (CGContact ct) binding_
                   pure (Just fInv, Just ciFile)
                 Nothing -> pure (Nothing, Nothing)
             prepareMsgs :: NonEmpty (ComposedMessageReq, Maybe FileInvitation) -> Maybe CITimed -> CM (NonEmpty (MsgContainer, Maybe (CIQuote 'CTDirect)))
@@ -4836,24 +4871,24 @@ processChatCommand cxt nm = \case
                         quotedItem = CIQuote {chatDir = qd, itemId = Just qiId, sharedMsgId = itemSharedMsgId, sentAt = itemTs, content = qmc, formattedText}
                     pure (mcQuote QuotedMsg {msgRef, content = qmc} mc, Just quotedItem)
                   (Just _, Just _) -> throwError SEInvalidQuote
-                pure (mc' {file = fInv_, ttl = ttl' <$> timed_, live = justTrue live}, quotedItem_)
+                pure (mc' {file = fInv_, ttl = ttl' <$> timed_, live = justTrue live, burnAfterRead = justTrue burnAfterRead}, quotedItem_)
               where
                 quoteData :: ChatItem c d -> ExceptT StoreError IO (MsgContent, CIQDirection 'CTDirect, Bool)
                 quoteData ChatItem {meta = CIMeta {itemDeleted = Just _}} = throwError SEInvalidQuote
                 quoteData ChatItem {content = CISndMsgContent qmc} = pure (qmc, CIQDirectSnd, True)
                 quoteData ChatItem {content = CIRcvMsgContent qmc} = pure (qmc, CIQDirectRcv, False)
                 quoteData _ = throwError SEInvalidQuote
-    sendGroupContentMessages :: User -> GroupInfoKeys -> Maybe GroupChatScope -> ShowGroupAsSender -> Bool -> Maybe Int -> Bool -> NonEmpty ComposedMessageReq -> CM ChatResponse
-    sendGroupContentMessages user gInfo@(GIK g _) scope showGroupAsSender live itemTTL sign cmrs = do
+    sendGroupContentMessages :: User -> GroupInfoKeys -> Maybe GroupChatScope -> ShowGroupAsSender -> Bool -> Maybe Int -> Bool -> Bool -> NonEmpty ComposedMessageReq -> CM ChatResponse
+    sendGroupContentMessages user gInfo@(GIK g _) scope showGroupAsSender live itemTTL sign bar cmrs = do
       assertMultiSendable live cmrs
       chatScopeInfo <- mapM (getChatScopeInfo cxt user) scope
       recipients <- getGroupRecipients cxt user g chatScopeInfo modsCompatVersion
-      sendGroupContentMessages_ user gInfo scope showGroupAsSender chatScopeInfo recipients live itemTTL sign cmrs
+      sendGroupContentMessages_ user gInfo scope showGroupAsSender chatScopeInfo recipients live itemTTL sign bar cmrs
         where
           hasReport = any (\(ComposedMessage {msgContent}, _, _, _) -> isReport msgContent) cmrs
           modsCompatVersion = if hasReport then contentReportsVersion else groupKnockingVersion
-    sendGroupContentMessages_ :: User -> GroupInfoKeys -> Maybe GroupChatScope -> ShowGroupAsSender -> Maybe GroupChatScopeInfo -> [GroupMember] -> Bool -> Maybe Int -> Bool -> NonEmpty ComposedMessageReq -> CM ChatResponse
-    sendGroupContentMessages_ user g@(GIK gInfo@GroupInfo {groupId, membership} _) scope showGroupAsSender chatScopeInfo recipients live itemTTL sign cmrs = do
+    sendGroupContentMessages_ :: User -> GroupInfoKeys -> Maybe GroupChatScope -> ShowGroupAsSender -> Maybe GroupChatScopeInfo -> [GroupMember] -> Bool -> Maybe Int -> Bool -> Bool -> NonEmpty ComposedMessageReq -> CM ChatResponse
+    sendGroupContentMessages_ user g@(GIK gInfo@GroupInfo {groupId, membership} _) scope showGroupAsSender chatScopeInfo recipients live itemTTL sign bar cmrs = do
       forM_ allowedRole $ assertUserGroupRole gInfo
       assertGroupContentAllowed
       processComposedMessages
@@ -4885,7 +4920,7 @@ processChatCommand cxt nm = \case
           (chatMsgEvents, quotedItems_) <- L.unzip <$> prepareMsgs (L.zip cmrs fInvs_) timed_
           (msgs_, gsr) <- sendGroupMessages user g Nothing showGroupAsSender recipients signMsgs chatMsgEvents
           let itemsData = prepareSndItemsData (L.toList cmrs) (L.toList ciFiles_) (L.toList quotedItems_) (L.toList msgs_)
-          cis_ <- saveSndChatItems user (CDGroupSnd gInfo chatScopeInfo) showGroupAsSender itemsData timed_ live
+          cis_ <- saveSndChatItems user (CDGroupSnd gInfo chatScopeInfo) showGroupAsSender itemsData timed_ live bar
           when (length cis_ /= length cmrs) $ logError "sendGroupContentMessages: cmrs and cis_ length mismatch"
           createMemberSndStatuses cis_ msgs_ gsr
           let r@(_, cis) = partitionEithers cis_
@@ -4898,15 +4933,27 @@ processChatCommand cxt nm = \case
             setupSndFileTransfers :: Int -> CM (NonEmpty (Maybe FileInvitation, Maybe (CIFile 'MDSnd)))
             setupSndFileTransfers n =
               forM cmrs $ \(ComposedMessage {fileSource = file_}, _, _, _) -> case file_ of
-                Just file -> do
+                Just file@(CryptoFile filePath cfArgs) -> do
                   let User {profile = LocalProfile {localBadge}} = user
                   fileSize <- checkSndFile (if incognitoMembership gInfo then Nothing else localBadge) file
+                  file' <- if bar && isNothing cfArgs
+                    then do
+                      cfArgs' <- atomically . CF.randomArgs =<< asks random
+                      let tmpPath = filePath ++ ".enc"
+                      encResult <- liftIO $ runExceptT $ encryptFile filePath tmpPath cfArgs'
+                      case encResult of
+                        Right () -> do
+                          liftIO $ removeFile filePath
+                          liftIO $ renameFile tmpPath filePath
+                          pure $ CryptoFile filePath (Just cfArgs')
+                        Left _ -> pure file
+                    else pure file
                   needsBadge <- fileNeedsBadge fileSize
                   let binding_ = if needsBadge && not (incognitoMembership gInfo) then sndGroupChatBinding gInfo showGroupAsSender else Nothing
-                  (fInv, ciFile) <- xftpSndFileTransfer user file fileSize n (CGGroup gInfo recipients) binding_
+                  (fInv, ciFile) <- xftpSndFileTransfer user file' fileSize n (CGGroup gInfo recipients) binding_
                   fInv' <-
                     if signMsgs && useRelays' gInfo
-                      then (\d -> (fInv :: FileInvitation) {fileDigest = Just d}) <$> cryptoFileDigest file
+                      then (\d -> (fInv :: FileInvitation) {fileDigest = Just d}) <$> cryptoFileDigest file'
                       else pure fInv
                   pure (Just fInv', Just ciFile)
                 Nothing -> pure (Nothing, Nothing)
@@ -4915,7 +4962,7 @@ processChatCommand cxt nm = \case
               forM cmsFileInvs $ \((ComposedMessage {quotedItemId, msgContent = mc}, itemForwarded, _, ciMentions), fInv_) ->
                 let msgScope = toMsgScope gInfo <$> chatScopeInfo
                     mentions = M.map (\CIMention {memberId} -> MsgMention {memberId}) ciMentions
-                 in prepareGroupMsg db user gInfo msgScope showGroupAsSender mc mentions quotedItemId itemForwarded fInv_ timed_ live
+                 in prepareGroupMsg db user gInfo msgScope showGroupAsSender mc mentions quotedItemId itemForwarded fInv_ timed_ live bar
             createMemberSndStatuses ::
               [Either ChatError (ChatItem 'CTGroup 'MDSnd)] ->
               NonEmpty (Either ChatError SndMessage) ->
@@ -6097,7 +6144,7 @@ chatCommandP =
       "/_get content types " *> (APIGetChatContentTypes <$> chatRefP),
       "/_get items " *> (APIGetChatItems <$> chatPaginationP <*> optional (" search=" *> textP)),
       "/_get item info " *> (APIGetChatItemInfo <$> chatRefP <* A.space <*> A.decimal),
-      "/_send " *> (APISendMessages <$> sendRefP <*> liveMessageP <*> sendMessageTTLP <*> signMessagesP <*> (" json " *> jsonP <|> " text " *> composedMessagesTextP)),
+      "/_send " *> (APISendMessages <$> sendRefP <*> liveMessageP <*> sendMessageTTLP <*> signMessagesP <*> burnAfterReadP <*> (" json " *> jsonP <|> " text " *> composedMessagesTextP)),
       "/_create tag " *> (APICreateChatTag <$> jsonP),
       "/_tags " *> (APISetChatTags <$> chatRefP <*> optional _strP),
       "/_delete tag " *> (APIDeleteChatTag <$> A.decimal),
@@ -6131,6 +6178,10 @@ chatCommandP =
       "/_badge state " *> (APIGetBadgeState <$> A.decimal),
       "/_badge ledger " *> (APIGetBadgeLedger <$> A.decimal <* A.space <*> A.decimal),
       "/_badge ack " *> (APIAckBadgeAlert <$> A.decimal <* A.space <*> A.decimal <* A.space <*> badgeAlertKindP <* A.space <*> onOffP <* A.space <*> textP),
+      "/_binthere list " *> (APIListBinThereBots <$> A.decimal),
+      "/_binthere add " *> (APIAddBinThereBot <$> A.decimal <* A.space <*> jsonP),
+      "/_binthere update " *> (APIUpdateBinThereBot <$> A.decimal <* A.space <*> jsonP),
+      "/_binthere delete " *> (APIDeleteBinThereBot <$> A.decimal <* A.space <*> A.decimal),
       "/_service_response " *> (APISendServiceResponse <$> A.decimal <* A.space <*> strP <* A.space <*> jsonP),
       "/_call invite @" *> (APISendCallInvitation <$> A.decimal <* A.space <*> jsonP),
       "/call " *> char_ '@' *> (SendCallInvitation <$> displayNameP <*> pure defaultCallType),
@@ -6487,6 +6538,7 @@ chatCommandP =
     updatedMessagesTextP = (`UpdatedMessage` []) <$> mcTextP
     liveMessageP = " live=" *> onOffP <|> pure False
     signMessagesP = " sign=" *> onOffP <|> pure False
+    burnAfterReadP = " bar=" *> onOffP <|> pure False
     sendMessageTTLP = " ttl=" *> ((Just <$> A.decimal) <|> ("default" $> Nothing)) <|> pure Nothing
     receiptSettings = do
       enable <- onOffP

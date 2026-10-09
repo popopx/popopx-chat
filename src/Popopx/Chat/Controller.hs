@@ -63,7 +63,7 @@ import Popopx.Chat.Protocol
 import Popopx.Chat.Remote.AppVersion
 import Popopx.Chat.Remote.Types
 import Popopx.Chat.Stats (PresentedServersSummary)
-import Popopx.Chat.Store (AddressSettings, ChatLockEntity, GroupLinkInfo, StoreError (..), UserContactLink, UserMsgReceiptSettings)
+import Popopx.Chat.Store (AddressSettings, BinThereBot (..), ChatLockEntity, GroupLinkInfo, StoreError (..), UserContactLink, UserMsgReceiptSettings)
 import Popopx.Chat.Types
 import Popopx.Chat.Types.Preferences
 import Popopx.Chat.Types.Shared
@@ -407,7 +407,7 @@ data ChatCommand
   | APIGetChatContentTypes ChatRef
   | APIGetChatItems {chatPagination :: ChatPagination, search :: Maybe Text}
   | APIGetChatItemInfo {chatRef :: ChatRef, chatItemId :: ChatItemId}
-  | APISendMessages {sendRef :: SendRef, liveMessage :: Bool, ttl :: Maybe Int, signMessages :: Bool, composedMessages :: NonEmpty ComposedMessage}
+  | APISendMessages {sendRef :: SendRef, liveMessage :: Bool, ttl :: Maybe Int, signMessages :: Bool, burnAfterRead :: Bool, composedMessages :: NonEmpty ComposedMessage}
   | APICreateChatTag ChatTagData
   | APISetChatTags ChatRef (Maybe (NonEmpty ChatTagId))
   | APIDeleteChatTag ChatTagId
@@ -666,6 +666,10 @@ data ChatCommand
   -- episode is last because it is free text: it is the value that makes one occurrence of an
   -- alert distinct from the next, and the app returns whatever it was given
   | APIAckBadgeAlert {userId :: UserId, badgePurchaseId :: Int64, alertKind :: BadgeAlertKind, snooze :: Bool, episode :: Text}
+  | APIListBinThereBots {userId :: UserId}
+  | APIAddBinThereBot {userId :: UserId, bot :: BinThereBot}
+  | APIUpdateBinThereBot {userId :: UserId, bot :: BinThereBot}
+  | APIDeleteBinThereBot {userId :: UserId, botId :: Int64}
   | ShowProfileImage
   | SetUserFeature AChatFeature FeatureAllowed -- UserId (not used in UI)
   | SetContactFeature AChatFeature ContactName (Maybe FeatureAllowed)
@@ -873,6 +877,10 @@ data ChatResponse
   | CRBadgeRedeemed {user :: User, redeemedBadge :: LocalBadge, newBadge :: Bool, badgeState :: Maybe BadgeState}
   | CRBadgeState {user :: User, badgeState :: Maybe BadgeState}
   | CRBadgeLedger {user :: User, badgeLedger :: [StatementEntry]}
+  | CRBinThereBotsList {user :: User, bots :: [BinThereBot]}
+  | CRBinThereBotAdded {user :: User, bot :: BinThereBot}
+  | CRBinThereBotUpdated {user :: User, bot :: BinThereBot}
+  | CRBinThereBotDeleted {user :: User, botId :: Int64}
   | CRUserAcceptedGroupSent {user :: User, groupInfo :: GroupInfo, hostContact :: Maybe Contact}
   | CRUserDeletedMembers {user :: User, groupInfo :: GroupInfo, members :: [GroupMember], withMessages :: Bool, msgSigned :: Bool}
   | CRGroupsList {user :: User, groups :: [GroupInfo]}

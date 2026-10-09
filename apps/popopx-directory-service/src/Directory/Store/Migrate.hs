@@ -24,13 +24,14 @@ import Directory.Listing
 import Directory.Options
 import Directory.Store
 import Popopx.Chat (createChatDatabase)
-import Popopx.Chat.Controller (ChatConfig (..), ChatDatabase (..), mkStoreCxt)
+import Popopx.Chat.Controller (ChatConfig (..), ChatDatabase (..))
 import Popopx.Chat.Options (CoreChatOpts (..))
 import Popopx.Chat.Options.DB
 import Popopx.Chat.Store.Groups (getHostMember)
 import Popopx.Chat.Store.Profiles (getUsers)
 import Popopx.Chat.Store.Shared (getGroupInfo)
 import Popopx.Chat.Types
+import qualified Popopx.Messaging.Crypto as C
 import Popopx.Messaging.Agent.Store.Common
 import qualified Popopx.Messaging.Agent.Store.DB as DB
 import Popopx.Messaging.Agent.Store.Interface (closeDBStore, migrateDBSchema)
@@ -61,13 +62,19 @@ runDirectoryMigrations opts ChatConfig {confirmMigrations} chatStore =
     DirectoryOpts {coreOptions = CoreChatOpts {dbOptions, yesToUpMigrations}} = opts
     confirm = if confirmMigrations == MCConsole && yesToUpMigrations then MCYesUp else confirmMigrations
 
+mkStoreCxt :: ChatConfig -> IO StoreCxt
+mkStoreCxt ChatConfig {chatVRange, badgePublicKeys} = do
+  drg <- C.newRandom
+  pure StoreCxt {vr = chatVRange, badgeKeys = badgePublicKeys, drg}
+
 checkDirectoryLog :: DirectoryOpts -> ChatConfig -> IO ()
 checkDirectoryLog opts cfg =
   withDirectoryLog opts $ \logFile -> withChatStore opts $ \st -> do
     runDirectoryMigrations opts cfg st
     gs <- readDirectoryLogData logFile
+    storeCxt <- mkStoreCxt cfg
     withActiveUser st $ \user -> withTransaction st $ \db -> do
-      mapM_ (verifyGroupRegistration (mkStoreCxt cfg) db user) gs
+      mapM_ (verifyGroupRegistration storeCxt db user) gs
     putStrLn $ show (length gs) <> " group registrations OK"
 
 importDirectoryLogToDB :: DirectoryOpts -> ChatConfig -> IO ()
@@ -76,9 +83,10 @@ importDirectoryLogToDB opts cfg = do
     runDirectoryMigrations opts cfg st
     gs <- readDirectoryLogData logFile
     ctRegs <- TM.emptyIO
+    storeCxt <- mkStoreCxt cfg
     withActiveUser st $ \user -> withTransaction st $ \db -> do
       forM_ gs $ \gr ->
-        whenM (verifyGroupRegistration (mkStoreCxt cfg) db user gr) $ do
+        whenM (verifyGroupRegistration storeCxt db user gr) $ do
           putStrLn $ "importing group " <> show (dbGroupId gr)
           insertGroupReg db =<< fixUserGroupRegId ctRegs gr
       renamePath logFile (logFile ++ ".bak")
@@ -104,11 +112,12 @@ exportDBToDirectoryLog opts cfg =
   withDirectoryLog opts $ \logFile -> withChatStore opts $ \st -> do
     whenM (doesFileExist logFile) $ exit $ "directory log file " ++ logFile ++ " already exists"
     runDirectoryMigrations opts cfg st
+    storeCxt <- mkStoreCxt cfg
     withActiveUser st $ \user -> do
       gs <- withFile logFile WriteMode $ \h -> withTransaction st $ \db -> do
-        gs <- getAllGroupRegs_ db (mkStoreCxt cfg) user
+        gs <- getAllGroupRegs_ db storeCxt user
         forM_ gs $ \(_, gr) ->
-          whenM (verifyGroupRegistration (mkStoreCxt cfg) db user gr) $
+          whenM (verifyGroupRegistration storeCxt db user gr) $
             B.hPutStrLn h $ strEncode $ GRCreate gr
         pure gs
       putStrLn $ show (length gs) <> " group registrations exported"
@@ -118,8 +127,9 @@ saveGroupListingFiles opts cfg = case webFolder opts of
   Nothing -> exit "use --web-folder to generate listings"
   Just dir ->
     withChatStore opts $ \st -> withActiveUser st $ \user ->
-      withTransaction st $ \db ->
-        getAllListedGroups_ db (mkStoreCxt cfg) user >>= generateListing dir
+      withTransaction st $ \db -> do
+        storeCxt <- mkStoreCxt cfg
+        getAllListedGroups_ db storeCxt user >>= generateListing dir
 
 verifyGroupRegistration :: StoreCxt -> DB.Connection -> User -> GroupReg -> IO Bool
 verifyGroupRegistration cxt db user GroupReg {dbGroupId = gId, dbContactId = ctId, dbOwnerMemberId, groupRegStatus} =

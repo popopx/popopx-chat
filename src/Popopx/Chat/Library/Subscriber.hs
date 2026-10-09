@@ -53,6 +53,7 @@ import Popopx.Chat.Delivery
 import Popopx.Chat.Files (getChatTempDirectory, safeFileNameStr)
 import Popopx.Chat.Library.Internal
 import Popopx.Chat.Web (channelContentChanged, channelProfileUpdated, channelRemoved)
+import Popopx.Chat.BinThere.Protocol (burnAfterReadTTL)
 import Popopx.Chat.Messages
 import Popopx.Chat.Messages.Batch (batchDeliveryTasks1, batchProfiles, batchProfilesWithBody, encodeBinaryBatch, encodeFwdElement, maxBatchElementSize)
 import Popopx.Chat.Messages.CIContent
@@ -1923,18 +1924,19 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
       --   _ -> pure ()
       if isVoice content && not (featureAllowed SCFVoice forContact ct)
         then do
-          void $ newChatItem (ciContentNoParse $ CIRcvChatFeatureRejected CFVoice) Nothing Nothing False
+          void $ newChatItem (ciContentNoParse $ CIRcvChatFeatureRejected CFVoice) Nothing Nothing False False
         else do
-          let MsgContainer {ttl = itemTTL, live = live_} = mc
-              timed_ = rcvContactCITimed ct itemTTL
+          let MsgContainer {ttl = itemTTL, live = live_, burnAfterRead = bar_} = mc
+              bar = fromMaybe False bar_
+              timed_ = if bar then Just CITimed {ttl = burnAfterReadTTL, deleteAt = Nothing} else rcvContactCITimed ct itemTTL
               live = fromMaybe False live_
-          file_ <- processFileInvitation fInv_ content (rcvDirectFileProhibited ct) $ \db -> createRcvFileTransfer db userId ct
-          newChatItem (CIRcvMsgContent content, msgContentTexts content) (snd <$> file_) timed_ live
+          file_ <- processFileInvitation fInv_ content bar (rcvDirectFileProhibited ct) $ \db -> createRcvFileTransfer db userId ct
+          newChatItem (CIRcvMsgContent content, msgContentTexts content) (snd <$> file_) timed_ live bar
           autoAcceptFile file_
       where
         brokerTs = metaBrokerTs msgMeta
-        newChatItem content ciFile_ timed_ live = do
-          (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg sharedMsgId_ brokerTs content ciFile_ timed_ live M.empty
+        newChatItem content ciFile_ timed_ live bar = do
+          (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg sharedMsgId_ brokerTs content ciFile_ timed_ live bar M.empty
           reactions <- maybe (pure []) (\sharedMsgId -> withStore' $ \db -> getDirectCIReactions db ct sharedMsgId) sharedMsgId_
           toView $ CEvtNewChatItems user [AChatItem SCTDirect SMDRcv cInfo ci {reactions}]
 
@@ -2010,8 +2012,8 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
       let descrHash = FD.sharedDescriptionHash fd
       badgeProofStatus ((\chatBinding -> PHFileDescr {chatBinding, fileSize = fromInteger fileSize, descrHash, fileExpires}) <$> binding_) badge
 
-    processFileInvitation :: Maybe FileInvitation -> MsgContent -> (FileInvitation -> CM (Maybe FileProhibited)) -> (DB.Connection -> FileInvitation -> Maybe FileProhibited -> Maybe InlineFileMode -> Integer -> ExceptT StoreError IO RcvFileTransfer) -> CM (Maybe (RcvFileTransfer, CIFile 'MDRcv))
-    processFileInvitation fInv_ mc fileProhibited_ createRcvFT = forM fInv_ $ \fInv -> do
+    processFileInvitation :: Maybe FileInvitation -> MsgContent -> Bool -> (FileInvitation -> CM (Maybe FileProhibited)) -> (DB.Connection -> FileInvitation -> Maybe FileProhibited -> Maybe InlineFileMode -> Integer -> ExceptT StoreError IO RcvFileTransfer) -> CM (Maybe (RcvFileTransfer, CIFile 'MDRcv))
+    processFileInvitation fInv_ mc forceEncrypt fileProhibited_ createRcvFT = forM fInv_ $ \fInv -> do
       ChatConfig {fileChunkSize} <- asks config
       fInv'@FileInvitation {fileName, fileSize} <- validateFileInvitation fInv
       fileProhibited <- fileProhibited_ fInv'
@@ -2020,7 +2022,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
       let fileProtocol = if isJust xftpRcvFile then FPXFTP else FPSMP
       (filePath, fileStatus, ft') <- case inline of
         Just IFMSent -> do
-          encrypt <- chatReadVar encryptLocalFiles
+          encrypt <- (forceEncrypt ||) <$> chatReadVar encryptLocalFiles
           ft' <- (if encrypt then setFileToEncrypt else pure) ft
           fPath <- getRcvFilePath fileId Nothing fileName True
           withStore' $ \db -> startRcvInlineFT db user ft' fPath inline
@@ -2051,12 +2053,12 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
         if isVoice mc && not (featureAllowed SCFVoice forContact ct)
           then do
             let ciContent = ciContentNoParse $ CIRcvChatFeatureRejected CFVoice
-            (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg (Just sharedMsgId) brokerTs ciContent Nothing Nothing False M.empty
+            (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg (Just sharedMsgId) brokerTs ciContent Nothing Nothing False False M.empty
             toView $ CEvtChatItemUpdated user (AChatItem SCTDirect SMDRcv cInfo ci)
           else do
             let timed_ = rcvContactCITimed ct ttl
                 ts = ciContentTexts content
-            (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg (Just sharedMsgId) brokerTs (content, ts) Nothing timed_ live M.empty
+            (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg (Just sharedMsgId) brokerTs (content, ts) Nothing timed_ live False M.empty
             ci' <- withStore' $ \db -> do
               createChatItemVersion db (chatItemId' ci) brokerTs mc
               updateDirectChatItem' db user contactId ci content True live Nothing Nothing
@@ -2210,10 +2212,11 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                       createContentItem gInfo' (Just m') scopeInfo
                       pure $ Just $ infoToDeliveryContext gInfo' scopeInfo sentAsGroup
       where
-        rejected gInfo' m' scopeInfo f = newChatItem gInfo' m' scopeInfo (ciContentNoParse $ CIRcvGroupFeatureRejected f) Nothing Nothing False
-        timed_ gInfo' = if forwarded then rcvCITimed_ (Just Nothing) itemTTL else rcvGroupCITimed gInfo' itemTTL
+        rejected gInfo' m' scopeInfo f = newChatItem gInfo' m' scopeInfo (ciContentNoParse $ CIRcvGroupFeatureRejected f) Nothing Nothing False False
+        timed_ gInfo' = if bar' then Just CITimed {ttl = burnAfterReadTTL, deleteAt = Nothing} else if forwarded then rcvCITimed_ (Just Nothing) itemTTL else rcvGroupCITimed gInfo' itemTTL
         live' = fromMaybe False live_
-        MsgContainer {content = c, mentions = MsgMentions mentions, file = fInv_, ttl = itemTTL, live = live_, scope = msgScope_, asGroup = asGroup_} = mc
+        bar' = fromMaybe False bar_
+        MsgContainer {content = c, mentions = MsgMentions mentions, file = fInv_, ttl = itemTTL, live = live_, scope = msgScope_, asGroup = asGroup_, burnAfterRead = bar_} = mc
         content = case c of
           MCChat {text, chatLink, ownerSig = Just LinkOwnerSig {chatBinding = B64UrlByteString binding}} -> case publicGroup of
             Just pgp | maybe False (binding ==) (expectedBinding pgp) -> c
@@ -2233,7 +2236,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
         createBlockedByAdmin gInfo' m' scopeInfo
           | groupFeatureAllowed SGFFullDelete gInfo' = do
               -- ignores member role when blocked by admin
-              (ci, cInfo) <- saveRcvCI gInfo' m' scopeInfo (ciContentNoParse CIRcvBlocked) Nothing (timed_ gInfo') False M.empty
+              (ci, cInfo) <- saveRcvCI gInfo' m' scopeInfo (ciContentNoParse CIRcvBlocked) Nothing (timed_ gInfo') False False M.empty
               ci' <- withStore' $ \db -> updateGroupCIBlockedByAdmin db user gInfo' ci brokerTs
               groupMsgToView cInfo ci'
           | otherwise = do
@@ -2245,7 +2248,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
           | moderatorRole < GRModerator || moderatorRole < memberRole =
               createContentItem gInfo' (Just m') scopeInfo
           | groupFeatureMemberAllowed SGFFullDelete moderator gInfo' = do
-              (ci, cInfo) <- saveRcvCI gInfo' (Just m') scopeInfo (ciContentNoParse CIRcvModerated) Nothing (timed_ gInfo') False M.empty
+              (ci, cInfo) <- saveRcvCI gInfo' (Just m') scopeInfo (ciContentNoParse CIRcvModerated) Nothing (timed_ gInfo') False False M.empty
               ci' <- withStore' $ \db -> updateGroupChatItemModerated db user gInfo' ci moderator moderatedAt
               groupMsgToView cInfo ci'
           | otherwise = do
@@ -2256,17 +2259,17 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
         -- m' is Maybe GroupMember
         createNonLive gInfo' m' scopeInfo file_ = do
           let mentions' = if maybe False memberBlocked m' then M.empty else mentions
-          saveRcvCI gInfo' m' scopeInfo (CIRcvMsgContent content, ts) (snd <$> file_) (timed_ gInfo') False mentions'
+          saveRcvCI gInfo' m' scopeInfo (CIRcvMsgContent content, ts) (snd <$> file_) (timed_ gInfo') False False mentions'
         createContentItem gInfo' m' scopeInfo = do
           file_ <- processFileInv gInfo' m'
-          newChatItem gInfo' m' scopeInfo (CIRcvMsgContent content, ts) (snd <$> file_) (timed_ gInfo') live'
+          newChatItem gInfo' m' scopeInfo (CIRcvMsgContent content, ts) (snd <$> file_) (timed_ gInfo') live' bar'
           unless (maybe False memberBlocked m') $ autoAcceptFile file_
         processFileInv gInfo' m' =
           let fileMember_ = if sentAsGroup then Nothing else m'
-           in processFileInvitation fInv_ content (rcvGroupFileProhibited gInfo' m' sentAsGroup) $ \db -> createRcvGroupFileTransfer db userId gInfo' fileMember_ FTNormal sharedMsgId_
-        newChatItem gInfo' m' scopeInfo ciContent ciFile_ timed live = do
+           in processFileInvitation fInv_ content bar' (rcvGroupFileProhibited gInfo' m' sentAsGroup) $ \db -> createRcvGroupFileTransfer db userId gInfo' fileMember_ FTNormal sharedMsgId_
+        newChatItem gInfo' m' scopeInfo ciContent ciFile_ timed live bar = do
           let mentions' = if maybe False memberBlocked m' then M.empty else mentions
-          (ci, cInfo) <- saveRcvCI gInfo' m' scopeInfo ciContent ciFile_ timed live mentions'
+          (ci, cInfo) <- saveRcvCI gInfo' m' scopeInfo ciContent ciFile_ timed live bar mentions'
           ci' <- maybe (pure ci) (\m -> blockedMemberCI gInfo' m ci) m'
           let memberId_ = memberId' <$> m'
           reactions <- maybe (pure []) (\sharedMsgId -> withStore' $ \db -> getGroupCIReactions db gInfo' memberId_ sharedMsgId) sharedMsgId_
@@ -2298,11 +2301,11 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                 case m_ >>= \m -> prohibitedGroupContent gInfo' m scopeInfo mc ft_ (Nothing :: Maybe String) False of
                   Just f -> do
                     let ciContent = ciContentNoParse $ CIRcvGroupFeatureRejected f
-                    (ci, cInfo) <- saveRcvChatItem' user chatDir msg (Just sharedMsgId) brokerTs ciContent Nothing timed_ False M.empty
+                    (ci, cInfo) <- saveRcvChatItem' user chatDir msg (Just sharedMsgId) brokerTs ciContent Nothing timed_ False False M.empty
                     groupMsgToView cInfo ci
                     pure Nothing
                   Nothing -> do
-                    (ci, cInfo) <- saveRcvChatItem' user chatDir msg (Just sharedMsgId) brokerTs (content, ts) Nothing timed_ live mentions'
+                    (ci, cInfo) <- saveRcvChatItem' user chatDir msg (Just sharedMsgId) brokerTs (content, ts) Nothing timed_ live False mentions'
                     ci' <- withStore' $ \db -> do
                       createChatItemVersion db (chatItemId' ci) brokerTs mc
                       updateGroupChatItem db user groupId ci content True live Nothing
@@ -2491,7 +2494,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
       let fileProtocol = if isJust xftpRcvFile then FPXFTP else FPSMP
           ciFile = Just $ CIFile {fileId, fileName, fileSize, fileSource = Nothing, fileStatus = CIFSRcvInvitation, fileProtocol, fileExpires = Nothing, fileProhibited}
           content = ciContentNoParse $ CIRcvMsgContent $ MCFile ""
-      (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg sharedMsgId_ brokerTs content ciFile Nothing False M.empty
+      (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg sharedMsgId_ brokerTs content ciFile Nothing False False M.empty
       toView $ CEvtNewChatItems user [AChatItem SCTDirect SMDRcv cInfo ci]
       where
         brokerTs = metaBrokerTs msgMeta
@@ -2507,7 +2510,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
       let fileProtocol = if isJust xftpRcvFile then FPXFTP else FPSMP
           ciFile = Just $ CIFile {fileId, fileName, fileSize, fileSource = Nothing, fileStatus = CIFSRcvInvitation, fileProtocol, fileExpires = Nothing, fileProhibited}
           content = ciContentNoParse $ CIRcvMsgContent $ MCFile ""
-      (ci, cInfo) <- saveRcvChatItem' user (CDGroupRcv gInfo Nothing m) msg sharedMsgId_ brokerTs content ciFile Nothing False M.empty
+      (ci, cInfo) <- saveRcvChatItem' user (CDGroupRcv gInfo Nothing m) msg sharedMsgId_ brokerTs content ciFile Nothing False False M.empty
       ci' <- blockedMemberCI gInfo m ci
       groupMsgToView cInfo ci'
 
@@ -3037,7 +3040,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
         saveCallItem status = saveRcvChatItemNoParse user (CDDirectRcv ct) msg brokerTs (CIRcvCall status 0)
         featureRejected f = do
           let content = ciContentNoParse $ CIRcvChatFeatureRejected f
-          (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg sharedMsgId_ brokerTs content Nothing Nothing False M.empty
+          (ci, cInfo) <- saveRcvChatItem' user (CDDirectRcv ct) msg sharedMsgId_ brokerTs content Nothing Nothing False False M.empty
           toView $ CEvtNewChatItems user [AChatItem SCTDirect SMDRcv cInfo ci]
 
     -- to party initiating call

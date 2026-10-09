@@ -697,7 +697,8 @@ data MsgContainer = MsgContainer
     quote :: Maybe QuotedMsg,
     parent :: Maybe MsgRef,
     forward :: Maybe Bool,
-    forwardLink :: Maybe ForwardLink
+    forwardLink :: Maybe ForwardLink,
+    burnAfterRead :: Maybe Bool
   }
   deriving (Eq, Show)
 
@@ -723,7 +724,8 @@ mcSimple content =
       quote = Nothing,
       parent = Nothing,
       forward = Nothing,
-      forwardLink = Nothing
+      forwardLink = Nothing,
+      burnAfterRead = Nothing
     }
 
 mcQuote :: QuotedMsg -> MsgContent -> MsgContainer

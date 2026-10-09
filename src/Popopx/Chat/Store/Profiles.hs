@@ -20,6 +20,7 @@ module Popopx.Chat.Store.Profiles
     UserMsgReceiptSettings (..),
     UserContactLink (..),
     GroupLinkInfo (..),
+    BinThereBot (..),
     createUserRecordAt,
     getUsersInfo,
     getUsers,
@@ -522,6 +523,25 @@ data AutoAccept = AutoAccept
   deriving (Eq, Show)
 
 $(J.deriveJSON defaultJSON ''AutoAccept)
+
+data BinThereBot = BinThereBot
+  { botId :: Int64,
+    botAddress :: Text,
+    botName :: Maybe Text,
+    botType :: Text,
+    enabled :: Bool,
+    usageCount :: Int,
+    createdAt :: Text,
+    updatedAt :: Text,
+    description :: Maybe Text,
+    iconUrl :: Maybe Text,
+    tokenCount :: Int,
+    pricingUnit :: Maybe Text,
+    pricingAmount :: Int
+  }
+  deriving (Eq, Show)
+
+$(J.deriveJSON defaultJSON ''BinThereBot)
 
 $(J.deriveJSON defaultJSON ''AddressSettings)
 

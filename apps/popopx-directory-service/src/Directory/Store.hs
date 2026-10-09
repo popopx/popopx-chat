@@ -466,7 +466,7 @@ toGroupInfoReg currentTs cxt user row = let (g, gr, _) = toGroupInfoRegLink curr
 
 toGroupInfoRegLink :: UTCTime -> StoreCxt -> User -> (GroupInfoRow :. GroupRegRow :. GroupLinkRow) -> (GroupInfo, GroupReg, Maybe GroupLink)
 toGroupInfoRegLink currentTs cxt User {userContactId} (groupRow :. grRow :. linkRow) =
-  (toGroupInfo currentTs cxt userContactId [] groupRow, rowToGroupReg grRow, toMaybeGroupLink linkRow)
+  (fst (toGroupInfo currentTs cxt userContactId [] groupRow), rowToGroupReg grRow, toMaybeGroupLink linkRow)
 
 type GroupRegRow = (GroupId, UserGroupRegId, ContactId, Maybe GroupMemberId, GroupRegStatus, BoolInt, UTCTime)
 

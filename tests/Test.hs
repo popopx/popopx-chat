@@ -22,6 +22,8 @@ import ChatTests.Utils (xdescribe'')
 import Control.Logger.Simple
 import Data.Time.Clock.System
 import BadgeTests
+import BinThereStoreTests
+import BinThereIntegrationTests
 import JSONTests
 import MarkdownTests
 import MemberRelationsTests
@@ -83,6 +85,8 @@ main = do
         badgeWaitersTests
         badgeBTCPayTests
         badgeStripeTests
+      describe "BinThere store" binThereStoreTests
+      around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "BinThere integration" binThereIntegrationTests
       describe "PopopX chat markdown" markdownTests
       describe "JSON Tests" jsonTests
       describe "Member relations" memberRelationsTests

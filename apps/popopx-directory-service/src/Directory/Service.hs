@@ -21,6 +21,8 @@ module Directory.Service
   ( welcomeGetOpts,
     directoryService,
     directoryServiceCLI,
+    newServiceState,
+    ServiceState (..),
   )
 where
 
@@ -66,7 +68,7 @@ import Popopx.Chat.Protocol (GroupShortLinkData (..), LinkOwnerSig (..), MsgChat
 import Popopx.Chat.Store.Direct (getContact)
 import Popopx.Chat.Store.Groups (getGroupLink, getGroupMember, getGroupMemberByMemberId, setGroupCustomData) -- TODO remove setGroupCustomData
 import Popopx.Chat.Store.Profiles (GroupLinkInfo (..), getGroupLinkInfo)
-import Popopx.Chat.Store.Shared (StoreError (..))
+import Popopx.Chat.Store.Shared (StoreError (..), getGroupInfoRow, mkGroupKeys)
 import Popopx.Chat.Terminal (terminalChatConfig)
 import Popopx.Chat.Terminal.Main (popopxChatCLI')
 import Popopx.Chat.Types
@@ -78,7 +80,7 @@ import Popopx.Messaging.Client (NetworkRequestMode (..))
 import qualified Popopx.Messaging.Crypto.File as CF
 import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Protocol (ErrorType (..))
-import Popopx.Messaging.PoName (PopopxNameInfo (..), PopopxNameType (..), shortNameInfoStr)
+import Popopx.Messaging.PopopxName (PopopxNameInfo (..), PopopxNameType (..), shortNameInfoStr)
 import Popopx.Messaging.TMap (TMap)
 import qualified Popopx.Messaging.TMap as TM
 import Popopx.Messaging.Util (eitherToMaybe, raceAny_, safeDecodeUtf8, tshow, unlessM, (<$$>))
@@ -222,7 +224,7 @@ directoryPostStartHook opts@DirectoryOpts {noAddress, testing} env cc =
   readTVarIO (currentUser cc) >>= \case
     Nothing -> putStrLn "No current user" >> exitFailure
     Just User {userId, profile = p@LocalProfile {preferences}} -> do
-      unless noAddress $ initializeBotAddress' (not testing) cc
+      unless noAddress $ initializeBotAddress' (not testing) (Just True) False cc
       void $ atomically $ tryPutTMVar (serviceCC env) cc
       listingsUpdated env
       let cmds = fromMaybe [] $ preferences >>= commands_
@@ -1565,7 +1567,14 @@ getGroupLink' cc user gInfo =
   withDB "getGroupLink" cc $ \db -> withExceptT groupDBError $ getGroupLink db user gInfo
 
 updateGroupLinkData :: ChatController -> User -> GroupInfo -> GroupLink -> IO (Either ChatError GroupLink)
-updateGroupLinkData cc user gInfo gLink = runReaderT (runExceptT $ setGroupLinkData NRMBackground user gInfo gLink) cc
+updateGroupLinkData cc user gInfo@GroupInfo {groupId} gLink = do
+  gInfoKeysRes <- withDB' "getGroupInfoKeys" cc $ \db -> do
+    (gInfo', keysRow) <- runExceptT (getGroupInfoRow db (storeCxt cc) user groupId) >>= either (fail . show) pure
+    gks <- runExceptT (mkGroupKeys db (storeCxt cc) gInfo' keysRow) >>= either (fail . show) pure
+    pure $ GIK gInfo' gks
+  case gInfoKeysRes of
+    Left e -> pure $ Left $ ChatErrorStore $ SEInternalError e
+    Right gInfoKeys -> runReaderT (runExceptT $ setGroupLinkData NRMBackground user gInfoKeys gLink) cc
 
 setGroupLinkRole :: ChatController -> GroupInfo -> GroupMemberRole -> IO (Maybe CreatedLinkContact)
 setGroupLinkRole cc GroupInfo {groupId} mRole = resp <$> sendChatCmd cc (APIGroupLinkMemberRole groupId mRole)

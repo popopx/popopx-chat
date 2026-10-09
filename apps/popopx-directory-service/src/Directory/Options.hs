@@ -251,6 +251,7 @@ mkChatOpts DirectoryOpts {coreOptions, serviceName, clientService} =
       optFilesFolder = Nothing,
       optTempDirectory = Nothing,
       showReactions = False,
+      showFullLinks = False,
       allowInstantFiles = True,
       autoAcceptFileSize = 0,
       muteNotifications = True,

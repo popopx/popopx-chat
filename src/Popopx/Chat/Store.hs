@@ -19,9 +19,17 @@ module Popopx.Chat.Store
     createChatStore,
     migrations, -- used in tests
     withTransaction,
+    createBinThereBot,
+    getBinThereBots,
+    getBinThereBotById,
+    getBinThereBotByAddress,
+    updateBinThereBot,
+    deleteBinThereBot,
+    incrementBotUsage,
   )
 where
 
+import Popopx.Chat.Store.BinThere
 import Popopx.Chat.Store.Profiles
 import Popopx.Chat.Store.Shared
 import Popopx.Messaging.Agent.Store.Common (DBStore (..), withTransaction)

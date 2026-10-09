@@ -129,6 +129,10 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, showFullLinks, te
   CRApiChat u chat _ -> ttyUser u $ if testView then testViewChat chat else [viewJSON chat]
   CRChatContentTypes cts -> [plain $ "Chat content types: " <> T.intercalate ", " (map (safeDecodeUtf8 . strEncode) cts)]
   CRChatTags u tags -> ttyUser u [viewJSON tags]
+  CRBinThereBotsList u bots -> ttyUser u [viewJSON bots]
+  CRBinThereBotAdded u bot -> ttyUser u [viewJSON bot]
+  CRBinThereBotUpdated u bot -> ttyUser u [viewJSON bot]
+  CRBinThereBotDeleted u botId -> ttyUser u [plain $ "bot deleted: " <> tshow botId]
   CRServerTestResult u srv testFailure info -> ttyUser u $ viewServerTestResult srv testFailure <> maybe [] viewServerInfo info
     where
       viewServerInfo = \case

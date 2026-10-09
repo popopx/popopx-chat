@@ -97,6 +97,9 @@ popopxChatRelays =
     presetChatRelay True (mkRelayProfile "PopopX Chat Relay 3" $ Just popopxChatImage) ["popopx.im"] (either error id $ strDecode "https://smp4.popopx.im/r#yxNOMJcry5jMTRPEBVtGBATYaKeoRIsZRBPIDLx7x6M")
   ]
 
+popopxXFTPServers :: [NewUserServer 'PXFTP]
+popopxXFTPServers = []
+
 fluxSMPServers :: [NewUserServer 'PSMP]
 fluxSMPServers = map (presetServer' True) (L.toList fluxSMPServers_)
 

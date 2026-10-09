@@ -44,6 +44,7 @@ library
       Popopx.Chat.Badges.Ledger
       Popopx.Chat.Badges.Service
       Popopx.Chat.Badges.Types
+      Popopx.Chat.BinThere.Protocol
       Popopx.Chat.Names
       Popopx.Chat.Call
       Popopx.Chat.Controller
@@ -84,6 +85,7 @@ library
       Popopx.Chat.Store
       Popopx.Chat.Store.AppSettings
       Popopx.Chat.Store.Badges
+      Popopx.Chat.Store.BinThere
       Popopx.Chat.Store.Connections
       Popopx.Chat.Store.ContactRequest
       Popopx.Chat.Store.Delivery
@@ -349,6 +351,7 @@ library
           Popopx.Chat.Store.SQLite.Migrations.M20260923_preferences_json
           Popopx.Chat.Store.SQLite.Migrations.M20260905_binthere_bots
           Popopx.Chat.Store.SQLite.Migrations.M20260906_bot_directory
+          Popopx.Chat.Store.SQLite.Migrations.M20261009_binthere_bar_flag
   other-modules:
       Paths_popopx_chat
   hs-source-dirs:
@@ -622,18 +625,9 @@ test-suite popopx-chat-test
   other-modules:
       APIDocs
       BadgeTests
+      BinThereStoreTests
+      BinThereIntegrationTests
       Bots.BroadcastTests
-      Bots.BadgeService.BTCPayTests
-      Bots.BadgeService.BotTests
-      Bots.BadgeService.CatalogTests
-      Bots.BadgeService.ConfigTests
-      Bots.BadgeService.FakeBTCPay
-      Bots.BadgeService.FakeStripe
-      Bots.BadgeService.GroupIntegrationTests
-      Bots.BadgeService.GroupTests
-      Bots.BadgeService.StripeTests
-      Bots.BadgeService.WaitersTests
-      Bots.BadgeService.WebTests
       Bots.DirectoryTests
       ChatClient
       ChatTests
@@ -682,6 +676,24 @@ test-suite popopx-chat-test
       Directory.Store
       Directory.Store.Migrate
       Directory.Util
+      BadgeService.Catalog
+      BadgeService.Codes
+      BadgeService.Config
+      BadgeService.Group
+      BadgeService.Group.Command
+      BadgeService.Log
+      BadgeService.Options
+      BadgeService.Orders
+      BadgeService.Poller
+      BadgeService.Providers
+      BadgeService.Providers.BTCPay
+      BadgeService.Providers.Stripe
+      BadgeService.Service
+      BadgeService.Store
+      BadgeService.Store.Invoices
+      BadgeService.Store.Migrate
+      BadgeService.Waiters
+      BadgeService.Web.Server
       Paths_popopx_chat
   if flag(client_postgres)
       other-modules:
@@ -697,6 +709,7 @@ test-suite popopx-chat-test
       bots/src
       tests
       apps/popopx-broadcast-bot/src
+      apps/popopx-badge-service/src
       apps/popopx-directory-service/src
   default-extensions:
       StrictData
@@ -718,11 +731,15 @@ test-suite popopx-chat-test
     , filepath ==1.4.*
     , generic-random ==1.5.*
     , http-types ==0.12.*
+    , http-client ==0.7.*
+    , http-client-tls ==0.3.*
+    , ini ==0.4.1
     , memory ==0.18.*
     , mtl >=2.3.1 && <3.0
     , network >=3.1.2.7 && <3.2
     , optparse-applicative >=0.15 && <0.17
     , random >=1.1 && <1.3
+    , scientific ==0.3.*
     , silently ==1.2.*
     , simple-logger ==0.1.*
     , popopx-chat
