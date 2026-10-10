@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Bumps CURRENT_PROJECT_VERSION (build number) and MARKETING_VERSION in
-# apps/ios/POPOPX.xcodeproj/project.pbxproj. Each appears in 10 places.
+# apps/ios/SimpleX.xcodeproj/project.pbxproj. Each appears in 10 places.
 #
 # Usage: ./scripts/ios/update-version.sh <build_number> <marketing_version>
 # Example: ./scripts/ios/update-version.sh 333 6.5.3
@@ -26,7 +26,7 @@ if ! echo "$NEW_MARKETING" | grep -qE '^[0-9]+(\.[0-9]+)+$'; then
     exit 1
 fi
 
-PBXPROJ=./apps/ios/POPOPX.xcodeproj/project.pbxproj
+PBXPROJ=./apps/ios/SimpleX.xcodeproj/project.pbxproj
 if [ ! -f "$PBXPROJ" ]; then
     echo "Error: $PBXPROJ not found. Run from repo root." >&2
     exit 1

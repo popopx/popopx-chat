@@ -4,7 +4,7 @@ FROM ubuntu:${TAG} AS build
 
 ### Build stage
 
-# Install curl and git and popopx-chat dependencies
+# Install curl and git and simplex-chat dependencies
 RUN apt-get update && apt-get install -y curl git build-essential libgmp3-dev zlib1g-dev llvm-12 llvm-12-dev libnuma-dev libssl-dev
 
 # Specify bootstrap Haskell versions
@@ -27,15 +27,15 @@ WORKDIR /project
 # Adjust build
 RUN cp ./scripts/cabal.project.local.linux ./cabal.project.local
 
-# Compile popopx-chat
+# Compile simplex-chat
 RUN cabal update
-RUN cabal build exe:popopx-chat --constraint 'popopxmq +client_library' --constraint 'popopx-chat +client_library'
+RUN cabal build exe:simplex-chat --constraint 'simplexmq +client_library' --constraint 'simplex-chat +client_library'
 
 # Strip the binary from debug symbols to reduce size
-RUN bin=$(find /project/dist-newstyle -name "popopx-chat" -type f -executable) && \
+RUN bin=$(find /project/dist-newstyle -name "simplex-chat" -type f -executable) && \
     mv "$bin" ./ && \
-    strip ./popopx-chat
+    strip ./simplex-chat
 
 # Copy compiled app from build stage
 FROM scratch AS export-stage
-COPY --from=build /project/popopx-chat /
+COPY --from=build /project/simplex-chat /

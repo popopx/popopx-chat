@@ -1,32 +1,32 @@
 #!/bin/sh
 set -eu
 
-# Copies generated iOS assets into PopopxAssets.xcassets.
+# Copies generated iOS assets into SimpleXAssets.xcassets.
 # Intended to run as an Xcode Run Script build phase.
-# Skips silently if POPOPX_ASSETS is not in SWIFT_ACTIVE_COMPILATION_CONDITIONS
+# Skips silently if SIMPLEX_ASSETS is not in SWIFT_ACTIVE_COMPILATION_CONDITIONS
 # or if the source directory is not found.
 #
 # The source path is resolved in order:
 #   1. Command-line argument
-#   2. POPOPX_ASSETS_DIR build setting (set in Local.xcconfig)
+#   2. SIMPLEX_ASSETS_DIR build setting (set in Local.xcconfig)
 #   3. No default — skips if neither is set
 #
 # Manual usage: ./scripts/copy-assets.sh path/to/assets
 
-# Skip if POPOPX_ASSETS flag is not set (unless run manually outside Xcode)
+# Skip if SIMPLEX_ASSETS flag is not set (unless run manually outside Xcode)
 if [ -n "${SWIFT_ACTIVE_COMPILATION_CONDITIONS:-}" ]; then
   case " $SWIFT_ACTIVE_COMPILATION_CONDITIONS " in
-    *" POPOPX_ASSETS "*) ;;
+    *" SIMPLEX_ASSETS "*) ;;
     *) exit 0 ;;
   esac
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-IOS_DIR="$SCRIPT_DIR/../../apps/ios/Shared/PopopxAssets.xcassets"
+IOS_DIR="$SCRIPT_DIR/../../apps/ios/Shared/SimpleXAssets.xcassets"
 
-ASSETS_ROOT="${1:-${POPOPX_ASSETS_DIR:-}}"
+ASSETS_ROOT="${1:-${SIMPLEX_ASSETS_DIR:-}}"
 if [ -z "$ASSETS_ROOT" ]; then
-  # Skip silently if no assets directory configured (normal for local development)
+  echo "warning: SIMPLEX_ASSETS_DIR not set and no path argument provided" >&2
   exit 0
 fi
 

@@ -30,30 +30,30 @@ import Data.Int (Int64)
 import Data.List (intercalate, isInfixOf, isSuffixOf)
 import qualified Data.Map.Strict as M
 import qualified Data.Text as T
-import Popopx.Chat.Badges (FileSizeLimits (..))
-import Popopx.Chat.Controller (ChatController (ChatController, smpAgent), ChatConfig (..), ChatHooks (..), ChatLogLevel (..), defaultChatHooks)
-import Popopx.Chat.Library.Internal (uniqueMsgMentions, updatedMentionNames)
-import Popopx.Chat.Markdown (parseMaybeMarkdownList)
-import Popopx.Chat.Messages (CIMention (..), CIMentionMember (..), ChatItemId)
-import Popopx.Chat.Messages.Batch (encodeBinaryBatch, encodeFwdElement)
-import Popopx.Chat.Messages.CIContent (publicGroupNoE2EText)
-import Popopx.Chat.Options
-import Popopx.Chat.Protocol (ChatMessage (ChatMessage), ChatMsgEvent (XGrpMemNew, XInfo, XMsgUpdate, XMsgNew, XMsgDel), FwdSender (FwdMember, FwdChannel), GrpMsgForward (GrpMsgForward), MsgContainer (..), MsgMention (..), MsgContent (..), VerifiedMsg (VMUnsigned), mcSimple, msgContentText)
-import Popopx.Chat.Types
-import Popopx.Chat.Types.MemberRelations (MemberRelation (..), getRelation, setRelation)
-import Popopx.Chat.Types.Shared (GroupMemberRole (..), GroupAcceptance (..))
-import Popopx.Messaging.Agent (sendMessages, vrValue)
-import Popopx.Messaging.Agent.Env.SQLite
-import Popopx.Messaging.Agent.RetryInterval
-import qualified Popopx.Messaging.Agent.Store.DB as DB
-import Popopx.Messaging.Agent.Store.DB (Binary (..))
-import qualified Popopx.Messaging.Crypto as C
-import Popopx.Messaging.Crypto.BBS (bbsKeyGen)
-import Popopx.Messaging.Crypto.Ratchet (pattern PQEncOff)
-import Popopx.Messaging.Protocol (MsgFlags (..))
-import Popopx.Messaging.Server.Env.STM hiding (subscriptions)
-import Popopx.Messaging.Transport
-import Popopx.Messaging.Version
+import Simplex.Chat.Badges (FileSizeLimits (..))
+import Simplex.Chat.Controller (ChatController (ChatController, smpAgent), ChatConfig (..), ChatHooks (..), ChatLogLevel (..), defaultChatHooks)
+import Simplex.Chat.Library.Internal (uniqueMsgMentions, updatedMentionNames)
+import Simplex.Chat.Markdown (parseMaybeMarkdownList)
+import Simplex.Chat.Messages (CIMention (..), CIMentionMember (..), ChatItemId)
+import Simplex.Chat.Messages.Batch (encodeBinaryBatch, encodeFwdElement)
+import Simplex.Chat.Messages.CIContent (publicGroupNoE2EText)
+import Simplex.Chat.Options
+import Simplex.Chat.Protocol (ChatMessage (ChatMessage), ChatMsgEvent (XGrpMemNew, XInfo, XMsgUpdate, XMsgNew, XMsgDel), FwdSender (FwdMember, FwdChannel), GrpMsgForward (GrpMsgForward), MsgContainer (..), MsgMention (..), MsgContent (..), VerifiedMsg (VMUnsigned), mcSimple, msgContentText)
+import Simplex.Chat.Types
+import Simplex.Chat.Types.MemberRelations (MemberRelation (..), getRelation, setRelation)
+import Simplex.Chat.Types.Shared (GroupMemberRole (..), GroupAcceptance (..))
+import Simplex.Messaging.Agent (sendMessages, vrValue)
+import Simplex.Messaging.Agent.Env.SQLite
+import Simplex.Messaging.Agent.RetryInterval
+import qualified Simplex.Messaging.Agent.Store.DB as DB
+import Simplex.Messaging.Agent.Store.DB (Binary (..))
+import qualified Simplex.Messaging.Crypto as C
+import Simplex.Messaging.Crypto.BBS (bbsKeyGen)
+import Simplex.Messaging.Crypto.Ratchet (pattern PQEncOff)
+import Simplex.Messaging.Protocol (MsgFlags (..))
+import Simplex.Messaging.Server.Env.STM hiding (subscriptions)
+import Simplex.Messaging.Transport
+import Simplex.Messaging.Version
 import System.Directory (copyFile, doesFileExist)
 import Test.Hspec hiding (it)
 #if defined(dbPostgres)
@@ -62,7 +62,7 @@ import Database.PostgreSQL.Simple.SqlQQ (sql)
 #else
 import Database.SQLite.Simple (Only (..))
 import Database.SQLite.Simple.QQ (sql)
-import Popopx.Chat.Options.DB
+import Simplex.Chat.Options.DB
 import System.FilePath ((</>))
 #endif
 
@@ -1770,7 +1770,7 @@ testGroupDescription = testChat4 aliceProfile bobProfile cathProfile danProfile 
       alice <## "Message reactions: on"
       alice <## "Voice messages: on"
       alice <## "Files and media: on"
-      alice <## "PopopX links: on"
+      alice <## "SimpleX links: on"
       alice <## "Member reports: on"
       alice <## "Recent history: on"
       alice <## "Chat with admins: on"
@@ -13466,12 +13466,12 @@ testGroupLinkContentFilter =
     \alice bob cath -> do
       createGroup3 "team" alice bob cath
 
-      let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://popopx.chat\", \"preview\": {\"uri\": \"https://popopx.chat\", \"title\": \"PopopX Chat\", \"description\": \"PopopX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
+      let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://simplex.chat\", \"preview\": {\"uri\": \"https://simplex.chat\", \"title\": \"SimpleX Chat\", \"description\": \"SimpleX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
       alice ##> ("/_send #1 json [" <> linkPreview <> "]")
-      alice <# "#team https://popopx.chat"
+      alice <# "#team https://simplex.chat"
       concurrently_
-        (bob <# "#team alice> https://popopx.chat")
-        (cath <# "#team alice> https://popopx.chat")
+        (bob <# "#team alice> https://simplex.chat")
+        (cath <# "#team alice> https://simplex.chat")
 
       threadDelay 1000000
 
@@ -13487,12 +13487,12 @@ testGroupLinkContentFilter =
 
       alice ##> "/_get content types #1"
       alice <## "Chat content types: link, text"
-      alice #$> ("/_get chat #1 content=link count=100", chat, [(1, "https://popopx.chat"), (0, "check out https://example.com")])
+      alice #$> ("/_get chat #1 content=link count=100", chat, [(1, "https://simplex.chat"), (0, "check out https://example.com")])
 
       bob ##> "/_get content types #1"
       bob <## "Chat content types: link, text"
-      bob #$> ("/_get chat #1 content=link count=100", chat, [(0, "https://popopx.chat"), (1, "check out https://example.com")])
+      bob #$> ("/_get chat #1 content=link count=100", chat, [(0, "https://simplex.chat"), (1, "check out https://example.com")])
 
       cath ##> "/_get content types #1"
       cath <## "Chat content types: link, text"
-      cath #$> ("/_get chat #1 content=link count=100", chat, [(0, "https://popopx.chat"), (0, "check out https://example.com")])
+      cath #$> ("/_get chat #1 content=link count=100", chat, [(0, "https://simplex.chat"), (0, "check out https://example.com")])

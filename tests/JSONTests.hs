@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 popopx.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from Popopx Chat to POPOPX Chat.
-
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TemplateHaskell #-}
 
@@ -19,8 +13,8 @@ import qualified Data.ByteString.Lazy.Char8 as LB
 import GHC.Generics (Generic)
 import Generic.Random (genericArbitraryU)
 import JSONFixtures
-import Popopx.Chat.Remote.Protocol (owsf2tagged)
-import Popopx.Messaging.Parsers
+import Simplex.Chat.Remote.Protocol (owsf2tagged)
+import Simplex.Messaging.Parsers
 import Test.Hspec
 import Test.Hspec.QuickCheck (modifyMaxSuccess)
 import Test.QuickCheck (Arbitrary (..), property)

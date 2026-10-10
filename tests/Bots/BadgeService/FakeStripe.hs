@@ -62,12 +62,12 @@ import Network.HTTP.Types
 import Network.HTTP.Types.Header (Header)
 import Network.Wai (Application, Response, pathInfo, queryString, requestHeaders, requestMethod, responseLBS, strictRequestBody)
 import qualified Network.Wai.Handler.Warp as Warp
-import Popopx.Messaging.Util (tshow)
+import Simplex.Messaging.Util (tshow)
 import System.FilePath ((</>))
 import Text.Read (readMaybe)
 
 fixtureDir :: FilePath
-fixtureDir = "apps" </> "popopx-badge-service" </> "test-fixtures" </> "stripe"
+fixtureDir = "apps" </> "simplex-badge-service" </> "test-fixtures" </> "stripe"
 
 -- | A restricted `rk_` key shaped like Stripe's, the kind the service is configured with and never a live one.
 fakeSecretKey :: Text

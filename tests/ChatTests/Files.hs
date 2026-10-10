@@ -19,15 +19,15 @@ import qualified Data.ByteString.Char8 as B
 import qualified Data.ByteString.Lazy.Char8 as LB
 import Network.HTTP.Types.URI (urlEncode)
 import Data.Time.Clock (addUTCTime, getCurrentTime, nominalDay)
-import Popopx.Chat.Badges (BadgeProof, BadgeStatus (..), BadgeType (..), FileSizeLimits (..), ProofPresHeader (..), badgeProof, defaultFileSizeLimits)
-import Popopx.Chat.Controller (ChatConfig (..))
-import Popopx.Chat.Library.Internal (badgeProofStatus, roundedFDCount)
-import Popopx.Chat.Mobile.File
-import Popopx.Chat.Options (ChatOpts (..))
-import Popopx.FileTransfer.Server.Env (XFTPServerConfig (..), XFTPStoreConfig (..))
-import Popopx.Messaging.Crypto.BBS (BBSPublicKey, bbsKeyGen)
-import Popopx.Messaging.Crypto.File (CryptoFile (..), CryptoFileArgs (..))
-import Popopx.Messaging.Encoding.String
+import Simplex.Chat.Badges (BadgeProof, BadgeStatus (..), BadgeType (..), FileSizeLimits (..), ProofPresHeader (..), badgeProof, defaultFileSizeLimits)
+import Simplex.Chat.Controller (ChatConfig (..))
+import Simplex.Chat.Library.Internal (badgeProofStatus, roundedFDCount)
+import Simplex.Chat.Mobile.File
+import Simplex.Chat.Options (ChatOpts (..))
+import Simplex.FileTransfer.Server.Env (XFTPServerConfig (..), XFTPStoreConfig (..))
+import Simplex.Messaging.Crypto.BBS (BBSPublicKey, bbsKeyGen)
+import Simplex.Messaging.Crypto.File (CryptoFile (..), CryptoFileArgs (..))
+import Simplex.Messaging.Encoding.String
 import System.Directory (copyFile, createDirectoryIfMissing, doesFileExist, getFileSize)
 import System.FilePath ((</>))
 import Test.Hspec hiding (it)

@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 popopx.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from Popopx Chat to POPOPX Chat.
-
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -17,11 +11,11 @@ import Control.Monad (unless, void)
 import qualified Data.ByteString.Char8 as B
 import Data.List (dropWhileEnd)
 import Data.Maybe (fromJust, isJust)
-import Popopx.Messaging.Agent.Store.Postgres (closeDBStore, createDBStore)
-import Popopx.Messaging.Agent.Store.Postgres.Common (DBOpts (..))
-import qualified Popopx.Messaging.Agent.Store.Postgres.Migrations as Migrations
-import Popopx.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationConfirmation (..), MigrationsToRun (..), toDownMigration)
-import Popopx.Messaging.Util (ifM, whenM)
+import Simplex.Messaging.Agent.Store.Postgres (closeDBStore, createDBStore)
+import Simplex.Messaging.Agent.Store.Postgres.Common (DBOpts (..))
+import qualified Simplex.Messaging.Agent.Store.Postgres.Migrations as Migrations
+import Simplex.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationConfirmation (..), MigrationsToRun (..), toDownMigration)
+import Simplex.Messaging.Util (ifM, whenM)
 import System.Directory (doesFileExist, removeFile)
 import System.Process (readCreateProcess, shell)
 import Test.Hspec
@@ -29,7 +23,7 @@ import Test.Hspec
 testSchemaPath :: FilePath
 testSchemaPath = "tests/tmp/test_schema.sql"
 
--- copied from popopxmq
+-- copied from simplexmq
 postgresSchemaDumpTest :: [Migration] -> DBOpts -> FilePath -> Spec
 postgresSchemaDumpTest migrations testDBOpts@DBOpts {connstr, schema = testDBSchema} srcSchemaPath = do
   it "verify and overwrite schema dump" testVerifySchemaDump
@@ -88,5 +82,5 @@ skipComparisonForDownMigrations =
     -- on down migration single_sender_group_member_id column is re-added at the end of the table
     "20260529_delivery_job_senders",
     -- group_domain is removed
-    "20260603_popopx_name"
+    "20260603_simplex_name"
   ]

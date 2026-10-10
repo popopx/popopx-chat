@@ -1,121 +1,5 @@
 # Release History
 
-## v7.1.0.5 — POPOPX Complete Rebrand (2026-10-04)
-
-### Complete SimpleX → POPOPX Rebranding
-
-**Haskell Core** (222 commits since v7.1.0.3):
-- Package rename: `simplex-chat` → `popopx-chat` in .cabal, flake.nix, all modules
-- Module namespace: `Simplex.Chat.*` → `Popopx.Chat.*` (231 modules)
-- Executable: `simplex-chat` → `popopx-chat`
-- FFI exports: all `simplex_*` → `popopx_*` functions
-- Protocol URIs: `simplex:/` → `popopx:/` throughout codebase
-- Operator tag: `simplex` → `popopx`
-- Database prefix: `simplex_v1` → `popopx_v1`
-
-**iOS App** (7-phase rebrand):
-- Bundle ID: `chat.simplex.app` → `chat.popopx.app`
-- App Group: `group.chat.simplex.app` → `group.chat.popopx.app`
-- All Swift files: SimpleX → POPOPX in comments, headers, UI strings
-- FFI library names: `libHSsimplex-chat-*.a` → `libHSpopopx-chat-*.a`
-- Protocol boundary: `normalizeForParsing()` removed (Haskell now parses `popopx:/` directly)
-- TLD handling: `.simplex` → `.popopx` in ChatTypes.swift and PXUserAddressView.swift
-- hs_init.c: program name `"simplex"` → `"popopx"`
-- UserDefaults keys: `privacySimplex*` → `privacyPopopx*` with migration
-- Localization: 76 keys migrated to snake_case with POPOPX branding
-
-**Android App**:
-- Package/directory/class renames throughout codebase
-- Variable names, comments, window titles updated
-
-**Build System**:
-- Dependency constraints aligned with upstream simplex-chat (2023-12-12 Hackage index)
-- popopx-chat.cabal: crypton ==0.34.*, http2 >=4.2.2, network >=3.1.2.7, tls >=1.9.0
-- popopxmq.cabal: matching constraints for all crypto/network dependencies
-- OpenSSL path configured: `/opt/homebrew/opt/openssl@3`
-- Build verified: libHSpopopx-chat-7.1.0.3-inplace.a (76MB), libHSpopopxmq-7.0.1.0-inplace.a (33MB)
-
-### Protocol Boundary Fixes
-
-- Removed `normalizeForParsing()` function that was converting `popopx:/` → `simplex:/`
-- Haskell FFI now receives `popopx:/` URIs directly (matches rebranded parser)
-- Legacy `simplex:/` links still supported via APITypes.swift conversion for backward compatibility
-- TLD handling updated: POPOPX names use `.popopx` suffix
-
-### Build Verification
-
-- macOS aarch64 native build: **SUCCESS** (231 modules compiled)
-- Dependency resolution: all constraints satisfied with pinned 2023-12-12 index
-- Library artifacts produced and verified
-
-### Stats
-
-222 commits since v7.1.0.3 | 150+ files modified | Complete rebrand across Haskell/iOS/Android/Web
-
----
-
-## v7.1.0.4 — POPOPX Build (2026-09-19)
-
-### Onboarding Optimization
-
-- **4→2 Step Merge** (commit `e3ef300a1`): Reduced onboarding from 4 steps to 2, preserving all functionality
-  - Step 1 "Welcome & Identity": 3D bubble pop → profile creation → gravitational collapse encryption animation
-  - Step 2 "Network & Commitments": Router config + notification mode + icon commitment cards + accept
-  - `OnboardingStage` enum: new cases `step1_WelcomeIdentity` + `step2_NetworkCommitments`, backward-compatible migration
-- **UI Polish** (commit `171f85480`): Enhanced visual impact across both steps
-  - Larger branding: logo 0.45→0.50, titles 34→38pt with tracking + shadow glow
-  - Bubble enlarged: 220→260px, area 0.35→0.40
-  - Commitments redesigned: plain text → two side-by-side icon cards (shield.checkered + person.fill.checkmark)
-  - Central visual enlarged: 200→240pt, NeedleRing 240→280px
-  - Cards cornerRadius 16→20, accept button tracking 1.5 + height 58pt
-  - "Why we built this" simplified from card to minimal text link
-
-### BinThere Security Enhancement (commit `e3bd36cea`)
-
-- **Evidence Manager**: Silent CMSampleBuffer capture → AES-GCM encrypted evidence files
-- **Moiré Defense**: 60Hz Canvas anti-photography overlay (fine line interference)
-- **Mosaic Dissolve**: Canvas progressive pixelation (replaces Metal shader)
-- **Audit Log**: Encrypted violation log (append-only, AES-GCM)
-- **User Toggle**: PrivacySettings switch, default enabled
-- **iPad**: ScreenshotDefenseOverlay added to NavigationSplitView
-- 31 files, +510/-355, 22/22 safescreen.rtf features implemented
-
----
-
-## v7.1.0.3 — POPOPX Build (2026-09-06)
-
-### Haskell Core Fixes
-
-- **CRcv Connection Auto-Upgrade** (`Agent.hs` / simplexmq): `sendMessagesB_` no longer rejects CRcv connections — auto-upgrades to Duplex via accepted confirmation reply queues (`getAcceptedConfirmation` → `smpReplyQueues` → `newSndQueue` → `upgradeRcvConnToDuplex` → `agentSecureSndQueue` → `enqueueConfirmation`)
-- **Nix Patch**: `simplexmq-crcv-upgrade-fix.patch` (57 lines) injected via `flake.nix`
-- **Base64url Lenient Decode**: tolerant handling of malformed base64url encoding
-
-### Build Toolchain
-
-- **Platform tag conversion**: migrated from Python `patch_iossim.py` to `mac2ios` (Nix store native tool)
-- Device: 231 objects → platform=2 (IOS) | Simulator: 231 objects → platform=7 (IOSSIMULATOR)
-- Nix build target: `aarch64-darwin-ios:lib:simplex-chat` — component lib 79MB rebuilt; rolled-up lib 286MB already contains CRcv fix
-
-### New Features
-
-- **BinThere** (burn-after-read): ACK protocol, image encryption, screenshot protection, compression pipeline, Python bot
-- **Config Bot + Bot Directory**: REST API → SimpleX Config Bot, paid bot directory, DB migrations
-- **Needle Phase 6**: Dead Man's Switch, iOS Shortcuts App Intents, CryptoKit encrypted wallet
-- **Nostr Global Square**: 24H ephemeral broadcast feed (kind-20002), throwaway keys, PoW, Needle filter
-- **Generative Art**: Art Blocks style JSContext engine, 5 generators, encrypted vault, cyber theme, 16 files
-- **Cyber Mode**: neon border + breathing glow chat bubble effects, Settings toggle
-
-### Build Verification
-
-- iOS Simulator (iPhone 16 Pro): **BUILD SUCCEEDED** — 0 errors, 0 warnings
-- iOS Device (generic/platform=iOS): **BUILD SUCCEEDED** — 0 errors, 0 warnings
-
-### Stats
-
-120 files changed, +17,638 / -4,204 lines | 55 Swift modified | 16 Swift new | 16 Haskell/Nix modified | 2 Nix patches
-
----
-
 ## v6.5
 
 30 April, 2026
@@ -300,7 +184,7 @@ The blog post with the announcement is coming on 3/23/2024.
 - do not share contact address in member profile.
 - many fixes!
 
-Also, we added Hungarian (Android only) and Turkish interface - thanks to the users and Weblate (https://github.com/popopx/simplex-chat/tree/stable#help-translating-simplex-chat).
+Also, we added Hungarian (Android only) and Turkish interface - thanks to the users and Weblate (https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat).
 
 ## v5.4
 
@@ -394,7 +278,7 @@ Also, the users have added Japanese and Portuguese (Brazil) interfaces (the latt
 - support for IPv6 server addresses.
 - configurable SOCKS proxy host and port in Android app.
 
-Also we added Polish interface language – [thanks to the users and Weblate](https://github.com/popopx/simplex-chat#help-translating-simplex-chat).
+Also we added Polish interface language – [thanks to the users and Weblate](https://github.com/simplex-chat/simplex-chat#help-translating-simplex-chat).
 
 See more details in this post: https://simplex.chat/blog/20230422-simplex-chat-vision-funding-v5-videos-files-passcode.html
 
@@ -496,7 +380,7 @@ Changes:
 Local database encryption with passphrase on iOS, Android, Linux, Mac!
 
 Mobile apps:
-- configurable WebRTC ICE servers - see https://github.com/popopx/simplex-chat/blob/stable/docs/WEBRTC.md
+- configurable WebRTC ICE servers - see https://github.com/simplex-chat/simplex-chat/blob/stable/docs/WEBRTC.md
 - improved stability of establishing direct and group connections, files transfers and message reception.
 - support for animated images on Android
 - German language UI
@@ -552,7 +436,7 @@ Mobile clients:
 - export and import of chat database, allowing to move the chat profile to another device,
 - improved privacy and performance of the protocol.
 
-Please see [this post](https://github.com/popopx/simplex-chat/blob/stable/blog/20220711-simplex-chat-v3-released-ios-notifications-audio-video-calls-database-export-import-protocol-improvements.md) for more details.
+Please see [this post](https://github.com/simplex-chat/simplex-chat/blob/stable/blog/20220711-simplex-chat-v3-released-ios-notifications-audio-video-calls-database-export-import-protocol-improvements.md) for more details.
 
 ## v2.2
 
@@ -593,7 +477,7 @@ Changes:
 - The new protocol to exchange files, in preparation to support images, files and groups in mobile apps. It makes sending files to groups much more efficient, and allows attaching files to the text messages. This version is backwards and forwards compatible, so you can exchange the files with the previous version. It will not be possible to receive the files sent from the next version (1.7) in the previous version (1.5) - please upgrade.
 - **Up arrow** key in the terminal can be used to edit the last message you sent.
 - CLI option to execute a single command / send one message, e.g. to use in CI to notify about the build completion, or for any other scenario.
-- Library support + [chat bot examples](https://github.com/popopx/simplex-chat/tree/stable/apps) to create SimpleX Chat chat bots.
+- Library support + [chat bot examples](https://github.com/simplex-chat/simplex-chat/tree/stable/apps) to create SimpleX Chat chat bots.
 
 ## v1.5
 
@@ -650,19 +534,19 @@ Changes:
 
 ### The most private and secure chat and application platform
 
-We are building a new platform for distributed Internet applications where privacy of the messages _and_ the network matter. [SimpleX Chat](https://github.com/popopx/simplex-chat) is our first application, a messaging application built on the SimpleX platform.
+We are building a new platform for distributed Internet applications where privacy of the messages _and_ the network matter. [SimpleX Chat](https://github.com/simplex-chat/simplex-chat) is our first application, a messaging application built on the SimpleX platform.
 
 ### What is SimpleX?
 
-There is currently no messaging application other than SimpleX Chat that guarantees metadata privacy - who is communicating with whom and when. SimpleX is designed to not use any permanent users identities to protect meta-data privacy. See [SimpleX overview](https://github.com/popopx/simplexmq/blob/master/protocol/overview-tjr.md) for more details.
+There is currently no messaging application other than SimpleX Chat that guarantees metadata privacy - who is communicating with whom and when. SimpleX is designed to not use any permanent users identities to protect meta-data privacy. See [SimpleX overview](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md) for more details.
 
 ### SimpleX protocol changes
 
-Best possible E2E encryption - the only messenger using two-layer E2E encryption, with one layer using double ratchet protocol that provides forward secrecy and break-in recovery, and additional encryption layer providing meta-data protection. See more details about encryption algorithms in [SimpleXMQ change log](https://github.com/popopx/simplexmq/blob/master/CHANGELOG.md#100).
+Best possible E2E encryption - the only messenger using two-layer E2E encryption, with one layer using double ratchet protocol that provides forward secrecy and break-in recovery, and additional encryption layer providing meta-data protection. See more details about encryption algorithms in [SimpleXMQ change log](https://github.com/simplex-chat/simplexmq/blob/master/CHANGELOG.md#100).
 
 Performance and space efficiency improvements - protocol overhead is reduced from circa 15% to 3.7% thanks to binary encoding, and performance is substantially improved due to more efficient cryptographic algorithms.
 
 Shorter invitation and contact links due to switching from long RSA to much shorter Curve448/25519 keys - for example, you can connect to the team via [team's SimpleX Chat contact address](https://simplex.chat/contact#/?v=1&smp=smp%3A%2F%2FPQUV2eL0t7OStZOoAsPEV2QYWt4-xilbakvGUGOItUo%3D%40smp6.simplex.im%2FK1rslx-m5bpXVIdMZg9NLUZ_8JBm8xTt%23MCowBQYDK2VuAyEALDeVe-sG8mRY22LsXlPgiwTNs9dbiLrNuA7f3ZMAJ2w%3D) (you need to use it in terminal app) or just by using `/simplex` command in the chat.
 
-This [this post](https://github.com/popopx/simplex-chat/blob/master/blog/20220112-simplex-chat-v1-released.md) for more information.
+This [this post](https://github.com/simplex-chat/simplex-chat/blob/master/blog/20220112-simplex-chat-v1-released.md) for more information.
 

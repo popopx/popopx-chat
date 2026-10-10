@@ -1,0 +1,630 @@
+//
+//  MsgContentView.swift
+//  SimpleX
+//
+//  Created by Evgeny on 13/03/2022.
+//  Copyright © 2022 SimpleX Chat. All rights reserved.
+//
+// Spec: spec/client/chat-view.md
+
+import SwiftUI
+import SimpleXChat
+
+let uiLinkColor = UIColor(red: 0, green: 0.533, blue: 1, alpha: 1)
+
+private func typing(_ theme: AppTheme, _ descr: UIFontDescriptor, _ ws: [UIFont.Weight]) -> NSMutableAttributedString {
+    let res = NSMutableAttributedString()
+    for w in ws {
+        res.append(NSAttributedString(string: ".", attributes: [
+            .font: UIFont.monospacedSystemFont(ofSize: descr.pointSize, weight: w),
+            .kern: -2 as NSNumber,
+            .foregroundColor: UIColor(theme.colors.secondary)
+        ]))
+    }
+    return res
+}
+
+// Spec: spec/client/chat-view.md#MsgContentView
+struct MsgContentView: View {
+    @ObservedObject var chat: Chat
+    @Environment(\.showTimestamp) var showTimestamp: Bool
+    @Environment(\.containerBackground) var containerBackground: UIColor
+    @EnvironmentObject var theme: AppTheme
+    var text: String
+    var formattedText: [FormattedText]? = nil
+    var textStyle: UIFont.TextStyle
+    var sender: String? = nil
+    var meta: CIMeta? = nil
+    var mentions: [String: CIMention]? = nil
+    var userMemberId: String? = nil
+    var rightToLeft = false
+    var prefix: NSAttributedString? = nil
+    var stripLink: String? = nil
+    @State private var showSecrets: Set<Int> = []
+    @State private var typingIdx = 0
+    @State private var timer: Timer?
+    @State private var typingIndicators: [NSAttributedString] = []
+    @State private var noTyping = NSAttributedString(string: "   ")
+    @State private var phase: CGFloat = 0
+
+    @AppStorage(DEFAULT_SHOW_SENT_VIA_RPOXY) private var showSentViaProxy = false
+    @AppStorage(DEFAULT_PRIVACY_SHOW_SIGNATURE) private var showSignature = true
+
+    var body: some View {
+        let v = msgContentView()
+        if meta?.isLive == true {
+            v.onAppear {
+                let descr = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
+                noTyping = NSAttributedString(string: "   ", attributes: [
+                    .font: UIFont.monospacedSystemFont(ofSize: descr.pointSize, weight: .regular),
+                    .kern: -2 as NSNumber,
+                    .foregroundColor: UIColor(theme.colors.secondary)
+                ])
+                switchTyping()
+            }
+            .onDisappear(perform: stopTyping)
+            .onChange(of: meta?.isLive, perform: switchTyping)
+            .onChange(of: meta?.recent, perform: switchTyping)
+        } else {
+            v
+        }
+    }
+
+    private func switchTyping(_: Bool? = nil) {
+        if let meta = meta, meta.isLive && meta.recent {
+            if typingIndicators.isEmpty {
+                let descr = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
+                typingIndicators = [
+                    typing(theme, descr, [.black, .light, .light]),
+                    typing(theme, descr, [.bold, .black, .light]),
+                    typing(theme, descr, [.light, .bold, .black]),
+                    typing(theme, descr, [.light, .light, .bold])
+                ]
+            }
+            timer = timer ?? Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
+                typingIdx = typingIdx + 1
+            }
+        } else {
+            stopTyping()
+        }
+    }
+
+    private func stopTyping() {
+        timer?.invalidate()
+        timer = nil
+        typingIdx = 0
+    }
+
+    @inline(__always)
+    private func msgContentView() -> some View {
+        let r = messageText(
+            text,
+            formattedText,
+            textStyle: textStyle,
+            sender: sender,
+            mentions: mentions,
+            userMemberId: userMemberId,
+            showSecrets: showSecrets,
+            commands: chat.chatInfo.useCommands && chat.chatInfo.sndReady,
+            backgroundColor: containerBackground,
+            prefix: prefix,
+            stripLink: stripLink
+        )
+        let s = r.string
+        let t: Text
+        if let mt = meta {
+            if mt.isLive {
+                s.append(typingIndicator(mt.recent))
+            }
+            t = Text(AttributedString(s)) + reserveSpaceForMeta(mt)
+        } else {
+            t = Text(AttributedString(s))
+        }
+        return msgTextResultView(r, t, showSecrets: $showSecrets, sendCommand: { cmd in sendCommandMsg(chat, cmd) })
+    }
+
+    @inline(__always)
+    private func typingIndicator(_ recent: Bool) -> NSAttributedString {
+        recent && !typingIndicators.isEmpty
+        ? typingIndicators[typingIdx % 4]
+        : noTyping
+    }
+
+    @inline(__always)
+    private func reserveSpaceForMeta(_ mt: CIMeta) -> Text {
+        (rightToLeft ? textNewLine : Text(verbatim: "   ")) + ciMetaText(mt, chatTTL: chat.chatInfo.timedMessagesTTL, encrypted: nil, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp, showSignature: showSignature)
+    }
+}
+
+func msgTextResultView(
+    _ r: MsgTextResult,
+    _ t: Text,
+    showSecrets: Binding<Set<Int>>? = nil,
+    sendCommand: ((String) -> Void)? = nil,
+    openModal: ((Format) -> Void)? = nil,
+    centered: Bool = false,
+    smallFont: Bool = false
+) -> some View {
+    t.if(r.hasSecrets, transform: hiddenSecretsView)
+        .if(r.handleTaps) { $0.overlay(handleTextTaps(r.string, showSecrets: showSecrets, sendCommand: sendCommand, openModal: openModal, centered: centered, smallFont: smallFont)) }
+}
+
+// smallFont parameter is used to pad height, otherwise CTFrameGetLines fails to see them as lines - it's needed if font is not .body
+@inline(__always)
+private func handleTextTaps(
+    _ s: NSAttributedString,
+    showSecrets: Binding<Set<Int>>? = nil,
+    sendCommand: ((String) -> Void)? = nil,
+    openModal: ((Format) -> Void)? = nil,
+    centered: Bool,
+    smallFont: Bool
+) -> some View {
+    return GeometryReader { g in
+        Rectangle()
+            .fill(Color.clear)
+            .contentShape(Rectangle())
+            .simultaneousGesture(DragGesture(minimumDistance: 0).onEnded { event in
+                let t = event.translation
+                if t.width * t.width + t.height * t.height > 100 { return }
+                let framesetter = CTFramesetterCreateWithAttributedString(s as CFAttributedString)
+                let paddedSize = smallFont ? CGSize(width: g.size.width, height: g.size.height + 1.0) : g.size
+                let path = CGPath(rect: CGRect(origin: .zero, size: paddedSize), transform: nil)
+                let frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, s.length), path, nil)
+                let point = CGPoint(x: event.location.x, y: g.size.height - event.location.y) // Flip y for UIKit
+                var index: CFIndex?
+                if let lines = CTFrameGetLines(frame) as? [CTLine] {
+                    var origins = [CGPoint](repeating: .zero, count: lines.count)
+                    CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), &origins)
+                    var maxWidth: CGFloat = 0
+                    if centered {
+                        for line in lines {
+                            let bounds = CTLineGetBoundsWithOptions(line, .useOpticalBounds)
+                            if bounds.width > maxWidth {
+                                maxWidth = bounds.width
+                            }
+                        }
+                    }
+                    for i in 0 ..< lines.count {
+                        let bounds = CTLineGetBoundsWithOptions(lines[i], .useOpticalBounds)
+                        let offsetX = centered ? (maxWidth - bounds.width) / 2 : 0
+                        if bounds.offsetBy(dx: origins[i].x + offsetX, dy: origins[i].y).contains(point) {
+                            let relativePoint = centered ? CGPoint(x: point.x - origins[i].x - offsetX, y: point.y - origins[i].y) : point
+                            index = CTLineGetStringIndexForPosition(lines[i], relativePoint)
+                            break
+                        }
+                    }
+                }
+                if let index, let (uri, browser, simplex) = attributedStringLink(s, for: index) {
+                    if browser {
+                        openBrowserAlert(uri: uri)
+                    } else if simplex, let url = URL(string: uri) {
+                        // SimpleX links target this same app (simplex: scheme / simplex.chat universal link),
+                        // so UIApplication.shared.open is dropped by iOS while the app is in the foreground.
+                        // Route to the in-app connect flow instead (same sink onOpenURL feeds).
+                        ChatModel.shared.appOpenUrl = url
+                    } else if let url = URL(string: uri) {
+                        UIApplication.shared.open(url)
+                    } else {
+                        showInvalidLinkAlert(uri)
+                    }
+                }
+            })
+    }
+
+    func attributedStringLink(_ s: NSAttributedString, for index: CFIndex) -> (String, Bool, Bool)? {
+        var linkURL: String?
+        var browser: Bool = false
+        var simplex: Bool = false
+        s.enumerateAttributes(in: NSRange(location: 0, length: s.length)) { attrs, range, stop in
+            if index >= range.location && index < range.location + range.length {
+                if attrs[nameAttrKey] is SimplexNameInfo {
+                    planAndConnect(s.attributedSubstring(from: range).string, theme: AppTheme.shared, dismiss: false)
+                } else if let url = attrs[linkAttrKey] as? String {
+                    linkURL = url
+                    browser = attrs[webLinkAttrKey] != nil
+                    simplex = attrs[simplexLinkAttrKey] != nil
+                } else if let showSecrets, let i = attrs[secretAttrKey] as? Int {
+                    if showSecrets.wrappedValue.contains(i) {
+                        showSecrets.wrappedValue.remove(i)
+                    } else {
+                        showSecrets.wrappedValue.insert(i)
+                    }
+                } else if let sendCommand, let cmd = attrs[commandAttrKey] as? String {
+                    sendCommand(cmd)
+                } else if let openModal, let fmt = attrs[modalAttrKey] as? Format {
+                    openModal(fmt)
+                }
+                stop.pointee = true
+            }
+        }
+        return if let linkURL { (linkURL, browser, simplex) } else { nil }
+    }
+}
+
+func hiddenSecretsView<V: View>(_ v: V) -> some View {
+    v.overlay(
+        GeometryReader { g in
+            let size = (g.size.width + g.size.height) / 1.4142
+            Image("vertical_logo")
+                .resizable(resizingMode: .tile)
+                .frame(width: size, height: size)
+                .rotationEffect(.degrees(45), anchor: .center)
+                .position(x: g.size.width / 2, y: g.size.height / 2)
+                .clipped()
+                .saturation(0.65)
+                .opacity(0.35)
+        }
+        .mask(v)
+    )
+}
+
+private let linkAttrKey = NSAttributedString.Key("chat.simplex.app.link")
+
+private let webLinkAttrKey = NSAttributedString.Key("chat.simplex.app.webLink")
+
+private let simplexLinkAttrKey = NSAttributedString.Key("chat.simplex.app.simplexLink")
+
+private let secretAttrKey = NSAttributedString.Key("chat.simplex.app.secret")
+
+private let commandAttrKey = NSAttributedString.Key("chat.simplex.app.command")
+private let nameAttrKey = NSAttributedString.Key("chat.simplex.app.name")
+private let modalAttrKey = NSAttributedString.Key("chat.simplex.app.modal")
+
+typealias MsgTextResult = (string: NSMutableAttributedString, hasSecrets: Bool, handleTaps: Bool)
+
+// Reusable profile bio/description header: renders the teaser and opens the full
+// description in a sheet when the "Read more" (Format.modal) link is tapped.
+struct ProfileDescriptionView: View {
+    @EnvironmentObject var theme: AppTheme
+    let shortDescr: String?
+    let description: String?
+    @State private var showSecrets: Set<Int> = []
+    @State private var modal: ModalText? = nil
+
+    var body: some View {
+        if let r = markdownProfileDescription(shortDescr: shortDescr, description: description, showSecrets: showSecrets, backgroundColor: theme.colors.background) {
+            msgTextResultView(r, Text(AttributedString(r.string)), showSecrets: $showSecrets, openModal: openModal, centered: true, smallFont: true)
+                .multilineTextAlignment(.center)
+                .lineLimit(4)
+                .fixedSize(horizontal: false, vertical: true)
+                .appSheet(item: $modal) { m in
+                    FullProfileDescriptionView(description: m.text).environmentObject(theme)
+                }
+        }
+    }
+
+    private func openModal(_ format: Format) {
+        if case let .modal(_, text) = format { modal = ModalText(text: text) }
+    }
+}
+
+private struct ModalText: Identifiable {
+    let id = UUID()
+    let text: String
+}
+
+private struct FullProfileDescriptionView: View {
+    @EnvironmentObject var theme: AppTheme
+    let description: String
+    @State private var showSecrets: Set<Int> = []
+
+    var body: some View {
+        List {
+            Text("Description")
+                .font(.title)
+                .bold()
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .listRowBackground(Color.clear)
+
+            Section {
+                let r = markdownText(description, showSecrets: showSecrets, backgroundColor: theme.colors.background)
+                msgTextResultView(r, Text(AttributedString(r.string)), showSecrets: $showSecrets)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .modifier(ThemedBackground(grouped: true))
+    }
+}
+
+@inline(__always)
+func markdownText(
+    _ s: String,
+    textStyle: UIFont.TextStyle = .body,
+    sender: String? = nil,
+    preview: Bool = false,
+    mentions: [String: CIMention]? = nil,
+    userMemberId: String? = nil,
+    showSecrets: Set<Int>? = nil,
+    backgroundColor: Color
+) -> MsgTextResult {
+    messageText(
+        s,
+        parseSimpleXMarkdown(s),
+        textStyle: textStyle,
+        sender: sender,
+        preview: preview,
+        mentions: mentions,
+        userMemberId: userMemberId,
+        showSecrets: showSecrets,
+        commands: false,
+        backgroundColor: UIColor(backgroundColor)
+    )
+}
+
+// Renders a profile bio/description: the bio, a short single-line description, or a
+// truncated teaser followed by a "Read more" link that opens the full description (Format.modal).
+func markdownProfileDescription(
+    shortDescr: String?,
+    description: String?,
+    showSecrets: Set<Int>? = nil,
+    backgroundColor: Color
+) -> MsgTextResult? {
+    func trimmed(_ s: String?) -> String? {
+        guard let t = s?.trimmingCharacters(in: .whitespacesAndNewlines), !t.isEmpty else { return nil }
+        return t
+    }
+    let short = trimmed(shortDescr)
+    let descr = trimmed(description)
+    guard let descr else {
+        return short.map { markdownText($0, textStyle: .subheadline, showSecrets: showSecrets, backgroundColor: backgroundColor) }
+    }
+    let firstLine = String(descr.prefix(while: { $0 != "\n" }))
+    let truncated = firstLine.count > 100
+    let multiline = descr.count > firstLine.count
+    if short == nil && !truncated && !multiline {
+        return markdownText(descr, textStyle: .subheadline, showSecrets: showSecrets, backgroundColor: backgroundColor)
+    }
+    let teaser = short ?? (truncated ? String(firstLine.prefix(100)).trimmingCharacters(in: .whitespaces) + "…" : firstLine + "…")
+    let readMore = NSLocalizedString("Read more", comment: "profile description teaser")
+    var formatted = parseSimpleXMarkdown(teaser) ?? [FormattedText(text: teaser)]
+    formatted.append(FormattedText(text: " "))
+    formatted.append(FormattedText(text: readMore, format: .modal(modalName: Format.modalDescription, text: descr)))
+    return messageText(
+        "\(teaser) \(readMore)",
+        formatted,
+        textStyle: .subheadline,
+        sender: nil,
+        mentions: nil,
+        userMemberId: nil,
+        showSecrets: showSecrets,
+        backgroundColor: UIColor(backgroundColor)
+    )
+}
+
+
+func messageText(
+    _ text: String,
+    _ formattedText: [FormattedText]?,
+    textStyle: UIFont.TextStyle = .body,
+    sender: String?,
+    preview: Bool = false,
+    mentions: [String: CIMention]?,
+    userMemberId: String?,
+    showSecrets: Set<Int>?,
+    commands: Bool = false,
+    backgroundColor: UIColor,
+    prefix: NSAttributedString? = nil,
+    stripLink: String? = nil
+) -> MsgTextResult {
+    let text = if let stripLink { stripTextLink(text, stripLink) } else { text }
+    let formattedText = if let stripLink { stripFormattedTextLink(formattedText, stripLink) } else { formattedText }
+    let res = NSMutableAttributedString()
+    let descr = UIFontDescriptor.preferredFontDescriptor(withTextStyle: textStyle)
+    let font = UIFont.preferredFont(forTextStyle: textStyle)
+    let plain: [NSAttributedString.Key: Any] = [
+        .font: font,
+        .foregroundColor: UIColor.label
+    ]
+    let secretColor = backgroundColor.withAlphaComponent(1)
+    var link: [NSAttributedString.Key: Any]?
+    var hasSecrets = false
+    var handleTaps = false
+
+    if let sender {
+        if preview {
+            res.append(NSAttributedString(string: sender + ": ", attributes: plain))
+        } else {
+            var attrs = plain
+            attrs[.font] = UIFont(descriptor: descr.addingAttributes([.traits: [UIFontDescriptor.TraitKey.weight: UIFont.Weight.medium]]), size: descr.pointSize)
+            res.append(NSAttributedString(string: sender, attributes: attrs))
+            res.append(NSAttributedString(string: ": ", attributes: plain))
+        }
+    }
+
+    if let prefix {
+        res.append(prefix)
+    }
+
+    if let fts = formattedText, fts.count > 0 {
+        var bold: UIFont?
+        var italic: UIFont?
+        var snippet: UIFont?
+        var small: UIFont?
+        var mention: UIFont?
+        var secretIdx: Int = 0
+        for ft in fts {
+            var t = ft.text
+            var attrs = plain
+            switch (ft.format) {
+            case .bold:
+                bold = bold ?? UIFont(descriptor: descr.addingAttributes([.traits: [UIFontDescriptor.TraitKey.weight: UIFont.Weight.bold]]), size: descr.pointSize)
+                attrs[.font] = bold
+            case .italic:
+                italic = italic ?? UIFont(descriptor: descr.withSymbolicTraits(.traitItalic) ?? descr, size: descr.pointSize)
+                attrs[.font] = italic
+            case .strikeThrough:
+                attrs[.strikethroughStyle] = NSUnderlineStyle.single.rawValue
+            case .snippet:
+                snippet = snippet ?? UIFont.monospacedSystemFont(ofSize: descr.pointSize, weight: .regular)
+                attrs[.font] = snippet
+            case .secret:
+                if let showSecrets {
+                    if !showSecrets.contains(secretIdx) {
+                        attrs[.foregroundColor] = UIColor.clear
+                        attrs[.backgroundColor] = secretColor
+                    }
+                    attrs[secretAttrKey] = secretIdx
+                    secretIdx += 1
+                    handleTaps = true
+                } else {
+                    attrs[.foregroundColor] = UIColor.clear
+                    attrs[.backgroundColor] = secretColor
+                }
+                hasSecrets = true
+            case .small:
+                small = small ?? UIFont.preferredFont(forTextStyle: .footnote)
+                attrs[.font] = small
+                attrs[.foregroundColor] = UIColor.secondaryLabel
+            case let .colored(color):
+                if let c = color.uiColor {
+                    attrs[.foregroundColor] = UIColor(c)
+                }
+            case .uri:
+                attrs = linkAttrs()
+                if !preview {
+                    let link = t.hasPrefix("http://") || t.hasPrefix("https://")
+                                ? t
+                                : "https://" + t
+                    attrs[linkAttrKey] = link
+                    attrs[webLinkAttrKey] = true
+                    handleTaps = true
+                }
+            case let .hyperLink(text, uri):
+                attrs = linkAttrs()
+                if let text { t = text }
+                if !preview {
+                    attrs[linkAttrKey] = uri
+                    attrs[webLinkAttrKey] = true
+                    handleTaps = true
+                }
+            case let .simplexLink(text, linkType, simplexUri, smpHosts):
+                attrs = linkAttrs()
+                if !preview {
+                    attrs[linkAttrKey] = simplexUri
+                    attrs[simplexLinkAttrKey] = true
+                    handleTaps = true
+                }
+                if let s = text ?? (privacySimplexLinkModeDefault.get() == .description ? linkType.description : nil) {
+                    res.append(NSAttributedString(string: s + " ", attributes: attrs))
+                    italic = italic ?? UIFont(descriptor: descr.withSymbolicTraits(.traitItalic) ?? descr, size: descr.pointSize)
+                    attrs[.font] = italic
+                    t = viaHost(smpHosts)
+                }
+            case let .command(cmdStr):
+                snippet = snippet ?? UIFont.monospacedSystemFont(ofSize: descr.pointSize, weight: .regular)
+                attrs[.font] = snippet
+                t = "/" + cmdStr
+                if !preview && commands {
+                    attrs[.foregroundColor] = uiLinkColor
+                    attrs[commandAttrKey] = t
+                    handleTaps = true
+                }
+            case let .mention(memberName):
+                if let m = mentions?[memberName] {
+                    mention = mention ?? UIFont(descriptor: descr.addingAttributes([.traits: [UIFontDescriptor.TraitKey.weight: UIFont.Weight.semibold]]), size: descr.pointSize)
+                    attrs[.font] = mention
+                    if let ref = m.memberRef {
+                        let name: String = if let alias = ref.localAlias, alias != "" {
+                            "\(alias) (\(ref.displayName))"
+                        } else {
+                            ref.displayName
+                        }
+                        if m.memberId == userMemberId {
+                            attrs[.foregroundColor] = UIColor.tintColor
+                        }
+                        t = mentionText(name)
+                    } else {
+                        t = mentionText(memberName)
+                    }
+                }
+            case let .simplexName(nameInfo):
+                attrs = linkAttrs()
+                if !preview {
+                    attrs[nameAttrKey] = nameInfo
+                    handleTaps = true
+                }
+            case .email:
+                attrs = linkAttrs()
+                if !preview {
+                    attrs[linkAttrKey] = "mailto:" + ft.text
+                    handleTaps = true
+                }
+            case .phone:
+                attrs = linkAttrs()
+                if !preview {
+                    attrs[linkAttrKey] = "tel:" + t.replacingOccurrences(of: " ", with: "")
+                    handleTaps = true
+                }
+            case let .modal(modalName, text):
+                attrs = linkAttrs()
+                if !preview {
+                    attrs[modalAttrKey] = Format.modal(modalName: modalName, text: text)
+                    handleTaps = true
+                }
+            case .unknown: ()
+            case .none: ()
+            }
+            res.append(NSAttributedString(string: t, attributes: attrs))
+        }
+    } else {
+        res.append(NSMutableAttributedString(string: text, attributes: plain))
+    }
+    
+    return (string: res, hasSecrets: hasSecrets, handleTaps: handleTaps)
+
+    func linkAttrs() -> [NSAttributedString.Key: Any] {
+        link = link ?? [
+            .font: font,
+            .foregroundColor: uiLinkColor,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+        return link!
+    }
+}
+
+@inline(__always)
+private func mentionText(_ name: String) -> String {
+    name.contains(" @") ? "@'\(name)'" : "@\(name)"
+}
+
+func simplexLinkText(_ linkType: SimplexLinkType, _ smpHosts: [String]) -> String {
+    linkType.description + " " + viaHost(smpHosts)
+}
+
+func viaHost(_ smpHosts: [String]) -> String {
+    "(via \(smpHosts.first ?? "?"))"
+}
+
+func stripTextLink(_ text: String, _ link: String) -> String {
+    text == link
+        ? ""
+        : text.hasSuffix("\n" + link)
+        ? String(text.dropLast(link.count + 1))
+        : text
+}
+
+func stripFormattedTextLink(_ ft: [FormattedText]?, _ link: String) -> [FormattedText]? {
+    guard var ft, ft.last?.text == link else { return ft }
+    ft.removeLast()
+    if let i = ft.indices.last, ft[i].format == nil, ft[i].text.hasSuffix("\n") {
+        ft[i].text = String(ft[i].text.dropLast())
+        if ft[i].text.isEmpty { ft.removeLast() }
+    }
+    return ft.isEmpty ? nil : ft
+}
+
+struct MsgContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        let chatItem = ChatItem.getSample(1, .directSnd, .now, "hello")
+        return MsgContentView(
+            chat: Chat.sampleData,
+            text: chatItem.text,
+            formattedText: chatItem.formattedText,
+            textStyle: .body,
+            sender: chatItem.memberDisplayName,
+            meta: chatItem.meta
+        )
+        .environmentObject(Chat.sampleData)
+    }
+}

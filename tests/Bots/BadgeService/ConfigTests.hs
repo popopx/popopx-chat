@@ -9,7 +9,7 @@ import Data.Either (isLeft)
 import Data.Ini (readIniFile)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
-import Popopx.Messaging.Encoding.String (strDecode)
+import Simplex.Messaging.Encoding.String (strDecode)
 import System.Directory (createDirectoryIfMissing)
 import System.FilePath ((</>))
 import Test.Hspec
@@ -56,7 +56,7 @@ fullIni =
       "static_dir = /srv/badges",
       -- [group] stays before [btcpay], since tests append btcpay keys to this fixture.
       "[group]",
-      "display_name = POPOPX Badges",
+      "display_name = SimpleX Badges",
       "description = badge ops desk",
       "[btcpay]",
       "host = https://btcpay.example.org",
@@ -301,7 +301,7 @@ testHostMustBeHttps =
       Left e -> e `shouldContain` "https"
       Right _ -> expectationFailure "an http host carries the api key in the clear"
 
--- A real 32-byte base64url secret, as `popopx-chat badge keygen` prints it.
+-- A real 32-byte base64url secret, as `simplex-chat badge keygen` prints it.
 issuerSecret :: T.Text
 issuerSecret = "Ea5wG-J2mQjPBu9YfSJRKPnGnzoIdEE-8VaMh_wY2Bg="
 
@@ -343,7 +343,7 @@ testIssuerIndexInvalid =
 testIssuerBadSecret :: IO ()
 testIssuerBadSecret =
   issuerRefusal ["index = 1", "private_key = not-a-key"]
-    `shouldReturn` "issuer.private_key is not a valid issuer secret; use the value from `popopx-chat badge keygen`"
+    `shouldReturn` "issuer.private_key is not a valid issuer secret; use the value from `simplex-chat badge keygen`"
 
 testIssuerOldFormat :: IO ()
 testIssuerOldFormat = do
@@ -374,8 +374,8 @@ groupIni body = parseIni (listenerIni <> "[group]\n" <> body)
 
 testGroupNameAndDescription :: IO ()
 testGroupNameAndDescription = do
-  r <- groupIni "display_name = POPOPX Badges\ndescription = Welcome\n"
-  fmap group r `shouldBe` Right (Just GroupConfig {gDisplayName = "POPOPX Badges", gDescription = Just "Welcome"})
+  r <- groupIni "display_name = SimpleX Badges\ndescription = Welcome\n"
+  fmap group r `shouldBe` Right (Just GroupConfig {gDisplayName = "SimpleX Badges", gDescription = Just "Welcome"})
 
 testGroupNoDescription :: IO ()
 testGroupNoDescription = do

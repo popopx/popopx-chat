@@ -20,8 +20,8 @@ contract NFTMinterTest {
 
     function beforeAll() public {
         s = new NFTNumbered(
-            "POPOPX NFT: SMPX testnet access",
-            "POPOPXNFT",
+            "SimpleX NFT: SMPX testnet access",
+            "SIMPLEXNFT",
             "https://ipfs.io/ipfs/abcd"
         );
         m = new NFTMinter(address(s), 0, 0, false);

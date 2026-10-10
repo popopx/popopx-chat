@@ -26,25 +26,25 @@ import qualified Data.Map.Strict as M
 import Data.Maybe (isJust, isNothing)
 import qualified Data.Text as T
 import GHC.Conc (ThreadStatus (..), threadStatus)
-import Popopx.Chat.AppSettings (defaultAppSettings)
-import qualified Popopx.Chat.AppSettings as AS
-import Popopx.Chat.Call
-import Popopx.Chat.Controller (ChatConfig (..), ChatController (..), PresetServers (..))
-import Popopx.Chat.Messages (ChatItemId)
-import Popopx.Chat.Options
-import Popopx.Chat.Protocol (supportedChatVRange)
-import Popopx.Chat.Types (ContactId, VersionRangeChat, authErrDisableCount, sameVerificationCode, verificationCode, pattern VersionChat)
-import Popopx.Messaging.Agent.Env.SQLite
-import Popopx.Messaging.Agent.RetryInterval
-import qualified Popopx.Messaging.Agent.Store.DB as DB
-import Popopx.Messaging.Client (NetworkTimeout (..))
+import Simplex.Chat.AppSettings (defaultAppSettings)
+import qualified Simplex.Chat.AppSettings as AS
+import Simplex.Chat.Call
+import Simplex.Chat.Controller (ChatConfig (..), ChatController (..), PresetServers (..))
+import Simplex.Chat.Messages (ChatItemId)
+import Simplex.Chat.Options
+import Simplex.Chat.Protocol (supportedChatVRange)
+import Simplex.Chat.Types (ContactId, VersionRangeChat, authErrDisableCount, sameVerificationCode, verificationCode, pattern VersionChat)
+import Simplex.Messaging.Agent.Env.SQLite
+import Simplex.Messaging.Agent.RetryInterval
+import qualified Simplex.Messaging.Agent.Store.DB as DB
+import Simplex.Messaging.Client (NetworkTimeout (..))
 import Control.Concurrent.STM (atomically, readTVarIO)
-import qualified Popopx.Messaging.Crypto as C
-import Popopx.Messaging.Encoding.String (strEncode)
-import Popopx.Messaging.Server.Env.STM hiding (subscriptions)
-import Popopx.Messaging.Transport
-import Popopx.Messaging.Util (safeDecodeUtf8)
-import Popopx.Messaging.Version
+import qualified Simplex.Messaging.Crypto as C
+import Simplex.Messaging.Encoding.String (strEncode)
+import Simplex.Messaging.Server.Env.STM hiding (subscriptions)
+import Simplex.Messaging.Transport
+import Simplex.Messaging.Util (safeDecodeUtf8)
+import Simplex.Messaging.Version
 import System.Directory (copyFile, doesDirectoryExist, doesFileExist)
 import System.Mem.Weak (deRefWeak)
 import Test.Hspec hiding (it)
@@ -52,7 +52,7 @@ import Test.Hspec hiding (it)
 import Database.PostgreSQL.Simple (Only (..))
 #else
 import Database.SQLite.Simple (Only (..))
-import Popopx.Chat.Options.DB
+import Simplex.Chat.Options.DB
 import System.FilePath ((</>))
 #endif
 
@@ -1231,25 +1231,25 @@ testOperators =
       alice ##> "/_conditions"
       alice <##. "Current conditions: 2."
       alice ##> "/_operators"
-      alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: required"
-      alice <## "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: required"
-      alice <##. "The new conditions will be accepted for PopopX Chat Ltd, InFlux Technologies Limited at "
+      alice <##. "1 (simplex). SimpleX Chat (SimpleX Chat Ltd), domains: simplex.im, servers: enabled, conditions: required"
+      alice <## "2 (flux). Flux (InFlux Technologies Limited), domains: simplexonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: required"
+      alice <##. "The new conditions will be accepted for SimpleX Chat Ltd, InFlux Technologies Limited at "
       -- set conditions notified
       alice ##> "/_conditions_notified 2"
       alice <## "ok"
       alice ##> "/_operators"
-      alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: required"
-      alice <## "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: required"
+      alice <##. "1 (simplex). SimpleX Chat (SimpleX Chat Ltd), domains: simplex.im, servers: enabled, conditions: required"
+      alice <## "2 (flux). Flux (InFlux Technologies Limited), domains: simplexonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: required"
       alice ##> "/_conditions"
       alice <##. "Current conditions: 2 (notified)."
       -- accept conditions
       alice ##> "/_accept_conditions 2 1,2"
-      alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: accepted ("
-      alice <##. "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: accepted ("
+      alice <##. "1 (simplex). SimpleX Chat (SimpleX Chat Ltd), domains: simplex.im, servers: enabled, conditions: accepted ("
+      alice <##. "2 (flux). Flux (InFlux Technologies Limited), domains: simplexonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: accepted ("
       -- update operators
       alice ##> "/operators 2:on:smp=proxy:xftp=off"
-      alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: accepted ("
-      alice <##. "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP disabled (servers known), conditions: accepted ("
+      alice <##. "1 (simplex). SimpleX Chat (SimpleX Chat Ltd), domains: simplex.im, servers: enabled, conditions: accepted ("
+      alice <##. "2 (flux). Flux (InFlux Technologies Limited), domains: simplexonflux.com, servers: SMP enabled proxy, XFTP disabled (servers known), conditions: accepted ("
   where
     opts' = testOpts {coreOptions = testCoreOpts {smpServers = [], xftpServers = []}}
 
@@ -2137,14 +2137,14 @@ testMultipleUserAddresses =
       cLinkAlisa <- getContactLink alice True
       bob ##> ("/c " <> cLinkAlisa)
       alice <#? bob
-      alice #$> ("/_get chats 2 pcc=on", chats, [("@bob", "Audio/video calls: enabled"), ("@Ask PopopX Team", ""), ("*", "")])
+      alice #$> ("/_get chats 2 pcc=on", chats, [("@bob", "Audio/video calls: enabled"), ("@Ask SimpleX Team", ""), ("*", "")])
       alice ##> "/ac bob"
       alice <## "bob (Bob): accepting contact request, you can send messages to contact"
       concurrently_
         (bob <## "alisa: contact is connected")
         (alice <## "bob (Bob): contact is connected")
       threadDelay 100000
-      alice #$> ("/_get chats 2 pcc=on", chats, [("@bob", lastChatFeature), ("@Ask PopopX Team", ""), ("*", "")])
+      alice #$> ("/_get chats 2 pcc=on", chats, [("@bob", lastChatFeature), ("@Ask SimpleX Team", ""), ("*", "")])
       alice <##> bob
 
       bob #> "@alice hey alice"
@@ -2175,7 +2175,7 @@ testMultipleUserAddresses =
         (cath <## "alisa: contact is connected")
         (alice <## "cath (Catherine): contact is connected")
       threadDelay 100000
-      alice #$> ("/_get chats 2 pcc=on", chats, [("@cath", lastChatFeature), ("@bob", "hey"), ("@Ask PopopX Team", ""), ("*", "")])
+      alice #$> ("/_get chats 2 pcc=on", chats, [("@cath", lastChatFeature), ("@bob", "hey"), ("@Ask SimpleX Team", ""), ("*", "")])
       alice <##> cath
 
       -- first user doesn't have cath as contact
@@ -3558,12 +3558,12 @@ testLinkContentFilter =
       connectUsers alice bob
 
       alice ##> "/c"
-      popopxLink <- getInvitation alice
+      simplexLink <- getInvitation alice
 
-      let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://popopx.chat\", \"preview\": {\"uri\": \"https://popopx.chat\", \"title\": \"PopopX Chat\", \"description\": \"PopopX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
+      let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://simplex.chat\", \"preview\": {\"uri\": \"https://simplex.chat\", \"title\": \"SimpleX Chat\", \"description\": \"SimpleX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
       alice ##> ("/_send @2 json [" <> linkPreview <> "]")
-      alice <# "@bob https://popopx.chat"
-      bob <# "alice> https://popopx.chat"
+      alice <# "@bob https://simplex.chat"
+      bob <# "alice> https://simplex.chat"
 
       alice #> "@bob check out https://example.com"
       bob <# "alice> check out https://example.com"
@@ -3571,8 +3571,8 @@ testLinkContentFilter =
       bob #> "@alice visit http://test.org"
       alice <# "bob> visit http://test.org"
 
-      alice #> ("@bob " <> popopxLink)
-      bob <#. "alice> https://popopx.chat/invitation#"
+      alice #> ("@bob " <> simplexLink)
+      bob <#. "alice> https://simplex.chat/invitation#"
 
       bob #> "@alice [click here](https://link.example.com)"
       alice <# "bob> [click here](https://link.example.com)"
@@ -3585,8 +3585,8 @@ testLinkContentFilter =
 
       alice ##> "/_get content types @2"
       alice <## "Chat content types: link, text"
-      alice #$> ("/_get chat @2 content=link count=100", chat, [(1, "https://popopx.chat"), (1, "check out https://example.com"), (0, "visit http://test.org"), (1, popopxLink), (0, "[click here](https://link.example.com)"), (1, "visit example.com for info")])
+      alice #$> ("/_get chat @2 content=link count=100", chat, [(1, "https://simplex.chat"), (1, "check out https://example.com"), (0, "visit http://test.org"), (1, simplexLink), (0, "[click here](https://link.example.com)"), (1, "visit example.com for info")])
 
       bob ##> "/_get content types @2"
       bob <## "Chat content types: link, text"
-      bob #$> ("/_get chat @2 content=link count=100", chat, [(0, "https://popopx.chat"), (0, "check out https://example.com"), (1, "visit http://test.org"), (0, popopxLink), (1, "[click here](https://link.example.com)"), (0, "visit example.com for info")])
+      bob #$> ("/_get chat @2 content=link count=100", chat, [(0, "https://simplex.chat"), (0, "check out https://example.com"), (1, "visit http://test.org"), (0, simplexLink), (1, "[click here](https://link.example.com)"), (0, "visit example.com for info")])

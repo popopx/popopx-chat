@@ -1,5 +1,5 @@
 {
-  description = "nix flake for popopx-chat";
+  description = "nix flake for simplex-chat";
   inputs.haskellNix.url = "github:input-output-hk/haskell.nix/armv7a";
   inputs.nixpkgs.follows = "haskellNix/nixpkgs-2305";
   inputs.mac2ios.url = "github:zw3rk/mobile-core-tools";
@@ -36,7 +36,7 @@
         # If the stack.yaml was dropped, this would not be necessary.
         projectFileName = "cabal.project";
         src = pkgs.haskell-nix.haskellLib.cleanGit {
-          name = "popopx-chat";
+          name = "simplex-chat";
           src = ./.;
         };
         sha256map = import ./scripts/nix/sha256map.nix;
@@ -56,12 +56,8 @@
             packages.direct-sqlcipher.patches = [ ./scripts/nix/direct-sqlcipher-2.3.27.patch ];
           })
 
-          {
-            packages.popopxmq.patches = [ ./scripts/nix/popopxmq-base64url-decodeLenient.patch ./scripts/nix/popopxmq-crcv-upgrade-fix.patch ];
-          }
-
           ({ pkgs,lib, ... }: lib.mkIf (pkgs.stdenv.hostPlatform.isAndroid) {
-            packages.popopx-chat.components.library.ghcOptions = [ "-pie" ];
+            packages.simplex-chat.components.library.ghcOptions = [ "-pie" ];
           })] ++ extra-modules;
       }; in
       # by defualt we don't need to pass extra-modules.
@@ -97,7 +93,7 @@
         for pkg in $out/_pkg/*.a; do
           chmod +w $pkg
           ${mac2ios.packages.${system}.mac2ios}/bin/mac2ios $pkg
-          [[ "$pkg" == *popopx-chat* ]] && ${pkgs.stdenv.cc.targetPrefix}strip -x $pkg
+          [[ "$pkg" == *simplex-chat* ]] && ${pkgs.stdenv.cc.targetPrefix}strip -x $pkg
           chmod -w $pkg
         done
 
@@ -106,33 +102,6 @@
         (cd tmp; ${pkgs.tree}/bin/tree .; ar x libHS*.a; for o in *.o; do if /usr/bin/otool -xv $o|grep ldadd ; then echo $o; fi; done; cd ..; rm -fR tmp)
 
         sha256sum $out/_pkg/*.a
-
-        # Verify both ghc (rolled-up) and non-ghc popopx-chat libraries are consistent.
-        # Both are built from the same source in this derivation, so they must contain
-        # the same configuration strings. A mismatch indicates a build cache issue.
-        GHC_LIB=$(find $out/_pkg -name "libHS*-ghc*.a" -path "*popopx-chat*" | head -1)
-        PLAIN_LIB=$(find $out/_pkg -name "libHS*.a" -path "*popopx-chat*" ! -name "*-ghc*" | head -1)
-        if [ -n "$GHC_LIB" ] && [ -n "$PLAIN_LIB" ]; then
-          echo "=== Library consistency check ==="
-          echo "GHC (rolled-up): $GHC_LIB"
-          echo "Plain (module):  $PLAIN_LIB"
-          # Extract a known configuration string from both libraries using grep -c on raw bytes
-          for pattern in "ntf://" "popopxchat.com" "popopchat.com"; do
-            GHC_COUNT=$(grep -c "$pattern" "$GHC_LIB" || true)
-            PLAIN_COUNT=$(grep -c "$pattern" "$PLAIN_LIB" || true)
-            echo "  '$pattern': ghc=$GHC_COUNT plain=$PLAIN_COUNT"
-            if [ "$GHC_COUNT" != "$PLAIN_COUNT" ]; then
-              echo "ERROR: Library mismatch for '$pattern'! ghc=$GHC_COUNT vs plain=$PLAIN_COUNT"
-              echo "This indicates the build produced inconsistent libraries."
-              exit 1
-            fi
-          done
-          echo "=== Library consistency check PASSED ==="
-        else
-          echo "WARNING: Could not find both popopx-chat libraries for consistency check"
-          echo "  GHC_LIB=$GHC_LIB"
-          echo "  PLAIN_LIB=$PLAIN_LIB"
-        fi
 
         (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 $out/${bundleName}.zip *)
         rm -fR $out/_pkg
@@ -151,8 +120,8 @@
       }; in
       rec {
         packages = {
-            "lib:popopx-chat" = (drv pkgs).popopx-chat.components.library;
-            "exe:popopx-chat" = (drv pkgs).popopx-chat.components.exes.popopx-chat;
+            "lib:simplex-chat" = (drv pkgs).simplex-chat.components.library;
+            "exe:simplex-chat" = (drv pkgs).simplex-chat.components.exes.simplex-chat;
         } // ({
             "x86_64-linux" =
               let
@@ -180,9 +149,9 @@
                   }
               );in {
               # STATIC x86_64-linux
-              "${pkgs.pkgsCross.musl64.hostPlatform.system}-static:exe:popopx-chat" = (drv pkgs.pkgsCross.musl64).popopx-chat.components.exes.popopx-chat;
+              "${pkgs.pkgsCross.musl64.hostPlatform.system}-static:exe:simplex-chat" = (drv pkgs.pkgsCross.musl64).simplex-chat.components.exes.simplex-chat;
               # STATIC i686-linux
-              "${pkgs.pkgsCross.musl32.hostPlatform.system}-static:exe:popopx-chat" = (drv' {
+              "${pkgs.pkgsCross.musl32.hostPlatform.system}-static:exe:simplex-chat" = (drv' {
                 pkgs' = pkgs.pkgsCross.musl32;
                 extra-modules = [{
                   # 32 bit patches
@@ -193,9 +162,9 @@
                     ./scripts/nix/memory-pr-99.patch
                   ];
                 }];
-              }).popopx-chat.components.exes.popopx-chat;
+              }).simplex-chat.components.exes.simplex-chat;
               # WINDOWS x86_64-mingwW64
-              "${pkgs.pkgsCross.mingwW64.hostPlatform.system}:exe:popopx-chat" = (drv' {
+              "${pkgs.pkgsCross.mingwW64.hostPlatform.system}:exe:simplex-chat" = (drv' {
                 pkgs' = pkgs.pkgsCross.mingwW64;
                 extra-modules = [{
                   packages.direct-sqlcipher.flags.openssl = true;
@@ -206,28 +175,28 @@
                   packages.direct-sqlcipher.components.library.libs = pkgs.lib.mkForce [
                     (pkgs.pkgsCross.mingwW64.openssl) #.override) # { static = true; enableKTLS = false; })
                   ];
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                  packages.simplexmq.components.library.libs = pkgs.lib.mkForce [
                     (pkgs.pkgsCross.mingwW64.openssl) #.override) # { static = true; enableKTLS = false; })
                   ];
                   packages.unix-time.postPatch = ''
                     sed -i 's/mingwex//g' unix-time.cabal
                   '';
                  }];
-                }).popopx-chat.components.exes.popopx-chat.override {
+                }).simplex-chat.components.exes.simplex-chat.override {
                 postInstall = ''
                   set -x
                   ${pkgs.tree}/bin/tree $out
                   mkdir -p $out/_pkg
                   cp $out/bin/* $out/_pkg
                   ${pkgs.tree}/bin/tree $out/_pkg
-                  (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 $out/${pkgs.pkgsCross.mingwW64.hostPlatform.system}-poopx-chat.zip *)
+                  (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 $out/${pkgs.pkgsCross.mingwW64.hostPlatform.system}-simplex-chat.zip *)
                   rm -fR $out/_pkg
                   mkdir -p $out/nix-support
                   echo "file binary-dist \"$(echo $out/*.zip)\"" \
                       > $out/nix-support/hydra-build-products
                 '';
               };
-              "${pkgs.pkgsCross.mingwW64.hostPlatform.system}:lib:popopx-chat" = (drv' rec {
+              "${pkgs.pkgsCross.mingwW64.hostPlatform.system}:lib:simplex-chat" = (drv' rec {
                 pkgs' = pkgs.pkgsCross.mingwW64;
                 extra-modules = [{
                   packages.direct-sqlcipher.flags.openssl = true;
@@ -240,28 +209,28 @@
                   packages.direct-sqlcipher.components.library.libs = pkgs.lib.mkForce [
                     pkgs.pkgsCross.mingwW64.openssl
                   ];
-                  packages.popopx-chat.flags.client_library = true;
-                  packages.popopxmq.flags.client_library = true;
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                  packages.simplex-chat.flags.client_library = true;
+                  packages.simplexmq.flags.client_library = true;
+                  packages.simplexmq.components.library.libs = pkgs.lib.mkForce [
                     pkgs.pkgsCross.mingwW64.openssl
                   ];
                   packages.unix-time.postPatch = ''
                     sed -i 's/mingwex//g' unix-time.cabal
                   '';
                 }];
-              }).popopx-chat.components.library
+              }).simplex-chat.components.library
               .override (p: {
                 # enableShared = false;
                 setupBuildFlags = p.component.setupBuildFlags ++ map (x: "--ghc-option=${x}") [
                   "-shared"
                   "-threaded"
-                  "-o" "libpopopx.dll"
+                  "-o" "libsimplex.dll"
                   # "-optl-lHSrts_thr"
                   "-optl-lffi"
                   # "-optl-static-libgcc"
                   # We can't do -optl-static-libstdc++ with gcc. g++ might
                   # but then we are chaning the compiler altogether.
-                  "${./libpopopx.dll.def}"
+                  "${./libsimplex.dll.def}"
                 ];
                 postInstall = ''
                   set -x
@@ -270,8 +239,8 @@
                   }
                   ${pkgs.tree}/bin/tree $out
                   mkdir -p $out/_pkg
-                  cp libpopopx.dll $out/_pkg
-                  cp libpopopx.dll.a $out/_pkg
+                  cp libsimplex.dll $out/_pkg
+                  cp libsimplex.dll.a $out/_pkg
                   mkdir $out/libs
                   find ${pkgs.lib.getBin pkgs.pkgsCross.mingwW64.openssl}             -name "*.dll" -exec cp {} $out/libs \;
                   find ${pkgs.lib.getBin pkgs.pkgsCross.mingwW64.libffi}              -name "*.dll" -exec cp {} $out/libs \;
@@ -292,23 +261,23 @@
                       fi
                     done
                   }
-                  copyDeps libpopopx.dll
+                  copyDeps libsimplex.dll
                   popd
                   ${pkgs.tree}/bin/tree $out/_pkg
-                  (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 $out/pkg-${pkgs.pkgsCross.mingwW64.hostPlatform.system}-libpopopx.zip *)
+                  (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 $out/pkg-${pkgs.pkgsCross.mingwW64.hostPlatform.system}-libsimplex.zip *)
                   rm -fR $out/_pkg
                   mkdir -p $out/nix-support
                   echo "file binary-dist \"$(echo $out/*.zip)\"" \
                       > $out/nix-support/hydra-build-products
                 '';
               });
-              # "${pkgs.pkgsCross.muslpi.hostPlatform.system}-static:exe:popopx-chat" = (drv pkgs.pkgsCross.muslpi).popopx-chat.components.exes.popopx-chat;
+              # "${pkgs.pkgsCross.muslpi.hostPlatform.system}-static:exe:simplex-chat" = (drv pkgs.pkgsCross.muslpi).simplex-chat.components.exes.simplex-chat;
 
               # STATIC aarch64-linux
-              "${pkgs.pkgsCross.aarch64-multiplatform-musl.hostPlatform.system}-static:exe:popopx-chat" = (drv pkgs.pkgsCross.aarch64-multiplatform-musl).popopx-chat.components.exes.popopx-chat;
+              "${pkgs.pkgsCross.aarch64-multiplatform-musl.hostPlatform.system}-static:exe:simplex-chat" = (drv pkgs.pkgsCross.aarch64-multiplatform-musl).simplex-chat.components.exes.simplex-chat;
               "armv7a-android:lib:support" = (drv android32Pkgs).android-support.components.library.override (p: {
                 smallAddressSpace = true;
-                # we won't want -dyamic (see aarch64-android:lib:popopx-chat)
+                # we won't want -dyamic (see aarch64-android:lib:simplex-chat)
                 enableShared = false;
                 # we also do not want to have any dependencies listed (especially no rts!)
                 enableStatic = false;
@@ -369,7 +338,7 @@
                         > $out/nix-support/hydra-build-products
                 '';
               });
-              "armv7a-android:lib:popopx-chat" = (drv' {
+              "armv7a-android:lib:simplex-chat" = (drv' {
                 pkgs' = android32Pkgs;
                 extra-modules = [{
                   packages.text.flags.simdutf = false;
@@ -380,9 +349,9 @@
                   packages.direct-sqlcipher.patches = [
                     ./scripts/nix/direct-sqlcipher-android-log.patch
                   ];
-                  packages.popopx-chat.flags.client_library = true;
-                  packages.popopxmq.flags.client_library = true;
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                  packages.simplex-chat.flags.client_library = true;
+                  packages.simplexmq.flags.client_library = true;
+                  packages.simplexmq.components.library.libs = pkgs.lib.mkForce [
                     (android32Pkgs.openssl.override { static = true; enableKTLS = false; })
                   ];
                   # 32 bit patches
@@ -393,7 +362,7 @@
                     ./scripts/nix/memory-pr-99.patch
                   ];
                 }];
-              }).popopx-chat.components.library.override (p: {
+              }).simplex-chat.components.library.override (p: {
                 smallAddressSpace = true;
                 # we want -shared, but not -dyanmic, hence `enableShared = false`.
                 enableShared = false;
@@ -406,7 +375,7 @@
                 # flags to tell GHC we want to produce a -shared object, and we want to also link
                 # - the ffi library (ffi)
                 ++ map (x: "--ghc-option=${x}") [
-                  "-shared" "-o" "libpopopx.so"
+                  "-shared" "-o" "libsimplex.so"
                   "-threaded"
                   # "-debug"
                   "-optl-lffi"
@@ -424,6 +393,7 @@
                   "chat_encrypt_file"
                   "chat_encrypt_media"
                   "chat_migrate_init"
+                  "chat_migrate_init_queue"
                   "chat_parse_markdown"
                   "chat_parse_server"
                   "chat_parse_uri"
@@ -436,6 +406,7 @@
                   "chat_send_remote_cmd"
                   "chat_send_remote_cmd_retry"
                   "chat_valid_name"
+                  "chat_parse_badge_code"
                   "chat_json_length"
                   "chat_badge_keygen"
                   "chat_badge_issue"
@@ -449,7 +420,7 @@
                   # cp -r $out/lib/*/*/include $out/_pkg/
                   # find the libHS...ghc-X.Y.Z.a static library; this is the
                   # rolled up one with all dependencies included.
-                  cp libpopopx.so $out/_pkg
+                  cp libsimplex.so $out/_pkg
                   # find ./dist -name "lib*.so" -exec cp {} $out/_pkg \;
                   # find ./dist -name "libHS*-ghc*.a" -exec cp {} $out/_pkg \;
                   # find ${android32FFI}/lib -name "*.a" -exec cp {} $out/_pkg \;
@@ -474,7 +445,7 @@
                   for lib in $out/_pkg/*.so; do
                     chmod +w "$lib"
                     ${pkgs.patchelf}/bin/patchelf --remove-needed libunwind.so "$lib"
-                    [[ "$lib" != *libpopopx.so ]] && ${pkgs.patchelf}/bin/patchelf --set-soname "$(basename -a $lib)" "$lib"
+                    [[ "$lib" != *libsimplex.so ]] && ${pkgs.patchelf}/bin/patchelf --set-soname "$(basename -a $lib)" "$lib"
                   done
 
                   ${pkgs.tree}/bin/tree $out/_pkg
@@ -487,14 +458,14 @@
                   find "$out/_pkg" -type d -exec chmod 755 {} +
                   find "$out/_pkg" -exec touch -h -d '@1764547200' {} +
 
-                  (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 -X $out/pkg-armv7a-android-libpopopx.zip *)
+                  (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 -X $out/pkg-armv7a-android-libsimplex.zip *)
                   rm -fR $out/_pkg
                   mkdir -p $out/nix-support
                   echo "file binary-dist \"$(echo $out/*.zip)\"" \
                       > $out/nix-support/hydra-build-products
                 '';
               });
-              "aarch64-android:lib:popopx-chat" = (drv' {
+              "aarch64-android:lib:simplex-chat" = (drv' {
                 pkgs' = androidPkgs;
                 extra-modules = [{
                   packages.text.flags.simdutf = false;
@@ -505,13 +476,13 @@
                   packages.direct-sqlcipher.patches = [
                     ./scripts/nix/direct-sqlcipher-android-log.patch
                   ];
-                  packages.popopx-chat.flags.client_library = true;
-                  packages.popopxmq.flags.client_library = true;
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                  packages.simplex-chat.flags.client_library = true;
+                  packages.simplexmq.flags.client_library = true;
+                  packages.simplexmq.components.library.libs = pkgs.lib.mkForce [
                     (androidPkgs.openssl.override { static = true; })
                   ];
                 }];
-              }).popopx-chat.components.library.override (p: {
+              }).simplex-chat.components.library.override (p: {
                 smallAddressSpace = true;
                 # we do not want a dynamically linked object, even though we _do_
                 # want to produce a _shared_ object. But `shared` implied -dyanmic
@@ -526,7 +497,7 @@
                 # flags to tell GHC we want to produce a -shared object, and we want to also link
                 # - the ffi library (ffi)
                 ++ map (x: "--ghc-option=${x}") [
-                  "-shared" "-o" "libpopopx.so"
+                  "-shared" "-o" "libsimplex.so"
                   "-threaded"
                   # "-debug"
                   "-optl-lffi"
@@ -545,6 +516,7 @@
                   "chat_encrypt_file"
                   "chat_encrypt_media"
                   "chat_migrate_init"
+                  "chat_migrate_init_queue"
                   "chat_parse_markdown"
                   "chat_parse_server"
                   "chat_parse_uri"
@@ -557,6 +529,7 @@
                   "chat_send_remote_cmd"
                   "chat_send_remote_cmd_retry"
                   "chat_valid_name"
+                  "chat_parse_badge_code"
                   "chat_json_length"
                   "chat_badge_keygen"
                   "chat_badge_issue"
@@ -570,7 +543,7 @@
                   # cp -r $out/lib/*/*/include $out/_pkg/
                   # find the libHS...ghc-X.Y.Z.a static library; this is the
                   # rolled up one with all dependencies included.
-                  cp libpopopx.so $out/_pkg
+                  cp libsimplex.so $out/_pkg
                   # find ./dist -name "lib*.so" -exec cp {} $out/_pkg \;
                   # find ./dist -name "libHS*-ghc*.a" -exec cp {} $out/_pkg \;
                   # find ${androidFFI}/lib -name "*.a" -exec cp {} $out/_pkg \;
@@ -595,7 +568,7 @@
                   for lib in $out/_pkg/*.so; do
                     chmod +w "$lib"
                     ${pkgs.patchelf}/bin/patchelf --remove-needed libunwind.so "$lib"
-                    [[ "$lib" != *libpopopx.so ]] && ${pkgs.patchelf}/bin/patchelf --set-soname "$(basename -a $lib)" "$lib"
+                    [[ "$lib" != *libsimplex.so ]] && ${pkgs.patchelf}/bin/patchelf --set-soname "$(basename -a $lib)" "$lib"
                   done
 
                   ${pkgs.tree}/bin/tree $out/_pkg
@@ -608,7 +581,7 @@
                   find "$out/_pkg" -type d -exec chmod 755 {} +
                   find "$out/_pkg" -exec touch -h -d '@1764547200' {} +
 
-                  (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 -X $out/pkg-aarch64-android-libpopopx.zip *)
+                  (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 -X $out/pkg-aarch64-android-libsimplex.zip *)
                   rm -fR $out/_pkg
                   mkdir -p $out/nix-support
                   echo "file binary-dist \"$(echo $out/*.zip)\"" \
@@ -620,74 +593,74 @@
             # builds for iOS and iOS simulator
             "aarch64-darwin" = {
               # aarch64-darwin iOS build (to be patched with mac2ios)
-              "aarch64-darwin-ios:lib:popopx-chat" = (drv' {
+              "aarch64-darwin-ios:lib:simplex-chat" = (drv' {
                 pkgs' = pkgs;
                 extra-modules = [{
-                  packages.popopx-chat.flags.swift = true;
-                  packages.popopxmq.flags.swift = true;
+                  packages.simplex-chat.flags.swift = true;
+                  packages.simplexmq.flags.swift = true;
                   packages.direct-sqlcipher.flags.commoncrypto = true;
-                  packages.popopxmq.flags.commoncrypto = true;
+                  packages.simplexmq.flags.commoncrypto = true;
                   packages.entropy.flags.DoNotGetEntropy = true;
-                  packages.popopx-chat.flags.client_library = true;
-                  packages.popopxmq.flags.client_library = true;
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                  packages.simplex-chat.flags.client_library = true;
+                  packages.simplexmq.flags.client_library = true;
+                  packages.simplexmq.components.library.libs = pkgs.lib.mkForce [
                     # TODO: have a cross override for iOS, that sets this.
                     ((pkgs.openssl.override { static = true; }).overrideDerivation (old: { CFLAGS = "-mcpu=apple-a7 -march=armv8-a+norcpc" ;}))
                   ];
                 }];
-              }).popopx-chat.components.library.override (
+              }).simplex-chat.components.library.override (
                 iosOverrides "pkg-ios-aarch64-swift-json"
               );
 	            # aarch64-darwin build with tagged JSON format (for Mac & Flutter)
-              "aarch64-darwin:lib:popopx-chat" = (drv' {
+              "aarch64-darwin:lib:simplex-chat" = (drv' {
                 pkgs' = pkgs;
                 extra-modules = [{
                   packages.direct-sqlcipher.flags.commoncrypto = true;
-                  packages.popopxmq.flags.commoncrypto = true;
+                  packages.simplexmq.flags.commoncrypto = true;
                   packages.entropy.flags.DoNotGetEntropy = true;
-                  packages.popopx-chat.flags.client_library = true;
-                  packages.popopxmq.flags.client_library = true;
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                  packages.simplex-chat.flags.client_library = true;
+                  packages.simplexmq.flags.client_library = true;
+                  packages.simplexmq.components.library.libs = pkgs.lib.mkForce [
                     ((pkgs.openssl.override { static = true; }).overrideDerivation (old: { CFLAGS = "-mcpu=apple-a7 -march=armv8-a+norcpc" ;}))
                   ];
                 }];
-              }).popopx-chat.components.library.override (
+              }).simplex-chat.components.library.override (
                 iosOverrides "pkg-ios-aarch64-tagged-json"
               );
             };
             "x86_64-darwin" = {
               # x86_64-darwin iOS simulator build (to be patched with mac2ios)
-              "x86_64-darwin-ios:lib:popopx-chat" = (drv' {
+              "x86_64-darwin-ios:lib:simplex-chat" = (drv' {
                 pkgs' = pkgs;
                 extra-modules = [{
-                  packages.popopx-chat.flags.swift = true;
-                  packages.popopxmq.flags.swift = true;
+                  packages.simplex-chat.flags.swift = true;
+                  packages.simplexmq.flags.swift = true;
                   packages.direct-sqlcipher.flags.commoncrypto = true;
-                  packages.popopxmq.flags.commoncrypto = true;
+                  packages.simplexmq.flags.commoncrypto = true;
                   packages.entropy.flags.DoNotGetEntropy = true;
-                  packages.popopx-chat.flags.client_library = true;
-                  packages.popopxmq.flags.client_library = true;
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                  packages.simplex-chat.flags.client_library = true;
+                  packages.simplexmq.flags.client_library = true;
+                  packages.simplexmq.components.library.libs = pkgs.lib.mkForce [
                     (pkgs.openssl.override { static = true; })
                   ];
                 }];
-              }).popopx-chat.components.library.override (
+              }).simplex-chat.components.library.override (
                 iosOverrides "pkg-ios-x86_64-swift-json"
               );
               # x86_64-darwin build with tagged JSON format (for Mac & Flutter iOS simulator)
-              "x86_64-darwin:lib:popopx-chat" = (drv' {
+              "x86_64-darwin:lib:simplex-chat" = (drv' {
                 pkgs' = pkgs;
                 extra-modules = [{
                   packages.direct-sqlcipher.flags.commoncrypto = true;
-                  packages.popopxmq.flags.commoncrypto = true;
+                  packages.simplexmq.flags.commoncrypto = true;
                   packages.entropy.flags.DoNotGetEntropy = true;
-                  packages.popopx-chat.flags.client_library = true;
-                  packages.popopxmq.flags.client_library = true;
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                  packages.simplex-chat.flags.client_library = true;
+                  packages.simplexmq.flags.client_library = true;
+                  packages.simplexmq.components.library.libs = pkgs.lib.mkForce [
                     (pkgs.openssl.override { static = true; })
                   ];
                 }];
-              }).popopx-chat.components.library.override (
+              }).simplex-chat.components.library.override (
                 iosOverrides "pkg-ios-x86_64-tagged-json"
               );
             };

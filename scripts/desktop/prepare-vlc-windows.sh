@@ -11,7 +11,7 @@ rm -rf $vlc_dir
 mkdir -p $vlc_dir/vlc || exit 0
 
 vlc_tag='v3.0.23-2'
-vlc_url="https://github.com/popopx/vlc/releases/download/${vlc_tag}/vlc-win-x86_64.zip"
+vlc_url="https://github.com/simplex-chat/vlc/releases/download/${vlc_tag}/vlc-win-x86_64.zip"
 
 cd /tmp
 mkdir tmp 2>/dev/null || true

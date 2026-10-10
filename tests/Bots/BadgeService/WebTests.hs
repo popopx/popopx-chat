@@ -58,18 +58,18 @@ import Network.HTTP.Client (Manager, Request (..), RequestBody (..), Response, d
 import Network.HTTP.Types (Header, HeaderName, hCacheControl, hContentType)
 import Network.HTTP.Types.Status (statusCode)
 import qualified Network.Wai.Handler.Warp as Warp
-import Popopx.Chat.Badges (BadgeCredential (..), BadgeInfo (..), BadgeMasterKey (..), BadgeType (..))
-import Popopx.Chat.Badges.Service (BadgeOffer (..), BadgePrice (..))
-import Popopx.Chat.Badges.Types (BadgeCodePaymentStatus (..), BadgeItemStatus (..), BadgeOfferId (..), BadgePriceId (..), OfferDiscount (..))
-import Popopx.Chat.PaymentService.Types (CryptoCurrency (..), CurrencyAmount (..), InvoiceId (..), InvoiceStatus (..), PaymentProvider (..), PaymentStatus (..), ServicePaymentDestination (..), ServicePaymentMethod (..))
-import Popopx.Messaging.Agent.Store.Common (DBStore (..), withConnection, withTransaction)
-import qualified Popopx.Messaging.Agent.Store.DB as DB
-import Popopx.Messaging.Agent.Store.Interface
-import Popopx.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationConfirmation (..), MigrationsToRun (..), toDownMigration)
-import qualified Popopx.Messaging.Crypto as C
-import Popopx.Messaging.Crypto.BBS (BBSSignature (..))
-import Popopx.Messaging.Encoding.String (textDecode, textEncode)
-import Popopx.Messaging.Util (safeDecodeUtf8, tshow)
+import Simplex.Chat.Badges (BadgeCredential (..), BadgeInfo (..), BadgeMasterKey (..), BadgeType (..))
+import Simplex.Chat.Badges.Service (BadgeOffer (..), BadgePrice (..))
+import Simplex.Chat.Badges.Types (BadgeCodePaymentStatus (..), BadgeItemStatus (..), BadgeOfferId (..), BadgePriceId (..), OfferDiscount (..))
+import Simplex.Chat.PaymentService.Types (CryptoCurrency (..), CurrencyAmount (..), InvoiceId (..), InvoiceStatus (..), PaymentProvider (..), PaymentStatus (..), ServicePaymentDestination (..), ServicePaymentMethod (..))
+import Simplex.Messaging.Agent.Store.Common (DBStore (..), withConnection, withTransaction)
+import qualified Simplex.Messaging.Agent.Store.DB as DB
+import Simplex.Messaging.Agent.Store.Interface
+import Simplex.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationConfirmation (..), MigrationsToRun (..), toDownMigration)
+import qualified Simplex.Messaging.Crypto as C
+import Simplex.Messaging.Crypto.BBS (BBSSignature (..))
+import Simplex.Messaging.Encoding.String (textDecode, textEncode)
+import Simplex.Messaging.Util (safeDecodeUtf8, tshow)
 import System.Directory (createDirectoryIfMissing, createFileLink, doesFileExist, listDirectory)
 import System.FilePath ((</>))
 import System.IO (IOMode (..), hClose, hGetBuffering, hSetBuffering, stderr, withFile)
@@ -83,14 +83,14 @@ import UnliftIO.Temporary (withTempDirectory)
 import BadgeService.Store.Postgres.Migrations (badgeServiceSchemaMigrations)
 import ChatClient (testDBConnstr)
 import Database.PostgreSQL.Simple (Only (..))
-import qualified Popopx.Messaging.Agent.Store.Postgres.Migrations as Migrations
+import qualified Simplex.Messaging.Agent.Store.Postgres.Migrations as Migrations
 #else
 import BadgeService.Store.SQLite.Migrations (badgeServiceSchemaMigrations)
 import Data.String (fromString)
 import Database.SQLite.Simple (Only (..))
 import qualified Database.SQLite.Simple as SQL
-import Popopx.Messaging.Agent.Store.DB (TrackQueries (..))
-import qualified Popopx.Messaging.Agent.Store.SQLite.Migrations as Migrations
+import Simplex.Messaging.Agent.Store.DB (TrackQueries (..))
+import qualified Simplex.Messaging.Agent.Store.SQLite.Migrations as Migrations
 #endif
 
 #if defined(dbPostgres)
@@ -648,7 +648,7 @@ testSeedNeverResurrectsAWithdrawnRow = withServiceStore $ \st -> do
 
 testSeedMatchesWebCatalog :: IO ()
 testSeedMatchesWebCatalog = withServiceStore $ \st -> do
-  src <- T.readFile "apps/popopx-badge-service/web/src/catalog.ts"
+  src <- T.readFile "apps/simplex-badge-service/web/src/catalog.ts"
   (webPrices, webOffers) <- case parseCatalogSource src of
     Nothing -> failWith "could not parse CATALOG out of web/src/catalog.ts -- its shape has changed"
     Just parsed -> pure parsed
@@ -945,7 +945,7 @@ outsideMarker :: LB.ByteString
 outsideMarker = "SECRET-OUTSIDE-STATIC-DIR"
 
 shellHtml :: LB.ByteString
-shellHtml = "<!doctype html><title>PopopX badges</title><meta id=\"stripe-publishable-key\" name=\"stripe-publishable-key\" content=\"\">"
+shellHtml = "<!doctype html><title>SimpleX badges</title><meta id=\"stripe-publishable-key\" name=\"stripe-publishable-key\" content=\"\">"
 
 assetJs :: LB.ByteString
 assetJs = "export const build = \"d95503da54ee228f\";"
@@ -1184,13 +1184,13 @@ testServesTheBuild = bounded "serves the build" $ withWebApp $ \_ client -> do
   statusOf missing `shouldBe` 404
 
 builtSiteDir :: FilePath
-builtSiteDir = "apps" </> "popopx-badge-service" </> "web" </> "dist"
+builtSiteDir = "apps" </> "simplex-badge-service" </> "web" </> "dist"
 
 testServesBuiltWebApp :: IO ()
 testServesBuiltWebApp = bounded "built web app" $ withServiceStore $ \st -> do
   built <- doesFileExist (builtSiteDir </> "index.html")
   if not built
-    then pendingWith ("no web build at " <> builtSiteDir <> ": run `npm run build` in apps/popopx-badge-service/web")
+    then pendingWith ("no web build at " <> builtSiteDir <> ": run `npm run build` in apps/simplex-badge-service/web")
     else withListener [] True holdMicros st (testServiceConfig builtSiteDir False) $ \_ client -> do
       shell <- webGet client "/"
       statusOf shell `shouldBe` 200

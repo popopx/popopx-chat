@@ -12,11 +12,11 @@ import ChatTests.DBUtils
 import ChatTests.Utils
 import Control.Concurrent (forkIO, killThread, threadDelay)
 import Control.Exception (bracket)
-import Popopx.Chat.Bot.KnownContacts
-import Popopx.Chat.Core
-import Popopx.Chat.Options (ChatOpts (..), CoreChatOpts (..))
-import Popopx.Chat.Options.DB
-import Popopx.Chat.Types (ChatPeerType (..), Profile (..))
+import Simplex.Chat.Bot.KnownContacts
+import Simplex.Chat.Core
+import Simplex.Chat.Options (ChatOpts (..), CoreChatOpts (..))
+import Simplex.Chat.Options.DB
+import Simplex.Chat.Types (ChatPeerType (..), Profile (..))
 import Test.Hspec hiding (it)
 #if !defined(dbPostgres)
 import System.FilePath ((</>))
@@ -30,7 +30,7 @@ withBroadcastBot :: TestParams -> BroadcastBotOpts -> IO () -> IO ()
 withBroadcastBot ps opts test =
   bracket (forkIO bot) killThread (\_ -> threadDelay 500000 >> test)
   where
-    bot = popopxChatCore (fst $ testPortsCfg ps testCfg testOpts) (mkChatOpts opts) $ broadcastBot opts
+    bot = simplexChatCore (fst $ testPortsCfg ps testCfg testOpts) (mkChatOpts opts) $ broadcastBot opts
 
 broadcastBotProfile :: Profile
 broadcastBotProfile = Profile {displayName = "broadcast_bot", fullName = "Broadcast Bot", shortDescr = Nothing, description = Nothing, image = Nothing, contactLink = Nothing, peerType = Just CPTBot, preferences = Nothing, badge = Nothing, contactDomain = Nothing}

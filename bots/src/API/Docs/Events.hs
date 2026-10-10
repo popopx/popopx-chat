@@ -11,8 +11,8 @@ import API.Docs.Types
 import API.TypeInfo
 import Data.List (find)
 import GHC.Generics
-import Popopx.Chat.Controller
-import Popopx.Messaging.Parsers (dropPrefix)
+import Simplex.Chat.Controller
+import Simplex.Messaging.Parsers (dropPrefix)
 
 data CECategory = CECategory
   { categoryName :: String,
@@ -56,11 +56,11 @@ chatEventsDocsData =
   [ ( "Contact connection events", -- which event should be processed by a bot that has business address. Maybe needs a separate category.
       "Bots must use these events to process connecting users.\n\n\
       \Most bots enable auto-accept and don't need to accept connections via commands.\n\n\
-      \You may create bot POPOPX address manually via CLI or desktop app or from bot code with these commands:\n\
+      \You may create bot SimpleX address manually via CLI or desktop app or from bot code with these commands:\n\
       \- [APIShowMyAddress](./COMMANDS.md#apishowmyaddress) to check if address exists,\n\
       \- [APICreateMyAddress](./COMMANDS.md#apicreatemyaddress) to create address,\n\
       \- [APISetAddressSettings](./COMMANDS.md#apisetaddresssettings) to enable auto-access.",
-      [ ( "CEvtContactConnected", "This event is sent after a user connects via bot POPOPX address (not a business address).")
+      [ ( "CEvtContactConnected", "This event is sent after a user connects via bot SimpleX address (not a business address).")
       ],
       [
         ("CEvtContactUpdated", "Contact profile of another user is updated."),
@@ -128,12 +128,11 @@ chatEventsDocsData =
     ),
     ( "Connection progress events",
       "Bots may use these events to track progress of connections for monitoring or debugging.",
-      [ ("CEvtAcceptingContactRequest", "Automatically accepting contact request via bot's POPOPX address with auto-accept enabled."),
+      [ ("CEvtAcceptingContactRequest", "Automatically accepting contact request via bot's SimpleX address with auto-accept enabled."),
         ("CEvtAcceptingBusinessRequest", "Automatically accepting contact request via bot's business address."),
-        ("CEvtContactConnecting", "Contact confirmed connection.\n\nSent when contact started connecting via bot's 1-time invitation link or when bot connects to another POPOPX address."), -- CONF
+        ("CEvtContactConnecting", "Contact confirmed connection.\n\nSent when contact started connecting via bot's 1-time invitation link or when bot connects to another SimpleX address."), -- CONF
         ("CEvtBusinessLinkConnecting", "Contact confirmed connection.\n\nSent when bot connects to another business address."), -- CONF
         ("CEvtJoinedGroupMemberConnecting", "Group member is announced to the group and will be connecting to bot."), -- MSG
-        ("CEvtSentGroupInvitation", "Sent when another user joins group via bot's link."), -- INV
         ("CEvtGroupLinkConnecting", "Sent when bot joins group via another user link.") -- CONF
       ],
       []
@@ -143,6 +142,20 @@ chatEventsDocsData =
       [ ("CEvtHostConnected", "Messaging or file server connected"),
         ("CEvtHostDisconnected", "Messaging or file server disconnected"),
         ("CEvtSubscriptionStatus", "Messaging subscription status changed")
+      ],
+      []
+    ),
+    ( "Service events",
+      "Bots with a double ratchet address, started with service request processing enabled, can answer service requests - a single request with a single response (RPC).",
+      [ ("CEvtServiceRequest", "Service request received.\n\nThe request needs to be answered using [APISendServiceResponse](./COMMANDS.md#apisendserviceresponse) command."),
+        ("CEvtServiceReplySent", "Service reply was sent (delivered to the server).\n\nCorrelate `connectionId` with the connection ID from the response to [APISendServiceResponse](./COMMANDS.md#apisendserviceresponse) to learn when the reply is delivered.")
+      ],
+      []
+    ),
+    ( "Remote control events",
+      "Bots that act as remote control hosts receive these events during the remote control session lifecycle.",
+      [ ("CEvtRemoteCtrlSessionCode", "Remote controller session code ready for verification.\n\nUse [VerifyRemoteCtrlSession](./COMMANDS.md#verifyremotectrlsession) to complete the connection."),
+        ("CEvtRemoteCtrlStopped", "Remote controller session stopped.")
       ],
       []
     ),
@@ -166,6 +179,8 @@ undocumentedEvents =
     "CEvtAgentConnsDeleted",
     "CEvtAgentRcvQueuesDeleted",
     "CEvtAgentUserDeleted",
+    "CEvtBadgeAlert",
+    "CEvtBadgeChanged",
     "CEvtBusinessRequestAlreadyAccepted",
     "CEvtCallAnswer",
     "CEvtCallEnded",
@@ -184,6 +199,7 @@ undocumentedEvents =
     "CEvtContactPQEnabled",
     "CEvtContactRatchetSync",
     "CEvtContactRequestAlreadyAccepted",
+    "CEvtContactRequestRejected",
     "CEvtContactSwitch",
     "CEvtCustomChatEvent",
     "CEvtGroupMemberRatchetSync",
@@ -196,8 +212,6 @@ undocumentedEvents =
     "CEvtRcvFileProgressXFTP",
     "CEvtRcvStandaloneFileComplete",
     "CEvtRemoteCtrlFound",
-    "CEvtRemoteCtrlSessionCode",
-    "CEvtRemoteCtrlStopped",
     "CEvtRemoteHostConnected",
     "CEvtRemoteHostSessionCode",
     "CEvtRemoteHostStopped",

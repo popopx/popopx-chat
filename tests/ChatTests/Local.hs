@@ -9,7 +9,7 @@ import ChatTests.DBUtils
 import ChatTests.Utils
 import Data.Time (getCurrentTime)
 import Data.Time.Format.ISO8601 (iso8601Show)
-import Popopx.Chat.Controller (ChatConfig (..), InlineFilesConfig (..), defaultInlineFilesConfig)
+import Simplex.Chat.Controller (ChatConfig (..), InlineFilesConfig (..), defaultInlineFilesConfig)
 import System.Directory (copyFile, doesFileExist)
 import System.FilePath ((</>))
 import Test.Hspec hiding (it)
@@ -239,13 +239,13 @@ testLinkContentFilter :: TestParams -> IO ()
 testLinkContentFilter ps = withNewTestChat ps "alice" aliceProfile $ \alice -> do
   createCCNoteFolder alice
 
-  let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://popopx.chat\", \"preview\": {\"uri\": \"https://popopx.chat\", \"title\": \"PopopX Chat\", \"description\": \"PopopX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
+  let linkPreview = "{\"msgContent\": {\"type\": \"link\", \"text\": \"https://simplex.chat\", \"preview\": {\"uri\": \"https://simplex.chat\", \"title\": \"SimpleX Chat\", \"description\": \"SimpleX Chat\", \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=\"}}}"
   alice ##> ("/_create *1 json [" <> linkPreview <> "]")
-  alice <# "* https://popopx.chat"
+  alice <# "* https://simplex.chat"
 
   alice >* "check out https://example.com"
   alice >* "hello, no links here"
 
   alice ##> "/_get content types *1"
   alice <## "Chat content types: link, text"
-  alice #$> ("/_get chat *1 content=link count=100", chat, [(1, "https://popopx.chat"), (1, "check out https://example.com")])
+  alice #$> ("/_get chat *1 content=link count=100", chat, [(1, "https://simplex.chat"), (1, "check out https://example.com")])

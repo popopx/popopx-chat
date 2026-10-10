@@ -2,11 +2,11 @@
 # Safety measures
 set -eu
 
-repo="https://github.com/popopx/popopx-chat"
+repo="https://github.com/simplex-chat/simplex-chat"
 
 u="$USER"
 tmp="$(mktemp -d -t)"
-folder="$tmp/popopx-chat"
+folder="$tmp/simplex-chat"
 
 nix_ver="nix-2.22.0"
 nix_url="https://releases.nixos.org/nix/$nix_ver/install"
@@ -106,35 +106,35 @@ build() {
 
   for arch in $arches; do
     if [ "$arch" = "armv7a" ]; then
-      android_popopx_lib="${folder}#hydraJobs.${arch}-android:lib:popopx-chat.x86_64-linux"
+      android_simplex_lib="${folder}#hydraJobs.${arch}-android:lib:simplex-chat.x86_64-linux"
       android_support_lib="${folder}#hydraJobs.${arch}-android:lib:support.x86_64-linux"
     else
-      android_popopx_lib="${folder}#hydraJobs.x86_64-linux.${arch}-android:lib:popopx-chat"
+      android_simplex_lib="${folder}#hydraJobs.x86_64-linux.${arch}-android:lib:simplex-chat"
       android_support_lib="${folder}#hydraJobs.x86_64-linux.${arch}-android:lib:support"
     fi
     
-    android_popopx_lib_output="${PWD}/result/pkg-${arch}-android-libpopopx.zip"
+    android_simplex_lib_output="${PWD}/result/pkg-${arch}-android-libsimplex.zip"
     android_support_lib_output="${PWD}/result/pkg-${arch}-android-libsupport.zip"
 
     arch_map "$arch"
 
     android_tmp_folder="${tmp}/android-${arch}"
     android_apk_output="${folder}/apps/multiplatform/android/build/outputs/apk/foss/release/android-foss-${android_arch}-release-unsigned.apk"
-    android_apk_output_final="popopx-chat-${android_arch}.apk"
+    android_apk_output_final="simplex-chat-${android_arch}.apk"
     libs_folder="${folder}/apps/multiplatform/common/src/commonMain/cpp/android/libs"
 
     # Create missing folders
     mkdir -p "$libs_folder/$android_arch"
 
-    nix build "$android_popopx_lib"
-    unzip -o "$android_popopx_lib_output" -d "$libs_folder/$android_arch"
+    nix build "$android_simplex_lib"
+    unzip -o "$android_simplex_lib_output" -d "$libs_folder/$android_arch"
 
     nix build "$android_support_lib"
     unzip -o "$android_support_lib_output" -d "$libs_folder/$android_arch"
 
     # Build only one arch
     sed -i.bak "s/include(.*/include(\"${android_arch}\")/" "$folder/apps/multiplatform/android/build.gradle.kts"
-    gradle -p "$folder/apps/multiplatform/" -Ppopopx.assets.dir=../../assets clean :android:assembleFossRelease
+    gradle -p "$folder/apps/multiplatform/" -Psimplex.assets.dir=../../assets clean :android:assembleFossRelease
 
     mkdir -p "$android_tmp_folder"
     unzip -oqd "$android_tmp_folder" "$android_apk_output"
@@ -157,7 +157,7 @@ build() {
 }
 
 final() {
-  printf 'Popopx-chat was successfully compiled: %s/popopx-chat-*.apk\nDelete nix and gradle caches with "rm -rf /nix && rm $HOME/.nix* && $HOME/.gradle/caches" in case if no longer needed.\n' "$PWD"
+  printf 'Simplex-chat was successfully compiled: %s/simplex-chat-*.apk\nDelete nix and gradle caches with "rm -rf /nix && rm $HOME/.nix* && $HOME/.gradle/caches" in case if no longer needed.\n' "$PWD"
 }
 
 pre() {

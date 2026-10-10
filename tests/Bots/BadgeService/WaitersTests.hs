@@ -11,7 +11,7 @@ import Control.Concurrent.STM
 import Control.Exception (Exception, SomeException, throwIO, try)
 import Data.IORef (newIORef, readIORef)
 import Data.Text (Text)
-import Popopx.Chat.PaymentService.Types (InvoiceId (..), InvoiceStatus (..))
+import Simplex.Chat.PaymentService.Types (InvoiceId (..), InvoiceStatus (..))
 import System.Timeout (timeout)
 import Test.Hspec
 

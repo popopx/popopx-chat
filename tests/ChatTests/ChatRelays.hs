@@ -17,15 +17,15 @@ import qualified Data.ByteString.Lazy.Char8 as LB
 import Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 import ProtocolTests (testGroupProfile)
-import Popopx.Chat.Controller (ChatConfig (..))
-import Popopx.Chat.Protocol (LinkOwnerSig, MsgChatLink (..), MsgContent (..))
-import Popopx.Chat.Types (B64UrlByteString (..), GroupProfile (..))
-import Popopx.Chat.Controller (CorsOrigin (..))
-import Popopx.Chat.Web (WebChannelPreview (..), WebMessage (..), extractOrigin, publicGroupIdFileName, removeStaleFiles, writeCorsConfig)
-import qualified Popopx.Messaging.Crypto as C
-import Popopx.Messaging.Crypto.BBS (bbsKeyGen)
-import Popopx.Messaging.Encoding.String (StrEncoding (..))
-import Popopx.Messaging.Util (decodeJSON)
+import Simplex.Chat.Controller (ChatConfig (..))
+import Simplex.Chat.Protocol (LinkOwnerSig, MsgChatLink (..), MsgContent (..))
+import Simplex.Chat.Types (B64UrlByteString (..), GroupProfile (..))
+import Simplex.Chat.Controller (CorsOrigin (..))
+import Simplex.Chat.Web (WebChannelPreview (..), WebMessage (..), extractOrigin, publicGroupIdFileName, removeStaleFiles, writeCorsConfig)
+import qualified Simplex.Messaging.Crypto as C
+import Simplex.Messaging.Crypto.BBS (bbsKeyGen)
+import Simplex.Messaging.Encoding.String (StrEncoding (..))
+import Simplex.Messaging.Util (decodeJSON)
 import qualified Data.Set as S
 import System.Directory (createDirectoryIfMissing, doesFileExist, listDirectory)
 import System.FilePath (takeExtension, (</>))
@@ -590,7 +590,7 @@ waitFileDeleted path n =
 
 testWebPreviewCors :: HasCallStack => TestParams -> IO ()
 testWebPreviewCors ps = do
-  let corsFile = tmpPath ps </> "popopx-cors.conf"
+  let corsFile = tmpPath ps </> "simplex-cors.conf"
       entries =
         [ ("abc123.json", CorsAny),
           ("def456.json", CorsOrigins ["https://owner-site.com"]),

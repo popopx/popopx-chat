@@ -42,8 +42,8 @@ for ((i = 0 ; i < ${#arches[@]}; i++)); do
     mv libsupport.so "$output_dir" && \
     rm libsupport.zip
 
-    curl --tlsv1.2 --location -o libpopopx.zip "$job_repo"/x86_64-linux."$arch"-android:lib:popopx-chat/latest/download/1 && \
-    unzip -o libpopopx.zip && \
-    mv libpopopx.so "$output_dir" && \
-    rm libpopopx.zip
+    curl --tlsv1.2 --location -o libsimplex.zip "$job_repo"/x86_64-linux."$arch"-android:lib:simplex-chat/latest/download/1 && \
+    unzip -o libsimplex.zip && \
+    mv libsimplex.so "$output_dir" && \
+    rm libsimplex.zip
 done

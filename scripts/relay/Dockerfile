@@ -36,7 +36,7 @@ RUN cabal update || { sleep 5; cabal update; } || { sleep 20; cabal update; }
 ARG CHAT_REF
 WORKDIR /project
 RUN git init -q . \
-    && git remote add origin https://github.com/popopx/popopx-chat \
+    && git remote add origin https://github.com/simplex-chat/simplex-chat \
     && git fetch -q --depth 1 origin "${CHAT_REF}" \
     && git checkout -q FETCH_HEAD
 
@@ -44,10 +44,10 @@ RUN git init -q . \
 RUN --mount=type=cache,target=/root/.cabal/store,sharing=locked \
     --mount=type=cache,target=/project/dist-newstyle,sharing=locked \
     cp scripts/cabal.project.local.linux cabal.project.local \
-    && cabal build -fclient_postgres exe:popopx-chat \
-    && bin=$(find dist-newstyle -name popopx-chat -type f -executable | head -n1) \
-    && install -m 0755 "$bin" /popopx-chat-relay \
-    && strip /popopx-chat-relay
+    && cabal build -fclient_postgres exe:simplex-chat \
+    && bin=$(find dist-newstyle -name simplex-chat -type f -executable | head -n1) \
+    && install -m 0755 "$bin" /simplex-chat-relay \
+    && strip /simplex-chat-relay
 
 # ---- runtime --------------------------------------------------------------
 FROM debian:stable-slim AS runtime
@@ -59,7 +59,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m -u 1000 relay
 
-COPY --from=build /popopx-chat-relay /usr/local/bin/popopx-chat-relay
+COPY --from=build /simplex-chat-relay /usr/local/bin/simplex-chat-relay
 COPY entrypoint.py /usr/local/bin/entrypoint.py
 
 # Bind-mounted host directories must be writable by this UID.

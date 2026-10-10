@@ -15,27 +15,27 @@ else
 fi
 
 LIB_EXT=dylib
-LIB=libpopopx.$LIB_EXT
+LIB=libsimplex.$LIB_EXT
 GHC_LIBS_DIR=$(ghc --print-libdir)
 
-BUILD_DIR=dist-newstyle/build/$ARCH-*/ghc-*/popopx-chat-*
+BUILD_DIR=dist-newstyle/build/$ARCH-*/ghc-*/simplex-chat-*
 
-exports=( $(sed 's/foreign export ccall "chat_migrate_init_key"//' src/Popopx/Chat/Mobile.hs | sed 's/foreign export ccall "chat_reopen_store"//' |grep "foreign export ccall" | cut -d '"' -f2) )
-for elem in "${exports[@]}"; do count=$(grep -R "$elem$" libpopopx.dll.def | wc -l); if [ $count -ne 1 ]; then echo Wrong exports in libpopopx.dll.def. Add \"$elem\" to that file; exit 1; fi ; done
+exports=( $(sed 's/foreign export ccall "chat_migrate_init_key"//' src/Simplex/Chat/Mobile.hs | sed 's/foreign export ccall "chat_reopen_store"//' |grep "foreign export ccall" | cut -d '"' -f2) )
+for elem in "${exports[@]}"; do count=$(grep -R "$elem$" libsimplex.dll.def | wc -l); if [ $count -ne 1 ]; then echo Wrong exports in libsimplex.dll.def. Add \"$elem\" to that file; exit 1; fi ; done
 for elem in "${exports[@]}"; do count=$(grep -R "\"$elem\"" flake.nix | wc -l); if [ $count -ne 2 ]; then echo Wrong exports in flake.nix. Add \"$elem\" in two places of the file; exit 1; fi ; done
 
 rm -rf $BUILD_DIR
 
 if [[ "$DATABASE_BACKEND" == "postgres" ]]; then
     echo "Building with postgres backend..."
-    cabal build lib:popopx-chat lib:popopx-chat --ghc-options="-optl-Wl,-rpath,@loader_path -optl-Wl,-install_name,@rpath/$LIB -optl-Wl,-L$GHC_LIBS_DIR/$ARCH-osx-ghc-$GHC_VERSION -optl-lHSrts_thr-ghc$GHC_VERSION -optl-lffi" --constraint 'popopxmq +client_library +client_postgres' --constraint 'popopx-chat +client_library +client_postgres'
+    cabal build lib:simplex-chat lib:simplex-chat --ghc-options="-optl-Wl,-rpath,@loader_path -optl-Wl,-install_name,@rpath/$LIB -optl-Wl,-L$GHC_LIBS_DIR/$ARCH-osx-ghc-$GHC_VERSION -optl-lHSrts_thr-ghc$GHC_VERSION -optl-lffi" --constraint 'simplexmq +client_library +client_postgres' --constraint 'simplex-chat +client_library +client_postgres'
 else
     echo "Building with sqlite backend..."
-    cabal build lib:popopx-chat lib:popopx-chat --ghc-options="-optl-Wl,-rpath,@loader_path -optl-Wl,-install_name,@rpath/$LIB -optl-Wl,-L$GHC_LIBS_DIR/$ARCH-osx-ghc-$GHC_VERSION -optl-lHSrts_thr-ghc$GHC_VERSION -optl-lffi" --constraint 'popopxmq +client_library' --constraint 'popopx-chat +client_library'
+    cabal build lib:simplex-chat lib:simplex-chat --ghc-options="-optl-Wl,-rpath,@loader_path -optl-Wl,-install_name,@rpath/$LIB -optl-Wl,-L$GHC_LIBS_DIR/$ARCH-osx-ghc-$GHC_VERSION -optl-lHSrts_thr-ghc$GHC_VERSION -optl-lffi" --constraint 'simplexmq +client_library' --constraint 'simplex-chat +client_library'
 fi
 
 cd $BUILD_DIR/build
-mv libHSpopopx-chat-*-inplace-ghc*.$LIB_EXT libpopopx.dylib 2> /dev/null || true
+mv libHSsimplex-chat-*-inplace-ghc*.$LIB_EXT libsimplex.dylib 2> /dev/null || true
 mkdir deps 2> /dev/null || true
 
 # It's not included by default for some reason. Compiled lib tries to find system one but it's not always available

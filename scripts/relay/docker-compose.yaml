@@ -1,4 +1,4 @@
-name: popopx-chat-relay
+name: simplex-chat-relay
 
 services:
   relay:

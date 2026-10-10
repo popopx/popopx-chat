@@ -17,7 +17,7 @@ import Data.Kind (Type)
 import Data.List.NonEmpty (NonEmpty)
 import Data.Typeable
 import GHC.Generics
-import Popopx.Messaging.Parsers (fstToLower)
+import Simplex.Messaging.Parsers (fstToLower)
 
 data APIType
   = ATPrim PrimitiveType
@@ -200,6 +200,7 @@ toTypeInfo tr =
         "AgentInvId",
         "AgentRcvFileId",
         "AgentSndFileId",
+        "AppVersion",
         "BadgeMasterKey",
         "B64UrlByteString",
         "BBSProof",
@@ -219,6 +220,7 @@ toTypeInfo tr =
         "ProofPresHeader",
         "PublicKey",
         "ProtocolServer",
+        "RCSignedInvitation",
         "SbKey",
         "SharedMsgId",
         "Signature",
@@ -248,5 +250,5 @@ toTypeInfo tr =
         "VoiceGroupPreference",
         "FilesGroupPreference",
         "SessionsGroupPreference",
-        "PopopxLinksGroupPreference"
+        "SimplexLinksGroupPreference"
       ]

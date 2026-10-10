@@ -123,11 +123,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "lastModified": 1701680307,
+        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
         "type": "github"
       },
       "original": {
@@ -457,11 +457,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1715594531,
-        "narHash": "sha256-/1Eppd4g/30hU/LKG84VWOgjOfrWfesBqM7eNmnOf08=",
+        "lastModified": 1699767871,
+        "narHash": "sha256-kxeCUfwC/Vgh2FvVMlBUq0eVx1JvfHyN+5MPKUik9mE=",
         "owner": "zw3rk",
         "repo": "mobile-core-tools",
-        "rev": "90e0a52893288bfe85e5ed6bff9cee077e3d18c7",
+        "rev": "4dcb77d5ea896d749381806dfab5358851b08951",
         "type": "github"
       },
       "original": {
@@ -493,16 +493,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1698434055,
-        "narHash": "sha256-Phxi5mUKSoL7A0IYUiYtkI9e8NcGaaV5PJEaJApU1Ko=",
+        "lastModified": 1657693803,
+        "narHash": "sha256-G++2CJ9u0E7NNTAi9n5G8TdDmGJXcIjkJ3NF8cetQB8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1a3c95e3b23b3cdb26750621c08cc2f1560cb883",
+        "rev": "365e1b3a859281cf11b94f87231adeabbdd878a2",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-23.05",
+        "ref": "nixos-22.05-small",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -717,11 +717,11 @@
     "stackage": {
       "flake": false,
       "locked": {
-        "lastModified": 1741565440,
-        "narHash": "sha256-JzFJ1xSm7vdn046HslgPeWRD9iGu0K4PGbRMWQGX1Tw=",
+        "lastModified": 1726532152,
+        "narHash": "sha256-LRXbVY3M2S8uQWdwd2zZrsnVPEvt2GxaHGoy8EFFdJA=",
         "owner": "input-output-hk",
         "repo": "stackage.nix",
-        "rev": "1d323674f9dc25f1b3a6a078532aa024edf75139",
+        "rev": "c77b3530cebad603812cb111c6f64968c2d2337d",
         "type": "github"
       },
       "original": {

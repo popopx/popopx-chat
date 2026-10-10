@@ -2,7 +2,7 @@
 
 set -eu
 
-APP_NAME="popopx-chat"
+APP_NAME="simplex-chat"
 BIN_DIR="$HOME/.local/bin"
 BIN_PATH="$BIN_DIR/$APP_NAME"
 PLATFORM="$(uname)"
@@ -10,11 +10,11 @@ PLATFORM="$(uname)"
 if [ -n "${1:-}" ]; then
   RELEASE="tag/$1"
   DOWNLOAD="download/$1"
-  echo "downloading POPOPX Chat $1 ..."
+  echo "downloading SimpleX Chat $1 ..."
 else
   RELEASE=latest
   DOWNLOAD="latest/download"
-  echo "downloading the latest version of POPOPX Chat ..."
+  echo "downloading the latest version of SimpleX Chat ..."
 fi
 
 if [ $PLATFORM == "Darwin" ]; then
@@ -23,7 +23,7 @@ elif [ $PLATFORM == "Linux" ]; then
   PLATFORM="ubuntu-22_04-x86_64"
 else
   echo "Scripted installation on your platform is not supported."
-  echo "See compiled binaries in the ${1:-latest} release: https://github.com/popopx/$APP_NAME/releases/$RELEASE"
+  echo "See compiled binaries in the ${1:-latest} release: https://github.com/$APP_NAME/$APP_NAME/releases/$RELEASE"
   exit 1
 fi
 
@@ -40,12 +40,12 @@ fi
 
 # If chat binary not found, check v0 initial migration and offer to abort or continue
 if [[ -z $binary ]]; then
-  agent_db="$HOME/.popopx/popopx.agent.db"
+  agent_db="$HOME/.simplex/simplex.agent.db"
   if [[ \
     -f "$agent_db" && \
     $(echo "select * from migrations;" | sqlite3 $agent_db | grep 20210101_initial) \
   ]]; then
-    echo "Warning: found POPOPX Chat database, the current version is not backwards compatible."
+    echo "Warning: found SimpleX Chat database, the current version is not backwards compatible."
     echo "If you continue, the current version will be installed as $APP_NAME with a clean database, the old database will be preserved."
     while true; do
       read -p "Please choose to (a)bort or (c)ontinue: " yn < /dev/tty
@@ -58,7 +58,7 @@ if [[ -z $binary ]]; then
   fi
 # If chat binary found, check version and offer to abort or continue, on continue rename chat binary
 elif [[ ! $($binary -h | grep v1) ]]; then
-  echo "Warning: found a previous version of POPOPX Chat, the current version is not backwards compatible."
+  echo "Warning: found a previous version of SimpleX Chat, the current version is not backwards compatible."
   echo "If you continue, it will be renamed to $APP_NAME-v0, and the new version will be installed as $APP_NAME with a clean database."
   while true; do
     read -p "Please choose (a)bort or (c)ontinue: " yn < /dev/tty
@@ -79,9 +79,9 @@ fi
 [[ ! -d $BIN_DIR ]] && mkdir -p $BIN_DIR
 
 if [ -n "$(command -v curl)" ]; then
-  curl -L -o $BIN_PATH "https://github.com/popopx/$APP_NAME/releases/$DOWNLOAD/$APP_NAME-$PLATFORM"
+  curl -L -o $BIN_PATH "https://github.com/$APP_NAME/$APP_NAME/releases/$DOWNLOAD/$APP_NAME-$PLATFORM"
 elif [ -n "$(command -v wget)" ]; then
-  wget -O $BIN_PATH "https://github.com/popopx/$APP_NAME/releases/$DOWNLOAD/$APP_NAME-$PLATFORM"
+  wget -O $BIN_PATH "https://github.com/$APP_NAME/$APP_NAME/releases/$DOWNLOAD/$APP_NAME-$PLATFORM"
 else
   echo "Cannot download $APP_NAME - please install curl or wget"
   exit 1
