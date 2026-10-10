@@ -21,6 +21,7 @@ module Directory.Service
   ( welcomeGetOpts,
     directoryService,
     directoryServiceCLI,
+    directoryServiceTest,
     newServiceState,
     ServiceState (..),
   )
@@ -273,6 +274,31 @@ directoryService st opts cfg = do
       ]
         <> maybeToList (updateListingsThread_ opts env)
         <> maybeToList (linkCheckThread_ opts env)
+
+-- | Test helper that runs directoryService and returns ServiceState for cleanup
+directoryServiceTest :: DirectoryLog -> DirectoryOpts -> ChatConfig -> IO ServiceState
+directoryServiceTest st opts cfg = do
+  env@ServiceState {eventQ} <- newServiceState opts
+  let chatHooks =
+        defaultChatHooks
+          { preStartHook = Just $ directoryPreStartHook opts,
+            postStartHook = Just $ directoryPostStartHook opts env,
+            acceptMember = Just $ acceptMemberHook opts env
+          }
+  _ <-
+    forkIO $
+      popopxChatCore cfg {chatHooks, updateGroupLinksFromApp = True} (mkChatOpts opts) $ \user cc ->
+        raceAny_ $
+          [ forever $ do
+              (_, resp) <- atomically . readTBQueue $ outputQ cc
+              mapM_ (atomically . writeTQueue eventQ) $ crDirectoryEvent resp,
+            forever $ do
+              event <- atomically $ readTQueue eventQ
+              directoryServiceEvent st opts env user cc event
+          ]
+            <> maybeToList (updateListingsThread_ opts env)
+            <> maybeToList (linkCheckThread_ opts env)
+  pure env
 
 acceptMemberHook :: DirectoryOpts -> ServiceState -> GroupInfo -> GroupLinkInfo -> Profile -> IO (Either GroupRejectionReason (GroupAcceptance, GroupMemberRole))
 acceptMemberHook

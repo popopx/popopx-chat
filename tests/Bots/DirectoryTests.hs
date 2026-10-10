@@ -11,7 +11,6 @@ import ChatTests.DBUtils
 import ChatTests.Groups (memberJoinChannel, prepareChannel1Relay)
 import ChatTests.Utils
 import Control.Concurrent (threadDelay)
-import Control.Concurrent.Async (async, cancel)
 import Control.Concurrent.STM (atomically, peekTQueue, tryReadTMVar)
 import Control.Exception (finally)
 import Control.Monad (forM_, when, void)
@@ -21,6 +20,7 @@ import Directory.Captcha
 import Directory.Listing
 import Directory.Options
 import Directory.Service
+import Directory.Store (DirectoryLog (..))
 import System.Directory (emptyPermissions, setOwnerExecutable, setOwnerReadable, setOwnerWritable, setPermissions)
 import Popopx.Chat.Bot.KnownContacts
 import Popopx.Chat.Controller (ChatConfig (..), ChatController (smpAgent))
@@ -141,6 +141,8 @@ mkDirectoryOpts ps superUsers ownersGroup webFolder =
       profileNameLimit = maxBound,
       captchaGenerator = Nothing,
       voiceCaptchaGenerator = Nothing,
+      directoryLog = Nothing,
+      migrateDirectoryLog = Nothing,
       serviceName = "SimpleX Directory",
       clientService = True,
       runCLI = False,
@@ -1832,10 +1834,10 @@ withDirectoryOwnersGroup ps cfg dsLink createOwnersGroup webFolder test = do
 
 runDirectory :: TestParams -> ChatConfig -> DirectoryOpts -> IO () -> IO ()
 runDirectory ps cfg opts action = do
-  env <- newServiceState opts
-  t <- async $ directoryService opts (fst $ testPortsCfg ps cfg testOpts) env
+  let dirLog = DirectoryLog Nothing
+  env <- directoryServiceTest dirLog opts (fst $ testPortsCfg ps cfg testOpts)
   threadDelay 500000
-  action `finally` (cancel t >> atomically (tryReadTMVar $ serviceCC env) >>= mapM_ (disposeAgentClient . smpAgent))
+  action `finally` (atomically (tryReadTMVar $ serviceCC env) >>= mapM_ (disposeAgentClient . smpAgent))
 
 registerGroup :: TestCC -> TestCC -> String -> String -> IO ()
 registerGroup su u n fn = registerGroupId su u n fn 1 1
