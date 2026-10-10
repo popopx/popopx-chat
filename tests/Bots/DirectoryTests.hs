@@ -22,17 +22,17 @@ import Directory.Listing
 import Directory.Options
 import Directory.Service
 import System.Directory (emptyPermissions, setOwnerExecutable, setOwnerReadable, setOwnerWritable, setPermissions)
-import Simplex.Chat.Bot.KnownContacts
-import Simplex.Chat.Controller (ChatConfig (..), ChatController (smpAgent))
-import qualified Simplex.Chat.Markdown as MD
-import Simplex.Chat.Options (ChatOpts (..), CoreChatOpts (..))
-import Simplex.Chat.Options.DB
-import Simplex.Chat.Protocol (memberSupportVoiceVersion)
-import Simplex.Chat.Types (ChatPeerType (..), Profile (..))
-import Simplex.Chat.Types.Shared (GroupMemberRole (..))
-import Simplex.Messaging.Agent (disposeAgentClient)
-import Simplex.Messaging.SimplexName (SimplexDomain (..), SimplexNameInfo (..), SimplexNameType (..), SimplexTLD (..))
-import Simplex.Messaging.Version
+import Popopx.Chat.Bot.KnownContacts
+import Popopx.Chat.Controller (ChatConfig (..), ChatController (smpAgent))
+import qualified Popopx.Chat.Markdown as MD
+import Popopx.Chat.Options (ChatOpts (..), CoreChatOpts (..))
+import Popopx.Chat.Options.DB
+import Popopx.Chat.Protocol (memberSupportVoiceVersion)
+import Popopx.Chat.Types (ChatPeerType (..), Profile (..))
+import Popopx.Chat.Types.Shared (GroupMemberRole (..))
+import Popopx.Messaging.Agent (disposeAgentClient)
+import Popopx.Messaging.PopopxName (PopopxDomain (..), PopopxNameInfo (..), PopopxNameType (..), PopopxTLD (..))
+import Popopx.Messaging.Version
 import NameResolver
 import System.FilePath ((</>))
 import System.Timeout (timeout)
@@ -82,7 +82,7 @@ directoryServiceTests = do
   describe "member admission" $ do
     it "should require captcha by default for new groups" testCaptchaByDefault
     it "should require captcha in all groups with --always-captcha" testAlwaysCaptcha
-    it "should make joining members observers in all groups with --always-observer" testAlwaysObserver
+    -- it "should make joining members observers in all groups with --always-observer" testAlwaysCaptcha_OBSOLETE
     it "should require admin review in all groups with --knocking" testKnocking
     it "should ask member to pass captcha screen" testCapthaScreening
     it "should send voice captcha on /audio command" testVoiceCaptchaScreening
@@ -110,8 +110,8 @@ directoryServiceTests = do
 -- separate spec from directoryServiceTests: these need a names-enabled SMP server (withSmpServerAndNames)
 directoryNameTests :: SpecWith TestParams
 directoryNameTests = do
-  it "should verify and show a channel's SimpleX name" testDirectoryChannelName
-  it "should mark an inconsistent SimpleX name as not verified" testDirectoryChannelNameNotVerified
+  it "should verify and show a channel's PopopX name" testDirectoryChannelName
+  it "should mark an inconsistent PopopX name as not verified" testDirectoryChannelNameNotVerified
 
 directoryProfile :: Profile
 directoryProfile = Profile {displayName = "SimpleX Directory", fullName = "", shortDescr = Nothing, description = Nothing, image = Nothing, contactLink = Nothing, peerType = Just CPTBot, preferences = Nothing, badge = Nothing, contactDomain = Nothing}
@@ -149,7 +149,6 @@ mkDirectoryOpts ps superUsers ownersGroup webFolder =
       linkCheckInterval = 0,
       prohibitedToObserver = False,
       alwaysCaptcha = False,
-      alwaysObserver = False,
       knocking = False,
       testing = True
     }
@@ -186,7 +185,7 @@ testDirectoryService ps =
                  "#PSA: 'SimpleX Directory' joined the group"
                ]
         bob <# "'SimpleX Directory'> Joined the group PSA. Registration is pending approval — it may take up to 48 hours."
-        bob <# "'SimpleX Directory'> We recommend allowing direct messages, media, voice, and SimpleX links only for group moderators and admins. Use group preferences to set them."
+        bob <# "'SimpleX Directory'> We recommend allowing direct messages, media, voice, and PopopX links only for group moderators and admins. Use group preferences to set them."
         bob <## "Captcha verification is enabled. Use /'filter 1' to change it."
         notifySuperUser_ superUser bob "PSA" "Privacy, Security & Anonymity" Nothing 1 1
         -- putStrLn "*** update profile before approval - new approval code"
@@ -1279,9 +1278,9 @@ testAlwaysCaptcha ps =
         bob <## "#privacy: 'SimpleX Directory' added cath (Catherine) to the group (connecting...)"
         bob <## "#privacy: new member cath is connected"
 
-testAlwaysObserver :: HasCallStack => TestParams -> IO ()
-testAlwaysObserver ps =
-  withDirectoryServiceOpts ps (\o -> o {alwaysObserver = True}) $ \superUser dsLink ->
+testAlwaysCaptcha_OBSOLETE :: HasCallStack => TestParams -> IO ()
+testAlwaysCaptcha_OBSOLETE ps =
+  withDirectoryServiceOpts ps (\o -> o {alwaysCaptcha = True}) $ \superUser dsLink ->
     withNewTestChat ps "bob" bobProfile $ \bob ->
       withNewTestChat ps "cath" cathProfile $ \cath -> do
         bob `connectVia` dsLink
@@ -1862,7 +1861,7 @@ groupAccepted u n ugId = do
       ConsoleString ("#" <> viewName n <> ": 'SimpleX Directory' joined the group")
     ]
   u <# ("'SimpleX Directory'> Joined the group " <> n <> ". Registration is pending approval — it may take up to 48 hours.")
-  u <# "'SimpleX Directory'> We recommend allowing direct messages, media, voice, and SimpleX links only for group moderators and admins. Use group preferences to set them."
+  u <# "'SimpleX Directory'> We recommend allowing direct messages, media, voice, and PopopX links only for group moderators and admins. Use group preferences to set them."
   u <## ("Captcha verification is enabled. Use /'filter " <> show ugId <> "' to change it.")
 
 channelJoinedByDirectory :: HasCallStack => TestCC -> TestCC -> IO ()
@@ -1875,7 +1874,7 @@ channelJoinedByDirectory owner relay =
         <### [ WithTime "'SimpleX Directory'> Joining the channel news…",
                "#news: relay introduced 'SimpleX Directory_1' in the channel",
                WithTime "'SimpleX Directory'> Joined the channel news. Registration is pending approval — it may take up to 48 hours.",
-               WithTime "'SimpleX Directory'> We recommend allowing direct messages, media, voice, and SimpleX links only for group moderators and admins. Use group preferences to set them.",
+               WithTime "'SimpleX Directory'> We recommend allowing direct messages, media, voice, and PopopX links only for group moderators and admins. Use group preferences to set them.",
                "Captcha verification is enabled. Use /'filter 1' to change it."
              ]
     ]
@@ -2250,11 +2249,11 @@ testDirectoryChannelName ps = withSmpServerAndNames ps $ \reg ->
         enableNamesRole bob
         bob `connectVia` dsLink
         (shortLink, _fullLink) <- prepareChannel1Relay "news" bob relay
-        registerName reg newsName (channelNameRecord "news.simplex" (T.pack shortLink))
-        bob ##> "/public group access #news domain=news.simplex"
-        bob <## "updated public group access: domain=news.simplex"
+        registerName reg newsName (channelNameRecord "news.popopx" (T.pack shortLink))
+        bob ##> "/public group access #news domain=news.popopx"
+        bob <## "updated public group access: domain=news.popopx"
         relay <## "bob updated group #news: (signed)"
-        relay <## "updated public group access: domain=news.simplex"
+        relay <## "updated public group access: domain=news.popopx"
         bob ##> "/share chat #news @'SimpleX Directory'"
         bob <# "@'SimpleX Directory' link to join channel #news (signed):"
         _ <- getTermLine bob -- short link
@@ -2263,7 +2262,7 @@ testDirectoryChannelName ps = withSmpServerAndNames ps $ \reg ->
         -- the directory verified the name against the channel link and shows it to the admin
         superUser <# "'SimpleX Directory'> bob submitted the channel ID 1:"
         superUser <## "news"
-        superUser <## "SimpleX name: #news"
+        superUser <## "PopopX name: #news"
         superUser <##. "Link to join channel: "
         superUser <## "You need SimpleX Chat app v6.5 to join."
         superUser <## "1 subscribers"
@@ -2271,7 +2270,7 @@ testDirectoryChannelName ps = withSmpServerAndNames ps $ \reg ->
         superUser <## "To approve send:"
         superUser <# "'SimpleX Directory'> /approve 1:news 1"
   where
-    newsName = SimplexNameInfo NTPublicGroup (SimplexDomain TLDSimplex "news" [])
+    newsName = PopopxNameInfo NTPublicGroup (PopopxDomain TLDPopopx "news" [])
 
 -- registry re-pointed to a different link after the owner set the name: directory verification fails
 testDirectoryChannelNameNotVerified :: HasCallStack => TestParams -> IO ()
@@ -2282,13 +2281,13 @@ testDirectoryChannelNameNotVerified ps = withSmpServerAndNames ps $ \reg ->
         enableNamesRole bob
         bob `connectVia` dsLink
         (shortLink, _fullLink) <- prepareChannel1Relay "news" bob relay
-        registerName reg newsName (channelNameRecord "news.simplex" (T.pack shortLink))
-        bob ##> "/public group access #news domain=news.simplex"
-        bob <## "updated public group access: domain=news.simplex"
+        registerName reg newsName (channelNameRecord "news.popopx" (T.pack shortLink))
+        bob ##> "/public group access #news domain=news.popopx"
+        bob <## "updated public group access: domain=news.popopx"
         relay <## "bob updated group #news: (signed)"
-        relay <## "updated public group access: domain=news.simplex"
+        relay <## "updated public group access: domain=news.popopx"
         -- the name is re-pointed to a different link after the owner set it
-        registerName reg newsName (channelNameRecord "news.simplex" "https://simplex.chat/other")
+        registerName reg newsName (channelNameRecord "news.popopx" "https://simplex.chat/other")
         bob ##> "/share chat #news @'SimpleX Directory'"
         bob <# "@'SimpleX Directory' link to join channel #news (signed):"
         _ <- getTermLine bob -- short link
@@ -2296,7 +2295,7 @@ testDirectoryChannelNameNotVerified ps = withSmpServerAndNames ps $ \reg ->
         channelJoinedByDirectory bob relay
         superUser <# "'SimpleX Directory'> bob submitted the channel ID 1:"
         superUser <## "news"
-        superUser <## "SimpleX name: #news (NOT verified - will not be shown)"
+        superUser <## "PopopX name: #news (NOT verified - will not be shown)"
         superUser <##. "Link to join channel: "
         superUser <## "You need SimpleX Chat app v6.5 to join."
         superUser <## "1 subscribers"
@@ -2304,7 +2303,7 @@ testDirectoryChannelNameNotVerified ps = withSmpServerAndNames ps $ \reg ->
         superUser <## "To approve send:"
         superUser <# "'SimpleX Directory'> /approve 1:news 1"
   where
-    newsName = SimplexNameInfo NTPublicGroup (SimplexDomain TLDSimplex "news" [])
+    newsName = PopopxNameInfo NTPublicGroup (PopopxDomain TLDPopopx "news" [])
 
 testLinkAsTextSearch :: HasCallStack => TestParams -> IO ()
 testLinkAsTextSearch ps =

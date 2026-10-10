@@ -40,11 +40,11 @@ import ViewTests
 #if defined(dbPostgres)
 import Control.Exception (bracket_, finally)
 import PostgresSchemaDump
-import Simplex.Chat.Store.Postgres.Migrations (migrations)
-import Simplex.Messaging.Agent.Store.Postgres.Util (createDBAndUserIfNotExists, dropDatabaseAndUser)
+import Popopx.Chat.Store.Postgres.Migrations (migrations)
+import Popopx.Messaging.Agent.Store.Postgres.Util (createDBAndUserIfNotExists, dropDatabaseAndUser)
 #else
 import APIDocs
-import qualified Simplex.Messaging.TMap as TM
+import qualified Popopx.Messaging.TMap as TM
 import MobileTests
 import SchemaDump
 import WebRTCTests
@@ -66,7 +66,7 @@ main = do
           postgresSchemaDumpTest
             migrations
             schemaDumpDBOpts
-            "src/Simplex/Chat/Store/Postgres/Migrations/chat_schema.sql"
+            "src/Popopx/Chat/Store/Postgres/Migrations/chat_schema.sql"
 #else
       sequential $ describe "Schema dump" schemaDumpTest
 #if MIN_VERSION_base(4,18,0)

@@ -13,7 +13,7 @@ vlc_dir=$root_dir/apps/multiplatform/common/src/commonMain/cpp/desktop/libs/linu
 mkdir $vlc_dir || exit 0
 
 vlc_tag='v3.0.23-2'
-vlc_url="https://github.com/simplex-chat/vlc/releases/download/${vlc_tag}/vlc-linux-${ARCH}.appimage"
+vlc_url="https://github.com/popopx-chat/vlc/releases/download/${vlc_tag}/vlc-linux-${ARCH}.appimage"
 
 cd /tmp
 mkdir tmp 2>/dev/null || true

@@ -4,7 +4,7 @@ module MemberRelationsTests where
 
 import Control.Monad
 import qualified Data.ByteString as B
-import Simplex.Chat.Types.MemberRelations
+import Popopx.Chat.Types.MemberRelations
 import Test.Hspec
 
 memberRelationsTests :: Spec

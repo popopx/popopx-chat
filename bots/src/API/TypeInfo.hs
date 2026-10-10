@@ -17,7 +17,7 @@ import Data.Kind (Type)
 import Data.List.NonEmpty (NonEmpty)
 import Data.Typeable
 import GHC.Generics
-import Simplex.Messaging.Parsers (fstToLower)
+import Popopx.Messaging.Parsers (fstToLower)
 
 data APIType
   = ATPrim PrimitiveType
@@ -250,5 +250,5 @@ toTypeInfo tr =
         "VoiceGroupPreference",
         "FilesGroupPreference",
         "SessionsGroupPreference",
-        "SimplexLinksGroupPreference"
+        "PopopxLinksGroupPreference"
       ]

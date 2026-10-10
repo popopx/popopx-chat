@@ -12,8 +12,8 @@ import API.Docs.Types
 import API.TypeInfo
 import Data.List (find)
 import GHC.Generics
-import Simplex.Chat.Controller
-import Simplex.Messaging.Parsers (dropPrefix)
+import Popopx.Chat.Controller
+import Popopx.Messaging.Parsers (dropPrefix)
 
 data CRDoc = CRDoc
   { consName :: ConsName,

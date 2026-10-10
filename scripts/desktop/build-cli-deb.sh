@@ -4,12 +4,12 @@ set -eu
 export SOURCE_DATE_EPOCH=1764547200
 
 CLI_VERSION="$1"
-CLI_PATH_TO_BIN="${2:-/out/simplex-chat}"
+CLI_PATH_TO_BIN="${2:-/out/popopx-chat}"
 BUILD_FOLDER="${3:-/out/deb-build}"
 
 size=$(stat -c '%s' "$CLI_PATH_TO_BIN" | awk '{printf "%.0f\n", ($1+1023)/1024}')
 arch=$(case "$(uname -m)" in x86_64) printf "amd64" ;; aarch64) printf "arm64" ;; *) printf "unknown" ;; esac)
-package='simplex-chat'
+package='popopx-chat'
 
 mkdir "$BUILD_FOLDER"
 cd "$BUILD_FOLDER"
@@ -27,8 +27,8 @@ Description: SimpleX - the first messaging platform that has no user identifiers
 Installed-Size: ${size}
 EOF
 
-cp "$CLI_PATH_TO_BIN" ./${package}/usr/bin/simplex-chat
-chmod +x ./${package}/usr/bin/simplex-chat
+cp "$CLI_PATH_TO_BIN" ./${package}/usr/bin/popopx-chat
+chmod +x ./${package}/usr/bin/popopx-chat
 
 find ./${package} -exec touch -d "@${SOURCE_DATE_EPOCH}" {} +
 

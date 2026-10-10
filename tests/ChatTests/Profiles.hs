@@ -23,22 +23,22 @@ import Data.Time.Clock (UTCTime, addUTCTime, getCurrentTime, nominalDay)
 import Data.Time.Clock.POSIX (posixSecondsToUTCTime, utcTimeToPOSIXSeconds)
 import Data.Time.Format (defaultTimeLocale, formatTime)
 import qualified Data.Map.Strict as M
-import Simplex.Chat.Badges (BadgeCredential, BadgeInfo (..), BadgePurchase (..), BadgeRequest (..), BadgeType (..), generateMasterKey, issueBadge, verifyPayment)
-import Simplex.Chat.Controller (ChatConfig (..), ChatHooks (..), defaultChatHooks, storeCxt)
-import Simplex.Chat.Options (ChatOpts (..), CoreChatOpts (..))
-import Simplex.Chat.Protocol (LinkOwnerSig, MsgChatLink (..), MsgContent (..))
-import Simplex.Chat.Store.Shared (createContact)
-import Simplex.Chat.Types (ConnStatus (..), Profile (..), GroupRejectionReason (..), profileFromName)
-import qualified Simplex.Messaging.Crypto as C
-import Simplex.Messaging.Crypto.BBS (BBSPublicKey, BBSSecretKey, bbsKeyGen)
-import Simplex.Chat.Types.Shared (GroupMemberRole (..))
-import Simplex.Chat.Types.UITheme
-import Simplex.Messaging.Agent.Env.SQLite
-import Simplex.Messaging.Agent.RetryInterval
-import Simplex.Messaging.Encoding.String (StrEncoding (..))
-import Simplex.Messaging.Server.Env.STM hiding (subscriptions)
-import Simplex.Messaging.Transport
-import Simplex.Messaging.Util (decodeJSON, encodeJSON)
+import Popopx.Chat.Badges (BadgeCredential, BadgeInfo (..), BadgePurchase (..), BadgeRequest (..), BadgeType (..), generateMasterKey, issueBadge, verifyPayment)
+import Popopx.Chat.Controller (ChatConfig (..), ChatHooks (..), defaultChatHooks, storeCxt)
+import Popopx.Chat.Options (ChatOpts (..), CoreChatOpts (..))
+import Popopx.Chat.Protocol (LinkOwnerSig, MsgChatLink (..), MsgContent (..))
+import Popopx.Chat.Store.Shared (createContact)
+import Popopx.Chat.Types (ConnStatus (..), Profile (..), GroupRejectionReason (..), profileFromName)
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.BBS (BBSPublicKey, BBSSecretKey, bbsKeyGen)
+import Popopx.Chat.Types.Shared (GroupMemberRole (..))
+import Popopx.Chat.Types.UITheme
+import Popopx.Messaging.Agent.Env.SQLite
+import Popopx.Messaging.Agent.RetryInterval
+import Popopx.Messaging.Encoding.String (StrEncoding (..))
+import Popopx.Messaging.Server.Env.STM hiding (subscriptions)
+import Popopx.Messaging.Transport
+import Popopx.Messaging.Util (decodeJSON, encodeJSON)
 import System.Directory (copyFile, createDirectoryIfMissing)
 import Test.Hspec hiding (it)
 
@@ -127,7 +127,7 @@ chatProfileTests = do
     describe "group preferences for specific member role" $ do
       it "direct messages" testGroupPrefsDirectForRole
       it "files & media" testGroupPrefsFilesForRole
-      it "SimpleX links" testGroupPrefsSimplexLinksForRole
+      it "PopopX links" testGroupPrefsPopopxLinksForRole
     it "set user, contact and group UI theme" testSetUITheme
   describe "short links" $ do
     it "should connect via one-time invitation" testShortLinkInvitation
@@ -354,7 +354,7 @@ testMemberDescriptionRedacted =
       alice ##> "/g team"
       alice <## "group #team is created"
       alice <## "to add members use /a team <name> or /create link #team"
-      -- prohibit direct messages (and thus simplex links) before members join
+      -- prohibit direct messages (and thus popopx links) before members join
       alice ##> "/set direct #team off"
       alice <## "updated group preferences:"
       alice <## "Direct messages: off"
@@ -410,7 +410,7 @@ issueTestBadgeType sk badgeType expiry = do
   Right cred <- issueBadge 1 sk vreq
   pure cred
 
--- the same single-line JSON `simplex-chat badge sign` prints, pasted into the app
+-- the same single-line JSON `popopx-chat badge sign` prints, pasted into the app
 addTestBadge :: HasCallStack => TestCC -> BadgeCredential -> IO ()
 addTestBadge cc cred = do
   cc ##> ("/badge add " <> T.unpack (encodeJSON cred))
@@ -3222,29 +3222,29 @@ testGroupPrefsFilesForRole = testChat3 aliceProfile bobProfile cathProfile $
       cc <## "updated group preferences:"
       cc <## "Files and media: on for owners"
 
-testGroupPrefsSimplexLinksForRole :: HasCallStack => TestParams -> IO ()
-testGroupPrefsSimplexLinksForRole = testChat3 aliceProfile bobProfile cathProfile $
+testGroupPrefsPopopxLinksForRole :: HasCallStack => TestParams -> IO ()
+testGroupPrefsPopopxLinksForRole = testChat3 aliceProfile bobProfile cathProfile $
   \alice bob cath -> withXFTPServer alice $ do
     createGroup3 "team" alice bob cath
     threadDelay 1000000
     alice ##> "/set links #team on owner"
     alice <## "updated group preferences:"
-    alice <## "SimpleX links: on for owners"
+    alice <## "PopopX links: on for owners"
     linksForOwners bob
     linksForOwners cath
     threadDelay 1000000
     bob ##> "/c"
     inv <- getInvitation bob
     bob ##> ("#team \"" <> inv <> "\\ntest\"")
-    bob <## "bad chat command: feature not allowed SimpleX links"
+    bob <## "bad chat command: feature not allowed PopopX links"
     bob ##> ("/_send #1 json [{\"msgContent\": {\"type\": \"text\", \"text\": \"" <> inv <> "\\ntest\"}}]")
-    bob <## "bad chat command: feature not allowed SimpleX links"
+    bob <## "bad chat command: feature not allowed PopopX links"
     -- a link split with a space or a newline is still blocked
     let (lnk1, lnk2) = splitAt 12 inv
     bob ##> ("#team \"" <> lnk1 <> " " <> lnk2 <> "\"")
-    bob <## "bad chat command: feature not allowed SimpleX links"
+    bob <## "bad chat command: feature not allowed PopopX links"
     bob ##> ("#team \"" <> lnk1 <> "\\n" <> lnk2 <> "\"")
-    bob <## "bad chat command: feature not allowed SimpleX links"
+    bob <## "bad chat command: feature not allowed PopopX links"
     (alice </)
     (cath </)
     bob `send` ("@alice \"" <> inv <> "\\ntest\"")
@@ -3253,7 +3253,7 @@ testGroupPrefsSimplexLinksForRole = testChat3 aliceProfile bobProfile cathProfil
     alice <# ("bob> " <> inv)
     alice <## "test"
     bob ##> "#team <- @alice https://simplex.chat"
-    bob <## "bad chat command: feature not allowed SimpleX links"
+    bob <## "bad chat command: feature not allowed PopopX links"
     alice #> ("#team " <> inv)
     bob <# ("#team alice> " <> inv)
     cath <# ("#team alice> " <> inv)
@@ -3262,7 +3262,7 @@ testGroupPrefsSimplexLinksForRole = testChat3 aliceProfile bobProfile cathProfil
     linksForOwners cc = do
       cc <## "alice updated group #team: (signed)"
       cc <## "updated group preferences:"
-      cc <## "SimpleX links: on for owners"
+      cc <## "PopopX links: on for owners"
 
 testSetUITheme :: HasCallStack => TestParams -> IO ()
 testSetUITheme =
@@ -3337,7 +3337,7 @@ testPlanShortLinkInvitation =
     (inv, _) <- getInvitations alice
     alice ##> ("/_connect plan 1 " <> inv)
     alice <## "invitation link: own link"
-    alice ##> ("/_connect plan 1 " <> slSimplexScheme inv)
+    alice ##> ("/_connect plan 1 " <> slPopopxScheme inv)
     alice <## "invitation link: own link"
     bob ##> ("/_connect plan 1 " <> inv)
     bob <## "invitation link: ok to connect"
@@ -3351,8 +3351,8 @@ testPlanShortLinkInvitation =
     bob ##> ("/_connect plan 1 " <> inv)
     bob <## "invitation link: ok to connect"
     _sLinkData <- getTermLine bob
-    -- with simplex: scheme too
-    bob ##> ("/_connect plan 1 " <> slSimplexScheme inv)
+    -- with popopx: scheme too
+    bob ##> ("/_connect plan 1 " <> slPopopxScheme inv)
     bob <## "invitation link: ok to connect"
     _sLinkData <- getTermLine bob
     bob ##> ("/c " <> inv)
@@ -3369,8 +3369,8 @@ testPlanShortLinkInvitation =
     alice ##> ("/_connect plan 1 " <> inv)
     alice <##. "error: connection authorization failed" -- short_link_inv and conn_req_inv are removed after connection
 
-slSimplexScheme :: String -> String
-slSimplexScheme sl = T.unpack $ T.replace "https://localhost/" "simplex:/" (T.pack sl) <> "?h=localhost"
+slPopopxScheme :: String -> String
+slPopopxScheme sl = T.unpack $ T.replace "https://localhost/" "popopx:/" (T.pack sl) <> "?h=localhost"
 
 testShareAddressViaChat :: HasCallStack => TestParams -> IO ()
 testShareAddressViaChat =
@@ -3411,15 +3411,15 @@ testShortLinkContactAddress =
     (shortLink, fullLink) <- getContactLinks alice True
     alice ##> ("/_connect plan 1 " <> shortLink)
     alice <## "contact address: own address"
-    alice ##> ("/_connect plan 1 " <> slSimplexScheme shortLink)
+    alice ##> ("/_connect plan 1 " <> slPopopxScheme shortLink)
     alice <## "contact address: own address"
     alice ##> ("/_connect plan 1 " <> fullLink)
     alice <## "contact address: own address"
     (alice, bob) `connectVia` shortLink
-    bob ##> ("/_connect plan 1 " <> slSimplexScheme shortLink)
+    bob ##> ("/_connect plan 1 " <> slPopopxScheme shortLink)
     bob <## "contact address: known contact alice"
     bob <## "use @alice <message> to send messages"
-    (alice, cath) `connectVia` slSimplexScheme shortLink
+    (alice, cath) `connectVia` slPopopxScheme shortLink
     cath ##> ("/_connect plan 1 " <> shortLink)
     cath <## "contact address: known contact alice"
     cath <## "use @alice <message> to send messages"
@@ -3455,7 +3455,7 @@ testShortLinkJoinGroup =
     (shortLink, fullLink) <- getGroupLinks alice "team" GRMember True
     alice ##> ("/_connect plan 1 " <> shortLink)
     alice <## "group link: own link for group #team"
-    alice ##> ("/_connect plan 1 " <> slSimplexScheme shortLink)
+    alice ##> ("/_connect plan 1 " <> slPopopxScheme shortLink)
     alice <## "group link: own link for group #team"
     alice ##> ("/_connect plan 1 " <> fullLink)
     alice <## "group link: own link for group #team"
@@ -3463,17 +3463,17 @@ testShortLinkJoinGroup =
     bob ##> ("/_connect plan 1 " <> shortLink)
     bob <## "group link: known group #team"
     bob <## "use #team <message> to send messages"
-    bob ##> ("/_connect plan 1 " <> slSimplexScheme shortLink)
+    bob ##> ("/_connect plan 1 " <> slPopopxScheme shortLink)
     bob <## "group link: known group #team"
     bob <## "use #team <message> to send messages"
-    joinGroup alice cath $ slSimplexScheme shortLink
+    joinGroup alice cath $ slPopopxScheme shortLink
     concurrentlyN_
       [ do
           bob <## "#team: alice added cath (Catherine) to the group (connecting...)"
           bob <## "#team: new member cath is connected",
         cath <## "#team: member bob (Bob) is connected"
       ]
-    cath ##> ("/_connect plan 1 " <> slSimplexScheme shortLink)
+    cath ##> ("/_connect plan 1 " <> slPopopxScheme shortLink)
     cath <## "group link: known group #team"
     cath <## "use #team <message> to send messages"
     cath ##> ("/_connect plan 1 " <> shortLink)

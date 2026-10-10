@@ -8,8 +8,8 @@ init_dir="$PWD"
 
 ghc='9.6.3'
 
-repo_name="simplex-chat"
-repo="https://github.com/simplex-chat/${repo_name}"
+repo_name="popopx-chat"
+repo="https://github.com/popopx-chat/${repo_name}"
 
 image_name='sx-local'
 container_name='sx-builder'
@@ -46,9 +46,9 @@ for os_pair in ${oses}; do
     hash="${os_pair#*@}"
     os_url="$(printf '%s' "${os}" | tr '.' '_')"
 
-    cli_name="simplex-chat-ubuntu-${os_url}-x86_64"
-    deb_name="simplex-desktop-ubuntu-${os_url}-x86_64.deb"
-    appimage_name="simplex-desktop-x86_64.AppImage"
+    cli_name="popopx-chat-ubuntu-${os_url}-x86_64"
+    deb_name="popopx-desktop-ubuntu-${os_url}-x86_64.deb"
+    appimage_name="popopx-desktop-x86_64.AppImage"
 
     # Build image
     docker build \
@@ -81,11 +81,11 @@ for os_pair in ${oses}; do
     # CLI
     docker exec \
         -t "${container_name}" \
-        sh -c 'cabal clean && cabal update && cabal build -j && mkdir -p /out && for i in simplex-chat; do bin=$(find /project/dist-newstyle -name "$i" -type f -executable) && chmod +x "$bin" && mv "$bin" /out/; done && strip /out/simplex-chat'
+        sh -c 'cabal clean && cabal update && cabal build -j && mkdir -p /out && for i in popopx-chat; do bin=$(find /project/dist-newstyle -name "$i" -type f -executable) && chmod +x "$bin" && mv "$bin" /out/; done && strip /out/popopx-chat'
 
     # Copy CLI
     docker cp \
-        "${container_name}":/out/simplex-chat \
+        "${container_name}":/out/popopx-chat \
         "${init_dir}/${TAG}-${repo_name}/from-source/${cli_name}"
 
     # Download prebuilt CLI binary
@@ -100,7 +100,7 @@ for os_pair in ${oses}; do
 
     # Copy CLI: deb
     docker cp \
-        "${container_name}":/out/deb-build/simplex-chat.deb \
+        "${container_name}":/out/deb-build/popopx-chat.deb \
         "${init_dir}/${TAG}-${repo_name}/from-source/${cli_name}.deb"
 
     # Download prebuilt CLI: deb binary
@@ -115,7 +115,7 @@ for os_pair in ${oses}; do
 
     # Copy deb
     docker cp \
-        "${container_name}":/project/apps/multiplatform/release/main/deb/simplex_x86_64.deb \
+        "${container_name}":/project/apps/multiplatform/release/main/deb/popopx_x86_64.deb \
         "${init_dir}/${TAG}-${repo_name}/from-source/${deb_name}"
 
     # Download prebuilt deb package
@@ -129,11 +129,11 @@ for os_pair in ${oses}; do
             # Appimage
             docker exec \
                 -t "${container_name}" \
-                sh -c "export ASSETS_DIR='../../assets'; ./scripts/desktop/make-appimage-linux.sh && mv ./apps/multiplatform/release/main/*imple*.AppImage ./apps/multiplatform/release/main/simplex.appimage"
+                sh -c "export ASSETS_DIR='../../assets'; ./scripts/desktop/make-appimage-linux.sh && mv ./apps/multiplatform/release/main/*popopx*.AppImage ./apps/multiplatform/release/main/popopx.appimage"
 
             # Copy appimage
             docker cp \
-                "${container_name}":/project/apps/multiplatform/release/main/simplex.appimage \
+                "${container_name}":/project/apps/multiplatform/release/main/popopx.appimage \
                 "${init_dir}/${TAG}-${repo_name}/from-source/${appimage_name}"
 
             # Download prebuilt appimage binary

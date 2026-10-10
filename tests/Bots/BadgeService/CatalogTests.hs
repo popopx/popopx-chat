@@ -14,10 +14,10 @@ import Data.Text.Read (decimal)
 import Data.Time.Clock (UTCTime)
 import Data.Time.Clock.POSIX (posixSecondsToUTCTime)
 import Data.Word (Word32, Word8)
-import Simplex.Chat.Badges (BadgeType (..))
-import Simplex.Chat.Badges.Service (BadgeOffer (..), BadgePrice (..))
-import Simplex.Chat.Badges.Types (BadgeItemStatus (..), BadgeOfferId (..), BadgePriceId (..), OfferDiscount (..))
-import Simplex.Chat.PaymentService.Types (CurrencyAmount (..))
+import Popopx.Chat.Badges (BadgeType (..))
+import Popopx.Chat.Badges.Service (BadgeOffer (..), BadgePrice (..))
+import Popopx.Chat.Badges.Types (BadgeItemStatus (..), BadgeOfferId (..), BadgePriceId (..), OfferDiscount (..))
+import Popopx.Chat.PaymentService.Types (CurrencyAmount (..))
 import Test.Hspec
 
 badgeCatalogTests :: Spec
@@ -202,7 +202,7 @@ testPriceOfferAnyPrice = do
 
 testNoDriftFromWeb :: IO ()
 testNoDriftFromWeb = do
-  src <- T.readFile "apps/simplex-badge-service/web/src/catalog.ts"
+  src <- T.readFile "apps/popopx-badge-service/web/src/catalog.ts"
   case parseCatalogSource src of
     Nothing -> expectationFailure "could not parse CATALOG out of web/src/catalog.ts -- its shape has changed"
     Just (webPrices, webOffers) -> do

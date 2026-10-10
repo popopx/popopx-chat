@@ -250,7 +250,7 @@ pattern OwsfTag = (SingleFieldJSONTag, J.Bool True)
 -- encLength32 = 4*4 OCTET ; uint32, includes authTag
 -- ```
 
--- See https://github.com/simplex-chat/simplexmq/blob/master/rfcs/2023-10-25-remote-control.md for encoding
+-- See https://github.com/popopx/popopxmq/blob/master/rfcs/2023-10-25-remote-control.md for encoding
 
 encryptEncodeHTTP2Body :: Word32 -> C.SbKeyNonce -> RemoteCrypto -> LazyByteString -> ExceptT RemoteProtocolError IO Builder
 encryptEncodeHTTP2Body corrId cmdKN RemoteCrypto {sessionCode, signatures, compression} s = do

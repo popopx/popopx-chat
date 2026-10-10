@@ -16,17 +16,17 @@ module OperatorTests (operatorTests) where
 
 import Data.Bifunctor (second)
 import qualified Data.List.NonEmpty as L
-import Simplex.Chat
-import Simplex.Chat.Controller (ChatConfig (..), PresetServers (..))
-import Simplex.Chat.Operators
-import Simplex.Chat.Operators.Presets
-import Simplex.Chat.Protocol (RelayProfile (..), mkRelayProfile)
-import Simplex.Chat.Types
-import Simplex.FileTransfer.Client.Presets (defaultXFTPServers)
-import Simplex.Messaging.Agent.Env.SQLite (ServerCfg (..), ServerRoles (..), allRoles)
-import Simplex.Messaging.Agent.Store.Entity
-import Simplex.Messaging.Encoding.String
-import Simplex.Messaging.Protocol
+import Popopx.Chat
+import Popopx.Chat.Controller (ChatConfig (..), PresetServers (..))
+import Popopx.Chat.Operators
+import Popopx.Chat.Operators.Presets
+import Popopx.Chat.Protocol (RelayProfile (..), mkRelayProfile)
+import Popopx.Chat.Types
+import Popopx.FileTransfer.Client.Presets (defaultXFTPServers)
+import Popopx.Messaging.Agent.Env.SQLite (ServerCfg (..), ServerRoles (..), allRoles)
+import Popopx.Messaging.Agent.Store.Entity
+import Popopx.Messaging.Encoding.String
+import Popopx.Messaging.Protocol
 import Test.Hspec
 
 operatorTests :: Spec
@@ -92,9 +92,9 @@ updatedServersTest = describe "validate user servers" $ do
     uss <-
       groupByOperator'
         ( ops'',
-          saveSrvs $ take 3 simplexChatSMPServers <> [newUserServer "smp://abcd@smp.example.im"],
+          saveSrvs $ take 3 popopxChatSMPServers <> [newUserServer "smp://abcd@smp.example.im"],
           saveSrvs $ map (presetServer True) $ L.take 3 defaultXFTPServers,
-          saveRelays $ take 2 simplexChatRelays <> [newChatRelay (mkRelayProfile "custom_relay" Nothing) ["example.im"] customRelayAddr]
+          saveRelays $ take 2 popopxChatRelays <> [newChatRelay (mkRelayProfile "custom_relay" Nothing) ["example.im"] customRelayAddr]
         )
     [op1, op2, op3] <- pure $ map updatedUserServers uss
     [p1, p2] <- pure operators -- presets
@@ -182,7 +182,7 @@ perServerRolesTest = describe "per-server roles" $ do
       let (_errs, warns) = validateUserServers [selfHostedUser (ServerRolesOverride Nothing Nothing (Just True))] []
       warns `shouldSatisfy` notElem (USWNoNamesServers Nothing)
   where
-    testOp = operatorSimpleXChat {operatorId = DBEntityId 1}
+    testOp = operatorPopopXChat {operatorId = DBEntityId 1}
     opDomains = operatorDomains [testOp]
     -- host matches no operator domain -> self-hosted
     selfHostedSMP :: ServerRolesOverride -> NewUserServer 'PSMP
@@ -210,10 +210,10 @@ deriving instance Eq UserServersWarning
 valid :: UpdatedUserOperatorServers
 valid =
   UpdatedUserOperatorServers
-    { operator = Just operatorSimpleXChat {operatorId = DBEntityId 1},
-      smpServers = map (AUS SDBNew) simplexChatSMPServers,
+    { operator = Just operatorPopopXChat {operatorId = DBEntityId 1},
+      smpServers = map (AUS SDBNew) popopxChatSMPServers,
       xftpServers = map (AUS SDBNew . presetServer True) $ L.toList defaultXFTPServers,
-      chatRelays = map (AUCR SDBNew) simplexChatRelays
+      chatRelays = map (AUCR SDBNew) popopxChatRelays
     }
 
 invalidNoServers :: UpdatedUserOperatorServers
@@ -222,25 +222,25 @@ invalidNoServers = (valid :: UpdatedUserOperatorServers) {smpServers = []}
 invalidDisabled :: UpdatedUserOperatorServers
 invalidDisabled =
   (valid :: UpdatedUserOperatorServers)
-    { smpServers = map (AUS SDBNew . (\srv -> (srv :: NewUserServer 'PSMP) {enabled = False})) simplexChatSMPServers
+    { smpServers = map (AUS SDBNew . (\srv -> (srv :: NewUserServer 'PSMP) {enabled = False})) popopxChatSMPServers
     }
 
 invalidDisabledOp :: UpdatedUserOperatorServers
 invalidDisabledOp =
   (valid :: UpdatedUserOperatorServers)
-    { operator = Just operatorSimpleXChat {operatorId = DBEntityId 1, enabled = False}
+    { operator = Just operatorPopopXChat {operatorId = DBEntityId 1, enabled = False}
     }
 
 invalidNoStorage :: UpdatedUserOperatorServers
 invalidNoStorage =
   (valid :: UpdatedUserOperatorServers)
-    { operator = Just operatorSimpleXChat {operatorId = DBEntityId 1, smpRoles = allRoles {storage = False}}
+    { operator = Just operatorPopopXChat {operatorId = DBEntityId 1, smpRoles = allRoles {storage = False}}
     }
 
 invalidDuplicateSrv :: UpdatedUserOperatorServers
 invalidDuplicateSrv =
   (valid :: UpdatedUserOperatorServers)
-    { smpServers = map (AUS SDBNew) $ simplexChatSMPServers <> [presetServer True "smp://abcd@smp8.simplex.im"]
+    { smpServers = map (AUS SDBNew) $ popopxChatSMPServers <> [presetServer True "smp://abcd@smp8.simplex.im"]
     }
 
 invalidNoChatRelays :: UpdatedUserOperatorServers
@@ -249,13 +249,13 @@ invalidNoChatRelays = (valid :: UpdatedUserOperatorServers) {chatRelays = []}
 duplicateChatRelayName :: UpdatedUserOperatorServers
 duplicateChatRelayName =
   (valid :: UpdatedUserOperatorServers)
-    { chatRelays = map (AUCR SDBNew) $ simplexChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_1" Nothing) ["simplex.im"] (either error id $ strDecode "https://smp444.simplex.im/r#Pz9qz7ZVljMofoRxiDDpL_w2DZSazK8IgafxqnWKv6Y")]
+    { chatRelays = map (AUCR SDBNew) $ popopxChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_1" Nothing) ["simplex.im"] (either error id $ strDecode "https://smp444.simplex.im/r#Pz9qz7ZVljMofoRxiDDpL_w2DZSazK8IgafxqnWKv6Y")]
     }
 
 invalidDuplicateChatRelayAddress :: UpdatedUserOperatorServers
 invalidDuplicateChatRelayAddress =
   (valid :: UpdatedUserOperatorServers)
-    { chatRelays = map (AUCR SDBNew) $ simplexChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_4" Nothing) ["simplex.im"] duplicateAddr]
+    { chatRelays = map (AUCR SDBNew) $ popopxChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_4" Nothing) ["simplex.im"] duplicateAddr]
     }
 
 duplicateAddr :: ShortLinkContact

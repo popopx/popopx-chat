@@ -18,8 +18,8 @@ import BadgeService.Options
 import BadgeService.Service
 import BadgeService.Store (IssuedCode (..), getBadgeCode)
 import BadgeService.Store.Invoices (markCodePaid)
-import Simplex.Messaging.Agent.Store.DB (Binary (..))
-import qualified Simplex.Messaging.Agent.Store.DB as DB
+import Popopx.Messaging.Agent.Store.DB (Binary (..))
+import qualified Popopx.Messaging.Agent.Store.DB as DB
 import ChatClient
 import ChatTests.DBUtils
 import ChatTests.Utils
@@ -43,26 +43,26 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Time.Clock (NominalDiffTime, UTCTime, addUTCTime, diffUTCTime, getCurrentTime, nominalDay)
 import Data.Time.Format (defaultTimeLocale, formatTime)
-import Simplex.Chat.Badges (BadgeCredential (..), BadgeInfo (..), BadgeMasterKey, BadgeType (..), generateMasterKey)
-import Simplex.Chat.Badges.Code (BadgeCode, badgeCodeHash, badgeCodeText, formatBadgeCode, parseBadgeCode, randomBadgeCode)
-import Simplex.Chat.Badges.Ledger (addMonths, creditTypeTag, debitTypeTag, endOfMondayAfter)
-import Simplex.Chat.Badges.Service
-import Simplex.Chat.Badges.Types (BadgeCodePaymentStatus (..))
-import Simplex.Chat.Bot.Store (withDB')
-import Simplex.Chat.Controller (ChatConfig (..), ChatController (..), ChatError (..), ChatErrorType (..), ChatResponse (CRCustomChatResponse))
-import Simplex.Chat.Core (sendChatCmdStr)
-import Simplex.Chat.Options (ChatOpts (..), CoreChatOpts (..))
-import Simplex.Chat.Options.DB
-import Simplex.Messaging.Agent (disposeAgentClient)
-import Simplex.Messaging.Agent.Env.SQLite (AgentConfig (..))
-import Simplex.Messaging.Agent.RetryInterval (RetryInterval (..))
-import Simplex.Messaging.Agent.Store.Common (DBStore, withTransaction)
-import Simplex.Messaging.Agent.Store.DB (BoolInt (..))
-import Simplex.Chat.Types (ChatPeerType (..), Profile (..))
-import qualified Simplex.Messaging.Crypto as C
-import Simplex.Messaging.Crypto.BBS (BBSSecretKey, bbsKeyGen)
-import Simplex.Messaging.Encoding.String (strDecode, strEncode, textEncode)
-import Simplex.Messaging.Util (safeDecodeUtf8, tshow)
+import Popopx.Chat.Badges (BadgeCredential (..), BadgeInfo (..), BadgeMasterKey, BadgeType (..), generateMasterKey)
+import Popopx.Chat.Badges.Code (BadgeCode, badgeCodeHash, badgeCodeText, formatBadgeCode, parseBadgeCode, randomBadgeCode)
+import Popopx.Chat.Badges.Ledger (addMonths, creditTypeTag, debitTypeTag, endOfMondayAfter)
+import Popopx.Chat.Badges.Service
+import Popopx.Chat.Badges.Types (BadgeCodePaymentStatus (..))
+import Popopx.Chat.Bot.Store (withDB')
+import Popopx.Chat.Controller (ChatConfig (..), ChatController (..), ChatError (..), ChatErrorType (..), ChatResponse (CRCustomChatResponse))
+import Popopx.Chat.Core (sendChatCmdStr)
+import Popopx.Chat.Options (ChatOpts (..), CoreChatOpts (..))
+import Popopx.Chat.Options.DB
+import Popopx.Messaging.Agent (disposeAgentClient)
+import Popopx.Messaging.Agent.Env.SQLite (AgentConfig (..))
+import Popopx.Messaging.Agent.RetryInterval (RetryInterval (..))
+import Popopx.Messaging.Agent.Store.Common (DBStore, withTransaction)
+import Popopx.Messaging.Agent.Store.DB (BoolInt (..))
+import Popopx.Chat.Types (ChatPeerType (..), Profile (..))
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.BBS (BBSSecretKey, bbsKeyGen)
+import Popopx.Messaging.Encoding.String (strDecode, strEncode, textEncode)
+import Popopx.Messaging.Util (safeDecodeUtf8, tshow)
 import System.FilePath ((</>))
 #if defined(dbPostgres)
 import Database.PostgreSQL.Simple (Only (..))

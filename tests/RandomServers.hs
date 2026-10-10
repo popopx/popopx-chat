@@ -15,11 +15,11 @@ import Data.Foldable (foldMap')
 import Data.List (sortOn)
 import Data.List.NonEmpty (NonEmpty)
 import Data.Monoid (Sum (..))
-import Simplex.Chat (defaultChatConfig, chooseRandomServers)
-import Simplex.Chat.Controller (ChatConfig (..), PresetServers (..))
-import Simplex.Chat.Operators
-import Simplex.Messaging.Agent.Env.SQLite (ServerRoles (..))
-import Simplex.Messaging.Protocol (ProtoServerWithAuth (..), SProtocolType (..), UserProtocol)
+import Popopx.Chat (defaultChatConfig, chooseRandomServers)
+import Popopx.Chat.Controller (ChatConfig (..), PresetServers (..))
+import Popopx.Chat.Operators
+import Popopx.Messaging.Agent.Env.SQLite (ServerRoles (..))
+import Popopx.Messaging.Protocol (ProtoServerWithAuth (..), SProtocolType (..), UserProtocol)
 import Test.Hspec
 
 randomServersTests :: Spec

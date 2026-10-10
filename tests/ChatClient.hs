@@ -30,43 +30,43 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Time.Clock (getCurrentTime)
 import Network.Socket
-import Simplex.Chat
-import Simplex.Chat.Controller (ChatCommand (..), ChatConfig (..), ChatController (..), ChatDatabase (..), ChatLogLevel (..), ChatResponse (..), WebPreviewConfig (..), defaultSimpleNetCfg)
-import Simplex.Chat.Core
-import Simplex.Chat.Library.Commands
-import Simplex.Chat.Operators
-import Simplex.Chat.Options
-import Simplex.Chat.Options.DB
-import Simplex.Chat.Store
-import Simplex.Chat.Store.Profiles
-import Simplex.Chat.Terminal
-import Simplex.Chat.Terminal.Output (WithTerminal (..), newChatTerminal)
-import Simplex.Chat.Types
-import Simplex.Chat.Types.Shared (GroupMemberRole (..))
-import Simplex.FileTransfer.Description (kb, mb)
-import Simplex.FileTransfer.Server (runXFTPServerBlocking)
-import Simplex.FileTransfer.Server.Env (XFTPServerConfig (..), XFTPStoreConfig (..), defaultFileExpiration)
-import Simplex.FileTransfer.Server.Store
-import Simplex.FileTransfer.Transport (alpnSupportedXFTPhandshakes, supportedFileServerVRange)
-import Simplex.Messaging.Agent (disposeAgentClient)
-import Simplex.Messaging.Agent.Env.SQLite
-import Simplex.Messaging.Agent.Protocol (supportedSMPAgentVRange)
-import Simplex.Messaging.Agent.RetryInterval
-import Simplex.Messaging.Agent.Store.Entity (SDBStored (..))
-import Simplex.Messaging.Agent.Store.Interface (closeDBStore)
-import Simplex.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..), MigrationError)
-import qualified Simplex.Messaging.Agent.Store.DB as DB
-import Simplex.Messaging.Client (ProtocolClientConfig (..))
-import Simplex.Messaging.Client.Agent (defaultSMPClientAgentConfig)
-import Simplex.Messaging.Protocol (ProtoServerWithAuth (..), ProtocolServer (..), ProtocolType (..))
-import Simplex.Messaging.Server (runSMPServerBlocking)
-import Simplex.Messaging.Server.Env.STM (ServerConfig (..), ServerStoreCfg (..), StartOptions (..), StorePaths (..), defaultMessageExpiration, defaultIdleQueueInterval, defaultNtfExpiration, defaultInactiveClientExpiration)
+import Popopx.Chat
+import Popopx.Chat.Controller (ChatCommand (..), ChatConfig (..), ChatController (..), ChatDatabase (..), ChatLogLevel (..), ChatResponse (..), WebPreviewConfig (..), defaultSimpleNetCfg)
+import Popopx.Chat.Core
+import Popopx.Chat.Library.Commands
+import Popopx.Chat.Operators
+import Popopx.Chat.Options
+import Popopx.Chat.Options.DB
+import Popopx.Chat.Store
+import Popopx.Chat.Store.Profiles
+import Popopx.Chat.Terminal
+import Popopx.Chat.Terminal.Output (WithTerminal (..), newChatTerminal)
+import Popopx.Chat.Types
+import Popopx.Chat.Types.Shared (GroupMemberRole (..))
+import Popopx.FileTransfer.Description (kb, mb)
+import Popopx.FileTransfer.Server (runXFTPServerBlocking)
+import Popopx.FileTransfer.Server.Env (XFTPServerConfig (..), XFTPStoreConfig (..), defaultFileExpiration)
+import Popopx.FileTransfer.Server.Store
+import Popopx.FileTransfer.Transport (alpnSupportedXFTPhandshakes, supportedFileServerVRange)
+import Popopx.Messaging.Agent (disposeAgentClient)
+import Popopx.Messaging.Agent.Env.SQLite
+import Popopx.Messaging.Agent.Protocol (supportedSMPAgentVRange)
+import Popopx.Messaging.Agent.RetryInterval
+import Popopx.Messaging.Agent.Store.Entity (SDBStored (..))
+import Popopx.Messaging.Agent.Store.Interface (closeDBStore)
+import Popopx.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..), MigrationError)
+import qualified Popopx.Messaging.Agent.Store.DB as DB
+import Popopx.Messaging.Client (ProtocolClientConfig (..))
+import Popopx.Messaging.Client.Agent (defaultSMPClientAgentConfig)
+import Popopx.Messaging.Protocol (ProtoServerWithAuth (..), ProtocolServer (..), ProtocolType (..))
+import Popopx.Messaging.Server (runSMPServerBlocking)
+import Popopx.Messaging.Server.Env.STM (ServerConfig (..), ServerStoreCfg (..), StartOptions (..), StorePaths (..), defaultMessageExpiration, defaultIdleQueueInterval, defaultNtfExpiration, defaultInactiveClientExpiration)
 import NameResolver (NameRegistry, resolverNamesConfig, withNameResolver)
-import Simplex.Messaging.Server.MsgStore.STM (STMMsgStore)
-import Simplex.Messaging.Transport
-import Simplex.Messaging.Transport.Server (ServerCredentials (..), mkTransportServerConfig)
-import Simplex.Messaging.Version
-import Simplex.Messaging.Version.Internal
+import Popopx.Messaging.Server.MsgStore.STM (STMMsgStore)
+import Popopx.Messaging.Transport
+import Popopx.Messaging.Transport.Server (ServerCredentials (..), mkTransportServerConfig)
+import Popopx.Messaging.Version
+import Popopx.Messaging.Version.Internal
 import System.Directory (createDirectoryIfMissing, listDirectory, removePathForcibly)
 import System.FilePath ((</>))
 import qualified System.Terminal as C
@@ -78,13 +78,13 @@ import qualified Data.ByteString.Char8 as B
 import Data.String (fromString)
 import Database.PostgreSQL.Simple (ConnectInfo (..), defaultConnectInfo)
 import qualified Database.PostgreSQL.Simple as PSQL
-import Simplex.Messaging.Agent.Store.Interface (DBOpts (..))
+import Popopx.Messaging.Agent.Store.Interface (DBOpts (..))
 import System.FilePath (takeFileName)
 #else
 import Data.ByteArray (ScrubbedBytes)
 import qualified Data.Map.Strict as M
-import Simplex.Messaging.Agent.Client (agentClientStore)
-import Simplex.Messaging.Agent.Store.Common (withConnection)
+import Popopx.Messaging.Agent.Client (agentClientStore)
+import Popopx.Messaging.Agent.Store.Common (withConnection)
 #endif
 
 #if defined(dbPostgres)
@@ -205,7 +205,7 @@ testCoreOpts =
           dbPoolSize = 10,
           dbCreateSchema = True
 #else
-        { dbFilePrefix = "./simplex_v1", -- dbFilePrefix is not used in tests (except bot tests where it's redefined)
+        { dbFilePrefix = "./popopx_v1", -- dbFilePrefix is not used in tests (except bot tests where it's redefined)
           dbKey = "", -- dbKey = "this is a pass-phrase to encrypt the database",
           trackQueries = DB.TQAll,
           vacuumOnMigration = True
@@ -404,7 +404,7 @@ startTestChat_ ps@TestParams {tmpPath, printOutput} db cfg_ opts_ dbPrefix user 
   ct <- newChatTerminal t opts
   Right cc <- newChatController db (Just user) cfg opts False
   void $ execChatCommand' (SetTempFolder (tmpPath </> dbPrefix)) 0 `runReaderT` cc
-  chatAsync <- async $ runSimplexChat cfg opts user cc $ \_u cc' -> runChatTerminal ct cc' opts
+  chatAsync <- async $ runPopopxChat cfg opts user cc $ \_u cc' -> runChatTerminal ct cc' opts
   unless maintenance $ atomically $ readTVar (agentAsync cc) >>= \a -> when (isNothing a) retry
   pure TestCC {chatController = cc, chatAsync, termQ, printOutput, ccParams = ps}
 

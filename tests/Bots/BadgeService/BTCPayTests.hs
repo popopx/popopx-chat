@@ -36,7 +36,7 @@ import qualified Data.Text.Encoding as TE
 import Data.Time.Clock (UTCTime, getCurrentTime)
 import Data.Time.Clock.POSIX (posixSecondsToUTCTime, utcTimeToPOSIXSeconds)
 import Network.HTTP.Types.Header (Header, hAuthorization)
-import Simplex.Chat.PaymentService.Types
+import Popopx.Chat.PaymentService.Types
   ( CryptoCurrency (..),
     CurrencyAmount (..),
     ServicePaymentDestination (..),

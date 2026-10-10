@@ -3,7 +3,7 @@
 module ViewTests where
 
 import Data.Time
-import Simplex.Chat.View
+import Popopx.Chat.View
 import Test.Hspec
 
 viewTests :: Spec

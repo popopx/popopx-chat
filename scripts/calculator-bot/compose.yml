@@ -1,6 +1,6 @@
 services:
   calculator-bot:
-    image: simplex-calculator-bot:latest
+    image: popopx-calculator-bot:latest
     build:
       context: ../..
       dockerfile: scripts/calculator-bot/Dockerfile
@@ -8,9 +8,9 @@ services:
     # The name must first be registered with the bot address short link.
     # command:
     #   - "--domain"
-    #   - "yourname.simplex"
+    #   - "yourname.popopx"
     volumes:
-      - calculator-bot-data:/src/apps/simplex-calculator-bot/data
+      - calculator-bot-data:/src/apps/popopx-calculator-bot/data
 
 volumes:
   calculator-bot-data:

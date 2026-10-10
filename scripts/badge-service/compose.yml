@@ -1,6 +1,6 @@
 services:
   badge-service:
-    image: simplex-badge-service:latest
+    image: popopx-badge-service:latest
     build:
       context: ../..
       dockerfile: scripts/badge-service/Dockerfile
@@ -13,12 +13,12 @@ services:
     network_mode: host
     command:
       - "-d"
-      - "${BADGE_DB_CONN:-postgresql://simplex@127.0.0.1:5432/badge_service}"
+      - "${BADGE_DB_CONN:-postgresql://popopx@127.0.0.1:5432/badge_service}"
       - "--create-schema"
       - "--yes-migrate"
       - "--service-config"
-      - "/etc/simplex-badge-service/badge_service.ini"
+      - "/etc/popopx-badge-service/badge_service.ini"
     volumes:
-      - ./badge_service.ini:/etc/simplex-badge-service/badge_service.ini:ro
+      - ./badge_service.ini:/etc/popopx-badge-service/badge_service.ini:ro
       - ./web:/srv/webapp
     stop_grace_period: 10s

@@ -17,17 +17,17 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import Database.SQLite.Simple (Only (..), Query (..))
-import Simplex.Chat.Options.SQLite (chatDBFunctions)
-import Simplex.Chat.Store (createChatStore)
-import qualified Simplex.Chat.Store as Store
-import Simplex.Messaging.Agent.Env.SQLite (createAgentStore)
-import Simplex.Messaging.Agent.Store.Common (withConnection)
-import Simplex.Messaging.Agent.Store.DB (TrackQueries (..))
-import qualified Simplex.Messaging.Agent.Store.DB as DB
-import Simplex.Messaging.Agent.Store.Interface
-import qualified Simplex.Messaging.Agent.Store.SQLite.Migrations as Migrations
-import Simplex.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationConfirmation (..), MigrationsToRun (..), toDownMigration)
-import Simplex.Messaging.Util (ifM, tshow, whenM)
+import Popopx.Chat.Options.SQLite (chatDBFunctions)
+import Popopx.Chat.Store (createChatStore)
+import qualified Popopx.Chat.Store as Store
+import Popopx.Messaging.Agent.Env.SQLite (createAgentStore)
+import Popopx.Messaging.Agent.Store.Common (withConnection)
+import Popopx.Messaging.Agent.Store.DB (TrackQueries (..))
+import qualified Popopx.Messaging.Agent.Store.DB as DB
+import Popopx.Messaging.Agent.Store.Interface
+import qualified Popopx.Messaging.Agent.Store.SQLite.Migrations as Migrations
+import Popopx.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationConfirmation (..), MigrationsToRun (..), toDownMigration)
+import Popopx.Messaging.Util (ifM, tshow, whenM)
 import System.Directory (doesFileExist, removeFile)
 import System.Process (readCreateProcess, shell)
 import Test.Hspec
@@ -39,16 +39,16 @@ testAgentDB :: FilePath
 testAgentDB = "tests/tmp/test_agent.db"
 
 appSchema :: FilePath
-appSchema = "src/Simplex/Chat/Store/SQLite/Migrations/chat_schema.sql"
+appSchema = "src/Popopx/Chat/Store/SQLite/Migrations/chat_schema.sql"
 
 appLint :: FilePath
-appLint = "src/Simplex/Chat/Store/SQLite/Migrations/chat_lint.sql"
+appLint = "src/Popopx/Chat/Store/SQLite/Migrations/chat_lint.sql"
 
 appChatQueryPlans :: FilePath
-appChatQueryPlans = "src/Simplex/Chat/Store/SQLite/Migrations/chat_query_plans.txt"
+appChatQueryPlans = "src/Popopx/Chat/Store/SQLite/Migrations/chat_query_plans.txt"
 
 appAgentQueryPlans :: FilePath
-appAgentQueryPlans = "src/Simplex/Chat/Store/SQLite/Migrations/agent_query_plans.txt"
+appAgentQueryPlans = "src/Popopx/Chat/Store/SQLite/Migrations/agent_query_plans.txt"
 
 testSchema :: FilePath
 testSchema = "tests/tmp/test_agent_schema.sql"
@@ -146,7 +146,7 @@ skipComparisonForDownMigrations =
     -- appends; CREATE INDEX appends).
     "20260529_delivery_job_senders",
     -- group_domain is removed
-    "20260603_simplex_name"
+    "20260603_popopx_name"
   ]
 
 getSchema :: FilePath -> FilePath -> IO String

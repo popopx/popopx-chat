@@ -19,16 +19,16 @@ import Data.Text (Text)
 import qualified Data.Text as T
 
 commandsCodeFile :: FilePath
-commandsCodeFile = "./packages/simplex-chat-client/types/typescript/src/commands.ts"
+commandsCodeFile = "./packages/popopx-chat-client/types/typescript/src/commands.ts"
 
 responsesCodeFile :: FilePath
-responsesCodeFile = "./packages/simplex-chat-client/types/typescript/src/responses.ts"
+responsesCodeFile = "./packages/popopx-chat-client/types/typescript/src/responses.ts"
 
 eventsCodeFile :: FilePath
-eventsCodeFile = "./packages/simplex-chat-client/types/typescript/src/events.ts"
+eventsCodeFile = "./packages/popopx-chat-client/types/typescript/src/events.ts"
 
 typesCodeFile :: FilePath
-typesCodeFile = "./packages/simplex-chat-client/types/typescript/src/types.ts"
+typesCodeFile = "./packages/popopx-chat-client/types/typescript/src/types.ts"
 
 commandsCodeText :: Text
 commandsCodeText =

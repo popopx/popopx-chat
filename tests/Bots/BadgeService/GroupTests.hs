@@ -9,14 +9,14 @@ import qualified Data.Text as T
 import Data.Text.Encoding (encodeUtf8)
 import Data.Time.Calendar (fromGregorian)
 import Data.Time.Clock (UTCTime (..), addUTCTime)
-import Simplex.Chat.Badges (BadgeType (..))
-import Simplex.Chat.Badges.Code (BadgeCode, badgeCodeText, randomBadgeCode)
-import Simplex.Chat.Controller (ChatCommand (DeleteGroup, MemberRole))
-import Simplex.Chat.Library.Commands (parseChatCommand)
-import Simplex.Chat.Types (GroupProfile (..))
-import Simplex.Chat.Types.Shared (GroupMemberRole (..))
-import qualified Simplex.Messaging.Crypto as C
-import Simplex.Messaging.Util (tshow)
+import Popopx.Chat.Badges (BadgeType (..))
+import Popopx.Chat.Badges.Code (BadgeCode, badgeCodeText, randomBadgeCode)
+import Popopx.Chat.Controller (ChatCommand (DeleteGroup, MemberRole))
+import Popopx.Chat.Library.Commands (parseChatCommand)
+import Popopx.Chat.Types (GroupProfile (..))
+import Popopx.Chat.Types.Shared (GroupMemberRole (..))
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Util (tshow)
 import Test.Hspec
 
 badgeGroupTests :: Spec

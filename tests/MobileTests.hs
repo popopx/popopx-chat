@@ -32,27 +32,27 @@ import Foreign.StablePtr
 import Foreign.Storable (peek)
 import GHC.IO.Encoding (setLocaleEncoding, setFileSystemEncoding, setForeignEncoding)
 import JSONFixtures
-import Simplex.Chat
-import Simplex.Chat.Badges (BadgeInfo (..), BadgeRequest (..), BadgeType (..), generateMasterKey, verifyCredential)
-import Simplex.Chat.Controller (ChatConfig (..), ChatController (..), ChatDatabase (..))
-import Simplex.Chat.Mobile hiding (error)
-import Simplex.Chat.Mobile.Badges hiding (error)
-import Simplex.Chat.Mobile.File
-import Simplex.Chat.Mobile.Shared
-import Simplex.Chat.Mobile.WebRTC
-import Simplex.Chat.Options.DB
-import Simplex.Chat.Store
-import Simplex.Chat.Store.Profiles
-import Simplex.Chat.Types (AgentUserId (..), Profile (..))
-import Simplex.Messaging.Agent.Client (AgentClient (..))
-import Simplex.Messaging.Agent.Env.SQLite (AgentConfig (..), Env (..))
-import Simplex.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..))
-import qualified Simplex.Messaging.Agent.Store.SQLite.DB as DB
-import qualified Simplex.Messaging.Crypto as C
-import Simplex.Messaging.Crypto.File (CryptoFile(..), CryptoFileArgs (..))
-import qualified Simplex.Messaging.Crypto.File as CF
-import Simplex.Messaging.Encoding.String
-import Simplex.Messaging.Parsers (dropPrefix, sumTypeJSON)
+import Popopx.Chat
+import Popopx.Chat.Badges (BadgeInfo (..), BadgeRequest (..), BadgeType (..), generateMasterKey, verifyCredential)
+import Popopx.Chat.Controller (ChatConfig (..), ChatController (..), ChatDatabase (..))
+import Popopx.Chat.Mobile hiding (error)
+import Popopx.Chat.Mobile.Badges hiding (error)
+import Popopx.Chat.Mobile.File
+import Popopx.Chat.Mobile.Shared
+import Popopx.Chat.Mobile.WebRTC
+import Popopx.Chat.Options.DB
+import Popopx.Chat.Store
+import Popopx.Chat.Store.Profiles
+import Popopx.Chat.Types (AgentUserId (..), Profile (..))
+import Popopx.Messaging.Agent.Client (AgentClient (..))
+import Popopx.Messaging.Agent.Env.SQLite (AgentConfig (..), Env (..))
+import Popopx.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..))
+import qualified Popopx.Messaging.Agent.Store.SQLite.DB as DB
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.File (CryptoFile(..), CryptoFileArgs (..))
+import qualified Popopx.Messaging.Crypto.File as CF
+import Popopx.Messaging.Encoding.String
+import Popopx.Messaging.Parsers (dropPrefix, sumTypeJSON)
 import System.Directory (copyFile)
 import System.FilePath ((</>))
 import System.IO (utf8)

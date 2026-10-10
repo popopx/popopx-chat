@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cabal build 2>&1 | grep -A 6 \"Migrate.hs:34\" | head -10)"
+    ]
+  }
+}

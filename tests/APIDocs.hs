@@ -19,7 +19,7 @@ import Data.List (foldl', intercalate, sort, (\\))
 import qualified Data.Set as S
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
-import Simplex.Messaging.Util (ifM)
+import Popopx.Messaging.Util (ifM)
 import System.Directory (doesFileExist)
 import Test.Hspec
 

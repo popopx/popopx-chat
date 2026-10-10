@@ -15,20 +15,20 @@ import Data.List (isInfixOf)
 import qualified Data.List.NonEmpty as L
 import Data.Maybe (fromMaybe)
 import Data.Time.Clock.System (SystemTime (..), systemToUTCTime)
-import Simplex.Chat.Call
-import Simplex.Chat.Library.Internal (decodeLinkUserData, encodeShortLinkData)
-import Simplex.Chat.Protocol
-import Simplex.Chat.Types
-import Simplex.Chat.Types.Preferences
-import Simplex.Chat.Types.Shared
-import Simplex.Messaging.Agent.Protocol
-import Simplex.Messaging.Compression (compress1)
-import qualified Simplex.Messaging.Crypto as C
-import Simplex.Messaging.Crypto.Ratchet
-import Simplex.Messaging.Encoding (smpEncode)
-import Simplex.Messaging.Protocol (EntityId (..), supportedSMPClientVRange)
-import Simplex.Messaging.ServiceScheme
-import Simplex.Messaging.Version
+import Popopx.Chat.Call
+import Popopx.Chat.Library.Internal (decodeLinkUserData, encodeShortLinkData)
+import Popopx.Chat.Protocol
+import Popopx.Chat.Types
+import Popopx.Chat.Types.Preferences
+import Popopx.Chat.Types.Shared
+import Popopx.Messaging.Agent.Protocol
+import Popopx.Messaging.Compression (compress1)
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.Ratchet
+import Popopx.Messaging.Encoding (smpEncode)
+import Popopx.Messaging.Protocol (EntityId (..), supportedSMPClientVRange)
+import Popopx.Messaging.ServiceScheme
+import Popopx.Messaging.Version
 import Test.Hspec
 
 protocolTests :: Spec
@@ -118,7 +118,7 @@ queue =
 connReqData :: ConnReqUriData
 connReqData =
   ConnReqUriData
-    { crScheme = SSSimplex,
+    { crScheme = SSPopopx,
       crAgentVRange = mkVersionRange (VersionSMPA 1) (VersionSMPA 1),
       crSmpQueues = [queue],
       crClientData = Nothing
@@ -137,7 +137,7 @@ testForwardLink :: ForwardLink
 testForwardLink =
   ForwardLink
     { displayName = "team",
-      groupLink = CSLContact SLSSimplex CCTChannel srv (LinkKey "\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8"),
+      groupLink = CSLContact SLSPopopx CCTChannel srv (LinkKey "\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8\1\2\3\4\5\6\7\8"),
       publicGroupId = B64UrlByteString "\1\2\3\4",
       memberId = Just $ MemberId "\1\2\3\4",
       msgId = SharedMsgId "\5\6\7\8"
@@ -188,7 +188,7 @@ testChatPreferences :: Maybe Preferences
 testChatPreferences = Just Preferences {voice = Just VoicePreference {allow = FAYes}, files = Nothing, fullDelete = Nothing, timedMessages = Nothing, calls = Nothing, reactions = Just ReactionsPreference {allow = FAYes}, sessions = Nothing, commands = Nothing, _json = PrefsJSON Nothing}
 
 testGroupPreferences :: Maybe GroupPreferences
-testGroupPreferences = Just GroupPreferences {timedMessages = Nothing, directMessages = Nothing, reactions = Just ReactionsGroupPreference {enable = FEOn}, voice = Just VoiceGroupPreference {enable = FEOn, role = Nothing}, files = Nothing, fullDelete = Nothing, simplexLinks = Nothing, history = Nothing, reports = Nothing, support = Nothing, sessions = Nothing, comments = Nothing, signMessages = Nothing, commands = Nothing, _json = PrefsJSON Nothing}
+testGroupPreferences = Just GroupPreferences {timedMessages = Nothing, directMessages = Nothing, reactions = Just ReactionsGroupPreference {enable = FEOn}, voice = Just VoiceGroupPreference {enable = FEOn, role = Nothing}, files = Nothing, fullDelete = Nothing, popopxLinks = Nothing, history = Nothing, reports = Nothing, support = Nothing, sessions = Nothing, comments = Nothing, signMessages = Nothing, commands = Nothing, _json = PrefsJSON Nothing}
 
 testProfile :: Profile
 testProfile = Profile {displayName = "alice", fullName = "Alice", shortDescr = Nothing, description = Nothing, image = Just (ImageData "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII="), peerType = Nothing, contactLink = Nothing, preferences = testChatPreferences, badge = Nothing, contactDomain = Nothing}

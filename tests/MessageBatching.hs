@@ -17,16 +17,16 @@ import Data.String (IsString (..))
 import qualified Data.Text as T
 import Data.Text.Encoding (encodeUtf8)
 import Data.Time.Clock.System (SystemTime (..), systemToUTCTime)
-import Simplex.Chat.Delivery
+import Popopx.Chat.Delivery
   ( DeliveryJobScope (DJSGroup, jobSpec),
     DeliveryJobSpec (DJDeliveryJob, includePending),
     MessageDeliveryTask (MessageDeliveryTask, brokerTs, fwdSender, jobScope, senderGMId, taskId, verifiedMsg),
     deliveryTaskId,
   )
-import Simplex.Chat.Messages.Batch
-import Simplex.Chat.Controller (ChatError (..), ChatErrorType (..))
-import Simplex.Chat.Messages (SndMessage (..))
-import Simplex.Chat.Protocol
+import Popopx.Chat.Messages.Batch
+import Popopx.Chat.Controller (ChatError (..), ChatErrorType (..))
+import Popopx.Chat.Messages (SndMessage (..))
+import Popopx.Chat.Protocol
   ( ChatMessage (ChatMessage),
     ChatMsgEvent (XMsgNew),
     FwdSender (FwdChannel),
@@ -38,8 +38,8 @@ import Simplex.Chat.Protocol
     maxEncodedMsgLength,
     mcSimple,
   )
-import Simplex.Chat.Types (SharedMsgId (..), chatInitialVRange)
-import Simplex.Messaging.Encoding (Large (..), smpEncodeList)
+import Popopx.Chat.Types (SharedMsgId (..), chatInitialVRange)
+import Popopx.Messaging.Encoding (Large (..), smpEncodeList)
 import Test.Hspec
 
 batchingTests :: Spec

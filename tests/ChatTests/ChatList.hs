@@ -5,7 +5,7 @@ import ChatTests.DBUtils
 import ChatTests.Utils
 import Data.Time.Clock (getCurrentTime)
 import Data.Time.Format.ISO8601 (iso8601Show)
-import Simplex.Chat.Options (ChatOpts (..), CoreChatOpts (..))
+import Popopx.Chat.Options (ChatOpts (..), CoreChatOpts (..))
 import Test.Hspec hiding (it)
 
 chatListTests :: SpecWith TestParams

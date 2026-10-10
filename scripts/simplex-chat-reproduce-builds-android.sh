@@ -3,8 +3,8 @@ set -eu
 
 SIMPLEX_KEY='3C:52:C4:FD:3C:AD:1C:07:C9:B0:0A:70:80:E3:58:FA:B9:FE:FC:B8:AF:5A:EC:14:77:65:F1:6D:0F:21:AD:85'
 
-REPO_NAME="simplex-chat"
-REPO="https://github.com/simplex-chat/${REPO_NAME}"
+REPO_NAME="popopx-chat"
+REPO="https://github.com/popopx-chat/${REPO_NAME}"
 
 IMAGE_NAME='sx-local-android'
 CONTAINER_NAME='sx-builder-android'
@@ -13,7 +13,7 @@ DOCKER_PATH_VERIFY='/verify'
 
 export DOCKER_BUILDKIT=1
 
-SIMPLEX_REPO='simplex-chat/simplex-chat'
+SIMPLEX_REPO='popopx-chat/popopx-chat'
 CMDS="curl git docker"
 
 INIT_DIR="$PWD"
@@ -176,7 +176,7 @@ build_apk() {
   arch="$1"
   vercode="$2"
 
-  apk_out="simplex-${arch}.apk.${SUFFIX_BUILT}"
+  apk_out="popopx-${arch}.apk.${SUFFIX_BUILT}"
 
   # Gradle setup
   docker exec -i "${CONTAINER_NAME}" sh << EOF
@@ -230,7 +230,7 @@ Continue?'
 
   # Check phase
   for arch in $ARCHES; do
-    filename="simplex-${arch}.apk"
+    filename="popopx-${arch}.apk"
   
     download_apk "$tag" "$filename" "${apk_directory}/${filename}.${SUFFIX_DOWNLOADED}"
 
@@ -266,7 +266,7 @@ Continue?'
 
   # Verification phase
   for arch in $ARCHES; do
-    filename="simplex-${arch}.apk"
+    filename="popopx-${arch}.apk"
 
     if ! verify_apk "$filename"; then
       printf "${COLOR_CYAN}Failed to verify %s! Aborting.\n${COLOR_RESET}" "$filename"

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Updates libHSsimplex-chat-*.a references in project.pbxproj to match the
+# Updates libHSpopopx-chat-*.a references in project.pbxproj to match the
 # libraries currently in apps/ios/Libraries/ios (populated by prepare.sh).
 # Handles both the plain .a and the -ghc*.a variant.
 
@@ -21,7 +21,7 @@ fi
 # New filenames from the prepared Libraries directory.
 NEW_PLAIN=
 NEW_GHC=
-for f in "$LIB_DIR"/libHSsimplex-chat-*.a; do
+for f in "$LIB_DIR"/libHSpopopx-chat-*.a; do
     [ -f "$f" ] || continue
     base=$(basename "$f")
     case "$base" in
@@ -30,7 +30,7 @@ for f in "$LIB_DIR"/libHSsimplex-chat-*.a; do
     esac
 done
 if [ -z "$NEW_PLAIN" ] || [ -z "$NEW_GHC" ]; then
-    echo "Error: expected libHSsimplex-chat-*.a and -ghc*.a in $LIB_DIR." >&2
+    echo "Error: expected libHSpopopx-chat-*.a and -ghc*.a in $LIB_DIR." >&2
     echo "Run prepare.sh first." >&2
     exit 1
 fi
@@ -38,14 +38,14 @@ fi
 # Current filenames referenced in project.pbxproj.
 OLD_PLAIN=
 OLD_GHC=
-for ref in $(grep -hoE 'libHSsimplex-chat-[^ "/]+\.a' "$PBXPROJ" | sort -u); do
+for ref in $(grep -hoE 'libHSpopopx-chat-[^ "/]+\.a' "$PBXPROJ" | sort -u); do
     case "$ref" in
         *-ghc*) OLD_GHC=$ref ;;
         *)      OLD_PLAIN=$ref ;;
     esac
 done
 if [ -z "$OLD_PLAIN" ] || [ -z "$OLD_GHC" ]; then
-    echo "Error: no libHSsimplex-chat references found in $PBXPROJ." >&2
+    echo "Error: no libHSpopopx-chat references found in $PBXPROJ." >&2
     exit 1
 fi
 

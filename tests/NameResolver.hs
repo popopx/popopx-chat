@@ -1,7 +1,7 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Local HTTP names resolver for chat tests, copied from simplexmq's
+-- | Local HTTP names resolver for chat tests, copied from popopxmq's
 -- NamesResolverServer and made dynamic: it answers /v2/resolve/<query> from a
 -- mutable name -> NameRecord registry, so a test can resolve a name to the
 -- address it just created.
@@ -25,10 +25,10 @@ import Data.Text.Encoding (decodeLatin1)
 import Network.HTTP.Types (hContentType, notFound404, ok200)
 import Network.Wai (Application, pathInfo, responseLBS)
 import qualified Network.Wai.Handler.Warp as Warp
-import Simplex.Messaging.Encoding.String (strEncode)
-import Simplex.Messaging.Names.Record (NamePricing (..), NameRecord (..), NameRegistration (..), NameResponse (..), USDCents (..))
-import Simplex.Messaging.Server.Names (NamesConfig (..))
-import Simplex.Messaging.SimplexName (SimplexDomain (..), SimplexNameInfo (..), labelHash)
+import Popopx.Messaging.Encoding.String (strEncode)
+import Popopx.Messaging.Names.Record (NamePricing (..), NameRecord (..), NameRegistration (..), NameResponse (..), USDCents (..))
+import Popopx.Messaging.Server.Names (NamesConfig (..))
+import Popopx.Messaging.PopopxName (PopopxDomain (..), PopopxNameInfo (..), labelHash)
 
 type NameRegistry = TVar (Map Text NameRecord)
 
@@ -50,20 +50,20 @@ withNameResolver action = do
     nameResponse Nothing = NameResponse {lastBlockTs = Nothing, registration = NRAvailable {pricing = NamePricing {registrationPrices = M.empty, basePrice = USDCents 1000, minLabelLength = 1}}}
 
 -- | Register a name's domain to resolve to the given record.
-registerName :: TVar (Map Text NameRecord) -> SimplexNameInfo -> NameRecord -> IO ()
-registerName reg SimplexNameInfo {nameDomain = SimplexDomain {nameTLD, domain}} r =
+registerName :: TVar (Map Text NameRecord) -> PopopxNameInfo -> NameRecord -> IO ()
+registerName reg PopopxNameInfo {nameDomain = PopopxDomain {nameTLD, domain}} r =
   atomically $ modifyTVar' reg $ M.insert (decodeLatin1 $ strEncode (labelHash domain) <> strEncode nameTLD) r
 
 contactNameRecord :: Text -> Text -> NameRecord
-contactNameRecord name link = (emptyRecord name) {nrSimplexContact = [link]}
+contactNameRecord name link = (emptyRecord name) {nrPopopxContact = [link]}
 
 channelNameRecord :: Text -> Text -> NameRecord
-channelNameRecord name link = (emptyRecord name) {nrSimplexChannel = [link]}
+channelNameRecord name link = (emptyRecord name) {nrPopopxChannel = [link]}
 
 -- | A record whose domain resolves to both a direct contact link and a channel link.
 contactAndChannelNameRecord :: Text -> Text -> Text -> NameRecord
 contactAndChannelNameRecord name contactLink channelLink =
-  (emptyRecord name) {nrSimplexContact = [contactLink], nrSimplexChannel = [channelLink]}
+  (emptyRecord name) {nrPopopxContact = [contactLink], nrPopopxChannel = [channelLink]}
 
 emptyRecord :: Text -> NameRecord
 emptyRecord name =
@@ -72,8 +72,8 @@ emptyRecord name =
       nrNickname = "",
       nrWebsite = "",
       nrLocation = "",
-      nrSimplexContact = [],
-      nrSimplexChannel = [],
+      nrPopopxContact = [],
+      nrPopopxChannel = [],
       nrEth = Nothing,
       nrBtc = Nothing,
       nrXmr = Nothing,

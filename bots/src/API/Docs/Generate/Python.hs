@@ -19,16 +19,16 @@ import Data.Text (Text)
 import qualified Data.Text as T
 
 commandsCodeFile :: FilePath
-commandsCodeFile = "./packages/simplex-chat-python/src/simplex_chat/types/_commands.py"
+commandsCodeFile = "./packages/popopx-chat-python/src/popopx_chat/types/_commands.py"
 
 responsesCodeFile :: FilePath
-responsesCodeFile = "./packages/simplex-chat-python/src/simplex_chat/types/_responses.py"
+responsesCodeFile = "./packages/popopx-chat-python/src/popopx_chat/types/_responses.py"
 
 eventsCodeFile :: FilePath
-eventsCodeFile = "./packages/simplex-chat-python/src/simplex_chat/types/_events.py"
+eventsCodeFile = "./packages/popopx-chat-python/src/popopx_chat/types/_events.py"
 
 typesCodeFile :: FilePath
-typesCodeFile = "./packages/simplex-chat-python/src/simplex_chat/types/_types.py"
+typesCodeFile = "./packages/popopx-chat-python/src/popopx_chat/types/_types.py"
 
 -- | Replace dashes with underscores so Python identifiers stay valid.
 pyIdent :: String -> Text

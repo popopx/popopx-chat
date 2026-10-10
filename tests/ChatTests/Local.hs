@@ -9,7 +9,7 @@ import ChatTests.DBUtils
 import ChatTests.Utils
 import Data.Time (getCurrentTime)
 import Data.Time.Format.ISO8601 (iso8601Show)
-import Simplex.Chat.Controller (ChatConfig (..), InlineFilesConfig (..), defaultInlineFilesConfig)
+import Popopx.Chat.Controller (ChatConfig (..), InlineFilesConfig (..), defaultInlineFilesConfig)
 import System.Directory (copyFile, doesFileExist)
 import System.FilePath ((</>))
 import Test.Hspec hiding (it)

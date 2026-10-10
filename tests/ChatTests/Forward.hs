@@ -12,8 +12,8 @@ import Control.Concurrent.Async (concurrently_)
 import qualified Data.ByteString.Char8 as B
 import Data.List (intercalate)
 import qualified Data.Text as T
-import Simplex.Chat.Library.Commands (fixedImagePreview)
-import Simplex.Chat.Types (ImageData (..))
+import Popopx.Chat.Library.Commands (fixedImagePreview)
+import Popopx.Chat.Types (ImageData (..))
 import System.Directory (copyFile, doesFileExist, removeFile)
 import System.FilePath ((</>))
 import Test.Hspec hiding (it)
@@ -128,10 +128,10 @@ testForwardChannelLinkRemoved ps =
           createGroup2 "club" cath dan
           cath ##> "/set links #club off"
           cath <## "updated group preferences:"
-          cath <## "SimpleX links: off"
+          cath <## "PopopX links: off"
           dan <## "cath updated group #club: (signed)"
           dan <## "updated group preferences:"
-          dan <## "SimpleX links: off"
+          dan <## "PopopX links: off"
           alice #> "#team hi"
           bob <# "#team> hi"
           cath <# "#team> hi [>>]"

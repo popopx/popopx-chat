@@ -9,7 +9,7 @@ import shlex
 import subprocess
 import sys
 
-BIN = "simplex-chat-relay"
+BIN = "popopx-chat-relay"
 WEB_ROOT = "/var/www/relay-web-channels"
 ADDR_FILE = "/out/relay-address.txt"
 CAPTURE_TIMEOUT = 180  # seconds
@@ -37,7 +37,7 @@ def rts_args():
 
 def find_address(text):
     for token in text.split():
-        if token.startswith("https://") or token.startswith("simplex:"):
+        if token.startswith("https://") or token.startswith("popopx:"):
             return token
     return None
 

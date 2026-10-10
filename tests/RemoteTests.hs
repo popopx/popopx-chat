@@ -19,23 +19,23 @@ import qualified Data.ByteString.Lazy.Char8 as LB
 import Data.List (find, isPrefixOf)
 import qualified Data.Map.Strict as M
 import Data.Word (Word32)
-import Simplex.Chat.Controller (ChatCommand (..), ChatConfig (..), versionNumber)
-import Simplex.Chat.Files (safeFileNameStr)
-import Simplex.Chat.Library.Commands (parseChatCommand)
-import qualified Simplex.Chat.Controller as Controller
-import Simplex.Chat.Mobile.File
-import Simplex.Chat.Remote (remoteFilesFolder, validRemoteFileName)
-import Simplex.Chat.Remote.Protocol (encryptEncodeHTTP2Body, parseDecryptHTTP2Body, remoteStoreFile)
-import Simplex.Chat.Remote.Types
-import qualified Simplex.Messaging.Crypto as C
-import Simplex.Messaging.Crypto.File (CryptoFileArgs (..))
-import Simplex.Messaging.Encoding (smpEncode)
-import Simplex.Messaging.Encoding.String (strEncode)
-import qualified Simplex.Messaging.TMap as TM
-import Simplex.Messaging.Transport (TSbChainKeys (..))
-import Simplex.Messaging.Transport.HTTP2 (HTTP2BodyChunk (..), getHTTP2Body)
-import Simplex.Messaging.Util
-import Simplex.RemoteControl.Types (RCCtrlAddress (..))
+import Popopx.Chat.Controller (ChatCommand (..), ChatConfig (..), versionNumber)
+import Popopx.Chat.Files (safeFileNameStr)
+import Popopx.Chat.Library.Commands (parseChatCommand)
+import qualified Popopx.Chat.Controller as Controller
+import Popopx.Chat.Mobile.File
+import Popopx.Chat.Remote (remoteFilesFolder, validRemoteFileName)
+import Popopx.Chat.Remote.Protocol (encryptEncodeHTTP2Body, parseDecryptHTTP2Body, remoteStoreFile)
+import Popopx.Chat.Remote.Types
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.File (CryptoFileArgs (..))
+import Popopx.Messaging.Encoding (smpEncode)
+import Popopx.Messaging.Encoding.String (strEncode)
+import qualified Popopx.Messaging.TMap as TM
+import Popopx.Messaging.Transport (TSbChainKeys (..))
+import Popopx.Messaging.Transport.HTTP2 (HTTP2BodyChunk (..), getHTTP2Body)
+import Popopx.Messaging.Util
+import Popopx.RemoteControl.Types (RCCtrlAddress (..))
 import System.FilePath (takeFileName, (</>))
 import Test.Hspec hiding (it)
 import UnliftIO

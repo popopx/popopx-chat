@@ -7,9 +7,9 @@ import Crypto.Random (getRandomBytes)
 import qualified Data.ByteString.Base64.URL as U
 import qualified Data.ByteString.Char8 as B
 import Foreign.StablePtr
-import Simplex.Chat.Mobile
-import Simplex.Chat.Mobile.WebRTC
-import qualified Simplex.Messaging.Crypto as C
+import Popopx.Chat.Mobile
+import Popopx.Chat.Mobile.WebRTC
+import qualified Popopx.Messaging.Crypto as C
 import System.FilePath ((</>))
 import Test.Hspec
 
