@@ -1,0 +1,40 @@
+# The build context is the repository root. Exclude everything, then add back
+# what the image is built from, one directory level at a time.
+*
+
+!cabal.project
+!popopx-chat.cabal
+!README.md
+!PRIVACY.md
+!src
+
+!scripts
+scripts/*
+!scripts/cabal.project.local.linux
+
+!packages
+packages/*
+!packages/popopx-chat-python
+
+!apps
+apps/*
+!apps/popopx-support-bot-light
+
+# Build output, caches, and anything holding an identity or a secret.
+**/__pycache__
+**/*.py[cod]
+**/*.egg-info
+**/.venv
+**/.venv-*
+**/.pytest_cache
+**/.ruff_cache
+**/.pyright_cache
+**/.mypy_cache
+**/dist
+**/*.db
+**/*.db-*
+apps/popopx-support-bot-light/plans
+apps/popopx-support-bot-light/state
+apps/popopx-support-bot-light/bot-config
+apps/popopx-support-bot-light/config.toml
+apps/popopx-support-bot-light/.env
