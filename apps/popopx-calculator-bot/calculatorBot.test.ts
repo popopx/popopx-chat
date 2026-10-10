@@ -19,7 +19,7 @@ async function useSmpServer(chat: api.ChatApi): Promise<void> {
 
 async function prepareBotDatabase(dbOpts: bot.BotDbOpts): Promise<void> {
   const chat = await api.ChatApi.init(dbOpts)
-  await chat.apiCreateActiveUser({displayName: "SimpleX Calculator", fullName: ""})
+  await chat.apiCreateActiveUser({displayName: "PopopX Calculator", fullName: ""})
   await chat.startChat()
   await useSmpServer(chat)
   await chat.close()

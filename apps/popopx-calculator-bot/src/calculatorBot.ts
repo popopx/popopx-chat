@@ -80,7 +80,7 @@ async function onMessage(ci: T.AChatItem, content: T.MsgContent, chat: api.ChatA
 
 export function runCalculatorBot(dbOpts: bot.BotDbOpts, popopxDomain?: string): Promise<[api.ChatApi, T.User, T.UserContactLink | undefined]> {
   return bot.run({
-    profile: {displayName: "SimpleX Calculator", fullName: "", image: calculatorIcon, preferences: {fullDelete: {allow: T.FeatureAllowed.Yes}}},
+    profile: {displayName: "PopopX Calculator", fullName: "", image: calculatorIcon, preferences: {fullDelete: {allow: T.FeatureAllowed.Yes}}},
     popopxDomain,
     dbOpts,
     options: {
