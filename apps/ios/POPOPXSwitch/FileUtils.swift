@@ -1,0 +1,456 @@
+//
+//  FileUtils.swift
+//  POPOPX (iOS)
+//
+//  Created by JRoberts on 15.04.2022.
+//  Copyright © 2025 POPOPX. All rights reserved.
+//
+// Spec: spec/services/files.md
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
+
+import Foundation
+
+public func excludeFromBackup(_ url: URL) {
+    do {
+        var resourceValues = URLResourceValues()
+        resourceValues.isExcludedFromBackup = true
+        var mutableURL = url
+        try mutableURL.setResourceValues(resourceValues)
+    } catch {
+        logger.error("Failed to exclude from backup: \(url.path), error: \(error)")
+    }
+}
+import OSLog
+import UIKit
+
+let logger = Logger()
+
+// image file size for compression
+// Spec: spec/services/files.md#MAX_IMAGE_SIZE
+public let MAX_IMAGE_SIZE: Int64 = 261_120 // 255KB
+
+// Spec: spec/services/files.md#MAX_IMAGE_SIZE_AUTO_RCV
+public let MAX_IMAGE_SIZE_AUTO_RCV: Int64 = MAX_IMAGE_SIZE * 2
+
+// Spec: spec/services/files.md#MAX_VOICE_SIZE_AUTO_RCV
+public let MAX_VOICE_SIZE_AUTO_RCV: Int64 = MAX_IMAGE_SIZE * 2
+
+// Spec: spec/services/files.md#MAX_VIDEO_SIZE_AUTO_RCV
+public let MAX_VIDEO_SIZE_AUTO_RCV: Int64 = 1_047_552 // 1023KB
+
+// Spec: spec/services/files.md#MAX_FILE_SIZE_XFTP
+public let MAX_FILE_SIZE_XFTP: Int64 = 1_073_741_824 // 1GB
+
+// raised XFTP limits for a user with a supporter badge (also investor) or a legend badge
+public let MAX_FILE_SIZE_XFTP_SUPPORTER: Int64 = 2_147_483_648 // 2GB
+public let MAX_FILE_SIZE_XFTP_LEGEND: Int64 = 5_368_709_120 // 5GB
+
+// a badge raises the limit at send for this long after its expiry, shorter than the receiver's grace
+public let BADGE_SND_GRACE_INTERVAL = TimeInterval(86400)
+
+public let MAX_FILE_SIZE_LOCAL: Int64 = Int64.max
+
+public let MAX_FILE_SIZE_SMP: Int64 = 8000000
+
+public let MAX_VOICE_MESSAGE_LENGTH = TimeInterval(300)
+
+let CHAT_DB: String = "_chat.db"
+
+let AGENT_DB: String = "_agent.db"
+
+let CHAT_DB_BAK: String = "_chat.db.bak"
+
+let AGENT_DB_BAK: String = "_agent.db.bak"
+
+private let CHAT_DB_EXPORTED: String = "_chat.db.exported"
+
+private let AGENT_DB_EXPORTED: String = "_agent.db.exported"
+
+// Spec: spec/database.md#getDocumentsDirectory
+public func getDocumentsDirectory() -> URL {
+    FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: NSTemporaryDirectory())
+}
+
+// Spec: spec/database.md#getGroupContainerDirectory
+public func getGroupContainerDirectory() -> URL {
+    if let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_NAME) {
+        return groupURL
+    }
+    logger.error("App group '\(APP_GROUP_NAME)' not available, falling back to documents directory — extensions will not be able to access shared data")
+    return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: NSTemporaryDirectory())
+}
+
+func getAppDirectory() -> URL {
+    if dbContainerGroupDefault.get() == .group,
+       let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_NAME) {
+        return groupURL
+    }
+    return getDocumentsDirectory()
+}
+
+public func excludeAppDataFromBackup() {
+    var values = URLResourceValues()
+    values.isExcludedFromBackup = true
+    for var dir in [getGroupContainerDirectory(), getDocumentsDirectory()] {
+        do {
+            try dir.setResourceValues(values)
+        } catch {
+            logger.error("FileUtils.excludeAppDataFromBackup error: \(error.localizedDescription)")
+        }
+    }
+}
+
+// Spec: spec/database.md#DB_FILE_PREFIX
+let DB_FILE_PREFIX = "popopx_v1"
+
+func getLegacyDatabasePath() -> URL {
+    guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+        logger.error("getLegacyDatabasePath: documentDirectory not available, using temporary directory")
+        return FileManager.default.temporaryDirectory.appendingPathComponent("mobile_v1", isDirectory: false)
+    }
+    return url.appendingPathComponent("mobile_v1", isDirectory: false)
+}
+
+// Spec: spec/database.md#getAppDatabasePath
+public func getAppDatabasePath() -> URL {
+    dbContainerGroupDefault.get() == .group
+    ? getGroupContainerDirectory().appendingPathComponent(DB_FILE_PREFIX, isDirectory: false)
+    : getLegacyDatabasePath()
+}
+
+func fileModificationDate(_ path: String) -> Date? {
+    do {
+        let attr = try FileManager.default.attributesOfItem(atPath: path)
+        return attr[FileAttributeKey.modificationDate] as? Date
+    } catch {
+        return nil
+    }
+}
+
+// Spec: spec/services/files.md#deleteAppDatabaseAndFiles
+public func deleteAppDatabaseAndFiles() {
+    let fm = FileManager.default
+    let dbPath = getAppDatabasePath().path
+    do {
+        try fm.removeItem(atPath: dbPath + CHAT_DB)
+        try fm.removeItem(atPath: dbPath + AGENT_DB)
+    } catch let error {
+        logger.error("Failed to delete all databases: \(error)")
+    }
+    try? fm.removeItem(atPath: dbPath + CHAT_DB_BAK)
+    try? fm.removeItem(atPath: dbPath + AGENT_DB_BAK)
+    try? fm.removeItem(atPath: dbPath + CHAT_DB_EXPORTED)
+    try? fm.removeItem(atPath: dbPath + AGENT_DB_EXPORTED)
+    try? fm.removeItem(at: getTempFilesDirectory())
+    try? fm.removeItem(at: getMigrationTempFilesDirectory())
+    try? fm.createDirectory(at: getTempFilesDirectory(), withIntermediateDirectories: true)
+    try? fm.removeItem(at: getWallpaperDirectory())
+    try? fm.createDirectory(at: getWallpaperDirectory(), withIntermediateDirectories: true)
+    deleteAppFiles()
+    _ = kcDatabasePassword.remove()
+    storeDBPassphraseGroupDefault.set(true)
+}
+
+// Spec: spec/services/files.md#deleteAppFiles
+public func deleteAppFiles() {
+    let fm = FileManager.default
+    do {
+        try fm.removeItem(at: getAppFilesDirectory())
+        try fm.createDirectory(at: getAppFilesDirectory(), withIntermediateDirectories: true)
+    } catch {
+        logger.error("FileUtils deleteAppFiles error: \(error.localizedDescription)")
+    }
+}
+
+public func fileSize(_ url: URL) -> Int? { // in bytes
+    do {
+        let val = try url.resourceValues(forKeys: [.totalFileAllocatedSizeKey, .fileAllocatedSizeKey])
+        return val.totalFileAllocatedSize ?? val.fileAllocatedSize
+    } catch {
+        logger.error("FileUtils fileSize error: \(error.localizedDescription)")
+        return nil
+    }
+}
+
+public func directoryFileCountAndSize(_ dir: URL) -> (Int, Int)? { // size in bytes
+    let fm = FileManager.default
+    if let enumerator = fm.enumerator(at: dir, includingPropertiesForKeys: [.totalFileAllocatedSizeKey, .fileAllocatedSizeKey], options: [], errorHandler: { (_, error) -> Bool in
+        logger.error("FileUtils directoryFileCountAndSize error: \(error.localizedDescription)")
+        return false
+    }) {
+        var fileCount = 0
+        var bytes = 0
+        for case let url as URL in enumerator {
+            fileCount += 1
+            bytes += fileSize(url) ?? 0
+        }
+        return (fileCount, bytes)
+    } else {
+        return nil
+    }
+}
+
+public func hasBackup(newerThan date: Date) -> Bool {
+    let dbPath = getAppDatabasePath().path
+    return hasBackupFile(dbPath + AGENT_DB_BAK, newerThan: date)
+        && hasBackupFile(dbPath + CHAT_DB_BAK, newerThan: date)
+}
+
+private func hasBackupFile(_ path: String, newerThan date: Date) -> Bool {
+    let fm = FileManager.default
+    return fm.fileExists(atPath: path)
+            && date <= (fileModificationDate(path) ?? Date.distantPast)
+}
+
+public func restoreBackup() throws {
+    let dbPath = getAppDatabasePath().path
+    try restoreBackupFile(fromPath: dbPath + AGENT_DB_BAK, toPath: dbPath + AGENT_DB)
+    try restoreBackupFile(fromPath: dbPath + CHAT_DB_BAK, toPath: dbPath + CHAT_DB)
+    try verifyRestoredDatabases(dbPath: dbPath)
+}
+
+private func verifyRestoredDatabases(dbPath: String) throws {
+    let fm = FileManager.default
+    for dbName in [AGENT_DB, CHAT_DB] {
+        let path = dbPath + dbName
+        guard fm.fileExists(atPath: path) else {
+            throw NSError(domain: "FileUtils", code: 3, userInfo: [NSLocalizedDescriptionKey: "Restored database missing: \(dbName)"])
+        }
+        let attrs = try fm.attributesOfItem(atPath: path)
+        guard let size = attrs[.size] as? NSNumber, size.int64Value > 0 else {
+            throw NSError(domain: "FileUtils", code: 4, userInfo: [NSLocalizedDescriptionKey: "Restored database is empty or corrupt: \(dbName)"])
+        }
+    }
+}
+
+private func restoreBackupFile(fromPath: String, toPath: String) throws {
+    let fm = FileManager.default
+    guard fm.fileExists(atPath: fromPath) else {
+        throw NSError(domain: "FileUtils", code: 1, userInfo: [NSLocalizedDescriptionKey: "Backup file not found: \(fromPath)"])
+    }
+    let tempPath = toPath + ".restoring"
+    let oldPath = toPath + ".old"
+    if fm.fileExists(atPath: tempPath) {
+        try fm.removeItem(atPath: tempPath)
+    }
+    if fm.fileExists(atPath: oldPath) {
+        try fm.removeItem(atPath: oldPath)
+    }
+    try fm.copyItem(atPath: fromPath, toPath: tempPath)
+    if fm.fileExists(atPath: toPath) {
+        try fm.moveItem(atPath: toPath, toPath: oldPath)
+    }
+    do {
+        try fm.moveItem(atPath: tempPath, toPath: toPath)
+        try? fm.removeItem(atPath: oldPath)
+    } catch {
+        if fm.fileExists(atPath: oldPath) {
+            try? fm.moveItem(atPath: oldPath, toPath: toPath)
+        }
+        throw error
+    }
+}
+
+public func deleteDatabaseBackups() {
+    let fm = FileManager.default
+    let dbPath = getAppDatabasePath().path
+    try? fm.removeItem(atPath: dbPath + CHAT_DB_BAK)
+    try? fm.removeItem(atPath: dbPath + AGENT_DB_BAK)
+}
+
+public func hasLegacyDatabase() -> Bool {
+    hasDatabaseAtPath(getLegacyDatabasePath())
+}
+
+public func hasDatabase() -> Bool {
+    hasDatabaseAtPath(getAppDatabasePath())
+}
+
+func hasDatabaseAtPath(_ dbPath: URL) -> Bool {
+    let fm = FileManager.default
+    return fm.isReadableFile(atPath: dbPath.path + AGENT_DB) &&
+           fm.isReadableFile(atPath: dbPath.path + CHAT_DB)
+}
+
+public func removeLegacyDatabaseAndFiles() -> Bool {
+    let dbPath = getLegacyDatabasePath()
+    let appFiles = getDocumentsDirectory().appendingPathComponent("app_files", isDirectory: true)
+    let fm = FileManager.default
+    let r1 = nil != (try? fm.removeItem(atPath: dbPath.path + AGENT_DB))
+    let r2 = nil != (try? fm.removeItem(atPath: dbPath.path + CHAT_DB))
+    try? fm.removeItem(atPath: dbPath.path + AGENT_DB_BAK)
+    try? fm.removeItem(atPath: dbPath.path + CHAT_DB_BAK)
+    try? fm.removeItem(atPath: dbPath.path + AGENT_DB_EXPORTED)
+    try? fm.removeItem(atPath: dbPath.path + CHAT_DB_EXPORTED)
+    try? fm.removeItem(at: appFiles)
+    return r1 && r2
+}
+
+// Spec: spec/services/files.md#getTempFilesDirectory
+public func getTempFilesDirectory() -> URL {
+    getAppDirectory().appendingPathComponent("temp_files", isDirectory: true)
+}
+
+public func getMigrationTempFilesDirectory() -> URL {
+    let dir = getDocumentsDirectory().appendingPathComponent("migration_temp_files", isDirectory: true)
+    let fm = FileManager.default
+    if !fm.fileExists(atPath: dir.path) {
+        try? fm.createDirectory(at: dir, withIntermediateDirectories: true)
+        try? fm.setAttributes([.protectionKey: FileProtectionType.complete], ofItemAtPath: dir.path)
+    }
+    return dir
+}
+
+// Spec: spec/services/files.md#getAppFilesDirectory
+public func getAppFilesDirectory() -> URL {
+    getAppDirectory().appendingPathComponent("app_files", isDirectory: true)
+}
+
+public func getAppFilePath(_ fileName: String) -> URL {
+    getAppFilesDirectory().appendingPathComponent(fileName)
+}
+
+// Spec: spec/services/files.md#getWallpaperDirectory
+public func getWallpaperDirectory() -> URL {
+    getAppDirectory().appendingPathComponent("assets", isDirectory: true).appendingPathComponent("wallpapers", isDirectory: true)
+}
+
+public func getWallpaperFilePath(_ filename: String) -> URL {
+    getWallpaperDirectory().appendingPathComponent(filename)
+}
+
+// Spec: spec/services/files.md#saveFile
+public func saveFile(_ data: Data, _ fileName: String, encrypted: Bool) -> CryptoFile? {
+    let filePath = getAppFilePath(fileName)
+    do {
+        let requiredSpace = Int64(data.count) + 1024 * 1024
+        if let availableSpace = try? filePath.deletingLastPathComponent().resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey]).volumeAvailableCapacityForImportantUsage,
+           availableSpace < requiredSpace {
+            logger.error("FileUtils.saveFile: insufficient disk space (need \(requiredSpace), have \(availableSpace))")
+            return nil
+        }
+        if encrypted {
+            let cfArgs = try writeCryptoFile(path: filePath.path, data: data)
+            return CryptoFile(filePath: fileName, cryptoArgs: cfArgs)
+        } else {
+            try data.write(to: filePath, options: [.atomic, .completeFileProtection])
+            return CryptoFile.plain(fileName)
+        }
+    } catch {
+        logger.error("FileUtils.saveFile error: \(error.localizedDescription)")
+        return nil
+    }
+}
+
+// Spec: spec/services/files.md#removeFile
+public func removeFile(_ url: URL) {
+    do {
+        try FileManager.default.removeItem(atPath: url.path)
+    } catch {
+        logger.error("FileUtils.removeFile error: \(error.localizedDescription)")
+    }
+}
+
+public func removeFile(_ fileName: String) {
+    do {
+        try FileManager.default.removeItem(atPath: getAppFilePath(fileName).path)
+    } catch {
+        logger.error("FileUtils.removeFile error: \(error.localizedDescription)")
+    }
+}
+
+// Spec: spec/services/files.md#cleanupDirectFile
+public func cleanupDirectFile(_ aChatItem: AChatItem) {
+    if aChatItem.chatInfo.chatType == .direct {
+        cleanupFile(aChatItem)
+    }
+}
+
+// Spec: spec/services/files.md#cleanupFile
+public func cleanupFile(_ aChatItem: AChatItem) {
+    let cItem = aChatItem.chatItem
+    let mc = cItem.content.msgContent
+    if case .file = mc,
+       let fileName = cItem.file?.fileSource?.filePath {
+        removeFile(fileName)
+    }
+}
+
+public func badgeMaxFileSize(_ badge: LocalBadge) -> Int64 {
+    badge.badge.badgeType == .legend ? MAX_FILE_SIZE_XFTP_LEGEND : MAX_FILE_SIZE_XFTP_SUPPORTER
+}
+
+// a badge raises the limit at send until one day past its expiry, as the core applies it
+public func badgeActiveForSend(_ badge: LocalBadge) -> Bool {
+    badge.status == .active && badge.badge.badgeExpiry.addingTimeInterval(BADGE_SND_GRACE_INTERVAL) >= Date.now
+}
+
+// in incognito chats and above the largest badge's limit no badge applies, so badgeIssue is not used
+public func largeFileMessage(_ fileSize: Int64, incognito: Bool = false, badgeIssue: String = "") -> String {
+    if incognito {
+        return String.localizedStringWithFormat(
+            NSLocalizedString("Files larger than %@ cannot be sent in incognito chats.", comment: "file alert"),
+            ByteCountFormatter.string(fromByteCount: MAX_FILE_SIZE_XFTP, countStyle: .binary)
+        )
+    }
+    if fileSize > MAX_FILE_SIZE_XFTP_LEGEND {
+        return String.localizedStringWithFormat(
+            NSLocalizedString("Maximum supported file size is %1$@, with a %2$@.", comment: "file alert"),
+            ByteCountFormatter.string(fromByteCount: MAX_FILE_SIZE_XFTP_LEGEND, countStyle: .binary),
+            NSLocalizedString("legend badge", comment: "badge required to send a large file")
+        )
+    }
+    let supporter = fileSize <= MAX_FILE_SIZE_XFTP_SUPPORTER
+    let message = String.localizedStringWithFormat(
+        NSLocalizedString("You need a %1$@ to send files larger than %2$@.", comment: "file alert"),
+        supporter
+        ? NSLocalizedString("supporter badge", comment: "badge required to send a large file")
+        : NSLocalizedString("legend badge", comment: "badge required to send a large file"),
+        ByteCountFormatter.string(fromByteCount: supporter ? MAX_FILE_SIZE_XFTP : MAX_FILE_SIZE_XFTP_SUPPORTER, countStyle: .binary)
+    )
+    return badgeIssue.isEmpty ? message : message + " " + badgeIssue
+}
+
+// the badge lapsed, and while active it would have allowed this file
+public func expiredBadgeReason(_ fileSize: Int64, _ senderProfile: LocalProfile?) -> String {
+    if let badge = senderProfile?.localBadge, !badgeActiveForSend(badge), badgeMaxFileSize(badge) >= fileSize {
+        NSLocalizedString("Your badge expired.", comment: "file alert")
+    } else {
+        ""
+    }
+}
+
+public func getMaxFileSize(_ fileProtocol: FileProtocol, _ senderProfile: LocalProfile? = nil) -> Int64 {
+    switch fileProtocol {
+    case .smp: MAX_FILE_SIZE_SMP
+    case .local: MAX_FILE_SIZE_LOCAL
+    case .xftp:
+        if let badge = senderProfile?.localBadge, badgeActiveForSend(badge) {
+            badgeMaxFileSize(badge)
+        } else {
+            MAX_FILE_SIZE_XFTP
+        }
+    }
+}
+
+// the profile of whoever sent a received chat item - the group member, or the direct chat's contact
+public func ciSenderProfile(_ ci: ChatItem, _ chatInfo: ChatInfo) -> LocalProfile? {
+    switch (ci.chatDir, chatInfo) {
+    case let (.groupRcv(groupMember), _): return groupMember.memberProfile
+    case let (.directRcv, .direct(contact)): return contact.profile
+    default: return nil
+    }
+}
+
+public struct RuntimeError: Error {
+    let message: String
+
+    public init(_ message: String) {
+        self.message = message
+    }
+
+    public var localizedDescription: String {
+        return message
+    }
+}

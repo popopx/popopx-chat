@@ -1,6 +1,6 @@
-# SimpleX Chat iOS -- Glossary
+# POPOPX Chat iOS -- Glossary
 
-> SimpleX Chat iOS domain glossary. Defines all domain terms used in SimpleX Chat with links to relevant specifications and source code.
+> POPOPX Chat iOS domain glossary. Defines all domain terms used in POPOPX Chat with links to relevant specifications and source code.
 >
 > **Related spec:** [spec/api.md](../spec/api.md) | [spec/architecture.md](../spec/architecture.md)
 
@@ -21,31 +21,31 @@
 ## Protocols & Cryptography
 
 ### SMP (Simplex Messaging Protocol)
-The core messaging protocol used for asynchronous message delivery through relay servers. Each conversation uses separate unidirectional queues, and sender and receiver queues have no shared identifier. Defined in the [simplexmq](https://github.com/simplex-chat/simplexmq) library. *See: protocol spec `simplexmq/protocol/simplex-messaging.md`, implementation `simplexmq/src/Simplex/Messaging/Protocol.hs`*
+The core messaging protocol used for asynchronous message delivery through relay servers. Each conversation uses separate unidirectional queues, and sender and receiver queues have no shared identifier. Defined in the [popopxmq](https://github.com/popopx-chat/popopxmq) library. *See: protocol spec `popopxmq/protocol/simplex-messaging.md`, implementation `popopxmq/src/Simplex/Messaging/Protocol.hs`*
 
 ### SMP Server
 A relay server that stores and forwards encrypted messages between parties. Users can configure custom SMP servers or use defaults. Servers cannot see message contents or correlate senders with receivers. *See: `Shared/Views/UserSettings/NetworkAndServers/ProtocolServersView.swift`*
 
 ### XFTP (eXtended File Transfer Protocol)
-A protocol for transferring large files (up to 1GB) through relay servers. Files are encrypted, split into chunks, and uploaded to XFTP servers. Recipients download and reassemble chunks independently. Defined in the [simplexmq](https://github.com/simplex-chat/simplexmq) library. *See: protocol spec `simplexmq/protocol/xftp.md`, implementation `simplexmq/src/Simplex/FileTransfer/Protocol.hs`; chat-level integration `../../src/Simplex/Chat/Files.hs`*
+A protocol for transferring large files (up to 1GB) through relay servers. Files are encrypted, split into chunks, and uploaded to XFTP servers. Recipients download and reassemble chunks independently. Defined in the [popopxmq](https://github.com/popopx-chat/popopxmq) library. *See: protocol spec `popopxmq/protocol/xftp.md`, implementation `popopxmq/src/Simplex/FileTransfer/Protocol.hs`; chat-level integration `../../src/Simplex/Chat/Files.hs`*
 
 ### XFTP Server
 A relay server that stores encrypted file chunks for asynchronous file transfer. Like SMP servers, users can configure custom XFTP servers. *See: `Shared/Views/UserSettings/NetworkAndServers/ProtocolServersView.swift`*
 
 ### SMP Agent
-The lower-level agent library (in [simplexmq](https://github.com/simplex-chat/simplexmq)) that manages SMP connections, queue creation/rotation, duplex connection establishment, message delivery, and the double-ratchet encryption protocol. The chat application layer communicates with the agent via its functional API. *See: protocol spec `simplexmq/protocol/agent-protocol.md`, implementation `simplexmq/src/Simplex/Messaging/Agent.hs`; chat-level integration `../../src/Simplex/Chat/Controller.hs`*
+The lower-level agent library (in [popopxmq](https://github.com/popopx-chat/popopxmq)) that manages SMP connections, queue creation/rotation, duplex connection establishment, message delivery, and the double-ratchet encryption protocol. The chat application layer communicates with the agent via its functional API. *See: protocol spec `popopxmq/protocol/agent-protocol.md`, implementation `popopxmq/src/Simplex/Messaging/Agent.hs`; chat-level integration `../../src/Simplex/Chat/Controller.hs`*
 
 ### Double Ratchet
-The key agreement protocol used for E2E encryption. Provides forward secrecy and break-in recovery by deriving new encryption keys for each message. Based on the Signal protocol's double-ratchet algorithm, augmented with post-quantum KEM (PQDR). Implemented in the [simplexmq](https://github.com/simplex-chat/simplexmq) library. *See: protocol spec `simplexmq/protocol/pqdr.md`, implementation `simplexmq/src/Simplex/Messaging/Crypto/Ratchet.hs`*
+The key agreement protocol used for E2E encryption. Provides forward secrecy and break-in recovery by deriving new encryption keys for each message. Based on the Signal protocol's double-ratchet algorithm, augmented with post-quantum KEM (PQDR). Implemented in the [popopxmq](https://github.com/popopx-chat/popopxmq) library. *See: protocol spec `popopxmq/protocol/pqdr.md`, implementation `popopxmq/src/Simplex/Messaging/Crypto/Ratchet.hs`*
 
 ### Post-Quantum Encryption
-Optional quantum-resistant key exchange (PQ) available for direct chats. Uses a hybrid scheme combining classical X25519 with Streamlined NTRU-Prime 761 (sntrup761) KEM. The hybrid secret is SHA3-256(DH_secret || KEM_shared_secret). Implemented in the [simplexmq](https://github.com/simplex-chat/simplexmq) library. *See: protocol spec `simplexmq/protocol/pqdr.md`, implementation `simplexmq/src/Simplex/Messaging/Crypto/SNTRUP761.hs`; Swift types `SimpleXChat/ChatTypes.swift` (PQEncryption, PQSupport)*
+Optional quantum-resistant key exchange (PQ) available for direct chats. Uses a hybrid scheme combining classical X25519 with Streamlined NTRU-Prime 761 (sntrup761) KEM. The hybrid secret is SHA3-256(DH_secret || KEM_shared_secret). Implemented in the [popopxmq](https://github.com/popopx-chat/popopxmq) library. *See: protocol spec `popopxmq/protocol/pqdr.md`, implementation `popopxmq/src/Simplex/Messaging/Crypto/SNTRUP761.hs`; Swift types `POPOPXSwitch/ChatTypes.swift` (PQEncryption, PQSupport)*
 
 ### E2E Encryption
-End-to-end encryption ensuring that only the communicating parties can read message contents. Neither SMP relay servers nor any network observer can decrypt messages. All SimpleX Chat messages are E2E encrypted by default using the double-ratchet protocol. *See: `simplexmq/src/Simplex/Messaging/Crypto/Ratchet.hs` (ratchet implementation), `simplexmq/src/Simplex/Messaging/Agent/Protocol.hs` (E2E message envelopes)*
+End-to-end encryption ensuring that only the communicating parties can read message contents. Neither SMP relay servers nor any network observer can decrypt messages. All POPOPX Chat messages are E2E encrypted by default using the double-ratchet protocol. *See: `popopxmq/src/Simplex/Messaging/Crypto/Ratchet.hs` (ratchet implementation), `popopxmq/src/Simplex/Messaging/Agent/Protocol.hs` (E2E message envelopes)*
 
 ### Forward Secrecy
-A property of the double-ratchet protocol ensuring that compromise of current encryption keys does not compromise past session keys. Each message uses a derived key that is deleted after use. *See: `simplexmq/protocol/pqdr.md`, `simplexmq/src/Simplex/Messaging/Crypto/Ratchet.hs`*
+A property of the double-ratchet protocol ensuring that compromise of current encryption keys does not compromise past session keys. Each message uses a derived key that is deleted after use. *See: `popopxmq/protocol/pqdr.md`, `popopxmq/src/Simplex/Messaging/Crypto/Ratchet.hs`*
 
 ### Chat Protocol (x-events)
 The chat-level protocol defining message envelopes and content types exchanged between chat participants. Includes x-events (XMsgNew, XMsgUpdate, XMsgDel, XCallInv, XFileCancel, XGrpMemNew, etc.), MsgContent (text, image, video, voice, file, link), and message encoding (Binary/JSON). This is distinct from the lower-level SMP transport protocol. *See: `../../src/Simplex/Chat/Protocol.hs`*
@@ -58,10 +58,10 @@ A hash of the shared encryption session displayed as a numeric code and QR code.
 ## Core Data Types
 
 ### ChatItem
-The fundamental unit of content in a conversation. Represents a single message, event, call record, or system notification within a chat. Each ChatItem has direction (sent/received), content, metadata, and optional quoted context. *See: `../../src/Simplex/Chat/Messages.hs` (data ChatItem), `SimpleXChat/ChatTypes.swift`*
+The fundamental unit of content in a conversation. Represents a single message, event, call record, or system notification within a chat. Each ChatItem has direction (sent/received), content, metadata, and optional quoted context. *See: `../../src/Simplex/Chat/Messages.hs` (data ChatItem), `POPOPXSwitch/ChatTypes.swift`*
 
 ### ChatInfo
-A type-safe wrapper identifying a conversation and its metadata. Variants: DirectChat (1:1 with Contact), GroupChat (with GroupInfo), LocalChat (note folder), ContactRequest, ContactConnection. *See: `../../src/Simplex/Chat/Messages.hs` (data ChatInfo), `SimpleXChat/ChatTypes.swift`*
+A type-safe wrapper identifying a conversation and its metadata. Variants: DirectChat (1:1 with Contact), GroupChat (with GroupInfo), LocalChat (note folder), ContactRequest, ContactConnection. *See: `../../src/Simplex/Chat/Messages.hs` (data ChatInfo), `POPOPXSwitch/ChatTypes.swift`*
 
 ### CIContent
 The content payload of a ChatItem. Differentiates sent vs. received content types: message content (text/image/file/voice/link), deletion markers, call records, group events, and feature preference changes. *See: `../../src/Simplex/Chat/Messages/CIContent.hs` (data CIContent)*
@@ -70,7 +70,7 @@ The content payload of a ChatItem. Differentiates sent vs. received content type
 A local user profile within the app. Each user has an independent set of contacts, groups, and connections. Multiple users can exist in one app installation. Fields include userId, profile, display name, and optional view password hash for hidden profiles. *See: `../../src/Simplex/Chat/Types.hs` (data User), `Shared/Model/ChatModel.swift`*
 
 ### Contact
-A remote party with whom the user has an established E2E encrypted connection. Stores the contact's profile, local alias, connection status, feature preferences, and UI settings. *See: `../../src/Simplex/Chat/Types.hs` (data Contact), `SimpleXChat/ChatTypes.swift`*
+A remote party with whom the user has an established E2E encrypted connection. Stores the contact's profile, local alias, connection status, feature preferences, and UI settings. *See: `../../src/Simplex/Chat/Types.hs` (data Contact), `POPOPXSwitch/ChatTypes.swift`*
 
 ### GroupInfo
 Metadata for a group conversation including group profile, member count, preferences, and membership status. Contains the user's own membership record as a GroupMember. *See: `../../src/Simplex/Chat/Types.hs` (data GroupInfo)*
@@ -88,7 +88,7 @@ The lifecycle state of a Connection: ConnNew (created, awaiting join), ConnJoine
 The status of a contact record: CSActive (normal), CSDeleted (deleted by contact), CSDeletedByUser (deleted by user). *See: `../../src/Simplex/Chat/Types.hs` (data ContactStatus)*
 
 ### GroupMemberRole
-Hierarchical role assigned to a group member. From most to least privileged: GROwner, GRAdmin, GRModerator, GRMember, GRObserver, GRRelay. Roles determine permissions for sending messages, managing members, and moderating content. The `.relay` role is below `.observer` and is used for relay members in channels. *See: `../../src/Simplex/Chat/Types/Shared.hs` (data GroupMemberRole), `SimpleXChat/ChatTypes.swift` L2806*
+Hierarchical role assigned to a group member. From most to least privileged: GROwner, GRAdmin, GRModerator, GRMember, GRObserver, GRRelay. Roles determine permissions for sending messages, managing members, and moderating content. The `.relay` role is below `.observer` and is used for relay members in channels. *See: `../../src/Simplex/Chat/Types/Shared.hs` (data GroupMemberRole), `POPOPXSwitch/ChatTypes.swift` L2806*
 
 ### GroupMemberStatus
 The lifecycle state of a group member: GSMemRejected, GSMemRemoved, GSMemLeft, GSMemGroupDeleted, GSMemUnknown, GSMemInvited, GSMemIntroduced, GSMemIntroInvited, GSMemAccepted, GSMemAnnounced, GSMemConnected, GSMemComplete, GSMemCreator, GSMemPendingReview, GSMemPendingApproval. *See: `../../src/Simplex/Chat/Types.hs` (data GroupMemberStatus)*
@@ -100,22 +100,22 @@ Represents an in-progress or completed file transfer. Variants: FTSnd (sending, 
 A user-defined label for organizing conversations in the chat list. Each tag has a text label and optional emoji. Chats can have multiple tags, and the chat list can be filtered by tag. *See: `../../src/Simplex/Chat/Types.hs` (data ChatTag), `Shared/Views/ChatList/TagListView.swift`*
 
 ### Channel
-A group that uses relay infrastructure for message delivery (`groupInfo.useRelays == true`). Channels decouple the message sender from direct group membership connections, routing messages through relay members instead. Channels display the `antenna.radiowaves.left.and.right` SF Symbol as their icon and render received messages with the group avatar and "channel" role label. *See: [spec/state.md](../spec/state.md) (Relay-Related Data Model), [spec/client/chat-view.md](../spec/client/chat-view.md) (Channel Message Rendering), `SimpleXChat/ChatTypes.swift` (GroupInfo.useRelays, GroupInfo.chatIconName)*
+A group that uses relay infrastructure for message delivery (`groupInfo.useRelays == true`). Channels decouple the message sender from direct group membership connections, routing messages through relay members instead. Channels display the `antenna.radiowaves.left.and.right` SF Symbol as their icon and render received messages with the group avatar and "channel" role label. *See: [spec/state.md](../spec/state.md) (Relay-Related Data Model), [spec/client/chat-view.md](../spec/client/chat-view.md) (Channel Message Rendering), `POPOPXSwitch/ChatTypes.swift` (GroupInfo.useRelays, GroupInfo.chatIconName)*
 
 ### RelayStatus
-The lifecycle state of a relay member in a channel: `.rsNew` (created), `.rsInvited` (invitation sent), `.rsAccepted` (accepted by relay), `.rsActive` (fully operational). *See: `SimpleXChat/ChatTypes.swift` L2506*
+The lifecycle state of a relay member in a channel: `.rsNew` (created), `.rsInvited` (invitation sent), `.rsAccepted` (accepted by relay), `.rsActive` (fully operational). *See: `POPOPXSwitch/ChatTypes.swift` L2506*
 
 ### GroupRelay
-A struct representing a relay instance for a group. Contains the relay's database ID (`groupRelayId`), associated group member ID, user chat relay ID, relay status, and optional relay link (per-group link for subscribers). *See: `SimpleXChat/ChatTypes.swift` L2555*
+A struct representing a relay instance for a group. Contains the relay's database ID (`groupRelayId`), associated group member ID, user chat relay ID, relay status, and optional relay link (per-group link for subscribers). *See: `POPOPXSwitch/ChatTypes.swift` L2555*
 
 ### UserChatRelay
-A struct representing a user's chat relay configuration. Contains the relay's database ID (`chatRelayId`), SMP server address, name, domains, and flags for preset/tested/enabled/deleted status. *See: `SimpleXChat/ChatTypes.swift` L2513*
+A struct representing a user's chat relay configuration. Contains the relay's database ID (`chatRelayId`), SMP server address, name, domains, and flags for preset/tested/enabled/deleted status. *See: `POPOPXSwitch/ChatTypes.swift` L2513*
 
 ### GroupShortLinkInfo
 Information about a group's short link including whether it's a direct link, associated relay hostnames, and shared group identifier. Transient data returned by `APIConnectPreparedGroup` — not persisted on GroupInfo. *See: `Shared/Model/AppAPITypes.swift` L1352*
 
 ### CIDirection.channelRcv
-A chat item direction case for messages received via a channel relay, as opposed to `.groupRcv` for standard group messages. *See: `SimpleXChat/ChatTypes.swift` L3529*
+A chat item direction case for messages received via a channel relay, as opposed to `.groupRcv` for standard group messages. *See: `POPOPXSwitch/ChatTypes.swift` L3529*
 
 ---
 
@@ -137,7 +137,7 @@ Error types returned by the chat controller. Variants: ChatError (application-le
 
 ## Connection & Identity
 
-### SimpleX Address
+### POPOPX Address
 A long-lived contact address that others can use to send connection requests. Unlike one-time invitation links, an address can be reused by multiple contacts. The user can accept or reject each incoming request. *See: `Shared/Views/UserSettings/UserAddressView.swift`, `../../src/Simplex/Chat/Controller.hs` (APICreateMyAddress)*
 
 ### Contact Link
@@ -147,7 +147,7 @@ A one-time or reusable URI that initiates a contact connection. When scanned or 
 A shareable URI that allows new members to join a group. The link connects to the group host, who then introduces the new member to existing members. Configurable with a default member role. *See: `Shared/Views/Chat/Group/GroupLinkView.swift`, `../../src/Simplex/Chat/Types.hs` (data GroupLink)*
 
 ### Short Link
-A compact version of SimpleX contact or group links, using a shorter URI format for easier sharing. Contains encoded connection parameters with reduced character length. *See: `../../src/Simplex/Chat/Controller.hs`*
+A compact version of POPOPX contact or group links, using a shorter URI format for easier sharing. Contains encoded connection parameters with reduced character length. *See: `../../src/Simplex/Chat/Controller.hs`*
 
 ### Incognito Mode
 A privacy feature that generates a random profile (display name and avatar) for each new contact connection. The real user profile is never shared with incognito contacts. Can be toggled per-connection at invitation time. *See: `Shared/Views/UserSettings/IncognitoHelp.swift`, `../../src/Simplex/Chat/ProfileGenerator.hs`*
@@ -182,16 +182,16 @@ An error occurring when a received message cannot be decrypted, typically due to
 ## Calling & Media
 
 ### CallKit
-Apple's framework for integrating VoIP calls with the native iOS call UI. SimpleX Chat uses CallKit to display incoming calls on the lock screen, support call answering from the system UI, and manage audio sessions. *See: `Shared/Views/Call/CallController.swift`, `Shared/Views/Call/CallManager.swift`*
+Apple's framework for integrating VoIP calls with the native iOS call UI. POPOPX Chat uses CallKit to display incoming calls on the lock screen, support call answering from the system UI, and manage audio sessions. *See: `Shared/Views/Call/CallController.swift`, `Shared/Views/Call/CallManager.swift`*
 
 ### WebRTC
-The real-time communication framework used for audio/video calls. SimpleX Chat wraps WebRTC in an E2E encrypted layer, with signaling performed through the existing SMP message channel rather than a central server. *See: `Shared/Views/Call/WebRTC.swift`, `Shared/Views/Call/WebRTCClient.swift`*
+The real-time communication framework used for audio/video calls. POPOPX Chat wraps WebRTC in an E2E encrypted layer, with signaling performed through the existing SMP message channel rather than a central server. *See: `Shared/Views/Call/WebRTC.swift`, `Shared/Views/Call/WebRTCClient.swift`*
 
 ### ICE Server
-An Interactive Connectivity Establishment server used by WebRTC to discover network paths between call participants. SimpleX Chat supports configuring custom ICE servers. *See: `Shared/Views/UserSettings/RTCServers.swift`, `SimpleXChat/CallTypes.swift`*
+An Interactive Connectivity Establishment server used by WebRTC to discover network paths between call participants. POPOPX Chat supports configuring custom ICE servers. *See: `Shared/Views/UserSettings/RTCServers.swift`, `POPOPXSwitch/CallTypes.swift`*
 
 ### TURN Server
-A Traversal Using Relays around NAT server that relays WebRTC media when direct peer-to-peer connection is not possible. A specific type of ICE server. SimpleX Chat allows configuring custom TURN servers for call relay. *See: `Shared/Views/UserSettings/RTCServers.swift`*
+A Traversal Using Relays around NAT server that relays WebRTC media when direct peer-to-peer connection is not possible. A specific type of ICE server. POPOPX Chat allows configuring custom TURN servers for call relay. *See: `Shared/Views/UserSettings/RTCServers.swift`*
 
 ### RcvCallInvitation
 An in-memory data structure representing an incoming call invitation. Contains the calling contact, call type (audio/video), encryption keys, and shared key for the WebRTC session. Not persisted to database. *See: `../../src/Simplex/Chat/Call.hs` (data RcvCallInvitation)*
@@ -201,7 +201,7 @@ An in-memory data structure representing an incoming call invitation. Contains t
 ## Notifications & Background
 
 ### Notification Service Extension (NSE)
-An iOS app extension that processes incoming push notifications while the main app is not running. The NSE starts a temporary chat controller, decrypts the incoming message, and displays a notification with the message preview. *See: `SimpleX NSE/NotificationService.swift`, `SimpleX NSE/NSEAPITypes.swift`*
+An iOS app extension that processes incoming push notifications while the main app is not running. The NSE starts a temporary chat controller, decrypts the incoming message, and displays a notification with the message preview. *See: `POPOPX NSE/NotificationService.swift`, `POPOPX NSE/NSEAPITypes.swift`*
 
 ### Background Task
 An iOS background execution context used for periodic message fetching when instant notifications are not enabled. Managed by BGManager to check for new messages at system-determined intervals. *See: `Shared/Model/BGManager.swift`*
@@ -211,7 +211,7 @@ An iOS background execution context used for periodic message fetching when inst
 ## Application Architecture
 
 ### chat_ctrl
-The opaque C pointer to the Haskell chat controller, obtained via FFI initialization. All chat operations are dispatched through this controller handle. The main app and NSE maintain separate chat_ctrl instances. *See: `SimpleXChat/API.swift` (chatController, getChatCtrl)*
+The opaque C pointer to the Haskell chat controller, obtained via FFI initialization. All chat operations are dispatched through this controller handle. The main app and NSE maintain separate chat_ctrl instances. *See: `POPOPXSwitch/API.swift` (chatController, getChatCtrl)*
 
 ### ComposeState
 A Swift struct holding the current state of the message composition area. Tracks the message text, parsed markdown, preview, attached media, editing context, quote context, and voice recording state. *See: `Shared/Views/Chat/ComposeMessage/ComposeView.swift` (struct ComposeState)*
@@ -236,7 +236,7 @@ A type class (Haskell) / protocol pattern representing a user's preference for a
 Per-chat configuration including notification mode (all/mentions/off), send receipts toggle, favorite flag, and tag assignments. Stored per contact and per group. *See: `../../src/Simplex/Chat/Types.hs` (data ChatSettings)*
 
 ### UserDefaults / GroupDefaults
-iOS persistent key-value storage for app preferences. GroupDefaults (UserDefaults with the app group suite name) is shared between the main app and the NSE extension. Stores settings like notification mode, appearance preferences, and runtime flags. *See: `SimpleXChat/AppGroup.swift` (groupDefaults)*
+iOS persistent key-value storage for app preferences. GroupDefaults (UserDefaults with the app group suite name) is shared between the main app and the NSE extension. Stores settings like notification mode, appearance preferences, and runtime flags. *See: `POPOPXSwitch/AppGroup.swift` (groupDefaults)*
 
 ---
 
@@ -249,5 +249,5 @@ iOS persistent key-value storage for app preferences. GroupDefaults (UserDefault
 - Haskell chat protocol (x-events): `../../src/Simplex/Chat/Protocol.hs`
 - Haskell messages: `../../src/Simplex/Chat/Messages.hs`
 - Swift model: `Shared/Model/ChatModel.swift`
-- Swift API types: `SimpleXChat/APITypes.swift`, `SimpleXChat/ChatTypes.swift`
-- simplexmq library (SMP, XFTP, Agent, encryption): [github.com/simplex-chat/simplexmq](https://github.com/simplex-chat/simplexmq)
+- Swift API types: `POPOPXSwitch/APITypes.swift`, `POPOPXSwitch/ChatTypes.swift`
+- popopxmq library (SMP, XFTP, Agent, encryption): [github.com/popopx-chat/popopxmq](https://github.com/popopx-chat/popopxmq)

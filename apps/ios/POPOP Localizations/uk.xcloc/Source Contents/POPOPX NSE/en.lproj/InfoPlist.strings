@@ -1,0 +1,9 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "POPOP NSE";
+
+/* Bundle name */
+"CFBundleName" = "POPOP NSE";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Copyright © 2022 POPOP Chat. All rights reserved.";
+

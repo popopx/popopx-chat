@@ -1,0 +1,17 @@
+/* Bundle name */
+"CFBundleName" = "POPOPX";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "POPOPX needs camera access to scan QR codes for connecting with other users and for video calls.";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "POPOPX uses Face ID for local authentication";
+
+/* Privacy - Local Network Usage Description */
+"NSLocalNetworkUsageDescription" = "POPOPX uses local network access to allow using your chat profile via the desktop app on the same network.";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "POPOPX needs microphone access for audio and video calls, and for recording voice messages.";
+
+/* Privacy - Photo Library Additions Usage Description */
+"NSPhotoLibraryAddUsageDescription" = "POPOPX needs photo library access to save captured and received media";

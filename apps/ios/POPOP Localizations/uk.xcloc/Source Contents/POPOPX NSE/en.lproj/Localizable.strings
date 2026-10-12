@@ -1,0 +1,281 @@
+/* 
+  Localizable.strings
+  POPOP
+
+  Created by EP on 30/07/2024.
+  Copyright © 2024 POPOP Chat. All rights reserved.
+*/
+
+/* RadialActionMenu - Chat actions */
+"accept_contact_request" = "Accept";
+"incognito_accept" = "Incognito";
+"reject_contact_request" = "Reject";
+"join_group" = "Join";
+"archive_reports" = "Archive";
+"leave_group_action" = "Leave";
+"mark_read" = "Read";
+"mark_unread" = "Unread";
+"unfavorite_chat" = "Unfav";
+"favorite_chat" = "Fav";
+"chat_list" = "List";
+"clear_conversation" = "Clear";
+"delete_chat" = "Delete";
+
+/* RadialActionMenu - Alert dialogs */
+"clear_private_notes_title" = "Clear private notes?";
+"clear_conversation_title" = "Clear conversation?";
+"clear_private_notes_message" = "All messages will be deleted - this cannot be undone!";
+"clear_conversation_message" = "All messages will be deleted - this cannot be undone! The messages will be deleted ONLY for you.";
+"clear_action" = "Clear";
+"archive_reports_title" = "Archive all reports?";
+"archive_reports_message" = "All reports will be archived for you.";
+"archive_action" = "Archive";
+"leave_group_title" = "Leave group?";
+"leave_group_message" = "You will no longer receive messages from this group.";
+"leave_action" = "Leave";
+
+/* OneHandUICard - Accessibility */
+"selected_state" = "Selected";
+"not_selected_state" = "Not selected";
+
+/* PXContactConnectionInfo - Connection status */
+"you_invited_contact" = "You invited a contact";
+"you_accepted_connection" = "You accepted connection";
+"group_connection_pending" = "You will be connected to group when the group host's device is online, please wait or check later!";
+"connection_request_pending" = "You will be connected when your connection request is accepted, please wait or check later!";
+"contact_device_pending" = "You will be connected when your contact's device is online, please wait or check later!";
+"incognito_mode" = "Incognito";
+"delete_connection" = "Delete connection";
+"share_onetime_link" = "Share 1-time link";
+"onetime_invitation_title" = "One-time invitation link";
+"learn_more" = "Learn more";
+
+/* PXTagListView - Tag management */
+"delete_list_title" = "Delete list?";
+"delete_list_message" = "All chats will be removed from the list %@, and the list deleted.";
+"delete_action" = "Delete";
+"edit_action" = "Edit";
+"create_list" = "Create list";
+"error_reordering_lists" = "Error reordering lists";
+"error_saving_chat_list" = "Error saving chat list";
+"add_to_list" = "Add to list";
+"save_list" = "Save list";
+"unique_list_name_emoji" = "List name and emoji should be different for all lists.";
+"error_creating_list" = "Error creating list";
+
+/* PXChatRelayView - Relay settings (Batch 3) */
+"relay_test_failed_title" = "Relay test failed!";
+"your_relay_name" = "Your relay name";
+"preset_relay_address" = "Preset relay address";
+"preset_relay_name" = "Preset relay name";
+"your_relay_address" = "Your relay address";
+"test_relay_footer" = "**Test relay** to retrieve its name.";
+"delete_relay" = "Delete relay";
+"use_relay" = "Use relay";
+"test_relay_button" = "Test relay";
+"use_for_new_channels" = "Use for new channels";
+"chat_relay_nav_title" = "Chat relay";
+"enter_relay_name_placeholder" = "Enter relay name…";
+
+/* UserAddressLearnMore - Address help (Batch 3) */
+"share_address_publicly" = "Share POPOPX address on social media.";
+"address_wont_lose_contacts" = "You won't lose your contacts if you later delete your address.";
+"onetime_link_usage_hint" = "1-time link can be used *with one contact only* - share in person or via any messenger.";
+"set_connection_name_hint" = "You can set connection name, to remember who the link was shared with.";
+"connection_security" = "Connection security";
+"address_links_safe_share" = "POPOPX address and 1-time links are safe to share via any messenger.";
+"compare_security_codes" = "To protect against your link being replaced, you can compare contact security codes.";
+"read_more_user_guide" = "Read more in User Guide.";
+"create_popopx_address" = "Create POPOPX address";
+"create_onetime_link" = "Create 1-time link";
+"popopx_address_title" = "POPOPX address";
+"new_chat_title" = "New chat";
+
+/* PXRTCServers - WebRTC settings (Batch 3) */
+"configure_ice_servers" = "Configure ICE servers";
+"use_popopx_servers_confirm" = "Use POPOPX Chat servers?";
+"saved_webrtc_removed" = "Saved WebRTC ICE servers will be removed";
+"confirm_action" = "Confirm";
+"using_popopx_servers" = "Using POPOPX Chat servers.";
+"ice_servers_one_per_line" = "ICE servers (one per line)";
+"error_saving_ice_servers" = "Error saving ICE servers";
+"ice_servers_format_error" = "Make sure WebRTC ICE server addresses are in correct format, line separated and are not duplicated.";
+"how_to" = "How to";
+
+/* PXChatItemInfoView - Chat item info (Batch 4) */
+"delivery_tab" = "Delivery";
+"history_tab" = "History";
+"in_reply_to_tab" = "In reply to";
+"saved_message" = "Saved";
+"forwarded_message" = "Forwarded";
+"history_section" = "History";
+"no_history" = "No history";
+"share_action" = "Share";
+"copy_action" = "Copy";
+"current_version" = "(current)";
+"no_text_content" = "no text";
+"in_reply_to_section" = "In reply to";
+"recipients_cant_see_sender" = "Recipient(s) can't see who this message is from.";
+"you_sent_label" = "you";
+"delivery_section" = "Delivery";
+"no_delivery_info" = "No delivery information";
+
+/* PXFramedItemView - Chat item framing (Batch 5) */
+"only_you_and_mods_see" = "Only you and moderators see it";
+"only_sender_and_mods_see" = "Only sender and moderators see it";
+"archived_report" = "archived report";
+"moderated_by_user" = "moderated by";
+"blocked_status" = "blocked";
+"blocked_by_admin" = "blocked by admin";
+"marked_deleted" = "marked deleted";
+"live_message" = "LIVE";
+
+/* PXIntegrityErrorItemView - Error alerts (Batch 5) */
+"skipped_messages_title" = "Skipped messages";
+"skipped_messages_message" = "It can happen when:\n1. The messages expired in the sending client after 2 days or on the server after 30 days.\n2. Message decryption failed, because you or your contact used old database backup.\n3. The connection was compromised.";
+"bad_message_hash" = "Bad message hash";
+"hash_mismatch_description" = "The hash of the previous message is different.";
+"report_to_developers" = "Please report it to the developers.";
+"bad_message_id" = "Bad message ID";
+"message_id_incorrect" = "The ID of the next message is incorrect (less or equal to the previous).\nIt can happen because of some bug or when the connection is compromised.";
+"message_receive_error" = "The app removed this message after %d attempts to receive it.";
+"message_error_title" = "Message error";
+
+"chat_audio_call" = "Audio call";
+"chat_video_call" = "Video call";
+"chat_all_messages" = "All messages";
+"chat_search" = "Search";
+"chat_filter" = "Filter";
+"chat_invite_member" = "Invite member";
+
+"compose_member_deleted_cant_accept" = "Member is deleted - can't accept request";
+"compose_reject" = "Reject";
+"compose_accept" = "Accept";
+"compose_your_profile" = "Your profile";
+"compose_incognito" = "Incognito";
+"compose_send_live_message" = "Send live message";
+"compose_disappearing_message" = "Disappearing message";
+"compose_char_count_format" = %d/65536;
+"compose_scan_security_code" = "Scan security code from your contact's app.";
+"compose_incorrect_security_code" = "Incorrect security code!";
+"compose_no_filtered_chats" = "No filtered chats";
+"compose_share" = "Share";
+"compose_copy" = "Copy";
+"compose_mark_read" = "Mark read";
+"compose_delete_from_history" = "Delete from history";
+"compose_archive_report" = "Archive report";
+"compose_answer_call" = "Answer call";
+"compose_tap_to_open" = "Tap to open";
+"compose_invalid_data" = "invalid data";
+"compose_event_happened" = "event happened";
+
+"group_no_contacts_to_add" = "No contacts to add";
+"group_clear_selection" = "Clear";
+"group_contacts_selected_fmt" = "%d contact(s) selected";
+"group_no_contacts_selected" = "No contacts selected";
+"group_cant_invite_contact_title" = "Can't invite contact!";
+"group_cant_invite_contact_msg" = "You're trying to invite contact with whom you've shared an incognito profile to the group in which you're using your main profile";
+"group_enabled_for" = "Enabled for";
+"group_set_member_admission" = "Set member admission";
+"group_member_admission" = "Member admission";
+"group_no_available_relays" = "No available relays";
+"group_channel_delete_all" = "Channel will be deleted for all subscribers - this cannot be undone!";
+"group_channel_delete_you" = "Channel will be deleted for you - this cannot be undone!";
+"group_group_delete_all" = "Group will be deleted for all members - this cannot be undone!";
+"group_group_delete_you" = "Group will be deleted for you - this cannot be undone!";
+"group_chat_delete_all" = "Chat will be deleted for all members - this cannot be undone!";
+"group_chat_delete_you" = "Chat will be deleted for you - this cannot be undone!";
+"group_cant_invite_contacts_title" = "Can't invite contacts!";
+"group_cant_invite_contacts_msg" = "You're using an incognito profile for this group - to prevent sharing your main profile inviting contacts is not allowed";
+"group_receipts_disabled_title" = "Receipts are disabled";
+"group_receipts_disabled_msg_fmt" = "This group has over %d members, delivery receipts are not sent.";
+"group_copy_code" = "Copy code";
+"group_webpage_code" = "Webpage code";
+"group_webpage_code_instructions" = "Add this code to your webpage. It will display the preview of your channel / group.";
+"group_enter_webpage_url" = "Enter webpage URL";
+"group_webpage_url_instructions" = "It will be shown to subscribers and used to allow loading the preview.";
+"group_chat_with_admins" = "Chat with admins";
+"group_member_reports" = "Member reports";
+"group_set_group_preferences" = "Set group preferences";
+"group_owners_section" = "Owners";
+"group_you_label" = "you";
+"group_no_chat_relays" = "No chat relays";
+"group_chat_relays_forward_info" = "Chat relays forward messages to channel subscribers.";
+"group_reset_button" = "Reset";
+"group_take_picture" = "Take picture";
+"group_choose_from_library" = "Choose from library";
+"group_paste_image" = "Paste image";
+"group_read_action" = "Read";
+"group_accept_action" = "Accept";
+"group_delete_action_member" = "Delete";
+"group_share_link_desc_channel" = "You can share a link or a QR code - anybody will be able to join the channel.";
+"group_share_link_desc_group" = "You can share a link or a QR code - anybody will be able to join the group. You won't lose members of the group if you later delete it.";
+"group_upgrade_link" = "Upgrade link";
+"group_share_link_button" = "Share link";
+"group_share_via_chat_button" = "Share via chat";
+"group_delete_link" = "Delete link";
+"group_create_link_button" = "Create link";
+"group_delete_link_title" = "Delete link?";
+"group_delete_link_message" = "All group members will remain connected.";
+"group_delete_link_action" = "Delete";
+
+"settings_send_notifications" = "Send notifications";
+"settings_lock_screen_preview" = "You can set lock screen notification preview via settings.";
+"settings_open_settings_button" = "Open Settings";
+"settings_show_preview" = "Show preview";
+"settings_push_notifications" = "Push notifications";
+"settings_restart_migrate_notice" = "Please restart the app and migrate the database to enable push notifications.";
+"settings_server_test_failed" = "Server test failed!";
+"settings_test_notifications" = "Test notifications";
+"settings_core_version_fmt" = "Core version: v%@";
+"settings_core_engine_fmt" = "Core engine: v%@";
+"settings_markdown_usage" = "You can use markdown to format messages:";
+"settings_incognito_mode" = "Incognito mode";
+"settings_incognito_description_1" = "Incognito mode protects your privacy by using a new random profile for each contact.";
+"settings_incognito_description_2" = "It allows having many anonymous connections without any shared data between them in a single chat profile.";
+"settings_incognito_description_3" = "When you share an incognito profile with somebody, this profile will be used for the groups they invite you to.";
+"settings_chat_console" = "Chat console";
+"settings_reset_hints" = "Reset all hints";
+"settings_show_hide_db_ids" = "Database IDs and Transport isolation option.";
+"settings_storage_label" = "Storage";
+"settings_developer_options" = "Developer options";
+"settings_compute_store_url" = "Compute store URL";
+"settings_compute_store_label" = "Compute Store";
+"settings_compute_store_hint" = "Leave empty to use local mock mode. Set a backend URL to enable real StoreKit purchases with server-side verification.";
+"settings_profile_stored_notice" = "Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile.";
+"settings_reset_button" = "Reset";
+"settings_save_notify_contacts" = "Save (and notify contacts)";
+"settings_take_picture" = "Take picture";
+"settings_choose_from_library" = "Choose from library";
+"settings_paste_image" = "Paste image";
+"settings_hide_profile" = "Hide profile";
+"settings_hidden_profile_password" = "Hidden profile password";
+"settings_hidden_profile_instructions" = "To reveal your hidden profile, enter a full password into a search field in **Your chat profiles** page.";
+"settings_error_saving_password" = "Error saving user password";
+"settings_time_disappear_new_contacts" = "Time to disappear is set only for new contacts.";
+"settings_webrtc_ice_servers" = "WebRTC ICE servers";
+"settings_call_settings_header" = "Settings";
+"settings_relay_protects_ip" = "Relay server protects your IP address, but it can observe the duration of the call.";
+"settings_relay_only_if_necessary" = "Relay server is only used if necessary. Another party can observe your IP address.";
+"settings_interface_section" = "Interface";
+"settings_accept_calls_lockscreen" = "You can accept calls from lock screen, without device and app authentication.";
+"settings_auth_required_before_connect" = "Authentication is required before the call is connected, but you may miss calls.";
+"settings_limitations_section" = "Limitations";
+"settings_preset_server_address" = "Preset server address";
+"settings_your_server_address" = "Your server address";
+"settings_add_to_another_device" = "Add to another device";
+"settings_use_for_messages" = "Use for messages";
+"settings_yes_option" = "yes";
+"settings_no_option" = "no";
+"settings_use_server" = "Use server";
+"settings_chat_relays_header" = "Chat relays";
+"settings_chat_relays_forward_desc" = "Chat relays forward messages in channels you create.";
+"settings_message_servers" = "Message servers";
+"settings_media_file_servers" = "Media & file servers";
+"settings_add_server" = "Add server";
+"settings_enter_server_manually" = "Enter server manually";
+"settings_scan_server_qr" = "Scan server QR code";
+"settings_chat_relay_link" = "Chat relay";
+"settings_how_to_use_servers" = "How to use your servers";
+"settings_test_servers" = "Test servers";
+"settings_scan_server_qr_title" = "Scan server QR code";

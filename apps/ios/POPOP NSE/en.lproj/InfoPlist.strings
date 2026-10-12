@@ -1,0 +1,9 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "POPOPX NSE";
+
+/* Bundle name */
+"CFBundleName" = "POPOPX NSE";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Copyright © 2025 POPOPX. All rights reserved.";
+

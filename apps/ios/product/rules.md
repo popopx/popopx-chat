@@ -1,6 +1,6 @@
-# SimpleX Chat iOS -- Business Rules
+# POPOPX Chat iOS -- Business Rules
 
-> Business invariants enforced by the SimpleX Chat iOS app and Haskell core. Each rule states the invariant, where it is enforced, and links to the relevant spec.
+> Business invariants enforced by the POPOPX Chat iOS app and Haskell core. Each rule states the invariant, where it is enforced, and links to the relevant spec.
 >
 > **Related spec:** [spec/api.md](../spec/api.md) | [spec/architecture.md](../spec/architecture.md) | [spec/state.md](../spec/state.md)
 
@@ -10,12 +10,12 @@
 
 ### RULE-01: No user identifiers
 **Rule:** The system MUST NOT assign, generate, or expose any persistent user identifier (phone number, email, username, UUID) that could be used to correlate a user across conversations.
-**Enforced by:** SMP protocol design in simplexmq library; each connection uses independent unidirectional queues with no shared identifier.
+**Enforced by:** SMP protocol design in popopxmq library; each connection uses independent unidirectional queues with no shared identifier.
 **Spec:** [spec/architecture.md](../spec/architecture.md)
 
 ### RULE-02: End-to-end encryption on all messages
 **Rule:** All message content MUST be encrypted end-to-end using double-ratchet (with optional post-quantum KEM). The SMP server MUST NOT have access to plaintext.
-**Enforced by:** simplexmq library (`Simplex.Messaging.Crypto.Ratchet`); encryption happens before `chat_send_cmd_retry` FFI call.
+**Enforced by:** popopxmq library (`Simplex.Messaging.Crypto.Ratchet`); encryption happens before `chat_send_cmd_retry` FFI call.
 **Spec:** [spec/architecture.md](../spec/architecture.md)
 
 ### RULE-03: Database encryption at rest
@@ -119,8 +119,8 @@
 **Spec:** [spec/client/chat-view.md](../spec/client/chat-view.md)
 
 ### RULE-21: Relay links cannot be used to connect
-**Rule:** SimpleX links with path `/r` (relay addresses) MUST be rejected when users attempt to connect. An explanatory alert is shown instead.
-**Enforced by:** `ContentView.swift` (`connectViaUrl_` early return for `/r` path), `NewChatView.swift` (`planAndConnect` guard for `.simplexLink(_, .relay, _, _)`).
+**Rule:** POPOPX links with path `/r` (relay addresses) MUST be rejected when users attempt to connect. An explanatory alert is shown instead.
+**Enforced by:** `ContentView.swift` (`connectViaUrl_` early return for `/r` path), `NewChatView.swift` (`planAndConnect` guard for `.popopxLink(_, .relay, _, _)`).
 **Spec:** [spec/client/navigation.md](../spec/client/navigation.md)
 
 ### RULE-22: Channel subscribers default to observer role

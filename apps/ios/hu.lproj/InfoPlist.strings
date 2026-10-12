@@ -1,0 +1,7 @@
+/* Localized permission strings */
+"NSBluetoothAlwaysUsageDescription" = "A POPOPX Bluetooth-t használ a közeli eszközökhöz való csatlakozáshoz, amikor az internet nem elérhető, lehetővé téve az üzenetek kézbesítését egy biztonságos hálózaton keresztül.";
+"NSBluetoothPeripheralUsageDescription" = "A POPOPX Bluetooth-t (háttérben) használ a közeli eszközökhöz való csatlakozáshoz hálózaton keresztül, amikor az internet nem elérhető.";
+"NSLocationWhenInUseUsageDescription" = "A helyadatait csak arra használjuk, hogy megossza egy beszélgetésben. Soha nem gyűjtjük vagy küldjük sehová, kivéve a kiválasztott beszélgetésbe.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "A helyadatait csak arra használjuk, hogy megossza egy beszélgetésben. Soha nem gyűjtjük vagy küldjük sehová, kivéve a kiválasztott beszélgetésbe.";
+"NSPhotoLibraryUsageDescription" = "A POPOPX hozzáférést igényel a fotókönyvtárához, hogy kiválasszon és elküldjön fényképeket a beszélgetésekben.";
+"NSPhotoLibraryAddUsageDescription" = "A POPOPX hozzáférést igényel a fényképek és videók fotókönyvtárába mentéséhez.";

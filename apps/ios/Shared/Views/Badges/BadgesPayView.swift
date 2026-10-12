@@ -1,13 +1,15 @@
 //
 //  BadgesPayView.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 28.07.2026.
 //  Copyright © 2026 SimpleX Chat. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
 // TODO [badges]: replace with types produced by the badge purchase API when it lands.
 enum BadgePeriod: String, CaseIterable, Identifiable {

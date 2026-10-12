@@ -4,11 +4,11 @@
 
 ## Overview
 
-First-time setup and migration flows for SimpleX Chat iOS. Covers app initialization, profile creation, server operator selection, notification configuration, and database import/export for device migration. The app uses a Haskell runtime for its core chat engine, with SQLite databases shared between the main app and the Notification Service Extension (NSE).
+First-time setup and migration flows for POPOPX Chat iOS. Covers app initialization, profile creation, server operator selection, notification configuration, and database import/export for device migration. The app uses a Haskell runtime for its core chat engine, with SQLite databases shared between the main app and the Notification Service Extension (NSE).
 
 ## Prerequisites
 
-- Fresh install of SimpleX Chat from the App Store, or
+- Fresh install of POPOPX Chat from the App Store, or
 - Existing install with database archive for import/migration
 - iOS 15+ with App Group entitlement configured
 
@@ -16,7 +16,7 @@ First-time setup and migration flows for SimpleX Chat iOS. Covers app initializa
 
 ### 1. App Initialization Sequence
 
-On every app launch, `SimpleXApp.init()` executes the following in order:
+On every app launch, `POPOPXApp.init()` executes the following in order:
 
 ```
 1. haskell_init()                              -- Start Haskell runtime system (GHC RTS)
@@ -37,9 +37,9 @@ Then in `ContentView.onAppear`:
 
 Onboarding is managed by `OnboardingStage` enum and `OnboardingView`:
 
-**Step 1: SimpleX Info** (`step1_SimpleXInfo`)
-1. `SimpleXInfo` view is presented.
-2. Explains SimpleX's architecture: no user identifiers, E2E encryption, decentralized servers.
+**Step 1: POPOPX Info** (`step1_POPOPXInfo`)
+1. `POPOPXInfo` view is presented.
+2. Explains POPOPX's architecture: no user identifiers, E2E encryption, decentralized servers.
 3. User taps "Create your profile" to proceed.
 
 **Step 2: Create Profile** (`step2_CreateProfile` -- now inline in step 1)
@@ -104,7 +104,7 @@ func startChat(refreshInvitations: Bool = true, onboarding: Bool = false) throws
 - Agent database: `simplex_v1_agent.db` (SMP connections, encryption keys, queues)
 
 **Initialization:**
-- `chatMigrateInit(useKey:confirmMigrations:backgroundMode:)` in `SimpleXChat/API.swift`.
+- `chatMigrateInit(useKey:confirmMigrations:backgroundMode:)` in `POPOPXSwitch/API.swift`.
 - Creates databases if they do not exist.
 - Runs pending migrations with confirmation mode.
 - Handles database encryption:
@@ -178,17 +178,17 @@ If migration is interrupted:
 
 | Type | Location | Description |
 |------|----------|-------------|
-| `OnboardingStage` | `Shared/Views/Onboarding/OnboardingView.swift` | Enum: `step1_SimpleXInfo`, `step2_CreateProfile`, `step3_ChooseServerOperators`, `step4_SetNotificationsMode`, `onboardingComplete` |
-| `Profile` | `SimpleXChat/ChatTypes.swift` | `displayName`, `fullName`, `image`, `shortDescr` |
-| `User` | `SimpleXChat/ChatTypes.swift` | Full user model with profile, userId, and settings |
-| `ArchiveConfig` | `SimpleXChat/APITypes.swift` | Configuration for database export/import |
-| `DBMigrationResult` | `SimpleXChat/API.swift` | Result of database migration: `.ok`, `.errorNotADatabase`, `.errorKeychain`, etc. |
-| `MigrationConfirmation` | `SimpleXChat/API.swift` | Migration confirmation mode: `.error`, `.yesUp`, `.yesUpDown` |
-| `DeviceToken` | `SimpleXChat/ChatTypes.swift` | Apple push notification device token |
-| `NtfTknStatus` | `SimpleXChat/ChatTypes.swift` | Notification token status: registered, active, expired, etc. |
-| `NotificationsMode` | `SimpleXChat/ChatTypes.swift` | `.off`, `.periodic`, `.instant` |
+| `OnboardingStage` | `Shared/Views/Onboarding/OnboardingView.swift` | Enum: `step1_POPOPXInfo`, `step2_CreateProfile`, `step3_ChooseServerOperators`, `step4_SetNotificationsMode`, `onboardingComplete` |
+| `Profile` | `POPOPXSwitch/ChatTypes.swift` | `displayName`, `fullName`, `image`, `shortDescr` |
+| `User` | `POPOPXSwitch/ChatTypes.swift` | Full user model with profile, userId, and settings |
+| `ArchiveConfig` | `POPOPXSwitch/APITypes.swift` | Configuration for database export/import |
+| `DBMigrationResult` | `POPOPXSwitch/API.swift` | Result of database migration: `.ok`, `.errorNotADatabase`, `.errorKeychain`, etc. |
+| `MigrationConfirmation` | `POPOPXSwitch/API.swift` | Migration confirmation mode: `.error`, `.yesUp`, `.yesUpDown` |
+| `DeviceToken` | `POPOPXSwitch/ChatTypes.swift` | Apple push notification device token |
+| `NtfTknStatus` | `POPOPXSwitch/ChatTypes.swift` | Notification token status: registered, active, expired, etc. |
+| `NotificationsMode` | `POPOPXSwitch/ChatTypes.swift` | `.off`, `.periodic`, `.instant` |
 | `MigrationFileLinkData` | Used in standalone file transfers for device migration |
-| `AppChatState` | `SimpleXChat/` | Shared state: `.active`, `.stopped`, `.suspended` |
+| `AppChatState` | `POPOPXSwitch/` | Shared state: `.active`, `.stopped`, `.suspended` |
 
 ## Error Cases
 
@@ -208,27 +208,27 @@ If migration is interrupted:
 
 | File | Purpose |
 |------|---------|
-| `Shared/SimpleXApp.swift` | App entry point: `haskell_init`, defaults registration, DB container setup, BG tasks |
+| `Shared/POPOPXApp.swift` | App entry point: `haskell_init`, defaults registration, DB container setup, BG tasks |
 | `Shared/AppDelegate.swift` | Push notification registration, URL handling |
 | `Shared/ContentView.swift` | Root view: authentication, onboarding routing, chat initialization |
 | `Shared/Views/Onboarding/OnboardingView.swift` | Onboarding step router, `OnboardingStage` enum |
-| `Shared/Views/Onboarding/SimpleXInfo.swift` | Step 1: Privacy architecture explanation |
+| `Shared/Views/Onboarding/POPOPXInfo.swift` | Step 1: Privacy architecture explanation |
 | `Shared/Views/Onboarding/CreateProfile.swift` | Profile creation: `CreateProfile` (additional) and `CreateFirstProfile` (onboarding) |
 | `Shared/Views/Onboarding/ChooseServerOperators.swift` | Step 3: Server operator conditions |
 | `Shared/Views/Onboarding/SetNotificationsMode.swift` | Step 4: Notification mode selection |
-| `Shared/Views/Onboarding/CreateSimpleXAddress.swift` | Optional address creation during onboarding |
-| `Shared/Views/Onboarding/HowItWorks.swift` | Educational content about SimpleX protocol |
+| `Shared/Views/Onboarding/CreatePOPOPXAddress.swift` | Optional address creation during onboarding |
+| `Shared/Views/Onboarding/HowItWorks.swift` | Educational content about POPOPX protocol |
 | `Shared/Views/Migration/MigrateFromDevice.swift` | Source device migration UI |
 | `Shared/Views/Migration/MigrateToDevice.swift` | Destination device migration UI |
 | `Shared/Views/Database/DatabaseView.swift` | Database management: export, import, encryption |
 | `Shared/Views/Database/DatabaseEncryptionView.swift` | Database passphrase management |
 | `Shared/Views/Database/DatabaseErrorView.swift` | Database error recovery UI |
 | `Shared/Views/Database/MigrateToAppGroupView.swift` | Legacy migration from Documents to App Group container |
-| `Shared/Model/SimpleXAPI.swift` | `startChat`, `apiCreateActiveUser`, `apiExportArchive`, `apiImportArchive`, `apiRegisterToken` |
-| `SimpleXChat/API.swift` | `chatMigrateInit`, `chatInitTemporaryDatabase`, low-level DB initialization |
-| `SimpleXChat/FileUtils.swift` | DB file paths, constants (`DB_FILE_PREFIX`, `CHAT_DB`, `AGENT_DB`) |
-| `SimpleXChat/AppGroup.swift` | App group container configuration |
-| `SimpleXChat/KeyChain.swift` | Keychain access for DB passphrase and app passwords |
+| `Shared/Model/POPOPXAPI.swift` | `startChat`, `apiCreateActiveUser`, `apiExportArchive`, `apiImportArchive`, `apiRegisterToken` |
+| `POPOPXSwitch/API.swift` | `chatMigrateInit`, `chatInitTemporaryDatabase`, low-level DB initialization |
+| `POPOPXSwitch/FileUtils.swift` | DB file paths, constants (`DB_FILE_PREFIX`, `CHAT_DB`, `AGENT_DB`) |
+| `POPOPXSwitch/AppGroup.swift` | App group container configuration |
+| `POPOPXSwitch/KeyChain.swift` | Keychain access for DB passphrase and app passwords |
 | `Shared/Model/BGManager.swift` | Background task registration and scheduling |
 | `Shared/Model/NtfManager.swift` | Notification management and badge counts |
 

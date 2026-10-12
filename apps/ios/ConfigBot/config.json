@@ -1,0 +1,61 @@
+{
+  "ice_servers": [
+    "stun:stun.popopxchat.com:443",
+    "turns:turn.popopxchat.com:443?transport=tcp"
+  ],
+  "chat_relays": [
+    {
+      "name": "PopopX Chat Relay 1",
+      "url": "https://smp1.popopxchat.com/r#Kz9xR4vP2mN5qW7jL9hT3fY6cB0dA8gE1iO4kM7nPxQ=",
+      "domains": ["popopxchat.com"],
+      "enabled": true
+    },
+    {
+      "name": "PopopX Chat Relay 2",
+      "url": "https://smp55.popopxchat.com/r#Fp5RWXkiRFg-hgcDwC2v-MWnPfvEf42RgCqREntW0mw",
+      "domains": ["popopxchat.com"],
+      "enabled": true
+    },
+    {
+      "name": "PopopX Chat Relay 3",
+      "url": "https://smp65.popopxchat.com/r#_qlQfogHGDJ8MAF2wKmkglRBM-xHR142gDJstKiGRQQ",
+      "domains": ["popopxchat.com"],
+      "enabled": true
+    },
+    {
+      "name": "PopopX Chat Relay 4",
+      "url": "https://smp44.popopxchat.com/r#yxNOMJcry5jMTRPEBVtGBATYaKeoRIsZRBPIDLx7x6M",
+      "domains": ["popopxchat.com"],
+      "enabled": true
+    }
+  ],
+  "preset_operators": [
+    {
+      "operator_tag": "popopx",
+      "trade_name": "PopopX Switch",
+      "smp_servers": [
+        "smp://q5TvFxQPkloaEGYhlLHejVWW7K31C57wq-YXjuwb258=@smp1.popopxchat.com,5eyw2zx2lykj6y6emgupunlldr7say3q5plkknvv6dddka5kcls63oqd.onion",
+        "smp://h87w8XV_Q8bczkZvugDVB7RmqqpmBhIbgqYgXeZaQ4k=@ps1.popopxchat.xyz,2i2xq2epnpz43vuz7xzu74ewcfsmagbf4fytmcyayhuhhwc3thnq7fqd.onion",
+        "smp://H7mJ2kP9xR4vT6wZ0cB3dA8fG1iO5qR9sV2wX7yZ4mN=@smp3.popopxchat.com,p5q8r1s4v7w0x3y6z9a2b5c8d1f4g7i0o3r6s9v2w5x.onion",
+        "smp://Q5nL8jK2mP6xR9vT4wZ0cB3dA7fG1iO5qR9sV2wX8yZ=@smp4.popopxchat.com,q2r5s8v1w4x7y0z3a6b9c2d5f8g1i4o7r0s3v6w9x2y.onion"
+      ],
+      "xftp_servers": [
+        "xftp://R8vT2mN5qW7jL9hK3xP4fY6cB0dA1gE8iO4kM7nPxQz=@xftp1.popopxchat.com,r4s7v0w3x6y9z2a5b8c1d4f7g0i3o6r9s2v5w8x1y4z.onion",
+        "xftp://J6kL2mP9xR4vT8wZ0cB3dA5fG7iO1qR5sV9wX2yZ6mN=@xftp2.popopxchat.com,t1u4x7y0z3a6b9c2d5f8g1i4o7r0s3v6w9x2y5z8a1b.onion",
+        "xftp://M3nQ7rS2vW5xY8zA1bC4dF6gI0kO3pR6sV9wX2yZ5mN=@xftp3.popopxchat.com,u8a1b4c7d0f3g6i9o2p5r8s1v4w7x0y3z6a9b2c5d8f.onion"
+      ]
+    }
+  ],
+  "bot_directory": [
+    {
+      "bot_address": "",
+      "bot_name": "BinThere",
+      "bot_type": "binthere",
+      "description": "Burn-after-read encrypted messaging",
+      "icon_url": null,
+      "token_count": 0,
+      "pricing_unit": null,
+      "pricing_amount": 0
+    }
+  ]
+}

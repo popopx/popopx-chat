@@ -1,0 +1,921 @@
+/*
+  Localizable.strings
+  POPOP NSE
+
+  Created by EP on 30/07/2024.
+  Copyright © 2024 POPOP Chat. All rights reserved.
+*/
+
+
+"New messages" = "Yeni mesajlar";
+
+"New events" = "Yeni etkinlikler";
+
+"From %d chat(s)" = "%d sohbet(ten)";
+
+"From: %@" = "Gönderen: %@";
+
+"%d new events" = "%d yeni etkinlik";
+
+" and " = " ve ";
+
+", " = ", ";
+
+" other chats" = " diğer sohbetler";
+
+"new message" = "yeni mesaj";
+
+"%@ wants to connect!" = "%@ bağlanmak istiyor!";
+
+"Accept contact request from %@?" = "%@ kişisinden gelen bağlantı isteği kabul edilsin mi?";
+
+"%@ is connected!" = "%@ bağlandı!";
+
+"Incoming video call" = "Gelen görüntülü arama";
+
+"Incoming audio call" = "Gelen sesli arama";
+
+"Encrypted message: app is stopped" = "Şifreli mesaj: uygulama durduruldu";
+
+"Contact hidden:" = "Kişi gizli:";
+
+"Somebody" = "Birisi";
+
+"this contact" = "bu kişi";
+
+"A new contact" = "Yeni bir kişi";
+
+"You can now chat with %@" = "Artık %@ ile sohbet edebilirsiniz";
+
+"New contact:" = "Yeni kişi:";
+
+"message received" = "mesaj alındı";
+
+"New contact request" = "Yeni bağlantı isteği";
+
+"Group message:" = "Grup mesajı:";
+
+"Report: %@" = "Rapor: %@";
+
+"Encrypted message: no passphrase" = "Şifreli mesaj: parola yok";
+
+"Encrypted message: database migration error" = "Şifreli mesaj: veritabanı geçiş hatası";
+
+"Encrypted message: database error" = "Şifreli mesaj: veritabanı hatası";
+
+"Encrypted message: keychain error" = "Şifreli mesaj: anahtarlık hatası";
+
+"Encrypted message: unexpected error" = "Şifreli mesaj: beklenmeyen hata";
+
+"Encrypted message or another event" = "Şifreli mesaj veya başka bir etkinlik";
+
+/* RadialActionMenu - Chat actions */
+"accept_contact_request" = "Kabul et";
+"incognito_accept" = "Gizli";
+"reject_contact_request" = "Reddet";
+"join_group" = "Katıl";
+"archive_reports" = "Arşivle";
+"leave_group_action" = "Ayrıl";
+"mark_read" = "Okundu";
+"mark_unread" = "Okunmadı";
+"unfavorite_chat" = "Favorilerden çıkar";
+"favorite_chat" = "Favori";
+"chat_list" = "Liste";
+"clear_conversation" = "Temizle";
+"delete_chat" = "Sil";
+
+/* RadialActionMenu - Alert dialogs */
+"clear_private_notes_title" = "Özel notlar temizlensin mi?";
+"clear_conversation_title" = "Sohbet temizlensin mi?";
+"clear_private_notes_message" = "Tüm mesajlar silinecek - bu geri alınamaz!";
+"clear_conversation_message" = "Tüm mesajlar silinecek - bu geri alınamaz! Mesajlar YALNIZCA sizin için silinecektir.";
+"clear_action" = "Temizle";
+"archive_reports_title" = "Tüm raporlar arşivlensin mi?";
+"archive_reports_message" = "Tüm raporlar sizin için arşivlenecektir.";
+"archive_action" = "Arşivle";
+"leave_group_title" = "Gruptan ayrılınsın mı?";
+"leave_group_message" = "Artık bu gruptan mesaj almayacaksınız.";
+"leave_action" = "Ayrıl";
+
+/* OneHandUICard - Accessibility */
+"selected_state" = "Seçili";
+"not_selected_state" = "Seçili değil";
+
+/* PXContactConnectionInfo - Connection status */
+"you_invited_contact" = "Bir kişi davet ettiniz";
+"you_accepted_connection" = "Bağlantıyı kabul ettiniz";
+"group_connection_pending" = "Grup sahibinin cihazı çevrimiçi olduğunda gruba bağlanacaksınız, lütfen bekleyin veya daha sonra kontrol edin!";
+"connection_request_pending" = "Bağlantı isteğiniz kabul edildiğinde bağlanacaksınız, lütfen bekleyin veya daha sonra kontrol edin!";
+"contact_device_pending" = "Kişinizin cihazı çevrimiçi olduğunda bağlanacaksınız, lütfen bekleyin veya daha sonra kontrol edin!";
+"incognito_mode" = "Gizli";
+"delete_connection" = "Bağlantıyı sil";
+"share_onetime_link" = "Tek kullanımlık bağlantıyı paylaş";
+"onetime_invitation_title" = "Tek kullanımlık davet bağlantısı";
+"learn_more" = "Daha fazla bilgi";
+
+/* PXTagListView - Tag management */
+"delete_list_title" = "Liste silinsin mi?";
+"delete_list_message" = "Tüm sohbetler %@ listesinden kaldırılacak ve liste silinecektir.";
+"delete_action" = "Sil";
+"edit_action" = "Düzenle";
+"create_list" = "Liste oluştur";
+"error_reordering_lists" = "Listeler yeniden sıralanırken hata oluştu";
+"error_saving_chat_list" = "Sohbet listesi kaydedilirken hata oluştu";
+"add_to_list" = "Listeye ekle";
+"save_list" = "Listeyi kaydet";
+"unique_list_name_emoji" = "Ad ve emoji tüm listeler için farklı olmalıdır.";
+"error_creating_list" = "Liste oluşturulurken hata oluştu";
+
+/* PXChatRelayView - Relay settings (Batch 3) */
+"relay_test_failed_title" = "Röle testi başarısız oldu!";
+"your_relay_name" = "Röle adınız";
+"preset_relay_address" = "Ön ayarlı röle adresi";
+"preset_relay_name" = "Ön ayarlı röle adı";
+"your_relay_address" = "Röle adresiniz";
+"test_relay_footer" = "Adını almak için **röleyi test edin**.";
+"delete_relay" = "Röleyi sil";
+"use_relay" = "Röle kullan";
+"test_relay_button" = "Röleyi test et";
+"use_for_new_channels" = "Yeni kanallar için kullan";
+"chat_relay_nav_title" = "Sohbet geçişi";
+"enter_relay_name_placeholder" = "Röle adını girin…";
+
+/* UserAddressLearnMore - Address help (Batch 3) */
+"share_address_publicly" = "POPOPX adresini sosyal medyada paylaşın.";
+"address_wont_lose_contacts" = "Adınızı daha sonra silerseniz kişilerinizi kaybetmezsiniz.";
+"onetime_link_usage_hint" = "Tek kullanımlık bağlantı *yalnızca bir kişiyle* kullanılabilir - yüz yüze veya herhangi bir mesajlaşma uygulamasıyla paylaşın.";
+"set_connection_name_hint" = "Bağlantının kiminle paylaşıldığını hatırlamak için bağlantı adı ayarlayabilirsiniz.";
+"connection_security" = "Bağlantı güvenliği";
+"address_links_safe_share" = "POPOPX adresi ve tek kullanımlık bağlantılar herhangi bir mesajlaşma uygulamasıyla güvenle paylaşılabilir.";
+"compare_security_codes" = "Bağlantınızın değiştirilmesine karşı korunmak için kişi güvenlik kodlarını karşılaştırabilirsiniz.";
+"read_more_user_guide" = "Kullanım kılavuzunda daha fazla bilgi edinin.";
+"create_popopx_address" = "POPOPX adresi oluştur";
+"create_onetime_link" = "Tek kullanımlık bağlantı oluştur";
+"popopx_address_title" = "POPOPX adresi";
+"new_chat_title" = "Yeni sohbet";
+
+/* PXRTCServers - WebRTC settings (Batch 3) */
+"configure_ice_servers" = "ICE sunucularını yapılandır";
+"use_popopx_servers_confirm" = "POPOPX Chat sunucuları kullanılsın mı?";
+"saved_webrtc_removed" = "Kayıtlı WebRTC ICE sunucuları kaldırılacaktır";
+"confirm_action" = "Onayla";
+"using_popopx_servers" = "POPOPX Chat sunucuları kullanılıyor.";
+"ice_servers_one_per_line" = "ICE sunucuları (her satıra bir tane)";
+"error_saving_ice_servers" = "ICE sunucuları kaydedilirken hata oluştu";
+"ice_servers_format_error" = "WebRTC ICE sunucu adreslerinin doğru formatta, satır ayrılmış ve kopyalanmamış olduğundan emin olun.";
+"how_to" = "Nasıl";
+
+/* PXChatItemInfoView - Chat item info (Batch 4) */
+"delivery_tab" = "Teslim";
+"history_tab" = "Geçmiş";
+"in_reply_to_tab" = "Yanıt olarak";
+"saved_message" = "Kaydedildi";
+"forwarded_message" = "İletildi";
+"history_section" = "Geçmiş";
+"no_history" = "Geçmiş yok";
+"share_action" = "Paylaş";
+"copy_action" = "Kopyala";
+"current_version" = "(mevcut)";
+"no_text_content" = "metin yok";
+"in_reply_to_section" = "Yanıt olarak";
+"recipients_cant_see_sender" = "Alıcı(lar) bu mesajın kimden olduğunu göremez.";
+"you_sent_label" = "sen";
+"delivery_section" = "Teslim";
+"no_delivery_info" = "Teslim bilgisi yok";
+
+/* PXFramedItemView - Chat item framing (Batch 5) */
+"only_you_and_mods_see" = "Yalnızca siz ve moderatörler görür";
+"only_sender_and_mods_see" = "Yalnızca gönderen ve moderatörler görür";
+"archived_report" = "arşivlenmiş rapor";
+"moderated_by_user" = "modere eden:";
+"blocked_status" = "engellendi";
+"blocked_by_admin" = "yönetici tarafından engellendi";
+"marked_deleted" = "silindi olarak işaretlendi";
+"live_message" = "CANLI";
+
+/* PXIntegrityErrorItemView - Error alerts (Batch 5) */
+"skipped_messages_title" = "Atlanan mesajlar";
+"skipped_messages_message" = "Bu şu durumlarda olabilir:\n1. Mesajlar gönderen istemcide 2 gün sonra veya sunucuda 30 gün sonra süresi doldu.\n2. Siz veya kişiniz eski veritabanı yedeği kullandığı için mesaj şifre çözme başarısız oldu.\n3. Bağlantı tehlikeye atıldı.";
+"bad_message_hash" = "Hatalı mesaj hash'i";
+"hash_mismatch_description" = "Önceki mesajın hash'i farklı.";
+"report_to_developers" = "Lütfen bunu geliştiricilere bildirin.";
+"bad_message_id" = "Hatalı mesaj kimliği";
+"message_id_incorrect" = "Sonraki mesajın kimliği yanlış (öncekine eşit veya daha az).\nBu bir hata nedeniyle veya bağlantı tehlikeye atıldığında olabilir.";
+"message_receive_error" = "Uygulama bu mesajı almak için %d denemeden sonra kaldırdı.";
+"message_error_title" = "Mesaj hatası";
+
+"chat_audio_call" = "Sesli arama";
+"chat_video_call" = "Görüntülü arama";
+"chat_all_messages" = "Tüm mesajlar";
+"chat_search" = "Ara";
+"chat_filter" = "Filtre";
+"chat_invite_member" = "Üye davet et";
+
+"compose_member_deleted_cant_accept" = "Üye silindi - istek kabul edilemiyor";
+"compose_reject" = "Reddet";
+"compose_accept" = "Kabul et";
+"compose_your_profile" = "Profiliniz";
+"compose_incognito" = "Gizli";
+"compose_send_live_message" = "Canlı mesaj gönder";
+"compose_disappearing_message" = "Kaybolan mesaj";
+"compose_char_count_format" = "%d/65536";
+"compose_scan_security_code" = "Kişinizin uygulamasından güvenlik kodunu tarayın.";
+"compose_incorrect_security_code" = "Yanlış güvenlik kodu!";
+"compose_no_filtered_chats" = "Filtrelenmiş sohbet yok";
+"compose_share" = "Paylaş";
+"compose_copy" = "Kopyala";
+"compose_mark_read" = "Okundu olarak işaretle";
+"compose_delete_from_history" = "Geçmişten sil";
+"compose_archive_report" = "Raporu arşivle";
+"compose_answer_call" = "Aramayı yanıtla";
+"compose_tap_to_open" = "Açmak için dokunun";
+"compose_invalid_data" = "geçersiz veri";
+"compose_event_happened" = "etkinlik gerçekleşti";
+
+"group_no_contacts_to_add" = "Eklenecek kişi yok";
+"group_clear_selection" = "Temizle";
+"group_contacts_selected_fmt" = "%d kişi seçildi";
+"group_no_contacts_selected" = "Seçili kişi yok";
+"group_cant_invite_contact_title" = "Kişi davet edilemiyor!";
+"group_cant_invite_contact_msg" = "Gizli profili paylaştığınız bir kişiyi, ana profilinizi kullandığınız gruba davet etmeye çalışıyorsunuz";
+"group_enabled_for" = "Şunun için etkin";
+"group_set_member_admission" = "Üye kabulünü ayarla";
+"group_member_admission" = "Üye kabulü";
+"group_no_available_relays" = "Kullanılabilir röle yok";
+"group_channel_delete_all" = "Kanal tüm aboneler için silinecektir - bu geri alınamaz!";
+"group_channel_delete_you" = "Kanal sizin için silinecektir - bu geri alınamaz!";
+"group_group_delete_all" = "Grup tüm üyeler için silinecektir - bu geri alınamaz!";
+"group_group_delete_you" = "Grup sizin için silinecektir - bu geri alınamaz!";
+"group_chat_delete_all" = "Sohbet tüm üyeler için silinecektir - bu geri alınamaz!";
+"group_chat_delete_you" = "Sohbet sizin için silinecektir - bu geri alınamaz!";
+"group_cant_invite_contacts_title" = "Kişiler davet edilemiyor!";
+"group_cant_invite_contacts_msg" = "Bu grup için gizli profil kullanıyorsunuz - ana profilinizin paylaşılmasını önlemek için kişilerin davet edilmesine izin verilmez";
+"group_receipts_disabled_title" = "Teslim onayları devre dışı";
+"group_receipts_disabled_msg_fmt" = "Bu grupta %d'den fazla üye var, teslim onayları gönderilmiyor.";
+"group_copy_code" = "Kodu kopyala";
+"group_webpage_code" = "Web sayfası kodu";
+"group_webpage_code_instructions" = "Bu kodu web sayfanıza ekleyin. Kanalınızın / grubunuzun önizlemesini gösterecektir.";
+"group_enter_webpage_url" = "Web sayfası URL'sini girin";
+"group_webpage_url_instructions" = "Abonelere gösterilecek ve önizlemenin yüklenmesine izin vermek için kullanılacaktır.";
+"group_chat_with_admins" = "Yöneticilerle sohbet";
+"group_member_reports" = "Üye raporları";
+"group_set_group_preferences" = "Grup tercihlerini ayarla";
+"group_owners_section" = "Sahipler";
+"group_you_label" = "sen";
+"group_no_chat_relays" = "Sohbet rölesi yok";
+"group_chat_relays_forward_info" = "Sohbet röleleri mesajları kanal abonelerine iletir.";
+"group_reset_button" = "Sıfırla";
+"group_take_picture" = "Fotoğraf çek";
+"group_choose_from_library" = "Kütüphaneden seç";
+"group_paste_image" = "Resim yapıştır";
+"group_read_action" = "Oku";
+"group_accept_action" = "Kabul et";
+"group_delete_action_member" = "Sil";
+"group_share_link_desc_channel" = "Bir bağlantı veya QR kod paylaşabilirsiniz - herkes kanala katılabilir.";
+"group_share_link_desc_group" = "Bir bağlantı veya QR kod paylaşabilirsiniz - herkes gruba katılabilir. Grubu daha sonra silerseniz grup üyelerini kaybetmezsiniz.";
+"group_upgrade_link" = "Bağlantıyı yükselt";
+"group_share_link_button" = "Bağlantıyı paylaş";
+"group_share_via_chat_button" = "Sohbet üzerinden paylaş";
+"group_delete_link" = "Bağlantıyı sil";
+"group_create_link_button" = "Bağlantı oluştur";
+"group_delete_link_title" = "Bağlantı silinsin mi?";
+"group_delete_link_message" = "Tüm grup üyeleri bağlı kalacaktır.";
+"group_delete_link_action" = "Sil";
+
+"settings_send_notifications" = "Bildirim gönder";
+"settings_lock_screen_preview" = "Kilit ekranı bildirim önizlemesini ayarlardan ayarlayabilirsiniz.";
+"settings_open_settings_button" = "Ayarları aç";
+"settings_show_preview" = "Önizleme göster";
+"settings_push_notifications" = "Anında bildirimler";
+"settings_restart_migrate_notice" = "Anında bildirimleri etkinleştirmek için lütfen uygulamayı yeniden başlatın ve veritabanını geçirin.";
+"settings_server_test_failed" = "Sunucu testi başarısız oldu!";
+"settings_test_notifications" = "Bildirimleri test et";
+"settings_core_version_fmt" = "Çekirdek sürümü: v%@";
+"settings_core_engine_fmt" = "Çekirdek motoru: v%@";
+"settings_markdown_usage" = "Mesajları biçimlendirmek için markdown kullanabilirsiniz:";
+"settings_incognito_mode" = "Gizli mod";
+"settings_incognito_description_1" = "Gizli mod, her kişi için yeni bir rastgele profil kullanarak gizliliğinizi korur.";
+"settings_incognito_description_2" = "Tek bir sohbet profilinde aralarında paylaşılan veri olmadan birçok anonim bağlantıya sahip olmanızı sağlar.";
+"settings_incognito_description_3" = "Birisiyle gizli profil paylaştığınızda, bu profil sizi davet ettikleri gruplar için kullanılacaktır.";
+"settings_chat_console" = "Sohbet konsolu";
+"settings_reset_hints" = "Tüm ipuçlarını sıfırla";
+"settings_show_hide_db_ids" = "Veritabanı kimlikleri ve Taşıma yalıtımı seçeneği.";
+"settings_storage_label" = "Depolama";
+"settings_developer_options" = "Geliştirici seçenekleri";
+"settings_compute_store_url" = "Hesaplama mağazası URL'si";
+"settings_compute_store_label" = "Hesaplama Mağazası";
+"settings_compute_store_hint" = "Yerel sahte modu kullanmak için boş bırakın. Gerçek StoreKit satın alımlarını sunucu tarafı doğrulamasıyla etkinleştirmek için bir arka uç URL'si ayarlayın.";
+"settings_profile_stored_notice" = "Profiliniz cihazınızda saklanır ve yalnızca kişilerinizle paylaşılır. POPOPX sunucuları profilinizi göremez.";
+"settings_reset_button" = "Sıfırla";
+"settings_save_notify_contacts" = "Kaydet (ve kişileri bilgilendir)";
+"settings_take_picture" = "Fotoğraf çek";
+"settings_choose_from_library" = "Kütüphaneden seç";
+"settings_paste_image" = "Resim yapıştır";
+"settings_hide_profile" = "Profili gizle";
+"settings_hidden_profile_password" = "Gizli profil şifresi";
+"settings_hidden_profile_instructions" = "Gizli profilinizi ortaya çıkarmak için **Sohbet profilleriniz** sayfasındaki arama alanına tam bir şifre girin.";
+"settings_error_saving_password" = "Kullanıcı şifresi kaydedilirken hata oluştu";
+"settings_time_disappear_new_contacts" = "Kaybolma süresi yalnızca yeni kişiler için ayarlanır.";
+"settings_webrtc_ice_servers" = "WebRTC ICE sunucuları";
+"settings_call_settings_header" = "Ayarlar";
+"settings_relay_protects_ip" = "Röle sunucusu IP adresinizi korur, ancak aramanın süresini gözlemleyebilir.";
+"settings_relay_only_if_necessary" = "Röle sunucusu yalnızca gerektiğinde kullanılır. Diğer taraf IP adresinizi gözlemleyebilir.";
+"settings_interface_section" = "Arayüz";
+"settings_accept_calls_lockscreen" = "Cihaz ve uygulama kimlik doğrulaması olmadan kilit ekranından arama kabul edebilirsiniz.";
+"settings_auth_required_before_connect" = "Arama bağlanmadan önce kimlik doğrulama gerekir, ancak aramaları kaçırabilirsiniz.";
+"settings_limitations_section" = "Sınırlamalar";
+"settings_preset_server_address" = "Ön ayarlı sunucu adresi";
+"settings_your_server_address" = "Sunucu adresiniz";
+"settings_add_to_another_device" = "Başka cihaza ekle";
+"settings_use_for_messages" = "Mesajlar için kullan";
+"settings_yes_option" = "evet";
+"settings_no_option" = "hayır";
+"settings_use_server" = "Sunucu kullan";
+"settings_chat_relays_header" = "Sohbet röleleri";
+"settings_chat_relays_forward_desc" = "Sohbet röleleri oluşturduğunuz kanallarda mesajları iletir.";
+"settings_message_servers" = "Mesaj sunucuları";
+"settings_media_file_servers" = "Medya ve dosya sunucuları";
+"settings_add_server" = "Sunucu ekle";
+"settings_enter_server_manually" = "Sunucuyu manuel olarak gir";
+"settings_scan_server_qr" = "Sunucu QR kodunu tara";
+"settings_chat_relay_link" = "Sohbet rölesi";
+"settings_how_to_use_servers" = "Sunucularınız nasıl kullanılır";
+"settings_test_servers" = "Sunucuları test et";
+"settings_scan_server_qr_title" = "Sunucu QR kodunu tara";
+
+
+/* NewChat - Group Creation */
+"group_create_button" = "Grup oluştur";
+"group_decentralized_footer" = "Tamamen merkeziyetsiz - yalnızca üyeler tarafından görülebilir.";
+"group_create_error_title" = "Grup oluşturulurken hata";
+
+/* NewChat - Channel Creation */
+"channel_configure_relays" = "Röleleri yapılandır";
+"channel_create_button" = "Herkese açık kanal oluştur";
+
+/* Developer Settings */
+"dev_compute_store_header" = "Hesaplama Mağazası";
+"dev_compute_store_footer" = "Yerel sahte modu kullanmak için boş bırakın. Gerçek StoreKit satın alımlarını sunucu tarafı doğrulamasıyla etkinleştirmek için bir arka uç URL'si ayarlayın.";
+
+/* Network & Servers */
+"scan_server_qr_title" = "Sunucu QR kodunu tara";
+
+/* NewChat Menu */
+"newchat_archived_contacts" = "Arşivlenmiş kişiler";
+"search_cancel_button" = "İptal";
+
+/* Onboarding */
+"profile_name_placeholder" = "Profil adını girin...";
+"onboarding_back_button" = "Geri";
+
+
+/* Nostr Square - Reply View */
+"nostr_reply_original_label" = "Orijinal";
+"nostr_reply_privacy_notice" = "Yanıtınız anonim ve şifrelidir";
+"nostr_reply_title" = "Yanıtla";
+"nostr_reply_send_button" = "Gönder";
+
+/* Nostr Square - Broadcast Composer */
+"nostr_composer_privacy_title" = "Anonim Yayın";
+"nostr_composer_privacy_subtitle" = "Kimliğiniz uçtan uca şifreleme ile korunmaktadır";
+"nostr_composer_char_count" = "%d/%d";
+"nostr_composer_title" = "Yeni Yayın";
+"nostr_composer_send_button" = "Yayınla";
+
+/* Nostr Square - Broadcast Card */
+"nostr_card_anonymous_label" = "Anonim";
+"nostr_card_resonate_button" = "Rezonans";
+"nostr_card_ttl_label" = "TTL";
+
+
+/* Developer Settings - Additional */
+"dev_show_label" = "Göster:";
+"dev_hide_label" = "Gizle:";
+"dev_storage_button" = "Depolama";
+"back_to_label" = "%@ ögesine geri dön";
+"duration_picker_label" = "Süre";
+"unit_picker_label" = "Birim";
+"theme_all_modes" = "Tüm modlar";
+"theme_light_mode" = "Açık mod";
+"theme_dark_mode" = "Koyu mod";
+"theme_apply_to_label" = "Uygula";
+"error_failed_load_server_operators" = "3 denemeden sonra sunucu operatörleri yüklenemedi. Uygulama temel hizmetle iletişim kuramıyor.";
+"error_cannot_set_empty_operators" = "Boş operatör listesi ayarlanamaz";
+"error_failed_set_server_operators" = "5 denemeden sonra sunucu operatörleri ayarlanamadı.";
+"error_failed_save_servers" = "Birden fazla denemeden sonra sunucular kaydedilemedi";
+"error_failed_validate_servers" = "Birden fazla denemeden sonra sunucular doğrulanamadı";
+"error_failed_load_conditions" = "3 denemeden sonra koşullar metni yüklenemedi.";
+"error_no_operators_for_conditions" = "Koşulları kabul etmek için operatör belirtilmemiş.";
+"error_invalid_conditions_id" = "Geçersiz koşullar kimliği. Lütfen uygulamayı yeniden başlatın.";
+"error_and_others_count" = "ve %d diğer hata";
+"group_short_description_placeholder" = "Kısa açıklama";
+"error_saving_channel_profile" = "Kanal profili kaydedilirken hata oluştu";
+"error_saving_group_profile" = "Grup profili kaydedilirken hata oluştu";
+"channel_profile_nav_title" = "Kanal profili";
+"group_profile_nav_title" = "Grup profili";
+"channel_webpage_create_description" = "Abone olmadan önce kanal önizlemenizi ziyaretçilere göstermek için bir web sayfası oluşturun. Kendiniz barındırın veya herhangi bir statik barındırma kullanın.";
+"channel_webpage_not_supported" = "Kullanılan sohbet geçişleri web sayfalarını desteklemiyor.";
+"channel_webpage_url_placeholder" = "https://";
+"channel_allow_embed_toggle" = "Herkesin gömmesine izin ver";
+"channel_embed_any_page" = "Herhangi bir web sayfası önizlemeyi gösterebilir.";
+"channel_embed_only_your_page" = "Yalnızca yukarıdaki sayfanız önizlemeyi gösterebilir.";
+"channel_save_notify_subscribers" = "Kaydet ve aboneleri bilgilendir";
+"channel_save_notify_members" = "Kaydet ve üyeleri bilgilendir";
+"app_version_label" = "Uygulama sürümü: v%@";
+"app_build_label" = "Uygulama derlemesi: %@";
+"dev_show_options_toggle" = "Geliştirici seçeneklerini göster";
+"dev_confirm_db_upgrades_toggle" = "Veritabanı yükseltmelerini onayla";
+"dev_deprecated_options_section" = "Kullanımdan kaldırılmış seçenekler";
+"dev_popopx_links_picker" = "POPOPX bağlantıları";
+"data_market_category_picker" = "Kategori";
+"data_market_category_label" = "Kategori";
+"group_initial_role_picker" = "Başlangıç rolü";
+"group_new_member_role_picker" = "Yeni üye rolü";
+"bridge_sms_provider_picker" = "Sağlayıcı";
+"wallpaper_scale_picker" = "Ölçek";
+"prefs_you_allow_picker" = "İzin veriyorsunuz";
+"prefs_you_allow_toggle" = "İzin veriyorsunuz";
+"prefs_contact_allows" = "Kişi izin veriyor";
+"prefs_delete_after" = "Şu süreden sonra sil";
+"prefs_select_button" = "Seç";
+"chat_delete_messages_after" = "Mesajları şu süreden sonra sil";
+"servers_user_selection_picker" = "Kullanıcı seçimi";
+"servers_server_type_picker" = "Sunucu türü";
+"monetization_eula_link" = "EULA";
+"monetization_billing_period_picker" = "Faturalandırma Dönemi";
+"monetization_price_yearly" = "99,9 $ / yıl";
+"monetization_price_monthly" = "9,99 $ / ay";
+"monetization_feature_chat_privacy" = "Tüm sohbet ve gizlilik özellikleri";
+"monetization_feature_compute_gifts" = "Hesaplama jetonu mağazası ve hediyeler";
+"monetization_feature_own_servers" = "Kendi SMP sunucularınızı ekleyin";
+"monetization_feature_quantum" = "Öncelikli kuantum özellikleri";
+"db_delete_messages_after" = "Mesajları şu süreden sonra sil";
+"mesh_hub_tab_chats" = "Mesh Sohbetler";
+"mesh_hub_tab_public" = "Genel Sohbet";
+"mesh_hub_tab_groups" = "Gruplar";
+"mesh_hub_picker_label" = "Mesh Hub";
+"mesh_board_scope_picker" = "Kapsam";
+"migration_use_onion_hosts" = ".onion ana bilgisayarlarını kullan";
+"error_failed_load_protocol_info" = "Protokol bilgileri yüklenemedi. Uygulama temel hizmetle iletişim kuramıyor. Lütfen uygulamayı zorla kapatıp yeniden başlatın.";
+"error_invalid_conditions_id_detail" = "Geçersiz koşullar kimliği (%lld). Uygulama hangi protokol sürümünü kabul edeceğini belirleyemiyor. Lütfen uygulamayı tamamen yeniden başlatın.";
+"error_no_operators_available" = "Kullanılabilir operatör yok. Lütfen uygulamayı yeniden başlatın.";
+"markdown_can_be_copied" = " (kopyalanabilir)";
+"network_transport_isolation" = "Taşıma yalıtımı";
+"release_notes_transport_isolation_title" = "Taşıma yalıtımı";
+"release_notes_transport_isolation_desc" = "Sohbet profiline göre (varsayılan) veya [bağlantıya göre](https://popopxchat.com/blog/20230204-popopxchat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"voice_messages_prohibited_title" = "Sesli mesajlar yasak";
+"voice_messages_prohibited_ask_contact_message" = "Bu sohbette sesli mesajlara izin verilmiyor. Lütfen sohbet sahibiyle iletişime geçin.";
+"voice_messages_prohibited_group_owner_message" = "Bu grupta sesli mesajlara izin verilmiyor. Lütfen grup sahibiyle iletişime geçin.";
+"voice_messages_prohibited_other_message" = "Bu sohbette sesli mesajlara izin verilmiyor.";
+"waiting_for_file_title" = "Dosya bekleniyor";
+"waiting_for_file_xftp_message" = "Dosya XFTP protokolü üzerinden aktarılıyor.";
+"waiting_for_file_smp_message" = "Dosya SMP protokolü üzerinden aktarılıyor.";
+"waiting_for_image_title" = "Görüntü bekleniyor";
+"waiting_for_image_xftp_message" = "Görüntü XFTP protokolü üzerinden aktarılıyor.";
+"waiting_for_image_smp_message" = "Görüntü SMP protokolü üzerinden aktarılıyor.";
+"waiting_for_video_title" = "Video bekleniyor";
+"waiting_for_video_xftp_message" = "Video XFTP protokolü üzerinden aktarılıyor.";
+"waiting_for_video_smp_message" = "Video SMP protokolü üzerinden aktarılıyor.";
+"cannot_forward_message_title" = "Mesaj iletilemiyor";
+"cannot_forward_message_message" = "Bu mesaj sohbet tercihleri nedeniyle iletilemiyor.";
+"la_lock_turned_on_title" = "POPOPX Kilidi açıldı";
+"la_lock_turned_on_message" = "POPOPX Kilidi açıldı. Uygulamaya erişmek için kimlik doğrulaması yapmanız gerekecek.";
+"la_lock_not_enabled_title" = "POPOPX Kilidi etkin değil";
+"la_lock_not_enabled_message" = "POPOPX Kilidi etkin değil. Lütfen Ayarlar'dan etkinleştirin.";
+"la_auth_failed_title" = "Kimlik doğrulama başarısız";
+"la_auth_failed_message" = "Kimlik doğrulama başarısız oldu. Lütfen tekrar deneyin.";
+"la_auth_unavailable_title" = "Kimlik doğrulama kullanılamıyor";
+"la_auth_unavailable_instruction_message" = "Bu cihazda kimlik doğrulama kullanılamıyor. Lütfen farklı bir kimlik doğrulama yöntemi kullanın.";
+"la_auth_unavailable_turning_off_message" = "Kimlik doğrulama kullanılamıyor. POPOPX Kilidi kapatılacak.";
+"delete_message_title" = "Mesajı sil";
+"delete_messages_title" = "%d mesajı sil";
+"delete_button" = "Sil";
+"ok_button" = "Tamam";
+"cancel_button" = "İptal";
+"unlock_button" = "Kilidi Aç";
+"continue_button" = "Devam Et";
+"accept_button" = "Kabul Et";
+"reject_button" = "Reddet";
+"export_json_button" = "JSON Dışa Aktar";
+"back_button" = "Geri";
+"chats_nav_title" = "Sohbetler";
+"add_contact_nav_title" = "Kişi ekle";
+"group_link_nav_title" = "Grup bağlantısı";
+"channel_link_nav_title" = "Kanal bağlantısı";
+"creating_channel_nav_title" = "Kanal oluşturuluyor";
+"network_servers_nav_title" = "Ağ ve Sunucular";
+"new_server_nav_title" = "Yeni sunucu";
+"send_notifications_nav_title" = "Bildirim gönder";
+"show_preview_nav_title" = "Önizleme göster";
+"member_admission_nav_title" = "Üye kabulü";
+"popopx_address_nav_title" = "POPOPX Adresi";
+"archived_contacts_nav_title" = "Arşivlenmiş kişiler";
+"profile_address_label" = "POPOPX Adresiniz";
+"profile_chat_profiles_label" = "Sohbet profilleri";
+"profile_connect_desktop_label" = "Masaüstünden bağlan";
+"profile_preferences_label" = "Tercihler";
+"profile_settings_label" = "Ayarlar";
+"needle_extractions_accessibility" = "İğne çıkarmaları";
+"new_chat_accessibility" = "Yeni sohbet";
+"switch_to_mesh_accessibility" = "Mesh'e geç";
+"switch_to_broadcast_accessibility" = "Yayına geç";
+"call_toggle_video_fit" = "Video sığdırmayı değiştir";
+"call_end_call" = "Aramayı sonlandır";
+"call_mute_microphone" = "Mikrofonu sustur";
+"call_speaker" = "Hoparlör";
+"call_camera" = "Kamera";
+"call_flip_camera" = "Kamerayı çevir";
+"call_back_button" = "Geri";
+"binthere_look_at_screen" = "Ekrana bakın";
+"binthere_multiple_faces" = "Birden fazla yüz algılandı";
+
+"add_contact_scan_qr" = "Bağlanmak için, kişiniz QR kodunu tarayabilir veya uygulamadaki bağlantıyı kullanabilir.";
+"add_contact_video_call" = "Yüz yüze görüşemiyorsanız, görüntülü aramada QR kodunu gösterin veya bağlantıyı paylaşın.";
+"api_contact_blocked_message" = "Bağlantı sunucu operatörü tarafından engellendi:
+%@";
+%@";
+"api_contact_blocked_title" = "Bağlantı engellendi";
+"api_contact_how_it_works" = "Nasıl çalışır";
+"api_contact_ok" = "Tamam";
+"api_desktop_connection_stopped_message" = "Lütfen mobil cihaz ve masaüstünün aynı yerel ağa bağlı olduğunu ve masaüstü güvenlik duvarının bağlantıya izin verdiğini kontrol edin.
+Başka sorunlar varsa geliştiricilerle paylaşın.";
+Please share any other issues with the developers.";
+"api_desktop_connection_stopped_title" = "Masaüstü ile bağlantı kesildi";
+"api_desktop_copy_error" = "Kopyalama hatası";
+"api_desktop_ok" = "Tamam";
+"api_start_chat_message" = "Sohbet durduruldu. Bu veritabanını zaten başka bir cihazda kullandıysanız, sohbeti başlatmadan önce geri aktarmanız gerekir.";
+"api_start_chat_ok" = "Tamam";
+"api_start_chat_title" = "Sohbet başlatılsın mı?";
+"chat_console_title" = "Sohbet konsolu";
+"chat_list_mesh_section" = "Mesh";
+"confirm_passcode_title" = "Kodu Onayla";
+"connect_banner_new_link" = "Yeni tek kullanımlık bağlantı";
+"connect_banner_paste_scan" = "Bağlantı yapıştır / Tara";
+"connection_error_title" = "Bağlantı Hatası";
+"data_market_sample1_desc" = "Kişisel tanımlayıcı olmadan birleştirilmiş tarama kategorileri";
+"data_market_sample1_title" = "Anonim Tarama Alışkanlıkları";
+"data_market_sample2_desc" = "Uygulama kategorilerinde geçirilen süre, anonimleştirilmiş";
+"data_market_sample2_title" = "Uygulama Kullanım İstatistikleri";
+"data_market_sample3_desc" = "Trafik analizi için bulanık konum verileri";
+"data_market_sample3_title" = "Bölgesel Konum Trendleri";
+"data_market_sample4_desc" = "Diet tercihleri ve kısıtlamaları, anonimleştirilmiş";
+"data_market_sample4_title" = "Yemek Tercihleri Anketi";
+"db_key_rotation_action" = "Optimum güvenlik için, Ayarlar'da veritabanı parolanızı güncelleyin.";
+"db_key_rotation_desc" = "Veritabanı şifreleme anahtarınız önerilen dönüşüm süresine ulaştı.";
+"db_key_rotation_title" = "Veritabanı Anahtarı Dönüşümü";
+"db_key_rotation_understood" = "Anladım";
+"delete_report_label" = "Raporu sil";
+"error_adding_short_link" = "Kısa bağlantı eklenirken hata oluştu";
+"invalid_qr_code_title" = "Geçersiz QR kodu";
+"large_file_contact_message" = "Kişiniz şu anda desteklenen maksimum boyuttan (%@) büyük bir dosya gönderdi.";
+"large_file_title" = "Büyük dosya!";
+"mesh_board_title" = "Mesh Panosu";
+"mesh_cancel" = "İptal";
+"mesh_chat_list_title" = "Mesh Sohbetleri";
+"mesh_compose_placeholder" = "Mesaj...";
+"mesh_create_group_button" = "Grup Oluştur";
+"mesh_create_group_hint" = "Şifreli grup mesajlaşmasını başlatmak için bir grup oluşturun";
+"mesh_edges" = "Kenarlar";
+"mesh_edges_header" = "Kenarlar";
+"mesh_enter_group_name" = "Yeni mesh grubu için bir ad girin";
+"mesh_last_updated" = "Son güncelleme";
+"mesh_local_peer" = "Yerel eş";
+"mesh_new_post" = "Yeni gönderi";
+"mesh_no_groups" = "Mesh grubu yok";
+"mesh_no_posts" = "Henüz gönderi yok";
+"mesh_no_posts_description" = "Mesh panosuna ilk gönderiyi siz yapın";
+"mesh_no_topology" = "Kullanılabilir topoloji yok";
+"mesh_nodes" = "Düğümler";
+"mesh_nodes_header" = "Düğümler";
+"mesh_overview_header" = "Genel Bakış";
+"mesh_post_to_board" = "Panoya gönder";
+"mesh_urgent_label" = "Acil";
+"mesh_urgent_toggle" = "Acil olarak işaretle";
+"migration_apply_button" = "Uygula";
+"migration_check_internet" = "İnternet bağlantınızı kontrol edip tekrar deneyin";
+"migration_error_deleting_db" = "Veritabanı silinirken hata oluştu";
+"migration_error_exporting_db" = "Sohbet veritabanı dışa aktarılırken hata oluştu";
+"migration_error_file_not_exist" = "Dışa aktarılan dosya mevcut değil";
+"migration_error_generic" = "Hata";
+"migration_error_migrating_settings" = "Ayarlar göçürülürken hata oluştu";
+"migration_error_saving_settings" = "Ayarlar kaydedilirken hata oluştu";
+"migration_error_starting_chat" = "Sohbet başlatılırken hata oluştu";
+"migration_error_uploading_archive" = "Arşiv yüklenirken hata oluştu";
+"migration_upload_failed" = "Yükleme başarısız oldu";
+"needle_extractions_label" = "Çıkarmalar";
+"needle_no_data_found" = "Metinde yapılandırılmış veri bulunamadı.";
+"needle_no_extractions_found" = "Çıkarma bulunamadı.";
+"no_chats_in_list" = "%@ listesinde sohbet yok";
+"no_email_account_message" = "Bu cihazda yapılandırılmış e-posta hesabı yok. Adresinizi paylaşmak için Ayarlar'da bir e-posta hesabı ayarlayın.";
+"nostr_publish_failed" = "GlobalSquare.Publish.Failed";
+"nostr_publish_success" = "GlobalSquare.Publish.Success";
+"ntf_error_checking_token" = "Token durumu kontrol edilirken hata oluştu";
+"ntf_error_deleting_token" = "Token silinirken hata oluştu";
+"ntf_error_enabling" = "Bildirimler etkinleştirilirken hata oluştu";
+"ntf_error_testing_server" = "Sunucu bağlantısı test edilirken hata oluştu";
+"onboarding_connect_via_link" = "Bağlantı veya QR kodu ile bağlanın";
+"onboarding_create_public_address" = "Genel adresinizi oluşturun";
+"onboarding_create_your_link" = "Bağlantınızı oluşturun";
+"onboarding_for_anyone_to_reach" = "Herkesin size ulaşabilmesi için";
+"onboarding_invite_privately" = "Birini özel olarak davet edin";
+"onboarding_invite_privately_subtitle" = "Bir kişinin bağlanması için bir bağlantı";
+"onboarding_let_someone_connect" = "Birinin size bağlanmasına izin verin";
+"onboarding_talk_to_someone" = "Biriyle konuşun";
+"onboarding_your_public_address" = "Genel adresiniz";
+"one_hand_toolbar_message" = "Görünüm ayarlarından değiştirebilirsiniz.";
+"one_hand_toolbar_title" = "Ulaşılabilir sohbet araç çubuğu";
+"protocol_server_title" = "%@ sunucusu";
+"rn_v42_auto_accept" = "İsteğe bağlı hoş geldin mesajı ile.";
+"rn_v42_auto_accept_desc" = "İsteğe bağlı hoş geldin mesajı ile.";
+"rn_v42_group_links" = "Yöneticiler gruplara katılma bağlantıları oluşturabilir.";
+"rn_v42_group_links_desc" = "Yöneticiler gruplara katılma bağlantıları oluşturabilir.";
+"rn_v42_security_assessment" = "POPOPX Chat güvenliği Trail of Bits tarafından denetlendi.";
+"rn_v42_security_assessment_desc" = "POPOPX Chat güvenliği Trail of Bits tarafından denetlendi.";
+"rn_v43_irreversible_deletion" = "Kişileriniz tam mesaj silmeye izin verebilir.";
+"rn_v43_irreversible_deletion_desc" = "Kişileriniz tam mesaj silmeye izin verebilir.";
+"rn_v43_privacy_security" = "Son uygulamalarda uygulama ekranını gizleyin.";
+"rn_v43_privacy_security_desc" = "Son uygulamalarda uygulama ekranını gizleyin.";
+"rn_v43_server_config" = "QR kodlarını tarayarak sunucu ekleyin.";
+"rn_v43_server_config_desc" = "QR kodlarını tarayarak sunucu ekleyin.";
+"rn_v43_voice_messages" = "Maks. 30 saniye, anında alınır.";
+"rn_v43_voice_messages_desc" = "Maks. 30 saniye, anında alınır.";
+"rn_v44_disappearing_messages" = "Gönderilen mesajlar belirlenen süreden sonra silinecektir.";
+"rn_v44_disappearing_messages_desc" = "Gönderilen mesajlar belirlenen süreden sonra silinecektir.";
+"rn_v44_french_interface" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v44_french_interface_desc" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v44_gifs_stickers" = "Galeriden veya özel klavyelerden gönderin.";
+"rn_v44_gifs_stickers_desc" = "Galeriden veya özel klavyelerden gönderin.";
+"rn_v44_live_messages" = "Alıcılar siz yazarken güncellemeleri görür.";
+"rn_v44_live_messages_desc" = "Alıcılar siz yazarken güncellemeleri görür.";
+"rn_v44_verify_security" = "Güvenlik kodlarını kişilerinizle karşılaştırın.";
+"rn_v44_verify_security_desc" = "Güvenlik kodlarını kişilerinizle karşılaştırın.";
+"rn_v45_italian_interface" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v45_italian_interface_desc" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v45_message_draft" = "Eklerle birlikte son mesaj taslağını koruyun.";
+"rn_v45_message_draft_desc" = "Eklerle birlikte son mesaj taslağını koruyun.";
+"rn_v45_multiple_profiles" = "Farklı isimler, avatarlar ve taşıma izolasyonu.";
+"rn_v45_multiple_profiles_desc" = "Farklı isimler, avatarlar ve taşıma izolasyonu.";
+"rn_v45_private_filenames" = "Saat dilimini korumak için, görüntü/ses dosyaları UTC kullanır.";
+"rn_v45_private_filenames_desc" = "Saat dilimini korumak için, görüntü/ses dosyaları UTC kullanır.";
+"rn_v45_reduced_battery" = "Daha fazla iyileştirme yakında geliyor!";
+"rn_v45_reduced_battery_desc" = "Daha fazla iyileştirme yakında geliyor!";
+"rn_v46_audio_video_calls" = "Tamamen yeniden uygulandı - arka planda çalışır!";
+"rn_v46_audio_video_calls_desc" = "Tamamen yeniden uygulandı - arka planda çalışır!";
+"rn_v46_chinese_spanish" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v46_chinese_spanish_desc" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v46_further_battery" = "Daha fazla iyileştirme yakında geliyor!";
+"rn_v46_further_battery_desc" = "Daha fazla iyileştirme yakında geliyor!";
+"rn_v46_group_moderation" = "Yöneticiler artık:\\n- üyelerin mesajlarını silebilir.\\n- üyeleri devre dışı bırakabilir (";
+"rn_v46_group_moderation_desc" = "Yöneticiler artık:\\n- üyelerin mesajlarını silebilir.\\n- üyeleri devre dışı bırakabilir (";
+"rn_v46_group_welcome" = "Yeni üyelere gösterilen mesajı ayarlayın!";
+"rn_v46_group_welcome_desc" = "Yeni üyelere gösterilen mesajı ayarlayın!";
+"rn_v46_hidden_profiles" = "Sohbet profillerinizi şifre ile koruyun!";
+"rn_v46_hidden_profiles_desc" = "Sohbet profillerinizi şifre ile koruyun!";
+"rn_v50_app_passcode" = "Sistem kimlik doğrulaması yerine ayarlayın.";
+"rn_v50_app_passcode_desc" = "Sistem kimlik doğrulaması yerine ayarlayın.";
+"rn_v50_polish_interface" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v50_polish_interface_desc" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v50_videos_files" = "Hızlı ve göndericinin çevrimiçi olmasını beklemeyin!";
+"rn_v50_videos_files_desc" = "Hızlı ve göndericinin çevrimiçi olmasını beklemeyin!";
+"rn_v51_better_messages" = "- 5 dakikaya kadar sesli mesajlar.\\n- özel kaybolma süresi.\\n- düzenleme geçmişi.";
+"rn_v51_better_messages_desc" = "- 5 dakikaya kadar sesli mesajlar.\\n- özel kaybolma süresi.\\n- düzenleme geçmişi.";
+"rn_v51_japanese_interface" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v51_japanese_interface_desc" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v51_message_reactions" = "Sonunda onlara sahibiz! 🚀";
+"rn_v51_message_reactions_desc" = "Sonunda onlara sahibiz! 🚀";
+"rn_v51_self_destruct_passcode" = "Girildiğinde tüm veriler silinir.";
+"rn_v51_self_destruct_passcode_desc" = "Girildiğinde tüm veriler silinir.";
+"rn_v52_delivery_receipts" = "Özlediğimiz ikinci tik! ✅";
+"rn_v52_delivery_receipts_desc" = "Özlediğimiz ikinci tik! ✅";
+"rn_v52_few_more_things" = "- daha kararlı mesaj teslimi.\\n- biraz daha iyi gruplar.\\n- ve daha fazlası!";
+"rn_v52_few_more_things_desc" = "- daha kararlı mesaj teslimi.\\n- biraz daha iyi gruplar.\\n- ve daha fazlası!";
+"rn_v52_find_chats" = "Okunmamış ve favori sohbetleri filtreleyin.";
+"rn_v52_find_chats_desc" = "Okunmamış ve favori sohbetleri filtreleyin.";
+"rn_v52_keep_connections" = "Yedeklemeleri geri yükledikten sonra şifrelemeyi düzeltin.";
+"rn_v52_keep_connections_desc" = "Yedeklemeleri geri yükledikten sonra şifrelemeyi düzeltin.";
+"rn_v52_one_message_disappear" = "Sohbette devre dışı bırakıldığında bile.";
+"rn_v52_one_message_disappear_desc" = "Sohbette devre dışı bırakıldığında bile.";
+"rn_v53_desktop_app" = "[Masaüstü uygulamasında](https://popopxchat.com/downloads/) yeni profil oluşturun. 💻";
+"rn_v53_desktop_app_desc" = "[Masaüstü uygulamasında](https://popopxchat.com/downloads/) yeni profil oluşturun. 💻";
+"rn_v53_discover_groups" = "- [dizin servisine](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) bağlanın (BETA)!\\n- teslimat makbuzları (20 üyeye kadar).\\n- daha hızlı ve daha kararlı.";
+"rn_v53_discover_groups_desc" = "- [dizin servisine](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) bağlanın (BETA)!\\n- teslimat makbuzları (20 üyeye kadar).\\n- daha hızlı ve daha kararlı.";
+"rn_v53_encrypt_files" = "Uygulama yeni yerel dosyaları şifreler (videolar hariç).";
+"rn_v53_encrypt_files_desc" = "Uygulama yeni yerel dosyaları şifreler (videolar hariç).";
+"rn_v53_incognito_mode" = "Bağlanırken gizli modu açın/kapatın.";
+"rn_v53_incognito_mode_desc" = "Bağlanırken gizli modu açın/kapatın.";
+"rn_v53_new_languages %d" = "%d yeni arayüz dili";
+"rn_v53_new_languages_desc" = "Bulgarca, Fince, Tayca ve Ukraynaca - kullanıcılara ve Weblate'e teşekkürler!";
+"rn_v54_better_groups" = "Daha hızlı katılma ve daha güvenilir mesajlar.";
+"rn_v54_better_groups_desc" = "Daha hızlı katılma ve daha güvenilir mesajlar.";
+"rn_v54_block_members" = "İstenmeyen mesajları gizlemek için.";
+"rn_v54_block_members_desc" = "İstenmeyen mesajları gizlemek için.";
+"rn_v54_few_more_things" = "- isteğe bağlı olarak silinen kişileri bilgilendir.\\n- boşluklu profil adları.\\n- ve daha fazlası!";
+"rn_v54_few_more_things_desc" = "- isteğe bağlı olarak silinen kişileri bilgilendir.\\n- boşluklu profil adları.\\n- ve daha fazlası!";
+"rn_v54_incognito_groups" = "Rastgele bir profil kullanarak grup oluşturun.";
+"rn_v54_incognito_groups_desc" = "Rastgele bir profil kullanarak grup oluşturun.";
+"rn_v54_link_apps" = "Güvenli kuantum dirençli protokol aracılığıyla.";
+"rn_v54_link_apps_desc" = "Güvenli kuantum dirençli protokol aracılığıyla.";
+"rn_v55_improved_delivery" = "Azaltılmış pil kullanımı ile.";
+"rn_v55_improved_delivery_desc" = "Azaltılmış pil kullanımı ile.";
+"rn_v55_join_groups" = "Son geçmiş ve geliştirilmiş [dizin botu](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_join_groups_desc" = "Son geçmiş ve geliştirilmiş [dizin botu](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_paste_link" = "Arama çubuğu davet bağlantılarını kabul eder.";
+"rn_v55_paste_link_desc" = "Arama çubuğu davet bağlantılarını kabul eder.";
+"rn_v55_private_notes" = "Şifrelenmiş dosyalar ve medya ile.";
+"rn_v55_private_notes_desc" = "Şifrelenmiş dosyalar ve medya ile.";
+"rn_v55_turkish_interface" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v55_turkish_interface_desc" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v56_data_migration" = "QR kodu ile başka bir cihaza geçiş yapın.";
+"rn_v56_data_migration_desc" = "QR kodu ile başka bir cihaza geçiş yapın.";
+"rn_v56_hungarian_interface" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v56_hungarian_interface_desc" = "Kullanıcılara teşekkürler – Weblate üzerinden katkıda bulunun!";
+"rn_v56_pip_calls" = "Arama sırasında uygulamayı kullanın.";
+"rn_v56_pip_calls_desc" = "Arama sırasında uygulamayı kullanın.";
+"rn_v56_quantum_encryption" = "Doğrudan sohbetlerde etkinleştirin (BETA)!";
+"rn_v56_quantum_encryption_desc" = "Doğrudan sohbetlerde etkinleştirin (BETA)!";
+"rn_v56_safer_groups" = "Yöneticiler bir üyeyi herkes için engelleyebilir.";
+"rn_v56_safer_groups_desc" = "Yöneticiler bir üyeyi herkes için engelleyebilir.";
+"rn_v57_forward_save" = "Mesaj kaynağı gizli kalır.";
+"rn_v57_forward_save_desc" = "Mesaj kaynağı gizli kalır.";
+"rn_v57_incall_sounds" = "Sesli ve görüntülü aramalar bağlanırken.";
+"rn_v57_incall_sounds_desc" = "Sesli ve görüntülü aramalar bağlanırken.";
+"rn_v57_network_management" = "Daha güvenilir ağ bağlantısı.";
+"rn_v57_network_management_desc" = "Daha güvenilir ağ bağlantısı.";
+"rn_v57_quantum_encryption" = "Doğrudan sohbetlerde etkinleştirilecek!";
+"rn_v57_quantum_encryption_desc" = "Doğrudan sohbetlerde etkinleştirilecek!";
+"rn_v57_shape_images" = "Kare, daire veya aradaki herhangi bir şey.";
+"rn_v57_shape_images_desc" = "Kare, daire veya aradaki herhangi bir şey.";
+"rn_v58_improved_delivery" = "Azaltılmış pil kullanımı ile.";
+"rn_v58_improved_delivery_desc" = "Azaltılmış pil kullanımı ile.";
+"rn_v58_private_routing" = "IP adresinizi kişileriniz tarafından seçilen mesaj geçişlerinden koruyun.\\n*Ağ ve sunucular* ayarlarından etkinleştirin.";
+"rn_v58_private_routing_desc" = "IP adresinizi kişileriniz tarafından seçilen mesaj geçişlerinden koruyun.\\n*Ağ ve sunucular* ayarlarından etkinleştirin.";
+"rn_v58_safely_receive_files" = "Bilinmeyen sunuculardan dosyaları onaylayın.";
+"rn_v58_safely_receive_files_desc" = "Bilinmeyen sunuculardan dosyaları onaylayın.";
+"rn_v60_better_networking" = "Bağlantı ve sunucu durumu.";
+"rn_v60_better_networking_desc" = "Bağlantı ve sunucu durumu.";
+"rn_v60_new_chat_experience" = "Yeni sohbet deneyimi 🎉";
+"rn_v60_new_media_options" = "Yeni medya seçenekleri";
+"rn_v60_private_routing" = "IP adresinizi ve bağlantılarınızı korur.";
+"rn_v60_private_routing_desc" = "IP adresinizi ve bağlantılarınızı korur.";
+"rn_v60_sub_archive_contacts" = "Daha sonra sohbet etmek için kişileri arşivleyin.";
+"rn_v60_sub_blur_privacy" = "Yeni medya seçenekleri";
+"rn_v60_sub_color_themes" = "Yeni temalarla sohbetleri renklendirin.";
+"rn_v60_sub_connect_faster" = "Yeni sohbet deneyimi 🎉";
+"rn_v60_sub_delete_messages" = "Tek seferde 20 mesaja kadar silin.";
+"rn_v60_sub_one_hand" = "Uygulamayı tek elinizle kullanın.";
+"rn_v60_sub_play_chat_list" = "Yeni medya seçenekleri";
+"rn_v60_sub_share_apps" = "Yeni medya seçenekleri";
+"rn_v61_better_calls" = "Arama sırasında ses ve görüntüyü değiştirin.";
+"rn_v61_better_calls_desc" = "Arama sırasında ses ve görüntüyü değiştirin.";
+"rn_v61_better_notifications" = "Geliştirilmiş teslimat, azaltılmış veri kullanımı.\\nDaha fazla iyileştirme yakında geliyor!";
+"rn_v61_better_notifications_desc" = "Geliştirilmiş teslimat, azaltılmış veri kullanımı.\\nDaha fazla iyileştirme yakında geliyor!";
+"rn_v61_better_security" = "POPOPX protokolleri Trail of Bits tarafından incelendi.";
+"rn_v61_better_security_desc" = "POPOPX protokolleri Trail of Bits tarafından incelendi.";
+"rn_v61_better_ux" = "Daha iyi kullanıcı deneyimi";
+"rn_v61_sub_forward_messages" = "Tek seferde 20 mesaja kadar iletin.";
+"rn_v61_sub_message_dates" = "Daha iyi mesaj tarihleri.";
+"rn_v61_sub_message_shape" = "Özelleştirilebilir mesaj şekli.";
+"rn_v61_sub_moderate_messages" = "200 mesaja kadar silin veya yönetin.";
+"rn_v61_sub_switch_profile" = "Daha iyi kullanıcı deneyimi";
+"rn_v62_business_chats" = "Müşterileriniz için gizlilik.";
+"rn_v62_business_chats_desc" = "Müşterileriniz için gizlilik.";
+"rn_v62_network_decentralization" = "Ağ merkeziyetsizliği";
+"rn_v62_reliable_notifications" = "Apple bunları düşürse bile teslim edilir.";
+"rn_v62_reliable_notifications_desc" = "Apple bunları düşürse bile teslim edilir.";
+"rn_v63_better_groups_perf" = "Daha iyi grup performansı";
+"rn_v63_better_privacy" = "Daha iyi gizlilik ve güvenlik";
+"rn_v63_mention_members" = "Bahsedildiğinizde bildirim alın.";
+"rn_v63_mention_members_desc" = "Bahsedildiğinizde bildirim alın.";
+"rn_v63_organize_lists" = "Önemli mesajları kaçırmayın.";
+"rn_v63_organize_lists_desc" = "Önemli mesajları kaçırmayın.";
+"rn_v63_private_reports" = "Yöneticilerin gruplarını yönetmelerine yardımcı olun.";
+"rn_v63_private_reports_desc" = "Yöneticilerin gruplarını yönetmelerine yardımcı olun.";
+"rn_v63_sub_faster_deletion" = "Daha iyi grup performansı";
+"rn_v63_sub_faster_sending" = "Daha iyi grup performansı";
+"rn_v63_sub_message_expiration" = "Daha iyi gizlilik ve güvenlik";
+"rn_v63_sub_private_media" = "Daha iyi gizlilik ve güvenlik";
+"rn_v641_chats_clean" = "Varsayılan olarak kaybolan mesajları etkinleştirin.";
+"rn_v641_chats_clean_desc" = "Varsayılan olarak kaybolan mesajları etkinleştirin.";
+"rn_v641_short_address" = "Kısa POPOPX adresi";
+"rn_v641_welcome_contacts" = "Profil biyografisini ve hoş geldin mesajını ayarlayın.";
+"rn_v641_welcome_contacts_desc" = "Profil biyografisini ve hoş geldin mesajını ayarlayın.";
+"rn_v64_chat_admins" = "Gruplara özel geri bildirim gönderin.";
+"rn_v64_chat_admins_desc" = "Gruplara özel geri bildirim gönderin.";
+"rn_v64_connect_faster" = "Bağlan'a dokunduğunuzda anında mesaj gönderin.";
+"rn_v64_connect_faster_desc" = "Bağlan'a dokunduğunuzda anında mesaj gönderin.";
+"rn_v64_group_moderator" = "Mesajları kaldırır ve üyeleri engeller.";
+"rn_v64_group_moderator_desc" = "Mesajları kaldırır ve üyeleri engeller.";
+"rn_v64_improved_delivery" = "Mobil ağlarda daha az trafik.";
+"rn_v64_improved_delivery_desc" = "Mobil ağlarda daha az trafik.";
+"rn_v64_review_members" = "Üyeler katılmadan önce onlarla sohbet edin.";
+"rn_v64_review_members_desc" = "Üyeler katılmadan önce onlarla sohbet edin.";
+"rn_v65_invite_friends" = "Yeni kullanıcılar için bağlantıyı daha basit hale getirdik.";
+"rn_v65_invite_friends_desc" = "Yeni kullanıcılar için bağlantıyı daha basit hale getirdik.";
+"rn_v65_nonprofit_governance" = "POPOPX Ağı'nı kalıcı kılmak için.";
+"rn_v65_nonprofit_governance_desc" = "POPOPX Ağı'nı kalıcı kılmak için.";
+"rn_v65_public_channels" = "Genel kanallar - özgürce konuşun 🚀";
+"rn_v65_safe_web_links" = "- isteğe bağlı olarak bağlantı önizlemeleri gönderin.\\n- hiper bağlantı oltalamasını önleyin.\\n- bağlantı takibini kaldırın.";
+"rn_v65_safe_web_links_desc" = "- isteğe bağlı olarak bağlantı önizlemeleri gönderin.\\n- hiper bağlantı oltalamasını önleyin.\\n- bağlantı takibini kaldırın.";
+"rn_v65_sub_ownership" = "Genel kanallar - özgürce konuşun 🚀";
+"rn_v65_sub_privacy" = "Özel medya dosya adları.";
+"rn_v65_sub_reliability" = "Genel kanallar - özgürce konuşun 🚀";
+"rn_v65_sub_security" = "Sohbetlerde mesaj son kullanma süresini ayarlayın.";
+"save_button" = "Kaydet";
+"self_destruct_passcode_info" = "Kendini imha kodu bilgisi";
+"settings_tab_picker" = "Ayarlar Sekmesi";
+"share_channel_title" = "Kanalı paylaş";
+"swipe_action_clear" = "Temizle";
+"swipe_action_delete" = "Sil";
+"swipe_action_favorite" = "Favori";
+"swipe_action_list" = "Liste";
+"swipe_action_mute" = "Sessize al";
+"swipe_action_read" = "Okundu";
+"swipe_action_unfavorite" = "Favoriden çıkar";
+"tab_chats" = "Sohbetler";
+"tab_mesh" = "Mesh";
+"tab_profiler" = "Profiler";
+"tab_vortex" = "Vortex";
+"user_picker_chat_preferences" = "Sohbet tercihleri";
+"user_picker_chat_profiles" = "Sohbet profilleriniz";
+"user_picker_create_address" = "POPOPX adresi oluştur";
+"user_picker_settings" = "Ayarlar";
+"user_picker_use_from_desktop" = "Masaüstünden kullan";
+"user_picker_your_address" = "POPOPX adresiniz";
+"db_hide_passphrase" = "Parolayı gizle";
+"db_show_passphrase" = "Parolayı göster";
+"marked_deleted_moderated_by_list" = "%d mesaj %@ tarafından moderatör edildi";
+"marked_deleted_blocked_by_admin" = "%d mesaj yönetici tarafından engellendi";
+"marked_deleted_blocked" = "%d mesaj engellendi";
+"marked_deleted_marked_deleted" = "%d mesaj silindi olarak işaretlendi";
+"marked_deleted_moderated_by" = "%@ tarafından moderatör edildi";
+"marked_deleted_blocked_single" = "engellendi";
+"marked_deleted_blocked_by_admin_single" = "yönetici tarafından engellendi";
+"marked_deleted_deleted" = "silindi olarak işaretlendi";
+"ntf_register_button" = "Kayıt ol";
+"ntf_mode_desc_off" = "**En gizli**: POPOPX Chat push sunucusunu kullanma. Uygulama, sistem izin verdiğinde arka planda mesajları kontrol edecek, uygulamayı ne sıklıkla kullandığınıza bağlı olarak.";
+"ntf_mode_desc_periodic" = "**Daha gizli**: yeni mesajları her 20 dakikada bir kontrol et. Yalnızca cihaz token'ı push sunucumuzla paylaşılır. Kaç kişiniz olduğunu veya mesaj metadatalarını görmez.";
+"ntf_mode_desc_instant" = "**Önerilen**: cihaz token'ı ve uçtan uca şifrelenmiş bildirimler POPOPX Chat push sunucusuna gönderilir, ancak sunucu mesaj içeriğini, boyutunu veya göndereni görmez.";
+"ntf_mode_short_off" = "İzin verildiğinde mesajları kontrol et.";
+"ntf_mode_short_periodic" = "Her 20 dakikada bir mesajları kontrol et.";
+"ntf_mode_short_instant" = "E2E şifrelenmiş bildirimler.";
+"protocol_server_no_servers_for" = "%@ için %@ sunucusu yok";
+"protocol_server_no_servers_configured" = "%@ sunucusu yapılandırılmamış";
+"protocol_server_storage_missing_for" = "%@ için %@ içinde depolama eksik";
+"protocol_server_storage_missing" = "%@ için depolama eksik";
+"protocol_server_proxy_missing_for" = "%@ için %@ içinde proxy eksik";
+"protocol_server_proxy_missing" = "%@ için proxy eksik";
+"protocol_server_duplicate" = "Yinelenen sunucu: %@ konumunda %@";
+"protocol_server_duplicate_relay" = "Yinelenen sohbet geçişi: %@ konumunda %@";
+"protocol_server_no_relays_for" = "Uyarı: %@ için sohbet geçişi yok";
+"protocol_server_no_relays_configured" = "Uyarı: Sohbet geçişleri yapılandırılmamış";
+"protocol_server_no_name_servers_for" = "Uyarı: %@ için ad sunucusu yok";
+"protocol_server_no_name_servers_configured" = "Uyarı: Ad sunucuları yapılandırılmamış";
+"member_support_delete_button" = "Sil";
+"migration_error_title" = "Hata";
+"compliance_data_retention_desc" = "Veriler %d gün boyunca otomatik olarak saklanır. Bu süreden sonra kalıcı olarak silinir.";
+"location_precision_exact" = "Tam";
+"location_precision_fuzzy" = "Yaklaşık (~1km)";
+"location_precision_region" = "Bölge (~10km)";
+"location_precision_exact_desc" = "Kesin GPS koordinatlarınızı paylaşın";
+"location_precision_fuzzy_desc" = "~1km doğruluğa yuvarla";
+"location_precision_region_desc" = "Rastgele kaydırma ile ~10km'ye yuvarla";
+"art_generator_flow_field" = "Akış Alanı";
+"art_generator_circuit_board" = "Devre Kartı";
+"art_generator_geometric_harmony" = "Geometrik Uyum";
+"art_generator_wave_interference" = "Dalga Girişimi";
+"art_generator_cellular_automata" = "Hücresel Otomatlar";
+"pq_crypto_kyber768_desc" = "Deneysel Anahtar Anlaşması (X25519 ECDH) — kuantuma dayanıklı DEĞİL";
+"pq_crypto_dilithium3_desc" = "Deneysel İmza (Ed25519) — kuantuma dayanıklı DEĞİL";
+"pq_crypto_falcon512_desc" = "Deneysel Kompakt İmza (Ed25519) — kuantuma dayanıklı DEĞİL";
+"config_bot_not_configured" = "Yapılandırma botu yapılandırılmamış";
+"config_bot_invalid_response" = "Geçersiz yapılandırma yanıtı";
+"config_bot_timeout" = "Yapılandırma botu isteği zaman aşımına uğradı";
+"server_api_invalid_url" = "Geçersiz sunucu URL'si";
+"server_api_invalid_body" = "Geçersiz istek gövdesi";
+"server_api_error" = "Sunucu hatası: %d";
+"server_api_parse_failed" = "Sunucu yanıtı ayrıştırılamadı";
+"nostr_broadcast_empty" = "İçerik boş olamaz";
+"nostr_broadcast_too_long" = "İçerik 500 karakter sınırını aşıyor";
+"art_vault_encode_failed" = "Görüntü PNG olarak kodlanamadı";
+"art_vault_decrypt_failed" = "Sanat eseri şifresi çözülemedi";
+"art_engine_script_not_found" = "Oluşturucu komut dosyası bulunamadı: %@";
+"art_engine_render_failed" = "Oluşturma başarısız: %@";
+"art_engine_context_failed" = "Bitmap oluşturma bağlamı oluşturulamadı";
+"binthere_encrypt_failed" = "Mesaj şifrelenemedi";
+"binthere_decrypt_failed" = "Şifre çözülemedi — mesaj bozuk olabilir";
+"binthere_invalid_key" = "Geçersiz şifre çözme anahtarı";
+"binthere_bot_timeout" = "Bot zamanında yanıt vermedi";
+"binthere_message_expired" = "Bu mesaj zaten okunmuş veya süresi dolmuş";
+"binthere_bot_not_configured" = "BinThere botu yapılandırılmamış";
+"binthere_compress_failed" = "Görüntü boyut sınırının altına sıkıştırılamadı";
+"binthere_operation_in_progress" = "Başka bir depolama işlemi zaten devam ediyor";
+"needle_encrypt_failed" = "Şifreleme başarısız";
+"needle_decrypt_failed" = "Şifre çözme başarısız";
+"needle_keychain_error" = "Anahtarlık hatası: %d";
+"needle_not_initialized" = "Needle motoru başlatılmadı";
+"needle_encode_failed" = "Mesajlar kodlanamadı";
+"needle_completion_failed" = "Tamamlama başarısız: %@";
+"needle_parse_failed" = "Çıkarma sonucu ayrıştırılamadı";
+"encrypted_doc_encode_failed" = "Belge metni kodlanamadı";
+"encrypted_doc_encrypt_failed" = "Belge şifrelenemedi";
+"encrypted_doc_decrypt_failed" = "Belge şifresi çözülemedi — veriler bozuk olabilir";

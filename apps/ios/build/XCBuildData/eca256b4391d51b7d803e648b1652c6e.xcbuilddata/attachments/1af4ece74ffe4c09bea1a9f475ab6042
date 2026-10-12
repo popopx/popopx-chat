@@ -1,0 +1,19 @@
+{
+  "" : {
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString-primary.dia",
+    "emit-module-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString-primary-emit-module.dia",
+    "pch" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString-primary.swiftdeps"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/Sources/LZString/LZString.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString.dia",
+    "index-unit-output-path" : "/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/lzstring-swift/build/LZString.build/Debug-iphoneos/LZString-t.build/Objects-normal/arm64/LZString~partial.swiftmodule"
+  }
+}

@@ -1,0 +1,7 @@
+/* Localized permission strings */
+"NSBluetoothAlwaysUsageDescription" = "POPOPX, internet kullanılamadığında yakındaki cihazlara bağlanmak için Bluetooth kullanır ve güvenli bir mesh ağı aracılığıyla mesaj teslimi sağlar.";
+"NSBluetoothPeripheralUsageDescription" = "POPOPX, internet kullanılamadığında mesh ağı üzerinden yakındaki cihazlara bağlanmak için Bluetooth (arka planda) kullanır.";
+"NSLocationWhenInUseUsageDescription" = "Konumunuz yalnızca bir sohbette paylaşmak için kullanılır. Seçtiğiniz sohbet dışında hiçbir yerde toplanmaz veya gönderilmez.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Konumunuz yalnızca bir sohbette paylaşmak için kullanılır. Seçtiğiniz sohbet dışında hiçbir yerde toplanmaz veya gönderilmez.";
+"NSPhotoLibraryUsageDescription" = "POPOPX, sohbetlerde fotoğraf seçmek ve göndermek için fotoğraf librarynize erişim gerektirir.";
+"NSPhotoLibraryAddUsageDescription" = "POPOPX, fotoğraf ve videoları fotoğraf librarynize kaydetmek için erişim gerektirir.";

@@ -1,11 +1,13 @@
 //
 //  AddContactLearnMore.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 27.04.2023.
-//  Copyright © 2023 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
 
 struct AddContactLearnMore: View {
@@ -14,25 +16,25 @@ struct AddContactLearnMore: View {
     var body: some View {
         List {
             if showTitle {
-                Text("One-time invitation link")
-                    .font(.largeTitle)
-                    .bold()
+                Text(LocalizedStringKey(NSLocalizedString("onetime_invitation_link", comment: "One-time invitation link title")))
+                    .font(.title.weight(.heavy))
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.vertical)
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
+                                .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
             VStack(alignment: .leading, spacing: 18) {
-                Text("To connect, your contact can scan QR code or use the link in the app.")
-                Text("If you can't meet in person, show QR code in a video call, or share the link.")
-                ExternalLink("Read more in User Guide.", destination: URL(string: "https://simplex.chat/docs/guide/readme.html#connect-to-friends")!)
+                Text(LocalizedStringKey(NSLocalizedString("add_contact_scan_qr", comment: "Add contact scan QR code hint")))
+                Text(LocalizedStringKey(NSLocalizedString("add_contact_video_call", comment: "Add contact video call hint")))
+                ExternalLink("Read more in User Guide.", destination: URL(string: "https://popopxchat.com/docs/guide/readme.html#connect-to-friends") ?? URL(fileURLWithPath: "/dev/null"))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
         .modifier(ThemedBackground(grouped: true))
+        .popopxBranded()
     }
 }
 

@@ -1,0 +1,921 @@
+/*
+  Localizable.strings
+  POPOP NSE
+
+  Created by EP on 30/07/2024.
+  Copyright © 2024 POPOP Chat. All rights reserved.
+*/
+
+
+"New messages" = "Uudet viestit";
+
+"New events" = "Uudet tapahtumat";
+
+"From %d chat(s)" = "%d chat(ista)";
+
+"From: %@" = "Lähettäjä: %@";
+
+"%d new events" = "%d uutta tapahtumaa";
+
+" and " = " ja ";
+
+", " = ", ";
+
+" other chats" = " muuta chattia";
+
+"new message" = "uusi viesti";
+
+"%@ wants to connect!" = "%@ haluaa yhdistää!";
+
+"Accept contact request from %@?" = "Hyväksy yhteyspyyntö henkilöltä %@?";
+
+"%@ is connected!" = "%@ on yhdistetty!";
+
+"Incoming video call" = "Saapuva videopuhelu";
+
+"Incoming audio call" = "Saapuva äänipuhelu";
+
+"Encrypted message: app is stopped" = "Salattu viesti: sovellus on pysäytetty";
+
+"Contact hidden:" = "Yhteystieto piilotettu:";
+
+"Somebody" = "Joku";
+
+"this contact" = "tämä yhteystieto";
+
+"A new contact" = "Uusi yhteystieto";
+
+"You can now chat with %@" = "Voit nyt chattailla henkilön %@ kanssa";
+
+"New contact:" = "Uusi yhteystieto:";
+
+"message received" = "viesti vastaanotettu";
+
+"New contact request" = "Uusi yhteyspyyntö";
+
+"Group message:" = "Ryhmäviesti:";
+
+"Report: %@" = "Ilmoitus: %@";
+
+"Encrypted message: no passphrase" = "Salattu viesti: ei salasanaa";
+
+"Encrypted message: database migration error" = "Salattu viesti: tietokannan siirtovirhe";
+
+"Encrypted message: database error" = "Salattu viesti: tietokantavirhe";
+
+"Encrypted message: keychain error" = "Salattu viesti: avainnipun virhe";
+
+"Encrypted message: unexpected error" = "Salattu viesti: odottamaton virhe";
+
+"Encrypted message or another event" = "Salattu viesti tai muu tapahtuma";
+
+/* RadialActionMenu - Chat actions */
+"accept_contact_request" = "Hyväksy";
+"incognito_accept" = "Inkognito";
+"reject_contact_request" = "Hylkää";
+"join_group" = "Liity";
+"archive_reports" = "Arkistoi";
+"leave_group_action" = "Poistu";
+"mark_read" = "Luettu";
+"mark_unread" = "Merkitse lukemattomaksi";
+"unfavorite_chat" = "Poista suosikeista";
+"favorite_chat" = "Suosikki";
+"chat_list" = "Lista";
+"clear_conversation" = "Tyhjennä";
+"delete_chat" = "Poista";
+
+/* RadialActionMenu - Alert dialogs */
+"clear_private_notes_title" = "Tyhjennä yksityiset muistiinpanot?";
+"clear_conversation_title" = "Tyhjennä keskustelu?";
+"clear_private_notes_message" = "Kaikki viestit poistetaan - tätä ei voi peruuttaa!";
+"clear_conversation_message" = "Kaikki viestit poistetaan - tätä ei voi peruuttaa! Viestit poistetaan VAIN sinulta.";
+"clear_action" = "Tyhjennä";
+"archive_reports_title" = "Arkistoi kaikki ilmoitukset?";
+"archive_reports_message" = "Kaikki ilmoitukset arkistoidaan sinulle.";
+"archive_action" = "Arkistoi";
+"leave_group_title" = "Poistu ryhmästä?";
+"leave_group_message" = "Et enää vastaanota viestejä tästä ryhmästä.";
+"leave_action" = "Poistu";
+
+/* OneHandUICard - Accessibility */
+"selected_state" = "Valittu";
+"not_selected_state" = "Ei valittu";
+
+/* PXContactConnectionInfo - Connection status */
+"you_invited_contact" = "Kutsuit yhteystiedon";
+"you_accepted_connection" = "Hyväksyit yhteyden";
+"group_connection_pending" = "Sinut yhdistetään ryhmään, kun ryhmän isännän laite on online-tilassa, odota tai tarkista myöhemmin!";
+"connection_request_pending" = "Sinut yhdistetään, kun yhteyspyyntösi hyväksytään, odota tai tarkista myöhemmin!";
+"contact_device_pending" = "Sinut yhdistetään, kun yhteystietosi laite on online-tilassa, odota tai tarkista myöhemmin!";
+"incognito_mode" = "Inkognito";
+"delete_connection" = "Poista yhteys";
+"share_onetime_link" = "Jaa kertalinkki";
+"onetime_invitation_title" = "Kertakutsulinkki";
+"learn_more" = "Lue lisää";
+
+/* PXTagListView - Tag management */
+"delete_list_title" = "Poista lista?";
+"delete_list_message" = "Kaikki chatit poistetaan listalta %@ ja lista poistetaan.";
+"delete_action" = "Poista";
+"edit_action" = "Muokkaa";
+"create_list" = "Luo lista";
+"error_reordering_lists" = "Virhe listojen uudelleenjärjestelyssä";
+"error_saving_chat_list" = "Virhe chat-listan tallentamisessa";
+"add_to_list" = "Lisää listaan";
+"save_list" = "Tallenna lista";
+"unique_list_name_emoji" = "Nimen ja emojin tulee olla erilaisia kaikille listoille.";
+"error_creating_list" = "Virhe listan luomisessa";
+
+/* PXChatRelayView - Relay settings (Batch 3) */
+"relay_test_failed_title" = "Reletesti epäonnistui!";
+"your_relay_name" = "Releesi nimi";
+"preset_relay_address" = "Esiasetettu releosoite";
+"preset_relay_name" = "Esiasetettu releen nimi";
+"your_relay_address" = "Releesi osoite";
+"test_relay_footer" = "**Testaa rele** sen nimen hakemiseksi.";
+"delete_relay" = "Poista rele";
+"use_relay" = "Käytä relettä";
+"test_relay_button" = "Testaa rele";
+"use_for_new_channels" = "Käytä uusille kanaville";
+"chat_relay_nav_title" = "Chattien välityspalvelin";
+"enter_relay_name_placeholder" = "Syötä releen nimi…";
+
+/* UserAddressLearnMore - Address help (Batch 3) */
+"share_address_publicly" = "Jaa POPOPX-osoite sosiaalisessa mediassa.";
+"address_wont_lose_contacts" = "Et menetä yhteystietojasi, jos poistat osoitteesi myöhemmin.";
+"onetime_link_usage_hint" = "Kertalinkkiä voi käyttää *vain yhden yhteystiedon kanssa* - jaa henkilökohtaisesti tai minkä tahansa viestinsovelluksen kautta.";
+"set_connection_name_hint" = "Voit asettaa yhteyden nimen muistaaksesi, kenelle linkki jaettiin.";
+"connection_security" = "Yhteyden turvallisuus";
+"address_links_safe_share" = "POPOPX-osoite ja kertalinkit ovat turvallisia jakaa minkä tahansa viestinsovelluksen kautta.";
+"compare_security_codes" = "Suojautuaksesi linkkisi korvaamiselta voit verrata yhteystiedon turvakoodeja.";
+"read_more_user_guide" = "Lue lisää käyttöoppaasta.";
+"create_popopx_address" = "Luo POPOPX-osoite";
+"create_onetime_link" = "Luo kertalinkki";
+"popopx_address_title" = "POPOPX-osoite";
+"new_chat_title" = "Uusi chattailu";
+
+/* PXRTCServers - WebRTC settings (Batch 3) */
+"configure_ice_servers" = "Määritä ICE-palvelimet";
+"use_popopx_servers_confirm" = "Käytä POPOPX Chat -palvelimia?";
+"saved_webrtc_removed" = "Tallennetut WebRTC ICE -palvelimet poistetaan";
+"confirm_action" = "Vahvista";
+"using_popopx_servers" = "Käytetään POPOPX Chat -palvelimia.";
+"ice_servers_one_per_line" = "ICE-palvelimet (yksi per rivi)";
+"error_saving_ice_servers" = "Virhe ICE-palvelimien tallentamisessa";
+"ice_servers_format_error" = "Varmista, että WebRTC ICE -palvelinosoitteet ovat oikeassa muodossa, rivierottelut eivätkä duplikaatteja.";
+"how_to" = "Miten";
+
+/* PXChatItemInfoView - Chat item info (Batch 4) */
+"delivery_tab" = "Toimitus";
+"history_tab" = "Historia";
+"in_reply_to_tab" = "Vastauksena";
+"saved_message" = "Tallennettu";
+"forwarded_message" = "Välitetty";
+"history_section" = "Historia";
+"no_history" = "Ei historiaa";
+"share_action" = "Jaa";
+"copy_action" = "Kopioi";
+"current_version" = "(nykyinen)";
+"no_text_content" = "ei tekstiä";
+"in_reply_to_section" = "Vastauksena";
+"recipients_cant_see_sender" = "Vastaanottaja(t) ei(vät) voi nähdä, keneltä tämä viesti on.";
+"you_sent_label" = "sinä";
+"delivery_section" = "Toimitus";
+"no_delivery_info" = "Ei toimitustietoja";
+
+/* PXFramedItemView - Chat item framing (Batch 5) */
+"only_you_and_mods_see" = "Vain sinä ja moderaattorit näkevät tämän";
+"only_sender_and_mods_see" = "Vain lähettäjä ja moderaattorit näkevät tämän";
+"archived_report" = "arkistoitu raportti";
+"moderated_by_user" = "moderaattori:";
+"blocked_status" = "estetty";
+"blocked_by_admin" = "ylläpitäjän estämä";
+"marked_deleted" = "merkitty poistetuksi";
+"live_message" = "LIVE";
+
+/* PXIntegrityErrorItemView - Error alerts (Batch 5) */
+"skipped_messages_title" = "Ohitetut viestit";
+"skipped_messages_message" = "Tämä voi tapahtua, kun:\n1. Viestit vanhenivat lähettävässä sovelluksessa 2 päivän jälkeen tai palvelimella 30 päivän jälkeen.\n2. Viestin salauksen purku epäonnistui, koska sinä tai yhteystietosi käytitte vanhaa tietokantavarmuuskopiota.\n3. Yhteys vaarantui.";
+"bad_message_hash" = "Virheellinen viestin tiiviste";
+"hash_mismatch_description" = "Edellisen viestin tiiviste on erilainen.";
+"report_to_developers" = "Ilmoita tästä kehittäjille.";
+"bad_message_id" = "Virheellinen viestin ID";
+"message_id_incorrect" = "Seuraavan viestin ID on virheellinen (pienempi tai yhtä suuri kuin edellisen).\nTämä voi tapahtua jonkin bugin vuoksi tai kun yhteys on vaarantunut.";
+"message_receive_error" = "Sovellus poisti tämän viestin %d yrityksen jälkeen vastaanottaa se.";
+"message_error_title" = "Viestivirhe";
+
+"chat_audio_call" = "Äänipuhelu";
+"chat_video_call" = "Videopuhelu";
+"chat_all_messages" = "Kaikki viestit";
+"chat_search" = "Haku";
+"chat_filter" = "Suodatin";
+"chat_invite_member" = "Kutsu jäsen";
+
+"compose_member_deleted_cant_accept" = "Jäsen on poistettu - pyyntöä ei voi hyväksyä";
+"compose_reject" = "Hylkää";
+"compose_accept" = "Hyväksy";
+"compose_your_profile" = "Profiilisi";
+"compose_incognito" = "Inkognito";
+"compose_send_live_message" = "Lähetä live-viesti";
+"compose_disappearing_message" = "Katoava viesti";
+"compose_char_count_format" = "%d/65536";
+"compose_scan_security_code" = "Skannaa turvakoodi yhteystietosi sovelluksesta.";
+"compose_incorrect_security_code" = "Virheellinen turvakoodi!";
+"compose_no_filtered_chats" = "Ei suodatettuja chatteja";
+"compose_share" = "Jaa";
+"compose_copy" = "Kopioi";
+"compose_mark_read" = "Merkitse luetuksi";
+"compose_delete_from_history" = "Poista historiasta";
+"compose_archive_report" = "Arkistoi ilmoitus";
+"compose_answer_call" = "Vastaa puheluun";
+"compose_tap_to_open" = "Avaa napauttamalla";
+"compose_invalid_data" = "virheelliset tiedot";
+"compose_event_happened" = "tapahtuma tapahtui";
+
+"group_no_contacts_to_add" = "Ei lisättäviä yhteystietoja";
+"group_clear_selection" = "Tyhjennä";
+"group_contacts_selected_fmt" = "%d yhteystieto(a) valittu";
+"group_no_contacts_selected" = "Ei valittuja yhteystietoja";
+"group_cant_invite_contact_title" = "Yhteystietoa ei voi kutsua!";
+"group_cant_invite_contact_msg" = "Yrität kutsua yhteystiedon, jonka kanssa jaoit inkognitoprofiilin, ryhmään, jossa käytät pääprofiiliasi";
+"group_enabled_for" = "Käytössä";
+"group_set_member_admission" = "Aseta jäsenten hyväksyntä";
+"group_member_admission" = "Jäsenten hyväksyntä";
+"group_no_available_relays" = "Ei käytettävissä olevia releitä";
+"group_channel_delete_all" = "Kanava poistetaan kaikilta tilaajilta - tätä ei voi peruuttaa!";
+"group_channel_delete_you" = "Kanava poistetaan sinulta - tätä ei voi peruuttaa!";
+"group_group_delete_all" = "Ryhmä poistetaan kaikilta jäseniltä - tätä ei voi peruuttaa!";
+"group_group_delete_you" = "Ryhmä poistetaan sinulta - tätä ei voi peruuttaa!";
+"group_chat_delete_all" = "Chatti poistetaan kaikilta jäseniltä - tätä ei voi peruuttaa!";
+"group_chat_delete_you" = "Chatti poistetaan sinulta - tätä ei voi peruuttaa!";
+"group_cant_invite_contacts_title" = "Yhteystietoja ei voi kutsua!";
+"group_cant_invite_contacts_msg" = "Käytät inkognitoprofiilia tässä ryhmässä - pääprofiilisi jakamisen estämiseksi yhteystietojen kutsuminen ei ole sallittua";
+"group_receipts_disabled_title" = "Kuitit on poistettu käytöstä";
+"group_receipts_disabled_msg_fmt" = "Tässä ryhmässä on yli %d jäsentä, toimituskuittauksia ei lähetetä.";
+"group_copy_code" = "Kopioi koodi";
+"group_webpage_code" = "Verkkosivun koodi";
+"group_webpage_code_instructions" = "Lisää tämä koodi verkkosivullesi. Se näyttää esikatselun kanavastasi / ryhmästäsi.";
+"group_enter_webpage_url" = "Syötä verkkosivun URL";
+"group_webpage_url_instructions" = "Se näytetään tilaajille ja käytetään esikatselun lataamisen sallimiseen.";
+"group_chat_with_admins" = "Chatti ylläpitäjien kanssa";
+"group_member_reports" = "Jäsenten ilmoitukset";
+"group_set_group_preferences" = "Aseta ryhmän asetukset";
+"group_owners_section" = "Omistajat";
+"group_you_label" = "sinä";
+"group_no_chat_relays" = "Ei chattireleitä";
+"group_chat_relays_forward_info" = "Chattireleet välittävät viestejä kanavan tilaajille.";
+"group_reset_button" = "Nollaa";
+"group_take_picture" = "Ota kuva";
+"group_choose_from_library" = "Valitse kirjastosta";
+"group_paste_image" = "Liitä kuva";
+"group_read_action" = "Lue";
+"group_accept_action" = "Hyväksy";
+"group_delete_action_member" = "Poista";
+"group_share_link_desc_channel" = "Voit jakaa linkin tai QR-koodin - kuka tahansa voi liittyä kanavalle.";
+"group_share_link_desc_group" = "Voit jakaa linkin tai QR-koodin - kuka tahansa voi liittyä ryhmään. Et menetä ryhmän jäseniä, jos poistat sen myöhemmin.";
+"group_upgrade_link" = "Päivitä linkki";
+"group_share_link_button" = "Jaa linkki";
+"group_share_via_chat_button" = "Jaa chatin kautta";
+"group_delete_link" = "Poista linkki";
+"group_create_link_button" = "Luo linkki";
+"group_delete_link_title" = "Poista linkki?";
+"group_delete_link_message" = "Kaikki ryhmän jäsenet pysyvät yhteydessä.";
+"group_delete_link_action" = "Poista";
+
+"settings_send_notifications" = "Lähetä ilmoitukset";
+"settings_lock_screen_preview" = "Voit asettaa lukitusnäytön ilmoitusesikatselun asetuksista.";
+"settings_open_settings_button" = "Avaa asetukset";
+"settings_show_preview" = "Näytä esikatselu";
+"settings_push_notifications" = "Push-ilmoitukset";
+"settings_restart_migrate_notice" = "Käynnistä sovellus uudelleen ja siirrä tietokanta ottaaksesi push-ilmoitukset käyttöön.";
+"settings_server_test_failed" = "Palvelintesti epäonnistui!";
+"settings_test_notifications" = "Testaa ilmoitukset";
+"settings_core_version_fmt" = "Ytimen versio: v%@";
+"settings_core_engine_fmt" = "Ydinmoottori: v%@";
+"settings_markdown_usage" = "Voit käyttää markdownia viestien muotoiluun:";
+"settings_incognito_mode" = "Inkognito-tila";
+"settings_incognito_description_1" = "Inkognito-tila suojaa yksityisyyttäsi käyttämällä uutta satunnaista profiilia jokaiselle yhteystiedolle.";
+"settings_incognito_description_2" = "Se mahdollistaa monien anonyymien yhteyksien pitämisen ilman jaettuja tietoja niiden välillä yhdessä chattiprofiilissa.";
+"settings_incognito_description_3" = "Kun jaat inkognitoprofiilin jonkun kanssa, tätä profiilia käytetään ryhmissä, joihin he kutsuvat sinut.";
+"settings_chat_console" = "Chattikonsoli";
+"settings_reset_hints" = "Nollaa kaikki vihjeet";
+"settings_show_hide_db_ids" = "Tietokannan ID:t ja kuljetuseristyksen vaihtoehto.";
+"settings_storage_label" = "Tallennustila";
+"settings_developer_options" = "Kehittäjäasetukset";
+"settings_compute_store_url" = "Laskentakaupan URL";
+"settings_compute_store_label" = "Laskentakauppa";
+"settings_compute_store_hint" = "Jätä tyhjäksi käyttääksesi paikallista testitilaa. Aseta backend-URL ottaaksesi käyttöön todelliset StoreKit-ostot palvelinpuolen vahvistuksella.";
+"settings_profile_stored_notice" = "Profiilisi tallennetaan laitteellesi ja jaetaan vain yhteystietojesi kanssa. POPOPX-palvelimet eivät voi nähdä profiiliasi.";
+"settings_reset_button" = "Nollaa";
+"settings_save_notify_contacts" = "Tallenna (ja ilmoita yhteystiedoille)";
+"settings_take_picture" = "Ota kuva";
+"settings_choose_from_library" = "Valitse kirjastosta";
+"settings_paste_image" = "Liitä kuva";
+"settings_hide_profile" = "Piilota profiili";
+"settings_hidden_profile_password" = "Piilotetun profiilin salasana";
+"settings_hidden_profile_instructions" = "Paljastaaksesi piilotetun profiilisi, syötä koko salasana hakukenttään **Chattiprofiilisi** -sivulla.";
+"settings_error_saving_password" = "Virhe käyttäjän salasanan tallentamisessa";
+"settings_time_disappear_new_contacts" = "Katoamisaika asetetaan vain uusille yhteystiedoille.";
+"settings_webrtc_ice_servers" = "WebRTC ICE -palvelimet";
+"settings_call_settings_header" = "Asetukset";
+"settings_relay_protects_ip" = "Relepalvelin suojaa IP-osoitettasi, mutta voi tarkkailla puhelun kestoa.";
+"settings_relay_only_if_necessary" = "Relepalvelinta käytetään vain tarvittaessa. Toinen osapuoli voi tarkkailla IP-osoitettasi.";
+"settings_interface_section" = "Käyttöliittymä";
+"settings_accept_calls_lockscreen" = "Voit hyväksyä puheluita lukitusnäytöltä ilman laite- ja sovellustunnistautumista.";
+"settings_auth_required_before_connect" = "Tunnistautuminen vaaditaan ennen puhelun yhdistämistä, mutta voit menettää puheluita.";
+"settings_limitations_section" = "Rajoitukset";
+"settings_preset_server_address" = "Esiasetettu palvelinosoite";
+"settings_your_server_address" = "Palvelimesi osoite";
+"settings_add_to_another_device" = "Lisää toiseen laitteeseen";
+"settings_use_for_messages" = "Käytä viesteille";
+"settings_yes_option" = "kyllä";
+"settings_no_option" = "ei";
+"settings_use_server" = "Käytä palvelinta";
+"settings_chat_relays_header" = "Chattireleet";
+"settings_chat_relays_forward_desc" = "Chattireleet välittävät viestejä luomissasi kanavissa.";
+"settings_message_servers" = "Viestipalvelimet";
+"settings_media_file_servers" = "Media- ja tiedostopalvelimet";
+"settings_add_server" = "Lisää palvelin";
+"settings_enter_server_manually" = "Syötä palvelin manuaalisesti";
+"settings_scan_server_qr" = "Skannaa palvelimen QR-koodi";
+"settings_chat_relay_link" = "Chattirele";
+"settings_how_to_use_servers" = "Kuinka käyttää palvelimitasi";
+"settings_test_servers" = "Testaa palvelimet";
+"settings_scan_server_qr_title" = "Skannaa palvelimen QR-koodi";
+
+
+/* NewChat - Group Creation */
+"group_create_button" = "Luo ryhmä";
+"group_decentralized_footer" = "Täysin hajautettu - näkyy vain jäsenille.";
+"group_create_error_title" = "Virhe ryhmän luomisessa";
+
+/* NewChat - Channel Creation */
+"channel_configure_relays" = "Määritä releet";
+"channel_create_button" = "Luo julkinen kanava";
+
+/* Developer Settings */
+"dev_compute_store_header" = "Laskentakauppa";
+"dev_compute_store_footer" = "Jätä tyhjäksi käyttääksesi paikallista testitilaa. Aseta backend-URL ottaaksesi käyttöön todelliset StoreKit-ostot palvelinpuolen vahvistuksella.";
+
+/* Network & Servers */
+"scan_server_qr_title" = "Skannaa palvelimen QR-koodi";
+
+/* NewChat Menu */
+"newchat_archived_contacts" = "Arkistoidut yhteystiedot";
+"search_cancel_button" = "Peruuta";
+
+/* Onboarding */
+"profile_name_placeholder" = "Syötä profiilin nimi...";
+"onboarding_back_button" = "Takaisin";
+
+
+/* Nostr Square - Reply View */
+"nostr_reply_original_label" = "Alkuperäinen";
+"nostr_reply_privacy_notice" = "Vastauksesi on anonyymi ja salattu";
+"nostr_reply_title" = "Vastaa";
+"nostr_reply_send_button" = "Lähetä";
+
+/* Nostr Square - Broadcast Composer */
+"nostr_composer_privacy_title" = "Anonyymi lähetys";
+"nostr_composer_privacy_subtitle" = "Henkilöllisyytesi on suojattu päästä päähän -salauksella";
+"nostr_composer_char_count" = "%d/%d";
+"nostr_composer_title" = "Uusi lähetys";
+"nostr_composer_send_button" = "Julkaise";
+
+/* Nostr Square - Broadcast Card */
+"nostr_card_anonymous_label" = "Anonyymi";
+"nostr_card_resonate_button" = "Resonoi";
+"nostr_card_ttl_label" = "TTL";
+
+
+/* Developer Settings - Additional */
+"dev_show_label" = "Näytä:";
+"dev_hide_label" = "Piilota:";
+"dev_storage_button" = "Tallennustila";
+"back_to_label" = "Takaisin kohtaan %@";
+"duration_picker_label" = "Kesto";
+"unit_picker_label" = "Yksikkö";
+"theme_all_modes" = "Kaikki tilat";
+"theme_light_mode" = "Vaalea tila";
+"theme_dark_mode" = "Tumma tila";
+"theme_apply_to_label" = "Käytä kohteeseen";
+"error_failed_load_server_operators" = "Palvelinoperaattoreiden lataaminen epäonnistui 3 yrityksen jälkeen. Sovellus ei voi kommunikoida ydinpalvelun kanssa.";
+"error_cannot_set_empty_operators" = "Tyhjää operaattoriluetteloa ei voi asettaa";
+"error_failed_set_server_operators" = "Palvelinoperaattoreiden asettaminen epäonnistui 5 yrityksen jälkeen.";
+"error_failed_save_servers" = "Palvelinten tallentaminen epäonnistui useiden yritysten jälkeen";
+"error_failed_validate_servers" = "Palvelinten vahvistaminen epäonnistui useiden yritysten jälkeen";
+"error_failed_load_conditions" = "Ehtojen tekstin lataaminen epäonnistui 3 yrityksen jälkeen.";
+"error_no_operators_for_conditions" = "Ehtojen hyväksymiselle ei ole määritetty operaattoreita.";
+"error_invalid_conditions_id" = "Virheellinen ehtojen ID. Käynnistä sovellus uudelleen.";
+"error_and_others_count" = "ja %d muuta virhettä";
+"group_short_description_placeholder" = "Lyhyt kuvaus";
+"error_saving_channel_profile" = "Virhe kanavan profiilin tallentamisessa";
+"error_saving_group_profile" = "Virhe ryhmän profiilin tallentamisessa";
+"channel_profile_nav_title" = "Kanavan profiili";
+"group_profile_nav_title" = "Ryhmän profiili";
+"channel_webpage_create_description" = "Luo verkkosivu, joka näyttää kanavan esikatselun vierailijoille ennen tilaamista. Isännöi se itse tai käytä mitä tahansa staattista isännöintiä.";
+"channel_webpage_not_supported" = "Käytetyt chattien välityspalvelimet eivät tue verkkosivuja.";
+"channel_webpage_url_placeholder" = "https://";
+"channel_allow_embed_toggle" = "Salli kaikkien upottaa";
+"channel_embed_any_page" = "Mikä tahansa verkkosivu voi näyttää esikatselun.";
+"channel_embed_only_your_page" = "Vain yllä oleva sivusi voi näyttää esikatselun.";
+"channel_save_notify_subscribers" = "Tallenna ja ilmoita tilaajille";
+"channel_save_notify_members" = "Tallenna ja ilmoita jäsenille";
+"app_version_label" = "Sovelluksen versio: v%@";
+"app_build_label" = "Sovelluksen koonti: %@";
+"dev_show_options_toggle" = "Näytä kehittäjäasetukset";
+"dev_confirm_db_upgrades_toggle" = "Vahvista tietokantapäivitykset";
+"dev_deprecated_options_section" = "Vanhentuneet asetukset";
+"dev_popopx_links_picker" = "POPOPX-linkit";
+"data_market_category_picker" = "Kategoria";
+"data_market_category_label" = "Kategoria";
+"group_initial_role_picker" = "Alkurooli";
+"group_new_member_role_picker" = "Uuden jäsenen rooli";
+"bridge_sms_provider_picker" = "Tarjoaja";
+"wallpaper_scale_picker" = "Mittakaava";
+"prefs_you_allow_picker" = "Sinä sallit";
+"prefs_you_allow_toggle" = "Sinä sallit";
+"prefs_contact_allows" = "Yhteystieto sallii";
+"prefs_delete_after" = "Poista jälkeen";
+"prefs_select_button" = "Valitse";
+"chat_delete_messages_after" = "Poista viestit jälkeen";
+"servers_user_selection_picker" = "Käyttäjän valinta";
+"servers_server_type_picker" = "Palvelimen tyyppi";
+"monetization_eula_link" = "EULA";
+"monetization_billing_period_picker" = "Laskutuskausi";
+"monetization_price_yearly" = "$99.9 / vuosi";
+"monetization_price_monthly" = "$9.99 / kuukausi";
+"monetization_feature_chat_privacy" = "Kaikki chat- ja yksityisyysominaisuudet";
+"monetization_feature_compute_gifts" = "Laskentatunnukset ja lahjat";
+"monetization_feature_own_servers" = "Lisää omia SMP-palvelimia";
+"monetization_feature_quantum" = "Ensisijaiset kvanttiominaisuudet";
+"db_delete_messages_after" = "Poista viestit jälkeen";
+"mesh_hub_tab_chats" = "Mesh-keskustelut";
+"mesh_hub_tab_public" = "Julkinen keskustelu";
+"mesh_hub_tab_groups" = "Ryhmät";
+"mesh_hub_picker_label" = "Mesh-keskus";
+"mesh_board_scope_picker" = "Laajuus";
+"migration_use_onion_hosts" = "Käytä .onion-isäntiä";
+"error_failed_load_protocol_info" = "Protokollatietojen lataaminen epäonnistui. Sovellus ei voi kommunikoida ydinpalvelun kanssa. Sulje sovellus pakotetusti ja käynnistä se uudelleen.";
+"error_invalid_conditions_id_detail" = "Virheellinen ehtojen ID (%lld). Sovellus ei voi tunnistaa, mikä protokollaversio hyväksytään. Käynnistä sovellus kokonaan uudelleen.";
+"error_no_operators_available" = "Ei käytettävissä olevia operaattoreita. Käynnistä sovellus uudelleen.";
+"markdown_can_be_copied" = " (voidaan kopioida)";
+"network_transport_isolation" = "Kuljetuksen eristäminen";
+"release_notes_transport_isolation_title" = "Kuljetuksen eristäminen";
+"release_notes_transport_isolation_desc" = "Chat-profiilin mukaan (oletus) tai [yhteyden mukaan](https://popopxchat.com/blog/20230204-popopxchat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"voice_messages_prohibited_title" = "Ääniviestit kielletty";
+"voice_messages_prohibited_ask_contact_message" = "Ääniviestejä ei sallita tässä keskustelussa. Ota yhteyttä keskustelun omistajaan.";
+"voice_messages_prohibited_group_owner_message" = "Ääniviestejä ei sallita tässä ryhmässä. Ota yhteyttä ryhmän omistajaan.";
+"voice_messages_prohibited_other_message" = "Ääniviestejä ei sallita tässä keskustelussa.";
+"waiting_for_file_title" = "Odotetaan tiedostoa";
+"waiting_for_file_xftp_message" = "Tiedostoa siirretään XFTP-protokollalla.";
+"waiting_for_file_smp_message" = "Tiedostoa siirretään SMP-protokollalla.";
+"waiting_for_image_title" = "Odotetaan kuvaa";
+"waiting_for_image_xftp_message" = "Kuvaa siirretään XFTP-protokollalla.";
+"waiting_for_image_smp_message" = "Kuvaa siirretään SMP-protokollalla.";
+"waiting_for_video_title" = "Odotetaan videota";
+"waiting_for_video_xftp_message" = "Videota siirretään XFTP-protokollalla.";
+"waiting_for_video_smp_message" = "Videota siirretään SMP-protokollalla.";
+"cannot_forward_message_title" = "Viestiä ei voi välittää";
+"cannot_forward_message_message" = "Tätä viestiä ei voi välittää chat-asetusten vuoksi.";
+"la_lock_turned_on_title" = "POPOPX-lukitus käytössä";
+"la_lock_turned_on_message" = "POPOPX-lukitus on otettu käyttöön. Sinun on tunnistauduttava päästäksesi sovellukseen.";
+"la_lock_not_enabled_title" = "POPOPX-lukitusta ei ole otettu käyttöön";
+"la_lock_not_enabled_message" = "POPOPX-lukitusta ei ole otettu käyttöön. Ota se käyttöön Asetuksissa.";
+"la_auth_failed_title" = "Tunnistautuminen epäonnistui";
+"la_auth_failed_message" = "Tunnistautuminen epäonnistui. Yritä uudelleen.";
+"la_auth_unavailable_title" = "Tunnistautuminen ei ole käytettävissä";
+"la_auth_unavailable_instruction_message" = "Tunnistautuminen ei ole käytettävissä tällä laitteella. Käytä toista tunnistautumismenetelmää.";
+"la_auth_unavailable_turning_off_message" = "Tunnistautuminen ei ole käytettävissä. POPOPX-lukitus poistetaan käytöstä.";
+"delete_message_title" = "Poista viesti";
+"delete_messages_title" = "Poista %d viestiä";
+"delete_button" = "Poista";
+"ok_button" = "OK";
+"cancel_button" = "Peruuta";
+"unlock_button" = "Avaa lukitus";
+"continue_button" = "Jatka";
+"accept_button" = "Hyväksy";
+"reject_button" = "Hylkää";
+"export_json_button" = "Vie JSON";
+"back_button" = "Takaisin";
+"chats_nav_title" = "Keskustelut";
+"add_contact_nav_title" = "Lisää yhteystieto";
+"group_link_nav_title" = "Ryhmälinkki";
+"channel_link_nav_title" = "Kanavalinkki";
+"creating_channel_nav_title" = "Kanavan luominen";
+"network_servers_nav_title" = "Verkko ja palvelimet";
+"new_server_nav_title" = "Uusi palvelin";
+"send_notifications_nav_title" = "Lähetä ilmoitukset";
+"show_preview_nav_title" = "Näytä esikatselu";
+"member_admission_nav_title" = "Jäsenten hyväksyntä";
+"popopx_address_nav_title" = "POPOPX-osoite";
+"archived_contacts_nav_title" = "Arkistoidut yhteystiedot";
+"profile_address_label" = "Sinun POPOPX-osoitteesi";
+"profile_chat_profiles_label" = "Chat-profiilit";
+"profile_connect_desktop_label" = "Yhdistä työpöydältä";
+"profile_preferences_label" = "Asetukset";
+"profile_settings_label" = "Asetukset";
+"needle_extractions_accessibility" = "Needle-uutot";
+"new_chat_accessibility" = "Uusi keskustelu";
+"switch_to_mesh_accessibility" = "Vaihda meshiin";
+"switch_to_broadcast_accessibility" = "Vaihdat yleislähetykseen";
+"call_toggle_video_fit" = "Vaihda video-tilaa";
+"call_end_call" = "Lopeta puhelu";
+"call_mute_microphone" = "Mykistä mikrofoni";
+"call_speaker" = "Kaiutin";
+"call_camera" = "Kamera";
+"call_flip_camera" = "Käännä kamera";
+"call_back_button" = "Takaisin";
+"binthere_look_at_screen" = "Katso näyttöön";
+"binthere_multiple_faces" = "Useita kasvoja havaittu";
+
+"add_contact_scan_qr" = "Voit yhdistää kontaktisi skannaamalla QR-koodin tai käyttämällä sovelluksen linkkiä.";
+"add_contact_video_call" = "Jos ette voi tavata kasvotusten, näytä QR-koodi videopuhelussa tai jaa linkki.";
+"api_contact_blocked_message" = "Palvelimen ylläpitäjä on estänyt yhteyden:
+%@";
+%@";
+"api_contact_blocked_title" = "Yhteys estetty";
+"api_contact_how_it_works" = "Miten se toimii";
+"api_contact_ok" = "OK";
+"api_desktop_connection_stopped_message" = "Tarkista, että mobiili- ja työpöytälaitteet ovat yhteydessä samaan lähiverkkoon ja että työpöydän palomuuri sallii yhteyden.
+Ilmoita kehittäjille myös muista ongelmista.";
+Please share any other issues with the developers.";
+"api_desktop_connection_stopped_title" = "Yhteys työpöytään katkaistu";
+"api_desktop_copy_error" = "Kopiointivirhe";
+"api_desktop_ok" = "OK";
+"api_start_chat_message" = "Chat on pysäytetty. Jos olet jo käyttänyt tätä tietokantaa toisella laitteella, sinun on siirrettävä se takaisin ennen chatin käynnistämistä.";
+"api_start_chat_ok" = "OK";
+"api_start_chat_title" = "Käynnistä chat?";
+"chat_console_title" = "Chat-konsoli";
+"chat_list_mesh_section" = "Mesh";
+"confirm_passcode_title" = "Vahvista tunnusluku";
+"connect_banner_new_link" = "Uusi kertalinkki";
+"connect_banner_paste_scan" = "Liitä linkki / Skannaa";
+"connection_error_title" = "Yhteysvirhe";
+"data_market_sample1_desc" = "Koostetut selauskategoriat ilman henkilökohtaisia tunnisteita";
+"data_market_sample1_title" = "Anonyymit selaustottumukset";
+"data_market_sample2_desc" = "Sovelluskategorioiden käyttöaika, anonymisoitu";
+"data_market_sample2_title" = "Sovellusten käyttötilastot";
+"data_market_sample3_desc" = "Sumennetut sijaintitiedot liikenneanalyysiin";
+"data_market_sample3_title" = "Alueelliset sijaintitrendit";
+"data_market_sample4_desc" = "Ruokavaliomieltymykset ja -rajoitukset, anonymisoitu";
+"data_market_sample4_title" = "Ruokavaliokysely";
+"db_key_rotation_action" = "Optimaalisen turvallisuuden vuoksi päivitä tietokantasi salasana Asetuksissa.";
+"db_key_rotation_desc" = "Tietokantasi salausavain on saavuttanut suositellun kierron.";
+"db_key_rotation_title" = "Tietokanta-avaimen kierto";
+"db_key_rotation_understood" = "Selvä";
+"delete_report_label" = "Poista raportti";
+"error_adding_short_link" = "Virhe lyhyen linkin lisäämisessä";
+"invalid_qr_code_title" = "Virheellinen QR-koodi";
+"large_file_contact_message" = "Kontaktisi lähetti tiedoston, joka ylittää tuetun enimmäiskoon (%@).";
+"large_file_title" = "Suuri tiedosto!";
+"mesh_board_title" = "Mesh-taulu";
+"mesh_cancel" = "Peruuta";
+"mesh_chat_list_title" = "Mesh-chatit";
+"mesh_compose_placeholder" = "Viesti...";
+"mesh_create_group_button" = "Luo ryhmä";
+"mesh_create_group_hint" = "Luo ryhmä salattua ryhmäviestintää varten";
+"mesh_edges" = "Reunat";
+"mesh_edges_header" = "Reunat";
+"mesh_enter_group_name" = "Anna nimi uudelle mesh-ryhmälle";
+"mesh_last_updated" = "Viimeksi päivitetty";
+"mesh_local_peer" = "Paikallinen solmu";
+"mesh_new_post" = "Uusi julkaisu";
+"mesh_no_groups" = "Ei mesh-ryhmiä";
+"mesh_no_posts" = "Ei vielä julkaisuja";
+"mesh_no_posts_description" = "Ole ensimmäinen, joka julkaisee mesh-taululla";
+"mesh_no_topology" = "Topologiaa ei saatavilla";
+"mesh_nodes" = "Solmut";
+"mesh_nodes_header" = "Solmut";
+"mesh_overview_header" = "Yleiskatsaus";
+"mesh_post_to_board" = "Julkaise taululle";
+"mesh_urgent_label" = "Kiireellinen";
+"mesh_urgent_toggle" = "Merkitse kiireelliseksi";
+"migration_apply_button" = "Käytä";
+"migration_check_internet" = "Tarkista internetyhteytesi ja yritä uudelleen";
+"migration_error_deleting_db" = "Virhe tietokannan poistamisessa";
+"migration_error_exporting_db" = "Virhe chat-tietokannan viennissä";
+"migration_error_file_not_exist" = "Vietyä tiedostoa ei ole olemassa";
+"migration_error_generic" = "Virhe";
+"migration_error_migrating_settings" = "Virhe asetusten siirrossa";
+"migration_error_saving_settings" = "Virhe asetusten tallentamisessa";
+"migration_error_starting_chat" = "Virhe chatin käynnistämisessä";
+"migration_error_uploading_archive" = "Virhe arkiston lataamisessa";
+"migration_upload_failed" = "Lataus epäonnistui";
+"needle_extractions_label" = "Poiminnot";
+"needle_no_data_found" = "Tekstistä ei löytynyt jäsenneltyä dataa.";
+"needle_no_extractions_found" = "Poimintoja ei löytynyt.";
+"no_chats_in_list" = "Ei chat-keskusteluja listalla %@";
+"no_email_account_message" = "Tälle laitteelle ei ole määritetty sähköpostitiliä. Määritä sähköpostitili Asetuksissa jakaaksesi osoitteesi.";
+"nostr_publish_failed" = "GlobalSquare.Publish.Failed";
+"nostr_publish_success" = "GlobalSquare.Publish.Success";
+"ntf_error_checking_token" = "Virhe tokenin tilan tarkistuksessa";
+"ntf_error_deleting_token" = "Virhe tokenin poistamisessa";
+"ntf_error_enabling" = "Virhe ilmoitusten käyttöönotossa";
+"ntf_error_testing_server" = "Virhe palvelinyhteyden testauksessa";
+"onboarding_connect_via_link" = "Yhdistä linkin tai QR-koodin kautta";
+"onboarding_create_public_address" = "Luo julkinen osoitteesi";
+"onboarding_create_your_link" = "Luo linkkisi";
+"onboarding_for_anyone_to_reach" = "Jotta kuka tahansa voi tavoittaa sinut";
+"onboarding_invite_privately" = "Kutsu joku yksityisesti";
+"onboarding_invite_privately_subtitle" = "Linkki yhden henkilön yhdistämiseen";
+"onboarding_let_someone_connect" = "Anna jonkun yhdistää sinuun";
+"onboarding_talk_to_someone" = "Juttele jonkun kanssa";
+"onboarding_your_public_address" = "Julkinen osoitteesi";
+"one_hand_toolbar_message" = "Voit muuttaa sitä Ulkoasu-asetuksissa.";
+"one_hand_toolbar_title" = "Saavutettava chat-työkalupalkki";
+"protocol_server_title" = "%@-palvelin";
+"rn_v42_auto_accept" = "Valinnaisen tervetuloviestin kera.";
+"rn_v42_auto_accept_desc" = "Valinnaisen tervetuloviestin kera.";
+"rn_v42_group_links" = "Ylläpitäjät voivat luoda linkkejä ryhmiin liittymiseen.";
+"rn_v42_group_links_desc" = "Ylläpitäjät voivat luoda linkkejä ryhmiin liittymiseen.";
+"rn_v42_security_assessment" = "POPOPX Chatin turvallisuuden on auditoinut Trail of Bits.";
+"rn_v42_security_assessment_desc" = "POPOPX Chatin turvallisuuden on auditoinut Trail of Bits.";
+"rn_v43_irreversible_deletion" = "Kontaktisi voivat sallia viestien täydellisen poistamisen.";
+"rn_v43_irreversible_deletion_desc" = "Kontaktisi voivat sallia viestien täydellisen poistamisen.";
+"rn_v43_privacy_security" = "Piilota sovelluksen näyttö viimeisimmissä sovelluksissa.";
+"rn_v43_privacy_security_desc" = "Piilota sovelluksen näyttö viimeisimmissä sovelluksissa.";
+"rn_v43_server_config" = "Lisää palvelimia skannaamalla QR-koodeja.";
+"rn_v43_server_config_desc" = "Lisää palvelimia skannaamalla QR-koodeja.";
+"rn_v43_voice_messages" = "Enintään 30 sekuntia, vastaanotetaan heti.";
+"rn_v43_voice_messages_desc" = "Enintään 30 sekuntia, vastaanotetaan heti.";
+"rn_v44_disappearing_messages" = "Lähetetyt viestit poistetaan asetetun ajan kuluttua.";
+"rn_v44_disappearing_messages_desc" = "Lähetetyt viestit poistetaan asetetun ajan kuluttua.";
+"rn_v44_french_interface" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v44_french_interface_desc" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v44_gifs_stickers" = "Lähetä niitä galleriasta tai mukautetuista näppäimistöistä.";
+"rn_v44_gifs_stickers_desc" = "Lähetä niitä galleriasta tai mukautetuista näppäimistöistä.";
+"rn_v44_live_messages" = "Vastaanottajat näkevät päivitykset kirjoittaessasi.";
+"rn_v44_live_messages_desc" = "Vastaanottajat näkevät päivitykset kirjoittaessasi.";
+"rn_v44_verify_security" = "Vertaa turvakoodeja kontaktiesi kanssa.";
+"rn_v44_verify_security_desc" = "Vertaa turvakoodeja kontaktiesi kanssa.";
+"rn_v45_italian_interface" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v45_italian_interface_desc" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v45_message_draft" = "Säilytä viimeisin luonnos viestistä liitteineen.";
+"rn_v45_message_draft_desc" = "Säilytä viimeisin luonnos viestistä liitteineen.";
+"rn_v45_multiple_profiles" = "Eri nimet, avatarit ja liikenteen eristäminen.";
+"rn_v45_multiple_profiles_desc" = "Eri nimet, avatarit ja liikenteen eristäminen.";
+"rn_v45_private_filenames" = "Aikavyöhykkeen suojaamiseksi kuva/ääni-tiedostot käyttävät UTC-aikaa.";
+"rn_v45_private_filenames_desc" = "Aikavyöhykkeen suojaamiseksi kuva/ääni-tiedostot käyttävät UTC-aikaa.";
+"rn_v45_reduced_battery" = "Lisää parannuksia tulossa pian!";
+"rn_v45_reduced_battery_desc" = "Lisää parannuksia tulossa pian!";
+"rn_v46_audio_video_calls" = "Täysin uudistettu — toimii taustalla!";
+"rn_v46_audio_video_calls_desc" = "Täysin uudistettu — toimii taustalla!";
+"rn_v46_chinese_spanish" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v46_chinese_spanish_desc" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v46_further_battery" = "Lisää parannuksia tulossa pian!";
+"rn_v46_further_battery_desc" = "Lisää parannuksia tulossa pian!";
+"rn_v46_group_moderation" = "Nyt ylläpitäjät voivat:\\n- poistaa jäsenten viestejä.\\n- poistaa jäseniä käytöstä (";
+"rn_v46_group_moderation_desc" = "Nyt ylläpitäjät voivat:\\n- poistaa jäsenten viestejä.\\n- poistaa jäseniä käytöstä (";
+"rn_v46_group_welcome" = "Aseta uusille jäsenille näytettävä viesti!";
+"rn_v46_group_welcome_desc" = "Aseta uusille jäsenille näytettävä viesti!";
+"rn_v46_hidden_profiles" = "Suojaa chat-profiilisi salasanalla!";
+"rn_v46_hidden_profiles_desc" = "Suojaa chat-profiilisi salasanalla!";
+"rn_v50_app_passcode" = "Aseta se järjestelmän todennuksen sijaan.";
+"rn_v50_app_passcode_desc" = "Aseta se järjestelmän todennuksen sijaan.";
+"rn_v50_polish_interface" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v50_polish_interface_desc" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v50_videos_files" = "Nopeasti ilman lähettäjän online-tilan odottamista!";
+"rn_v50_videos_files_desc" = "Nopeasti ilman lähettäjän online-tilan odottamista!";
+"rn_v51_better_messages" = "- ääniviestit jopa 5 minuuttia.\\n- mukautettu katoamisaika.\\n- muokkaushistoria.";
+"rn_v51_better_messages_desc" = "- ääniviestit jopa 5 minuuttia.\\n- mukautettu katoamisaika.\\n- muokkaushistoria.";
+"rn_v51_japanese_interface" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v51_japanese_interface_desc" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v51_message_reactions" = "Vihdoinkin, meillä on niitä! 🚀";
+"rn_v51_message_reactions_desc" = "Vihdoinkin, meillä on niitä! 🚀";
+"rn_v51_self_destruct_passcode" = "Kaikki tiedot pyyhitään, kun se syötetään.";
+"rn_v51_self_destruct_passcode_desc" = "Kaikki tiedot pyyhitään, kun se syötetään.";
+"rn_v52_delivery_receipts" = "Toinen puumerkki, joka meiltä puuttui! ✅";
+"rn_v52_delivery_receipts_desc" = "Toinen puumerkki, joka meiltä puuttui! ✅";
+"rn_v52_few_more_things" = "- vakaampi viestien toimitus.\\n- hieman paremmat ryhmät.\\n- ja lisää!";
+"rn_v52_few_more_things_desc" = "- vakaampi viestien toimitus.\\n- hieman paremmat ryhmät.\\n- ja lisää!";
+"rn_v52_find_chats" = "Suodata lukemattomat ja suosikkikeskustelut.";
+"rn_v52_find_chats_desc" = "Suodata lukemattomat ja suosikkikeskustelut.";
+"rn_v52_keep_connections" = "Korjaa salauksen varmuuskopioiden palautuksen jälkeen.";
+"rn_v52_keep_connections_desc" = "Korjaa salauksen varmuuskopioiden palautuksen jälkeen.";
+"rn_v52_one_message_disappear" = "Vaikka keskustelussa ei olisi käytössä.";
+"rn_v52_one_message_disappear_desc" = "Vaikka keskustelussa ei olisi käytössä.";
+"rn_v53_desktop_app" = "Luo uusi profiili [työpöytäsovelluksessa](https://popopxchat.com/downloads/). 💻";
+"rn_v53_desktop_app_desc" = "Luo uusi profiili [työpöytäsovelluksessa](https://popopxchat.com/downloads/). 💻";
+"rn_v53_discover_groups" = "- yhdistä [hakemistopalveluun](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\\n- toimitusvarmistukset (jopa 20 jäsentä).\\n- nopeampi ja vakaampi.";
+"rn_v53_discover_groups_desc" = "- yhdistä [hakemistopalveluun](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\\n- toimitusvarmistukset (jopa 20 jäsentä).\\n- nopeampi ja vakaampi.";
+"rn_v53_encrypt_files" = "Sovellus salaa uudet paikalliset tiedostot (paitsi videot).";
+"rn_v53_encrypt_files_desc" = "Sovellus salaa uudet paikalliset tiedostot (paitsi videot).";
+"rn_v53_incognito_mode" = "Vaihda incognito-tila yhdistäessä.";
+"rn_v53_incognito_mode_desc" = "Vaihda incognito-tila yhdistäessä.";
+"rn_v53_new_languages %d" = "%d uutta käyttöliittymän kieltä";
+"rn_v53_new_languages_desc" = "Bulgaria, suomi, thai ja ukraina — kiitos käyttäjille ja Weblatelle!";
+"rn_v54_better_groups" = "Nopeampi liittyminen ja luotettavammat viestit.";
+"rn_v54_better_groups_desc" = "Nopeampi liittyminen ja luotettavammat viestit.";
+"rn_v54_block_members" = "Piilottaa ei-toivotut viestit.";
+"rn_v54_block_members_desc" = "Piilottaa ei-toivotut viestit.";
+"rn_v54_few_more_things" = "- valinnaisesti ilmoita poistetuille kontakteille.\\n- profiilinimet välilyönneillä.\\n- ja lisää!";
+"rn_v54_few_more_things_desc" = "- valinnaisesti ilmoita poistetuille kontakteille.\\n- profiilinimet välilyönneillä.\\n- ja lisää!";
+"rn_v54_incognito_groups" = "Luo ryhmä satunnaisella profiililla.";
+"rn_v54_incognito_groups_desc" = "Luo ryhmä satunnaisella profiililla.";
+"rn_v54_link_apps" = "Turvallisen kvantti-kestävän protokollan kautta.";
+"rn_v54_link_apps_desc" = "Turvallisen kvantti-kestävän protokollan kautta.";
+"rn_v55_improved_delivery" = "Akun käyttöä vähennetty.";
+"rn_v55_improved_delivery_desc" = "Akun käyttöä vähennetty.";
+"rn_v55_join_groups" = "Viimeaikainen historia ja paranneltu [hakemistobotti](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_join_groups_desc" = "Viimeaikainen historia ja paranneltu [hakemistobotti](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_paste_link" = "Hakukenttä hyväksyy kutsulinkit.";
+"rn_v55_paste_link_desc" = "Hakukenttä hyväksyy kutsulinkit.";
+"rn_v55_private_notes" = "Salatuilla tiedostoilla ja medialla.";
+"rn_v55_private_notes_desc" = "Salatuilla tiedostoilla ja medialla.";
+"rn_v55_turkish_interface" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v55_turkish_interface_desc" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v56_data_migration" = "Siirrä toiseen laitteeseen QR-koodilla.";
+"rn_v56_data_migration_desc" = "Siirrä toiseen laitteeseen QR-koodilla.";
+"rn_v56_hungarian_interface" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v56_hungarian_interface_desc" = "Kiitos käyttäjille — osallistu Weblaten kautta!";
+"rn_v56_pip_calls" = "Käytä sovellusta puhelun aikana.";
+"rn_v56_pip_calls_desc" = "Käytä sovellusta puhelun aikana.";
+"rn_v56_quantum_encryption" = "Ota käyttöön suorissa chateissa (BETA)!";
+"rn_v56_quantum_encryption_desc" = "Ota käyttöön suorissa chateissa (BETA)!";
+"rn_v56_safer_groups" = "Ylläpitäjät voivat estää jäsenen kaikilta.";
+"rn_v56_safer_groups_desc" = "Ylläpitäjät voivat estää jäsenen kaikilta.";
+"rn_v57_forward_save" = "Viestin lähde pysyy yksityisenä.";
+"rn_v57_forward_save_desc" = "Viestin lähde pysyy yksityisenä.";
+"rn_v57_incall_sounds" = "Ääni- ja videopuhelujen yhdistämisessä.";
+"rn_v57_incall_sounds_desc" = "Ääni- ja videopuhelujen yhdistämisessä.";
+"rn_v57_network_management" = "Luotettavampi verkkoyhteys.";
+"rn_v57_network_management_desc" = "Luotettavampi verkkoyhteys.";
+"rn_v57_quantum_encryption" = "Otetaan käyttöön suorissa chateissa!";
+"rn_v57_quantum_encryption_desc" = "Otetaan käyttöön suorissa chateissa!";
+"rn_v57_shape_images" = "Neliö, ympyrä tai jotain siltä väliltä.";
+"rn_v57_shape_images_desc" = "Neliö, ympyrä tai jotain siltä väliltä.";
+"rn_v58_improved_delivery" = "Akun käyttöä vähennetty.";
+"rn_v58_improved_delivery_desc" = "Akun käyttöä vähennetty.";
+"rn_v58_private_routing" = "Suojaa IP-osoitteesi kontaktiesi valitsemilta viestivälityspalvelimilta.\\nOta käyttöön *Verkko ja palvelimet* -asetuksissa.";
+"rn_v58_private_routing_desc" = "Suojaa IP-osoitteesi kontaktiesi valitsemilta viestivälityspalvelimilta.\\nOta käyttöön *Verkko ja palvelimet* -asetuksissa.";
+"rn_v58_safely_receive_files" = "Vahvista tiedostot tuntemattomilta palvelimilta.";
+"rn_v58_safely_receive_files_desc" = "Vahvista tiedostot tuntemattomilta palvelimilta.";
+"rn_v60_better_networking" = "Yhteyden ja palvelimien tila.";
+"rn_v60_better_networking_desc" = "Yhteyden ja palvelimien tila.";
+"rn_v60_new_chat_experience" = "Uusi chat-kokemus 🎉";
+"rn_v60_new_media_options" = "Uudet media-asetukset";
+"rn_v60_private_routing" = "Se suojaa IP-osoitettasi ja yhteyksiäsi.";
+"rn_v60_private_routing_desc" = "Se suojaa IP-osoitettasi ja yhteyksiäsi.";
+"rn_v60_sub_archive_contacts" = "Arkistoi kontakteja myöhempää chattailua varten.";
+"rn_v60_sub_blur_privacy" = "Uudet media-asetukset";
+"rn_v60_sub_color_themes" = "Väritä chatit uusilla teemoilla.";
+"rn_v60_sub_connect_faster" = "Uusi chat-kokemus 🎉";
+"rn_v60_sub_delete_messages" = "Poista jopa 20 viestiä kerralla.";
+"rn_v60_sub_one_hand" = "Käytä sovellusta yhdellä kädellä.";
+"rn_v60_sub_play_chat_list" = "Uudet media-asetukset";
+"rn_v60_sub_share_apps" = "Uudet media-asetukset";
+"rn_v61_better_calls" = "Vaihda ääni ja video puhelun aikana.";
+"rn_v61_better_calls_desc" = "Vaihda ääni ja video puhelun aikana.";
+"rn_v61_better_notifications" = "Paranneltu toimitus, vähennetty datankäyttö.\\nLisää parannuksia tulossa pian!";
+"rn_v61_better_notifications_desc" = "Paranneltu toimitus, vähennetty datankäyttö.\\nLisää parannuksia tulossa pian!";
+"rn_v61_better_security" = "Trail of Bits on tarkistanut POPOPX-protokollat.";
+"rn_v61_better_security_desc" = "Trail of Bits on tarkistanut POPOPX-protokollat.";
+"rn_v61_better_ux" = "Parempi käyttökokemus";
+"rn_v61_sub_forward_messages" = "Välitä jopa 20 viestiä kerralla.";
+"rn_v61_sub_message_dates" = "Paremmat viestipäivämäärät.";
+"rn_v61_sub_message_shape" = "Mukautettava viestin muoto.";
+"rn_v61_sub_moderate_messages" = "Poista tai moderoida jopa 200 viestiä.";
+"rn_v61_sub_switch_profile" = "Parempi käyttökokemus";
+"rn_v62_business_chats" = "Yksityisyys asiakkaillesi.";
+"rn_v62_business_chats_desc" = "Yksityisyys asiakkaillesi.";
+"rn_v62_network_decentralization" = "Verkon hajauttaminen";
+"rn_v62_reliable_notifications" = "Toimitetaan, vaikka Apple hylkäisi ne.";
+"rn_v62_reliable_notifications_desc" = "Toimitetaan, vaikka Apple hylkäisi ne.";
+"rn_v63_better_groups_perf" = "Parempi ryhmien suorituskyky";
+"rn_v63_better_privacy" = "Parempi yksityisyys ja turvallisuus";
+"rn_v63_mention_members" = "Saat ilmoituksen, kun sinut mainitaan.";
+"rn_v63_mention_members_desc" = "Saat ilmoituksen, kun sinut mainitaan.";
+"rn_v63_organize_lists" = "Älä missaa tärkeitä viestejä.";
+"rn_v63_organize_lists_desc" = "Älä missaa tärkeitä viestejä.";
+"rn_v63_private_reports" = "Auta ylläpitäjiä moderoimaan ryhmiään.";
+"rn_v63_private_reports_desc" = "Auta ylläpitäjiä moderoimaan ryhmiään.";
+"rn_v63_sub_faster_deletion" = "Parempi ryhmien suorituskyky";
+"rn_v63_sub_faster_sending" = "Parempi ryhmien suorituskyky";
+"rn_v63_sub_message_expiration" = "Parempi yksityisyys ja turvallisuus";
+"rn_v63_sub_private_media" = "Parempi yksityisyys ja turvallisuus";
+"rn_v641_chats_clean" = "Ota katoavat viestit käyttöön oletuksena.";
+"rn_v641_chats_clean_desc" = "Ota katoavat viestit käyttöön oletuksena.";
+"rn_v641_short_address" = "Lyhyt POPOPX-osoite";
+"rn_v641_welcome_contacts" = "Aseta profiilin bio ja tervetuloviesti.";
+"rn_v641_welcome_contacts_desc" = "Aseta profiilin bio ja tervetuloviesti.";
+"rn_v64_chat_admins" = "Lähetä yksityistä palautetta ryhmille.";
+"rn_v64_chat_admins_desc" = "Lähetä yksityistä palautetta ryhmille.";
+"rn_v64_connect_faster" = "Viesti heti, kun napautat Yhdistä.";
+"rn_v64_connect_faster_desc" = "Viesti heti, kun napautat Yhdistä.";
+"rn_v64_group_moderator" = "Poistaa viestejä ja estää jäseniä.";
+"rn_v64_group_moderator_desc" = "Poistaa viestejä ja estää jäseniä.";
+"rn_v64_improved_delivery" = "Vähemmän dataliikennettä mobiiliverkoissa.";
+"rn_v64_improved_delivery_desc" = "Vähemmän dataliikennettä mobiiliverkoissa.";
+"rn_v64_review_members" = "Chattele jäsenten kanssa ennen liittymistä.";
+"rn_v64_review_members_desc" = "Chattele jäsenten kanssa ennen liittymistä.";
+"rn_v65_invite_friends" = "Teimme yhdistämisestä yksinkertaisempaa uusille käyttäjille.";
+"rn_v65_invite_friends_desc" = "Teimme yhdistämisestä yksinkertaisempaa uusille käyttäjille.";
+"rn_v65_nonprofit_governance" = "Jotta POPOPX-verkko kestää.";
+"rn_v65_nonprofit_governance_desc" = "Jotta POPOPX-verkko kestää.";
+"rn_v65_public_channels" = "Julkiset kanavat — puhu vapaasti 🚀";
+"rn_v65_safe_web_links" = "- valinnaisesti lähetä linkkien esikatselut.\\n- estä hyperlinkkien phishing.\\n- poista linkkien seuranta.";
+"rn_v65_safe_web_links_desc" = "- valinnaisesti lähetä linkkien esikatselut.\\n- estä hyperlinkkien phishing.\\n- poista linkkien seuranta.";
+"rn_v65_sub_ownership" = "Julkiset kanavat — puhu vapaasti 🚀";
+"rn_v65_sub_privacy" = "Yksityiset mediatiedostojen nimet.";
+"rn_v65_sub_reliability" = "Julkiset kanavat — puhu vapaasti 🚀";
+"rn_v65_sub_security" = "Aseta viestien vanhenemisaika chateissa.";
+"save_button" = "Tallenna";
+"self_destruct_passcode_info" = "Itsetuhoavan tunnusluvun tiedot";
+"settings_tab_picker" = "Asetukset-välilehti";
+"share_channel_title" = "Jaa kanava";
+"swipe_action_clear" = "Tyhjennä";
+"swipe_action_delete" = "Poista";
+"swipe_action_favorite" = "Suosikki";
+"swipe_action_list" = "Lista";
+"swipe_action_mute" = "Mykistä";
+"swipe_action_read" = "Luettu";
+"swipe_action_unfavorite" = "Poista suosikeista";
+"tab_chats" = "Chatit";
+"tab_mesh" = "Mesh";
+"tab_profiler" = "Profiler";
+"tab_vortex" = "Vortex";
+"user_picker_chat_preferences" = "Chat-asetukset";
+"user_picker_chat_profiles" = "Chat-profiilisi";
+"user_picker_create_address" = "Luo POPOPX-osoite";
+"user_picker_settings" = "Asetukset";
+"user_picker_use_from_desktop" = "Käytä työpöydältä";
+"user_picker_your_address" = "POPOPX-osoitteesi";
+"db_hide_passphrase" = "Piilota salasana";
+"db_show_passphrase" = "Näytä salasana";
+"marked_deleted_moderated_by_list" = "%d viestiä moderoitu käyttäjän %@ toimesta";
+"marked_deleted_blocked_by_admin" = "%d viestiä estetty ylläpitäjän toimesta";
+"marked_deleted_blocked" = "%d viestiä estetty";
+"marked_deleted_marked_deleted" = "%d viestiä merkitty poistetuiksi";
+"marked_deleted_moderated_by" = "moderoitu käyttäjän %@ toimesta";
+"marked_deleted_blocked_single" = "estetty";
+"marked_deleted_blocked_by_admin_single" = "ylläpitäjän estämä";
+"marked_deleted_deleted" = "merkitty poistetuksi";
+"ntf_register_button" = "Rekisteröidy";
+"ntf_mode_desc_off" = "**Yksityisin**: älä käytä POPOPX Chat -pushpalvelinta. Sovellus tarkistaa viestit taustalla, kun järjestelmä sen sallii, riippuen siitä, kuinka usein käytät sovellusta.";
+"ntf_mode_desc_periodic" = "**Yksityisempi**: tarkista uudet viestit 20 minuutin välein. Vain laitetunniste jaetaan pushpalvelimellemme. Se ei näe kontaktiesi määrää eikä viestien metadataa.";
+"ntf_mode_desc_instant" = "**Suositeltu**: laitetunniste ja päästä päähän -salatut ilmoitukset lähetetään POPOPX Chat -pushpalvelimelle, mutta se ei näe viestin sisältöä, kokoa eikä lähettäjää.";
+"ntf_mode_short_off" = "Tarkista viestit, kun sallittu.";
+"ntf_mode_short_periodic" = "Tarkista viestit 20 min välein.";
+"ntf_mode_short_instant" = "E2E-salatut ilmoitukset.";
+"protocol_server_no_servers_for" = "Ei %@-palvelimia kohteelle %@";
+"protocol_server_no_servers_configured" = "Ei %@-palvelimia määritetty";
+"protocol_server_storage_missing_for" = "Tallennustila puuttuu kohteelta %@ palvelimella %@";
+"protocol_server_storage_missing" = "Tallennustila puuttuu kohteelta %@";
+"protocol_server_proxy_missing_for" = "Välityspalvelin puuttuu kohteelta %@ palvelimella %@";
+"protocol_server_proxy_missing" = "Välityspalvelin puuttuu kohteelta %@";
+"protocol_server_duplicate" = "Kaksinkertainen palvelin: %@ osoitteessa %@";
+"protocol_server_duplicate_relay" = "Kaksinkertainen chattivälitys: %@ osoitteessa %@";
+"protocol_server_no_relays_for" = "Varoitus: Ei chattivälityksiä kohteelle %@";
+"protocol_server_no_relays_configured" = "Varoitus: Ei chattivälityksiä määritetty";
+"protocol_server_no_name_servers_for" = "Varoitus: Ei nimipalvelimia kohteelle %@";
+"protocol_server_no_name_servers_configured" = "Varoitus: Ei nimipalvelimia määritetty";
+"member_support_delete_button" = "Poista";
+"migration_error_title" = "Virhe";
+"compliance_data_retention_desc" = "Tiedot säilytetään automaattisesti %d päivän ajan. Tämän jakson jälkeen ne poistetaan pysyvästi.";
+"location_precision_exact" = "Tarkka";
+"location_precision_fuzzy" = "Noin (~1 km)";
+"location_precision_region" = "Alue (~10 km)";
+"location_precision_exact_desc" = "Jaa tarkat GPS-koordinaattisi";
+"location_precision_fuzzy_desc" = "Pyöristä noin 1 km tarkkuuteen";
+"location_precision_region_desc" = "Pyöristä noin 10 km satunnaisella siirtymällä";
+"art_generator_flow_field" = "Virtauskenttä";
+"art_generator_circuit_board" = "Piirilevy";
+"art_generator_geometric_harmony" = "Geometrinen harmonia";
+"art_generator_wave_interference" = "Aaltojen interferenssi";
+"art_generator_cellular_automata" = "Soliautomaatti";
+"pq_crypto_kyber768_desc" = "Kokeellinen avaimenvaihto (X25519 ECDH) — EI kvanttivarma";
+"pq_crypto_dilithium3_desc" = "Kokeellinen allekirjoitus (Ed25519) — EI kvanttivarma";
+"pq_crypto_falcon512_desc" = "Kokeellinen tiivis allekirjoitus (Ed25519) — EI kvanttivarma";
+"config_bot_not_configured" = "Määritysbottia ei ole määritetty";
+"config_bot_invalid_response" = "Virheellinen määritysvastaus";
+"config_bot_timeout" = "Määritysbottipyynnön aikakatkaisu";
+"server_api_invalid_url" = "Virheellinen palvelimen URL";
+"server_api_invalid_body" = "Virheellinen pyyntörunko";
+"server_api_error" = "Palvelinvirhe: %d";
+"server_api_parse_failed" = "Palvelinvastauksen jäsennys epäonnistui";
+"nostr_broadcast_empty" = "Sisältö ei voi olla tyhjä";
+"nostr_broadcast_too_long" = "Sisältö ylittää 500 merkin rajan";
+"art_vault_encode_failed" = "Kuvan koodaus PNG-muotoon epäonnistui";
+"art_vault_decrypt_failed" = "Taideteoksen salauksen purku epäonnistui";
+"art_engine_script_not_found" = "Generointiskriptiä ei löydy: %@";
+"art_engine_render_failed" = "Renderöinti epäonnistui: %@";
+"art_engine_context_failed" = "Bittikartan renderöintikontekstin luominen epäonnistui";
+"binthere_encrypt_failed" = "Viestin salaaminen epäonnistui";
+"binthere_decrypt_failed" = "Salauksen purku epäonnistui — viesti voi olla vioittunut";
+"binthere_invalid_key" = "Virheellinen salauksenpurkuavain";
+"binthere_bot_timeout" = "Botti ei vastannut ajoissa";
+"binthere_message_expired" = "Tämä viesti on jo luettu tai vanhentunut";
+"binthere_bot_not_configured" = "BinThere-bottia ei ole määritetty";
+"binthere_compress_failed" = "Kuvan pakkaaminen kokorajan alle epäonnistui";
+"binthere_operation_in_progress" = "Toinen tallennustoiminto on jo käynnissä";
+"needle_encrypt_failed" = "Salaaminen epäonnistui";
+"needle_decrypt_failed" = "Salauksen purku epäonnistui";
+"needle_keychain_error" = "Avainnipun virhe: %d";
+"needle_not_initialized" = "Needle-moottoria ei alustettu";
+"needle_encode_failed" = "Viestien koodaaminen epäonnistui";
+"needle_completion_failed" = "Viimeistely epäonnistui: %@";
+"needle_parse_failed" = "Poimintatuloksen jäsennys epäonnistui";
+"encrypted_doc_encode_failed" = "Asiakirjatekstin koodaaminen epäonnistui";
+"encrypted_doc_encrypt_failed" = "Asiakirjan salaaminen epäonnistui";
+"encrypted_doc_decrypt_failed" = "Asiakirjan salauksen purku epäonnistui — tiedot voivat olla vioittuneet";

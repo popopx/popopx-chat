@@ -1,13 +1,15 @@
 //
 //  BadgesYourLevelView.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 28.07.2026.
 //  Copyright © 2026 SimpleX Chat. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
 // TODO [badges]: replace with types produced by the badge purchase API when it lands.
 enum BadgeLevel: String, CaseIterable, Identifiable {
@@ -98,6 +100,14 @@ struct BadgesYourLevelView: View {
         }
         .frame(maxHeight: .infinity)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $continueActive) {
+            BadgesPayView(level: selectedLevel)
+                .modifier(ThemedBackground())
+        }
+        .navigationDestination(isPresented: $howItWorksActive) {
+            BadgesHowItWorksView()
+                .modifier(ThemedBackground())
+        }
         .task { await store.load() }
     }
 
@@ -136,45 +146,23 @@ struct BadgesYourLevelView: View {
     }
 
     private func continueButton() -> some View {
-        ZStack {
-            Button {
-                continueActive = true
-            } label: {
-                Text("Continue")
-            }
-            .buttonStyle(OnboardingButtonStyle(isDisabled: false))
-
-            NavigationLink(isActive: $continueActive) {
-                BadgesPayView(level: selectedLevel)
-                    .modifier(ThemedBackground())
-            } label: {
-                EmptyView()
-            }
-            .frame(width: 1, height: 1)
-            .hidden()
+        Button {
+            continueActive = true
+        } label: {
+            Text("Continue")
         }
+        .buttonStyle(OnboardingButtonStyle(isDisabled: false))
     }
 
     private func howItWorksButton() -> some View {
-        ZStack {
-            Button {
-                howItWorksActive = true
-            } label: {
-                HStack(spacing: 4) {
-                    Image(systemName: "info.circle")
-                    Text("How badges protect your privacy").fontWeight(.medium)
-                }
-                .font(.body)
+        Button {
+            howItWorksActive = true
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: "info.circle")
+                Text("How badges protect your privacy").fontWeight(.medium)
             }
-
-            NavigationLink(isActive: $howItWorksActive) {
-                BadgesHowItWorksView()
-                    .modifier(ThemedBackground())
-            } label: {
-                EmptyView()
-            }
-            .frame(width: 1, height: 1)
-            .hidden()
+            .font(.body)
         }
     }
 }

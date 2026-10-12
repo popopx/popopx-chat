@@ -1,0 +1,921 @@
+/*
+  Localizable.strings
+  POPOP NSE
+
+  Created by EP on 30/07/2024.
+  Copyright © 2024 POPOP Chat. All rights reserved.
+*/
+
+
+"New messages" = "Neue Nachrichten";
+
+"New events" = "Neue Ereignisse";
+
+"From %d chat(s)" = "Von %d Chat(s)";
+
+"From: %@" = "Von: %@";
+
+"%d new events" = "%d neue Ereignisse";
+
+" and " = " und ";
+
+", " = ", ";
+
+" other chats" = " weitere Chats";
+
+"new message" = "neue Nachricht";
+
+"%@ wants to connect!" = "%@ möchte sich verbinden!";
+
+"Accept contact request from %@?" = "Kontaktanfrage von %@ annehmen?";
+
+"%@ is connected!" = "%@ ist verbunden!";
+
+"Incoming video call" = "Eingehender Videoanruf";
+
+"Incoming audio call" = "Eingehender Audioanruf";
+
+"Encrypted message: app is stopped" = "Verschlüsselte Nachricht: App ist gestoppt";
+
+"Contact hidden:" = "Kontakt verborgen:";
+
+"Somebody" = "Jemand";
+
+"this contact" = "dieser Kontakt";
+
+"A new contact" = "Ein neuer Kontakt";
+
+"You can now chat with %@" = "Du kannst jetzt mit %@ chatten";
+
+"New contact:" = "Neuer Kontakt:";
+
+"message received" = "Nachricht empfangen";
+
+"New contact request" = "Neue Kontaktanfrage";
+
+"Group message:" = "Gruppennachricht:";
+
+"Report: %@" = "Meldung: %@";
+
+"Encrypted message: no passphrase" = "Verschlüsselte Nachricht: keine Passphrase";
+
+"Encrypted message: database migration error" = "Verschlüsselte Nachricht: Datenbankmigrationsfehler";
+
+"Encrypted message: database error" = "Verschlüsselte Nachricht: Datenbankfehler";
+
+"Encrypted message: keychain error" = "Verschlüsselte Nachricht: Schlüsselbundfehler";
+
+"Encrypted message: unexpected error" = "Verschlüsselte Nachricht: unerwarteter Fehler";
+
+"Encrypted message or another event" = "Verschlüsselte Nachricht oder ein anderes Ereignis";
+
+/* RadialActionMenu - Chat actions */
+"accept_contact_request" = "Annehmen";
+"incognito_accept" = "Inkognito";
+"reject_contact_request" = "Ablehnen";
+"join_group" = "Beitreten";
+"archive_reports" = "Archivieren";
+"leave_group_action" = "Verlassen";
+"mark_read" = "Gelesen";
+"mark_unread" = "Ungelesen";
+"unfavorite_chat" = "Unfav";
+"favorite_chat" = "Fav";
+"chat_list" = "Liste";
+"clear_conversation" = "Löschen";
+"delete_chat" = "Löschen";
+
+/* RadialActionMenu - Alert dialogs */
+"clear_private_notes_title" = "Private Notizen löschen?";
+"clear_conversation_title" = "Unterhaltung löschen?";
+"clear_private_notes_message" = "Alle Nachrichten werden gelöscht – dies kann nicht rückgängig gemacht werden!";
+"clear_conversation_message" = "Alle Nachrichten werden gelöscht – dies kann nicht rückgängig gemacht werden! Die Nachrichten werden NUR für dich gelöscht.";
+"clear_action" = "Löschen";
+"archive_reports_title" = "Alle Meldungen archivieren?";
+"archive_reports_message" = "Alle Meldungen werden für dich archiviert.";
+"archive_action" = "Archivieren";
+"leave_group_title" = "Gruppe verlassen?";
+"leave_group_message" = "Du wirst keine Nachrichten mehr aus dieser Gruppe erhalten.";
+"leave_action" = "Verlassen";
+
+/* OneHandUICard - Accessibility */
+"selected_state" = "Ausgewählt";
+"not_selected_state" = "Nicht ausgewählt";
+
+/* PXContactConnectionInfo - Connection status */
+"you_invited_contact" = "Du hast einen Kontakt eingeladen";
+"you_accepted_connection" = "Du hast die Verbindung angenommen";
+"group_connection_pending" = "Du wirst mit der Gruppe verbunden, wenn das Gerät des Gruppenhosts online ist. Bitte warte oder überprüfe es später!";
+"connection_request_pending" = "Du wirst verbunden, wenn deine Verbindungsanfrage angenommen wird. Bitte warte oder überprüfe es später!";
+"contact_device_pending" = "Du wirst verbunden, wenn das Gerät deines Kontakts online ist. Bitte warte oder überprüfe es später!";
+"incognito_mode" = "Inkognito";
+"delete_connection" = "Verbindung löschen";
+"share_onetime_link" = "Einmallink teilen";
+"onetime_invitation_title" = "Einmal-Einladungslink";
+"learn_more" = "Mehr erfahren";
+
+/* PXTagListView - Tag management */
+"delete_list_title" = "Liste löschen?";
+"delete_list_message" = "Alle Chats werden aus der Liste %@ entfernt und die Liste wird gelöscht.";
+"delete_action" = "Löschen";
+"edit_action" = "Bearbeiten";
+"create_list" = "Liste erstellen";
+"error_reordering_lists" = "Fehler beim Neuordnen der Listen";
+"error_saving_chat_list" = "Fehler beim Speichern der Chatliste";
+"add_to_list" = "Zur Liste hinzufügen";
+"save_list" = "Liste speichern";
+"unique_list_name_emoji" = "Listenname und Emoji sollten für alle Listen unterschiedlich sein.";
+"error_creating_list" = "Fehler beim Erstellen der Liste";
+
+/* PXChatRelayView - Relay settings (Batch 3) */
+"relay_test_failed_title" = "Relay-Test fehlgeschlagen!";
+"your_relay_name" = "Dein Relay-Name";
+"preset_relay_address" = "Voreingestellte Relay-Adresse";
+"preset_relay_name" = "Voreingestellter Relay-Name";
+"your_relay_address" = "Deine Relay-Adresse";
+"test_relay_footer" = "**Relay testen**, um den Namen abzurufen.";
+"delete_relay" = "Relay löschen";
+"use_relay" = "Relay verwenden";
+"test_relay_button" = "Relay testen";
+"use_for_new_channels" = "Für neue Kanäle verwenden";
+"chat_relay_nav_title" = "Chat-Relais";
+"enter_relay_name_placeholder" = "Relay-Name eingeben…";
+
+/* UserAddressLearnMore - Address help (Batch 3) */
+"share_address_publicly" = "POPOPX-Adresse in sozialen Medien teilen.";
+"address_wont_lose_contacts" = "Du verlierst deine Kontakte nicht, wenn du später deine Adresse löschst.";
+"onetime_link_usage_hint" = "Der Einmallink kann *nur mit einem Kontakt* verwendet werden – teile ihn persönlich oder über einen beliebigen Messenger.";
+"set_connection_name_hint" = "Du kannst den Verbindungsnamen festlegen, um dich daran zu erinnern, mit wem der Link geteilt wurde.";
+"connection_security" = "Verbindungssicherheit";
+"address_links_safe_share" = "POPOPX-Adresse und Einmallinks können sicher über jeden Messenger geteilt werden.";
+"compare_security_codes" = "Um dich davor zu schützen, dass dein Link ersetzt wird, kannst du die Sicherheitscodes des Kontakts vergleichen.";
+"read_more_user_guide" = "Mehr im Benutzerhandbuch.";
+"create_popopx_address" = "POPOPX-Adresse erstellen";
+"create_onetime_link" = "Einmallink erstellen";
+"popopx_address_title" = "POPOPX-Adresse";
+"new_chat_title" = "Neuer Chat";
+
+/* PXRTCServers - WebRTC settings (Batch 3) */
+"configure_ice_servers" = "ICE-Server konfigurieren";
+"use_popopx_servers_confirm" = "POPOPX Chat-Server verwenden?";
+"saved_webrtc_removed" = "Gespeicherte WebRTC ICE-Server werden entfernt";
+"confirm_action" = "Bestätigen";
+"using_popopx_servers" = "POPOPX Chat-Server werden verwendet.";
+"ice_servers_one_per_line" = "ICE-Server (einer pro Zeile)";
+"error_saving_ice_servers" = "Fehler beim Speichern der ICE-Server";
+"ice_servers_format_error" = "Stelle sicher, dass die WebRTC ICE-Serveradressen im korrekten Format sind, zeilenweise getrennt und nicht doppelt vorhanden sind.";
+"how_to" = "Anleitung";
+
+/* PXChatItemInfoView - Chat item info (Batch 4) */
+"delivery_tab" = "Zustellung";
+"history_tab" = "Verlauf";
+"in_reply_to_tab" = "Als Antwort auf";
+"saved_message" = "Gespeichert";
+"forwarded_message" = "Weitergeleitet";
+"history_section" = "Verlauf";
+"no_history" = "Kein Verlauf";
+"share_action" = "Teilen";
+"copy_action" = "Kopieren";
+"current_version" = "(aktuell)";
+"no_text_content" = "kein Text";
+"in_reply_to_section" = "Als Antwort auf";
+"recipients_cant_see_sender" = "Empfänger können nicht sehen, von wem diese Nachricht stammt.";
+"you_sent_label" = "du";
+"delivery_section" = "Zustellung";
+"no_delivery_info" = "Keine Zustellinformationen";
+
+/* PXFramedItemView - Chat item framing (Batch 5) */
+"only_you_and_mods_see" = "Nur du und Moderatoren können es sehen";
+"only_sender_and_mods_see" = "Nur Absender und Moderatoren können es sehen";
+"archived_report" = "archivierter Bericht";
+"moderated_by_user" = "moderiert von";
+"blocked_status" = "blockiert";
+"blocked_by_admin" = "vom Admin blockiert";
+"marked_deleted" = "als gelöscht markiert";
+"live_message" = "LIVE";
+
+/* PXIntegrityErrorItemView - Error alerts (Batch 5) */
+"skipped_messages_title" = "Übersprungene Nachrichten";
+"skipped_messages_message" = "Das kann passieren, wenn:\n1. Die Nachrichten sind im sendenden Client nach 2 Tagen oder auf dem Server nach 30 Tagen abgelaufen.\n2. Die Nachrichtenentschlüsselung ist fehlgeschlagen, weil du oder dein Kontakt ein altes Datenbank-Backup verwendet habt.\n3. Die Verbindung wurde kompromittiert.";
+"bad_message_hash" = "Ungültiger Nachrichten-Hash";
+"hash_mismatch_description" = "Der Hash der vorherigen Nachricht ist unterschiedlich.";
+"report_to_developers" = "Bitte melde es den Entwicklern.";
+"bad_message_id" = "Ungültige Nachrichten-ID";
+"message_id_incorrect" = "Die ID der nächsten Nachricht ist falsch (kleiner oder gleich der vorherigen).\nDas kann aufgrund eines Fehlers passieren oder wenn die Verbindung kompromittiert ist.";
+"message_receive_error" = "Die App hat diese Nachricht nach %d Empfangsversuchen entfernt.";
+"message_error_title" = "Nachrichtenfehler";
+
+"chat_audio_call" = "Audioanruf";
+"chat_video_call" = "Videoanruf";
+"chat_all_messages" = "Alle Nachrichten";
+"chat_search" = "Suchen";
+"chat_filter" = "Filter";
+"chat_invite_member" = "Mitglied einladen";
+
+"compose_member_deleted_cant_accept" = "Mitglied ist gelöscht – Anfrage kann nicht angenommen werden";
+"compose_reject" = "Ablehnen";
+"compose_accept" = "Annehmen";
+"compose_your_profile" = "Dein Profil";
+"compose_incognito" = "Inkognito";
+"compose_send_live_message" = "Live-Nachricht senden";
+"compose_disappearing_message" = "Verschwindende Nachricht";
+"compose_char_count_format" = "%d/65536";
+"compose_scan_security_code" = "Sicherheitscode aus der App deines Kontakts scannen.";
+"compose_incorrect_security_code" = "Falscher Sicherheitscode!";
+"compose_no_filtered_chats" = "Keine gefilterten Chats";
+"compose_share" = "Teilen";
+"compose_copy" = "Kopieren";
+"compose_mark_read" = "Als gelesen markieren";
+"compose_delete_from_history" = "Aus dem Verlauf löschen";
+"compose_archive_report" = "Meldung archivieren";
+"compose_answer_call" = "Anruf annehmen";
+"compose_tap_to_open" = "Tippen zum Öffnen";
+"compose_invalid_data" = "ungültige Daten";
+"compose_event_happened" = "Ereignis eingetreten";
+
+"group_no_contacts_to_add" = "Keine Kontakte zum Hinzufügen";
+"group_clear_selection" = "Löschen";
+"group_contacts_selected_fmt" = "%d Kontakt(e) ausgewählt";
+"group_no_contacts_selected" = "Keine Kontakte ausgewählt";
+"group_cant_invite_contact_title" = "Kontakt kann nicht eingeladen werden!";
+"group_cant_invite_contact_msg" = "Du versuchst, den Kontakt einzuladen, mit dem du ein Inkognito-Profil geteilt hast, in die Gruppe, in der du dein Hauptprofil verwendest";
+"group_enabled_for" = "Aktiviert für";
+"group_set_member_admission" = "Mitgliedereintritt festlegen";
+"group_member_admission" = "Mitgliedereintritt";
+"group_no_available_relays" = "Keine verfügbaren Relays";
+"group_channel_delete_all" = "Der Kanal wird für alle Abonnenten gelöscht – dies kann nicht rückgängig gemacht werden!";
+"group_channel_delete_you" = "Der Kanal wird für dich gelöscht – dies kann nicht rückgängig gemacht werden!";
+"group_group_delete_all" = "Die Gruppe wird für alle Mitglieder gelöscht – dies kann nicht rückgängig gemacht werden!";
+"group_group_delete_you" = "Die Gruppe wird für dich gelöscht – dies kann nicht rückgängig gemacht werden!";
+"group_chat_delete_all" = "Der Chat wird für alle Mitglieder gelöscht – dies kann nicht rückgängig gemacht werden!";
+"group_chat_delete_you" = "Der Chat wird für dich gelöscht – dies kann nicht rückgängig gemacht werden!";
+"group_cant_invite_contacts_title" = "Kontakte können nicht eingeladen werden!";
+"group_cant_invite_contacts_msg" = "Du verwendest ein Inkognito-Profil für diese Gruppe – um die Weitergabe deines Hauptprofils zu verhindern, ist das Einladen von Kontakten nicht erlaubt";
+"group_receipts_disabled_title" = "Empfangsbestätigungen sind deaktiviert";
+"group_receipts_disabled_msg_fmt" = "Diese Gruppe hat über %d Mitglieder, Empfangsbestätigungen werden nicht gesendet.";
+"group_copy_code" = "Code kopieren";
+"group_webpage_code" = "Webseiten-Code";
+"group_webpage_code_instructions" = "Füge diesen Code zu deiner Webseite hinzu. Er zeigt die Vorschau deines Kanals / deiner Gruppe an.";
+"group_enter_webpage_url" = "Webseiten-URL eingeben";
+"group_webpage_url_instructions" = "Er wird Abonnenten angezeigt und verwendet, um das Laden der Vorschau zu ermöglichen.";
+"group_chat_with_admins" = "Chat mit Admins";
+"group_member_reports" = "Mitgliedermeldungen";
+"group_set_group_preferences" = "Gruppeneinstellungen festlegen";
+"group_owners_section" = "Eigentümer";
+"group_you_label" = "du";
+"group_no_chat_relays" = "Keine Chat-Relays";
+"group_chat_relays_forward_info" = "Chat-Relays leiten Nachrichten an Kanalabonnenten weiter.";
+"group_reset_button" = "Zurücksetzen";
+"group_take_picture" = "Foto aufnehmen";
+"group_choose_from_library" = "Aus Bibliothek wählen";
+"group_paste_image" = "Bild einfügen";
+"group_read_action" = "Lesen";
+"group_accept_action" = "Annehmen";
+"group_delete_action_member" = "Löschen";
+"group_share_link_desc_channel" = "Du kannst einen Link oder QR-Code teilen – jeder kann dem Kanal beitreten.";
+"group_share_link_desc_group" = "Du kannst einen Link oder QR-Code teilen – jeder kann der Gruppe beitreten. Du verlierst keine Gruppenmitglieder, wenn du sie später löschst.";
+"group_upgrade_link" = "Link upgraden";
+"group_share_link_button" = "Link teilen";
+"group_share_via_chat_button" = "Über Chat teilen";
+"group_delete_link" = "Link löschen";
+"group_create_link_button" = "Link erstellen";
+"group_delete_link_title" = "Link löschen?";
+"group_delete_link_message" = "Alle Gruppenmitglieder bleiben verbunden.";
+"group_delete_link_action" = "Löschen";
+
+"settings_send_notifications" = "Benachrichtigungen senden";
+"settings_lock_screen_preview" = "Du kannst die Sperrbildschirm-Benachrichtigungsvorschau über die Einstellungen festlegen.";
+"settings_open_settings_button" = "Einstellungen öffnen";
+"settings_show_preview" = "Vorschau anzeigen";
+"settings_push_notifications" = "Push-Benachrichtigungen";
+"settings_restart_migrate_notice" = "Bitte starte die App neu und migriere die Datenbank, um Push-Benachrichtigungen zu aktivieren.";
+"settings_server_test_failed" = "Server-Test fehlgeschlagen!";
+"settings_test_notifications" = "Benachrichtigungen testen";
+"settings_core_version_fmt" = "Core-Version: v%@";
+"settings_core_engine_fmt" = "Core-Engine: v%@";
+"settings_markdown_usage" = "Du kannst Markdown verwenden, um Nachrichten zu formatieren:";
+"settings_incognito_mode" = "Inkognito-Modus";
+"settings_incognito_description_1" = "Der Inkognito-Modus schützt deine Privatsphäre, indem er für jeden Kontakt ein neues zufälliges Profil verwendet.";
+"settings_incognito_description_2" = "Er ermöglicht viele anonyme Verbindungen ohne gemeinsame Daten in einem einzigen Chat-Profil.";
+"settings_incognito_description_3" = "Wenn du ein Inkognito-Profil mit jemandem teilst, wird dieses Profil für die Gruppen verwendet, zu denen er dich einlädt.";
+"settings_chat_console" = "Chat-Konsole";
+"settings_reset_hints" = "Alle Hinweise zurücksetzen";
+"settings_show_hide_db_ids" = "Datenbank-IDs und Transport-Isolationsoption.";
+"settings_storage_label" = "Speicher";
+"settings_developer_options" = "Entwickleroptionen";
+"settings_compute_store_url" = "Compute-Store-URL";
+"settings_compute_store_label" = "Compute Store";
+"settings_compute_store_hint" = "Leer lassen, um den lokalen Mock-Modus zu verwenden. Setze eine Backend-URL, um echte StoreKit-Käufe mit serverseitiger Verifizierung zu aktivieren.";
+"settings_profile_stored_notice" = "Dein Profil wird auf deinem Gerät gespeichert und nur mit deinen Kontakten geteilt. POPOPX-Server können dein Profil nicht sehen.";
+"settings_reset_button" = "Zurücksetzen";
+"settings_save_notify_contacts" = "Speichern (und Kontakte benachrichtigen)";
+"settings_take_picture" = "Foto aufnehmen";
+"settings_choose_from_library" = "Aus Bibliothek wählen";
+"settings_paste_image" = "Bild einfügen";
+"settings_hide_profile" = "Profil verbergen";
+"settings_hidden_profile_password" = "Passwort für verborgenes Profil";
+"settings_hidden_profile_instructions" = "Um dein verborgenes Profil anzuzeigen, gib ein vollständiges Passwort in ein Suchfeld auf der Seite **Deine Chat-Profile** ein.";
+"settings_error_saving_password" = "Fehler beim Speichern des Benutzerpassworts";
+"settings_time_disappear_new_contacts" = "Die Verschwindzeit wird nur für neue Kontakte festgelegt.";
+"settings_webrtc_ice_servers" = "WebRTC ICE-Server";
+"settings_call_settings_header" = "Einstellungen";
+"settings_relay_protects_ip" = "Der Relay-Server schützt deine IP-Adresse, kann aber die Dauer des Anrufs beobachten.";
+"settings_relay_only_if_necessary" = "Der Relay-Server wird nur bei Bedarf verwendet. Die andere Partei kann deine IP-Adresse beobachten.";
+"settings_interface_section" = "Benutzeroberfläche";
+"settings_accept_calls_lockscreen" = "Du kannst Anrufe vom Sperrbildschirm annehmen, ohne Geräte- und App-Authentifizierung.";
+"settings_auth_required_before_connect" = "Authentifizierung ist erforderlich, bevor der Anruf verbunden wird, aber du könntest Anrufe verpassen.";
+"settings_limitations_section" = "Einschränkungen";
+"settings_preset_server_address" = "Voreingestellte Serveradresse";
+"settings_your_server_address" = "Deine Serveradresse";
+"settings_add_to_another_device" = "Zu einem anderen Gerät hinzufügen";
+"settings_use_for_messages" = "Für Nachrichten verwenden";
+"settings_yes_option" = "ja";
+"settings_no_option" = "nein";
+"settings_use_server" = "Server verwenden";
+"settings_chat_relays_header" = "Chat-Relays";
+"settings_chat_relays_forward_desc" = "Chat-Relays leiten Nachrichten in Kanälen weiter, die du erstellst.";
+"settings_message_servers" = "Nachrichtenserver";
+"settings_media_file_servers" = "Medien- & Datei-Server";
+"settings_add_server" = "Server hinzufügen";
+"settings_enter_server_manually" = "Server manuell eingeben";
+"settings_scan_server_qr" = "Server-QR-Code scannen";
+"settings_chat_relay_link" = "Chat-Relay";
+"settings_how_to_use_servers" = "So verwendest du deine Server";
+"settings_test_servers" = "Server testen";
+"settings_scan_server_qr_title" = "Server-QR-Code scannen";
+
+
+/* NewChat - Group Creation */
+"group_create_button" = "Gruppe erstellen";
+"group_decentralized_footer" = "Vollständig dezentral – nur für Mitglieder sichtbar.";
+"group_create_error_title" = "Fehler beim Erstellen der Gruppe";
+
+/* NewChat - Channel Creation */
+"channel_configure_relays" = "Relays konfigurieren";
+"channel_create_button" = "Öffentlichen Kanal erstellen";
+
+/* Developer Settings */
+"dev_compute_store_header" = "Compute Store";
+"dev_compute_store_footer" = "Leer lassen, um den lokalen Mock-Modus zu verwenden. Setze eine Backend-URL, um echte StoreKit-Käufe mit serverseitiger Verifizierung zu aktivieren.";
+
+/* Network & Servers */
+"scan_server_qr_title" = "Server-QR-Code scannen";
+
+/* NewChat Menu */
+"newchat_archived_contacts" = "Archivierte Kontakte";
+"search_cancel_button" = "Abbrechen";
+
+/* Onboarding */
+"profile_name_placeholder" = "Profilname eingeben...";
+"onboarding_back_button" = "Zurück";
+
+
+/* Nostr Square - Reply View */
+"nostr_reply_original_label" = "Original";
+"nostr_reply_privacy_notice" = "Deine Antwort ist anonym und verschlüsselt";
+"nostr_reply_title" = "Antworten";
+"nostr_reply_send_button" = "Senden";
+
+/* Nostr Square - Broadcast Composer */
+"nostr_composer_privacy_title" = "Anonyme Rundnachricht";
+"nostr_composer_privacy_subtitle" = "Deine Identität ist durch Ende-zu-Ende-Verschlüsselung geschützt";
+"nostr_composer_char_count" = "%d/%d";
+"nostr_composer_title" = "Neue Rundnachricht";
+"nostr_composer_send_button" = "Veröffentlichen";
+
+/* Nostr Square - Broadcast Card */
+"nostr_card_anonymous_label" = "Anonym";
+"nostr_card_resonate_button" = "Widerhall";
+"nostr_card_ttl_label" = "TTL";
+
+
+/* Developer Settings - Additional */
+"dev_show_label" = "Anzeigen:";
+"dev_hide_label" = "Verbergen:";
+"dev_storage_button" = "Speicher";
+"back_to_label" = "Zurück zu %@";
+"duration_picker_label" = "Dauer";
+"unit_picker_label" = "Einheit";
+"theme_all_modes" = "Alle Modi";
+"theme_light_mode" = "Heller Modus";
+"theme_dark_mode" = "Dunkler Modus";
+"theme_apply_to_label" = "Anwenden auf";
+"error_failed_load_server_operators" = "Fehler beim Laden der Server-Betreiber nach 3 Versuchen. Die App kann nicht mit dem Kerndienst kommunizieren.";
+"error_cannot_set_empty_operators" = "Leere Betreiberliste kann nicht festgelegt werden";
+"error_failed_set_server_operators" = "Fehler beim Festlegen der Server-Betreiber nach 5 Versuchen.";
+"error_failed_save_servers" = "Fehler beim Speichern der Server nach mehreren Versuchen";
+"error_failed_validate_servers" = "Fehler beim Validieren der Server nach mehreren Versuchen";
+"error_failed_load_conditions" = "Fehler beim Laden des Bedingungstexts nach 3 Versuchen.";
+"error_no_operators_for_conditions" = "Keine Betreiber zum Akzeptieren der Bedingungen angegeben.";
+"error_invalid_conditions_id" = "Ungültige Bedingungs-ID. Bitte starten Sie die App neu.";
+"error_and_others_count" = "und %d weitere Fehler";
+"group_short_description_placeholder" = "Kurze Beschreibung";
+"error_saving_channel_profile" = "Fehler beim Speichern des Kanalprofils";
+"error_saving_group_profile" = "Fehler beim Speichern des Gruppenprofils";
+"channel_profile_nav_title" = "Kanalprofil";
+"group_profile_nav_title" = "Gruppenprofil";
+"channel_webpage_create_description" = "Erstellen Sie eine Webseite, um Besuchern eine Vorschau Ihres Kanals zu zeigen, bevor sie abonnieren. Hosten Sie sie selbst oder verwenden Sie ein beliebiges statisches Hosting.";
+"channel_webpage_not_supported" = "Die verwendeten Chat-Relais unterstützen keine Webseiten.";
+"channel_webpage_url_placeholder" = "https://";
+"channel_allow_embed_toggle" = "Jedem das Einbetten erlauben";
+"channel_embed_any_page" = "Jede Webseite kann die Vorschau anzeigen.";
+"channel_embed_only_your_page" = "Nur Ihre obige Seite kann die Vorschau anzeigen.";
+"channel_save_notify_subscribers" = "Speichern und Abonnenten benachrichtigen";
+"channel_save_notify_members" = "Speichern und Mitglieder benachrichtigen";
+"app_version_label" = "App-Version: v%@";
+"app_build_label" = "App-Build: %@";
+"dev_show_options_toggle" = "Entwickleroptionen anzeigen";
+"dev_confirm_db_upgrades_toggle" = "Datenbank-Upgrades bestätigen";
+"dev_deprecated_options_section" = "Veraltete Optionen";
+"dev_popopx_links_picker" = "POPOPX-Links";
+"data_market_category_picker" = "Kategorie";
+"data_market_category_label" = "Kategorie";
+"group_initial_role_picker" = "Anfängliche Rolle";
+"group_new_member_role_picker" = "Neue Mitgliederrolle";
+"bridge_sms_provider_picker" = "Anbieter";
+"wallpaper_scale_picker" = "Skalierung";
+"prefs_you_allow_picker" = "Sie erlauben";
+"prefs_you_allow_toggle" = "Sie erlauben";
+"prefs_contact_allows" = "Kontakt erlaubt";
+"prefs_delete_after" = "Löschen nach";
+"prefs_select_button" = "Auswählen";
+"chat_delete_messages_after" = "Nachrichten löschen nach";
+"servers_user_selection_picker" = "Benutzerauswahl";
+"servers_server_type_picker" = "Servertyp";
+"monetization_eula_link" = "EULA";
+"monetization_billing_period_picker" = "Abrechnungszeitraum";
+"monetization_price_yearly" = "99,9 $ / Jahr";
+"monetization_price_monthly" = "9,99 $ / Monat";
+"monetization_feature_chat_privacy" = "Alle Chat- und Datenschutzfunktionen";
+"monetization_feature_compute_gifts" = "Compute-Token-Speicher und Geschenke";
+"monetization_feature_own_servers" = "Fügen Sie Ihre eigenen SMP-Server hinzu";
+"monetization_feature_quantum" = "Priorisierte Quantenfunktionen";
+"db_delete_messages_after" = "Nachrichten löschen nach";
+"mesh_hub_tab_chats" = "Mesh-Chats";
+"mesh_hub_tab_public" = "Öffentlicher Chat";
+"mesh_hub_tab_groups" = "Gruppen";
+"mesh_hub_picker_label" = "Mesh-Hub";
+"mesh_board_scope_picker" = "Bereich";
+"migration_use_onion_hosts" = ".onion-Hosts verwenden";
+"error_failed_load_protocol_info" = "Fehler beim Laden der Protokollinformationen. Die App kann nicht mit dem Kerndienst kommunizieren. Bitte erzwingen Sie das Schließen und starten Sie die App neu.";
+"error_invalid_conditions_id_detail" = "Ungültige Bedingungs-ID (%lld). Die App kann nicht identifizieren, welche Protokollversion akzeptiert werden soll. Bitte starten Sie die App vollständig neu.";
+"error_no_operators_available" = "Keine Betreiber verfügbar. Bitte starten Sie die App neu.";
+"markdown_can_be_copied" = " (kann kopiert werden)";
+"network_transport_isolation" = "Transportisolierung";
+"release_notes_transport_isolation_title" = "Transportisolierung";
+"release_notes_transport_isolation_desc" = "Nach Chat-Profil (Standard) oder [nach Verbindung](https://popopxchat.com/blog/20230204-popopx-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"voice_messages_prohibited_title" = "Sprachnachrichten verboten";
+"voice_messages_prohibited_ask_contact_message" = "Sprachnachrichten sind in diesem Chat nicht erlaubt. Bitte kontaktieren Sie den Chat-Besitzer.";
+"voice_messages_prohibited_group_owner_message" = "Sprachnachrichten sind in dieser Gruppe nicht erlaubt. Bitte kontaktieren Sie den Gruppenbesitzer.";
+"voice_messages_prohibited_other_message" = "Sprachnachrichten sind in diesem Chat nicht erlaubt.";
+"waiting_for_file_title" = "Warte auf Datei";
+"waiting_for_file_xftp_message" = "Die Datei wird über das XFTP-Protokoll übertragen.";
+"waiting_for_file_smp_message" = "Die Datei wird über das SMP-Protokoll übertragen.";
+"waiting_for_image_title" = "Warte auf Bild";
+"waiting_for_image_xftp_message" = "Das Bild wird über das XFTP-Protokoll übertragen.";
+"waiting_for_image_smp_message" = "Das Bild wird über das SMP-Protokoll übertragen.";
+"waiting_for_video_title" = "Warte auf Video";
+"waiting_for_video_xftp_message" = "Das Video wird über das XFTP-Protokoll übertragen.";
+"waiting_for_video_smp_message" = "Das Video wird über das SMP-Protokoll übertragen.";
+"cannot_forward_message_title" = "Nachricht kann nicht weitergeleitet werden";
+"cannot_forward_message_message" = "Diese Nachricht kann aufgrund der Chat-Einstellungen nicht weitergeleitet werden.";
+"la_lock_turned_on_title" = "POPOPX-Sperre aktiviert";
+"la_lock_turned_on_message" = "Die POPOPX-Sperre wurde aktiviert. Sie müssen sich authentifizieren, um auf die App zuzugreifen.";
+"la_lock_not_enabled_title" = "POPOPX-Sperre nicht aktiviert";
+"la_lock_not_enabled_message" = "Die POPOPX-Sperre ist nicht aktiviert. Bitte aktivieren Sie sie in den Einstellungen.";
+"la_auth_failed_title" = "Authentifizierung fehlgeschlagen";
+"la_auth_failed_message" = "Authentifizierung fehlgeschlagen. Bitte versuchen Sie es erneut.";
+"la_auth_unavailable_title" = "Authentifizierung nicht verfügbar";
+"la_auth_unavailable_instruction_message" = "Die Authentifizierung ist auf diesem Gerät nicht verfügbar. Bitte verwenden Sie eine andere Authentifizierungsmethode.";
+"la_auth_unavailable_turning_off_message" = "Die Authentifizierung ist nicht verfügbar. Die POPOPX-Sperre wird ausgeschaltet.";
+"delete_message_title" = "Nachricht löschen";
+"delete_messages_title" = "%d Nachrichten löschen";
+"delete_button" = "Löschen";
+"ok_button" = "OK";
+"cancel_button" = "Abbrechen";
+"unlock_button" = "Entsperren";
+"continue_button" = "Fortfahren";
+"accept_button" = "Akzeptieren";
+"reject_button" = "Ablehnen";
+"export_json_button" = "JSON exportieren";
+"back_button" = "Zurück";
+"chats_nav_title" = "Chats";
+"add_contact_nav_title" = "Kontakt hinzufügen";
+"group_link_nav_title" = "Gruppenlink";
+"channel_link_nav_title" = "Kanallink";
+"creating_channel_nav_title" = "Kanal erstellen";
+"network_servers_nav_title" = "Netzwerk & Server";
+"new_server_nav_title" = "Neuer Server";
+"send_notifications_nav_title" = "Benachrichtigungen senden";
+"show_preview_nav_title" = "Vorschau anzeigen";
+"member_admission_nav_title" = "Mitgliederzulassung";
+"popopx_address_nav_title" = "POPOPX-Adresse";
+"archived_contacts_nav_title" = "Archivierte Kontakte";
+"profile_address_label" = "Ihre POPOPX-Adresse";
+"profile_chat_profiles_label" = "Chat-Profile";
+"profile_connect_desktop_label" = "Von Desktop verbinden";
+"profile_preferences_label" = "Einstellungen";
+"profile_settings_label" = "Einstellungen";
+"needle_extractions_accessibility" = "Needle-Extraktionen";
+"new_chat_accessibility" = "Neuer Chat";
+"switch_to_mesh_accessibility" = "Zu Mesh wechseln";
+"switch_to_broadcast_accessibility" = "Zu Broadcast wechseln";
+"call_toggle_video_fit" = "Videoanpassung umschalten";
+"call_end_call" = "Anruf beenden";
+"call_mute_microphone" = "Mikrofon stummschalten";
+"call_speaker" = "Lautsprecher";
+"call_camera" = "Kamera";
+"call_flip_camera" = "Kamera wechseln";
+"call_back_button" = "Zurück";
+"binthere_look_at_screen" = "Schauen Sie auf den Bildschirm";
+"binthere_multiple_faces" = "Mehrere Gesichter erkannt";
+
+"add_contact_scan_qr" = "Um sich zu verbinden, kann Ihr Kontakt den QR-Code scannen oder den Link in der App verwenden.";
+"add_contact_video_call" = "Wenn Sie sich nicht persönlich treffen können, zeigen Sie den QR-Code in einem Videoanruf oder teilen Sie den Link.";
+"api_contact_blocked_message" = "Die Verbindung wird vom Serverbetreiber blockiert:
+%@";
+%@";
+"api_contact_blocked_title" = "Verbindung blockiert";
+"api_contact_how_it_works" = "So funktioniert es";
+"api_contact_ok" = "Ok";
+"api_desktop_connection_stopped_message" = "Bitte überprüfen Sie, dass Mobilgerät und Desktop mit demselben lokalen Netzwerk verbunden sind und dass die Desktop-Firewall die Verbindung zulässt.
+Bitte teilen Sie weitere Probleme den Entwicklern mit.";
+Please share any other issues with the developers.";
+"api_desktop_connection_stopped_title" = "Verbindung zum Desktop unterbrochen";
+"api_desktop_copy_error" = "Kopierfehler";
+"api_desktop_ok" = "Ok";
+"api_start_chat_message" = "Der Chat wurde gestoppt. Wenn Sie diese Datenbank bereits auf einem anderen Gerät verwendet haben, sollten Sie sie zurückübertragen, bevor Sie den Chat starten.";
+"api_start_chat_ok" = "Ok";
+"api_start_chat_title" = "Chat starten?";
+"chat_console_title" = "Chat-Konsole";
+"chat_list_mesh_section" = "Mesh";
+"confirm_passcode_title" = "Passcode bestätigen";
+"connect_banner_new_link" = "Neuer 1-maliger Link";
+"connect_banner_paste_scan" = "Link einfügen / Scannen";
+"connection_error_title" = "Verbindungsfehler";
+"data_market_sample1_desc" = "Aggregierte Browserkategorien ohne persönliche Identifikatoren";
+"data_market_sample1_title" = "Anonyme Surfgewohnheiten";
+"data_market_sample2_desc" = "Verweildauer in App-Kategorien, anonymisiert";
+"data_market_sample2_title" = "App-Nutzungsstatistiken";
+"data_market_sample3_desc" = "Ungenaue Standortdaten für Verkehrsanalyse";
+"data_market_sample3_title" = "Regionale Standorttrends";
+"data_market_sample4_desc" = "Ernährungspräferenzen und -einschränkungen, anonymisiert";
+"data_market_sample4_title" = "Umfrage zu Ernährungspräferenzen";
+"db_key_rotation_action" = "Für optimale Sicherheit, aktualisieren Sie Ihren Datenbankpasssatz in den Einstellungen.";
+"db_key_rotation_desc" = "Ihr Datenbank-Verschlüsselungsschlüssel hat seine empfohlene Rotationsperiode erreicht.";
+"db_key_rotation_title" = "Rotation des Datenbank-Schlüssels";
+"db_key_rotation_understood" = "Verstanden";
+"delete_report_label" = "Bericht löschen";
+"error_adding_short_link" = "Fehler beim Hinzufügen des Kurzlinks";
+"invalid_qr_code_title" = "Ungültiger QR-Code";
+"large_file_contact_message" = "Ihr Kontakt hat eine Datei gesendet, die größer als die derzeit unterstützte maximale Größe (%@) ist.";
+"large_file_title" = "Große Datei!";
+"mesh_board_title" = "Mesh-Board";
+"mesh_cancel" = "Abbrechen";
+"mesh_chat_list_title" = "Mesh-Chats";
+"mesh_compose_placeholder" = "Nachricht...";
+"mesh_create_group_button" = "Gruppe erstellen";
+"mesh_create_group_hint" = "Erstellen Sie eine Gruppe, um verschlüsselte Gruppennachrichten zu starten";
+"mesh_edges" = "Kanten";
+"mesh_edges_header" = "Kanten";
+"mesh_enter_group_name" = "Geben Sie einen Namen für die neue Mesh-Gruppe ein";
+"mesh_last_updated" = "Zuletzt aktualisiert";
+"mesh_local_peer" = "Lokaler Peer";
+"mesh_new_post" = "Neuer Beitrag";
+"mesh_no_groups" = "Keine Mesh-Gruppen";
+"mesh_no_posts" = "Noch keine Beiträge";
+"mesh_no_posts_description" = "Seien Sie der Erste, der auf das Mesh-Board schreibt";
+"mesh_no_topology" = "Keine Topologie verfügbar";
+"mesh_nodes" = "Knoten";
+"mesh_nodes_header" = "Knoten";
+"mesh_overview_header" = "Übersicht";
+"mesh_post_to_board" = "An das Board senden";
+"mesh_urgent_label" = "Dringend";
+"mesh_urgent_toggle" = "Als dringend markieren";
+"migration_apply_button" = "Anwenden";
+"migration_check_internet" = "Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut";
+"migration_error_deleting_db" = "Fehler beim Löschen der Datenbank";
+"migration_error_exporting_db" = "Fehler beim Exportieren der Chat-Datenbank";
+"migration_error_file_not_exist" = "Exportierte Datei existiert nicht";
+"migration_error_generic" = "Fehler";
+"migration_error_migrating_settings" = "Fehler beim Migrieren der Einstellungen";
+"migration_error_saving_settings" = "Fehler beim Speichern der Einstellungen";
+"migration_error_starting_chat" = "Fehler beim Starten des Chats";
+"migration_error_uploading_archive" = "Fehler beim Hochladen des Archivs";
+"migration_upload_failed" = "Hochladen fehlgeschlagen";
+"needle_extractions_label" = "Extraktionen";
+"needle_no_data_found" = "Keine strukturierten Daten im Text gefunden.";
+"needle_no_extractions_found" = "Keine Extraktionen gefunden.";
+"no_chats_in_list" = "Keine Chats in der Liste %@";
+"no_email_account_message" = "Auf diesem Gerät ist kein E-Mail-Konto konfiguriert. Bitte richten Sie in den Einstellungen ein E-Mail-Konto ein, um Ihre Adresse zu teilen.";
+"nostr_publish_failed" = "GlobalSquare.Publish.Failed";
+"nostr_publish_success" = "GlobalSquare.Publish.Success";
+"ntf_error_checking_token" = "Fehler beim Überprüfen des Token-Status";
+"ntf_error_deleting_token" = "Fehler beim Löschen des Tokens";
+"ntf_error_enabling" = "Fehler beim Aktivieren der Benachrichtigungen";
+"ntf_error_testing_server" = "Fehler beim Testen der Serververbindung";
+"onboarding_connect_via_link" = "Über Link oder QR-Code verbinden";
+"onboarding_create_public_address" = "Öffentliche Adresse erstellen";
+"onboarding_create_your_link" = "Ihren Link erstellen";
+"onboarding_for_anyone_to_reach" = "Damit jeder Sie erreichen kann";
+"onboarding_invite_privately" = "Jemanden privat einladen";
+"onboarding_invite_privately_subtitle" = "Ein Link für eine Person zur Verbindung";
+"onboarding_let_someone_connect" = "Jemandem erlauben, sich mit Ihnen zu verbinden";
+"onboarding_talk_to_someone" = "Mit jemandem sprechen";
+"onboarding_your_public_address" = "Ihre öffentliche Adresse";
+"one_hand_toolbar_message" = "Sie können es in den Darstellungseinstellungen ändern.";
+"one_hand_toolbar_title" = "Erreichbare Chat-Symbolleiste";
+"protocol_server_title" = "%@-Server";
+"rn_v42_auto_accept" = "Mit optionaler Willkommensnachricht.";
+"rn_v42_auto_accept_desc" = "Mit optionaler Willkommensnachricht.";
+"rn_v42_group_links" = "Administratoren können Links zum Beitritt zu Gruppen erstellen.";
+"rn_v42_group_links_desc" = "Administratoren können Links zum Beitritt zu Gruppen erstellen.";
+"rn_v42_security_assessment" = "POPOPX Chat-Sicherheit wurde von Trail of Bits geprüft.";
+"rn_v42_security_assessment_desc" = "POPOPX Chat-Sicherheit wurde von Trail of Bits geprüft.";
+"rn_v43_irreversible_deletion" = "Ihre Kontakte können die vollständige Nachrichtenlöschung erlauben.";
+"rn_v43_irreversible_deletion_desc" = "Ihre Kontakte können die vollständige Nachrichtenlöschung erlauben.";
+"rn_v43_privacy_security" = "App-Bildschirm in den letzten Apps ausblenden.";
+"rn_v43_privacy_security_desc" = "App-Bildschirm in den letzten Apps ausblenden.";
+"rn_v43_server_config" = "Server durch Scannen von QR-Codes hinzufügen.";
+"rn_v43_server_config_desc" = "Server durch Scannen von QR-Codes hinzufügen.";
+"rn_v43_voice_messages" = "Max. 30 Sekunden, sofort empfangen.";
+"rn_v43_voice_messages_desc" = "Max. 30 Sekunden, sofort empfangen.";
+"rn_v44_disappearing_messages" = "Gesendete Nachrichten werden nach der eingestellten Zeit gelöscht.";
+"rn_v44_disappearing_messages_desc" = "Gesendete Nachrichten werden nach der eingestellten Zeit gelöscht.";
+"rn_v44_french_interface" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v44_french_interface_desc" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v44_gifs_stickers" = "Aus der Galerie oder benutzerdefinierten Tastaturen senden.";
+"rn_v44_gifs_stickers_desc" = "Aus der Galerie oder benutzerdefinierten Tastaturen senden.";
+"rn_v44_live_messages" = "Empfänger sehen Aktualisierungen während Sie tippen.";
+"rn_v44_live_messages_desc" = "Empfänger sehen Aktualisierungen während Sie tippen.";
+"rn_v44_verify_security" = "Sicherheitscodes mit Ihren Kontakten vergleichen.";
+"rn_v44_verify_security_desc" = "Sicherheitscodes mit Ihren Kontakten vergleichen.";
+"rn_v45_italian_interface" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v45_italian_interface_desc" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v45_message_draft" = "Den letzten Nachrichtenentwurf mit Anhängen aufbewahren.";
+"rn_v45_message_draft_desc" = "Den letzten Nachrichtenentwurf mit Anhängen aufbewahren.";
+"rn_v45_multiple_profiles" = "Verschiedene Namen, Avatare und Transportisolierung.";
+"rn_v45_multiple_profiles_desc" = "Verschiedene Namen, Avatare und Transportisolierung.";
+"rn_v45_private_filenames" = "Zum Schutz der Zeitzone verwenden Bild-/Sprachdateien UTC.";
+"rn_v45_private_filenames_desc" = "Zum Schutz der Zeitzone verwenden Bild-/Sprachdateien UTC.";
+"rn_v45_reduced_battery" = "Weitere Verbesserungen kommen bald!";
+"rn_v45_reduced_battery_desc" = "Weitere Verbesserungen kommen bald!";
+"rn_v46_audio_video_calls" = "Vollständig neu implementiert - funktionieren im Hintergrund!";
+"rn_v46_audio_video_calls_desc" = "Vollständig neu implementiert - funktionieren im Hintergrund!";
+"rn_v46_chinese_spanish" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v46_chinese_spanish_desc" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v46_further_battery" = "Weitere Verbesserungen kommen bald!";
+"rn_v46_further_battery_desc" = "Weitere Verbesserungen kommen bald!";
+"rn_v46_group_moderation" = "Administratoren können jetzt:\\n- Nachrichten von Mitgliedern löschen.\\n- Mitglieder deaktivieren (";
+"rn_v46_group_moderation_desc" = "Administratoren können jetzt:\\n- Nachrichten von Mitgliedern löschen.\\n- Mitglieder deaktivieren (";
+"rn_v46_group_welcome" = "Legen Sie die Nachricht fest, die neuen Mitgliedern angezeigt wird!";
+"rn_v46_group_welcome_desc" = "Legen Sie die Nachricht fest, die neuen Mitgliedern angezeigt wird!";
+"rn_v46_hidden_profiles" = "Schützen Sie Ihre Chat-Profile mit einem Passwort!";
+"rn_v46_hidden_profiles_desc" = "Schützen Sie Ihre Chat-Profile mit einem Passwort!";
+"rn_v50_app_passcode" = "Stattdessen festlegen anstelle der Systemauthentifizierung.";
+"rn_v50_app_passcode_desc" = "Stattdessen festlegen anstelle der Systemauthentifizierung.";
+"rn_v50_polish_interface" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v50_polish_interface_desc" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v50_videos_files" = "Schnell und ohne Warten, bis der Absender online ist!";
+"rn_v50_videos_files_desc" = "Schnell und ohne Warten, bis der Absender online ist!";
+"rn_v51_better_messages" = "- Sprachnachrichten bis zu 5 Minuten.\\n- benutzerdefinierte Verschwindzeit.\\n- Bearbeitungsverlauf.";
+"rn_v51_better_messages_desc" = "- Sprachnachrichten bis zu 5 Minuten.\\n- benutzerdefinierte Verschwindzeit.\\n- Bearbeitungsverlauf.";
+"rn_v51_japanese_interface" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v51_japanese_interface_desc" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v51_message_reactions" = "Endlich haben wir sie! 🚀";
+"rn_v51_message_reactions_desc" = "Endlich haben wir sie! 🚀";
+"rn_v51_self_destruct_passcode" = "Alle Daten werden bei Eingabe gelöscht.";
+"rn_v51_self_destruct_passcode_desc" = "Alle Daten werden bei Eingabe gelöscht.";
+"rn_v52_delivery_receipts" = "Das zweite Häkchen, das wir vermisst haben! ✅";
+"rn_v52_delivery_receipts_desc" = "Das zweite Häkchen, das wir vermisst haben! ✅";
+"rn_v52_few_more_things" = "- stabilere Nachrichtenzustellung.\\n- etwas bessere Gruppen.\\n- und mehr!";
+"rn_v52_few_more_things_desc" = "- stabilere Nachrichtenzustellung.\\n- etwas bessere Gruppen.\\n- und mehr!";
+"rn_v52_find_chats" = "Ungelesene und Lieblings-Chats filtern.";
+"rn_v52_find_chats_desc" = "Ungelesene und Lieblings-Chats filtern.";
+"rn_v52_keep_connections" = "Verschlüsselung nach Wiederherstellung von Backups korrigieren.";
+"rn_v52_keep_connections_desc" = "Verschlüsselung nach Wiederherstellung von Backups korrigieren.";
+"rn_v52_one_message_disappear" = "Auch wenn es in der Unterhaltung deaktiviert ist.";
+"rn_v52_one_message_disappear_desc" = "Auch wenn es in der Unterhaltung deaktiviert ist.";
+"rn_v53_desktop_app" = "Neues Profil in der [Desktop-App](https://popopxchat.com/downloads/) erstellen. 💻";
+"rn_v53_desktop_app_desc" = "Neues Profil in der [Desktop-App](https://popopxchat.com/downloads/) erstellen. 💻";
+"rn_v53_discover_groups" = "- mit dem [Verzeichnisdienst](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) verbinden (BETA)!\\n- Zustellungsbestätigungen (bis zu 20 Mitglieder).\\n- schneller und stabiler.";
+"rn_v53_discover_groups_desc" = "- mit dem [Verzeichnisdienst](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) verbinden (BETA)!\\n- Zustellungsbestätigungen (bis zu 20 Mitglieder).\\n- schneller und stabiler.";
+"rn_v53_encrypt_files" = "App verschlüsselt neue lokale Dateien (außer Videos).";
+"rn_v53_encrypt_files_desc" = "App verschlüsselt neue lokale Dateien (außer Videos).";
+"rn_v53_incognito_mode" = "Inkognito-Modus beim Verbinden umschalten.";
+"rn_v53_incognito_mode_desc" = "Inkognito-Modus beim Verbinden umschalten.";
+"rn_v53_new_languages %d" = "%d neue Oberflächensprachen";
+"rn_v53_new_languages_desc" = "Bulgarisch, Finnisch, Thailändisch und Ukrainisch - Dank an die Nutzer und Weblate!";
+"rn_v54_better_groups" = "Schnellerer Beitritt und zuverlässigere Nachrichten.";
+"rn_v54_better_groups_desc" = "Schnellerer Beitritt und zuverlässigere Nachrichten.";
+"rn_v54_block_members" = "Um unerwünschte Nachrichten auszublenden.";
+"rn_v54_block_members_desc" = "Um unerwünschte Nachrichten auszublenden.";
+"rn_v54_few_more_things" = "- gelöschte Kontakte optional benachrichtigen.\\n- Profilnamen mit Leerzeichen.\\n- und mehr!";
+"rn_v54_few_more_things_desc" = "- gelöschte Kontakte optional benachrichtigen.\\n- Profilnamen mit Leerzeichen.\\n- und mehr!";
+"rn_v54_incognito_groups" = "Eine Gruppe mit einem zufälligen Profil erstellen.";
+"rn_v54_incognito_groups_desc" = "Eine Gruppe mit einem zufälligen Profil erstellen.";
+"rn_v54_link_apps" = "Über sicheres quantenresistentes Protokoll.";
+"rn_v54_link_apps_desc" = "Über sicheres quantenresistentes Protokoll.";
+"rn_v55_improved_delivery" = "Mit reduziertem Batterieverbrauch.";
+"rn_v55_improved_delivery_desc" = "Mit reduziertem Batterieverbrauch.";
+"rn_v55_join_groups" = "Aktueller Verlauf und verbesserter [Verzeichnis-Bot](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_join_groups_desc" = "Aktueller Verlauf und verbesserter [Verzeichnis-Bot](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_paste_link" = "Suchleiste akzeptiert Einladungslinks.";
+"rn_v55_paste_link_desc" = "Suchleiste akzeptiert Einladungslinks.";
+"rn_v55_private_notes" = "Mit verschlüsselten Dateien und Medien.";
+"rn_v55_private_notes_desc" = "Mit verschlüsselten Dateien und Medien.";
+"rn_v55_turkish_interface" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v55_turkish_interface_desc" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v56_data_migration" = "Zu einem anderen Gerät per QR-Code migrieren.";
+"rn_v56_data_migration_desc" = "Zu einem anderen Gerät per QR-Code migrieren.";
+"rn_v56_hungarian_interface" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v56_hungarian_interface_desc" = "Dank an die Nutzer – beitragen über Weblate!";
+"rn_v56_pip_calls" = "App während des Anrufs verwenden.";
+"rn_v56_pip_calls_desc" = "App während des Anrufs verwenden.";
+"rn_v56_quantum_encryption" = "In direkten Chats aktivieren (BETA)!";
+"rn_v56_quantum_encryption_desc" = "In direkten Chats aktivieren (BETA)!";
+"rn_v56_safer_groups" = "Administratoren können ein Mitglied für alle blockieren.";
+"rn_v56_safer_groups_desc" = "Administratoren können ein Mitglied für alle blockieren.";
+"rn_v57_forward_save" = "Nachrichtenquelle bleibt privat.";
+"rn_v57_forward_save_desc" = "Nachrichtenquelle bleibt privat.";
+"rn_v57_incall_sounds" = "Beim Verbinden von Audio- und Videoanrufen.";
+"rn_v57_incall_sounds_desc" = "Beim Verbinden von Audio- und Videoanrufen.";
+"rn_v57_network_management" = "Zuverlässigere Netzwerkverbindung.";
+"rn_v57_network_management_desc" = "Zuverlässigere Netzwerkverbindung.";
+"rn_v57_quantum_encryption" = "Wird in direkten Chats aktiviert!";
+"rn_v57_quantum_encryption_desc" = "Wird in direkten Chats aktiviert!";
+"rn_v57_shape_images" = "Quadrat, Kreis oder irgendetwas dazwischen.";
+"rn_v57_shape_images_desc" = "Quadrat, Kreis oder irgendetwas dazwischen.";
+"rn_v58_improved_delivery" = "Mit reduziertem Batterieverbrauch.";
+"rn_v58_improved_delivery_desc" = "Mit reduziertem Batterieverbrauch.";
+"rn_v58_private_routing" = "Schützen Sie Ihre IP-Adresse vor den von Ihren Kontakten gewählten Nachrichten-Relais.\\nAktivieren in den *Netzwerk & Server*-Einstellungen.";
+"rn_v58_private_routing_desc" = "Schützen Sie Ihre IP-Adresse vor den von Ihren Kontakten gewählten Nachrichten-Relais.\\nAktivieren in den *Netzwerk & Server*-Einstellungen.";
+"rn_v58_safely_receive_files" = "Dateien von unbekannten Servern bestätigen.";
+"rn_v58_safely_receive_files_desc" = "Dateien von unbekannten Servern bestätigen.";
+"rn_v60_better_networking" = "Verbindungs- und Serverstatus.";
+"rn_v60_better_networking_desc" = "Verbindungs- und Serverstatus.";
+"rn_v60_new_chat_experience" = "Neues Chat-Erlebnis 🎉";
+"rn_v60_new_media_options" = "Neue Medienoptionen";
+"rn_v60_private_routing" = "Es schützt Ihre IP-Adresse und Verbindungen.";
+"rn_v60_private_routing_desc" = "Es schützt Ihre IP-Adresse und Verbindungen.";
+"rn_v60_sub_archive_contacts" = "Kontakte archivieren, um später zu chatten.";
+"rn_v60_sub_blur_privacy" = "Neue Medienoptionen";
+"rn_v60_sub_color_themes" = "Chats mit den neuen Themes einfärben.";
+"rn_v60_sub_connect_faster" = "Neues Chat-Erlebnis 🎉";
+"rn_v60_sub_delete_messages" = "Bis zu 20 Nachrichten auf einmal löschen.";
+"rn_v60_sub_one_hand" = "App mit einer Hand bedienen.";
+"rn_v60_sub_play_chat_list" = "Neue Medienoptionen";
+"rn_v60_sub_share_apps" = "Neue Medienoptionen";
+"rn_v61_better_calls" = "Während des Anrufs zwischen Audio und Video wechseln.";
+"rn_v61_better_calls_desc" = "Während des Anrufs zwischen Audio und Video wechseln.";
+"rn_v61_better_notifications" = "Verbesserte Zustellung, reduzierter Datenverbrauch.\\nWeitere Verbesserungen kommen bald!";
+"rn_v61_better_notifications_desc" = "Verbesserte Zustellung, reduzierter Datenverbrauch.\\nWeitere Verbesserungen kommen bald!";
+"rn_v61_better_security" = "POPOPX-Protokolle von Trail of Bits überprüft.";
+"rn_v61_better_security_desc" = "POPOPX-Protokolle von Trail of Bits überprüft.";
+"rn_v61_better_ux" = "Bessere Benutzererfahrung";
+"rn_v61_sub_forward_messages" = "Bis zu 20 Nachrichten auf einmal weiterleiten.";
+"rn_v61_sub_message_dates" = "Bessere Nachrichtendaten.";
+"rn_v61_sub_message_shape" = "Anpassbare Nachrichtenform.";
+"rn_v61_sub_moderate_messages" = "Bis zu 200 Nachrichten löschen oder moderieren.";
+"rn_v61_sub_switch_profile" = "Bessere Benutzererfahrung";
+"rn_v62_business_chats" = "Datenschutz für Ihre Kunden.";
+"rn_v62_business_chats_desc" = "Datenschutz für Ihre Kunden.";
+"rn_v62_network_decentralization" = "Netzwerk-Dezentralisierung";
+"rn_v62_reliable_notifications" = "Zugestellt, auch wenn Apple sie verwirft.";
+"rn_v62_reliable_notifications_desc" = "Zugestellt, auch wenn Apple sie verwirft.";
+"rn_v63_better_groups_perf" = "Bessere Gruppenleistung";
+"rn_v63_better_privacy" = "Bessere Privatsphäre und Sicherheit";
+"rn_v63_mention_members" = "Benachrichtigt werden, wenn Sie erwähnt werden.";
+"rn_v63_mention_members_desc" = "Benachrichtigt werden, wenn Sie erwähnt werden.";
+"rn_v63_organize_lists" = "Wichtige Nachrichten nicht verpassen.";
+"rn_v63_organize_lists_desc" = "Wichtige Nachrichten nicht verpassen.";
+"rn_v63_private_reports" = "Administratoren bei der Gruppenmoderation unterstützen.";
+"rn_v63_private_reports_desc" = "Administratoren bei der Gruppenmoderation unterstützen.";
+"rn_v63_sub_faster_deletion" = "Bessere Gruppenleistung";
+"rn_v63_sub_faster_sending" = "Bessere Gruppenleistung";
+"rn_v63_sub_message_expiration" = "Bessere Privatsphäre und Sicherheit";
+"rn_v63_sub_private_media" = "Bessere Privatsphäre und Sicherheit";
+"rn_v641_chats_clean" = "Verschwindende Nachrichten standardmäßig aktivieren.";
+"rn_v641_chats_clean_desc" = "Verschwindende Nachrichten standardmäßig aktivieren.";
+"rn_v641_short_address" = "Kurze POPOPX-Adresse";
+"rn_v641_welcome_contacts" = "Profil-Bio und Willkommensnachricht festlegen.";
+"rn_v641_welcome_contacts_desc" = "Profil-Bio und Willkommensnachricht festlegen.";
+"rn_v64_chat_admins" = "Privates Feedback an Gruppen senden.";
+"rn_v64_chat_admins_desc" = "Privates Feedback an Gruppen senden.";
+"rn_v64_connect_faster" = "Nachricht sofort nach dem Tippen auf Verbinden senden.";
+"rn_v64_connect_faster_desc" = "Nachricht sofort nach dem Tippen auf Verbinden senden.";
+"rn_v64_group_moderator" = "Entfernt Nachrichten und blockiert Mitglieder.";
+"rn_v64_group_moderator_desc" = "Entfernt Nachrichten und blockiert Mitglieder.";
+"rn_v64_improved_delivery" = "Weniger Datenverkehr in Mobilfunknetzen.";
+"rn_v64_improved_delivery_desc" = "Weniger Datenverkehr in Mobilfunknetzen.";
+"rn_v64_review_members" = "Mit Mitgliedern chatten, bevor sie beitreten.";
+"rn_v64_review_members_desc" = "Mit Mitgliedern chatten, bevor sie beitreten.";
+"rn_v65_invite_friends" = "Wir haben das Verbinden für neue Benutzer einfacher gemacht.";
+"rn_v65_invite_friends_desc" = "Wir haben das Verbinden für neue Benutzer einfacher gemacht.";
+"rn_v65_nonprofit_governance" = "Damit das POPOPX-Netzwerk Bestand hat.";
+"rn_v65_nonprofit_governance_desc" = "Damit das POPOPX-Netzwerk Bestand hat.";
+"rn_v65_public_channels" = "Öffentliche Kanäle - frei sprechen 🚀";
+"rn_v65_safe_web_links" = "- optional Link-Vorschauen senden.\\n- Hyperlink-Phishing verhindern.\\n- Link-Tracking entfernen.";
+"rn_v65_safe_web_links_desc" = "- optional Link-Vorschauen senden.\\n- Hyperlink-Phishing verhindern.\\n- Link-Tracking entfernen.";
+"rn_v65_sub_ownership" = "Öffentliche Kanäle - frei sprechen 🚀";
+"rn_v65_sub_privacy" = "Private Mediendateinamen.";
+"rn_v65_sub_reliability" = "Öffentliche Kanäle - frei sprechen 🚀";
+"rn_v65_sub_security" = "Nachrichtenablauf in Chats festlegen.";
+"save_button" = "Speichern";
+"self_destruct_passcode_info" = "Info zum Selbstzerstörungs-Passcode";
+"settings_tab_picker" = "Einstellungen-Tab";
+"share_channel_title" = "Kanal teilen";
+"swipe_action_clear" = "Löschen";
+"swipe_action_delete" = "Löschen";
+"swipe_action_favorite" = "Favorit";
+"swipe_action_list" = "Liste";
+"swipe_action_mute" = "Stumm";
+"swipe_action_read" = "Gelesen";
+"swipe_action_unfavorite" = "Favorit entfernen";
+"tab_chats" = "Chats";
+"tab_mesh" = "Mesh";
+"tab_profiler" = "Profiler";
+"tab_vortex" = "Vortex";
+"user_picker_chat_preferences" = "Chat-Einstellungen";
+"user_picker_chat_profiles" = "Ihre Chat-Profile";
+"user_picker_create_address" = "POPOPX-Adresse erstellen";
+"user_picker_settings" = "Einstellungen";
+"user_picker_use_from_desktop" = "Vom Desktop verwenden";
+"user_picker_your_address" = "Ihre POPOPX-Adresse";
+"db_hide_passphrase" = "Passphrase ausblenden";
+"db_show_passphrase" = "Passphrase anzeigen";
+"marked_deleted_moderated_by_list" = "%d Nachrichten moderiert von %@";
+"marked_deleted_blocked_by_admin" = "%d Nachrichten vom Administrator blockiert";
+"marked_deleted_blocked" = "%d Nachrichten blockiert";
+"marked_deleted_marked_deleted" = "%d Nachrichten als gelöscht markiert";
+"marked_deleted_moderated_by" = "moderiert von %@";
+"marked_deleted_blocked_single" = "blockiert";
+"marked_deleted_blocked_by_admin_single" = "vom Administrator blockiert";
+"marked_deleted_deleted" = "als gelöscht markiert";
+"ntf_register_button" = "Registrieren";
+"ntf_mode_desc_off" = "**Am privatsten**: POPOPX Chat Push-Server nicht verwenden. Die App prüft Nachrichten im Hintergrund, wenn das System es erlaubt, abhängig davon, wie oft du die App benutzt.";
+"ntf_mode_desc_periodic" = "**Privater**: Alle 20 Minuten nach neuen Nachrichten suchen. Nur das Geräte-Token wird mit unserem Push-Server geteilt. Er sieht nicht, wie viele Kontakte du hast, oder irgendwelche Nachrichten-Metadaten.";
+"ntf_mode_desc_instant" = "**Empfohlen**: Geräte-Token und Ende-zu-Ende-verschlüsselte Benachrichtigungen werden an den POPOPX Chat Push-Server gesendet, aber dieser sieht weder den Nachrichteninhalt, die Größe noch den Absender.";
+"ntf_mode_short_off" = "Nachrichten prüfen, wenn erlaubt.";
+"ntf_mode_short_periodic" = "Nachrichten alle 20 Min. prüfen.";
+"ntf_mode_short_instant" = "E2E-verschlüsselte Benachrichtigungen.";
+"protocol_server_no_servers_for" = "Keine %@-Server für %@";
+"protocol_server_no_servers_configured" = "Keine %@-Server konfiguriert";
+"protocol_server_storage_missing_for" = "Speicher fehlt für %@ in %@";
+"protocol_server_storage_missing" = "Speicher fehlt für %@";
+"protocol_server_proxy_missing_for" = "Proxy fehlt für %@ in %@";
+"protocol_server_proxy_missing" = "Proxy fehlt für %@";
+"protocol_server_duplicate" = "Doppelter Server: %@ bei %@";
+"protocol_server_duplicate_relay" = "Doppeltes Chat-Relay: %@ bei %@";
+"protocol_server_no_relays_for" = "Warnung: Keine Chat-Relays für %@";
+"protocol_server_no_relays_configured" = "Warnung: Keine Chat-Relays konfiguriert";
+"protocol_server_no_name_servers_for" = "Warnung: Keine Nameserver für %@";
+"protocol_server_no_name_servers_configured" = "Warnung: Keine Nameserver konfiguriert";
+"member_support_delete_button" = "Löschen";
+"migration_error_title" = "Fehler";
+"compliance_data_retention_desc" = "Daten werden automatisch für %d Tage aufbewahrt. Nach diesem Zeitraum werden sie endgültig gelöscht.";
+"location_precision_exact" = "Genau";
+"location_precision_fuzzy" = "Ungefähr (~1 km)";
+"location_precision_region" = "Region (~10 km)";
+"location_precision_exact_desc" = "Deine genauen GPS-Koordinaten teilen";
+"location_precision_fuzzy_desc" = "Auf ~1 km Genauigkeit runden";
+"location_precision_region_desc" = "Auf ~10 km mit zufälligem Versatz runden";
+"art_generator_flow_field" = "Strömungsfeld";
+"art_generator_circuit_board" = "Platine";
+"art_generator_geometric_harmony" = "Geometrische Harmonie";
+"art_generator_wave_interference" = "Welleninterferenz";
+"art_generator_cellular_automata" = "Zellulärer Automaton";
+"pq_crypto_kyber768_desc" = "Experimenteller Schlüsselaustausch (X25519 ECDH) — NICHT quantensicher";
+"pq_crypto_dilithium3_desc" = "Experimentelle Signatur (Ed25519) — NICHT quantensicher";
+"pq_crypto_falcon512_desc" = "Experimentelle kompakte Signatur (Ed25519) — NICHT quantensicher";
+"config_bot_not_configured" = "Konfigurations-Bot nicht konfiguriert";
+"config_bot_invalid_response" = "Ungültige Konfigurationsantwort";
+"config_bot_timeout" = "Zeitüberschreitung der Konfigurations-Bot-Anfrage";
+"server_api_invalid_url" = "Ungültige Server-URL";
+"server_api_invalid_body" = "Ungültiger Anfrage-Body";
+"server_api_error" = "Serverfehler: %d";
+"server_api_parse_failed" = "Serverantwort konnte nicht analysiert werden";
+"nostr_broadcast_empty" = "Inhalt darf nicht leer sein";
+"nostr_broadcast_too_long" = "Inhalt überschreitet das Limit von 500 Zeichen";
+"art_vault_encode_failed" = "Bild konnte nicht als PNG codiert werden";
+"art_vault_decrypt_failed" = "Kunstwerk konnte nicht entschlüsselt werden";
+"art_engine_script_not_found" = "Generator-Skript nicht gefunden: %@";
+"art_engine_render_failed" = "Rendern fehlgeschlagen: %@";
+"art_engine_context_failed" = "Bitmap-Rendering-Kontext konnte nicht erstellt werden";
+"binthere_encrypt_failed" = "Nachricht konnte nicht verschlüsselt werden";
+"binthere_decrypt_failed" = "Entschlüsselung fehlgeschlagen — Nachricht könnte beschädigt sein";
+"binthere_invalid_key" = "Ungültiger Entschlüsselungsschlüssel";
+"binthere_bot_timeout" = "Bot hat nicht rechtzeitig geantwortet";
+"binthere_message_expired" = "Diese Nachricht wurde bereits gelesen oder ist abgelaufen";
+"binthere_bot_not_configured" = "BinThere-Bot ist nicht konfiguriert";
+"binthere_compress_failed" = "Bild konnte nicht unter das Größenlimit komprimiert werden";
+"binthere_operation_in_progress" = "Ein anderer Speichervorgang ist bereits im Gange";
+"needle_encrypt_failed" = "Verschlüsselung fehlgeschlagen";
+"needle_decrypt_failed" = "Entschlüsselung fehlgeschlagen";
+"needle_keychain_error" = "Schlüsselbundfehler: %d";
+"needle_not_initialized" = "Needle-Engine nicht initialisiert";
+"needle_encode_failed" = "Nachrichten konnten nicht codiert werden";
+"needle_completion_failed" = "Vervollständigung fehlgeschlagen: %@";
+"needle_parse_failed" = "Extraktionsergebnis konnte nicht analysiert werden";
+"encrypted_doc_encode_failed" = "Dokumententext konnte nicht codiert werden";
+"encrypted_doc_encrypt_failed" = "Dokument konnte nicht verschlüsselt werden";
+"encrypted_doc_decrypt_failed" = "Dokument konnte nicht entschlüsselt werden — Daten könnten beschädigt sein";

@@ -1,179 +1,31 @@
 //
 //  ChatListView.swift
-//  SimpleX
+//  POPOPX
 //
 //  Created by Evgeny Poberezkin on 27/01/2022.
-//  Copyright © 2022 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 // Spec: spec/client/chat-list.md
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
-enum UserPickerSheet: Identifiable {
-    case address
-    case chatPreferences
-    case chatProfiles
-    case currentProfile
-    case useFromDesktop
-    case settings
+// MARK: - Haptic Feedback Helper
 
-    var id: Self { self }
-
-    var navigationTitle: LocalizedStringKey {
-        switch self {
-        case .address: "SimpleX address"
-        case .chatPreferences: "Your preferences"
-        case .chatProfiles: "Your chat profiles"
-        case .currentProfile: "Your current profile"
-        case .useFromDesktop: "Connect to desktop"
-        case .settings: "Your settings"
-        }
-    }
+private func triggerHapticFeedback(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
+    let generator = UIImpactFeedbackGenerator(style: style)
+    generator.impactOccurred()
 }
 
-// Spec: spec/client/chat-list.md#PresetTag
-enum PresetTag: Int, Identifiable, CaseIterable, Equatable {
-    case groupReports = 0
-    case favorites = 1
-    case contacts = 2
-    case groups = 3
-    case channels = 4
-    case business = 5
-    case notes = 6
-
-    var id: Int { rawValue }
-    
-    var сollapse: Bool {
-        self != .groupReports
-    }
+private func triggerNotificationHaptic(_ type: UINotificationFeedbackGenerator.FeedbackType) {
+    let generator = UINotificationFeedbackGenerator()
+    generator.notificationOccurred(type)
 }
 
-// Spec: spec/client/chat-list.md#ActiveFilter
-enum ActiveFilter: Identifiable, Equatable {
-    case presetTag(PresetTag)
-    case userTag(ChatTag)
-    case unread
-    
-    var id: String {
-        switch self {
-        case let .presetTag(tag): "preset \(tag.id)"
-        case let .userTag(tag): "user \(tag.chatTagId)"
-        case .unread: "unread"
-        }
-    }
-}
-
-class SaveableSettings: ObservableObject {
-    @Published var servers: ServerSettings = ServerSettings(currUserServers: [], userServers: [], serverErrors: [], serverWarnings: [])
-    var profileSave: (() -> Void)? = nil
-}
-
-struct ServerSettings {
-    public var currUserServers: [UserOperatorServers]
-    public var userServers: [UserOperatorServers]
-    public var serverErrors: [UserServersError]
-    public var serverWarnings: [UserServersWarning]
-}
-
-struct UserPickerSheetView: View {
-    let sheet: UserPickerSheet
-    @EnvironmentObject var chatModel: ChatModel
-    @StateObject private var ss = SaveableSettings()
-
-    @State private var loaded = false
-
-    var body: some View {
-        NavigationView {
-            ZStack {
-                if loaded, let currentUser = chatModel.currentUser {
-                    switch sheet {
-                    case .address:
-                        UserAddressView(shareViaProfile: currentUser.addressShared)
-                    case .chatPreferences:
-                        PreferencesView(
-                            profile: currentUser.profile,
-                            preferences: currentUser.fullPreferences,
-                            currentPreferences: currentUser.fullPreferences
-                        )
-                    case .chatProfiles:
-                        UserProfilesView()
-                    case .currentProfile:
-                        UserProfile()
-                    case .useFromDesktop:
-                        ConnectDesktopView()
-                    case .settings:
-                        SettingsView()
-                    }
-                }
-                Color.clear // Required for list background to be rendered during loading
-            }
-            .navigationTitle(sheet.navigationTitle)
-            .navigationBarTitleDisplayMode(.large)
-            .modifier(ThemedBackground(grouped: true))
-        }
-        .overlay {
-            if let la = chatModel.laRequest {
-                LocalAuthView(authRequest: la)
-            }
-        }
-        .task {
-            withAnimation(
-                .easeOut(duration: 0.1),
-                { loaded = true }
-            )
-        }
-        .onDisappear {
-            if serversCanBeSaved(
-                ss.servers.currUserServers,
-                ss.servers.userServers,
-                ss.servers.serverErrors
-            ) {
-                showAlert(
-                    title: NSLocalizedString("Save servers?", comment: "alert title"),
-                    buttonTitle: NSLocalizedString("Save", comment: "alert button"),
-                    buttonAction: { saveServers($ss.servers.currUserServers, $ss.servers.userServers) },
-                    cancelButton: true
-                )
-            }
-            if let saveProfile = ss.profileSave {
-                showAlert(
-                    title: NSLocalizedString("Save your profile?", comment: "alert title"),
-                    message: NSLocalizedString("Your profile was changed. If you save it, the updated profile will be sent to all your contacts.", comment: "alert message"),
-                    buttonTitle: NSLocalizedString("Save (and notify contacts)", comment: "alert button"),
-                    buttonAction: saveProfile,
-                    cancelButton: true
-                )
-            }
-        }
-        .environmentObject(ss)
-    }
-}
-
-// Spec: spec/client/chat-list.md#ChatListView
 struct ChatListView: View {
-    @EnvironmentObject var chatModel: ChatModel
-    @StateObject private var connectProgressManager = ConnectProgressManager.shared
-    @ObservedObject private var badgeModel = BadgeModel.shared
-    @EnvironmentObject var theme: AppTheme
-    @Binding var activeUserPickerSheet: UserPickerSheet?
-    @State private var showNewChatSheet = false
-    @State private var showGetStakeSheet = false
-    @State private var searchMode = false
-    @FocusState private var searchFocussed
-    @State private var searchText = ""
-    @State private var searchShowingSimplexLink = false
-    @State private var searchChatFilteredBySimplexLink: Set<String> = []
-    @State private var scrollToSearchBar = false
-    @State private var userPickerShown: Bool = false
-    @State private var sheet: SomeSheet<AnyView>? = nil
-    @StateObject private var chatTagsModel = ChatTagsModel.shared
-    @State private var scrollToItemId: ChatItem.ID? = nil
-
-    // iOS 15 is required it to show/hide toolbar while chat is hidden/visible
-    @State private var viewOnScreen = true
-
-    @AppStorage(GROUP_DEFAULT_ONE_HAND_UI, store: groupDefaults) private var oneHandUI = true
+    @AppStorage(GROUP_DEFAULT_ONE_HAND_UI, store: groupDefaults) private var oneHandUI = false
     @AppStorage(DEFAULT_ONE_HAND_UI_CARD_SHOWN) private var oneHandUICardShown = false
     @AppStorage(DEFAULT_ADDRESS_CREATION_CARD_SHOWN) private var addressCreationCardShown = false
     @AppStorage(DEFAULT_SUPPORTER_BANNER_SHOWN) private var supporterBannerShown = false
@@ -181,28 +33,52 @@ struct ChatListView: View {
     @AppStorage(DEFAULT_GET_STAKE_BANNER_TAPPED) private var getStakeBannerTapped = false
     @AppStorage(DEFAULT_GET_STAKE_BANNER_DISMISSED) private var getStakeBannerDismissed = false
     @AppStorage(DEFAULT_TOOLBAR_MATERIAL) private var toolbarMaterial = ToolbarMaterial.defaultMaterial
+    @State private var showNewChatSheet = false
+    @State private var showProfilerWheel = false
+    @State private var showGetStakeSheet = false
+    @State private var searchMode = false
+    @FocusState private var searchFocussed
+    @State private var searchText = ""
+    @State private var searchShowingPopopxLink = false
+    @State private var searchChatFilteredByPopopxLink: String? = nil
+    @State private var scrollToSearchBar = false
+    @State private var userPickerShown: Bool = false
+    @State private var tagsExpanded: Bool = false
+    @State private var sheet: SomeSheet<AnyView>? = nil
+    @ObservedObject private var chatTagsModel = ChatTagsModel.shared
+    @ObservedObject private var badgeModel = BadgeModel.shared
+    @State private var scrollToItemId: ChatItem.ID? = nil
     @State private var showBadgesSheet = false
-    
+
+    // iOS 15 is required it to show/hide toolbar while chat is hidden/visible
+    @State private var viewOnScreen = true
+
+    @EnvironmentObject var chatModel: ChatModel
+    @ObservedObject private var connectProgressManager = ConnectProgressManager.shared
+    @EnvironmentObject var theme: AppTheme
+    @Binding var activeUserPickerSheet: UserPickerSheet?
+    var onSwitchToProfileTab: (() -> Void)? = nil
+    var onSwitchToMesh: (() -> Void)? = nil
+    var onSwitchToDiscover: (() -> Void)? = nil
+
     // Spec: spec/client/chat-list.md#body
     var body: some View {
-        if #available(iOS 16.0, *) {
-            viewBody.scrollDismissesKeyboard(.immediately)
-        } else {
-            viewBody
-        }
+        viewBody.scrollDismissesKeyboard(.immediately)
     }
     
     private var viewBody: some View {
-        ZStack(alignment: oneHandUI ? .bottomLeading : .topLeading) {
-            NavStackCompat(
-                isActive: Binding(
-                    get: { chatModel.chatId != nil },
-                    set: { active in
-                        if !active { chatModel.chatId = nil }
-                    }
-                ),
-                destination: chatView
-            ) { chatListView }
+        ZStack {
+            NavigationLink(value: true) { EmptyView() }
+            chatListView
+            ChatPopOverlayView()
+            if showProfilerWheel {
+                RevolverWheelView(isPresented: $showProfilerWheel, onSwitchToProfileTab: onSwitchToProfileTab)
+                    .zIndex(100)
+                    .allowsHitTesting(showProfilerWheel)
+            }
+        }
+        .navigationDestination(for: Bool.self) { show in
+            if show { chatView() }
         }
         .modifier(
             Sheet(isPresented: $userPickerShown) {
@@ -216,7 +92,6 @@ struct ChatListView: View {
         )
         .appSheet(isPresented: $showNewChatSheet) {
             NewChatSheet()
-                .environment(\EnvironmentValues.refresh as! WritableKeyPath<EnvironmentValues, RefreshAction?>, nil)
         }
         .appSheet(isPresented: $showBadgesSheet) {
             NavigationView {
@@ -224,11 +99,8 @@ struct ChatListView: View {
                     .modifier(ThemedBackground())
             }
         }
-        .appSheet(isPresented: $showGetStakeSheet) {
-            GetStakeView(fromSettings: false, showFirstImage: true)
-        }
-        .onChange(of: activeUserPickerSheet) {
-            if $0 != nil {
+        .onChange(of: activeUserPickerSheet) { _, newValue in
+            if newValue != nil {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     userPickerShown = false
                 }
@@ -241,32 +113,27 @@ struct ChatListView: View {
         let tm = ToolbarMaterial.material(toolbarMaterial)
         return withToolbar(tm) {
             chatList
-                .background(theme.colors.background)
+                .background(Color.clear)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarHidden(searchMode || oneHandUI)
+                // FIXED: Keep navigation bar visible during search for consistent back button access
+                // Previously hid nav bar completely, violating iOS HIG navigation consistency
         }
-        .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-        .onAppear {
-            if #unavailable(iOS 16.0), !viewOnScreen {
-                viewOnScreen = true
-            }
-        }
+        // REMOVED: .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
+        // Vertical flip created cognitive disorientation and violated iOS HIG
+        // Now using proper safe area adjustments instead
         .onDisappear {
             activeUserPickerSheet = nil
-            if #unavailable(iOS 16.0) {
-                viewOnScreen = false
-            }
         }
         .refreshable {
             AlertManager.shared.showAlert(Alert(
-                title: Text("Reconnect servers?"),
-                message: Text("Reconnect all connected servers to force message delivery. It uses additional traffic."),
-                primaryButton: .default(Text("Ok")) {
+                title: Text(NSLocalizedString("Reconnect servers?", comment: "")),
+                message: Text(NSLocalizedString("Reconnect all connected servers to force message delivery. It uses additional traffic.", comment: "")),
+                primaryButton: .default(Text(NSLocalizedString("Ok", comment: ""))) {
                     Task {
                         do {
                             try await reconnectAllServers()
                         } catch let error {
-                            AlertManager.shared.showAlertMsg(title: "Error", message: "\(responseError(error))")
+                            AlertManager.shared.showAlertMsg(title: LocalizedStringKey(NSLocalizedString("Error", comment: "alert title")), message: LocalizedStringKey(String.localizedStringWithFormat(NSLocalizedString("Error: %@", comment: "error message"), responseError(error))))
                         }
                     }
                 },
@@ -274,19 +141,12 @@ struct ChatListView: View {
             ))
         }
         .safeAreaInset(edge: .top) {
-            if oneHandUI { Divider().background(tm) }
-        }
-        .safeAreaInset(edge: .bottom) {
             if oneHandUI {
-                Divider().padding(.bottom, Self.hasHomeIndicator ? 0 : 8).background(tm)
+                GlassDivider()
             }
         }
         .sheet(item: $sheet) { sheet in
-            if #available(iOS 16.0, *) {
-                sheet.content.presentationDetents([.fraction(sheet.fraction)])
-            } else {
-                sheet.content
-            }
+            sheet.content.presentationDetents([.fraction(sheet.fraction)])
         }
     }
     
@@ -298,87 +158,46 @@ struct ChatListView: View {
     }()
     
     @ViewBuilder func withToolbar(_ material: Material, content: () -> some View) -> some View {
-        if #available(iOS 16.0, *) {
-            if oneHandUI {
-                content()
-                    .toolbarBackground(.hidden, for: .bottomBar)
-                    .toolbar { bottomToolbar }
-            } else {
-                content()
-                    .toolbarBackground(.automatic, for: .navigationBar)
-                    .toolbarBackground(material)
-                    .toolbar { topToolbar }
-            }
-        } else {
-            if oneHandUI {
-                content().toolbar { bottomToolbarGroup() }
-            } else {
-                content().toolbar { topToolbar }
-            }
-        }
+        content()
+            .toolbarBackground(.automatic, for: .navigationBar)
+            .toolbarBackground(material)
+            .toolbar { topToolbar }
+            .navigationTitle(NSLocalizedString("chats_nav_title", comment: "Chats navigation title"))
+            .navigationBarTitleDisplayMode(.inline)
     }
-    
+
     @ToolbarContentBuilder var topToolbar: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) { leadingToolbarItem }
-        ToolbarItem(placement: .principal) { if !shouldShowOnboarding { SubsStatusIndicator() } }
-        ToolbarItem(placement: .topBarTrailing) { trailingToolbarItem }
-    }
-
-    @ToolbarContentBuilder var bottomToolbar: some ToolbarContent {
-        let padding: Double = Self.hasHomeIndicator ? 0 : 14
-        ToolbarItem(placement: .bottomBar) {
-            HStack {
-                leadingToolbarItem.padding(.bottom, padding)
-                Spacer()
-                if !shouldShowOnboarding {
-                    SubsStatusIndicator().padding(.bottom, padding)
-                    Spacer()
-                }
-                trailingToolbarItem.padding(.bottom, padding)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture { scrollToSearchBar = true }
+        ToolbarItem(placement: .navigationBarLeading) {
+            PXProfilerAvatar(showProfilerWheel: $showProfilerWheel, onSwitchToProfileTab: onSwitchToProfileTab)
+                .frame(width: 36, height: 36)
         }
-    }
-
-    @ToolbarContentBuilder func bottomToolbarGroup() -> some ToolbarContent {
-        let padding: Double = Self.hasHomeIndicator ? 0 : 14
-        ToolbarItemGroup(placement: viewOnScreen ? .bottomBar : .principal) {
-            leadingToolbarItem.padding(.bottom, padding)
-            Spacer()
-            if !shouldShowOnboarding {
-                SubsStatusIndicator().padding(.bottom, padding)
-                Spacer()
-            }
-            trailingToolbarItem.padding(.bottom, padding)
+        ToolbarItem(placement: .principal) {
+            BrandTitleView()
         }
-    }
-
-    @ViewBuilder var leadingToolbarItem: some View {
-        let user = chatModel.currentUser ?? User.sampleData
-        ZStack(alignment: .topTrailing) {
-            ProfileImage(imageStr: user.image, size: 32, color: Color(uiColor: .quaternaryLabel))
-                .padding([.top, .trailing], 3)
-            let allRead = chatModel.users
-                .filter { u in !u.user.activeUser && !u.user.hidden }
-                .allSatisfy { u in u.unreadCount == 0 }
-            if !allRead {
-                unreadBadge(size: 12)
+        ToolbarItem(placement: .navigationBarTrailing) {
+            HStack(spacing: 10) {
+                HeaderNeedlePinView()
+                QuickActionButton(showNewChatSheet: $showNewChatSheet)
             }
         }
-        .onTapGesture {
-            userPickerShown = true
+        ToolbarItem(placement: .topBarTrailing) {
+            if chatModel.chatRunning == .some(false) {
+                chatStoppedIcon()
+                    .accessibilityLabel(NSLocalizedString("Service stopped", comment: "Accessibility label for stopped service indicator"))
+            }
         }
     }
     
     @ViewBuilder var trailingToolbarItem: some View {
         switch chatModel.chatRunning {
         case .some(true): NewChatMenuButton(showNewChatSheet: $showNewChatSheet)
-        case .some(false): chatStoppedIcon()
+        case .some(false):
+            chatStoppedIcon()
+                .accessibilityLabel(NSLocalizedString("Service stopped", comment: "Accessibility label for stopped service indicator"))
         case .none: EmptyView()
         }
     }
-    
+
     // the onboarding cards replace the whole chat list, and the support-ended banner lives in the
     // list - a lapsed supporter is not a newcomer, and must be told even with no conversations yet
     private var shouldShowOnboarding: Bool {
@@ -407,14 +226,19 @@ struct ChatListView: View {
         }
     }
 
-    private func showSupportSimpleXDismissAlert() {
+    private func showSupportPopopxDismissAlert() {
         showAlert(
-            title: NSLocalizedString("Support SimpleX", comment: "alert title"),
-            message: NSLocalizedString("You can support SimpleX later in Settings.", comment: "alert message"),
+            title: NSLocalizedString("Support POPOPX", comment: "alert title"),
+            message: NSLocalizedString("You can support POPOPX later in Settings.", comment: "alert message"),
             buttonTitle: NSLocalizedString("Ok", comment: "alert button"),
             buttonAction: { withAnimation { supporterBannerShown = true } },
             cancelButton: false
         )
+    }
+
+    private func openGetStake() {
+        getStakeBannerTapped = true
+        showGetStakeSheet = true
     }
 
     private var hasConversations: Bool {
@@ -425,159 +249,59 @@ struct ChatListView: View {
             case .group: return true
             case .contactRequest: return false
             case .contactConnection: return false
+            case .meshPeer: return true
+            case .meshGroup: return true
             case .invalidJSON: return false
             }
         }
     }
 
     @ViewBuilder private var chatList: some View {
-        if shouldShowOnboarding {
-            VStack(spacing: 0) {
-                ConnectOnboardingView()
-                if chatModel.bannerSlotFree(for: .getStake) && isInUS && !getStakeBannerDismissed {
-                    GetStakeBanner(showDismiss: false, onTap: openGetStake, onDismiss: {})
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 8)
-                        .onAppear { chatModel.chatListBanner = .getStake }
-                }
-            }
-            .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-            .modifier(ThemedBackground())
-        } else {
-            chatListContent
-        }
-    }
-
-    private func openGetStake() {
-        getStakeBannerTapped = true
-        showGetStakeSheet = true
+        chatListContent
     }
 
     private var chatListContent: some View {
         let cs = filteredChats()
+        let meshChats = cs.filter { isMeshChat($0) }
+        let regularChats = cs.filter { !isMeshChat($0) }
         return ZStack {
+            CosmicAbyssBackground()
             ScrollViewReader { scrollProxy in
-                List {
-                    if !chatModel.chats.isEmpty {
-                        ChatListSearchBar(
-                            searchMode: $searchMode,
-                            searchFocussed: $searchFocussed,
-                            searchText: $searchText,
-                            searchShowingSimplexLink: $searchShowingSimplexLink,
-                            searchChatFilteredBySimplexLink: $searchChatFilteredBySimplexLink,
-                            parentSheet: $sheet
-                        )
-                        .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
-                        .frame(maxWidth: .infinity)
-                        .padding(.top, oneHandUI ? 8 : 0)
-                        .id("searchBar")
-                    }
-                    if !oneHandUICardShown {
-                        OneHandUICard()
-                            .padding(.vertical, 6)
-                            .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                    }
-                    // one slot: a badge the user paid for ending outranks the pitch to get one
-                    if supportEnded, let alert = badgeModel.alert {
-                        SupportSimpleXBanner(
-                            title: "Your badge expired",
-                            subtitle: "Your badge expired on \(alert.dateText).",
-                            onTap: { showBadgesSheet = true },
-                            onDismiss: { showBadgeAlertDismissAlert(NSLocalizedString("Your badge expired", comment: "alert title")) }
-                        )
-                            .padding(.vertical, 3)
-                            .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                            .zIndex(1)
-                            .onAppear { chatModel.chatListBanner = .badgeExpired }
-                    } else if badgeIssueFailed {
-                        SupportSimpleXBanner(
-                            title: "Badge renewal failed",
-                            subtitle: "Tap for details",
-                            warning: true,
-                            onTap: { showBadgesSheet = true },
-                            onDismiss: { showBadgeAlertDismissAlert(NSLocalizedString("Badge renewal failed", comment: "alert title")) }
-                        )
-                            .padding(.vertical, 3)
-                            .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                            .zIndex(1)
-                            .onAppear { chatModel.chatListBanner = .badgeIssueFailed }
-                    // noShownBadge is false until the badge state loads: the pitch must not lock the slot and then
-                    // be hidden by a supporter's badge arriving a moment later, leaving the slot empty for the session
-                    } else if chatModel.bannerSlotFree(for: .badgePitch) && !supporterBannerShown && noShownBadge() && chatModel.chats.count > 3 {
-                        SupportSimpleXBanner(
-                            showDismiss: supporterBannerTapped,
-                            onTap: {
-                                supporterBannerTapped = true
-                                showBadgesSheet = true
-                            },
-                            onDismiss: showSupportSimpleXDismissAlert
-                        )
-                            .padding(.vertical, 3)
-                            .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                            .zIndex(1)
-                            .onAppear { chatModel.chatListBanner = .badgePitch }
-                    } else if chatModel.bannerSlotFree(for: .getStake) && isInUS && !getStakeBannerDismissed {
-                        GetStakeBanner(
-                            showDismiss: getStakeBannerTapped && !chatModel.chats.isEmpty,
-                            onTap: openGetStake,
-                            onDismiss: { withAnimation { getStakeBannerDismissed = true } }
-                        )
-                            .padding(.vertical, 3)
-                            .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                            .zIndex(1)
-                            .onAppear { chatModel.chatListBanner = .getStake }
-                    }
-                    if #available(iOS 16.0, *) {
-                        ForEach(cs, id: \.viewId) { chat in
-                            ChatListNavLink(chat: chat, parentSheet: $sheet)
-                                .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                                .padding(.trailing, -16)
-                                .disabled(chatModel.chatRunning != true || chatModel.deletedChats.contains(chat.chatInfo.id))
-                                .listRowBackground(Color.clear)
-                        }
-                        .offset(x: -8)
-                    } else {
-                        ForEach(cs, id: \.viewId) { chat in
-                            ChatListNavLink(chat: chat,  parentSheet: $sheet)
-                            .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets())
-                            .background { theme.colors.background } // Hides default list selection colour
-                            .disabled(chatModel.chatRunning != true || chatModel.deletedChats.contains(chat.chatInfo.id))
-                        }
-                    }
-                    if !addressCreationCardShown && hasConversations {
-                        ConnectBannerCard()
-                            .padding(.vertical, 6)
-                            .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                    }
+                ScrollView {
+                    chatListStack(cs: cs, meshChats: meshChats, regularChats: regularChats)
+                        .padding(.vertical, 8)
                 }
-                .listStyle(.plain)
-                .onChange(of: chatModel.chatId) { currentChatId in
+                .scrollContentBackground(.hidden)
+                .safeAreaInset(edge: .bottom) {
+                    Color.clear.frame(height: 62)
+                }
+                .refreshable {
+                    AlertManager.shared.showAlert(Alert(
+                        title: Text(NSLocalizedString("Reconnect servers?", comment: "")),
+                        message: Text(NSLocalizedString("Reconnect all connected servers to force message delivery. It uses additional traffic.", comment: "")),
+                        primaryButton: .default(Text(NSLocalizedString("Ok", comment: ""))) {
+                            Task {
+                                do {
+                                    try await reconnectAllServers()
+                                } catch let error {
+                                    AlertManager.shared.showAlertMsg(title: LocalizedStringKey(NSLocalizedString("Error", comment: "alert title")), message: LocalizedStringKey(String.localizedStringWithFormat(NSLocalizedString("Error: %@", comment: "error message"), responseError(error))))
+                                }
+                            }
+                        },
+                        secondaryButton: .cancel()
+                    ))
+                }
+                .onChange(of: chatModel.chatId) {_,  currentChatId in
                     if let chatId = chatModel.chatToTop, currentChatId != chatId {
                         chatModel.chatToTop = nil
                         chatModel.popChat(chatId)
                     }
                     stopAudioPlayer()
                 }
-                .onChange(of: chatModel.currentUser?.userId) { _ in
+                .onChange(of: chatModel.currentUser?.userId) {_, _ in
                     stopAudioPlayer()
                 }
-                .onChange(of: scrollToSearchBar) { scrollToSearchBar in
+                .onChange(of: scrollToSearchBar) {_,  scrollToSearchBar in
                     if scrollToSearchBar {
                         Task { self.scrollToSearchBar = false }
                         withAnimation { scrollProxy.scrollTo("searchBar") }
@@ -586,31 +310,219 @@ struct ChatListView: View {
             }
             if cs.isEmpty && !chatModel.chats.isEmpty {
                 noChatsView()
-                    .scaleEffect(x: 1, y: oneHandUI ? -1 : 1, anchor: .center)
                     .foregroundColor(.secondary)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func chatListStack(cs: [Chat], meshChats: [Chat], regularChats: [Chat]) -> some View {
+        LazyVStack(spacing: 6) {
+            if !chatModel.chats.isEmpty {
+                ChatListSearchBar(
+                    searchMode: $searchMode,
+                    searchFocussed: $searchFocussed,
+                    searchText: $searchText,
+                    searchShowingPopopxLink: $searchShowingPopopxLink,
+                    searchChatFilteredByPopopxLink: $searchChatFilteredByPopopxLink,
+                    tagsExpanded: $tagsExpanded,
+                    parentSheet: $sheet
+                )
+                .frame(maxWidth: .infinity)
+                .padding(.top, oneHandUI ? 12 : 0)
+                .padding(.bottom, 4)
+                .id("searchBar")
+            }
+            // one slot: a badge the user paid for ending outranks the pitch to get one
+            if supportEnded, let alert = badgeModel.alert {
+                SupportPopopxBanner(
+                    title: "Your badge expired",
+                    subtitle: "Your badge expired on \(alert.dateText).",
+                    onTap: { showBadgesSheet = true },
+                    onDismiss: { showBadgeAlertDismissAlert(NSLocalizedString("Your badge expired", comment: "alert title")) }
+                )
+                    .padding(.vertical, 3)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .zIndex(1)
+                    .onAppear { chatModel.chatListBanner = .badgeExpired }
+            } else if badgeIssueFailed {
+                SupportPopopxBanner(
+                    title: "Badge renewal failed",
+                    subtitle: "Tap for details",
+                    warning: true,
+                    onTap: { showBadgesSheet = true },
+                    onDismiss: { showBadgeAlertDismissAlert(NSLocalizedString("Badge renewal failed", comment: "alert title")) }
+                )
+                    .padding(.vertical, 3)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .zIndex(1)
+                    .onAppear { chatModel.chatListBanner = .badgeIssueFailed }
+            // noShownBadge is false until the badge state loads: the pitch must not lock the slot and then
+            // be hidden by a supporter's badge arriving a moment later, leaving the slot empty for the session
+            } else if chatModel.bannerSlotFree(for: .badgePitch) && !supporterBannerShown && noShownBadge() && chatModel.chats.count > 3 {
+                SupportPopopxBanner(
+                    showDismiss: supporterBannerTapped,
+                    onTap: {
+                        supporterBannerTapped = true
+                        showBadgesSheet = true
+                    },
+                    onDismiss: showSupportPopopxDismissAlert
+                )
+                    .padding(.vertical, 3)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .zIndex(1)
+                    .onAppear { chatModel.chatListBanner = .badgePitch }
+            } else if chatModel.bannerSlotFree(for: .getStake) && isInUS && !getStakeBannerDismissed {
+                GetStakeBanner(
+                    showDismiss: getStakeBannerTapped && !chatModel.chats.isEmpty,
+                    onTap: openGetStake,
+                    onDismiss: { withAnimation { getStakeBannerDismissed = true } }
+                )
+                    .padding(.vertical, 3)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .zIndex(1)
+                    .onAppear { chatModel.chatListBanner = .getStake }
+            }
+            if !meshChats.isEmpty {
+                HStack(spacing: 8) {
+                    Image(systemName: "antenna.radiowaves.left.and.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(Color(hex: "#6E25C4").opacity(0.8))
+                    Text(NSLocalizedString("chat_list_mesh_section", comment: "Mesh section header"))
+                        .font(.caption.weight(.bold))
+                        .foregroundColor(Color(hex: "#6E25C4").opacity(0.9))
+                        .textCase(.uppercase)
+                    Rectangle()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color(hex: "#6E25C4").opacity(0.3), .clear],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(height: 0.5)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 8)
+                .padding(.bottom, 4)
+
+                ForEach(meshChats, id: \.viewId) { chat in
+                    ChatBubbleRow(chat: chat, parentSheet: $sheet)
+                        .disabled(chatModel.chatRunning != true || chatModel.deletedChats.contains(chat.chatInfo.id))
+                }
+            }
+            ForEach(regularChats, id: \.viewId) { chat in
+                ChatBubbleRow(chat: chat, parentSheet: $sheet)
+                    .disabled(chatModel.chatRunning != true || chatModel.deletedChats.contains(chat.chatInfo.id))
             }
         }
     }
     
     @ViewBuilder private func noChatsView() -> some View {
-        if searchString().isEmpty {
-            switch chatTagsModel.activeFilter {
-            case .presetTag: Text("No filtered chats") // this should not happen
-            case let .userTag(tag): Text("No chats in list \(tag.chatTagText)")
-            case .unread:
-                Button {
-                    chatTagsModel.activeFilter = nil
-                } label: {
-                    HStack {
-                        Image(systemName: "line.3.horizontal.decrease")
-                        Text("No unread chats")
+        VStack(spacing: 16) {
+            if searchString().isEmpty {
+                switch chatTagsModel.activeFilter {
+                case .presetTag:
+                    gradientIcon("tag.slash", size: 48)
+                case let .userTag(tag):
+                    gradientIcon("tag.slash", size: 48)
+                    Text(verbatim: String(format: NSLocalizedString("no_chats_in_list", comment: "No chats in list"), tag.chatTagText))
+                        .font(.system(size: 16))
+                        .foregroundStyle(.secondary)
+                    Button {
+                        chatTagsModel.activeFilter = nil
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "xmark.circle.fill")
+                            Text(NSLocalizedString("clear_filter", comment: "Button to clear active filter"))
+                        }
+                        .font(.system(size: 12))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .background(Color.primary.opacity(0.08))
+                        .cornerRadius(12)
                     }
+                case .unread:
+                    gradientIcon("bubble.left.slash", size: 48)
+                    Text(LocalizedStringKey("No unread chats"))
+                        .font(.system(size: 16))
+                        .foregroundStyle(.secondary)
+                    Button {
+                        chatTagsModel.activeFilter = nil
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "line.3.horizontal.decrease")
+                            Text(NSLocalizedString("show_all_chats", comment: "Button to show all chats"))
+                        }
+                        .font(.system(size: 12))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .background(Color.primary.opacity(0.08))
+                        .cornerRadius(12)
+                    }
+                case .none:
+                    gradientIcon("bubble.left.and.bubble.right", size: 56, glow: true)
+                    Text(LocalizedStringKey(NSLocalizedString("chat_list_no_chats_yet", comment: "")))
+                        .font(.system(size: 28, weight: .semibold))
+                        .foregroundStyle(.primary)
+                    Text(NSLocalizedString("start_conversation_hint", comment: "Hint text when no chats exist"))
+                        .font(.system(size: 16))
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
+                    Button {
+                        showNewChatSheet = true
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "plus.circle.fill")
+                            Text(NSLocalizedString("new_chat_button", comment: "Button to start new chat"))
+                        }
+                        .font(.system(size: 16, weight: .semibold))
+                    }
+                    .buttonStyle(QuantumButtonStyle())
+                    .padding(.top, 12)
                 }
-            case .none: Text("No chats")
+            } else {
+                gradientIcon("magnifyingglass", size: 48)
+                Text(LocalizedStringKey("No chats found"))
+                    .font(.system(size: 16))
+                    .foregroundStyle(.secondary)
+                Text(NSLocalizedString("try_different_search", comment: "Hint for empty search results"))
+                    .font(.system(size: 12))
+                    .foregroundStyle(.tertiary)
             }
-        } else {
-            Text("No chats found")
         }
+        .padding(.vertical, 32)
+        .padding(.horizontal, 24)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.primary.opacity(0.08))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(
+                    QuantumGlass.iridescentBorderGradient(opacity: 0.12),
+                    lineWidth: 0.5
+                )
+        )
+        .padding(.horizontal, 20)
+    }
+
+    private func gradientIcon(_ name: String, size: CGFloat, glow: Bool = false) -> some View {
+        Image(systemName: name)
+            .font(.system(size: size, weight: .light))
+            .foregroundStyle(
+                LinearGradient(
+                    colors: [Color(hex: "#6E25C4").opacity(0.7), Color(hex: "#00FFD2").opacity(0.5)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .shadow(color: glow ? Color(hex: "#6E25C4").opacity(0.3) : .clear, radius: 12)
     }
 
     
@@ -639,14 +551,14 @@ struct ChatListView: View {
         VoiceItemState.smallView.values.forEach { $0.audioPlayer?.stop() }
         VoiceItemState.smallView = [:]
     }
-
+    
     // Spec: spec/client/chat-list.md#filteredChats
     private func filteredChats() -> [Chat] {
-        if !searchChatFilteredBySimplexLink.isEmpty {
-            return chatModel.chats.filter { searchChatFilteredBySimplexLink.contains($0.id) }
+        if let linkChatId = searchChatFilteredByPopopxLink {
+            return chatModel.chats.filter { $0.id == linkChatId }
         } else {
             let s = searchString()
-            return s == ""
+            let simpleChats: [Chat] = s == ""
             ? chatModel.chats.filter { chat in
                 !chat.chatInfo.chatDeleted && !chat.chatInfo.contactCard && filtered(chat)
             }
@@ -664,11 +576,23 @@ struct ChatListView: View {
                 case .local: viewNameContains(cInfo, s)
                 case .contactRequest: viewNameContains(cInfo, s)
                 case let .contactConnection(conn): conn.localAlias.localizedLowercase.contains(s)
+                case .meshPeer: false
+                case .meshGroup: false
                 case .invalidJSON: false
                 }
             }
+            // Merge mesh conversations when mesh transport is enabled
+            if chatModel.meshTransportEnabled {
+                let meshFiltered: [Chat] = s == ""
+                    ? chatModel.meshConversations
+                    : chatModel.meshConversations.filter { chat in
+                        chat.chatInfo.chatViewName.localizedLowercase.contains(s)
+                    }
+                return meshFiltered + simpleChats
+            }
+            return simpleChats
         }
-        
+
         func filtered(_ chat: Chat) -> Bool {
             switch chatTagsModel.activeFilter {
             case let .presetTag(tag): presetTagMatchesChat(tag, chat.chatInfo, chat.chatStats)
@@ -677,7 +601,7 @@ struct ChatListView: View {
             case .none: true
             }
         }
-        
+
         func viewNameContains(_ cInfo: ChatInfo, _ s: String) -> Bool {
             cInfo.chatViewName.localizedLowercase.contains(s)
         }
@@ -685,7 +609,12 @@ struct ChatListView: View {
     
     // Spec: spec/client/chat-list.md#searchString
     func searchString() -> String {
-        searchShowingSimplexLink ? "" : searchText.trimmingCharacters(in: .whitespaces).localizedLowercase
+        searchShowingPopopxLink ? "" : searchText.trimmingCharacters(in: .whitespaces).localizedLowercase
+    }
+
+    private func isMeshChat(_ chat: Chat) -> Bool {
+        let chatId = chat.chatInfo.id
+        return chatId.hasPrefix("mesh:") || chatId.hasPrefix("meshgroup:")
     }
 }
 
@@ -702,7 +631,7 @@ struct SubsStatusIndicator: View {
             showServersSummary = true
         } label: {
             HStack(spacing: 4) {
-                Text("Chats").foregroundStyle(Color.primary).fixedSize().font(.headline)
+                Text(LocalizedStringKey("Chats")).foregroundStyle(Color.primary).fixedSize().font(.headline)
                 SubscriptionStatusIndicatorView(subs: subs, hasSess: hasSess)
                 if showSubscriptionPercentage {
                     SubscriptionStatusPercentageView(subs: subs, hasSess: hasSess)
@@ -718,7 +647,6 @@ struct SubsStatusIndicator: View {
         }
         .appSheet(isPresented: $showServersSummary) {
             ServersSummaryView()
-                .environment(\EnvironmentValues.refresh as! WritableKeyPath<EnvironmentValues, RefreshAction?>, nil)
         }
     }
 
@@ -736,7 +664,7 @@ struct SubsStatusIndicator: View {
                         logger.error("getSubsTotal error: \(responseError(error))")
                     }
                 }
-                try? await Task.sleep(nanoseconds: 1_000_000_000) // Sleep for 1 second
+                try? await Task.sleep(nanoseconds: 5_000_000_000) // POPOPX: 5s interval to reduce battery drain (was 1s)
             }
         }
     }
@@ -752,155 +680,165 @@ struct ChatListSearchBar: View {
     @EnvironmentObject var m: ChatModel
     @EnvironmentObject var theme: AppTheme
     @EnvironmentObject var chatTagsModel: ChatTagsModel
-    @StateObject private var connectProgressManager = ConnectProgressManager.shared
+    @ObservedObject private var connectProgressManager = ConnectProgressManager.shared
     @Binding var searchMode: Bool
     @FocusState.Binding var searchFocussed: Bool
     @Binding var searchText: String
-    @Binding var searchShowingSimplexLink: Bool
-    @Binding var searchChatFilteredBySimplexLink: Set<String>
+    @Binding var searchShowingPopopxLink: Bool
+    @Binding var searchChatFilteredByPopopxLink: String?
+    @Binding var tagsExpanded: Bool
     @Binding var parentSheet: SomeSheet<AnyView>?
-    @AppStorage(GROUP_DEFAULT_ONE_HAND_UI, store: groupDefaults) private var oneHandUI = true
     @State private var ignoreSearchTextChange = false
-    // when the search text is a SimpleX name, the string to connect to (with @/# preserved); nil otherwise
-    @State private var connectNameCandidate: String? = nil
-    @State private var nameSearchTask: Task<Void, Never>? = nil
 
     var body: some View {
         VStack(spacing: 12) {
-            // a typed name shows a row to connect to it (as on Android mobile): with the reachable toolbar it
-            // replaces the tags above the search field; in top bar mode the tags stay and it moves below (end of VStack)
-            if oneHandUI, let candidate = connectNameCandidate {
-                ConnectByNameRow(
-                    name: candidate,
-                    searchText: $searchText,
-                    connectNameCandidate: $connectNameCandidate,
-                    searchFocussed: $searchFocussed,
-                    dismiss: false
-                )
-            } else {
+            if tagsExpanded || searchFocussed {
                 ScrollView([.horizontal], showsIndicators: false) { TagsView(parentSheet: $parentSheet, searchText: $searchText) }
+                    .transition(.move(edge: .top).combined(with: .opacity))
             }
-            HStack(spacing: 12) {
+            HStack(spacing: 16) {
                 HStack(spacing: 4) {
                     Image(systemName: "magnifyingglass")
-                    TextField("Search or paste SimpleX link", text: $searchText)
-                        .foregroundColor(searchShowingSimplexLink ? theme.colors.secondary : theme.colors.onBackground)
-                        .disabled(searchShowingSimplexLink)
+                    TextField(NSLocalizedString("Search or paste POPOPX link", comment: ""), text: $searchText)
+                        .foregroundColor(searchShowingPopopxLink ? theme.colors.secondary : theme.colors.onBackground)
+                        .disabled(searchShowingPopopxLink)
                         .focused($searchFocussed)
                         .frame(maxWidth: .infinity)
                     if connectProgressManager.showConnectProgress != nil {
-                        ProgressView()
+                        // Compact connecting indicator with pulsing animation
+                        Circle()
+                            .fill(theme.colors.primary)
+                            .frame(width: 8, height: 8)
+                            .overlay(
+                                Circle()
+                                    .strokeBorder(theme.colors.primary.opacity(0.3), lineWidth: 2)
+                                    .frame(width: 16, height: 16)
+                            )
                     }
                     if !searchText.isEmpty {
-                        Image(systemName: "xmark.circle.fill")
-                            .onTapGesture {
-                                searchText = ""
-                            }
+                        Button {
+                            triggerHapticFeedback(.light)
+                            searchText = ""
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                        }
+                        .buttonStyle(.plain)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Circle())
                     }
                 }
-                .padding(EdgeInsets(top: 7, leading: 7, bottom: 7, trailing: 7))
+                .padding(12)
                 .foregroundColor(theme.colors.secondary)
-                .background(Color(.tertiarySystemFill))
-                .cornerRadius(10.0)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color.primary.opacity(0.08))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .strokeBorder(
+                            QuantumGlass.iridescentBorderGradient(opacity: 0.15),
+                            lineWidth: 0.5
+                        )
+                )
+                .cornerRadius(12)
+                .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.08) : .clear, radius: 8, x: 0, y: 2)
 
                 if searchFocussed {
-                    Text("Cancel")
+                    Text(LocalizedStringKey("Cancel"))
                         .foregroundColor(theme.colors.primary)
                         .onTapGesture {
                             searchText = ""
                             searchFocussed = false
                         }
                 } else if m.chats.count > 0 {
-                    toggleFilterButton()
+                    HStack(spacing: 8) {
+                        tagToggleButton()
+                        toggleFilterButton()
+                    }
                 }
             }
-            if !oneHandUI, let candidate = connectNameCandidate {
-                ConnectByNameRow(
-                    name: candidate,
-                    searchText: $searchText,
-                    connectNameCandidate: $connectNameCandidate,
-                    searchFocussed: $searchFocussed,
-                    dismiss: false
-                )
+        }
+        .onChange(of: searchFocussed) {_,  sf in
+            withAnimation { searchMode = sf }
+            if !sf && searchText.isEmpty {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                    tagsExpanded = false
+                }
             }
         }
-        .onChange(of: searchFocussed) { sf in
-            withAnimation { searchMode = sf }
-        }
-        .onChange(of: searchText) { t in
+        .onChange(of: searchText) {_,  t in
             if ignoreSearchTextChange {
                 ignoreSearchTextChange = false
             } else {
-                let s = t.trimmingCharacters(in: .whitespaces)
-                switch strConnectTarget(s) {
+                switch strConnectTarget(t.trimmingCharacters(in: .whitespaces)) {
                 case let .link(text, _, linkText):
-                    nameSearchTask?.cancel()
-                    nameSearchTask = nil
                     searchFocussed = false
                     ignoreSearchTextChange = true
                     searchText = linkText
-                    searchShowingSimplexLink = true
-                    searchChatFilteredBySimplexLink = []
-                    connectNameCandidate = nil
+                    searchShowingPopopxLink = true
+                    searchChatFilteredByPopopxLink = nil
                     connect(text)
-                default:
-                    // not a link: a recognized SimpleX name shows the connect-by-name row (in place of the
-                    // list tags) and, debounced, resolves locally per keystroke to narrow the list to the
-                    // matching known chat(s); tapping the row connects online. Clear the filter immediately so
-                    // the list falls back to text search until the search returns.
-                    let candidate = nameSearchCandidate(s)
-                    connectNameCandidate = candidate
-                    searchShowingSimplexLink = false
-                    searchChatFilteredBySimplexLink = []
-                    nameSearchTask?.cancel()
-                    nameSearchTask = nil
-                    if let candidate = candidate {
-                        nameSearchTask = Task { @MainActor in
-                            try? await Task.sleep(nanoseconds: 300_000_000)
-                            if Task.isCancelled { return }
-                            // a bare name can be a contact or a channel: search both and keep every match
-                            let targets = candidate.hasPrefix("@") || candidate.hasPrefix("#") ? [candidate] : ["@\(candidate)", "#\(candidate)"]
-                            var ids: [String] = []
-                            for name in targets {
-                                let plan = await apiConnectPlan(connLink: name, resolveMode: .never, inProgress: BoxedValue(false))
-                                if Task.isCancelled { return }
-                                if let id = knownChatId(plan) { ids.append(id) }
-                            }
-                            searchChatFilteredBySimplexLink = Set(ids)
-                            // drop the row only when every searched type is already known locally
-                            if ids.count == targets.count { connectNameCandidate = nil }
-                        }
-                    } else if t != "" {
+                case let .name(nameInfo):
+                    showUnsupportedNameAlert(nameInfo)
+                case .none:
+                    if t != "" {
                         searchFocussed = true
                     } else {
                         ConnectProgressManager.shared.cancelConnectProgress()
                     }
+                    searchShowingPopopxLink = false
+                    searchChatFilteredByPopopxLink = nil
                 }
             }
         }
-        .onChange(of: chatTagsModel.activeFilter) { _ in
+        .onChange(of: chatTagsModel.activeFilter) {_, _ in
             searchText = ""
         }
     }
 
+    private func tagToggleButton() -> some View {
+        return Button {
+            triggerHapticFeedback(.light)
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                tagsExpanded.toggle()
+            }
+        } label: {
+            ZStack {
+                Color.clear
+                    .frame(width: 44, height: 44)
+                Image(systemName: tagsExpanded ? "tag.fill" : "tag")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(tagsExpanded ? theme.colors.primary : theme.colors.secondary)
+                    .frame(width: tagsExpanded ? 20 : 18, height: tagsExpanded ? 20 : 18)
+            }
+            .contentShape(Rectangle())
+        }
+        .accessibilityLabel(tagsExpanded ? NSLocalizedString("Hide tags", comment: "Accessibility label to hide tag filters") : NSLocalizedString("Show tags", comment: "Accessibility label to show tag filters"))
+    }
+
     private func toggleFilterButton() -> some View {
         let showUnread = chatTagsModel.activeFilter == .unread
-        return ZStack {
-            Color.clear
-                .frame(width: 22, height: 22)
-            Image(systemName: showUnread ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(showUnread ? theme.colors.primary : theme.colors.secondary)
-                .frame(width: showUnread ? 22 : 16, height: showUnread ? 22 : 16)
-                .onTapGesture {
-                    if chatTagsModel.activeFilter == .unread {
-                        chatTagsModel.activeFilter = nil
-                    } else {
-                        chatTagsModel.activeFilter = .unread
-                    }
-                }
+        return Button {
+            triggerHapticFeedback(.light)
+            if chatTagsModel.activeFilter == .unread {
+                chatTagsModel.activeFilter = nil
+            } else {
+                chatTagsModel.activeFilter = .unread
+            }
+        } label: {
+            ZStack {
+                Color.clear
+                    .frame(width: 44, height: 44)
+                Image(systemName: showUnread ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(showUnread ? theme.colors.primary : theme.colors.secondary)
+                    .frame(width: showUnread ? 22 : 18, height: showUnread ? 22 : 18)
+            }
+            .contentShape(Rectangle())
         }
+        .accessibilityLabel(showUnread ? NSLocalizedString("Show all chats", comment: "Accessibility label for unread filter button when active") : NSLocalizedString("Show unread chats", comment: "Accessibility label for unread filter button"))
     }
 
     private func connect(_ link: String) {
@@ -912,105 +850,9 @@ struct ChatListSearchBar: View {
                 searchText = ""
                 searchFocussed = false
             },
-            filterKnownContact: { searchChatFilteredBySimplexLink = [$0.id] },
-            filterKnownGroup: { searchChatFilteredBySimplexLink = [$0.id] }
+            filterKnownContact: { searchChatFilteredByPopopxLink = $0.id },
+            filterKnownGroup: { searchChatFilteredByPopopxLink = $0.id }
         )
-    }
-}
-
-// Row shown when the search text is a SimpleX name — in place of the list tags in the chat list, below
-// the search field in the new chat sheet. The @ icon marks a contact name, the tag icon a channel/other
-// name; tapping hides the keyboard, connects online, and clears the field.
-struct ConnectByNameRow: View {
-    @EnvironmentObject var theme: AppTheme
-    var name: String
-    @Binding var searchText: String
-    @Binding var connectNameCandidate: String?
-    @FocusState.Binding var searchFocussed: Bool
-    var dismiss: Bool
-
-    var body: some View {
-        HStack(spacing: 4) {
-            Image(systemName: name.hasPrefix("@") ? "at" : "number")
-                .foregroundColor(theme.colors.primary)
-            Text(String.localizedStringWithFormat(NSLocalizedString("Connect to %@", comment: "new chat action"), name))
-                .foregroundColor(theme.colors.primary)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            searchFocussed = false
-            planAndConnect(
-                name,
-                theme: theme,
-                dismiss: dismiss,
-                cleanup: {
-                    searchText = ""
-                    connectNameCandidate = nil
-                }
-            )
-        }
-    }
-}
-
-// Default top-level part used to complete a bare name typed in the search field (search field only;
-// the message parser and the wire format are unchanged).
-private let DEFAULT_NAME_TLD = "testing"
-// Shortest name that offers the button, so it is discoverable but does not flash on short prefixes.
-private let MIN_NAME_LENGTH = 5
-
-private func isNameLabel(_ s: String) -> Bool {
-    s.count >= 1 && s.count <= 63 && s.range(of: "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$", options: .regularExpression) != nil
-}
-
-// On-device candidate for connecting by SimpleX name: the string sent to the core to resolve it.
-// The chat id a local (.never) search resolved to — a contact, business, or channel — or nil on a miss.
-// A name-resolved chat may be prepared in the store but not yet listed, so add it so the filter can surface it.
-@MainActor
-func knownChatId(_ result: ConnectionPlanResult?) -> String? {
-    guard let plan = result?.connectionPlan else { return nil }
-    let m = ChatModel.shared
-    switch plan {
-    case let .contactAddress(contactAddressPlan):
-        if case let .known(contact) = contactAddressPlan {
-            if m.getContactChat(contact.contactId) == nil {
-                m.addChat(Chat(chatInfo: .direct(contact: contact), chatItems: []))
-            }
-            return contact.id
-        }
-        return nil
-    case let .groupLink(groupLinkPlan):
-        switch groupLinkPlan {
-        case .known(let groupInfo), .ownLink(let groupInfo):
-            if m.getGroupChat(groupInfo.groupId) == nil {
-                m.addChat(Chat(chatInfo: .group(groupInfo: groupInfo, groupChatScope: nil), chatItems: []))
-            }
-            return groupInfo.id
-        default:
-            return nil
-        }
-    default:
-        return nil
-    }
-}
-
-// Mirrors the domain grammar (nameLabelP/mkDomain in SimplexName.hs): an optional @/# prefix, then
-// dot-separated ASCII labels; a dotless word is completed with the default top-level part. Returns
-// the string to send (keeping @/# so the type is preserved), or nil when the text is not a name.
-func nameSearchCandidate(_ str: String) -> String? {
-    let text = str.trimmingCharacters(in: .whitespaces)
-    let prefix: Character? = text.first.flatMap { $0 == "@" || $0 == "#" ? $0 : nil }
-    let core = prefix != nil ? String(text.dropFirst()) : text
-    if core.isEmpty { return nil }
-    let labels = core.split(separator: ".", omittingEmptySubsequences: false)
-    if labels.contains(where: { !isNameLabel(String($0)) }) { return nil }
-    if labels.count > 1 {
-        return text                                            // already has a top-level part
-    } else if core.count >= MIN_NAME_LENGTH {
-        return "\(prefix.map(String.init) ?? "")\(core).\(DEFAULT_NAME_TLD)"
-    } else {
-        return nil
     }
 }
 
@@ -1022,7 +864,7 @@ struct TagsView: View {
     @Binding var searchText: String
 
     var body: some View {
-        HStack {
+        HStack(spacing: 8) {
             tagsView()
         }
     }
@@ -1047,26 +889,65 @@ struct TagsView: View {
         }
         ForEach(chatTagsModel.userTags, id: \.id) { tag in
             let current = tag == selectedTag
-            let color: Color = current ? .accentColor : .secondary
             ZStack {
-                HStack(spacing: 4) {
+                HStack(spacing: 5) {
                     if let emoji = tag.chatTagEmoji {
-                        Text(emoji)
+                        Text(emoji).font(.subheadline)
                     } else {
                         Image(systemName: current ? "tag.fill" : "tag")
-                            .foregroundColor(color)
+                            .font(.system(.footnote).weight(current ? .semibold : .regular))
                     }
-                    ZStack {
-                        let badge = Text(verbatim: (chatTagsModel.unreadTags[tag.chatTagId] ?? 0) > 0 ? " ●" : "").font(.footnote)
-                        (Text(tag.chatTagText).fontWeight(.semibold) + badge).foregroundColor(.clear)
-                        Text(tag.chatTagText).fontWeight(current ? .semibold : .regular).foregroundColor(color) + badge.foregroundColor(theme.colors.primary)
+                    Text(tag.chatTagText).fontWeight(current ? .semibold : .regular)
+                    if (chatTagsModel.unreadTags[tag.chatTagId] ?? 0) > 0 {
+                        Circle()
+                            .fill(theme.colors.primary)
+                            .frame(width: 6, height: 6)
                     }
                 }
+                .font(.subheadline)
+                .foregroundColor(current ? .white : theme.colors.secondary)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 7)
+                .background(
+                    Capsule()
+                        .fill(Color.primary.opacity(0.08))
+                )
+                .background(
+                    Capsule()
+                        .fill(
+                            current
+                            ? AnyShapeStyle(LinearGradient(
+                                colors: [theme.colors.primaryVariant, theme.colors.secondary],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                              ))
+                            : AnyShapeStyle(Color.clear)
+                        )
+                )
+                .overlay(
+                    Capsule()
+                        .strokeBorder(
+                            current ? AnyShapeStyle(theme.colors.primaryVariant.opacity(0.4)) :
+                            AnyShapeStyle(LinearGradient(
+                                colors: [
+                                    Color.white.opacity(isInDarkTheme() ? 0.15 : 0.5),
+                                    Color.white.opacity(isInDarkTheme() ? 0.05 : 0.15)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )),
+                            lineWidth: 0.5
+                        )
+                )
+                .shadow(color: current ? theme.colors.primaryVariant.opacity(0.3) : .clear, radius: 6, x: 0, y: 2)
+                .scaleEffect(current ? 1.04 : 1.0)
+                .animation(.easeInOut(duration: 0.2), value: current)
+                .contentShape(Capsule())
                 .onTapGesture {
                     setActiveFilter(filter: .userTag(tag))
                 }
                 .onLongPressGesture {
-                    let screenHeight = UIScreen.main.bounds.height
+                    let screenHeight = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first { $0.activationState == .foregroundActive }?.screen.bounds.height ?? 800
                     let reservedSpace: Double = 4 * 44 // 2 for padding, 1 for "Create list" and another for extra tag
                     let tagsSpace = Double(max(chatTagsModel.userTags.count, 3)) * 44
                     let fraction = min((reservedSpace + tagsSpace) / screenHeight, 0.62)
@@ -1074,8 +955,8 @@ struct TagsView: View {
                     parentSheet = SomeSheet(
                         content: {
                             AnyView(
-                                NavigationView {
-                                    TagListView(chat: nil)
+                                NavigationStack {
+                                    PXTagFilterList(chat: nil)
                                         .modifier(ThemedBackground(grouped: true))
                                 }
                             )
@@ -1088,10 +969,11 @@ struct TagsView: View {
         }
         
         Button {
+            triggerHapticFeedback(.light)
             parentSheet = SomeSheet(
                 content: {
                     AnyView(
-                        NavigationView {
+                        NavigationStack {
                             TagListEditor()
                         }
                     )
@@ -1102,13 +984,42 @@ struct TagsView: View {
             if chatTagsModel.userTags.isEmpty {
                 HStack(spacing: 4) {
                     Image(systemName: "plus")
-                    Text("Add list")
+                        .font(.system(.footnote).weight(.semibold))
+                    Text(LocalizedStringKey("Add list")).fontWeight(.medium)
                 }
+                .font(.system(size: 12))
+                .foregroundColor(theme.colors.primary)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 7) // Keep asymmetric for button height
+                .background(Capsule().fill(Color.primary.opacity(0.08)))
+                .overlay(
+                    Capsule()
+                        .strokeBorder(
+                            LinearGradient(
+                                colors: [theme.colors.primary.opacity(0.5), theme.colors.primaryVariant.opacity(0.5)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            ),
+                            lineWidth: 0.8
+                        )
+                )
+                .shadow(color: theme.colors.primary.opacity(0.15), radius: 4, x: 0, y: 1)
+                .frame(minHeight: 44) // Ensure minimum touch target
+                .contentShape(Capsule())
             } else {
                 Image(systemName: "plus")
+                    .font(.system(.subheadline).weight(.semibold))
+                    .foregroundColor(theme.colors.primary)
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Color.primary.opacity(0.08)))
+                    .overlay(
+                        Circle()
+                            .strokeBorder(theme.colors.primary.opacity(0.3), lineWidth: 0.8)
+                    )
+                    .contentShape(Circle())
             }
         }
-        .foregroundColor(.secondary)
+        .accessibilityLabel(NSLocalizedString("Create new chat list", comment: "Accessibility label for tag creation button"))
     }
 
     @ViewBuilder private func expandedTagFilterView(_ tag: PresetTag) -> some View {
@@ -1119,16 +1030,51 @@ struct TagsView: View {
         }
         let active = tag == selectedPresetTag
         let (icon, menuIcon, text) = presetTagLabel(tag: tag, active: active)
-        let color: Color = active ? .accentColor : .secondary
 
-        HStack(spacing: 4) {
+        HStack(spacing: 5) {
             Image(systemName: menuIcon ?? icon)
-                .foregroundColor(color)
-            ZStack {
-                Text(text).fontWeight(.semibold).foregroundColor(.clear)
-                Text(text).fontWeight(active ? .semibold : .regular).foregroundColor(color)
-            }
+                .font(.system(.footnote).weight(active ? .semibold : .regular))
+            Text(text).fontWeight(active ? .semibold : .regular)
         }
+        .font(.subheadline)
+        .foregroundColor(active ? .white : theme.colors.secondary)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 7)
+        .background(
+            Capsule()
+                .fill(Color.primary.opacity(0.08))
+        )
+        .background(
+            Capsule()
+                .fill(
+                    active
+                    ? AnyShapeStyle(LinearGradient(
+                        colors: [theme.colors.primary, theme.colors.primaryVariant],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                      ))
+                    : AnyShapeStyle(Color.clear)
+                )
+        )
+        .overlay(
+            Capsule()
+                .strokeBorder(
+                    active ? AnyShapeStyle(theme.colors.primary.opacity(0.4)) :
+                    AnyShapeStyle(LinearGradient(
+                        colors: [
+                            Color.white.opacity(isInDarkTheme() ? 0.15 : 0.5),
+                            Color.white.opacity(isInDarkTheme() ? 0.05 : 0.15)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )),
+                    lineWidth: 0.5
+                )
+        )
+        .shadow(color: active ? theme.colors.primary.opacity(0.35) : .clear, radius: 6, x: 0, y: 2)
+        .scaleEffect(active ? 1.04 : 1.0)
+        .animation(.easeInOut(duration: 0.2), value: active)
+        .contentShape(Capsule())
         .onTapGesture {
             setActiveFilter(filter: .presetTag(tag))
         }
@@ -1148,6 +1094,7 @@ struct TagsView: View {
         } else {
             nil
         }
+        let hasSelection = selectedPresetTag != nil && (selectedPresetTag?.сollapse ?? false)
         Menu {
             if chatTagsModel.activeFilter != nil || !searchText.isEmpty {
                 Button {
@@ -1156,7 +1103,7 @@ struct TagsView: View {
                 } label: {
                     HStack {
                         Image(systemName: "list.bullet")
-                        Text("All")
+                        Text(LocalizedStringKey("All"))
                     }
                 }
             }
@@ -1174,16 +1121,50 @@ struct TagsView: View {
                 }
             }
         } label: {
-            if let tag = selectedPresetTag, tag.сollapse {
-                let (icon, menuIcon, _) = presetTagLabel(tag: tag, active: true)
-                Image(systemName: menuIcon ?? icon)
-                    .foregroundColor(.accentColor)
-            } else {
-                Image(systemName: "list.bullet")
-                    .foregroundColor(.secondary)
+            HStack(spacing: 5) {
+                if let tag = selectedPresetTag, tag.сollapse {
+                    let (icon, menuIcon, _) = presetTagLabel(tag: tag, active: true)
+                    Image(systemName: menuIcon ?? icon)
+                        .font(.system(.footnote).weight(.semibold))
+                } else {
+                    Image(systemName: "list.bullet")
+                        .font(.system(.footnote).weight(.medium))
+                }
             }
+            .foregroundColor(hasSelection ? .white : theme.colors.secondary)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
+            .background(
+                Capsule()
+                    .fill(Color.primary.opacity(0.08))
+            )
+            .background(
+                Capsule()
+                    .fill(hasSelection
+                        ? AnyShapeStyle(LinearGradient(
+                            colors: [theme.colors.primary, theme.colors.primaryVariant],
+                            startPoint: .leading, endPoint: .trailing))
+                        : AnyShapeStyle(Color.clear)
+                    )
+            )
+            .overlay(
+                Capsule()
+                    .strokeBorder(
+                        hasSelection ? AnyShapeStyle(theme.colors.primary.opacity(0.4)) :
+                        AnyShapeStyle(LinearGradient(
+                            colors: [
+                                Color.white.opacity(isInDarkTheme() ? 0.15 : 0.5),
+                                Color.white.opacity(isInDarkTheme() ? 0.05 : 0.15)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )),
+                        lineWidth: 0.5
+                    )
+            )
+            .shadow(color: hasSelection ? theme.colors.primary.opacity(0.35) : .clear, radius: 6, x: 0, y: 2)
         }
-        .frame(minWidth: 28)
+        .frame(minHeight: 32)
     }
     
     private func presetTagLabel(tag: PresetTag, active: Bool) -> (item: String, menu: String?, label: LocalizedStringKey) {
@@ -1211,11 +1192,11 @@ struct TagsView: View {
 func chatStoppedIcon() -> some View {
     Button {
         AlertManager.shared.showAlertMsg(
-            title: "Chat is stopped",
-            message: "You can start chat via app Settings / Database or by restarting the app"
+            title: LocalizedStringKey("Chat is stopped"),
+            message: LocalizedStringKey(NSLocalizedString("chat_list_start_chat_hint", comment: ""))
         )
     } label: {
-        Image(systemName: "exclamationmark.octagon.fill").foregroundColor(.red)
+        Image(systemName: "exclamationmark.octagon.fill").foregroundColor(QuantumColors.error)
     }
 }
 
@@ -1277,8 +1258,14 @@ struct ChatListView_Previews: PreviewProvider {
         return Group {
             ChatListView(activeUserPickerSheet: $userPickerSheet)
                 .environmentObject(chatModel)
+                .environmentObject(AppTheme.shared)
+                .environmentObject(SubscriptionManager.shared)
+                .environmentObject(ComputeStore.shared)
             ChatListView(activeUserPickerSheet: $userPickerSheet)
                 .environmentObject(ChatModel())
+                .environmentObject(AppTheme.shared)
+                .environmentObject(SubscriptionManager.shared)
+                .environmentObject(ComputeStore.shared)
         }
     }
 }

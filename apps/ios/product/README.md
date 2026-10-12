@@ -1,6 +1,6 @@
-# SimpleX Chat iOS -- Product Overview
+# POPOPX Chat iOS -- Product Overview
 
-> SimpleX Chat iOS product specification. Bidirectional code links: product docs reference source files, source files reference product docs.
+> POPOPX Chat iOS product specification. Bidirectional code links: product docs reference source files, source files reference product docs.
 >
 > **Related spec:** [spec/README.md](../spec/README.md) | [spec/architecture.md](../spec/architecture.md)
 
@@ -14,13 +14,13 @@
 
 ## Executive Summary
 
-SimpleX Chat is the first messaging platform with no user identifiers of any kind -- not even random numbers. It provides end-to-end encrypted messaging (with optional post-quantum cryptography), audio/video calls, file sharing, and group communication through a fully decentralized architecture where users control their own SMP relay servers. The iOS app is a native SwiftUI application backed by a Haskell core library.
+POPOPX Chat is the first messaging platform with no user identifiers of any kind -- not even random numbers. It provides end-to-end encrypted messaging (with optional post-quantum cryptography), audio/video calls, file sharing, and group communication through a fully decentralized architecture where users control their own SMP relay servers. The iOS app is a native SwiftUI application backed by a Haskell core library.
 
 ---
 
 ## Vision
 
-SimpleX Chat is the first messaging platform that has no user identifiers -- not even random numbers. It uses double-ratchet end-to-end encryption with optional post-quantum cryptography. The system is fully decentralized with user-controlled SMP relay servers.
+POPOPX Chat is the first messaging platform that has no user identifiers -- not even random numbers. It uses double-ratchet end-to-end encryption with optional post-quantum cryptography. The system is fully decentralized with user-controlled SMP relay servers.
 
 The protocol design ensures that no server or network observer can determine who communicates with whom. Each conversation uses separate unidirectional messaging queues on potentially different servers, and there is no shared identifier between the sender and receiver queues.
 
@@ -43,7 +43,7 @@ Core message composition, delivery, and interaction features.
 
 | Feature | Description | Key Source (Swift) |
 |---------|-------------|--------------------|
-| Text with markdown | Rich text formatting with SimpleX markdown syntax | `Shared/Views/Chat/ComposeMessage/ComposeView.swift` |
+| Text with markdown | Rich text formatting with POPOPX markdown syntax | `Shared/Views/Chat/ComposeMessage/ComposeView.swift` |
 | Images | Compressed inline images (up to 255KB) | `Shared/Views/Chat/ChatItem/CIImageView.swift` |
 | Video | Video message recording and playback | `Shared/Views/Chat/ChatItem/CIVideoView.swift` |
 | Voice messages | Audio recording and playback (5min / 510KB limit) | `Shared/Views/Chat/ChatItem/CIVoiceView.swift` |
@@ -64,14 +64,14 @@ Establishing, managing, and verifying contacts.
 
 | Feature | Description | Key Source (Swift) |
 |---------|-------------|--------------------|
-| Add via SimpleX address | Connect using a SimpleX contact address | `Shared/Views/NewChat/NewChatView.swift` |
+| Add via POPOPX address | Connect using a POPOPX contact address | `Shared/Views/NewChat/NewChatView.swift` |
 | Add via QR code | Scan QR code to establish connection | `Shared/Views/Chat/ScanCodeView.swift` |
 | Contact requests | Accept or reject incoming contact requests | `Shared/Views/ChatList/ContactRequestView.swift` |
 | Local aliases | Set private display names for contacts | `Shared/Views/Chat/ChatInfoView.swift` |
 | Contact verification | Compare security codes out-of-band | `Shared/Views/Chat/VerifyCodeView.swift` |
 | Blocking | Block contacts from sending messages | `Shared/Views/Chat/ChatInfoView.swift` |
 | Incognito mode | Per-contact random profile generation | `Shared/Views/UserSettings/IncognitoHelp.swift` |
-| Bot detection | Identify automated/bot contacts | `SimpleXChat/ChatTypes.swift` |
+| Bot detection | Identify automated/bot contacts | `POPOPXSwitch/ChatTypes.swift` |
 
 ### 3. Groups
 
@@ -81,7 +81,7 @@ Multi-party encrypted conversations with role-based management.
 |---------|-------------|--------------------|
 | Create groups | Create new group with initial members | `Shared/Views/NewChat/AddGroupView.swift` |
 | Invite members | Invite by individual contact or link | `Shared/Views/Chat/Group/AddGroupMembersView.swift` |
-| Member roles | Owner, admin, moderator, member, observer | `SimpleXChat/ChatTypes.swift` |
+| Member roles | Owner, admin, moderator, member, observer | `POPOPXSwitch/ChatTypes.swift` |
 | Member admission | Queue-based admission with review workflow | `Shared/Views/Chat/Group/MemberAdmissionView.swift` |
 | Group links | Shareable invite links for groups | `Shared/Views/Chat/Group/GroupLinkView.swift` |
 | Business chat mode | Structured business communication groups | `Shared/Views/Chat/Group/GroupChatInfoView.swift` |
@@ -107,13 +107,13 @@ Encryption, authentication, and privacy controls.
 
 | Feature | Description | Key Source (Swift) |
 |---------|-------------|--------------------|
-| E2E encryption | Double-ratchet encryption for all messages | `SimpleXChat/API.swift` |
-| Post-quantum encryption | Optional PQ key exchange for direct chats | `SimpleXChat/ChatTypes.swift` |
+| E2E encryption | Double-ratchet encryption for all messages | `POPOPXSwitch/API.swift` |
+| Post-quantum encryption | Optional PQ key exchange for direct chats | `POPOPXSwitch/ChatTypes.swift` |
 | Local authentication | Face ID, Touch ID, or app passcode lock | `Shared/Views/LocalAuth/LocalAuthView.swift` |
 | Hidden profiles | Password-protected profiles invisible in UI | `Shared/Views/UserSettings/HiddenProfileView.swift` |
 | Database encryption | AES encryption of local SQLite database | `Shared/Views/Database/DatabaseEncryptionView.swift` |
 | Screen privacy | Blur app content when in app switcher | `Shared/Views/UserSettings/PrivacySettings.swift` |
-| Encrypted file storage | Local files encrypted at rest | `SimpleXChat/CryptoFile.swift` |
+| Encrypted file storage | Local files encrypted at rest | `POPOPXSwitch/CryptoFile.swift` |
 | Delivery receipts control | Toggle delivery/read receipts per contact/group | `Shared/Views/UserSettings/SetDeliveryReceiptsView.swift` |
 
 ### 6. User Management
@@ -147,9 +147,9 @@ Visual appearance and UI preferences.
 
 | Feature | Description | Key Source (Swift) |
 |---------|-------------|--------------------|
-| Themes | Light, dark, SimpleX, black, and custom themes | `Shared/Theme/ThemeManager.swift` |
+| Themes | Light, dark, POPOPX, black, and custom themes | `Shared/Theme/ThemeManager.swift` |
 | Wallpapers | Preset and custom chat wallpapers | `Shared/Views/Helpers/ChatWallpaper.swift` |
-| Chat bubble styling | Customize message bubble appearance | `SimpleXChat/Theme/ThemeTypes.swift` |
+| Chat bubble styling | Customize message bubble appearance | `POPOPXSwitch/Theme/ThemeTypes.swift` |
 | One-handed UI mode | Compact layout for single-hand use | `Shared/Views/ChatList/OneHandUICard.swift` |
 | Language selection | In-app language override | `Shared/Views/UserSettings/AppearanceSettings.swift` |
 
@@ -161,7 +161,7 @@ Import, export, encryption, and storage management.
 |---------|-------------|--------------------|
 | Export/import profiles | Full database export and import | `Shared/Views/Database/DatabaseView.swift` |
 | Database encryption | Encrypt/decrypt local database with passphrase | `Shared/Views/Database/DatabaseEncryptionView.swift` |
-| Local file encryption | Encrypt stored media and attachments | `SimpleXChat/CryptoFile.swift` |
+| Local file encryption | Encrypt stored media and attachments | `POPOPXSwitch/CryptoFile.swift` |
 | Storage breakdown | View storage usage by category | `Shared/Views/UserSettings/StorageView.swift` |
 | Device-to-device migration | Migrate full profile between iOS devices | `Shared/Views/Migration/MigrateFromDevice.swift` |
 
@@ -181,7 +181,7 @@ Remote control of the mobile app from a desktop client.
 ```
 Onboarding
   OnboardingView.swift
-    -> SimpleXInfo -> CreateProfile -> ChooseServerOperators -> SetNotificationsMode -> CreateSimpleXAddress
+    -> POPOPXInfo -> CreateProfile -> ChooseServerOperators -> SetNotificationsMode -> CreatePOPOPXAddress
     -> ChatListView (home)
 
 ChatListView (home)
@@ -222,7 +222,7 @@ NewChatMenuButton
   Shared/Views/NewChat/NewChatMenuButton.swift
     -> NewChatView ............... (QR scanner / paste link)
     -> AddGroupView .............. (create group)
-    -> UserAddressView ........... (create SimpleX address)
+    -> UserAddressView ........... (create POPOPX address)
 
 SettingsView
   Shared/Views/UserSettings/SettingsView.swift
@@ -239,7 +239,7 @@ SettingsView
 UserPicker
   Shared/Views/ChatList/UserPicker.swift
     -> UserProfilesView .......... (manage all profiles)
-    -> UserAddressView ........... (SimpleX address)
+    -> UserAddressView ........... (POPOPX address)
     -> PreferencesView ........... (user preferences)
     -> SettingsView .............. (app settings)
     -> ConnectDesktopView ........ (pair with desktop)
@@ -254,5 +254,5 @@ UserPicker
 - [spec/README.md](../spec/README.md) -- Technical specification overview
 - [spec/architecture.md](../spec/architecture.md) -- Architecture specification
 - Haskell core: `../../src/Simplex/Chat/Controller.hs`, `../../src/Simplex/Chat/Types.hs`
-- Swift model: `Shared/Model/ChatModel.swift`, `SimpleXChat/ChatTypes.swift`
-- Swift API bridge: `SimpleXChat/API.swift`, `Shared/Model/SimpleXAPI.swift`
+- Swift model: `Shared/Model/ChatModel.swift`, `POPOPXSwitch/ChatTypes.swift`
+- Swift API bridge: `POPOPXSwitch/API.swift`, `Shared/Model/POPOPXAPI.swift`

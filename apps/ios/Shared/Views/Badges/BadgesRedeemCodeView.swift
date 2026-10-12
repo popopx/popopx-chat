@@ -1,13 +1,15 @@
 //
 //  BadgesRedeemCodeView.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 28.07.2026.
 //  Copyright © 2026 SimpleX Chat. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 import CodeScanner
 
 private let badgeCodePrefix = "SB"
@@ -120,7 +122,7 @@ struct BadgesRedeemCodeView: View {
             .padding(EdgeInsets(top: 14, leading: 12, bottom: 14, trailing: 12))
             .background(Color(.tertiarySystemFill))
             .cornerRadius(10.0)
-            .onChange(of: code) { applyCodeInput($0) }
+            .onChange(of: code) { _, newValue in applyCodeInput(newValue) }
     }
 
     private func pasteButton() -> some View {

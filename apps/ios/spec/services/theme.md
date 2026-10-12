@@ -1,11 +1,11 @@
-# SimpleX Chat iOS -- Theme Engine
+# POPOPX Chat iOS -- Theme Engine
 
 > Technical specification for the theming system: ThemeManager, default themes, customization layers, wallpapers, and YAML export.
 >
 > Related specs: [State Management](../state.md) | [Architecture](../architecture.md) | [README](../README.md)
 > Related product: [Product Overview](../../product/README.md)
 
-**Source:** [`ThemeManager.swift`](../../Shared/Theme/ThemeManager.swift) | [`AppearanceSettings.swift`](../../Shared/Views/UserSettings/AppearanceSettings.swift) | [`ThemeTypes.swift`](../../SimpleXChat/Theme/ThemeTypes.swift) | [`ChatWallpaperTypes.swift`](../../SimpleXChat/Theme/ChatWallpaperTypes.swift) | [`Theme.swift`](../../Shared/Theme/Theme.swift)
+**Source:** [`ThemeManager.swift`](../../Shared/Theme/ThemeManager.swift) | [`AppearanceSettings.swift`](../../Shared/Views/UserSettings/AppearanceSettings.swift) | [`ThemeTypes.swift`](../../POPOPXSwitch/Theme/ThemeTypes.swift) | [`ChatWallpaperTypes.swift`](../../POPOPXSwitch/Theme/ChatWallpaperTypes.swift) | [`Theme.swift`](../../Shared/Theme/Theme.swift)
 
 ---
 
@@ -36,7 +36,7 @@ Theme Resolution Order (most specific wins):
 ├─────────────────────┤
 │  App settings theme  │  themeOverridesDefault (UserDefaults)
 ├─────────────────────┤
-│  Base theme          │  Light / Dark / SimpleX / Black
+│  Base theme          │  Light / Dark / POPOPX / Black
 └─────────────────────┘
 ```
 
@@ -56,7 +56,7 @@ The resolved theme output:
 
 ```swift
 struct ActiveTheme: Equatable {
-    let name: String            // Theme name (e.g., "light", "dark", "simplex", "black", "system")
+    let name: String            // Theme name (e.g., "LIGHT", "DARK")
     let base: DefaultTheme      // Base theme enum
     let colors: Colors          // Resolved color palette
     let appColors: AppColors    // App-specific colors (sent/received bubbles, etc.)
@@ -90,8 +90,8 @@ struct ActiveTheme: Equatable {
 
 1. Determine base theme from `currentThemeDefault`:
    - If `"system"`: use light or dark based on [`systemInDarkThemeCurrently`](../../Shared/Theme/Theme.swift#L95)
-   - Dark mode maps to `systemDarkThemeDefault` (Dark, SimpleX, or Black)
-2. Get base color palette ([`LightColorPalette`](../../SimpleXChat/Theme/ThemeTypes.swift#L650), [`DarkColorPalette`](../../SimpleXChat/Theme/ThemeTypes.swift#L629), [`SimplexColorPalette`](../../SimpleXChat/Theme/ThemeTypes.swift#L671), [`BlackColorPalette`](../../SimpleXChat/Theme/ThemeTypes.swift#L692))
+   - Dark mode maps to `systemDarkThemeDefault` (Dark, POPOPX, or Black)
+2. Get base color palette ([`LightColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L650), [`DarkColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L629), [`SimplexColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L671), [`BlackColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L692))
 3. Look up app settings theme override (`themeOverridesDefault`)
 4. Look up per-user theme override (`User.uiThemes`)
 5. Look up per-chat theme override (from ChatInfo)
@@ -109,10 +109,10 @@ Four built-in themes with pre-defined color palettes:
 |-------|------|---------------------|
 | **Light** | `DefaultTheme.LIGHT` | White background, standard colors |
 | **Dark** | `DefaultTheme.DARK` | Dark gray background, light text |
-| **SimpleX** | `DefaultTheme.SIMPLEX` | Brand purple accents, dark background |
+| **POPOPX** | `DefaultTheme.SIMPLEX` | Brand purple accents, dark background |
 | **Black** | `DefaultTheme.BLACK` | Pure black background (OLED), high contrast |
 
-### [DefaultTheme](../../SimpleXChat/Theme/ThemeTypes.swift#L13) Enum
+### [DefaultTheme](../../POPOPXSwitch/Theme/ThemeTypes.swift#L13) Enum
 
 ```swift
 enum DefaultTheme {
@@ -131,14 +131,14 @@ enum DefaultTheme {
 ### Color Palettes
 
 Each base theme defines two palette types:
-- [`Colors`](../../SimpleXChat/Theme/ThemeTypes.swift#L44): Standard UI colors (primary, background, surface, error, onBackground, onSurface)
-- [`AppColors`](../../SimpleXChat/Theme/ThemeTypes.swift#L90): App-specific colors (sentMessage, receivedMessage, title, primaryVariant2)
+- [`Colors`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L44): Standard UI colors (primary, background, surface, error, onBackground, onSurface)
+- [`AppColors`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L90): App-specific colors (sentMessage, receivedMessage, title, primaryVariant2)
 
 Palette instances:
-- [`LightColorPalette`](../../SimpleXChat/Theme/ThemeTypes.swift#L650) / [`LightColorPaletteApp`](../../SimpleXChat/Theme/ThemeTypes.swift#L662)
-- [`DarkColorPalette`](../../SimpleXChat/Theme/ThemeTypes.swift#L629) / [`DarkColorPaletteApp`](../../SimpleXChat/Theme/ThemeTypes.swift#L641)
-- [`SimplexColorPalette`](../../SimpleXChat/Theme/ThemeTypes.swift#L671) / [`SimplexColorPaletteApp`](../../SimpleXChat/Theme/ThemeTypes.swift#L683)
-- [`BlackColorPalette`](../../SimpleXChat/Theme/ThemeTypes.swift#L692) / [`BlackColorPaletteApp`](../../SimpleXChat/Theme/ThemeTypes.swift#L704)
+- [`LightColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L650) / [`LightColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L662)
+- [`DarkColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L629) / [`DarkColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L641)
+- [`SimplexColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L671) / [`SimplexColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L683)
+- [`BlackColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L692) / [`BlackColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L704)
 
 ---
 
@@ -148,7 +148,7 @@ Palette instances:
 
 Stored in `themeOverridesDefault` (UserDefaults). Contains `[ThemeOverrides]` -- an array of theme overrides, one per base theme.
 
-#### [`ThemeOverrides`](../../SimpleXChat/Theme/ThemeTypes.swift#L385)
+#### [`ThemeOverrides`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L385)
 
 ```swift
 struct ThemeOverrides: Codable {
@@ -162,7 +162,7 @@ struct ThemeOverrides: Codable {
 
 Stored on the `User` object (`User.uiThemes: ThemeModeOverrides?`), persisted in the Haskell database via `apiSetUserUIThemes(userId:, themes:)`.
 
-#### [`ThemeModeOverrides`](../../SimpleXChat/Theme/ThemeTypes.swift#L570)
+#### [`ThemeModeOverrides`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L570)
 
 ```swift
 struct ThemeModeOverrides: Codable {
@@ -171,7 +171,7 @@ struct ThemeModeOverrides: Codable {
 }
 ```
 
-#### [`ThemeModeOverride`](../../SimpleXChat/Theme/ThemeTypes.swift#L585)
+#### [`ThemeModeOverride`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L585)
 
 ```swift
 struct ThemeModeOverride: Codable {
@@ -194,9 +194,9 @@ Colors are merged field-by-field: if a more-specific layer defines a color, it o
 
 ## 5. Color System
 
-**File**: [`SimpleXChat/Theme/ThemeTypes.swift`](../../SimpleXChat/Theme/ThemeTypes.swift)
+**File**: [`POPOPXSwitch/Theme/ThemeTypes.swift`](../../POPOPXSwitch/Theme/ThemeTypes.swift)
 
-### [ThemeColors](../../SimpleXChat/Theme/ThemeTypes.swift#L230)
+### [ThemeColors](../../POPOPXSwitch/Theme/ThemeTypes.swift#L230)
 
 Overridable color definitions:
 
@@ -219,7 +219,7 @@ struct ThemeColors: Codable {
 
 Colors are stored as hex strings (e.g., `"#FF6600"`) and converted to SwiftUI `Color` values at resolution time.
 
-### [Colors](../../SimpleXChat/Theme/ThemeTypes.swift#L44) (Resolved Palette)
+### [Colors](../../POPOPXSwitch/Theme/ThemeTypes.swift#L44) (Resolved Palette)
 
 ```swift
 struct Colors {
@@ -237,7 +237,7 @@ struct Colors {
 }
 ```
 
-### [AppColors](../../SimpleXChat/Theme/ThemeTypes.swift#L90) (Resolved App-Specific)
+### [AppColors](../../POPOPXSwitch/Theme/ThemeTypes.swift#L90) (Resolved App-Specific)
 
 ```swift
 struct AppColors {
@@ -254,9 +254,9 @@ struct AppColors {
 
 ## 6. Wallpapers
 
-**File**: [`SimpleXChat/Theme/ChatWallpaperTypes.swift`](../../SimpleXChat/Theme/ChatWallpaperTypes.swift)
+**File**: [`POPOPXSwitch/Theme/ChatWallpaperTypes.swift`](../../POPOPXSwitch/Theme/ChatWallpaperTypes.swift)
 
-### [Preset Wallpapers](../../SimpleXChat/Theme/ChatWallpaperTypes.swift#L13)
+### [Preset Wallpapers](../../POPOPXSwitch/Theme/ChatWallpaperTypes.swift#L13)
 
 6 built-in wallpaper presets:
 
@@ -278,7 +278,7 @@ Users can set a custom image as wallpaper:
 - Scaled and tiled to fill the chat background
 - Custom wallpapers can be combined with color overrides
 
-### [WallpaperType](../../SimpleXChat/Theme/ChatWallpaperTypes.swift#L311)
+### [WallpaperType](../../POPOPXSwitch/Theme/ChatWallpaperTypes.swift#L311)
 
 ```swift
 enum WallpaperType {
@@ -288,7 +288,7 @@ enum WallpaperType {
 }
 ```
 
-### [AppWallpaper](../../SimpleXChat/Theme/ThemeTypes.swift#L142) (Resolved)
+### [AppWallpaper](../../POPOPXSwitch/Theme/ThemeTypes.swift#L142) (Resolved)
 
 ```swift
 struct AppWallpaper {
@@ -320,7 +320,7 @@ These are configured in [`Shared/Views/UserSettings/AppearanceSettings.swift`](.
 
 When theme is set to `"system"` (DefaultTheme.SYSTEM_THEME_NAME):
 - Light mode: uses `DefaultTheme.LIGHT` palette
-- Dark mode: uses the configured dark theme (`systemDarkThemeDefault`), which can be Dark, SimpleX, or Black
+- Dark mode: uses the configured dark theme (`systemDarkThemeDefault`), which can be Dark, POPOPX, or Black
 
 ### Forced Mode
 
@@ -374,9 +374,9 @@ Key functions in [`AppearanceSettings.swift`](../../Shared/Views/UserSettings/Ap
 | File | Path | Key Definitions |
 |------|------|-----------------|
 | Theme manager | [`Shared/Theme/ThemeManager.swift`](../../Shared/Theme/ThemeManager.swift) | `ThemeManager` (L15), `ActiveTheme` (L17) |
-| Theme types & colors | [`SimpleXChat/Theme/ThemeTypes.swift`](../../SimpleXChat/Theme/ThemeTypes.swift) | `DefaultTheme` (L13), `Colors` (L44), `AppColors` (L90), `AppWallpaper` (L142), `ThemeColors` (L230), `ThemeWallpaper` (L302), `ThemeOverrides` (L385), `ThemeModeOverrides` (L570), `ThemeModeOverride` (L585) |
-| Wallpaper types | [`SimpleXChat/Theme/ChatWallpaperTypes.swift`](../../SimpleXChat/Theme/ChatWallpaperTypes.swift) | `PresetWallpaper` (L13), `WallpaperType` (L311) |
-| Color utilities | [`SimpleXChat/Theme/Color.swift`](../../SimpleXChat/Theme/Color.swift) | Hex color conversion |
+| Theme types & colors | [`POPOPXSwitch/Theme/ThemeTypes.swift`](../../POPOPXSwitch/Theme/ThemeTypes.swift) | `DefaultTheme` (L13), `Colors` (L44), `AppColors` (L90), `AppWallpaper` (L142), `ThemeColors` (L230), `ThemeWallpaper` (L302), `ThemeOverrides` (L385), `ThemeModeOverrides` (L570), `ThemeModeOverride` (L585) |
+| Wallpaper types | [`POPOPXSwitch/Theme/ChatWallpaperTypes.swift`](../../POPOPXSwitch/Theme/ChatWallpaperTypes.swift) | `PresetWallpaper` (L13), `WallpaperType` (L311) |
+| Color utilities | [`POPOPXSwitch/Theme/Color.swift`](../../POPOPXSwitch/Theme/Color.swift) | Hex color conversion |
 | App theme observable | [`Shared/Theme/Theme.swift`](../../Shared/Theme/Theme.swift) | `AppTheme` (L22), `CurrentColors` (L14), `systemInDarkThemeCurrently` (L95) |
 | Appearance settings UI | [`Shared/Views/UserSettings/AppearanceSettings.swift`](../../Shared/Views/UserSettings/AppearanceSettings.swift) | `AppearanceSettings` (L26), `ToolbarMaterial` (L319), `ImportExportThemeSection` (L603) |
 | Theme mode editor | `Shared/Views/Helpers/ThemeModeEditor.swift` | Theme mode selection UI |

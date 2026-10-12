@@ -4,7 +4,7 @@
 
 ## Overview
 
-File and media sharing in SimpleX Chat iOS. Small files are sent inline within SMP messages; large files use the XFTP (eXtended File Transfer Protocol) for chunked, encrypted uploads up to 1GB. All files are encrypted end-to-end. Optional local encryption protects downloaded files at rest using AES via `CryptoFile`.
+File and media sharing in POPOPX Chat iOS. Small files are sent inline within SMP messages; large files use the XFTP (eXtended File Transfer Protocol) for chunked, encrypted uploads up to 1GB. All files are encrypted end-to-end. Optional local encryption protects downloaded files at rest using AES via `CryptoFile`.
 
 ## Prerequisites
 
@@ -160,14 +160,14 @@ File and media sharing in SimpleX Chat iOS. Small files are sent inline within S
 
 | Type | Location | Description |
 |------|----------|-------------|
-| `CryptoFile` | `SimpleXChat/CryptoFile.swift` | File path with optional encryption key and nonce for local AES encryption |
-| `MsgContent.image` | `SimpleXChat/ChatTypes.swift` | `.image(text: String, image: String)` -- text caption + base64 thumbnail |
-| `MsgContent.video` | `SimpleXChat/ChatTypes.swift` | `.video(text: String, image: String, duration: Int)` -- caption + thumbnail + duration |
-| `MsgContent.voice` | `SimpleXChat/ChatTypes.swift` | `.voice(text: String, duration: Int)` -- empty text + duration in seconds |
-| `MsgContent.file` | `SimpleXChat/ChatTypes.swift` | `.file(String)` -- file name |
-| `ComposedMessage` | `SimpleXChat/APITypes.swift` | Outgoing message with fileSource, quotedItemId, msgContent, mentions |
-| `FileTransferMeta` | `SimpleXChat/ChatTypes.swift` | Metadata for an ongoing file transfer |
-| `RcvFileTransfer` | `SimpleXChat/ChatTypes.swift` | State of a file being received |
+| `CryptoFile` | `POPOPXSwitch/CryptoFile.swift` | File path with optional encryption key and nonce for local AES encryption |
+| `MsgContent.image` | `POPOPXSwitch/ChatTypes.swift` | `.image(text: String, image: String)` -- text caption + base64 thumbnail |
+| `MsgContent.video` | `POPOPXSwitch/ChatTypes.swift` | `.video(text: String, image: String, duration: Int)` -- caption + thumbnail + duration |
+| `MsgContent.voice` | `POPOPXSwitch/ChatTypes.swift` | `.voice(text: String, duration: Int)` -- empty text + duration in seconds |
+| `MsgContent.file` | `POPOPXSwitch/ChatTypes.swift` | `.file(String)` -- file name |
+| `ComposedMessage` | `POPOPXSwitch/APITypes.swift` | Outgoing message with fileSource, quotedItemId, msgContent, mentions |
+| `FileTransferMeta` | `POPOPXSwitch/ChatTypes.swift` | Metadata for an ongoing file transfer |
+| `RcvFileTransfer` | `POPOPXSwitch/ChatTypes.swift` | State of a file being received |
 | `MigrationFileLinkData` | Used for standalone file transfers during database migration |
 
 ## Error Cases
@@ -186,9 +186,9 @@ File and media sharing in SimpleX Chat iOS. Small files are sent inline within S
 
 | File | Purpose |
 |------|---------|
-| `SimpleXChat/FileUtils.swift` | File size constants, path utilities, database file management |
-| `SimpleXChat/CryptoFile.swift` | Local file encryption/decryption with AES |
-| `SimpleXChat/ImageUtils.swift` | Image compression and thumbnail generation |
+| `POPOPXSwitch/FileUtils.swift` | File size constants, path utilities, database file management |
+| `POPOPXSwitch/CryptoFile.swift` | Local file encryption/decryption with AES |
+| `POPOPXSwitch/ImageUtils.swift` | Image compression and thumbnail generation |
 | `Shared/Views/Chat/ComposeMessage/ComposeView.swift` | File/media attachment selection and composition |
 | `Shared/Views/Chat/ComposeMessage/ComposeImageView.swift` | Image preview in compose area |
 | `Shared/Views/Chat/ComposeMessage/ComposeFileView.swift` | File preview in compose area |
@@ -199,7 +199,7 @@ File and media sharing in SimpleX Chat iOS. Small files are sent inline within S
 | `Shared/Views/Chat/ChatItem/CIVoiceView.swift` | Voice message display: waveform, playback controls |
 | `Shared/Views/Chat/ChatItem/FramedCIVoiceView.swift` | Voice message inside a framed (quoted/forwarded) context |
 | `Shared/Views/Chat/ChatItem/FullScreenMediaView.swift` | Full-screen image/video viewer |
-| `Shared/Model/SimpleXAPI.swift` | `apiSendMessages`, `receiveFile`, `receiveFiles`, `uploadStandaloneFile`, `downloadStandaloneFile` |
+| `Shared/Model/POPOPXAPI.swift` | `apiSendMessages`, `receiveFile`, `receiveFiles`, `uploadStandaloneFile`, `downloadStandaloneFile` |
 | `Shared/Model/AudioRecPlay.swift` | Audio recording and playback engine for voice messages |
 
 ## Related Specifications

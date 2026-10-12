@@ -1,0 +1,969 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
+/* No comment provided by engineer. */
+"se_app_locked" = "應用已鎖定！";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+/* No comment provided by engineer. */
+"se_keychain_error_msg" = "无法访問钥匙串以保存數據庫密碼";
+
+/* No comment provided by engineer. */
+"se_cannot_forward_title" = "无法轉發消息";
+
+/* No comment provided by engineer. */
+"Comment" = "评论";
+
+/* No comment provided by engineer. */
+"se_large_file_msg" = "目前支持的最大文件大小為 %@。";
+
+/* No comment provided by engineer. */
+"se_db_downgrade" = "需要降級數據庫";
+
+/* No comment provided by engineer. */
+"se_db_encrypted" = "數據庫已加密！";
+
+/* No comment provided by engineer. */
+"se_db_error" = "數據庫錯誤";
+
+/* No comment provided by engineer. */
+"se_wrong_passphrase_msg" = "數據庫密碼短語與钥匙串中保存的不同。";
+
+/* No comment provided by engineer. */
+"se_db_encrypted_msg" = "需要數據庫密碼短語才能打開聊天。";
+
+/* No comment provided by engineer. */
+"se_db_upgrade" = "需要升級數據庫";
+
+/* No comment provided by engineer. */
+"se_error_preparing_file" = "准備文件出錯";
+
+/* No comment provided by engineer. */
+"se_error_preparing" = "准備消息出錯";
+
+/* No comment provided by engineer. */
+"se_db_error_msg" = "錯誤：%@";
+
+/* No comment provided by engineer. */
+"se_file_error" = "文件錯誤";
+
+/* No comment provided by engineer. */
+"se_db_incompatible" = "數據庫版本不兼容";
+
+/* No comment provided by engineer. */
+"se_invalid_migration_confirm" = "无效的迁移確認";
+
+/* No comment provided by engineer. */
+"se_keychain_error" = "钥匙串錯誤";
+
+/* No comment provided by engineer. */
+"se_large_file" = "大文件！";
+
+/* No comment provided by engineer. */
+"se_no_profile" = "无活動資料";
+
+/* No comment provided by engineer. */
+"Ok" = "好的";
+
+/* No comment provided by engineer. */
+"se_db_downgrade_msg" = "打開應用以降級數據庫。";
+
+/* No comment provided by engineer. */
+"se_db_upgrade_msg" = "打開應用以升級數據庫。";
+
+/* No comment provided by engineer. */
+"Passphrase" = "密码";
+
+/* No comment provided by engineer. */
+"se_no_profile_msg" = "請在 POPOP 應用中創建資料";
+
+/* No comment provided by engineer. */
+"se_cannot_forward_message" = "選定的聊天偏好設置禁止此消息。";
+
+/* No comment provided by engineer. */
+"se_slow_network_msg" = "發送消息所需時間比預期长。";
+
+/* No comment provided by engineer. */
+"Sending message…" = "正在发送消息…";
+
+/* No comment provided by engineer. */
+"Share" = "共享";
+
+/* No comment provided by engineer. */
+"se_slow_network" = "網络缓慢？";
+
+/* No comment provided by engineer. */
+"se_db_unknown_error_msg" = "未知數據庫錯誤：%@";
+
+/* No comment provided by engineer. */
+"se_unsupported_format" = "不支持的格式";
+
+/* No comment provided by engineer. */
+"Wait" = "等待";
+
+/* No comment provided by engineer. */
+"se_wrong_passphrase" = "數據庫密碼短語錯誤";
+
+/* No comment provided by engineer. */
+"se_app_locked_msg" = "您可以在隱私與安全 / POPOP 鎖定集中允許分享";
+"se_multiple_items_title" = "多個项目";
+"se_multiple_items_msg" = "不支持同時分享多個项目。請逐個分享。";
+"se_passphrase_placeholder" = "密碼短語";
+"se_comment_placeholder" = "備注";
+
+/* RadialActionMenu - Chat actions */
+"accept_contact_request" = "接受";
+"incognito_accept" = "隱身";
+"reject_contact_request" = "拒绝";
+"join_group" = "加入";
+"archive_reports" = "歸檔";
+"leave_group_action" = "離開";
+"mark_read" = "已讀";
+"mark_unread" = "未讀";
+"unfavorite_chat" = "取消收藏";
+"favorite_chat" = "收藏";
+"chat_list" = "列表";
+"clear_conversation" = "清除";
+"delete_chat" = "刪除";
+
+/* RadialActionMenu - Alert dialogs */
+"clear_private_notes_title" = "清除私密笔記？";
+"clear_conversation_title" = "清除對話？";
+"clear_private_notes_message" = "所有消息將被刪除 - 此操作不可撤销！";
+"clear_conversation_message" = "所有消息將被刪除 - 此操作不可撤销！消息僅會從您的設備刪除。";
+"clear_action" = "清除";
+"archive_reports_title" = "歸檔所有舉報？";
+"archive_reports_message" = "所有舉報將為您歸檔。";
+"archive_action" = "歸檔";
+"leave_group_title" = "離開群組？";
+"leave_group_message" = "您將不再收到此群組的消息。";
+"leave_action" = "離開";
+
+/* OneHandUICard - Accessibility */
+"selected_state" = "已選擇";
+"not_selected_state" = "未選擇";
+
+/* PXContactConnectionInfo - Connection status */
+"you_invited_contact" = "您邀請了聯系人";
+"you_accepted_connection" = "您接受了連接";
+"group_connection_pending" = "當群組主持人的設備上線後您將連接到群組，請稍候或稍後查看！";
+"connection_request_pending" = "當您的連接請求被接受後您將連接，請稍候或稍後查看！";
+"contact_device_pending" = "當聯系人的設備上線後您將連接，請稍候或稍後查看！";
+"incognito_mode" = "隱身模式";
+"delete_connection" = "刪除連接";
+"share_onetime_link" = "分享一次性鏈接";
+"onetime_invitation_title" = "一次性邀請鏈接";
+"learn_more" = "了解更多";
+
+/* PXTagListView - Tag management */
+"delete_list_title" = "刪除列表？";
+"delete_list_message" = "所有聊天將從列表 %@ 中移除，列表將被刪除。";
+"delete_action" = "刪除";
+"edit_action" = "編輯";
+"create_list" = "創建列表";
+"error_reordering_lists" = "重新排序列表出錯";
+"error_saving_chat_list" = "保存聊天列表出錯";
+"add_to_list" = "添加到列表";
+"save_list" = "保存列表";
+"unique_list_name_emoji" = "所有列表的名稱和表情符號必須不同。";
+"error_creating_list" = "創建列表出錯";
+
+/* PXChatRelayView - Relay settings (Batch 3) */
+"relay_test_failed_title" = "中繼測試失敗！";
+"your_relay_name" = "您的中繼名稱";
+"preset_relay_address" = "預設中繼地址";
+"preset_relay_name" = "預設中繼名稱";
+"your_relay_address" = "您的中繼地址";
+"test_relay_footer" = "**測試中繼**以獲取其名稱。";
+"delete_relay" = "刪除中繼";
+"use_relay" = "使用中繼";
+"test_relay_button" = "測試中繼";
+"use_for_new_channels" = "用于新頻道";
+"chat_relay_nav_title" = "聊天中繼";
+"enter_relay_name_placeholder" = "輸入中繼名稱…";
+
+/* UserAddressLearnMore - Address help (Batch 3) */
+"share_address_publicly" = "在社交媒体上分享 POPOPX 地址。";
+"address_wont_lose_contacts" = "如果您之後刪除地址，不會丟失聯系人。";
+"onetime_link_usage_hint" = "一次性鏈接只能與*一個聯系人*使用 - 當面分享或通過任何即時通訊工具分享。";
+"set_connection_name_hint" = "您可以設置連接名稱，以記住鏈接分享給了谁。";
+"connection_security" = "連接安全";
+"address_links_safe_share" = "POPOPX 地址和一次性鏈接可以安全地通過任何即時通訊工具分享。";
+"compare_security_codes" = "為防止您的鏈接被替换，您可以比较聯系人安全代碼。";
+"read_more_user_guide" = "在閱讀用户指南中了解更多。";
+"create_popopx_address" = "創建 POPOPX 地址";
+"create_onetime_link" = "創建一次性鏈接";
+"popopx_address_title" = "POPOPX 地址";
+"new_chat_title" = "新聊天";
+
+/* PXRTCServers - WebRTC settings (Batch 3) */
+"configure_ice_servers" = "配置 ICE 服務器";
+"use_popopx_servers_confirm" = "使用 POPOPX Chat 服務器？";
+"saved_webrtc_removed" = "已保存的 WebRTC ICE 服務器將被移除";
+"confirm_action" = "確認";
+"using_popopx_servers" = "正在使用 POPOPX Chat 服務器。";
+"ice_servers_one_per_line" = "ICE 服務器（每行一個）";
+"error_saving_ice_servers" = "保存 ICE 服務器出錯";
+"ice_servers_format_error" = "請確保 WebRTC ICE 服務器地址格式正確，每行一個且不重複。";
+"how_to" = "操作方法";
+
+/* PXChatItemInfoView - Chat item info (Batch 4) */
+"delivery_tab" = "送達";
+"history_tab" = "歷史";
+"in_reply_to_tab" = "回複";
+"saved_message" = "已保存";
+"forwarded_message" = "已轉發";
+"history_section" = "歷史";
+"no_history" = "无歷史";
+"share_action" = "分享";
+"copy_action" = "複制";
+"current_version" = "（當前）";
+"no_text_content" = "无文本内容";
+"in_reply_to_section" = "回複";
+"recipients_cant_see_sender" = "收件人无法看到此消息的發送者。";
+"you_sent_label" = "您";
+"delivery_section" = "送達";
+"no_delivery_info" = "无送達信息";
+
+/* PXFramedItemView - Chat item framing (Batch 5) */
+"only_you_and_mods_see" = "只有您和管理員可以看到";
+"only_sender_and_mods_see" = "只有發送者和管理員可以看到";
+"archived_report" = "已歸檔舉報";
+"moderated_by_user" = "管理員";
+"blocked_status" = "已屏蔽";
+"blocked_by_admin" = "被管理員屏蔽";
+"marked_deleted" = "已標記刪除";
+"live_message" = "實時";
+
+/* PXIntegrityErrorItemView - Error alerts (Batch 5) */
+"skipped_messages_title" = "跳過的消息";
+"skipped_messages_message" = "可能發生以下情况：\n1. 消息在發送客户端2天後或服務器上30天後過期。\n2. 消息解密失敗，因為您或聯系人使用了旧的數據庫備份。\n3. 連接已被破壞。";
+"bad_message_hash" = "消息哈希錯誤";
+"hash_mismatch_description" = "上一条消息的哈希值不同。";
+"report_to_developers" = "請向開發者報告此問題。";
+"bad_message_id" = "消息 ID 錯誤";
+"message_id_incorrect" = "下一条消息的 ID 不正確（小于或等于上一条）。\n这可能是由于某些錯誤或連接已被破壞。";
+"message_receive_error" = "應用在嘗試接收此消息 %d 次後將其移除。";
+"message_error_title" = "消息錯誤";
+
+"chat_audio_call" = "語音通話";
+"chat_video_call" = "視頻通話";
+"chat_all_messages" = "所有消息";
+"chat_search" = "搜索";
+"chat_filter" = "篩選";
+"chat_invite_member" = "邀請成員";
+
+"compose_member_deleted_cant_accept" = "成員已刪除 - 无法接受請求";
+"compose_reject" = "拒绝";
+"compose_accept" = "接受";
+"compose_your_profile" = "您的資料";
+"compose_incognito" = "隱身";
+"compose_send_live_message" = "發送實時消息";
+"compose_disappearing_message" = "閱後即焚消息";
+"compose_char_count_format" = "%d/65536";
+"compose_scan_security_code" = "從聯系人應用中掃描安全代碼。";
+"compose_incorrect_security_code" = "安全代碼不正確！";
+"compose_no_filtered_chats" = "无篩選的聊天";
+"compose_share" = "分享";
+"compose_copy" = "複制";
+"compose_mark_read" = "標記已讀";
+"compose_delete_from_history" = "從歷史中刪除";
+"compose_archive_report" = "歸檔舉報";
+"compose_answer_call" = "接听";
+"compose_tap_to_open" = "点击打開";
+"compose_invalid_data" = "无效數據";
+"compose_event_happened" = "事件已發生";
+
+"group_no_contacts_to_add" = "无聯系人可添加";
+"group_clear_selection" = "清除";
+"group_contacts_selected_fmt" = "已選擇 %d 個聯系人";
+"group_no_contacts_selected" = "未選擇聯系人";
+"group_cant_invite_contact_title" = "无法邀請聯系人！";
+"group_cant_invite_contact_msg" = "您正在嘗試邀請使用隱身資料的聯系人加入您使用主資料的群組";
+"group_enabled_for" = "已啟用";
+"group_set_member_admission" = "設置成員准入";
+"group_member_admission" = "成員准入";
+"group_no_available_relays" = "无可用中繼";
+"group_channel_delete_all" = "頻道將為所有訂閱者刪除 - 此操作不可撤销！";
+"group_channel_delete_you" = "頻道將為您刪除 - 此操作不可撤销！";
+"group_group_delete_all" = "群組將為所有成員刪除 - 此操作不可撤销！";
+"group_group_delete_you" = "群組將為您刪除 - 此操作不可撤销！";
+"group_chat_delete_all" = "聊天將為所有成員刪除 - 此操作不可撤销！";
+"group_chat_delete_you" = "聊天將為您刪除 - 此操作不可撤销！";
+"group_cant_invite_contacts_title" = "无法邀請聯系人！";
+"group_cant_invite_contacts_msg" = "您在此群組使用隱身資料 - 為防止分享主資料，不允許邀請聯系人";
+"group_receipts_disabled_title" = "已禁用回執";
+"group_receipts_disabled_msg_fmt" = "此群組超過 %d 個成員，不發送送達回執。";
+"group_copy_code" = "複制代碼";
+"group_webpage_code" = "網頁代碼";
+"group_webpage_code_instructions" = "將此代碼添加到您的網頁。它將顯示頻道/群組的預覽。";
+"group_enter_webpage_url" = "輸入網頁 URL";
+"group_webpage_url_instructions" = "它將顯示給訂閱者並用于允許加載預覽。";
+"group_chat_with_admins" = "與管理者聊天";
+"group_member_reports" = "成員舉報";
+"group_set_group_preferences" = "設置群組偏好";
+"group_owners_section" = "所有者";
+"group_you_label" = "您";
+"group_no_chat_relays" = "无聊天中繼";
+"group_chat_relays_forward_info" = "聊天中繼將消息轉發給頻道訂閱者。";
+"group_reset_button" = "重置";
+"group_take_picture" = "拍照";
+"group_choose_from_library" = "從相册選擇";
+"group_paste_image" = "粘贴圖片";
+"group_read_action" = "閱讀";
+"group_accept_action" = "接受";
+"group_delete_action_member" = "刪除";
+"group_share_link_desc_channel" = "您可以分享鏈接或二维碼 - 任何人都可以加入頻道。";
+"group_share_link_desc_group" = "您可以分享鏈接或二维碼 - 任何人都可以加入群組。如果您之後刪除群組，不會丟失成員。";
+"group_upgrade_link" = "升級鏈接";
+"group_share_link_button" = "分享鏈接";
+"group_share_via_chat_button" = "通過聊天分享";
+"group_delete_link" = "刪除鏈接";
+"group_create_link_button" = "創建鏈接";
+"group_delete_link_title" = "刪除鏈接？";
+"group_delete_link_message" = "所有群組成員將保持連接。";
+"group_delete_link_action" = "刪除";
+
+"settings_send_notifications" = "發送通知";
+"settings_lock_screen_preview" = "您可以通過設置鎖定屏幕通知預覽。";
+"settings_open_settings_button" = "打開設置";
+"settings_show_preview" = "顯示預覽";
+"settings_push_notifications" = "推送通知";
+"settings_restart_migrate_notice" = "請重啟應用並迁移數據庫以啟用推送通知。";
+"settings_server_test_failed" = "服務器測試失敗！";
+"settings_test_notifications" = "測試通知";
+"settings_core_version_fmt" = "核心版本：v%@";
+"settings_core_engine_fmt" = "核心引擎：v%@";
+"settings_markdown_usage" = "您可以使用 markdown 格式化消息：";
+"settings_incognito_mode" = "隱身模式";
+"settings_incognito_description_1" = "隱身模式通過為每個聯系人使用新的随机資料來保護您的隱私。";
+"settings_incognito_description_2" = "它允許在单個聊天資料中建立多個匿名連接，彼此之間没有任何共享數據。";
+"settings_incognito_description_3" = "當您與他人分享隱身資料時，此資料將用于他們邀請您加入的群組。";
+"settings_chat_console" = "聊天控制台";
+"settings_reset_hints" = "重置所有提示";
+"settings_show_hide_db_ids" = "數據庫 ID 和传輸隔離選项。";
+"settings_storage_label" = "存儲";
+"settings_developer_options" = "開發者選项";
+"settings_compute_store_url" = "計算商店 URL";
+"settings_compute_store_label" = "計算商店";
+"settings_compute_store_hint" = "留空使用本地模擬模式。設置後端 URL 以啟用帶服務器端驗證的真實 StoreKit 購買。";
+"settings_profile_stored_notice" = "您的資料存儲在您的設備上，僅與聯系人分享。POPOPX 服務器无法看到您的資料。";
+"settings_reset_button" = "重置";
+"settings_save_notify_contacts" = "保存（並通知聯系人）";
+"settings_take_picture" = "拍照";
+"settings_choose_from_library" = "從相册選擇";
+"settings_paste_image" = "粘贴圖片";
+"settings_hide_profile" = "隱藏資料";
+"settings_hidden_profile_password" = "隱藏資料密碼";
+"settings_hidden_profile_instructions" = "要顯示隱藏資料，在**您的聊天資料**頁面的搜索字段中輸入完整密碼。";
+"settings_error_saving_password" = "保存用户密碼出錯";
+"settings_time_disappear_new_contacts" = "消失時間僅對新聯系人設置。";
+"settings_webrtc_ice_servers" = "WebRTC ICE 服務器";
+"settings_call_settings_header" = "設置";
+"settings_relay_protects_ip" = "中繼服務器保護您的 IP 地址，但可以观察通話時长。";
+"settings_relay_only_if_necessary" = "僅在必要時使用中繼服務器。對方可以观察您的 IP 地址。";
+"settings_interface_section" = "界面";
+"settings_accept_calls_lockscreen" = "您可以在鎖定屏幕上接听電話，无需設備和應用認證。";
+"settings_auth_required_before_connect" = "連接通話前需要認證，但您可能錯過來電。";
+"settings_limitations_section" = "限制";
+"settings_preset_server_address" = "預設服務器地址";
+"settings_your_server_address" = "您的服務器地址";
+"settings_add_to_another_device" = "添加到其他設備";
+"settings_use_for_messages" = "用于消息";
+"settings_yes_option" = "是";
+"settings_no_option" = "否";
+"settings_use_server" = "使用服務器";
+"settings_chat_relays_header" = "聊天中繼";
+"settings_chat_relays_forward_desc" = "聊天中繼在您創建的頻道中轉發消息。";
+"settings_message_servers" = "消息服務器";
+"settings_media_file_servers" = "媒体和文件服務器";
+"settings_add_server" = "添加服務器";
+"settings_enter_server_manually" = "手動輸入服務器";
+"settings_scan_server_qr" = "掃描服務器二维碼";
+"settings_chat_relay_link" = "聊天中繼";
+"settings_how_to_use_servers" = "如何使用您的服務器";
+"settings_test_servers" = "測試服務器";
+"settings_scan_server_qr_title" = "掃描服務器二维碼";
+
+
+/* NewChat - Group Creation */
+"group_create_button" = "創建群組";
+"group_decentralized_footer" = "完全去中心化 - 僅成員可見。";
+"group_create_error_title" = "創建群組出錯";
+
+/* NewChat - Channel Creation */
+"channel_configure_relays" = "配置中繼";
+"channel_create_button" = "創建公開頻道";
+
+/* Developer Settings */
+"dev_compute_store_header" = "計算商店";
+"dev_compute_store_footer" = "留空使用本地模擬模式。設置後端 URL 以啟用帶服務器端驗證的真實 StoreKit 購買。";
+
+/* Network & Servers */
+"scan_server_qr_title" = "掃描服務器二维碼";
+
+/* NewChat Menu */
+"newchat_archived_contacts" = "已歸檔聯系人";
+"search_cancel_button" = "取消";
+
+/* Onboarding */
+"profile_name_placeholder" = "輸入資料名稱...";
+"onboarding_back_button" = "返回";
+
+
+/* Nostr Square - Reply View */
+"nostr_reply_original_label" = "原文";
+"nostr_reply_privacy_notice" = "您的回複是匿名且加密的";
+"nostr_reply_title" = "回複";
+"nostr_reply_send_button" = "發送";
+
+/* Nostr Square - Broadcast Composer */
+"nostr_composer_privacy_title" = "匿名廣播";
+"nostr_composer_privacy_subtitle" = "您的身份受到端到端加密保護";
+"nostr_composer_char_count" = "%d/%d";
+"nostr_composer_title" = "新廣播";
+"nostr_composer_send_button" = "發布";
+
+/* Nostr Square - Broadcast Card */
+"nostr_card_anonymous_label" = "匿名";
+"nostr_card_resonate_button" = "共鳴";
+"nostr_card_ttl_label" = "生存時間";
+
+
+/* Developer Settings - Additional */
+"dev_show_label" = "顯示：";
+"dev_hide_label" = "隱藏：";
+"dev_storage_button" = "存儲";
+"se_mesh_connected" = "已連接";
+"se_mesh_disconnected" = "已斷開";
+"se_no_content" = "無可分享的內容";
+"OK" = "OK";
+"back_to_label" = "返回%@";
+"duration_picker_label" = "時長";
+"unit_picker_label" = "單位";
+"theme_all_modes" = "所有模式";
+"theme_light_mode" = "淺色模式";
+"theme_dark_mode" = "深色模式";
+"theme_apply_to_label" = "應用到";
+"error_failed_load_server_operators" = "載入伺服器營運商失敗，已嘗試3次。應用無法與核心服務通訊。";
+"error_cannot_set_empty_operators" = "無法設定空的營運商清單";
+"error_failed_set_server_operators" = "設定伺服器營運商失敗，已嘗試5次。";
+"error_failed_save_servers" = "儲存伺服器失敗，多次嘗試後仍失敗";
+"error_failed_validate_servers" = "驗證伺服器失敗，多次嘗試後仍失敗";
+"error_failed_load_conditions" = "載入條件文字失敗，已嘗試3次。";
+"error_no_operators_for_conditions" = "未指定接受條件的營運商。";
+"error_invalid_conditions_id" = "無效的條件ID。請重新啟動應用。";
+"error_and_others_count" = "以及其他%d個錯誤";
+"group_short_description_placeholder" = "簡短描述";
+"error_saving_channel_profile" = "儲存頻道資料失敗";
+"error_saving_group_profile" = "儲存群組資料失敗";
+"channel_profile_nav_title" = "頻道資料";
+"group_profile_nav_title" = "群組資料";
+"channel_webpage_create_description" = "建立一個網頁，在訪客訂閱前向他們展示您的頻道預覽。您可以自己託管或使用任何靜態託管服務。";
+"channel_webpage_not_supported" = "使用的聊天中繼不支援網頁。";
+"channel_webpage_url_placeholder" = "https://";
+"channel_allow_embed_toggle" = "允許任何人嵌入";
+"channel_embed_any_page" = "任何網頁都可以顯示預覽。";
+"channel_embed_only_your_page" = "只有您上面的頁面可以顯示預覽。";
+"channel_save_notify_subscribers" = "儲存並通知訂閱者";
+"channel_save_notify_members" = "儲存並通知成員";
+"app_version_label" = "應用版本：v%@";
+"app_build_label" = "應用建置：%@";
+"dev_show_options_toggle" = "顯示開發者選項";
+"dev_confirm_db_upgrades_toggle" = "確認資料庫升級";
+"dev_deprecated_options_section" = "已棄用選項";
+"dev_popopx_links_picker" = "POPOPX連結";
+"data_market_category_picker" = "類別";
+"data_market_category_label" = "類別";
+"group_initial_role_picker" = "初始角色";
+"group_new_member_role_picker" = "新成員角色";
+"bridge_sms_provider_picker" = "提供商";
+"wallpaper_scale_picker" = "縮放";
+"prefs_you_allow_picker" = "您允許";
+"prefs_you_allow_toggle" = "您允許";
+"prefs_contact_allows" = "聯絡人允許";
+"prefs_delete_after" = "刪除時間";
+"prefs_select_button" = "選擇";
+"chat_delete_messages_after" = "刪除訊息時間";
+"servers_user_selection_picker" = "使用者選擇";
+"servers_server_type_picker" = "伺服器類型";
+"monetization_eula_link" = "最終使用者授權協議";
+"monetization_billing_period_picker" = "計費週期";
+"monetization_price_yearly" = "$99.9 / 年";
+"monetization_price_monthly" = "$9.99 / 月";
+"monetization_feature_chat_privacy" = "所有聊天和隱私功能";
+"monetization_feature_compute_gifts" = "計算代幣儲存和禮物";
+"monetization_feature_own_servers" = "新增您自己的SMP伺服器";
+"monetization_feature_quantum" = "優先量子功能";
+"db_delete_messages_after" = "刪除訊息時間";
+"mesh_hub_tab_chats" = "Mesh聊天";
+"mesh_hub_tab_public" = "公共聊天";
+"mesh_hub_tab_groups" = "群組";
+"mesh_hub_picker_label" = "Mesh中心";
+"mesh_board_scope_picker" = "範圍";
+"migration_use_onion_hosts" = "使用.onion主機";
+"error_failed_load_protocol_info" = "載入協議資訊失敗。應用無法與核心服務通訊。請強制關閉並重新啟動應用。";
+"error_invalid_conditions_id_detail" = "無效的條件ID（%lld）。應用無法識別要接受的協議版本。請完全重新啟動應用。";
+"error_no_operators_available" = "沒有可用的營運商。請重新啟動應用。";
+"markdown_can_be_copied" = "（可以複製）";
+"network_transport_isolation" = "傳輸隔離";
+"release_notes_transport_isolation_title" = "傳輸隔離";
+"release_notes_transport_isolation_desc" = "按聊天資料（預設）或[按連線](https://popopxchat.com/blog/20230204-popopx-v4-5-user-chat-profiles.html#transport-isolation)（測試版）。";
+"voice_messages_prohibited_title" = "禁止語音訊息";
+"voice_messages_prohibited_ask_contact_message" = "此聊天不允許語音訊息。請聯絡聊天所有者。";
+"voice_messages_prohibited_group_owner_message" = "此群組不允許語音訊息。請聯絡群組所有者。";
+"voice_messages_prohibited_other_message" = "此聊天不允許語音訊息。";
+"waiting_for_file_title" = "等待檔案";
+"waiting_for_file_xftp_message" = "檔案正在透過XFTP協議傳輸。";
+"waiting_for_file_smp_message" = "檔案正在透過SMP協議傳輸。";
+"waiting_for_image_title" = "等待圖片";
+"waiting_for_image_xftp_message" = "圖片正在透過XFTP協議傳輸。";
+"waiting_for_image_smp_message" = "圖片正在透過SMP協議傳輸。";
+"waiting_for_video_title" = "等待影片";
+"waiting_for_video_xftp_message" = "影片正在透過XFTP協議傳輸。";
+"waiting_for_video_smp_message" = "影片正在透過SMP協議傳輸。";
+"cannot_forward_message_title" = "無法轉寄訊息";
+"cannot_forward_message_message" = "由於聊天偏好設定，此訊息無法轉寄。";
+"la_lock_turned_on_title" = "POPOPX鎖已開啟";
+"la_lock_turned_on_message" = "POPOPX鎖已開啟。您需要身份驗證才能存取應用。";
+"la_lock_not_enabled_title" = "POPOPX鎖未啟用";
+"la_lock_not_enabled_message" = "POPOPX鎖未啟用。請在設定中啟用它。";
+"la_auth_failed_title" = "身份驗證失敗";
+"la_auth_failed_message" = "身份驗證失敗。請重試。";
+"la_auth_unavailable_title" = "身份驗證不可用";
+"la_auth_unavailable_instruction_message" = "此裝置上身份驗證不可用。請使用其他身份驗證方法。";
+"la_auth_unavailable_turning_off_message" = "身份驗證不可用。POPOPX鎖將被關閉。";
+"delete_message_title" = "刪除訊息";
+"delete_messages_title" = "刪除%d條訊息";
+"delete_button" = "刪除";
+"ok_button" = "確定";
+"cancel_button" = "取消";
+"unlock_button" = "解鎖";
+"continue_button" = "繼續";
+"accept_button" = "接受";
+"reject_button" = "拒絕";
+"export_json_button" = "匯出JSON";
+"back_button" = "返回";
+"chats_nav_title" = "聊天";
+"add_contact_nav_title" = "新增聯絡人";
+"group_link_nav_title" = "群組連結";
+"channel_link_nav_title" = "頻道連結";
+"creating_channel_nav_title" = "建立頻道";
+"network_servers_nav_title" = "網路和伺服器";
+"new_server_nav_title" = "新伺服器";
+"send_notifications_nav_title" = "傳送通知";
+"show_preview_nav_title" = "顯示預覽";
+"member_admission_nav_title" = "成員準入";
+"popopx_address_nav_title" = "POPOPX地址";
+"archived_contacts_nav_title" = "已歸檔聯絡人";
+"profile_address_label" = "您的POPOPX地址";
+"profile_chat_profiles_label" = "聊天資料";
+"profile_connect_desktop_label" = "從桌面連線";
+"profile_preferences_label" = "偏好設定";
+"profile_settings_label" = "設定";
+"needle_extractions_accessibility" = "Needle提取";
+"new_chat_accessibility" = "新聊天";
+"switch_to_mesh_accessibility" = "切換到mesh";
+"switch_to_broadcast_accessibility" = "切換到廣播";
+"call_toggle_video_fit" = "切換影片適配";
+"call_end_call" = "結束通話";
+"call_mute_microphone" = "靜音麥克風";
+"call_speaker" = "揚聲器";
+"call_camera" = "相機";
+"call_flip_camera" = "翻轉相機";
+"call_back_button" = "返回";
+"binthere_look_at_screen" = "看螢幕";
+"binthere_multiple_faces" = "檢測到多張人臉";
+
+"add_contact_scan_qr" = "要連線，您的聯絡人可以掃描 QR code 或使用應用程式中的連結。";
+"add_contact_video_call" = "如果無法見面，可以在視訊通話中展示 QR code，或分享連結。";
+"api_contact_blocked_message" = "連線已被伺服器運營者封鎖：
+%@";
+%@";
+"api_contact_blocked_title" = "連線被封鎖";
+"api_contact_how_it_works" = "運作原理";
+"api_contact_ok" = "好的";
+"api_desktop_connection_stopped_message" = "請檢查手機和桌面端是否連線到同一本地網路，以及桌面端防火牆是否允許連線。
+如有其他問題，請與開發者聯絡。";
+Please share any other issues with the developers.";
+"api_desktop_connection_stopped_title" = "與桌面端的連線已停止";
+"api_desktop_copy_error" = "複製錯誤";
+"api_desktop_ok" = "好的";
+"api_start_chat_message" = "聊天已停止。如果您已在其他裝置上使用過此資料庫，應先將其傳回再啟動聊天。";
+"api_start_chat_ok" = "好的";
+"api_start_chat_title" = "啟動聊天？";
+"chat_console_title" = "聊天主控台";
+"chat_list_mesh_section" = "Mesh";
+"confirm_passcode_title" = "確認密碼";
+"connect_banner_new_link" = "新的一次性連結";
+"connect_banner_paste_scan" = "貼上連結 / 掃描";
+"connection_error_title" = "連線錯誤";
+"data_market_sample1_desc" = "不含個人身份資訊的聚合瀏覽類別";
+"data_market_sample1_title" = "匿名瀏覽模式";
+"data_market_sample2_desc" = "應用程式類別中的使用時間，已匿名化";
+"data_market_sample2_title" = "應用程式使用統計";
+"data_market_sample3_desc" = "用於流量分析的模糊位置資料";
+"data_market_sample3_title" = "區域位置趨勢";
+"data_market_sample4_desc" = "飲食偏好和限制，已匿名化";
+"data_market_sample4_title" = "食物偏好調查";
+"db_key_rotation_action" = "為獲得最佳安全性，請在設定中更新您的資料庫密碼。";
+"db_key_rotation_desc" = "您的資料庫加密金鑰已達到建議的輪換週期。";
+"db_key_rotation_title" = "資料庫金鑰輪換";
+"db_key_rotation_understood" = "知道了";
+"delete_report_label" = "刪除報告";
+"error_adding_short_link" = "新增短連結時出錯";
+"invalid_qr_code_title" = "無效的 QR code";
+"large_file_contact_message" = "您的聯絡人傳送了一個超過目前支援的最大檔案大小（%@）的檔案。";
+"large_file_title" = "大檔案！";
+"mesh_board_title" = "Mesh 佈告板";
+"mesh_cancel" = "取消";
+"mesh_chat_list_title" = "Mesh 聊天";
+"mesh_compose_placeholder" = "訊息...";
+"mesh_create_group_button" = "建立群組";
+"mesh_create_group_hint" = "建立群組以開始加密群組訊息";
+"mesh_edges" = "邊";
+"mesh_edges_header" = "邊";
+"mesh_enter_group_name" = "輸入新 mesh 群組的名稱";
+"mesh_last_updated" = "最後更新";
+"mesh_local_peer" = "本地節點";
+"mesh_new_post" = "新貼文";
+"mesh_no_groups" = "沒有 mesh 群組";
+"mesh_no_posts" = "暫無貼文";
+"mesh_no_posts_description" = "成為第一個在 mesh 佈告板上發文的人";
+"mesh_no_topology" = "沒有可用的拓撲";
+"mesh_nodes" = "節點";
+"mesh_nodes_header" = "節點";
+"mesh_overview_header" = "概覽";
+"mesh_post_to_board" = "發佈到佈告板";
+"mesh_urgent_label" = "緊急";
+"mesh_urgent_toggle" = "標記為緊急";
+"migration_apply_button" = "套用";
+"migration_check_internet" = "請檢查您的網路連線並重試";
+"migration_error_deleting_db" = "刪除資料庫時出錯";
+"migration_error_exporting_db" = "匯出聊天資料庫時出錯";
+"migration_error_file_not_exist" = "匯出的檔案不存在";
+"migration_error_generic" = "錯誤";
+"migration_error_migrating_settings" = "遷移設定時出錯";
+"migration_error_saving_settings" = "儲存設定時出錯";
+"migration_error_starting_chat" = "啟動聊天時出錯";
+"migration_error_uploading_archive" = "上傳封存檔時出錯";
+"migration_upload_failed" = "上傳失敗";
+"needle_extractions_label" = "擷取內容";
+"needle_no_data_found" = "文字中未找到結構化資料。";
+"needle_no_extractions_found" = "未找到擷取內容。";
+"no_chats_in_list" = "列表中沒有聊天 %@";
+"no_email_account_message" = "此裝置未設定電子郵件帳戶。請在設定中設定電子郵件帳戶以分享您的地址。";
+"nostr_publish_failed" = "GlobalSquare.Publish.Failed";
+"nostr_publish_success" = "GlobalSquare.Publish.Success";
+"ntf_error_checking_token" = "檢查權杖狀態時出錯";
+"ntf_error_deleting_token" = "刪除權杖時出錯";
+"ntf_error_enabling" = "啟用通知時出錯";
+"ntf_error_testing_server" = "測試伺服器連線時出錯";
+"onboarding_connect_via_link" = "透過連結或 QR code 連線";
+"onboarding_create_public_address" = "建立您的公開地址";
+"onboarding_create_your_link" = "建立您的連結";
+"onboarding_for_anyone_to_reach" = "讓任何人都能聯絡到您";
+"onboarding_invite_privately" = "私下邀請某人";
+"onboarding_invite_privately_subtitle" = "供一個人連線的連結";
+"onboarding_let_someone_connect" = "讓某人與您連線";
+"onboarding_talk_to_someone" = "與某人交談";
+"onboarding_your_public_address" = "您的公開地址";
+"one_hand_toolbar_message" = "您可以在外觀設定中變更。";
+"one_hand_toolbar_title" = "可觸及的聊天工具列";
+"protocol_server_title" = "%@ 伺服器";
+"rn_v42_auto_accept" = "附有可選的歡迎訊息。";
+"rn_v42_auto_accept_desc" = "附有可選的歡迎訊息。";
+"rn_v42_group_links" = "管理員可以建立加入群組的連結。";
+"rn_v42_group_links_desc" = "管理員可以建立加入群組的連結。";
+"rn_v42_security_assessment" = "POPOPX Chat 安全性已由 Trail of Bits 審計。";
+"rn_v42_security_assessment_desc" = "POPOPX Chat 安全性已由 Trail of Bits 審計。";
+"rn_v43_irreversible_deletion" = "您的聯絡人可以允許完全刪除訊息。";
+"rn_v43_irreversible_deletion_desc" = "您的聯絡人可以允許完全刪除訊息。";
+"rn_v43_privacy_security" = "在最近使用的應用程式中隱藏應用程式畫面。";
+"rn_v43_privacy_security_desc" = "在最近使用的應用程式中隱藏應用程式畫面。";
+"rn_v43_server_config" = "透過掃描 QR code 新增伺服器。";
+"rn_v43_server_config_desc" = "透過掃描 QR code 新增伺服器。";
+"rn_v43_voice_messages" = "最長30秒，即時接收。";
+"rn_v43_voice_messages_desc" = "最長30秒，即時接收。";
+"rn_v44_disappearing_messages" = "傳送的訊息將在設定時間後刪除。";
+"rn_v44_disappearing_messages_desc" = "傳送的訊息將在設定時間後刪除。";
+"rn_v44_french_interface" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v44_french_interface_desc" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v44_gifs_stickers" = "從相簿或自訂鍵盤傳送。";
+"rn_v44_gifs_stickers_desc" = "從相簿或自訂鍵盤傳送。";
+"rn_v44_live_messages" = "接收方在您輸入時即可看到更新。";
+"rn_v44_live_messages_desc" = "接收方在您輸入時即可看到更新。";
+"rn_v44_verify_security" = "與您的聯絡人比較安全代碼。";
+"rn_v44_verify_security_desc" = "與您的聯絡人比較安全代碼。";
+"rn_v45_italian_interface" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v45_italian_interface_desc" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v45_message_draft" = "保留最後的訊息草稿，包括附件。";
+"rn_v45_message_draft_desc" = "保留最後的訊息草稿，包括附件。";
+"rn_v45_multiple_profiles" = "不同的名稱、大頭貼和傳輸隔離。";
+"rn_v45_multiple_profiles_desc" = "不同的名稱、大頭貼和傳輸隔離。";
+"rn_v45_private_filenames" = "為保護時區，圖片/語音檔案使用 UTC。";
+"rn_v45_private_filenames_desc" = "為保護時區，圖片/語音檔案使用 UTC。";
+"rn_v45_reduced_battery" = "更多改進即將推出！";
+"rn_v45_reduced_battery_desc" = "更多改進即將推出！";
+"rn_v46_audio_video_calls" = "完全重新實作 - 可在背景執行！";
+"rn_v46_audio_video_calls_desc" = "完全重新實作 - 可在背景執行！";
+"rn_v46_chinese_spanish" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v46_chinese_spanish_desc" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v46_further_battery" = "更多改進即將推出！";
+"rn_v46_further_battery_desc" = "更多改進即將推出！";
+"rn_v46_group_moderation" = "現在管理員可以：\\n- 刪除成員的訊息。\\n- 停用成員（";
+"rn_v46_group_moderation_desc" = "現在管理員可以：\\n- 刪除成員的訊息。\\n- 停用成員（";
+"rn_v46_group_welcome" = "設定顯示給新成員的訊息！";
+"rn_v46_group_welcome_desc" = "設定顯示給新成員的訊息！";
+"rn_v46_hidden_profiles" = "用密碼保護您的聊天資料！";
+"rn_v46_hidden_profiles_desc" = "用密碼保護您的聊天資料！";
+"rn_v50_app_passcode" = "用它替代系統認證。";
+"rn_v50_app_passcode_desc" = "用它替代系統認證。";
+"rn_v50_polish_interface" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v50_polish_interface_desc" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v50_videos_files" = "快速傳輸，無需等待傳送者上線！";
+"rn_v50_videos_files_desc" = "快速傳輸，無需等待傳送者上線！";
+"rn_v51_better_messages" = "- 最長5分鐘的語音訊息。\\n- 自訂消失時間。\\n- 編輯歷史。";
+"rn_v51_better_messages_desc" = "- 最長5分鐘的語音訊息。\\n- 自訂消失時間。\\n- 編輯歷史。";
+"rn_v51_japanese_interface" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v51_japanese_interface_desc" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v51_message_reactions" = "終於來了！🚀";
+"rn_v51_message_reactions_desc" = "終於來了！🚀";
+"rn_v51_self_destruct_passcode" = "輸入時所有資料將被清除。";
+"rn_v51_self_destruct_passcode_desc" = "輸入時所有資料將被清除。";
+"rn_v52_delivery_receipts" = "我們錯過的第二個勾！✅";
+"rn_v52_delivery_receipts_desc" = "我們錯過的第二個勾！✅";
+"rn_v52_few_more_things" = "- 更穩定的訊息傳遞。\\n- 更好的群組功能。\\n- 以及更多！";
+"rn_v52_few_more_things_desc" = "- 更穩定的訊息傳遞。\\n- 更好的群組功能。\\n- 以及更多！";
+"rn_v52_find_chats" = "篩選未讀和收藏的聊天。";
+"rn_v52_find_chats_desc" = "篩選未讀和收藏的聊天。";
+"rn_v52_keep_connections" = "復原備份後修復加密。";
+"rn_v52_keep_connections_desc" = "復原備份後修復加密。";
+"rn_v52_one_message_disappear" = "即使在對話中已停用。";
+"rn_v52_one_message_disappear_desc" = "即使在對話中已停用。";
+"rn_v53_desktop_app" = "在[桌面應用程式](https://popopxchat.com/downloads/)中建立新資料。💻";
+"rn_v53_desktop_app_desc" = "在[桌面應用程式](https://popopxchat.com/downloads/)中建立新資料。💻";
+"rn_v53_discover_groups" = "- 連線到[目錄服務](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)（測試版）！\\n- 送達回執（最多20名成員）。\\n- 更快更穩定。";
+"rn_v53_discover_groups_desc" = "- 連線到[目錄服務](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)（測試版）！\\n- 送達回執（最多20名成員）。\\n- 更快更穩定。";
+"rn_v53_encrypt_files" = "應用程式加密新的本地檔案（影片除外）。";
+"rn_v53_encrypt_files_desc" = "應用程式加密新的本地檔案（影片除外）。";
+"rn_v53_incognito_mode" = "連線時切換隱身模式。";
+"rn_v53_incognito_mode_desc" = "連線時切換隱身模式。";
+"rn_v53_new_languages %d" = "%d 種新的介面語言";
+"rn_v53_new_languages_desc" = "保加利亞語、芬蘭語、泰語和烏克蘭語 - 感謝使用者和 Weblate！";
+"rn_v54_better_groups" = "更快的加入和更可靠的訊息。";
+"rn_v54_better_groups_desc" = "更快的加入和更可靠的訊息。";
+"rn_v54_block_members" = "隱藏不需要的訊息。";
+"rn_v54_block_members_desc" = "隱藏不需要的訊息。";
+"rn_v54_few_more_things" = "- 可選擇通知已刪除的聯絡人。\\n- 個人資料名稱支援空格。\\n- 以及更多！";
+"rn_v54_few_more_things_desc" = "- 可選擇通知已刪除的聯絡人。\\n- 個人資料名稱支援空格。\\n- 以及更多！";
+"rn_v54_incognito_groups" = "使用隨機資料建立群組。";
+"rn_v54_incognito_groups_desc" = "使用隨機資料建立群組。";
+"rn_v54_link_apps" = "透過安全的抗量子協議。";
+"rn_v54_link_apps_desc" = "透過安全的抗量子協議。";
+"rn_v55_improved_delivery" = "降低電池使用量。";
+"rn_v55_improved_delivery_desc" = "降低電池使用量。";
+"rn_v55_join_groups" = "最近的歷史記錄和改進的[目錄機器人](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)。";
+"rn_v55_join_groups_desc" = "最近的歷史記錄和改進的[目錄機器人](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)。";
+"rn_v55_paste_link" = "搜尋欄接受邀請連結。";
+"rn_v55_paste_link_desc" = "搜尋欄接受邀請連結。";
+"rn_v55_private_notes" = "支援加密檔案和媒體。";
+"rn_v55_private_notes_desc" = "支援加密檔案和媒體。";
+"rn_v55_turkish_interface" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v55_turkish_interface_desc" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v56_data_migration" = "透過 QR code 遷移到另一台裝置。";
+"rn_v56_data_migration_desc" = "透過 QR code 遷移到另一台裝置。";
+"rn_v56_hungarian_interface" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v56_hungarian_interface_desc" = "感謝使用者 – 透過 Weblate 貢獻！";
+"rn_v56_pip_calls" = "通話時繼續使用應用程式。";
+"rn_v56_pip_calls_desc" = "通話時繼續使用應用程式。";
+"rn_v56_quantum_encryption" = "在直接聊天中啟用（測試版）！";
+"rn_v56_quantum_encryption_desc" = "在直接聊天中啟用（測試版）！";
+"rn_v56_safer_groups" = "管理員可以為所有人封鎖某成員。";
+"rn_v56_safer_groups_desc" = "管理員可以為所有人封鎖某成員。";
+"rn_v57_forward_save" = "訊息來源保持私密。";
+"rn_v57_forward_save_desc" = "訊息來源保持私密。";
+"rn_v57_incall_sounds" = "連線音訊和視訊通話時。";
+"rn_v57_incall_sounds_desc" = "連線音訊和視訊通話時。";
+"rn_v57_network_management" = "更可靠的網路連線。";
+"rn_v57_network_management_desc" = "更可靠的網路連線。";
+"rn_v57_quantum_encryption" = "將在直接聊天中啟用！";
+"rn_v57_quantum_encryption_desc" = "將在直接聊天中啟用！";
+"rn_v57_shape_images" = "方形、圓形，或介於兩者之間的所有形狀。";
+"rn_v57_shape_images_desc" = "方形、圓形，或介於兩者之間的所有形狀。";
+"rn_v58_improved_delivery" = "降低電池使用量。";
+"rn_v58_improved_delivery_desc" = "降低電池使用量。";
+"rn_v58_private_routing" = "保護您的 IP 位址免受聯絡人選擇的訊息中繼的影響。\\n在*網路和伺服器*設定中啟用。";
+"rn_v58_private_routing_desc" = "保護您的 IP 位址免受聯絡人選擇的訊息中繼的影響。\\n在*網路和伺服器*設定中啟用。";
+"rn_v58_safely_receive_files" = "確認來自未知伺服器的檔案。";
+"rn_v58_safely_receive_files_desc" = "確認來自未知伺服器的檔案。";
+"rn_v60_better_networking" = "連線和伺服器狀態。";
+"rn_v60_better_networking_desc" = "連線和伺服器狀態。";
+"rn_v60_new_chat_experience" = "全新聊天體驗 🎉";
+"rn_v60_new_media_options" = "新媒體選項";
+"rn_v60_private_routing" = "它保護您的 IP 位址和連線。";
+"rn_v60_private_routing_desc" = "它保護您的 IP 位址和連線。";
+"rn_v60_sub_archive_contacts" = "封存聯絡人以便稍後聊天。";
+"rn_v60_sub_blur_privacy" = "新媒體選項";
+"rn_v60_sub_color_themes" = "用新主題為聊天上色。";
+"rn_v60_sub_connect_faster" = "全新聊天體驗 🎉";
+"rn_v60_sub_delete_messages" = "一次最多刪除20則訊息。";
+"rn_v60_sub_one_hand" = "單手使用應用程式。";
+"rn_v60_sub_play_chat_list" = "新媒體選項";
+"rn_v60_sub_share_apps" = "新媒體選項";
+"rn_v61_better_calls" = "在通話中切換音訊和視訊。";
+"rn_v61_better_calls_desc" = "在通話中切換音訊和視訊。";
+"rn_v61_better_notifications" = "改善送達，減少流量使用。\\n更多改進即將推出！";
+"rn_v61_better_notifications_desc" = "改善送達，減少流量使用。\\n更多改進即將推出！";
+"rn_v61_better_security" = "POPOPX 協議已由 Trail of Bits 審查。";
+"rn_v61_better_security_desc" = "POPOPX 協議已由 Trail of Bits 審查。";
+"rn_v61_better_ux" = "更好的使用者體驗";
+"rn_v61_sub_forward_messages" = "一次最多轉寄20則訊息。";
+"rn_v61_sub_message_dates" = "更好的訊息日期。";
+"rn_v61_sub_message_shape" = "可自訂的訊息形狀。";
+"rn_v61_sub_moderate_messages" = "刪除或審核最多200則訊息。";
+"rn_v61_sub_switch_profile" = "更好的使用者體驗";
+"rn_v62_business_chats" = "為您的客戶提供隱私保護。";
+"rn_v62_business_chats_desc" = "為您的客戶提供隱私保護。";
+"rn_v62_network_decentralization" = "網路去中心化";
+"rn_v62_reliable_notifications" = "即使 Apple 丟棄通知也能送達。";
+"rn_v62_reliable_notifications_desc" = "即使 Apple 丟棄通知也能送達。";
+"rn_v63_better_groups_perf" = "更好的群組效能";
+"rn_v63_better_privacy" = "更好的隱私和安全性";
+"rn_v63_mention_members" = "被提及時收到通知。";
+"rn_v63_mention_members_desc" = "被提及時收到通知。";
+"rn_v63_organize_lists" = "不錯過重要訊息。";
+"rn_v63_organize_lists_desc" = "不錯過重要訊息。";
+"rn_v63_private_reports" = "幫助管理員管理群組。";
+"rn_v63_private_reports_desc" = "幫助管理員管理群組。";
+"rn_v63_sub_faster_deletion" = "更好的群組效能";
+"rn_v63_sub_faster_sending" = "更好的群組效能";
+"rn_v63_sub_message_expiration" = "更好的隱私和安全性";
+"rn_v63_sub_private_media" = "更好的隱私和安全性";
+"rn_v641_chats_clean" = "預設啟用閱後即焚訊息。";
+"rn_v641_chats_clean_desc" = "預設啟用閱後即焚訊息。";
+"rn_v641_short_address" = "簡短的 POPOPX 地址";
+"rn_v641_welcome_contacts" = "設定個人資料簡介和歡迎訊息。";
+"rn_v641_welcome_contacts_desc" = "設定個人資料簡介和歡迎訊息。";
+"rn_v64_chat_admins" = "向群組傳送您的私密回饋。";
+"rn_v64_chat_admins_desc" = "向群組傳送您的私密回饋。";
+"rn_v64_connect_faster" = "點選連線後即可即時傳送訊息。";
+"rn_v64_connect_faster_desc" = "點選連線後即可即時傳送訊息。";
+"rn_v64_group_moderator" = "刪除訊息並封鎖成員。";
+"rn_v64_group_moderator_desc" = "刪除訊息並封鎖成員。";
+"rn_v64_improved_delivery" = "減少行動網路的流量。";
+"rn_v64_improved_delivery_desc" = "減少行動網路的流量。";
+"rn_v64_review_members" = "在成員加入前與其聊天。";
+"rn_v64_review_members_desc" = "在成員加入前與其聊天。";
+"rn_v65_invite_friends" = "我們讓新使用者的連線變得更簡單。";
+"rn_v65_invite_friends_desc" = "我們讓新使用者的連線變得更簡單。";
+"rn_v65_nonprofit_governance" = "讓 POPOPX 網路持久發展。";
+"rn_v65_nonprofit_governance_desc" = "讓 POPOPX 網路持久發展。";
+"rn_v65_public_channels" = "公開頻道 - 自由發言 🚀";
+"rn_v65_safe_web_links" = "- 選擇傳送連結預覽。\\n- 防止超連結釣魚。\\n- 移除連結追蹤。";
+"rn_v65_safe_web_links_desc" = "- 選擇傳送連結預覽。\\n- 防止超連結釣魚。\\n- 移除連結追蹤。";
+"rn_v65_sub_ownership" = "公開頻道 - 自由發言 🚀";
+"rn_v65_sub_privacy" = "私密媒體檔名。";
+"rn_v65_sub_reliability" = "公開頻道 - 自由發言 🚀";
+"rn_v65_sub_security" = "在聊天中設定訊息過期時間。";
+"save_button" = "儲存";
+"self_destruct_passcode_info" = "自毀密碼資訊";
+"settings_tab_picker" = "設定分頁";
+"share_channel_title" = "分享頻道";
+"swipe_action_clear" = "清除";
+"swipe_action_delete" = "刪除";
+"swipe_action_favorite" = "收藏";
+"swipe_action_list" = "列表";
+"swipe_action_mute" = "靜音";
+"swipe_action_read" = "已讀";
+"swipe_action_unfavorite" = "取消收藏";
+"tab_chats" = "聊天";
+"tab_mesh" = "Mesh";
+"tab_profiler" = "資料管理";
+"tab_vortex" = "Vortex";
+"user_picker_chat_preferences" = "聊天偏好設定";
+"user_picker_chat_profiles" = "您的聊天資料";
+"user_picker_create_address" = "建立 POPOPX 地址";
+"user_picker_settings" = "設定";
+"user_picker_use_from_desktop" = "從桌面端使用";
+"user_picker_your_address" = "您的 POPOPX 地址";
+"db_hide_passphrase" = "隱藏密碼短語";
+"db_show_passphrase" = "顯示密碼短語";
+"marked_deleted_moderated_by_list" = "%d 則訊息由 %@ 審核";
+"marked_deleted_blocked_by_admin" = "%d 則訊息已被管理員封鎖";
+"marked_deleted_blocked" = "%d 則訊息已被封鎖";
+"marked_deleted_marked_deleted" = "%d 則訊息已標記為刪除";
+"marked_deleted_moderated_by" = "由 %@ 審核";
+"marked_deleted_blocked_single" = "已封鎖";
+"marked_deleted_blocked_by_admin_single" = "已被管理員封鎖";
+"marked_deleted_deleted" = "已標記刪除";
+"ntf_register_button" = "註冊";
+"ntf_mode_desc_off" = "**最高隱私**：不使用 POPOPX Chat 推送伺服器。應用程式將在系統允許時在背景檢查訊息，具體頻率取決於您使用應用程式的頻率。";
+"ntf_mode_desc_periodic" = "**較高隱私**：每 20 分鐘檢查新訊息。僅裝置權杖與我們的推送伺服器共享。伺服器不會看到您有多少聯絡人，也不會看到任何訊息元資料。";
+"ntf_mode_desc_instant" = "**推薦**：裝置權杖和端到端加密通知會傳送到 POPOPX Chat 推送伺服器，但伺服器無法看到訊息內容、大小或傳送者。";
+"ntf_mode_short_off" = "在系統允許時檢查訊息。";
+"ntf_mode_short_periodic" = "每 20 分鐘檢查訊息。";
+"ntf_mode_short_instant" = "端到端加密通知。";
+"protocol_server_no_servers_for" = "沒有 %@ 的 %@ 伺服器";
+"protocol_server_no_servers_configured" = "未設定 %@ 伺服器";
+"protocol_server_storage_missing_for" = "%@ 在 %@ 中的儲存空間缺失";
+"protocol_server_storage_missing" = "%@ 的儲存空間缺失";
+"protocol_server_proxy_missing_for" = "%@ 在 %@ 中的代理缺失";
+"protocol_server_proxy_missing" = "%@ 的代理缺失";
+"protocol_server_duplicate" = "重複伺服器：%@ 在 %@";
+"protocol_server_duplicate_relay" = "重複聊天中繼：%@ 在 %@";
+"protocol_server_no_relays_for" = "警告：沒有 %@ 的聊天中繼";
+"protocol_server_no_relays_configured" = "警告：未設定聊天中繼";
+"protocol_server_no_name_servers_for" = "警告：沒有 %@ 的名稱伺服器";
+"protocol_server_no_name_servers_configured" = "警告：未設定名稱伺服器";
+"member_support_delete_button" = "刪除";
+"migration_error_title" = "錯誤";
+"compliance_data_retention_desc" = "資料自動保留 %d 天。超過此期限後，資料將被永久刪除。";
+"location_precision_exact" = "精確";
+"location_precision_fuzzy" = "大致 (~1km)";
+"location_precision_region" = "區域 (~10km)";
+"location_precision_exact_desc" = "分享您的精確 GPS 座標";
+"location_precision_fuzzy_desc" = "四捨五入到約 1km 精度";
+"location_precision_region_desc" = "四捨五入到約 10km 並新增隨機偏移";
+"art_generator_flow_field" = "流場";
+"art_generator_circuit_board" = "電路板";
+"art_generator_geometric_harmony" = "幾何和諧";
+"art_generator_wave_interference" = "波干涉";
+"art_generator_cellular_automata" = "細胞自動機";
+"pq_crypto_kyber768_desc" = "實驗性金鑰協商 (X25519 ECDH) — 非量子抗性";
+"pq_crypto_dilithium3_desc" = "實驗性簽章 (Ed25519) — 非量子抗性";
+"pq_crypto_falcon512_desc" = "實驗性緊湊簽章 (Ed25519) — 非量子抗性";
+"config_bot_not_configured" = "設定機器人未設定";
+"config_bot_invalid_response" = "無效的設定回應";
+"config_bot_timeout" = "設定機器人請求逾時";
+"server_api_invalid_url" = "無效的伺服器 URL";
+"server_api_invalid_body" = "無效的請求本體";
+"server_api_error" = "伺服器錯誤：%d";
+"server_api_parse_failed" = "解析伺服器回應失敗";
+"nostr_broadcast_empty" = "內容不能為空";
+"nostr_broadcast_too_long" = "內容超過 500 字元限制";
+"art_vault_encode_failed" = "將影像編碼為 PNG 失敗";
+"art_vault_decrypt_failed" = "解密藝術品失敗";
+"art_engine_script_not_found" = "產生器腳本未找到：%@";
+"art_engine_render_failed" = "繪製失敗：%@";
+"art_engine_context_failed" = "建立點陣圖繪製內容失敗";
+"binthere_encrypt_failed" = "加密訊息失敗";
+"binthere_decrypt_failed" = "解密失敗 — 訊息可能已損壞";
+"binthere_invalid_key" = "無效的解密金鑰";
+"binthere_bot_timeout" = "機器人未在規定時間內回應";
+"binthere_message_expired" = "此訊息已被閱讀或已過期";
+"binthere_bot_not_configured" = "BinThere 機器人未設定";
+"binthere_compress_failed" = "壓縮影像至大小限制以下失敗";
+"binthere_operation_in_progress" = "另一個儲存操作已在進行中";
+"needle_encrypt_failed" = "加密失敗";
+"needle_decrypt_failed" = "解密失敗";
+"needle_keychain_error" = "鑰匙圈錯誤：%d";
+"needle_not_initialized" = "Needle 引擎未初始化";
+"needle_encode_failed" = "編碼訊息失敗";
+"needle_completion_failed" = "補全失敗：%@";
+"needle_parse_failed" = "解析提取結果失敗";
+"encrypted_doc_encode_failed" = "編碼文件文字失敗";
+"encrypted_doc_encrypt_failed" = "加密文件失敗";
+"encrypted_doc_decrypt_failed" = "解密文件失敗 — 資料可能已損壞";

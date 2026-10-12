@@ -1,0 +1,349 @@
+{
+  "" : {
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Ink-primary.dia",
+    "emit-module-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Ink-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Ink-primary-emit-module.dia",
+    "pch" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Ink-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Ink-primary.swiftdeps"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/API/Markdown.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Markdown.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Markdown.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Markdown.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Markdown.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Markdown.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Markdown.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Markdown.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Markdown~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/API/MarkdownParser.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/MarkdownParser.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/MarkdownParser.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/MarkdownParser.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/MarkdownParser.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/MarkdownParser.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/MarkdownParser.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/MarkdownParser.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/MarkdownParser~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/API/Modifier.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifier.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifier.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifier.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifier.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifier.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifier.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifier.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifier~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Blockquote.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Blockquote.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Blockquote.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Blockquote.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Blockquote.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Blockquote.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Blockquote.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Blockquote.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Blockquote~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Character+Classification.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Classification.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Classification.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Classification.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Classification.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Classification.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Classification.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Classification.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Classification~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Character+Escaping.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Escaping.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Escaping.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Escaping.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Escaping.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Escaping.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Escaping.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Escaping.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Character+Escaping~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/CodeBlock.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/CodeBlock.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/CodeBlock.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/CodeBlock.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/CodeBlock.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/CodeBlock.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/CodeBlock.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/CodeBlock.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/CodeBlock~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/FormattedText.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/FormattedText.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/FormattedText.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/FormattedText.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/FormattedText.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/FormattedText.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/FormattedText.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/FormattedText.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/FormattedText~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Fragment.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Fragment.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Fragment.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Fragment.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Fragment.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Fragment.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Fragment.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Fragment.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Fragment~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/HTML.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTML.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTML.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTML.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTML.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTML.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTML.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTML.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTML~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/HTMLConvertible.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTMLConvertible.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTMLConvertible.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTMLConvertible.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTMLConvertible.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTMLConvertible.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTMLConvertible.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTMLConvertible.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HTMLConvertible~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Hashable+AnyOf.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Hashable+AnyOf.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Hashable+AnyOf.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Hashable+AnyOf.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Hashable+AnyOf.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Hashable+AnyOf.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Hashable+AnyOf.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Hashable+AnyOf.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Hashable+AnyOf~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Heading.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Heading.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Heading.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Heading.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Heading.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Heading.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Heading.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Heading.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Heading~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/HorizontalLine.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HorizontalLine.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HorizontalLine.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HorizontalLine.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HorizontalLine.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HorizontalLine.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HorizontalLine.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HorizontalLine.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/HorizontalLine~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Image.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Image.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Image.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Image.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Image.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Image.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Image.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Image.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Image~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/InlineCode.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/InlineCode.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/InlineCode.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/InlineCode.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/InlineCode.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/InlineCode.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/InlineCode.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/InlineCode.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/InlineCode~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/KeyPathPatterns.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/KeyPathPatterns.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/KeyPathPatterns.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/KeyPathPatterns.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/KeyPathPatterns.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/KeyPathPatterns.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/KeyPathPatterns.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/KeyPathPatterns.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/KeyPathPatterns~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Link.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Link.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Link.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Link.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Link.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Link.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Link.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Link.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Link~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/List.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/List.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/List.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/List.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/List.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/List.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/List.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/List.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/List~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Metadata.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Metadata.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Metadata.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Metadata.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Metadata.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Metadata.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Metadata.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Metadata.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Metadata~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Modifiable.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifiable.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifiable.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifiable.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifiable.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifiable.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifiable.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifiable.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Modifiable~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/ModifierCollection.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/ModifierCollection.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/ModifierCollection.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/ModifierCollection.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/ModifierCollection.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/ModifierCollection.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/ModifierCollection.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/ModifierCollection.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/ModifierCollection~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/NamedURLCollection.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/NamedURLCollection.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/NamedURLCollection.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/NamedURLCollection.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/NamedURLCollection.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/NamedURLCollection.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/NamedURLCollection.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/NamedURLCollection.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/NamedURLCollection~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Paragraph.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Paragraph.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Paragraph.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Paragraph.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Paragraph.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Paragraph.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Paragraph.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Paragraph.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Paragraph~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/PlainTextConvertible.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/PlainTextConvertible.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/PlainTextConvertible.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/PlainTextConvertible.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/PlainTextConvertible.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/PlainTextConvertible.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/PlainTextConvertible.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/PlainTextConvertible.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/PlainTextConvertible~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Readable.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Readable.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Readable.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Readable.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Readable.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Readable.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Readable.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Readable.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Readable~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Reader.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Reader.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Reader.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Reader.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Reader.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Reader.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Reader.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Reader.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Reader~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Require.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Require.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Require.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Require.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Require.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Require.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Require.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Require.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Require~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Substring+Trimming.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Substring+Trimming.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Substring+Trimming.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Substring+Trimming.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Substring+Trimming.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Substring+Trimming.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Substring+Trimming.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Substring+Trimming.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Substring+Trimming~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/Table.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Table.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Table.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Table.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Table.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Table.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Table.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Table.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/Table~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/TextStyle.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyle.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyle.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyle.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyle.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyle.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyle.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyle.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyle~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/TextStyleMarker.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyleMarker.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyleMarker.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyleMarker.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyleMarker.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyleMarker.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyleMarker.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyleMarker.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/TextStyleMarker~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/URL.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URL.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URL.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URL.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URL.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URL.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URL.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URL.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URL~partial.swiftmodule"
+  },
+  "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/Sources/Ink/Internal/URLDeclaration.swift" : {
+    "const-values" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URLDeclaration.swiftconstvalues",
+    "dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URLDeclaration.d",
+    "diagnostics" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URLDeclaration.dia",
+    "index-unit-output-path" : "/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URLDeclaration.o",
+    "llvm-bc" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URLDeclaration.bc",
+    "object" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URLDeclaration.o",
+    "swift-dependencies" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URLDeclaration.swiftdeps",
+    "swiftmodule" : "/Users/elliot/Library/Developer/Xcode/DerivedData/POPOPX-dhlxufexonewzegispfheptoxsbm/SourcePackages/checkouts/ink/build/Ink.build/Debug-iphoneos/Ink-t.build/Objects-normal/arm64/URLDeclaration~partial.swiftmodule"
+  }
+}

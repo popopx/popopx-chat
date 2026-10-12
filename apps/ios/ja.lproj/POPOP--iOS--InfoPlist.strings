@@ -1,0 +1,15 @@
+/* Bundle name */
+"CFBundleName" = "POPOPX";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "POPOPXは他のユーザーに接続したりビデオ通話する際にQRコード読み取りのためにカメラにアクセスする必要があります。";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "POPOPXはローカル認証にFace IDを使用します";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "POPOPXは音声通話やビデオ通話および音声メッセージの録音のためにマイクにアクセスする必要があります。";
+
+/* Privacy - Photo Library Additions Usage Description */
+"NSPhotoLibraryAddUsageDescription" = "POPOPXはキャプチャおよび受信したメディアを保存するためにフォトライブラリにアクセスする必要があります";
+

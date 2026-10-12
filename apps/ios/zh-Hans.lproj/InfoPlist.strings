@@ -1,0 +1,7 @@
+/* Localized permission strings */
+"NSBluetoothAlwaysUsageDescription" = "POPOPX 使用蓝牙在互联网不可用时连接附近设备，通过安全的网状网络传递消息。";
+"NSBluetoothPeripheralUsageDescription" = "POPOPX 使用蓝牙（后台模式）在互联网不可用时通过网状网络连接到附近设备。";
+"NSLocationWhenInUseUsageDescription" = "您的位置仅用于在聊天中分享。它不会被收集或发送到任何地方，除非您选择发送到的聊天。";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "您的位置仅用于在聊天中分享。它不会被收集或发送到任何地方，除非您选择发送到的聊天。";
+"NSPhotoLibraryUsageDescription" = "POPOPX 需要访问您的照片库以在聊天中选择和发送照片。";
+"NSPhotoLibraryAddUsageDescription" = "POPOPX 需要访问权限以将照片和视频保存到您的照片库。";

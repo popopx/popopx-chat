@@ -1,13 +1,15 @@
 //
 //  BadgesYourBadgeView.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 11.09.2026.
 //  Copyright © 2026 SimpleX Chat. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
 struct BadgesYourBadgeView: View {
     @EnvironmentObject var theme: AppTheme
@@ -62,11 +64,11 @@ struct BadgesYourBadgeView: View {
                             infoRow("Last attempt", badgeTimestamp(issueError.lastAttemptAt))
                         }
                         settingsRow("number", color: theme.colors.secondary) {
-                            Button("Contact SimpleX team") {
+                            Button("Contact POPOPX team") {
                                 dismiss()
                                 DispatchQueue.main.async {
-                                    // simplexTeamURL targets this same app; route to the in-app connect flow
-                                    ChatModel.shared.appOpenUrl = simplexTeamURL
+                                    // popopxTeamURL targets this same app; route to the in-app connect flow
+                                    ChatModel.shared.appOpenUrl = popopxTeamURL
                                 }
                             }
                         }

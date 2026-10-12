@@ -1,0 +1,4 @@
+module BitLogger {
+header "BitLogger-Swift.h"
+export *
+}

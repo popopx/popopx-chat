@@ -15,13 +15,13 @@ First-time setup flow for new users. Guides through app introduction, profile cr
 
 ## Onboarding Steps
 
-### Step 1: Welcome / SimpleX Info (`SimpleXInfo`)
+### Step 1: Welcome / POPOPX Info (`POPOPXInfo`)
 
-**Stage**: `step1_SimpleXInfo`
+**Stage**: `step1_POPOPXInfo`
 
 | Element | Description |
 |---|---|
-| Logo | SimpleX Chat logo (light/dark variant based on color scheme) |
+| Logo | POPOPX Chat logo (light/dark variant based on color scheme) |
 | "The future of messaging" | Info button opening `HowItWorks` sheet |
 | Privacy redefined | "No user identifiers." with privacy icon |
 | Immune to spam | "You decide who can connect." with shield icon |
@@ -29,7 +29,7 @@ First-time setup flow for new users. Guides through app introduction, profile cr
 | **Create your profile** button | Primary action; navigates to `CreateFirstProfile` |
 | **Migrate from another device** button | Secondary action; opens `MigrateToDevice` sheet |
 
-The "How it works" sheet (`HowItWorks`) explains SimpleX's privacy model with an option to proceed to profile creation.
+The "How it works" sheet (`HowItWorks`) explains POPOPX's privacy model with an option to proceed to profile creation.
 
 ### Step 2: Create Profile (`CreateFirstProfile`)
 
@@ -56,7 +56,7 @@ Profile is stored locally and only shared with contacts. Footer explains this pr
 | Configure operators | Sheet to customize operator settings |
 | **Accept** button | Accepts conditions and advances to notifications step |
 
-Previous deprecated step `step3_CreateSimpleXAddress` (`CreateSimpleXAddress`) is no longer in the active flow.
+Previous deprecated step `step3_CreatePOPOPXAddress` (`CreatePOPOPXAddress`) is no longer in the active flow.
 
 ### Step 4: Set Notification Mode (`SetNotificationsMode`)
 
@@ -107,9 +107,9 @@ On completion, `onboardingStageDefault.set(.onboardingComplete)` is called.
 
 ```
 enum OnboardingStage: String {
-    case step1_SimpleXInfo
+    case step1_POPOPXInfo
     case step2_CreateProfile          // deprecated
-    case step3_CreateSimpleXAddress   // deprecated
+    case step3_CreatePOPOPXAddress   // deprecated
     case step3_ChooseServerOperators  // conditions acceptance
     case step4_SetNotificationsMode
     case onboardingComplete
@@ -137,9 +137,9 @@ Persisted via `DEFAULT_ONBOARDING_STAGE` in `UserDefaults`.
 ## Source Files
 
 - `Shared/Views/Onboarding/OnboardingView.swift` -- Step router and `OnboardingStage` enum definition
-- `Shared/Views/Onboarding/SimpleXInfo.swift` -- Step 1: Welcome screen with privacy highlights and migration entry
+- `Shared/Views/Onboarding/POPOPXInfo.swift` -- Step 1: Welcome screen with privacy highlights and migration entry
 - `Shared/Views/Onboarding/CreateProfile.swift` -- Profile creation form (shared between onboarding and user profiles)
-- `Shared/Views/Onboarding/CreateSimpleXAddress.swift` -- Deprecated step 3: SimpleX address creation
+- `Shared/Views/Onboarding/CreatePOPOPXAddress.swift` -- Deprecated step 3: POPOPX address creation
 - `Shared/Views/Onboarding/ChooseServerOperators.swift` -- Step 3: Server operator conditions and selection
 - `Shared/Views/Onboarding/SetNotificationsMode.swift` -- Step 4: Push notification mode selection
 - `Shared/Views/Onboarding/HowItWorks.swift` -- "How it works" info sheet from step 1

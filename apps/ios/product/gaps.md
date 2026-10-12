@@ -1,4 +1,4 @@
-# SimpleX Chat iOS -- Known Gaps & Recommendations
+# POPOPX Chat iOS -- Known Gaps & Recommendations
 
 > Aggregation of `[GAP]` and `[REC]` annotations discovered during specification analysis. Organized by product area.
 >

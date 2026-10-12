@@ -1,0 +1,923 @@
+/*
+  Localizable.strings
+  POPOP NSE
+
+  Created by EP on 30/07/2024.
+  Copyright © 2024 POPOP Chat. All rights reserved.
+*/
+
+
+"New messages" = "ข้อความใหม่";
+
+"New events" = "กิจกรรมใหม่";
+
+"From %d chat(s)" = "จาก %d แชท";
+
+"From: %@" = "จาก: %@";
+
+"%d new events" = "%d กิจกรรมใหม่";
+
+" and " = " และ ";
+
+", " = ", ";
+
+" other chats" = " แชทอื่นๆ";
+
+"new message" = "ข้อความใหม่";
+
+"%@ wants to connect!" = "%@ ต้องการเชื่อมต่อ!";
+
+"Accept contact request from %@?" = "ยอมรับคำขอติดต่อจาก %@?";
+
+"%@ is connected!" = "%@ เชื่อมต่อแล้ว!";
+
+"Incoming video call" = "สายวิดีโอเข้า";
+
+"Incoming audio call" = "สายเสียงเข้า";
+
+"Encrypted message: app is stopped" = "ข้อความเข้ารหัส: แอปหยุดทำงาน";
+
+"Contact hidden:" = "ผู้ติดต่อถูกซ่อน:";
+
+"Somebody" = "ใครบางคน";
+
+"this contact" = "ผู้ติดต่อนี้";
+
+"A new contact" = "ผู้ติดต่อใหม่";
+
+"You can now chat with %@" = "ตอนนี้คุณสามารถแชทกับ %@ ได้แล้ว";
+
+"New contact:" = "ผู้ติดต่อใหม่:";
+
+"message received" = "ได้รับข้อความแล้ว";
+
+"New contact request" = "คำขอติดต่อใหม่";
+
+"Group message:" = "ข้อความกลุ่ม:";
+
+"Report: %@" = "รายงาน: %@";
+
+"Encrypted message: no passphrase" = "ข้อความเข้ารหัส: ไม่มีรหัสผ่าน";
+
+"Encrypted message: database migration error" = "ข้อความเข้ารหัส: ข้อผิดพลาดการย้ายฐานข้อมูล";
+
+"Encrypted message: database error" = "ข้อความเข้ารหัส: ข้อผิดพลาดฐานข้อมูล";
+
+"Encrypted message: keychain error" = "ข้อความเข้ารหัส: ข้อผิดพลาดพวงกุญแจ";
+
+"Encrypted message: unexpected error" = "ข้อความเข้ารหัส: ข้อผิดพลาดที่ไม่คาดคิด";
+
+"Encrypted message or another event" = "ข้อความเข้ารหัสหรือกิจกรรมอื่น";
+
+/* RadialActionMenu - Chat actions */
+"accept_contact_request" = "ยอมรับ";
+"incognito_accept" = "ไม่ระบุตัวตน";
+"reject_contact_request" = "ปฏิเสธ";
+"join_group" = "เข้าร่วม";
+"archive_reports" = "เก็บถาวร";
+"leave_group_action" = "ออก";
+"mark_read" = "อ่านแล้ว";
+"mark_unread" = "ยังไม่อ่าน";
+"unfavorite_chat" = "ยกเลิกโปรด";
+"favorite_chat" = "โปรด";
+"chat_list" = "รายการ";
+"clear_conversation" = "ล้าง";
+"delete_chat" = "ลบ";
+
+/* RadialActionMenu - Alert dialogs */
+"clear_private_notes_title" = "ล้างบันทึกส่วนตัว?";
+"clear_conversation_title" = "ล้างการสนทนา?";
+"clear_private_notes_message" = "ข้อความทั้งหมดจะถูกลบ - การนี้ไม่สามารถย้อนกลับได้!";
+"clear_conversation_message" = "ข้อความทั้งหมดจะถูกลบ - การนี้ไม่สามารถย้อนกลับได้! ข้อความจะถูกลบเฉพาะคุณเท่านั้น";
+"clear_action" = "ล้าง";
+"archive_reports_title" = "เก็บถาวรรายงานทั้งหมด?";
+"archive_reports_message" = "รายงานทั้งหมดจะถูกเก็บถาวรสำหรับคุณ";
+"archive_action" = "เก็บถาวร";
+"leave_group_title" = "ออกจากกลุ่ม?";
+"leave_group_message" = "คุณจะไม่ได้รับข้อความจากกลุ่มนี้อีกต่อไป";
+"leave_action" = "ออก";
+
+/* OneHandUICard - Accessibility */
+"selected_state" = "เลือกแล้ว";
+"not_selected_state" = "ยังไม่ได้เลือก";
+
+/* PXContactConnectionInfo - Connection status */
+"you_invited_contact" = "คุณได้เชิญผู้ติดต่อ";
+"you_accepted_connection" = "คุณได้ยอมรับการเชื่อมต่อ";
+"group_connection_pending" = "คุณจะเชื่อมต่อกับกลุ่มเมื่ออุปกรณ์ของโฮสต์กลุ่มออนไลน์ โปรดรอหรือตรวจสอบในภายหลัง!";
+"connection_request_pending" = "คุณจะเชื่อมต่อเมื่อยคำขอเชื่อมต่อของคุณได้รับการยอมรับ โปรดรอหรือตรวจสอบในภายหลัง!";
+"contact_device_pending" = "คุณจะเชื่อมต่อเมื่ออุปกรณ์ของผู้ติดต่อของคุณออนไลน์ โปรดรอหรือตรวจสอบในภายหลัง!";
+"incognito_mode" = "ไม่ระบุตัวตน";
+"delete_connection" = "ลบการเชื่อมต่อ";
+"share_onetime_link" = "แชร์ลิงก์แบบใช้ครั้งเดียว";
+"onetime_invitation_title" = "ลิงก์เชิญแบบครั้งเดียว";
+"learn_more" = "เรียนรู้เพิ่มเติม";
+
+/* PXTagListView - Tag management */
+"delete_list_title" = "ลบรายการ?";
+"delete_list_message" = "แชททั้งหมดจะถูกลบออกจากรายการ %@ และรายการจะถูกลบ";
+"delete_action" = "ลบ";
+"edit_action" = "แก้ไข";
+"create_list" = "สร้างรายการ";
+"error_reordering_lists" = "ข้อผิดพลาดในการจัดเรียงรายการใหม่";
+"error_saving_chat_list" = "ข้อผิดพลาดในการบันทึกรายการแชท";
+"add_to_list" = "เพิ่มในรายการ";
+"save_list" = "บันทึกรายการ";
+"unique_list_name_emoji" = "ชื่อรายการและอีโมจิต้องแตกต่างกันสำหรับทุกรายการ";
+"error_creating_list" = "ข้อผิดพลาดในการสร้างรายการ";
+
+/* PXChatRelayView - Relay settings (Batch 3) */
+"relay_test_failed_title" = "การทดสอบรีเลย์ล้มเหลว!";
+"your_relay_name" = "ชื่อรีเลย์ของคุณ";
+"preset_relay_address" = "ที่อยู่รีเลย์ที่ตั้งไว้";
+"preset_relay_name" = "ชื่อรีเลย์ที่ตั้งไว้";
+"your_relay_address" = "ที่อยู่รีเลย์ของคุณ";
+"test_relay_footer" = "**ทดสอบรีเลย์** เพื่อดึงชื่อ";
+"delete_relay" = "ลบรีเลย์";
+"use_relay" = "ใช้รีเลย์";
+"test_relay_button" = "ทดสอบรีเลย์";
+"use_for_new_channels" = "ใช้สำหรับช่องใหม่";
+"chat_relay_nav_title" = "รีเลย์แชท";
+"enter_relay_name_placeholder" = "ใส่ชื่อรีเลย์…";
+
+/* UserAddressLearnMore - Address help (Batch 3) */
+"share_address_publicly" = "แชร์ที่อยู่ POPOPX บนโซเชียลมีเดีย";
+"address_wont_lose_contacts" = "คุณจะไม่สูญเสียผู้ติดต่อหากคุณลบที่อยู่ของคุณในภายหลัง";
+"onetime_link_usage_hint" = "ลิงก์แบบใช้ครั้งเดียวสามารถใช้ได้ *กับผู้ติดต่อหนึ่งคนเท่านั้น* - แชร์แบบตัวต่อตัวหรือผ่านแอปส่งข้อความใดก็ได้";
+"set_connection_name_hint" = "คุณสามารถตั้งชื่อการเชื่อมต่อเพื่อจดจำว่าแชร์ลิงก์กับใคร";
+"connection_security" = "ความปลอดภัยของการเชื่อมต่อ";
+"address_links_safe_share" = "ที่อยู่ POPOPX และลิงก์แบบใช้ครั้งเดียวปลอดภัยที่จะแชร์ผ่านแอปส่งข้อความใดก็ได้";
+"compare_security_codes" = "เพื่อป้องกันการแทนที่ลิงก์ของคุณ คุณสามารถเปรียบเทียบรหัสความปลอดภัยของผู้ติดต่อ";
+"read_more_user_guide" = "อ่านเพิ่มเติมในคู่มือผู้ใช้";
+"create_popopx_address" = "สร้างที่อยู่ POPOPX";
+"create_onetime_link" = "สร้างลิงก์แบบใช้ครั้งเดียว";
+"popopx_address_title" = "ที่อยู่ POPOPX";
+"new_chat_title" = "แชทใหม่";
+
+/* PXRTCServers - WebRTC settings (Batch 3) */
+"configure_ice_servers" = "กำหนดค่าเซิร์ฟเวอร์ ICE";
+"use_popopx_servers_confirm" = "ใช้เซิร์ฟเวอร์ POPOPX Chat?";
+"saved_webrtc_removed" = "เซิร์ฟเวอร์ WebRTC ICE ที่บันทึกไว้จะถูกลบ";
+"confirm_action" = "ยืนยัน";
+"using_popopx_servers" = "กำลังใช้เซิร์ฟเวอร์ POPOPX Chat";
+"ice_servers_one_per_line" = "เซิร์ฟเวอร์ ICE (หนึ่งบรรทัดต่อหนึ่งเซิร์ฟเวอร์)";
+"error_saving_ice_servers" = "ข้อผิดพลาดในการบันทึกเซิร์ฟเวอร์ ICE";
+"ice_servers_format_error" = "ตรวจสอบว่าที่อยู่เซิร์ฟเวอร์ WebRTC ICE อยู่ในรูปแบบที่ถูกต้อง คั่นด้วยบรรทัด และไม่ซ้ำกัน";
+"how_to" = "วิธีการ";
+
+/* PXChatItemInfoView - Chat item info (Batch 4) */
+"delivery_tab" = "การส่ง";
+"history_tab" = "ประวัติ";
+"in_reply_to_tab" = "ตอบกลับถึง";
+"saved_message" = "บันทึกแล้ว";
+"forwarded_message" = "ส่งต่อแล้ว";
+"history_section" = "ประวัติ";
+"no_history" = "ไม่มีประวัติ";
+"share_action" = "แชร์";
+"copy_action" = "คัดลอก";
+"current_version" = "(ปัจจุบัน)";
+"no_text_content" = "ไม่มีข้อความ";
+"in_reply_to_section" = "ตอบกลับถึง";
+"recipients_cant_see_sender" = "ผู้รับไม่สามารถเห็นว่าข้อความนี้มาจากใคร";
+"you_sent_label" = "คุณ";
+"delivery_section" = "การส่ง";
+"no_delivery_info" = "ไม่มีข้อมูลการส่ง";
+
+/* PXFramedItemView - Chat item framing (Batch 5) */
+"only_you_and_mods_see" = "เฉพาะคุณและผู้ดูแลเท่านั้นที่เห็น";
+"only_sender_and_mods_see" = "เฉพาะผู้ส่งและผู้ดูแลเท่านั้นที่เห็น";
+"archived_report" = "รายงานที่ถูกเก็บถาวร";
+"moderated_by_user" = "ดูแลโดย";
+"blocked_status" = "ถูกบล็อก";
+"blocked_by_admin" = "ถูกบล็อกโดยผู้ดูแล";
+"marked_deleted" = "ทำเครื่องหมายว่าลบแล้ว";
+"live_message" = "สด";
+
+/* PXIntegrityErrorItemView - Error alerts (Batch 5) */
+"skipped_messages_title" = "ข้อความที่ข้าม";
+"skipped_messages_message" = "สิ่งนี้อาจเกิดขึ้นเมื่อ:\n1. ข้อความหมดอายุในไคลเอนต์ที่ส่งหลังจาก 2 วันหรือบนเซิร์ฟเวอร์หลังจาก 30 วัน\n2. การถอดรหัสข้อความล้มเหลว เพราะคุณหรือผู้ติดต่อของคุณใช้ข้อมูลสำรองฐานข้อมูลเก่า\n3. การเชื่อมต่อถูกบุกรุก";
+"bad_message_hash" = "แฮชข้อความไม่ถูกต้อง";
+"hash_mismatch_description" = "แฮชของข้อความก่อนหน้าแตกต่างกัน";
+"report_to_developers" = "โปรดรายงานสิ่งนี้ให้นักพัฒนาทราบ";
+"bad_message_id" = "ID ข้อความไม่ถูกต้อง";
+"message_id_incorrect" = "ID ของข้อความถัดไปไม่ถูกต้อง (น้อยกว่าหรือเท่ากับข้อความก่อนหน้า)\nสิ่งนี้อาจเกิดขึ้นเนื่องจากข้อบกพร่องหรือเมื่อการเชื่อมต่อถูกบุกรุก";
+"message_receive_error" = "แอปลบข้อความนี้หลังจากพยายามรับ %d ครั้ง";
+"message_error_title" = "ข้อผิดพลาดข้อความ";
+
+"chat_audio_call" = "โทรเสียง";
+"chat_video_call" = "โทรวิดีโอ";
+"chat_all_messages" = "ข้อความทั้งหมด";
+"chat_search" = "ค้นหา";
+"chat_filter" = "กรอง";
+"chat_invite_member" = "เชิญสมาชิก";
+
+"compose_member_deleted_cant_accept" = "สมาชิกลบแล้ว - ไม่สามารถยอมรับคำขอได้";
+"compose_reject" = "ปฏิเสธ";
+"compose_accept" = "ยอมรับ";
+"compose_your_profile" = "โปรไฟล์ของคุณ";
+"compose_incognito" = "ไม่ระบุตัวตน";
+"compose_send_live_message" = "ส่งข้อความสด";
+"compose_disappearing_message" = "ข้อความที่หายไป";
+"compose_char_count_format" = "%d/65536";
+"compose_scan_security_code" = "สแกนรหัสความปลอดภัยจากแอปของผู้ติดต่อของคุณ";
+"compose_incorrect_security_code" = "รหัสความปลอดภัยไม่ถูกต้อง!";
+"compose_no_filtered_chats" = "ไม่มีแชทที่กรองแล้ว";
+"compose_share" = "แชร์";
+"compose_copy" = "คัดลอก";
+"compose_mark_read" = "ทำเครื่องหมายว่าอ่านแล้ว";
+"compose_delete_from_history" = "ลบจากประวัติ";
+"compose_archive_report" = "เก็บถาวรรายงาน";
+"compose_answer_call" = "รับสาย";
+"compose_tap_to_open" = "แตะเพื่อเปิด";
+"compose_invalid_data" = "ข้อมูลไม่ถูกต้อง";
+"compose_event_happened" = "เหตุการณ์เกิดขึ้น";
+
+"group_no_contacts_to_add" = "ไม่มีผู้ติดต่อให้เพิ่ม";
+"group_clear_selection" = "ล้าง";
+"group_contacts_selected_fmt" = "เลือก %d ผู้ติดต่อแล้ว";
+"group_no_contacts_selected" = "ไม่ได้เลือกผู้ติดต่อ";
+"group_cant_invite_contact_title" = "ไม่สามารถเชิญผู้ติดต่อได้!";
+"group_cant_invite_contact_msg" = "คุณกำลังพยายามเชิญผู้ติดต่อที่คุณได้แชร์โปรไฟล์ไม่ระบุตัวตน ไปยังกลุ่มที่คุณใช้โปรไฟล์หลัก";
+"group_enabled_for" = "เปิดใช้งานสำหรับ";
+"group_set_member_admission" = "ตั้งการรับสมาชิก";
+"group_member_admission" = "การรับสมาชิก";
+"group_no_available_relays" = "ไม่มีรีเลย์ที่ใช้งานได้";
+"group_channel_delete_all" = "ช่องจะถูกลบสำหรับผู้ติดตามทั้งหมด - การนี้ไม่สามารถย้อนกลับได้!";
+"group_channel_delete_you" = "ช่องจะถูกลบสำหรับคุณ - การนี้ไม่สามารถย้อนกลับได้!";
+"group_group_delete_all" = "กลุ่มจะถูกลบสำหรับสมาชิกทั้งหมด - การนี้ไม่สามารถย้อนกลับได้!";
+"group_group_delete_you" = "กลุ่มจะถูกลบสำหรับคุณ - การนี้ไม่สามารถย้อนกลับได้!";
+"group_chat_delete_all" = "แชทจะถูกลบสำหรับสมาชิกทั้งหมด - การนี้ไม่สามารถย้อนกลับได้!";
+"group_chat_delete_you" = "แชทจะถูกลบสำหรับคุณ - การนี้ไม่สามารถย้อนกลับได้!";
+"group_cant_invite_contacts_title" = "ไม่สามารถเชิญผู้ติดต่อได้!";
+"group_cant_invite_contacts_msg" = "คุณกำลังใช้โปรไฟล์ไม่ระบุตัวตนสำหรับกลุ่มนี้ - เพื่อป้องกันการแชร์โปรไฟล์หลักของคุณ การเชิญผู้ติดต่อจะไม่ได้รับอนุญาต";
+"group_receipts_disabled_title" = "การยืนยันถูกปิดใช้งาน";
+"group_receipts_disabled_msg_fmt" = "กลุ่มนี้มีสมาชิกมากกว่า %d คน การยืนยันการส่งจะไม่ถูกส่ง";
+"group_copy_code" = "คัดลอกรหัส";
+"group_webpage_code" = "รหัสหน้าเว็บ";
+"group_webpage_code_instructions" = "เพิ่มรหัสนี้ลงในหน้าเว็บของคุณ จะแสดงตัวอย่างของช่อง / กลุ่มของคุณ";
+"group_enter_webpage_url" = "ใส่ URL หน้าเว็บ";
+"group_webpage_url_instructions" = "จะแสดงให้ผู้ติดตามและใช้เพื่ออนุญาตให้โหลดตัวอย่าง";
+"group_chat_with_admins" = "แชทกับผู้ดูแล";
+"group_member_reports" = "รายงานสมาชิก";
+"group_set_group_preferences" = "ตั้งค่าการตั้งค่ากลุ่ม";
+"group_owners_section" = "เจ้าของ";
+"group_you_label" = "คุณ";
+"group_no_chat_relays" = "ไม่มีรีเลย์แชท";
+"group_chat_relays_forward_info" = "รีเลย์แชทส่งต่อข้อความไปยังผู้ติดตามช่อง";
+"group_reset_button" = "รีเซ็ต";
+"group_take_picture" = "ถ่ายรูป";
+"group_choose_from_library" = "เลือกจากคลัง";
+"group_paste_image" = "วางรูปภาพ";
+"group_read_action" = "อ่านแล้ว";
+"group_accept_action" = "ยอมรับ";
+"group_delete_action_member" = "ลบ";
+"group_share_link_desc_channel" = "คุณสามารถแชร์ลิงก์หรือรหัส QR - ใครก็สามารถเข้าร่วมช่องได้";
+"group_share_link_desc_group" = "คุณสามารถแชร์ลิงก์หรือรหัส QR - ใครก็สามารถเข้าร่วมกลุ่มได้ คุณจะไม่สูญเสียสมาชิกของกลุ่มหากคุณลบในภายหลัง";
+"group_upgrade_link" = "อัพเกรดลิงก์";
+"group_share_link_button" = "แชร์ลิงก์";
+"group_share_via_chat_button" = "แชร์ผ่านแชท";
+"group_delete_link" = "ลบลิงก์";
+"group_create_link_button" = "สร้างลิงก์";
+"group_delete_link_title" = "ลบลิงก์?";
+"group_delete_link_message" = "สมาชิกกลุ่มทั้งหมดยังคงเชื่อมต่ออยู่";
+"group_delete_link_action" = "ลบ";
+
+"settings_send_notifications" = "ส่งการแจ้งเตือน";
+"settings_lock_screen_preview" = "คุณสามารถตั้งค่าตัวอย่างการแจ้งเตือนบนหน้าจอล็อกผ่านการตั้งค่า";
+"settings_open_settings_button" = "เปิดการตั้งค่า";
+"settings_show_preview" = "แสดงตัวอย่าง";
+"settings_push_notifications" = "การแจ้งเตือนแบบพุช";
+"settings_restart_migrate_notice" = "โปรดรีสตาร์ทแอปและย้ายฐานข้อมูลเพื่อเปิดใช้งานการแจ้งเตือนแบบพุช";
+"settings_server_test_failed" = "การทดสอบเซิร์ฟเวอร์ล้มเหลว!";
+"settings_test_notifications" = "ทดสอบการแจ้งเตือน";
+"settings_core_version_fmt" = "เวอร์ชันคอร์: v%@";
+"settings_core_engine_fmt" = "เอนจินคอร์: v%@";
+"settings_markdown_usage" = "คุณสามารถใช้ markdown เพื่อจัดรูปแบบข้อความ:";
+"settings_incognito_mode" = "โหมดไม่ระบุตัวตน";
+"settings_incognito_description_1" = "โหมดไม่ระบุตัวตนปกป้องความเป็นส่วนตัวของคุณโดยใช้โปรไฟล์สุ่มใหม่สำหรับผู้ติดต่อแต่ละคน";
+"settings_incognito_description_2" = "ช่วยให้มีการเชื่อมต่อที่ไม่ระบุตัวตนจำนวนมากโดยไม่มีการแชร์ข้อมูลระหว่างกันในโปรไฟล์แชทเดียว";
+"settings_incognito_description_3" = "เมื่อคุณแชร์โปรไฟล์ไม่ระบุตัวตนกับใคร โปรไฟล์นี้จะถูกใช้สำหรับกลุ่มที่พวกเขาเชิญคุณ";
+"settings_chat_console" = "คอนโซลแชท";
+"settings_reset_hints" = "รีเซ็ตคำแนะนำทั้งหมด";
+"settings_show_hide_db_ids" = "ID ฐานข้อมูลและตัวเลือกการแยกการขนส่ง";
+"settings_storage_label" = "ที่เก็บข้อมูล";
+"settings_developer_options" = "ตัวเลือกนักพัฒนา";
+"settings_compute_store_url" = "URL ของ Compute Store";
+"settings_compute_store_label" = "Compute Store";
+"settings_compute_store_hint" = "เว้นว่างไว้เพื่อใช้โหมดจำลองในเครื่อง ตั้งค่า URL แบ็กเอนด์เพื่อเปิดใช้งานการซื้อ StoreKit จริงพร้อมการตรวจสอบฝั่งเซิร์ฟเวอร์";
+"settings_profile_stored_notice" = "โปรไฟล์ของคุณถูกจัดเก็บบนอุปกรณ์ของคุณและแชร์กับผู้ติดต่อของคุณเท่านั้น เซิร์ฟเวอร์ POPOPX ไม่สามารถเห็นโปรไฟล์ของคุณ";
+"settings_reset_button" = "รีเซ็ต";
+"settings_save_notify_contacts" = "บันทึก (และแจ้งเตือนผู้ติดต่อ)";
+"settings_take_picture" = "ถ่ายรูป";
+"settings_choose_from_library" = "เลือกจากคลัง";
+"settings_paste_image" = "วางรูปภาพ";
+"settings_hide_profile" = "ซ่อนโปรไฟล์";
+"settings_hidden_profile_password" = "รหัสผ่านโปรไฟล์ที่ซ่อน";
+"settings_hidden_profile_instructions" = "เพื่อเปิดเผยโปรไฟล์ที่ซ่อนของคุณ ให้ใส่รหัสผ่านเต็มในช่องค้นหาในหน้า **โปรไฟล์แชทของคุณ**";
+"settings_error_saving_password" = "ข้อผิดพลาดในการบันทึกรหัสผ่านผู้ใช้";
+"settings_time_disappear_new_contacts" = "เวลาหายไปถูกตั้งค่าสำหรับผู้ติดต่อใหม่เท่านั้น";
+"settings_webrtc_ice_servers" = "เซิร์ฟเวอร์ WebRTC ICE";
+"settings_call_settings_header" = "การตั้งค่า";
+"settings_relay_protects_ip" = "เซิร์ฟเวอร์รีเลย์ปกป้องที่อยู่ IP ของคุณ แต่สามารถสังเกตระยะเวลาของการโทรได้";
+"settings_relay_only_if_necessary" = "เซิร์ฟเวอร์รีเลย์จะใช้เมื่อจำเป็นเท่านั้น อีกฝ่ายสามารถสังเกตที่อยู่ IP ของคุณได้";
+"settings_interface_section" = "อินเทอร์เฟซ";
+"settings_accept_calls_lockscreen" = "คุณสามารถรับสายจากหน้าจอล็อกได้ โดยไม่ต้องยืนยันตัวตนอุปกรณ์และแอป";
+"settings_auth_required_before_connect" = "ต้องมีการยืนยันตัวตนก่อนการโทรเชื่อมต่อ แต่คุณอาจพลาดสาย";
+"settings_limitations_section" = "ข้อจำกัด";
+"settings_preset_server_address" = "ที่อยู่เซิร์ฟเวอร์ที่ตั้งไว้";
+"settings_your_server_address" = "ที่อยู่เซิร์ฟเวอร์ของคุณ";
+"settings_add_to_another_device" = "เพิ่มลงในอุปกรณ์อื่น";
+"settings_use_for_messages" = "ใช้สำหรับข้อความ";
+"settings_yes_option" = "ใช่";
+"settings_no_option" = "ไม่";
+"settings_use_server" = "ใช้เซิร์ฟเวอร์";
+"settings_chat_relays_header" = "รีเลย์แชท";
+"settings_chat_relays_forward_desc" = "รีเลย์แชทส่งต่อข้อความในช่องที่คุณสร้าง";
+"settings_message_servers" = "เซิร์ฟเวอร์ข้อความ";
+"settings_media_file_servers" = "เซิร์ฟเวอร์สื่อและไฟล์";
+"settings_add_server" = "เพิ่มเซิร์ฟเวอร์";
+"settings_enter_server_manually" = "ใส่เซิร์ฟเวอร์ด้วยตนเอง";
+"settings_scan_server_qr" = "สแกนรหัส QR ของเซิร์ฟเวอร์";
+"settings_chat_relay_link" = "รีเลย์แชท";
+"settings_how_to_use_servers" = "วิธีใช้เซิร์ฟเวอร์ของคุณ";
+"settings_test_servers" = "ทดสอบเซิร์ฟเวอร์";
+"settings_scan_server_qr_title" = "สแกนรหัส QR ของเซิร์ฟเวอร์";
+
+
+/* NewChat - Group Creation */
+"group_create_button" = "สร้างกลุ่ม";
+"group_decentralized_footer" = "กระจายอำนาจอย่างสมบูรณ์ - มองเห็นเฉพาะสมาชิก";
+"group_create_error_title" = "ข้อผิดพลาดในการสร้างกลุ่ม";
+
+/* NewChat - Channel Creation */
+"channel_configure_relays" = "กำหนดค่ารีเลย์";
+"channel_create_button" = "สร้างช่องสาธารณะ";
+
+/* Developer Settings */
+"dev_compute_store_header" = "Compute Store";
+"dev_compute_store_footer" = "เว้นว่างไว้เพื่อใช้โหมดจำลองในเครื่อง ตั้งค่า URL แบ็กเอนด์เพื่อเปิดใช้งานการซื้อ StoreKit จริงพร้อมการตรวจสอบฝั่งเซิร์ฟเวอร์";
+
+/* Network & Servers */
+"scan_server_qr_title" = "สแกนรหัส QR ของเซิร์ฟเวอร์";
+
+/* NewChat Menu */
+"newchat_archived_contacts" = "ผู้ติดต่อที่เก็บถาวร";
+"search_cancel_button" = "ยกเลิก";
+
+/* Onboarding */
+"profile_name_placeholder" = "ใส่ชื่อโปรไฟล์...";
+"onboarding_back_button" = "ย้อนกลับ";
+
+
+/* Nostr Square - Reply View */
+"nostr_reply_original_label" = "ต้นฉบับ";
+"nostr_reply_privacy_notice" = "คำตอบของคุณไม่ระบุตัวตนและถูกเข้ารหัส";
+"nostr_reply_title" = "ตอบกลับ";
+"nostr_reply_send_button" = "ส่ง";
+
+/* Nostr Square - Broadcast Composer */
+"nostr_composer_privacy_title" = "การเผยแพร่แบบไม่ระบุตัวตน";
+"nostr_composer_privacy_subtitle" = "ตัวตนของคุณได้รับการปกป้องด้วยการเข้ารหัสแบบ end-to-end";
+"nostr_composer_char_count" = "%d/%d";
+"nostr_composer_title" = "การเผยแพร่ใหม่";
+"nostr_composer_send_button" = "เผยแพร่";
+
+/* Nostr Square - Broadcast Card */
+"nostr_card_anonymous_label" = "ไม่ระบุตัวตน";
+"nostr_card_resonate_button" = "สะท้อน";
+"nostr_card_ttl_label" = "TTL";
+
+
+/* Developer Settings - Additional */
+"dev_show_label" = "แสดง:";
+"dev_hide_label" = "ซ่อน:";
+"dev_storage_button" = "ที่เก็บข้อมูล";
+"back_to_label" = "กลับไปที่ %@";
+"duration_picker_label" = "ระยะเวลา";
+"unit_picker_label" = "หน่วย";
+"theme_all_modes" = "ทุกโหมด";
+"theme_light_mode" = "โหมดสว่าง";
+"theme_dark_mode" = "โหมดมืด";
+"theme_apply_to_label" = "ใช้กับ";
+"error_failed_load_server_operators" = "ไม่สามารถโหลดผู้ดำเนินการเซิร์ฟเวอร์หลังจากลอง 3 ครั้ง แอปไม่สามารถสื่อสารกับบริการหลักได้";
+"error_cannot_set_empty_operators" = "ไม่สามารถตั้งรายการผู้ดำเนินการว่างเปล่าได้";
+"error_failed_set_server_operators" = "ไม่สามารถตั้งผู้ดำเนินการเซิร์ฟเวอร์หลังจากลอง 5 ครั้ง";
+"error_failed_save_servers" = "ไม่สามารถบันทึกเซิร์ฟเวอร์หลังจากลองหลายครั้ง";
+"error_failed_validate_servers" = "ไม่สามารถตรวจสอบเซิร์ฟเวอร์หลังจากลองหลายครั้ง";
+"error_failed_load_conditions" = "ไม่สามารถโหลดข้อความเงื่อนไขหลังจากลอง 3 ครั้ง";
+"error_no_operators_for_conditions" = "ไม่ได้ระบุผู้ดำเนินการสำหรับการยอมรับเงื่อนไข";
+"error_invalid_conditions_id" = "ID เงื่อนไขไม่ถูกต้อง กรุณาเริ่มแอปใหม่";
+"error_and_others_count" = "และข้อผิดพลาดอื่นๆ อีก %d รายการ";
+"group_short_description_placeholder" = "คำอธิบายสั้น";
+"error_saving_channel_profile" = "เกิดข้อผิดพลาดในการบันทึกโปรไฟล์ช่อง";
+"error_saving_group_profile" = "เกิดข้อผิดพลาดในการบันทึกโปรไฟล์กลุ่ม";
+"channel_profile_nav_title" = "โปรไฟล์ช่อง";
+"group_profile_nav_title" = "โปรไฟล์กลุ่ม";
+"channel_webpage_create_description" = "สร้างหน้าเว็บเพื่อแสดงตัวอย่างช่องของคุณให้ผู้เยี่ยมชมดูก่อนสมัครสมาชิก โฮสต์เองหรือใช้บริการโฮสต์แบบคงที่ใดก็ได้";
+"channel_webpage_not_supported" = "รีเลย์แชทที่ใช้ไม่รองรับหน้าเว็บ";
+"channel_webpage_url_placeholder" = "https://";
+"channel_allow_embed_toggle" = "อนุญาตให้ทุกคนฝัง";
+"channel_embed_any_page" = "หน้าเว็บใดก็ได้สามารถแสดงตัวอย่างได้";
+"channel_embed_only_your_page" = "เฉพาะหน้าที่คุณระบุข้างต้นเท่านั้นที่สามารถแสดงตัวอย่างได้";
+"channel_save_notify_subscribers" = "บันทึกและแจ้งเตือนสมาชิก";
+"channel_save_notify_members" = "บันทึกและแจ้งเตือนสมาชิก";
+"app_version_label" = "เวอร์ชันแอป: v%@";
+"app_build_label" = "บิลด์แอป: %@";
+"dev_show_options_toggle" = "แสดงตัวเลือกนักพัฒนา";
+"dev_confirm_db_upgrades_toggle" = "ยืนยันการอัปเกรดฐานข้อมูล";
+"dev_deprecated_options_section" = "ตัวเลือกที่เลิกใช้แล้ว";
+"dev_popopx_links_picker" = "ลิงก์ POPOPX";
+"data_market_category_picker" = "หมวดหมู่";
+"data_market_category_label" = "หมวดหมู่";
+"group_initial_role_picker" = "บทบาทเริ่มต้น";
+"group_new_member_role_picker" = "บทบาทสมาชิกใหม่";
+"bridge_sms_provider_picker" = "ผู้ให้บริการ";
+"wallpaper_scale_picker" = "ขนาด";
+"prefs_you_allow_picker" = "คุณอนุญาต";
+"prefs_you_allow_toggle" = "คุณอนุญาต";
+"prefs_contact_allows" = "ผู้ติดต่ออนุญาต";
+"prefs_delete_after" = "ลบหลังจาก";
+"prefs_select_button" = "เลือก";
+"chat_delete_messages_after" = "ลบข้อความหลังจาก";
+"servers_user_selection_picker" = "การเลือกของผู้ใช้";
+"servers_server_type_picker" = "ประเภทเซิร์ฟเวอร์";
+"monetization_eula_link" = "EULA";
+"monetization_billing_period_picker" = "รอบการเรียกเก็บเงิน";
+"monetization_price_yearly" = "$99.9 / ปี";
+"monetization_price_monthly" = "$9.99 / เดือน";
+"monetization_feature_chat_privacy" = "ฟีเจอร์แชทและความเป็นส่วนตัวทั้งหมด";
+"monetization_feature_compute_gifts" = "โทเค็นคอมพิวเตอร์และของขวัญ";
+"monetization_feature_own_servers" = "เพิ่มเซิร์ฟเวอร์ SMP ของคุณเอง";
+"monetization_feature_quantum" = "ฟีเจอร์ควอนตัมลำดับความสำคัญ";
+"db_delete_messages_after" = "ลบข้อความหลังจาก";
+"mesh_hub_tab_chats" = "แชท Mesh";
+"mesh_hub_tab_public" = "แชทสาธารณะ";
+"mesh_hub_tab_groups" = "กลุ่ม";
+"mesh_hub_picker_label" = "Mesh Hub";
+"mesh_board_scope_picker" = "ขอบเขต";
+"migration_use_onion_hosts" = "ใช้โฮสต์ .onion";
+"error_failed_load_protocol_info" = "ไม่สามารถโหลดข้อมูลโปรโตคอล แอปไม่สามารถสื่อสารกับบริการหลัก กรุณาปิดแอปแล้วเริ่มใหม่";
+"error_invalid_conditions_id_detail" = "ID เงื่อนไขไม่ถูกต้อง (%lld) แอปไม่สามารถระบุเวอร์ชันโปรโตคอลที่จะยอมรับได้ กรุณาเริ่มแอปใหม่ทั้งหมด";
+"error_no_operators_available" = "ไม่มีผู้ดำเนินการที่พร้อมใช้งาน กรุณาเริ่มแอปใหม่";
+"markdown_can_be_copied" = " (สามารถคัดลอกได้)";
+"network_transport_isolation" = "การแยกการขนส่ง";
+"release_notes_transport_isolation_title" = "การแยกการขนส่ง";
+"release_notes_transport_isolation_desc" = "ตามโปรไฟล์แชท (ค่าเริ่มต้น) หรือ [ตามการเชื่อมต่อ](https://popopxchat.com/blog/20230204-popopxchat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)";
+"voice_messages_prohibited_title" = "ห้ามใช้ข้อความเสียง";
+"voice_messages_prohibited_ask_contact_message" = "ไม่อนุญาตให้ใช้ข้อความเสียงในการแชทนี้ กรุณาติดต่อเจ้าของแชท";
+"voice_messages_prohibited_group_owner_message" = "ไม่อนุญาตให้ข้อความเสียงในกลุ่มนี้ กรุณาติดต่อเจ้าของกลุ่ม";
+"voice_messages_prohibited_other_message" = "ไม่อนุญาตให้ใช้ข้อความเสียงในการแชทนี้";
+"waiting_for_file_title" = "กำลังรอไฟล์";
+"waiting_for_file_xftp_message" = "ไฟล์กำลังถูกถ่ายโอนผ่านโปรโตคอล XFTP";
+"waiting_for_file_smp_message" = "ไฟล์กำลังถูกถ่ายโอนผ่านโปรโตคอล SMP";
+"waiting_for_image_title" = "กำลังรอรูปภาพ";
+"waiting_for_image_xftp_message" = "รูปภาพกำลังถูกถ่ายโอนผ่านโปรโตคอล XFTP";
+"waiting_for_image_smp_message" = "รูปภาพกำลังถูกถ่ายโอนผ่านโปรโตคอล SMP";
+"waiting_for_video_title" = "กำลังรอวิดีโอ";
+"waiting_for_video_xftp_message" = "วิดีโอกำลังถูกถ่ายโอนผ่านโปรโตคอล XFTP";
+"waiting_for_video_smp_message" = "วิดีโอกำลังถูกถ่ายโอนผ่านโปรโตคอล SMP";
+"cannot_forward_message_title" = "ไม่สามารถส่งต่อข้อความได้";
+"cannot_forward_message_message" = "ข้อความนี้ไม่สามารถส่งต่อได้เนื่องจากข้อกำหนดการแชท";
+"la_lock_turned_on_title" = "เปิดล็อค POPOPX แล้ว";
+"la_lock_turned_on_message" = "เปิดล็อค POPOPX แล้ว คุณจะต้องยืนยันตัวตนเพื่อเข้าถึงแอป";
+"la_lock_not_enabled_title" = "ไม่ได้เปิดใช้งานล็อค POPOPX";
+"la_lock_not_enabled_message" = "ไม่ได้เปิดใช้งานล็อค POPOPX กรุณาเปิดใช้งานในการตั้งค่า";
+"la_auth_failed_title" = "การยืนยันตัวตนล้มเหลว";
+"la_auth_failed_message" = "การยืนยันตัวตนล้มเหลว กรุณาลองใหม่อีกครั้ง";
+"la_auth_unavailable_title" = "การยืนยันตัวตนไม่พร้อมใช้งาน";
+"la_auth_unavailable_instruction_message" = "การยืนยันตัวตนไม่พร้อมใช้งานบนอุปกรณ์นี้ กรุณาใช้วิธียืนยันตัวตนอื่น";
+"la_auth_unavailable_turning_off_message" = "การยืนยันตัวตนไม่พร้อมใช้งาน ล็อค POPOPX จะถูกปิด";
+"delete_message_title" = "ลบข้อความ";
+"delete_messages_title" = "ลบ %d ข้อความ";
+"delete_button" = "ลบ";
+"ok_button" = "ตกลง";
+"cancel_button" = "ยกเลิก";
+"unlock_button" = "ปลดล็อค";
+"continue_button" = "ดำเนินการต่อ";
+"accept_button" = "ยอมรับ";
+"reject_button" = "ปฏิเสธ";
+"export_json_button" = "ส่งออก JSON";
+"back_button" = "กลับ";
+"chats_nav_title" = "แชท";
+"add_contact_nav_title" = "เพิ่มผู้ติดต่อ";
+"group_link_nav_title" = "ลิงก์กลุ่ม";
+"channel_link_nav_title" = "ลิงก์ช่อง";
+"creating_channel_nav_title" = "กำลังสร้างช่อง";
+"network_servers_nav_title" = "เครือข่ายและเซิร์ฟเวอร์";
+"new_server_nav_title" = "เซิร์ฟเวอร์ใหม่";
+"send_notifications_nav_title" = "ส่งการแจ้งเตือน";
+"show_preview_nav_title" = "แสดงตัวอย่าง";
+"member_admission_nav_title" = "การรับสมาชิก";
+"popopx_address_nav_title" = "ที่อยู่ POPOPX";
+"archived_contacts_nav_title" = "ผู้ติดต่อที่เก็บถาวร";
+"profile_address_label" = "ที่อยู่ POPOPX ของคุณ";
+"profile_chat_profiles_label" = "โปรไฟล์แชท";
+"profile_connect_desktop_label" = "เชื่อมต่อจากเดสก์ท็อป";
+"profile_preferences_label" = "การตั้งค่า";
+"profile_settings_label" = "การตั้งค่า";
+"needle_extractions_accessibility" = "การดึงข้อมูล Needle";
+"new_chat_accessibility" = "แชทใหม่";
+"switch_to_mesh_accessibility" = "สลับไปที่ mesh";
+"switch_to_broadcast_accessibility" = "สลับไปที่การออกอากาศ";
+"call_toggle_video_fit" = "สลับโหมดวิดีโอ";
+"call_end_call" = "วางสาย";
+"call_mute_microphone" = "ปิดเสียงไมโครโฟน";
+"call_speaker" = "ลำโพง";
+"call_camera" = "กล้อง";
+"call_flip_camera" = "พลิกกล้อง";
+"call_back_button" = "กลับ";
+"binthere_look_at_screen" = "มองที่หน้าจอ";
+"binthere_multiple_faces" = "ตรวจพบใบหน้าหลายใบ";
+
+"add_contact_scan_qr" = "ในการเชื่อมต่อ ผู้ติดต่อของคุณสามารถสแกน QR โค้ดหรือใช้ลิงก์ในแอป";
+"add_contact_video_call" = "หากไม่สามารถพบกันตัวต่อตัวได้ แสดง QR โค้ดในวิดีโอคอลหรือแชร์ลิงก์";
+"api_contact_blocked_message" = "การเชื่อมต่อถูกบล็อกโดยผู้ดำเนินการเซิร์ฟเวอร์:
+%@";
+%@";
+%@";
+"api_contact_blocked_title" = "การเชื่อมต่อถูกบล็อก";
+"api_contact_how_it_works" = "วิธีการทำงาน";
+"api_contact_ok" = "ตกลง";
+"api_desktop_connection_stopped_message" = "โปรดตรวจสอบว่าอุปกรณ์มือถือและเดสก์ท็อปเชื่อมต่อกับเครือข่ายท้องถิ่นเดียวกัน และไฟร์วอลล์เดสก์ท็อปอนุญาตการเชื่อมต่อ
+โปรดแจ้งปัญหาอื่นๆ ให้กับนักพัฒนา";
+โปรดแจ้งปัญหาอื่นๆ ให้กับนักพัฒนา";
+Please share any other issues with the developers.";
+"api_desktop_connection_stopped_title" = "การเชื่อมต่อกับเดสก์ท็อปหยุดลง";
+"api_desktop_copy_error" = "ข้อผิดพลาดในการคัดลอก";
+"api_desktop_ok" = "ตกลง";
+"api_start_chat_message" = "แชทถูกหยุด หากคุณเคยใช้ฐานข้อมูลนี้บนอุปกรณ์อื่น คุณควรโอนกลับมาก่อนเริ่มแชท";
+"api_start_chat_ok" = "ตกลง";
+"api_start_chat_title" = "เริ่มแชท?";
+"chat_console_title" = "คอนโซลแชท";
+"chat_list_mesh_section" = "Mesh";
+"confirm_passcode_title" = "ยืนยันรหัสผ่าน";
+"connect_banner_new_link" = "ลิงก์ใช้ครั้งเดียวใหม่";
+"connect_banner_paste_scan" = "วางลิงก์ / สแกน";
+"connection_error_title" = "ข้อผิดพลาดในการเชื่อมต่อ";
+"data_market_sample1_desc" = "หมวดหมู่การท่องเว็บที่รวบรวมแล้วโดยไม่มีตัวระบุส่วนบุคคล";
+"data_market_sample1_title" = "รูปแบบการท่องเว็บแบบไม่ระบุชื่อ";
+"data_market_sample2_desc" = "เวลาที่ใช้ในหมวดหมู่แอป ไม่ระบุชื่อ";
+"data_market_sample2_title" = "สถิติการใช้งานแอป";
+"data_market_sample3_desc" = "ข้อมูลตำแหน่งโดยประมาณสำหรับการวิเคราะห์การจราจร";
+"data_market_sample3_title" = "แนวโน้มตำแหน่งตามภูมิภาค";
+"data_market_sample4_desc" = "ความชอบและข้อจำกัดด้านอาหาร ไม่ระบุชื่อ";
+"data_market_sample4_title" = "แบบสำรวจความชอบด้านอาหาร";
+"db_key_rotation_action" = "เพื่อความปลอดภัยที่ดีที่สุด อัปเดตรหัสผ่านฐานข้อมูลของคุณในการตั้งค่า";
+"db_key_rotation_desc" = "คีย์เข้ารหัสฐานข้อมูลของคุณถึงระยะเวลาการหมุนที่แนะนำแล้ว";
+"db_key_rotation_title" = "การหมุนคีย์ฐานข้อมูล";
+"db_key_rotation_understood" = "เข้าใจแล้ว";
+"delete_report_label" = "ลบรายงาน";
+"error_adding_short_link" = "ข้อผิดพลาดในการเพิ่มลิงก์สั้น";
+"invalid_qr_code_title" = "QR โค้ดไม่ถูกต้อง";
+"large_file_contact_message" = "ผู้ติดต่อของคุณส่งไฟล์ที่มีขนาดใหญ่กว่าขนาดสูงสุดที่รองรับในปัจจุบัน (%@)";
+"large_file_title" = "ไฟล์ขนาดใหญ่!";
+"mesh_board_title" = "บอร์ด Mesh";
+"mesh_cancel" = "ยกเลิก";
+"mesh_chat_list_title" = "แชท Mesh";
+"mesh_compose_placeholder" = "ข้อความ...";
+"mesh_create_group_button" = "สร้างกลุ่ม";
+"mesh_create_group_hint" = "สร้างกลุ่มสำหรับการส่งข้อความกลุ่มแบบเข้ารหัส";
+"mesh_edges" = "ขอบ";
+"mesh_edges_header" = "ขอบ";
+"mesh_enter_group_name" = "ป้อนชื่อสำหรับกลุ่ม mesh ใหม่";
+"mesh_last_updated" = "อัปเดตล่าสุด";
+"mesh_local_peer" = "โหนดท้องถิ่น";
+"mesh_new_post" = "โพสต์ใหม่";
+"mesh_no_groups" = "ไม่มีกลุ่ม mesh";
+"mesh_no_posts" = "ยังไม่มีโพสต์";
+"mesh_no_posts_description" = "เป็นคนแรกที่โพสต์บนบอร์ด mesh";
+"mesh_no_topology" = "ไม่มีโทโพโลยี";
+"mesh_nodes" = "โหนด";
+"mesh_nodes_header" = "โหนด";
+"mesh_overview_header" = "ภาพรวม";
+"mesh_post_to_board" = "โพสต์ลงบอร์ด";
+"mesh_urgent_label" = "เร่งด่วน";
+"mesh_urgent_toggle" = "ทำเครื่องหมายว่าเร่งด่วน";
+"migration_apply_button" = "ใช้งาน";
+"migration_check_internet" = "ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและลองอีกครั้ง";
+"migration_error_deleting_db" = "ข้อผิดพลาดในการลบฐานข้อมูล";
+"migration_error_exporting_db" = "ข้อผิดพลาดในการส่งออกฐานข้อมูลแชท";
+"migration_error_file_not_exist" = "ไฟล์ที่ส่งออกไม่มีอยู่";
+"migration_error_generic" = "ข้อผิดพลาด";
+"migration_error_migrating_settings" = "ข้อผิดพลาดในการย้ายการตั้งค่า";
+"migration_error_saving_settings" = "ข้อผิดพลาดในการบันทึกการตั้งค่า";
+"migration_error_starting_chat" = "ข้อผิดพลาดในการเริ่มแชท";
+"migration_error_uploading_archive" = "ข้อผิดพลาดในการอัปโหลดที่เก็บถาวร";
+"migration_upload_failed" = "อัปโหลดล้มเหลว";
+"needle_extractions_label" = "การแยกข้อมูล";
+"needle_no_data_found" = "ไม่พบข้อมูลที่มีโครงสร้างในข้อความ";
+"needle_no_extractions_found" = "ไม่พบการแยกข้อมูล";
+"no_chats_in_list" = "ไม่มีแชทในรายการ %@";
+"no_email_account_message" = "ไม่ได้ตั้งค่าบัญชีอีเมลบนอุปกรณ์นี้ โปรดตั้งค่าบัญชีอีเมลในการตั้งค่าเพื่อแชร์ที่อยู่ของคุณ";
+"nostr_publish_failed" = "GlobalSquare.Publish.Failed";
+"nostr_publish_success" = "GlobalSquare.Publish.Success";
+"ntf_error_checking_token" = "ข้อผิดพลาดในการตรวจสอบสถานะโทเค็น";
+"ntf_error_deleting_token" = "ข้อผิดพลาดในการลบโทเค็น";
+"ntf_error_enabling" = "ข้อผิดพลาดในการเปิดการแจ้งเตือน";
+"ntf_error_testing_server" = "ข้อผิดพลาดในการทดสอบการเชื่อมต่อเซิร์ฟเวอร์";
+"onboarding_connect_via_link" = "เชื่อมต่อผ่านลิงก์หรือ QR โค้ด";
+"onboarding_create_public_address" = "สร้างที่อยู่สาธารณะของคุณ";
+"onboarding_create_your_link" = "สร้างลิงก์ของคุณ";
+"onboarding_for_anyone_to_reach" = "เพื่อให้ทุกคนสามารถติดต่อคุณได้";
+"onboarding_invite_privately" = "เชิญใครบางคนแบบส่วนตัว";
+"onboarding_invite_privately_subtitle" = "ลิงก์สำหรับเชื่อมต่อหนึ่งคน";
+"onboarding_let_someone_connect" = "ให้ใครบางคนเชื่อมต่อถึงคุณ";
+"onboarding_talk_to_someone" = "พูดคุยกับใครบางคน";
+"onboarding_your_public_address" = "ที่อยู่สาธารณะของคุณ";
+"one_hand_toolbar_message" = "คุณสามารถเปลี่ยนได้ในการตั้งค่ารูปลักษณ์";
+"one_hand_toolbar_title" = "แถบเครื่องมือแชทที่เข้าถึงได้";
+"protocol_server_title" = "เซิร์ฟเวอร์ %@";
+"rn_v42_auto_accept" = "พร้อมข้อความต้อนรับทางเลือก";
+"rn_v42_auto_accept_desc" = "พร้อมข้อความต้อนรับทางเลือก";
+"rn_v42_group_links" = "ผู้ดูแลสามารถสร้างลิงก์สำหรับเข้าร่วมกลุ่มได้";
+"rn_v42_group_links_desc" = "ผู้ดูแลสามารถสร้างลิงก์สำหรับเข้าร่วมกลุ่มได้";
+"rn_v42_security_assessment" = "ความปลอดภัยของ POPOPX Chat ได้รับการตรวจสอบโดย Trail of Bits";
+"rn_v42_security_assessment_desc" = "ความปลอดภัยของ POPOPX Chat ได้รับการตรวจสอบโดย Trail of Bits";
+"rn_v43_irreversible_deletion" = "ผู้ติดต่อของคุณสามารถอนุญาตให้ลบข้อความทั้งหมดได้";
+"rn_v43_irreversible_deletion_desc" = "ผู้ติดต่อของคุณสามารถอนุญาตให้ลบข้อความทั้งหมดได้";
+"rn_v43_privacy_security" = "ซ่อนหน้าจอแอปในแอปล่าสุด";
+"rn_v43_privacy_security_desc" = "ซ่อนหน้าจอแอปในแอปล่าสุด";
+"rn_v43_server_config" = "เพิ่มเซิร์ฟเวอร์โดยการสแกน QR โค้ด";
+"rn_v43_server_config_desc" = "เพิ่มเซิร์ฟเวอร์โดยการสแกน QR โค้ด";
+"rn_v43_voice_messages" = "สูงสุด 30 วินาที รับทันที";
+"rn_v43_voice_messages_desc" = "สูงสุด 30 วินาที รับทันที";
+"rn_v44_disappearing_messages" = "ข้อความที่ส่งจะถูกลบหลังจากเวลาที่กำหนด";
+"rn_v44_disappearing_messages_desc" = "ข้อความที่ส่งจะถูกลบหลังจากเวลาที่กำหนด";
+"rn_v44_french_interface" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v44_french_interface_desc" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v44_gifs_stickers" = "ส่งจากแกลเลอรีหรือคีย์บอร์ดที่กำหนดเอง";
+"rn_v44_gifs_stickers_desc" = "ส่งจากแกลเลอรีหรือคีย์บอร์ดที่กำหนดเอง";
+"rn_v44_live_messages" = "ผู้รับเห็นการอัปเดตขณะที่คุณพิมพ์";
+"rn_v44_live_messages_desc" = "ผู้รับเห็นการอัปเดตขณะที่คุณพิมพ์";
+"rn_v44_verify_security" = "เปรียบเทียบรหัสความปลอดภัยกับผู้ติดต่อของคุณ";
+"rn_v44_verify_security_desc" = "เปรียบเทียบรหัสความปลอดภัยกับผู้ติดต่อของคุณ";
+"rn_v45_italian_interface" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v45_italian_interface_desc" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v45_message_draft" = "รักษาฉบับร่างข้อความล่าสุดพร้อมไฟล์แนบ";
+"rn_v45_message_draft_desc" = "รักษาฉบับร่างข้อความล่าสุดพร้อมไฟล์แนบ";
+"rn_v45_multiple_profiles" = "ชื่อ อวาตาร์ และการแยกการรับส่งข้อมูลที่แตกต่างกัน";
+"rn_v45_multiple_profiles_desc" = "ชื่อ อวาตาร์ และการแยกการรับส่งข้อมูลที่แตกต่างกัน";
+"rn_v45_private_filenames" = "เพื่อปกป้องเขตเวลา ไฟล์รูปภาพ/เสียงใช้ UTC";
+"rn_v45_private_filenames_desc" = "เพื่อปกป้องเขตเวลา ไฟล์รูปภาพ/เสียงใช้ UTC";
+"rn_v45_reduced_battery" = "การปรับปรุงเพิ่มเติมเร็วๆ นี้!";
+"rn_v45_reduced_battery_desc" = "การปรับปรุงเพิ่มเติมเร็วๆ นี้!";
+"rn_v46_audio_video_calls" = "นำกลับมาใช้ใหม่ทั้งหมด — ทำงานในพื้นหลัง!";
+"rn_v46_audio_video_calls_desc" = "นำกลับมาใช้ใหม่ทั้งหมด — ทำงานในพื้นหลัง!";
+"rn_v46_chinese_spanish" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v46_chinese_spanish_desc" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v46_further_battery" = "การปรับปรุงเพิ่มเติมเร็วๆ นี้!";
+"rn_v46_further_battery_desc" = "การปรับปรุงเพิ่มเติมเร็วๆ นี้!";
+"rn_v46_group_moderation" = "ตอนนี้ผู้ดูแลสามารถ:\\n- ลบข้อความของสมาชิก\\n- ปิดการใช้งานสมาชิก (";
+"rn_v46_group_moderation_desc" = "ตอนนี้ผู้ดูแลสามารถ:\\n- ลบข้อความของสมาชิก\\n- ปิดการใช้งานสมาชิก (";
+"rn_v46_group_welcome" = "ตั้งค่าข้อความที่แสดงให้สมาชิกใหม่!";
+"rn_v46_group_welcome_desc" = "ตั้งค่าข้อความที่แสดงให้สมาชิกใหม่!";
+"rn_v46_hidden_profiles" = "ปกป้องโปรไฟล์แชทของคุณด้วยรหัสผ่าน!";
+"rn_v46_hidden_profiles_desc" = "ปกป้องโปรไฟล์แชทของคุณด้วยรหัสผ่าน!";
+"rn_v50_app_passcode" = "ตั้งค่าแทนการตรวจสอบสิทธิ์ของระบบ";
+"rn_v50_app_passcode_desc" = "ตั้งค่าแทนการตรวจสอบสิทธิ์ของระบบ";
+"rn_v50_polish_interface" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v50_polish_interface_desc" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v50_videos_files" = "รวดเร็วและไม่ต้องรอจนกว่าผู้ส่งจะออนไลน์!";
+"rn_v50_videos_files_desc" = "รวดเร็วและไม่ต้องรอจนกว่าผู้ส่งจะออนไลน์!";
+"rn_v51_better_messages" = "- ข้อความเสียงสูงสุด 5 นาที\\n- เวลายืดหายที่กำหนดเอง\\n- ประวัติการแก้ไข";
+"rn_v51_better_messages_desc" = "- ข้อความเสียงสูงสุด 5 นาที\\n- เวลายืดหายที่กำหนดเอง\\n- ประวัติการแก้ไข";
+"rn_v51_japanese_interface" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v51_japanese_interface_desc" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v51_message_reactions" = "ในที่สุด พวกมันก็มาแล้ว! 🚀";
+"rn_v51_message_reactions_desc" = "ในที่สุด พวกมันก็มาแล้ว! 🚀";
+"rn_v51_self_destruct_passcode" = "ข้อมูลทั้งหมดจะถูกลบเมื่อป้อนรหัส";
+"rn_v51_self_destruct_passcode_desc" = "ข้อมูลทั้งหมดจะถูกลบเมื่อป้อนรหัส";
+"rn_v52_delivery_receipts" = "เครื่องหมายถูกที่สองที่เราพลาดไป! ✅";
+"rn_v52_delivery_receipts_desc" = "เครื่องหมายถูกที่สองที่เราพลาดไป! ✅";
+"rn_v52_few_more_things" = "- การส่งข้อความที่เสถียรขึ้น\\n- กลุ่มที่ดีขึ้นเล็กน้อย\\n- และอีกมากมาย!";
+"rn_v52_few_more_things_desc" = "- การส่งข้อความที่เสถียรขึ้น\\n- กลุ่มที่ดีขึ้นเล็กน้อย\\n- และอีกมากมาย!";
+"rn_v52_find_chats" = "กรองแชทที่ยังไม่ได้อ่านและแชทที่ชื่นชอบ";
+"rn_v52_find_chats_desc" = "กรองแชทที่ยังไม่ได้อ่านและแชทที่ชื่นชอบ";
+"rn_v52_keep_connections" = "แก้ไขการเข้ารหัสหลังจากกู้คืนข้อมูลสำรอง";
+"rn_v52_keep_connections_desc" = "แก้ไขการเข้ารหัสหลังจากกู้คืนข้อมูลสำรอง";
+"rn_v52_one_message_disappear" = "แม้ว่าจะปิดใช้งานในการสนทนา";
+"rn_v52_one_message_disappear_desc" = "แม้ว่าจะปิดใช้งานในการสนทนา";
+"rn_v53_desktop_app" = "สร้างโปรไฟล์ใหม่ใน [แอปเดสก์ท็อป](https://popopxchat.com/downloads/) 💻";
+"rn_v53_desktop_app_desc" = "สร้างโปรไฟล์ใหม่ใน [แอปเดสก์ท็อป](https://popopxchat.com/downloads/) 💻";
+"rn_v53_discover_groups" = "- เชื่อมต่อกับ [บริการไดเรกทอรี](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (เบต้า)!\\n- ใบรับส่ง (สูงสุด 20 สมาชิก)\\n- เร็วขึ้นและเสถียรขึ้น";
+"rn_v53_discover_groups_desc" = "- เชื่อมต่อกับ [บริการไดเรกทอรี](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (เบต้า)!\\n- ใบรับส่ง (สูงสุด 20 สมาชิก)\\n- เร็วขึ้นและเสถียรขึ้น";
+"rn_v53_encrypt_files" = "แอปเข้ารหัสไฟล์ท้องถิ่นใหม่ (ยกเว้นวิดีโอ)";
+"rn_v53_encrypt_files_desc" = "แอปเข้ารหัสไฟล์ท้องถิ่นใหม่ (ยกเว้นวิดีโอ)";
+"rn_v53_incognito_mode" = "สลับโหมดไม่ระบุตัวตนเมื่อเชื่อมต่อ";
+"rn_v53_incognito_mode_desc" = "สลับโหมดไม่ระบุตัวตนเมื่อเชื่อมต่อ";
+"rn_v53_new_languages %d" = "%d ภาษาอินเทอร์เฟซใหม่";
+"rn_v53_new_languages_desc" = "บัลแกเรีย ฟินแลนด์ ไทย และยูเครน — ขอบคุณผู้ใช้และ Weblate!";
+"rn_v54_better_groups" = "เข้าร่วมเร็วขึ้นและข้อความที่เชื่อถือได้มากขึ้น";
+"rn_v54_better_groups_desc" = "เข้าร่วมเร็วขึ้นและข้อความที่เชื่อถือได้มากขึ้น";
+"rn_v54_block_members" = "เพื่อซ่อนข้อความที่ไม่ต้องการ";
+"rn_v54_block_members_desc" = "เพื่อซ่อนข้อความที่ไม่ต้องการ";
+"rn_v54_few_more_things" = "- แจ้งเตือนผู้ติดต่อที่ถูกลบตามทางเลือก\\n- ชื่อโปรไฟล์ที่มีช่องว่าง\\n- และอีกมากมาย!";
+"rn_v54_few_more_things_desc" = "- แจ้งเตือนผู้ติดต่อที่ถูกลบตามทางเลือก\\n- ชื่อโปรไฟล์ที่มีช่องว่าง\\n- และอีกมากมาย!";
+"rn_v54_incognito_groups" = "สร้างกลุ่มโดยใช้โปรไฟล์แบบสุ่ม";
+"rn_v54_incognito_groups_desc" = "สร้างกลุ่มโดยใช้โปรไฟล์แบบสุ่ม";
+"rn_v54_link_apps" = "ผ่านโปรโตคอลต้านทานควอนตัมที่ปลอดภัย";
+"rn_v54_link_apps_desc" = "ผ่านโปรโตคอลต้านทานควอนตัมที่ปลอดภัย";
+"rn_v55_improved_delivery" = "ด้วยการใช้แบตเตอรี่ที่ลดลง";
+"rn_v55_improved_delivery_desc" = "ด้วยการใช้แบตเตอรี่ที่ลดลง";
+"rn_v55_join_groups" = "ประวัติล่าสุดและ [บอทไดเรกทอรี](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) ที่ปรับปรุงแล้ว";
+"rn_v55_join_groups_desc" = "ประวัติล่าสุดและ [บอทไดเรกทอรี](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) ที่ปรับปรุงแล้ว";
+"rn_v55_paste_link" = "แถบค้ายอมรับลิงก์คำเชิญ";
+"rn_v55_paste_link_desc" = "แถบค้ายอมรับลิงก์คำเชิญ";
+"rn_v55_private_notes" = "พร้อมไฟล์และสื่อที่เข้ารหัส";
+"rn_v55_private_notes_desc" = "พร้อมไฟล์และสื่อที่เข้ารหัส";
+"rn_v55_turkish_interface" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v55_turkish_interface_desc" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v56_data_migration" = "ย้ายไปยังอุปกรณ์อื่นผ่าน QR โค้ด";
+"rn_v56_data_migration_desc" = "ย้ายไปยังอุปกรณ์อื่นผ่าน QR โค้ด";
+"rn_v56_hungarian_interface" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v56_hungarian_interface_desc" = "ขอบคุณผู้ใช้ — มีส่วนร่วมผ่าน Weblate!";
+"rn_v56_pip_calls" = "ใช้แอปขณะโทร";
+"rn_v56_pip_calls_desc" = "ใช้แอปขณะโทร";
+"rn_v56_quantum_encryption" = "เปิดใช้งานในแชทโดยตรง (เบต้า)!";
+"rn_v56_quantum_encryption_desc" = "เปิดใช้งานในแชทโดยตรง (เบต้า)!";
+"rn_v56_safer_groups" = "ผู้ดูแลสามารถบล็อกสมาชิกสำหรับทุกคนได้";
+"rn_v56_safer_groups_desc" = "ผู้ดูแลสามารถบล็อกสมาชิกสำหรับทุกคนได้";
+"rn_v57_forward_save" = "แหล่งที่มาของข้อความยังคงเป็นส่วนตัว";
+"rn_v57_forward_save_desc" = "แหล่งที่มาของข้อความยังคงเป็นส่วนตัว";
+"rn_v57_incall_sounds" = "เมื่อเชื่อมต่อสายโทรด้วยเสียงและวิดีโอ";
+"rn_v57_incall_sounds_desc" = "เมื่อเชื่อมต่อสายโทรด้วยเสียงและวิดีโอ";
+"rn_v57_network_management" = "การเชื่อมต่อเครือข่ายที่เชื่อถือได้มากขึ้น";
+"rn_v57_network_management_desc" = "การเชื่อมต่อเครือข่ายที่เชื่อถือได้มากขึ้น";
+"rn_v57_quantum_encryption" = "จะเปิดใช้งานในแชทโดยตรง!";
+"rn_v57_quantum_encryption_desc" = "จะเปิดใช้งานในแชทโดยตรง!";
+"rn_v57_shape_images" = "สี่เหลี่ยม วงกลม หรืออะไรก็ตามที่อยู่ระหว่างกลาง";
+"rn_v57_shape_images_desc" = "สี่เหลี่ยม วงกลม หรืออะไรก็ตามที่อยู่ระหว่างกลาง";
+"rn_v58_improved_delivery" = "ด้วยการใช้แบตเตอรี่ที่ลดลง";
+"rn_v58_improved_delivery_desc" = "ด้วยการใช้แบตเตอรี่ที่ลดลง";
+"rn_v58_private_routing" = "ปกป้องที่อยู่ IP ของคุณจากเซิร์ฟเวอร์รีเลย์ที่ผู้ติดต่อของคุณเลือก\\nเปิดใช้งานในการตั้งค่า *เครือข่ายและเซิร์ฟเวอร์*";
+"rn_v58_private_routing_desc" = "ปกป้องที่อยู่ IP ของคุณจากเซิร์ฟเวอร์รีเลย์ที่ผู้ติดต่อของคุณเลือก\\nเปิดใช้งานในการตั้งค่า *เครือข่ายและเซิร์ฟเวอร์*";
+"rn_v58_safely_receive_files" = "ยืนยันไฟล์จากเซิร์ฟเวอร์ที่ไม่รู้จัก";
+"rn_v58_safely_receive_files_desc" = "ยืนยันไฟล์จากเซิร์ฟเวอร์ที่ไม่รู้จัก";
+"rn_v60_better_networking" = "สถานะการเชื่อมต่อและเซิร์ฟเวอร์";
+"rn_v60_better_networking_desc" = "สถานะการเชื่อมต่อและเซิร์ฟเวอร์";
+"rn_v60_new_chat_experience" = "ประสบการณ์แชทใหม่ 🎉";
+"rn_v60_new_media_options" = "ตัวเลือกสื่อใหม่";
+"rn_v60_private_routing" = "มันปกป้องที่อยู่ IP และการเชื่อมต่อของคุณ";
+"rn_v60_private_routing_desc" = "มันปกป้องที่อยู่ IP และการเชื่อมต่อของคุณ";
+"rn_v60_sub_archive_contacts" = "จัดเก็บผู้ติดต่อเพื่อแชทในภายหลัง";
+"rn_v60_sub_blur_privacy" = "ตัวเลือกสื่อใหม่";
+"rn_v60_sub_color_themes" = "ระบายสีแชทด้วยธีมใหม่";
+"rn_v60_sub_connect_faster" = "ประสบการณ์แชทใหม่ 🎉";
+"rn_v60_sub_delete_messages" = "ลบได้สูงสุด 20 ข้อความในครั้งเดียว";
+"rn_v60_sub_one_hand" = "ใช้แอปด้วยมือเดียว";
+"rn_v60_sub_play_chat_list" = "ตัวเลือกสื่อใหม่";
+"rn_v60_sub_share_apps" = "ตัวเลือกสื่อใหม่";
+"rn_v61_better_calls" = "สลับเสียงและวิดีโอระหว่างโทร";
+"rn_v61_better_calls_desc" = "สลับเสียงและวิดีโอระหว่างโทร";
+"rn_v61_better_notifications" = "การส่งที่ดีขึ้น ลดการใช้ข้อมูล\\nการปรับปรุงเพิ่มเติมเร็วๆ นี้!";
+"rn_v61_better_notifications_desc" = "การส่งที่ดีขึ้น ลดการใช้ข้อมูล\\nการปรับปรุงเพิ่มเติมเร็วๆ นี้!";
+"rn_v61_better_security" = "โปรโตคอล POPOPX ได้รับการตรวจสอบโดย Trail of Bits";
+"rn_v61_better_security_desc" = "โปรโตคอล POPOPX ได้รับการตรวจสอบโดย Trail of Bits";
+"rn_v61_better_ux" = "ประสบการณ์ผู้ใช้ที่ดีขึ้น";
+"rn_v61_sub_forward_messages" = "ส่งต่อได้สูงสุด 20 ข้อความในครั้งเดียว";
+"rn_v61_sub_message_dates" = "วันที่ข้อความที่ดีขึ้น";
+"rn_v61_sub_message_shape" = "รูปร่างข้อความที่กำหนดเองได้";
+"rn_v61_sub_moderate_messages" = "ลบหรือกลั่นกรองได้สูงสุด 200 ข้อความ";
+"rn_v61_sub_switch_profile" = "ประสบการณ์ผู้ใช้ที่ดีขึ้น";
+"rn_v62_business_chats" = "ความเป็นส่วนตัวสำหรับลูกค้าของคุณ";
+"rn_v62_business_chats_desc" = "ความเป็นส่วนตัวสำหรับลูกค้าของคุณ";
+"rn_v62_network_decentralization" = "การกระจายศูนย์เครือข่าย";
+"rn_v62_reliable_notifications" = "ส่งแม้ว่า Apple จะปฏิเสธ";
+"rn_v62_reliable_notifications_desc" = "ส่งแม้ว่า Apple จะปฏิเสธ";
+"rn_v63_better_groups_perf" = "ประสิทธิภาพกลุ่มที่ดีขึ้น";
+"rn_v63_better_privacy" = "ความเป็นส่วนตัวและความปลอดภัยที่ดีขึ้น";
+"rn_v63_mention_members" = "รับการแจ้งเตือนเมื่อถูกกล่าวถึง";
+"rn_v63_mention_members_desc" = "รับการแจ้งเตือนเมื่อถูกกล่าวถึง";
+"rn_v63_organize_lists" = "อย่าพลาดข้อความสำคัญ";
+"rn_v63_organize_lists_desc" = "อย่าพลาดข้อความสำคัญ";
+"rn_v63_private_reports" = "ช่วยผู้ดูแลในการกลั่นกรองกลุ่มของพวกเขา";
+"rn_v63_private_reports_desc" = "ช่วยผู้ดูแลในการกลั่นกรองกลุ่มของพวกเขา";
+"rn_v63_sub_faster_deletion" = "ประสิทธิภาพกลุ่มที่ดีขึ้น";
+"rn_v63_sub_faster_sending" = "ประสิทธิภาพกลุ่มที่ดีขึ้น";
+"rn_v63_sub_message_expiration" = "ความเป็นส่วนตัวและความปลอดภัยที่ดีขึ้น";
+"rn_v63_sub_private_media" = "ความเป็นส่วนตัวและความปลอดภัยที่ดีขึ้น";
+"rn_v641_chats_clean" = "เปิดใช้งานข้อความหายเป็นค่าเริ่มต้น";
+"rn_v641_chats_clean_desc" = "เปิดใช้งานข้อความหายเป็นค่าเริ่มต้น";
+"rn_v641_short_address" = "ที่อยู่ POPOPX สั้น";
+"rn_v641_welcome_contacts" = "ตั้งค่าชีวประวัติโปรไฟล์และข้อความต้อนรับ";
+"rn_v641_welcome_contacts_desc" = "ตั้งค่าชีวประวัติโปรไฟล์และข้อความต้อนรับ";
+"rn_v64_chat_admins" = "ส่งคำติชมส่วนตัวไปยังกลุ่ม";
+"rn_v64_chat_admins_desc" = "ส่งคำติชมส่วนตัวไปยังกลุ่ม";
+"rn_v64_connect_faster" = "ส่งข้อความทันทีเมื่อกดเชื่อมต่อ";
+"rn_v64_connect_faster_desc" = "ส่งข้อความทันทีเมื่อกดเชื่อมต่อ";
+"rn_v64_group_moderator" = "ลบข้อความและบล็อกสมาชิก";
+"rn_v64_group_moderator_desc" = "ลบข้อความและบล็อกสมาชิก";
+"rn_v64_improved_delivery" = "การรับส่งข้อมูลน้อยลงบนเครือข่ายมือถือ";
+"rn_v64_improved_delivery_desc" = "การรับส่งข้อมูลน้อยลงบนเครือข่ายมือถือ";
+"rn_v64_review_members" = "แชทกับสมาชิกก่อนที่พวกเขาจะเข้าร่วม";
+"rn_v64_review_members_desc" = "แชทกับสมาชิกก่อนที่พวกเขาจะเข้าร่วม";
+"rn_v65_invite_friends" = "เราทำให้การเชื่อมต่อง่ายขึ้นสำหรับผู้ใช้ใหม่";
+"rn_v65_invite_friends_desc" = "เราทำให้การเชื่อมต่อง่ายขึ้นสำหรับผู้ใช้ใหม่";
+"rn_v65_nonprofit_governance" = "เพื่อให้เครือข่าย POPOPX ดำเนินต่อไปได้";
+"rn_v65_nonprofit_governance_desc" = "เพื่อให้เครือข่าย POPOPX ดำเนินต่อไปได้";
+"rn_v65_public_channels" = "ช่องสาธารณะ — พูดได้อย่างอิสระ 🚀";
+"rn_v65_safe_web_links" = "- ส่งตัวอย่างลิงก์ตามทางเลือก\\n- ป้องกันการฟิชชิงผ่านไฮเปอร์ลิงก์\\n- ลบการติดตามลิงก์";
+"rn_v65_safe_web_links_desc" = "- ส่งตัวอย่างลิงก์ตามทางเลือก\\n- ป้องกันการฟิชชิงผ่านไฮเปอร์ลิงก์\\n- ลบการติดตามลิงก์";
+"rn_v65_sub_ownership" = "ช่องสาธารณะ — พูดได้อย่างอิสระ 🚀";
+"rn_v65_sub_privacy" = "ชื่อไฟล์สื่อส่วนตัว";
+"rn_v65_sub_reliability" = "ช่องสาธารณะ — พูดได้อย่างอิสระ 🚀";
+"rn_v65_sub_security" = "ตั้งค่าเวลาหมดอายุของข้อความในแชท";
+"save_button" = "บันทึก";
+"self_destruct_passcode_info" = "ข้อมูลรหัสทำลายตัวเอง";
+"settings_tab_picker" = "แท็บการตั้งค่า";
+"share_channel_title" = "แชร์ช่อง";
+"swipe_action_clear" = "ล้าง";
+"swipe_action_delete" = "ลบ";
+"swipe_action_favorite" = "ชื่นชอบ";
+"swipe_action_list" = "รายการ";
+"swipe_action_mute" = "ปิดเสียง";
+"swipe_action_read" = "อ่านแล้ว";
+"swipe_action_unfavorite" = "ยกเลิกชื่นชอบ";
+"tab_chats" = "แชท";
+"tab_mesh" = "Mesh";
+"tab_profiler" = "Profiler";
+"tab_vortex" = "Vortex";
+"user_picker_chat_preferences" = "การตั้งค่าแชท";
+"user_picker_chat_profiles" = "โปรไฟล์แชทของคุณ";
+"user_picker_create_address" = "สร้างที่อยู่ POPOPX";
+"user_picker_settings" = "การตั้งค่า";
+"user_picker_use_from_desktop" = "ใช้จากเดสก์ท็อป";
+"user_picker_your_address" = "ที่อยู่ POPOPX ของคุณ";
+"db_hide_passphrase" = "ซ่อนวลีรหัสผ่าน";
+"db_show_passphrase" = "แสดงวลีรหัสผ่าน";
+"marked_deleted_moderated_by_list" = "%d ข้อความถูกกลั่นกรองโดย %@";
+"marked_deleted_blocked_by_admin" = "%d ข้อความถูกปิดกั้นโดยผู้ดูแล";
+"marked_deleted_blocked" = "%d ข้อความถูกปิดกั้น";
+"marked_deleted_marked_deleted" = "%d ข้อความถูกทำเครื่องหมายว่าลบแล้ว";
+"marked_deleted_moderated_by" = "กลั่นกรองโดย %@";
+"marked_deleted_blocked_single" = "ถูกปิดกั้น";
+"marked_deleted_blocked_by_admin_single" = "ถูกปิดกั้นโดยผู้ดูแล";
+"marked_deleted_deleted" = "ถูกทำเครื่องหมายว่าลบแล้ว";
+"ntf_register_button" = "ลงทะเบียน";
+"ntf_mode_desc_off" = "**ส่วนตัวที่สุด**: ไม่ใช้เซิร์ฟเวอร์พุชของ POPOPX Chat แอปจะตรวจสอบข้อความในพื้นหลังเมื่อระบบอนุญาต ขึ้นอยู่กับความถี่ที่คุณใช้แอป";
+"ntf_mode_desc_periodic" = "**ส่วนตัวมากขึ้น**: ตรวจสอบข้อความใหม่ทุก 20 นาที เฉพาะโทเค็นอุปกรณ์เท่านั้นที่แชร์กับเซิร์ฟเวอร์พุชของเรา เซิร์ฟเวอร์ไม่เห็นจำนวนผู้ติดต่อหรือข้อมูลเมตาของข้อความ";
+"ntf_mode_desc_instant" = "**แนะนำ**: โทเค็นอุปกรณ์และการแจ้งเตือนแบบเข้ารหัสปลายทางถึงปลายทางจะถูกส่งไปยังเซิร์ฟเวอร์พุชของ POPOPX Chat แต่เซิร์ฟเวอร์ไม่เห็นเนื้อหา ขนาด หรือผู้ส่งข้อความ";
+"ntf_mode_short_off" = "ตรวจสอบข้อความเมื่อได้รับอนุญาต";
+"ntf_mode_short_periodic" = "ตรวจสอบข้อความทุก 20 นาที";
+"ntf_mode_short_instant" = "การแจ้งเตือนเข้ารหัส E2E";
+"protocol_server_no_servers_for" = "ไม่มีเซิร์ฟเวอร์ %@ สำหรับ %@";
+"protocol_server_no_servers_configured" = "ไม่มีเซิร์ฟเวอร์ %@ ที่กำหนดค่า";
+"protocol_server_storage_missing_for" = "ขาดพื้นที่จัดเก็บสำหรับ %@ ใน %@";
+"protocol_server_storage_missing" = "ขาดพื้นที่จัดเก็บสำหรับ %@";
+"protocol_server_proxy_missing_for" = "ขาดพร็อกซีสำหรับ %@ ใน %@";
+"protocol_server_proxy_missing" = "ขาดพร็อกซีสำหรับ %@";
+"protocol_server_duplicate" = "เซิร์ฟเวอร์ซ้ำ: %@ ที่ %@";
+"protocol_server_duplicate_relay" = "รีเลย์แชทซ้ำ: %@ ที่ %@";
+"protocol_server_no_relays_for" = "คำเตือน: ไม่มีรีเลย์แชทสำหรับ %@";
+"protocol_server_no_relays_configured" = "คำเตือน: ไม่มีรีเลย์แชทที่กำหนดค่า";
+"protocol_server_no_name_servers_for" = "คำเตือน: ไม่มีเซิร์ฟเวอร์ชื่อสำหรับ %@";
+"protocol_server_no_name_servers_configured" = "คำเตือน: ไม่มีเซิร์ฟเวอร์ชื่อที่กำหนดค่า";
+"member_support_delete_button" = "ลบ";
+"migration_error_title" = "ข้อผิดพลาด";
+"compliance_data_retention_desc" = "ข้อมูลจะถูกเก็บไว้โดยอัตโนมัติเป็นเวลา %d วัน หลังจากช่วงเวลานี้ ข้อมูลจะถูกลบอย่างถาวร";
+"location_precision_exact" = "แม่นยำ";
+"location_precision_fuzzy" = "โดยประมาณ (~1 กม.)";
+"location_precision_region" = "ภูมิภาค (~10 กม.)";
+"location_precision_exact_desc" = "แชร์พิกัด GPS ที่แม่นยำของคุณ";
+"location_precision_fuzzy_desc" = "ปัดเศษเป็นความแม่นยำ ~1 กม.";
+"location_precision_region_desc" = "ปัดเศษเป็น ~10 กม. พร้อมการเลื่อนแบบสุ่ม";
+"art_generator_flow_field" = "สนามการไหล";
+"art_generator_circuit_board" = "แผ่นวงจร";
+"art_generator_geometric_harmony" = "ความกลมกลืนเชิงเรขาคณิต";
+"art_generator_wave_interference" = "การแทรกสอดของคลื่น";
+"art_generator_cellular_automata" = "ออโตมาตาเชิงเซลล์";
+"pq_crypto_kyber768_desc" = "การตกลงคีย์ทดลอง (X25519 ECDH) — ไม่ต้านทานควอนตัม";
+"pq_crypto_dilithium3_desc" = "ลายเซ็นทดลอง (Ed25519) — ไม่ต้านทานควอนตัม";
+"pq_crypto_falcon512_desc" = "ลายเซ็นขนาดกะทัดรัดทดลอง (Ed25519) — ไม่ต้านทานควอนตัม";
+"config_bot_not_configured" = "บอตกำหนดค่ายังไม่ได้กำหนดค่า";
+"config_bot_invalid_response" = "การตอบกลับการกำหนดค่าไม่ถูกต้อง";
+"config_bot_timeout" = "คำขอบอตกำหนดค่าหมดเวลา";
+"server_api_invalid_url" = "URL เซิร์ฟเวอร์ไม่ถูกต้อง";
+"server_api_invalid_body" = "เนื้อหาคำขอไม่ถูกต้อง";
+"server_api_error" = "ข้อผิดพลาดเซิร์ฟเวอร์: %d";
+"server_api_parse_failed" = "ไม่สามารถวิเคราะห์การตอบกลับของเซิร์ฟเวอร์";
+"nostr_broadcast_empty" = "เนื้อหาต้องไม่ว่างเปล่า";
+"nostr_broadcast_too_long" = "เนื้อหาเกินขีดจำกัด 500 ตัวอักษร";
+"art_vault_encode_failed" = "ไม่สามารถเข้ารหัสภาพเป็น PNG";
+"art_vault_decrypt_failed" = "ไม่สามารถถอดรหัสผลงานศิลปะ";
+"art_engine_script_not_found" = "ไม่พบสคริปต์ตัวสร้าง: %@";
+"art_engine_render_failed" = "การเรนเดอร์ล้มเหลว: %@";
+"art_engine_context_failed" = "ไม่สามารถสร้างบริบทการเรนเดอร์บิตแมป";
+"binthere_encrypt_failed" = "ไม่สามารถเข้ารหัสข้อความ";
+"binthere_decrypt_failed" = "การถอดรหัสล้มเหลว — ข้อความอาจเสียหาย";
+"binthere_invalid_key" = "คีย์ถอดรหัสไม่ถูกต้อง";
+"binthere_bot_timeout" = "บอตไม่ตอบสนองทันเวลา";
+"binthere_message_expired" = "ข้อความนี้ถูกอ่านแล้วหรือหมดอายุแล้ว";
+"binthere_bot_not_configured" = "บอต BinThere ยังไม่ได้กำหนดค่า";
+"binthere_compress_failed" = "ไม่สามารถบีบอัดภาพให้ต่ำกว่าขีดจำกัดขนาด";
+"binthere_operation_in_progress" = "การดำเนินการจัดเก็บอีกอย่างกำลังดำเนินอยู่";
+"needle_encrypt_failed" = "การเข้ารหัสล้มเหลว";
+"needle_decrypt_failed" = "การถอดรหัสล้มเหลว";
+"needle_keychain_error" = "ข้อผิดพลาดพวงกุญแจ: %d";
+"needle_not_initialized" = "เครื่องมือ Needle ยังไม่ถูกเริ่มต้น";
+"needle_encode_failed" = "ไม่สามารถเข้ารหัสข้อความ";
+"needle_completion_failed" = "การทำให้สมบูรณ์ล้มเหลว: %@";
+"needle_parse_failed" = "ไม่สามารถวิเคราะห์ผลการดึงข้อมูล";
+"encrypted_doc_encode_failed" = "ไม่สามารถเข้ารหัสข้อความเอกสาร";
+"encrypted_doc_encrypt_failed" = "ไม่สามารถเข้ารหัสเอกสาร";
+"encrypted_doc_decrypt_failed" = "ไม่สามารถถอดรหัสเอกสาร — ข้อมูลอาจเสียหาย";

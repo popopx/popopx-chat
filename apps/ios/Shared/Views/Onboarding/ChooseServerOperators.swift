@@ -1,16 +1,21 @@
 //
 //  ChooseServerOperators.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 31.10.2024.
-//  Copyright © 2024 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 // Spec: spec/client/navigation.md
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
-let conditionsURL = URL(string: "https://github.com/simplex-chat/simplex-chat/blob/stable/PRIVACY.md")!
+// Terms and conditions URL for server operators.
+// Currently hardcoded; consider fetching from a remote config endpoint (servers/config)
+// to allow updates without requiring an app release.
+let conditionsURL = URL(string: "https://popopxchat.com/conditions") ?? URL(filePath: "/")
 
 struct OnboardingButtonStyle: ButtonStyle {
     @EnvironmentObject var theme: AppTheme
@@ -18,7 +23,7 @@ struct OnboardingButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 17, weight: .semibold))
+            .font(.body.weight(.semibold))
             .padding()
             .frame(maxWidth: .infinity)
             .background(
@@ -39,7 +44,8 @@ struct OnboardingButtonStyle: ButtonStyle {
                 )
                 : .white
             )
-            .cornerRadius(16)
+            .cornerRadius(10)
+            .shadow(color: darkThemeAccentColor().opacity(0.15), radius: 8, x: 0, y: 4)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }
@@ -48,33 +54,66 @@ struct OnboardingConditionsView: View {
     @EnvironmentObject var theme: AppTheme
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @State private var showConditionsSheet = false
-    var selectedOperatorIds: Set<Int64>
+    @State private var accepting = false
+    @State private var ageConfirmed = false
+    @State private var selectedOperatorIds: Set<Int64>
+    @State private var operatorsLoaded = false
+    @State private var operatorFetchError = false
+    @StateObject private var popController = BubblePopController()
+    @State private var showBubble = false
+
+    init(initialOperatorIds: Set<Int64> = []) {
+        _selectedOperatorIds = State(initialValue: initialOperatorIds)
+    }
 
     var body: some View {
-        GeometryReader { g in
-            VStack(alignment: .leading, spacing: 10) {
-                Spacer(minLength: 0)
+        ZStack {
+            OnboardingBubbleBackground()
 
-                heroImage().frame(maxWidth: .infinity, minHeight: 80)
+            GeometryReader { g in
+                VStack(alignment: .leading, spacing: 10) {
+                    Spacer(minLength: 0)
 
-                Text("Network commitments")
-                    .font(.largeTitle)
-                    .bold()
+                    conditionsBubbleContent(g: g)
+
+                    if operatorFetchError {
+                    VStack(spacing: 8) {
+                        Text(NSLocalizedString("Unable to load server operators. Please check your connection and try again.", comment: "Operator fetch error message"))
+                            .font(.system(size: 13, design: .monospaced))
+                            .foregroundColor(Color(hex: "#C4BFD6"))
+                            .multilineTextAlignment(.center)
+                        Button {
+                            retryFetchOperators()
+                        } label: {
+                            Text(NSLocalizedString("Retry", comment: "Retry button"))
+                                .fontWeight(.semibold)
+                        }
+                        .buttonStyle(QuantumButtonStyle(primary: true))
+                    }
+                    .padding(.vertical, 8)
+                }
+
+                Text(NSLocalizedString("Network commitments", comment: "Network commitments title"))
+                    .font(.system(.title, design: .default).weight(.bold))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(.white)
+                    .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 12, x: 0, y: 2)
 
-                Text("Operators commit to:\n- Be independent\n- Minimize metadata usage\n- Run verified open-source code")
-                    .font(.callout)
-                    .lineSpacing(2)
+                Text(NSLocalizedString("Operators commit to:\n- Be independent\n- Minimize metadata usage\n- Run verified open-source code", comment: "Operator commitments"))
+                    .font(.system(size: 14, design: .monospaced))
+                    .lineSpacing(4)
+                    .foregroundColor(Color(hex: "#C4BFD6"))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 4)
                     .padding(.top, 10)
                     .fixedSize(horizontal: false, vertical: true)
 
-                Text("You commit to:\n- Only legal content in public groups\n- Respect other users - no spam")
-                    .font(.callout)
-                    .lineSpacing(2)
+                Text(NSLocalizedString("You commit to:\n- Only legal content in public groups\n- Respect other users - no spam", comment: "User commitments"))
+                    .font(.system(size: 14, design: .monospaced))
+                    .lineSpacing(4)
+                    .foregroundColor(Color(hex: "#C4BFD6"))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 4)
                     .padding(.top, 10)
@@ -83,8 +122,9 @@ struct OnboardingConditionsView: View {
                 Button {
                     showConditionsSheet = true
                 } label: {
-                    Text("Privacy policy and conditions of use.")
+                    Text(NSLocalizedString("Privacy policy and conditions of use.", comment: "Privacy policy link"))
                         .fontWeight(.medium)
+                        .foregroundColor(Color(hex: "#00FFD2"))
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -94,26 +134,90 @@ struct OnboardingConditionsView: View {
 
                 Spacer(minLength: 0)
 
+                Button {
+                    ageConfirmed.toggle()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: ageConfirmed ? "checkmark.circle.fill" : "circle")
+                            .font(.title3)
+                            .foregroundColor(ageConfirmed ? Color(hex: "#00FFD2") : Color(hex: "#C4BFD6"))
+                        Text(NSLocalizedString("I confirm that I am at least 13 years of age", comment: "COPPA age verification"))
+                            .font(.system(size: 14, design: .monospaced))
+                            .foregroundColor(.white)
+                    }
+                }
+                .padding(.bottom, 8)
+
                 acceptButton()
-                    .padding(.bottom, g.safeAreaInsets.bottom == 0 ? 20 : 0)
+                    .frame(maxWidth: .infinity)
+                    .disabled(!ageConfirmed)
+                    .safeAreaPadding(.bottom, 20)
             }
-            .padding(.horizontal, 25)
-            .padding(.top, 25)
-            .padding(.bottom, 25)
-            .frame(minHeight: g.size.height)
+                .padding(.horizontal, 25)
+                .padding(.top, 25)
+                .padding(.bottom, 25)
+                .frame(maxHeight: .infinity)
+
+                PurpleFlashOverlay(isActive: popController.flashActive)
+            }
         }
         .frame(maxHeight: .infinity)
-        .navigationBarHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
+        .onAppear {
+            guard !operatorsLoaded else { return }
+            operatorsLoaded = true
+            if selectedOperatorIds.isEmpty {
+                let modelOps = ChatModel.shared.conditions.serverOperators
+                if !modelOps.isEmpty {
+                    selectedOperatorIds = Set(modelOps.filter { $0.enabled }.map { $0.operatorId })
+                } else {
+                    Task {
+                        await MainActor.run { operatorFetchError = false }
+                        do {
+                            let conditions = try await apiGetServerOperators()
+                            await MainActor.run {
+                                ChatModel.shared.conditions = conditions
+                                selectedOperatorIds = Set(conditions.serverOperators.filter { $0.enabled }.map { $0.operatorId })
+                            }
+                        } catch {
+                            logger.error("OnboardingConditionsView: failed to reload server operators: \(responseError(error))")
+                            await MainActor.run { operatorFetchError = true }
+                        }
+                    }
+                }
+            }
+        }
+        .onDisappear {
+            popController.reset()
+        }
         .sheet(isPresented: $showConditionsSheet) {
-            NavigationView {
+            NavigationStack {
                 VStack {
                     ConditionsTextView()
                         .padding()
+                    Spacer(minLength: 0)
+                    Button {
+                        ageConfirmed.toggle()
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: ageConfirmed ? "checkmark.circle.fill" : "circle")
+                                .font(.title3)
+                                .foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("I confirm that I am at least 13 years of age", comment: "COPPA age verification"))
+                                .font(.callout)
+                                .foregroundColor(isInDarkTheme() ? .white : .primary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.horizontal, 25)
+                    .padding(.bottom, 12)
                     acceptButton()
+                        .frame(maxWidth: .infinity)
+                        .disabled(!ageConfirmed)
                         .padding(.horizontal, 25)
                         .padding(.bottom, 20)
                 }
-                .navigationTitle("Conditions of use")
+                .navigationTitle(NSLocalizedString("Conditions of use", comment: "Conditions of use title"))
                 .navigationBarTitleDisplayMode(.large)
                 .toolbar { ToolbarItem(placement: .navigationBarTrailing, content: conditionsLinkButton) }
                 .modifier(ThemedBackground(grouped: true))
@@ -121,52 +225,113 @@ struct OnboardingConditionsView: View {
         }
     }
 
-    @ViewBuilder
-    private func heroImage() -> some View {
-        #if SIMPLEX_ASSETS
-        Image(colorScheme == .light ? "network-commitments" : "network-commitments-light")
-            .resizable()
-            .scaledToFit()
-        #else
+    private func conditionsBubbleContent(g: GeometryProxy) -> some View {
         ZStack {
-            let gp = OnboardingCardView.gradientPoints(aspectRatio: 1.5, scale: colorScheme == .light ? 1.2 : 1.5)
-            LinearGradient(
-                stops: colorScheme == .light ? OnboardingCardView.lightStops : OnboardingCardView.darkStops,
-                startPoint: gp.start,
-                endPoint: gp.end
-            )
-            Image(systemName: "checkmark.shield")
-                .font(.system(size: 72))
-                .foregroundColor(theme.colors.primary)
+            if popController.isPopping {
+                BubblePopCanvas(particles: popController.particles)
+                    .frame(width: g.size.width, height: 180)
+            } else {
+                ZStack(alignment: .bottomTrailing) {
+                    // Use XBalloon3D instead of CompactBubble3D for Accept animation
+                    XBalloon3D(diameter: min(160, g.size.width * 0.4))
+                        .scaleEffect(showBubble ? 1.0 : 0.8)
+                        .opacity(showBubble ? 1.0 : 0.0)
+                        .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showBubble)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                showBubble = true
+                            }
+                        }
+                        .onTapGesture {
+                            triggerConditionsPop(in: g)
+                        }
+
+                    if showBubble {
+                        FingerTapAnimation(onPop: { triggerConditionsPop(in: g) })
+                            .offset(x: 10, y: 10)
+                            .transition(.opacity.combined(with: .scale))
+                    }
+                }
+
+                if !popController.isPopping && showBubble {
+                    Text(NSLocalizedString("tap_commitments_hint", comment: "Hint text for commitments bubble"))
+                        .font(.system(size: 12, weight: .medium, design: .monospaced))
+                        .foregroundColor(Color(hex: "#C4BFD6"))
+                        .offset(y: 100)
+                }
+            }
         }
-        .aspectRatio(1.5, contentMode: .fit)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
-        .padding(.horizontal, 25)
-        #endif
+        .frame(height: 180)
+        .frame(maxWidth: .infinity)
+    }
+
+    private func triggerConditionsPop(in g: GeometryProxy) {
+        popController.triggerPop(
+            containerSize: g.size,
+            bubbleCenterY: 90,
+            style: .commitments,
+            onComplete: {}
+        )
+    }
+
+    private func triggerConditionsPopForAccept() {
+        let screenWidth: CGFloat = {
+            if let ws = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                return ws.windows.first?.bounds.width ?? 390
+            }
+            return 390
+        }()
+        popController.triggerPop(
+            containerSize: CGSize(width: screenWidth, height: 800),
+            bubbleCenterY: 90,
+            style: .commitments,
+            onComplete: {}
+        )
     }
 
     private func acceptButton() -> some View {
         Button {
+            guard !accepting else { return }
+            accepting = true
+            triggerConditionsPopForAccept()
             Task {
                 do {
-                    let conditionsId = ChatModel.shared.conditions.currentConditions.conditionsId
-                    let r = try await acceptConditions(conditionsId: conditionsId, operatorIds: Array(selectedOperatorIds))
+                    var conditionsId = ChatModel.shared.conditions.currentConditions.conditionsId
+                    var opIds = Array(selectedOperatorIds)
+                    let modelOps = ChatModel.shared.conditions.serverOperators
+                    if opIds.isEmpty && !modelOps.isEmpty {
+                        opIds = modelOps.filter { $0.enabled }.map { $0.operatorId }
+                        logger.debug("acceptButton: using model operators, opIds=\(opIds)")
+                    }
+                    if conditionsId == 0 || opIds.isEmpty {
+                        logger.debug("acceptButton: reloading conditions from server")
+                        let fresh = try await apiGetServerOperators()
+                        await MainActor.run { ChatModel.shared.conditions = fresh }
+                        conditionsId = fresh.currentConditions.conditionsId
+                        if opIds.isEmpty {
+                            opIds = fresh.serverOperators.filter { $0.enabled }.map { $0.operatorId }
+                        }
+                    }
+                    logger.debug("acceptButton: conditionsId=\(conditionsId), opIds=\(opIds), count=\(opIds.count)")
+                    guard !opIds.isEmpty else {
+                        throw ChatError.error(errorType: ChatErrorType.commandError(message: NSLocalizedString("error_no_operators_available", comment: "Error when no operators available")))
+                    }
+                    guard conditionsId > 0 else {
+                        throw ChatError.error(errorType: ChatErrorType.commandError(message: NSLocalizedString("error_invalid_conditions_id", comment: "Error message when conditions ID is invalid")))
+                    }
+                    if let validatedOps = enabledOperators(modelOps) {
+                        await MainActor.run { ChatModel.shared.conditions.serverOperators = validatedOps }
+                    }
+                    let r = try await acceptConditions(conditionsId: conditionsId, operatorIds: opIds)
+                    // acceptConditions already updates the database with accepted operators
+                    // No need to call setServerOperators again - it causes "Failed reading: empty" error
                     await MainActor.run {
                         ChatModel.shared.conditions = r
-                    }
-                    if let enabledOps = enabledOperators(r.serverOperators) {
-                        let r2 = try await setServerOperators(operators: enabledOps)
-                        await MainActor.run {
-                            ChatModel.shared.conditions = r2
-                            completeOnboarding()
-                        }
-                    } else {
-                        await MainActor.run {
-                            completeOnboarding()
-                        }
+                        completeOnboarding()
                     }
                 } catch let error {
                     await MainActor.run {
+                        accepting = false
                         showAlert(
                             NSLocalizedString("Error accepting conditions", comment: "alert title"),
                             message: responseError(error)
@@ -175,23 +340,62 @@ struct OnboardingConditionsView: View {
                 }
             }
         } label: {
-            Text("Accept")
+            Text(NSLocalizedString("Accept", comment: "Accept button"))
         }
-        .buttonStyle(OnboardingButtonStyle(isDisabled: selectedOperatorIds.isEmpty))
-        .disabled(selectedOperatorIds.isEmpty)
+        .buttonStyle(QuantumButtonStyle(primary: true))
+        .disabled(selectedOperatorIds.isEmpty || !ageConfirmed || accepting)
+    }
+
+    private func retryFetchOperators() {
+        operatorFetchError = false
+        Task {
+            do {
+                let conditions = try await apiGetServerOperators()
+                await MainActor.run {
+                    ChatModel.shared.conditions = conditions
+                    selectedOperatorIds = Set(conditions.serverOperators.filter { $0.enabled }.map { $0.operatorId })
+                }
+            } catch {
+                logger.error("OnboardingConditionsView: retry failed: \(responseError(error))")
+                await MainActor.run { operatorFetchError = true }
+            }
+        }
     }
 
     private func completeOnboarding() {
-        let m = ChatModel.shared
-        onboardingStageDefault.set(.onboardingComplete)
-        // defer the stage swap off the Accept handler's call stack so the deep onboarding nav stack
-        // isn't torn down from inside its own event handling (UIKit crash on completion); the inner
-        // async guarantees this even if dismissAllSheets runs its completion synchronously.
-        dismissAllSheets(animated: false) {
-            DispatchQueue.main.async {
-                m.onboardingStage = .onboardingComplete
+        dismissAllSheets(animated: false)
+        NtfManager.shared.requestAuthorization(
+            onDeny: {
+                DispatchQueue.main.async {
+                    TransportManager.shared.requestBluetoothPermission {
+                        DispatchQueue.main.async {
+                            advanceOnboarding(to: .onboardingComplete)
+                        }
+                    }
+                    Task {
+                        try? await Task.sleep(nanoseconds: 10_000_000000)
+                        if !Task.isCancelled && ChatModel.shared.onboardingStage != .onboardingComplete {
+                            advanceOnboarding(to: .onboardingComplete)
+                        }
+                    }
+                }
+            },
+            onAuthorized: {
+                DispatchQueue.main.async {
+                    TransportManager.shared.requestBluetoothPermission {
+                        DispatchQueue.main.async {
+                            advanceOnboarding(to: .onboardingComplete)
+                        }
+                    }
+                    Task {
+                        try? await Task.sleep(nanoseconds: 10_000_000000)
+                        if !Task.isCancelled && ChatModel.shared.onboardingStage != .onboardingComplete {
+                            advanceOnboarding(to: .onboardingComplete)
+                        }
+                    }
+                }
             }
-        }
+        )
     }
 
     private func enabledOperators(_ operators: [ServerOperator]) -> [ServerOperator]? {
@@ -239,45 +443,51 @@ struct ChooseServerOperators: View {
     @Environment(\.dismiss) var dismiss: DismissAction
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @EnvironmentObject var theme: AppTheme
+    @EnvironmentObject var m: ChatModel
     var serverOperators: [ServerOperator]
     @Binding var selectedOperatorIds: Set<Int64>
     @State private var sheetItem: ChooseServerOperatorsSheet? = nil
 
     var body: some View {
-        GeometryReader { g in
+        ZStack {
+            OnboardingBubbleBackground()
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Server operators")
-                        .font(.largeTitle)
-                        .bold()
+                    Text(NSLocalizedString("Server operators", comment: "Server operators title"))
+                        .font(.system(.title, design: .default).weight(.bold))
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 25)
+                        .foregroundColor(.white)
+                        .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 10, x: 0, y: 2)
 
                     infoText()
                         .frame(maxWidth: .infinity, alignment: .center)
 
                     Spacer()
-                    
+
                     ForEach(serverOperators) { srvOperator in
                         operatorCheckView(srvOperator)
                     }
                     VStack {
-                        Text("SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app.").padding(.bottom, 8)
-                        Text("You can configure servers via settings.")
+                        Text(NSLocalizedString("POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app.", comment: "Server agreement")).padding(.bottom, 8)
+                        Text(NSLocalizedString("You can configure servers via settings.", comment: "Server configuration hint"))
                     }
-                    .font(.footnote)
+                    .font(.system(size: 13, design: .monospaced))
+                    .foregroundColor(Color(hex: "#C4BFD6"))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal, 16)
-                    
+
                     Spacer()
 
                     VStack(spacing: 8) {
                         setOperatorsButton()
+                            .frame(maxWidth: .infinity)
                         onboardingButtonPlaceholder()
                     }
                 }
-                .frame(minHeight: g.size.height)
+                .frame(maxHeight: .infinity)
             }
             .sheet(item: $sheetItem) { item in
                 switch item {
@@ -296,15 +506,16 @@ struct ChooseServerOperators: View {
         Button {
             sheetItem = .showInfo
         } label: {
-            Label("How it helps privacy", systemImage: "info.circle")
+            Label(NSLocalizedString("How it helps privacy", comment: "Privacy info label"), systemImage: "info.circle")
                 .font(.headline)
+                .foregroundColor(Color(hex: "#00FFD2"))
         }
     }
 
     private func operatorCheckView(_ serverOperator: ServerOperator) -> some View {
         let checked = selectedOperatorIds.contains(serverOperator.operatorId)
         let icon = checked ? "checkmark.circle.fill" : "circle"
-        let iconColor = checked ? theme.colors.primary : Color(uiColor: .tertiaryLabel).asAnotherColorFromSecondary(theme)
+        let iconColor = checked ? Color(hex: "#00FFD2") : Color(hex: "#C4BFD6")
         return HStack(spacing: 10) {
             Image(serverOperator.largeLogo(colorScheme))
                 .resizable()
@@ -317,13 +528,23 @@ struct ChooseServerOperators: View {
                 .frame(width: 26, height: 26)
                 .foregroundColor(iconColor)
         }
-        .background(theme.colors.background)
+        .background(Color(hex: "#141021"))
         .padding()
-        .clipShape(RoundedRectangle(cornerRadius: 18))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
-            RoundedRectangle(cornerRadius: 18)
-                .stroke(Color(uiColor: .secondarySystemFill), lineWidth: 2)
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(
+                    LinearGradient(
+                        colors: checked
+                            ? [Color(hex: "#6E25C4").opacity(0.6), Color(hex: "#00FFD2").opacity(0.3)]
+                            : [Color(hex: "#6E25C4").opacity(0.2), Color(hex: "#00FFD2").opacity(0.1)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
         )
+        .shadow(color: Color(hex: "#6E25C4").opacity(checked ? 0.2 : 0.08), radius: 8, x: 0, y: 4)
         .padding(.horizontal, 2)
         .onTapGesture {
             if checked {
@@ -335,46 +556,51 @@ struct ChooseServerOperators: View {
     }
 
     private func setOperatorsButton() -> some View {
-        Button {
+        let noOperatorsAvailable = m.conditions.serverOperators.isEmpty
+        return Button {
             dismiss()
         } label: {
-            Text("OK")
+            Text(NSLocalizedString("OK", comment: "OK button"))
         }
-        .buttonStyle(OnboardingButtonStyle(isDisabled: selectedOperatorIds.isEmpty))
-        .disabled(selectedOperatorIds.isEmpty)
+        .buttonStyle(QuantumButtonStyle(primary: true))
+        .disabled(selectedOperatorIds.isEmpty && !noOperatorsAvailable)
     }
 }
 
-let operatorsPostLink = URL(string: "https://simplex.chat/blog/20241125-servers-operated-by-flux-true-privacy-and-decentralization-for-all-users.html")!
+// Link to operator signup/registration page.
+// Currently hardcoded; consider fetching from remote config to allow updates without app release.
+let operatorsPostLink = URL(string: "https://popopxchat.com") ?? URL(filePath: "/")
 
 struct ChooseServerOperatorsInfoView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @EnvironmentObject var theme: AppTheme
+    @EnvironmentObject var m: ChatModel
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("The app protects your privacy by using different operators in each conversation.")
-                    Text("When more than one operator is enabled, none of them has metadata to learn who communicates with whom.")
-                    Text("For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server.")
+                    Text(NSLocalizedString("The app protects your privacy by using different operators in each conversation.", comment: "Privacy protection explanation"))
+                    Text(NSLocalizedString("When more than one operator is enabled, none of them has metadata to learn who communicates with whom.", comment: "Multi-operator privacy"))
+                    Text(NSLocalizedString("For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server.", comment: "Operator example"))
                 }
                 .fixedSize(horizontal: false, vertical: true)
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
+                        .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .padding(.top)
 
                 Section {
-                    ForEach(ChatModel.shared.conditions.serverOperators) { op in
+                    ForEach(m.conditions.serverOperators) { op in
                         operatorInfoNavLinkView(op)
                     }
                 } header: {
-                    Text("About operators")
+                    Text(NSLocalizedString("About operators", comment: "About operators section header"))
                         .foregroundColor(theme.colors.secondary)
                 }
             }
-            .navigationTitle("Server operators")
+            .listRowBackground(Color.clear)
+            .scrollContentBackground(.hidden)
+            .navigationTitle(NSLocalizedString("Server operators", comment: "Server operators navigation title"))
             .navigationBarTitleDisplayMode(.large)
             .modifier(ThemedBackground(grouped: true))
         }
@@ -383,7 +609,7 @@ struct ChooseServerOperatorsInfoView: View {
     private func operatorInfoNavLinkView(_ op: ServerOperator) -> some View {
         NavigationLink() {
             OperatorInfoView(serverOperator: op)
-                .navigationBarTitle("Network operator")
+                .navigationTitle(NSLocalizedString("Network operator", comment: "Network operator title"))
                 .modifier(ThemedBackground(grouped: true))
                 .navigationBarTitleDisplayMode(.large)
         } label: {
@@ -399,5 +625,6 @@ struct ChooseServerOperatorsInfoView: View {
 }
 
 #Preview {
-    OnboardingConditionsView(selectedOperatorIds: [])
+    OnboardingConditionsView(initialOperatorIds: [])
+        .previewEnvironment()
 }

@@ -1,0 +1,126 @@
+
+ * 
+ * "Chats" = "Discussions";
+ * "Device" = "Appareil";
+ * (e.g., fr.lproj/Localizable.strings) and replace the right-hand values
+ * - PrivacySettings.swift (~70 strings)
+ * - UserAddressView.swift (~50 strings)
+ * Example for French:
+ * Generated: 2026-08-31
+ * Note: Strings using ^[count](inflect: true) syntax support automatic
+ * POPOPX Privacy & Address Settings Localization Template
+ * This file contains all user-facing strings from:
+ * To translate: Copy this file to your target language .lproj directory
+ * pluralization for languages with complex plural rules (e.g., Arabic).
+ * with translated text while keeping the left-hand keys unchanged.
+ */
+"Accept incognito" = "Accept incognito";
+"Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts." = "Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts.";
+"Add your team members to the conversations." = "Add your team members to the conversations.";
+"Address or 1-time link?" = "Address or 1-time link?";
+"Address settings" = "Address settings";
+"All app data is deleted." = "All app data is deleted.";
+"All your contacts will remain connected. Profile update will be sent to your contacts." = "All your contacts will remain connected. Profile update will be sent to your contacts.";
+"All your contacts will remain connected." = "All your contacts will remain connected.";
+"Allow sharing" = "Allow sharing";
+"An empty chat profile with the provided name is created, and the app opens as usual." = "An empty chat profile with the provided name is created, and the app opens as usual.";
+"App passcode is replaced with self-destruct passcode." = "App passcode is replaced with self-destruct passcode.";
+"Auto-accept images" = "Auto-accept images";
+"Auto-accept" = "Auto-accept";
+"Blur media" = "Blur media";
+"Business address" = "Business address";
+"Cancel" = "Cancel";
+"Change passcode" = "Change passcode";
+"Change self-destruct passcode" = "Change self-destruct passcode";
+"Chats" = "Chats";
+"Contact requests from groups" = "Contact requests from groups";
+"Contacts" = "Contacts";
+"Create 1-time link" = "Create 1-time link";
+"Create POPOPX address" = "Create POPOPX address";
+"Crowdfunding investors can reserve names before the sale starts: [simplex.domains](https://simplex.domains/)" = "Crowdfunding investors can reserve names before the sale starts: [simplex.domains](https://simplex.domains/)";
+"Delete address" = "Delete address";
+"Delete address?" = "Delete address?";
+"Delete" = "Delete";
+"Device" = "Device";
+"Disable (keep overrides)" = "Disable (keep overrides)";
+"Disable for all" = "Disable for all";
+"Enable (keep overrides)" = "Enable (keep overrides)";
+"Enable for all" = "Enable for all";
+"Enable lock" = "Enable lock";
+"Enable self-destruct" = "Enable self-destruct";
+"Encrypt local files" = "Encrypt local files";
+"Error setting auto-accept" = "Error setting auto-accept";
+"Error setting delivery receipts!" = "Error setting delivery receipts!";
+"Error" = "Error";
+"Error: ^[responseError(error)]" = "Error: ^[responseError(error)]";
+"Files" = "Files";
+"For social media" = "For social media";
+"Full link" = "Full link";
+"Get POPOPX name (BETA)" = "Get POPOPX name (BETA)";
+"How to register a test name" = "How to register a test name";
+"If you enter this passcode when opening the app, all app data will be irreversibly removed!" = "If you enter this passcode when opening the app, all app data will be irreversibly removed!";
+"If you enter your self-destruct passcode while opening the app:" = "If you enter your self-destruct passcode while opening the app:";
+"Immediately" = "Immediately";
+"Invite friends" = "Invite friends";
+"Let people connect to you via name registered with your POPOPX address." = "Let people connect to you via name registered with your POPOPX address.";
+"Lock after" = "Lock after";
+"Lock mode" = "Lock mode";
+"Message draft" = "Message draft";
+"More privacy" = "More privacy";
+"New chat" = "New chat";
+"New display name" = "New display name";
+"Notifications" = "Notifications";
+"Off" = "Off";
+"Open Settings" = "Open Settings";
+"Or to share privately" = "Or to share privately";
+"Or use this QR - print or show online." = "Or use this QR - print or show online.";
+"POPOPX Lock" = "POPOPX Lock";
+"POPOPX address or 1-time link?" = "POPOPX address or 1-time link?";
+"Passcode changed!" = "Passcode changed!";
+"Passcode not changed!" = "Passcode not changed!";
+"Passcode set!" = "Passcode set!";
+"Passcode" = "Passcode";
+"Please remember or store it securely - there is no way to recover a lost passcode!" = "Please remember or store it securely - there is no way to recover a lost passcode!";
+"Protect app screen" = "Protect app screen";
+"Remove link tracking" = "Remove link tracking";
+"Remove name" = "Remove name";
+"Save" = "Save";
+"Self-destruct passcode changed!" = "Self-destruct passcode changed!";
+"Self-destruct passcode enabled!" = "Self-destruct passcode enabled!";
+"Self-destruct passcode" = "Self-destruct passcode";
+"Self-destruct" = "Self-destruct";
+"Send delivery receipts to" = "Send delivery receipts to";
+"Send link previews" = "Send link previews";
+"Sending receipts is disabled for ^[contactReceiptsOverrides](inflect: true) contacts" = "Sending receipts is disabled for ^[contactReceiptsOverrides](inflect: true) contacts";
+"Sending receipts is disabled for ^[groupReceiptsOverrides](inflect: true) groups" = "Sending receipts is disabled for ^[groupReceiptsOverrides](inflect: true) groups";
+"Sending receipts is enabled for ^[contactReceiptsOverrides](inflect: true) contacts" = "Sending receipts is enabled for ^[contactReceiptsOverrides](inflect: true) contacts";
+"Sending receipts is enabled for ^[groupReceiptsOverrides](inflect: true) groups" = "Sending receipts is enabled for ^[groupReceiptsOverrides](inflect: true) groups";
+"Share address with POPOPX contacts?" = "Share address with POPOPX contacts?";
+"Share address" = "Share address";
+"Share to POPOPX" = "Share to POPOPX";
+"Share via chat" = "Share via chat";
+"Share with POPOPX contacts" = "Share with POPOPX contacts";
+"Share" = "Share";
+"Short link" = "Short link";
+"Show last messages" = "Show last messages";
+"Show preview" = "Show preview";
+"POPOPX name sale starts in" = "POPOPX name sale starts in";
+"Small groups (max 20)" = "Small groups (max 20)";
+"System" = "System";
+"The app will ask to confirm downloads from unknown file servers (except .onion)." = "The app will ask to confirm downloads from unknown file servers (except .onion).";
+"These settings are for your current profile **\(m.currentUser?.displayName ??" = "These settings are for your current profile **\(m.currentUser?.displayName ??";
+"They can be overridden in contact and group settings." = "They can be overridden in contact and group settings.";
+"This setting is for your current profile **\(m.currentUser?.displayName ??" = "This setting is for your current profile **\(m.currentUser?.displayName ??";
+"Update the app to register a POPOPX domain" = "Update the app to register a POPOPX domain";
+"Upgrade address" = "Upgrade address";
+"Use this address in your social media profile, website, or email signature." = "Use this address in your social media profile, website, or email signature.";
+"Verify POPOPX names" = "Verify POPOPX names";
+"Welcome message" = "Welcome message";
+"Without Tor or VPN, your IP address will be visible to file servers." = "Without Tor or VPN, your IP address will be visible to file servers.";
+"You can set lock screen notification preview via settings." = "You can set lock screen notification preview via settings.";
+"Your POPOPX name" = "Your POPOPX name";
+"Your contacts will remain connected." = "Your contacts will remain connected.";
+"^\[m] minutes](inflect: true)" = "^\[m] minutes](inflect: true)";
+"^\[s] seconds](inflect: true)" = "^\[s] seconds](inflect: true)";
+"until you can register a POPOPX domain" = "until you can register a POPOPX domain";
+/* 

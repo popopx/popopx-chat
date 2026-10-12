@@ -1,13 +1,15 @@
 //
 //  BadgeUserPreview.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 30.07.2026.
 //  Copyright © 2026 SimpleX Chat. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
 struct BadgeUserPreview<Trailing: View>: View {
     @EnvironmentObject var chatModel: ChatModel

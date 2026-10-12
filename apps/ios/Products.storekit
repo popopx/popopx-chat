@@ -1,0 +1,276 @@
+{
+  "identifier" : "A1B2C3D4",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "id" : "A2000001",
+      "referenceName" : "Starter Token Pack",
+      "type" : "Consumable",
+      "settings" : {
+        "consumableType" : "Quantity"
+      },
+      "productID" : "com.popopxchat.popopx.tokens.starter",
+      "displayPrice" : "9.99",
+      "localizations" : [
+        {
+          "displayName" : "Starter pack",
+          "description" : "100 compute tokens",
+          "locale" : "en_US"
+        }
+      ],
+      "appStoreConnectStatus" : "Missing Metadata",
+      "enabled" : true
+    },
+    {
+      "id" : "A2000002",
+      "referenceName" : "Plus Token Pack",
+      "type" : "Consumable",
+      "settings" : {
+        "consumableType" : "Quantity"
+      },
+      "productID" : "com.popopxchat.popopx.tokens.plus",
+      "displayPrice" : "29.99",
+      "localizations" : [
+        {
+          "displayName" : "Plus pack",
+          "description" : "350 compute tokens",
+          "locale" : "en_US"
+        }
+      ],
+      "appStoreConnectStatus" : "Missing Metadata",
+      "enabled" : true
+    },
+    {
+      "id" : "A2000003",
+      "referenceName" : "Pro Token Pack",
+      "type" : "Consumable",
+      "settings" : {
+        "consumableType" : "Quantity"
+      },
+      "productID" : "com.popopxchat.popopx.tokens.pro",
+      "displayPrice" : "99.99",
+      "localizations" : [
+        {
+          "displayName" : "Pro pack",
+          "description" : "1300 compute tokens",
+          "locale" : "en_US"
+        }
+      ],
+      "appStoreConnectStatus" : "Missing Metadata",
+      "enabled" : true
+    },
+    {
+      "id" : "A2000004",
+      "referenceName" : "Quantum Token Pack",
+      "type" : "Consumable",
+      "settings" : {
+        "consumableType" : "Quantity"
+      },
+      "productID" : "com.popopxchat.popopx.tokens.quantum",
+      "displayPrice" : "299.99",
+      "localizations" : [
+        {
+          "displayName" : "Quantum pack",
+          "description" : "4500 compute tokens",
+          "locale" : "en_US"
+        }
+      ],
+      "appStoreConnectStatus" : "Missing Metadata",
+      "enabled" : true
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "0000000000",
+    "_developerTeamID" : "0000000000",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "F1000001",
+      "localizations" : [
+
+      ],
+      "name" : "POPOP Membership",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "9.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "F1000103",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Standard membership. Full chat access, cannot add custom SMP servers.",
+              "displayName" : "Standard (Monthly)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.popopxchat.popopx.basic.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Standard Monthly",
+          "subscriptionGroupID" : "F1000001",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "99.00",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "F1000101",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "displayName" : "3-Day Free Trial",
+            "subscriptionPeriod" : "P3D",
+            "type" : "FREE_TRIAL"
+          },
+          "localizations" : [
+            {
+              "description" : "Standard membership. Full chat access, cannot add custom SMP servers.",
+              "displayName" : "Standard (Yearly)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.popopxchat.popopx.basic.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Standard Yearly",
+          "subscriptionGroupID" : "F1000001",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "29.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "F1000104",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Premium membership. Adds custom SMP servers and compute benefits.",
+              "displayName" : "Premium (Monthly)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.popopxchat.popopx.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Premium Monthly",
+          "subscriptionGroupID" : "F1000001",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "299.00",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "F1000102",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "displayName" : "3-Day Free Trial",
+            "subscriptionPeriod" : "P3D",
+            "type" : "FREE_TRIAL"
+          },
+          "localizations" : [
+            {
+              "description" : "Premium membership. Adds custom SMP servers and compute benefits.",
+              "displayName" : "Premium (Yearly)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.popopxchat.popopx.premium.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Premium Yearly",
+          "subscriptionGroupID" : "F1000001",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

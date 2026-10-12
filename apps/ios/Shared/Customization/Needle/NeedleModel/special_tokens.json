@@ -1,0 +1,31 @@
+{
+  "vocab_size": 8192,
+  "pad_token_id": 0,
+  "eos_token_id": 1,
+  "bos_token_id": 2,
+  "unk_token_id": 3,
+  "model_max_length": 1024,
+  "sp_model_type": "bpe",
+  "sp_add_dummy_prefix": true,
+  "sp_remove_extra_whitespaces": true,
+  "sp_escape_whitespaces": true,
+  "sp_byte_fallback": true,
+  "special_tokens": {
+    "0": "<pad>",
+    "1": "</s>",
+    "2": "<s>",
+    "3": "<unk>",
+    "4": "<tool_call>",
+    "5": "<tools>"
+  },
+  "additional_special_tokens": [
+    {
+      "token": "<tool_call>",
+      "id": 4
+    },
+    {
+      "token": "<tools>",
+      "id": 5
+    }
+  ]
+}

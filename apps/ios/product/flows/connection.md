@@ -4,7 +4,7 @@
 
 ## Overview
 
-Establishing contact between two SimpleX Chat users. SimpleX uses no user identifiers; connections are formed through one-time invitation links or permanent SimpleX addresses. Each connection creates unique unidirectional SMP queues, ensuring no server can correlate sender and receiver. Supports incognito mode for per-contact random profile generation.
+Establishing contact between two POPOPX Chat users. POPOPX uses no user identifiers; connections are formed through one-time invitation links or permanent POPOPX addresses. Each connection creates unique unidirectional SMP queues, ensuring no server can correlate sender and receiver. Supports incognito mode for per-contact random profile generation.
 
 ## Prerequisites
 
@@ -35,8 +35,8 @@ Establishing contact between two SimpleX Chat users. SimpleX uses no user identi
 
 ### 2. Connect via Link
 
-1. User receives a SimpleX link (pasted, scanned, or opened via URL scheme).
-2. If opened via deep link: `SimpleXApp.onOpenURL` sets `chatModel.appOpenUrl`.
+1. User receives a POPOPX link (pasted, scanned, or opened via URL scheme).
+2. If opened via deep link: `POPOPXApp.onOpenURL` sets `chatModel.appOpenUrl`.
 3. For manual entry: User pastes link in `NewChatView`.
 4. First, `apiConnectPlan(connLink:inProgress:)` is called to validate:
    ```swift
@@ -66,7 +66,7 @@ Establishing contact between two SimpleX Chat users. SimpleX uses no user identi
 
 ### 4. Accept Contact Request
 
-1. When a peer connects via the user's SimpleX address, core generates a `ChatEvent.receivedContactRequest`.
+1. When a peer connects via the user's POPOPX address, core generates a `ChatEvent.receivedContactRequest`.
 2. `processReceivedMsg` handles the event, adding a `UserContactRequest` to `ChatModel`.
 3. Contact request appears in `ChatListView` as a special `ContactRequestView` row.
 4. User taps "Accept":
@@ -88,9 +88,9 @@ Establishing contact between two SimpleX Chat users. SimpleX uses no user identi
 4. `NtfManager` may post a notification: "Contact connected".
 5. The `PendingContactConnection` in the chat list is replaced by the full contact chat.
 
-### 6. Create SimpleX Address
+### 6. Create POPOPX Address
 
-1. User navigates to Settings or taps "Create SimpleX address" during onboarding.
+1. User navigates to Settings or taps "Create POPOPX address" during onboarding.
 2. Calls `apiCreateUserAddress()`:
    ```swift
    func apiCreateUserAddress() async throws -> CreatedConnLink?
@@ -105,7 +105,7 @@ Establishing contact between two SimpleX Chat users. SimpleX uses no user identi
 
 1. User scans, pastes, or opens a relay address link (URL path `/r` or `SimplexLinkType.relay`).
 2. In `ContentView.connectViaUrl_()`: early return with alert "Relay address" / "This is a chat relay address, it cannot be used to connect."
-3. In `NewChatView.planAndConnect()`: `.simplexLink(_, .relay, _, _)` pattern triggers the same alert.
+3. In `NewChatView.planAndConnect()`: `.popopxLink(_, .relay, _, _)` pattern triggers the same alert.
 4. The link is NOT processed further. No connection is attempted.
 
 ### 7b. Channel Prepared Group Flow
@@ -113,7 +113,7 @@ Establishing contact between two SimpleX Chat users. SimpleX uses no user identi
 1. When connecting to a channel link (`GroupShortLinkInfo.direct == false`):
 2. `apiPrepareGroup(connLink:directLink:groupShortLinkData:)` is called with `directLink: false`, preparing the channel locally.
 3. `groupShortLinkInfo.groupRelays` (hostnames) stored in `ChatModel.shared.channelRelayHostnames[groupId]`.
-4. Pre-join UI shows channel icon and "Open channel" (not "Open group").
+4. Pre-join UI shows channel icon and "Open new channel" (not "Open new group").
 5. `apiConnectPreparedGroup(groupId:incognito:msg:)` returns `(GroupInfo, [RelayConnectionResult])`.
 6. `RelayConnectionResult` contains `relayMember: GroupMember` and optional `relayError: ChatError?` per relay.
 7. Relay members are upserted to `chatModel.groupMembers`; `channelRelayHostnames` entry is cleared.
@@ -131,13 +131,13 @@ Establishing contact between two SimpleX Chat users. SimpleX uses no user identi
 
 | Type | Location | Description |
 |------|----------|-------------|
-| `CreatedConnLink` | `SimpleXChat/APITypes.swift` | Contains `connFullLink` (URI) and optional `connShortLink` |
-| `PendingContactConnection` | `SimpleXChat/ChatTypes.swift` | Represents an in-progress connection before contact is established |
+| `CreatedConnLink` | `POPOPXSwitch/APITypes.swift` | Contains `connFullLink` (URI) and optional `connShortLink` |
+| `PendingContactConnection` | `POPOPXSwitch/ChatTypes.swift` | Represents an in-progress connection before contact is established |
 | `ConnectionPlan` | `Shared/Model/AppAPITypes.swift` | Enum describing what a link will do: connect contact, join group, already connected, etc. |
 | `ConnReqType` | `Shared/Views/NewChat/NewChatView.swift` | `.invitation`, `.contact`, or `.groupLink` -- type of connection request |
-| `Contact` | `SimpleXChat/ChatTypes.swift` | Full contact model with profile, connection status, preferences |
-| `UserContactRequest` | `SimpleXChat/ChatTypes.swift` | Incoming contact request awaiting acceptance |
-| `ChatType` | `SimpleXChat/ChatTypes.swift` | `.direct`, `.group`, `.local`, `.contactRequest`, `.contactConnection` |
+| `Contact` | `POPOPXSwitch/ChatTypes.swift` | Full contact model with profile, connection status, preferences |
+| `UserContactRequest` | `POPOPXSwitch/ChatTypes.swift` | Incoming contact request awaiting acceptance |
+| `ChatType` | `POPOPXSwitch/ChatTypes.swift` | `.direct`, `.group`, `.local`, `.contactRequest`, `.contactConnection` |
 | `GroupShortLinkInfo` | `Shared/Model/AppAPITypes.swift` | Contains `direct: Bool`, `groupRelays: [String]`, `publicGroupId: String?`; transient data returned by prepare |
 | `RelayConnectionResult` | `Shared/Model/AppAPITypes.swift` | Contains `relayMember: GroupMember`, `relayError: ChatError?`; per-relay join outcome |
 
@@ -167,10 +167,10 @@ Establishing contact between two SimpleX Chat users. SimpleX uses no user identi
 | `Shared/Views/ChatList/ContactRequestView.swift` | Incoming contact request display |
 | `Shared/Views/ChatList/ContactConnectionView.swift` | Pending connection display |
 | `Shared/Views/ChatList/ContactConnectionInfo.swift` | Connection details sheet |
-| `Shared/Model/SimpleXAPI.swift` | API functions: `apiAddContact`, `apiConnect`, `apiConnectPlan`, `apiAcceptContactRequest`, `apiCreateUserAddress` |
+| `Shared/Model/POPOPXAPI.swift` | API functions: `apiAddContact`, `apiConnect`, `apiConnectPlan`, `apiAcceptContactRequest`, `apiCreateUserAddress` |
 | `Shared/Model/AppAPITypes.swift` | `ConnectionPlan` enum, `GroupLink` struct |
-| `SimpleXChat/APITypes.swift` | `CreatedConnLink`, `ComposedMessage`, command/response types |
-| `SimpleXChat/ChatTypes.swift` | `Contact`, `PendingContactConnection`, `UserContactRequest` |
+| `POPOPXSwitch/APITypes.swift` | `CreatedConnLink`, `ComposedMessage`, command/response types |
+| `POPOPXSwitch/ChatTypes.swift` | `Contact`, `PendingContactConnection`, `UserContactRequest` |
 
 ## Related Specifications
 

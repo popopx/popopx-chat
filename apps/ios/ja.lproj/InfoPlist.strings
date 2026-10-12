@@ -1,0 +1,7 @@
+/* Localized permission strings */
+"NSBluetoothAlwaysUsageDescription" = "POPOPXはインターネットが利用できない場合、Bluetoothを使用して近くのデバイスに接続し、安全なメッシュネットワークを介してメッセージを配信します。";
+"NSBluetoothPeripheralUsageDescription" = "POPOPXはインターネットが利用できない場合、Bluetooth（バックグラウンド）を使用してメッシュネットワーク経由で近くのデバイスに接続します。";
+"NSLocationWhenInUseUsageDescription" = "位置情報はチャットで共有するためにのみ使用されます。選択したチャット以外に収集または送信されることはありません。";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "位置情報はチャットで共有するためにのみ使用されます。選択したチャット以外に収集または送信されることはありません。";
+"NSPhotoLibraryUsageDescription" = "POPOPXはチャットで写真を選択して送信するためにフォトライブラリへのアクセスが必要です。";
+"NSPhotoLibraryAddUsageDescription" = "POPOPXは写真とビデオをフォトライブラリに保存するためにアクセスが必要です。";

@@ -1,0 +1,20 @@
+{
+  "counts_by_component": {
+    "embedding": 2,
+    "language": 226
+  },
+  "counts_by_precision": {
+    "CQ4": 114,
+    "FP16": 114
+  },
+  "counts_by_status": {
+    "converted": 114,
+    "fallback": 114
+  },
+  "fallback_reasons": {
+    "non-2d tensor": 28,
+    "norm tensor": 86
+  },
+  "total_bytes": 17012728,
+  "total_tensors": 228
+}

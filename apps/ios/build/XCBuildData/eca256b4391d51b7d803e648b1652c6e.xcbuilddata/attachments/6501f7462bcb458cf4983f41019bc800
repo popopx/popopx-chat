@@ -1,0 +1,43 @@
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/ASN1.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ASN1Any.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ASN1BitString.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ASN1Boolean.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ASN1Identifier.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ASN1Integer.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ASN1Null.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ASN1OctetString.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ASN1Strings.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ArraySliceBigint.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/GeneralizedTime.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic\ ASN1\ Types/ObjectIdentifier.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/ECDSASignature.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/PEMDocument.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/PKCS8PrivateKey.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/SEC1PrivateKey.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/SubjectPublicKeyInfo.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Asymmetric.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Combine.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Context.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/CryptoKitErrors.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/DH.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Digest.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ECDH.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ECDSA.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/EdDSA.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Errors.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/HashDigest.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/MuSig.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Nonces.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/P256K.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/PrettyBytes.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/RNG_boring.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Recovery.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/SHA256.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/SafeCompare.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Schnorr.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/SecureBytes.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Signature.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Tweak.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/UInt256.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Utility.swift
+/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Zeroization.swift

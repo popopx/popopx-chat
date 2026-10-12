@@ -4,7 +4,7 @@
 
 ## Overview
 
-WebRTC-based audio and video calling in SimpleX Chat iOS. Calls are end-to-end encrypted with an additional shared key negotiated over the E2E encrypted SMP channel. The iOS app integrates with CallKit for native call UI (incoming call screen, lock screen integration) with a fallback mode for regions where CallKit is restricted (China). Call signaling (offer/answer/ICE candidates) is exchanged via SMP messages, not through a central signaling server.
+WebRTC-based audio and video calling in POPOPX Chat iOS. Calls are end-to-end encrypted with an additional shared key negotiated over the E2E encrypted SMP channel. The iOS app integrates with CallKit for native call UI (incoming call screen, lock screen integration) with a fallback mode for regions where CallKit is restricted (China). Call signaling (offer/answer/ICE candidates) is exchanged via SMP messages, not through a central signaling server.
 
 ## Prerequisites
 
@@ -135,16 +135,16 @@ All signaling messages are exchanged via E2E encrypted SMP messages (no central 
 
 | Type | Location | Description |
 |------|----------|-------------|
-| `CallType` | `SimpleXChat/CallTypes.swift` | `media: CallMediaType` (.audio/.video), `capabilities: CallCapabilities` |
-| `CallMediaType` | `SimpleXChat/CallTypes.swift` | `.audio` or `.video` |
-| `CallCapabilities` | `SimpleXChat/CallTypes.swift` | `encryption: Bool` for E2E call encryption support |
-| `RcvCallInvitation` | `SimpleXChat/CallTypes.swift` | Incoming call: user, contact, callType, sharedKey, callUUID, callTs |
-| `WebRTCCallOffer` | `SimpleXChat/CallTypes.swift` | SDP offer with call type and WebRTC session data |
-| `WebRTCSession` | `SimpleXChat/CallTypes.swift` | `rtcSession` (SDP) and `rtcIceCandidates` (serialized) |
-| `WebRTCExtraInfo` | `SimpleXChat/CallTypes.swift` | Additional ICE candidates sent after initial offer/answer |
-| `WebRTCCallStatus` | `SimpleXChat/CallTypes.swift` | Call lifecycle states for status reporting |
-| `CallMediaSource` | `SimpleXChat/CallTypes.swift` | `.mic`, `.camera`, `.screenAudio`, `.screenVideo`, `.unknown` |
-| `VideoCamera` | `SimpleXChat/CallTypes.swift` | `.user` (front) or `.environment` (rear) camera |
+| `CallType` | `POPOPXSwitch/CallTypes.swift` | `media: CallMediaType` (.audio/.video), `capabilities: CallCapabilities` |
+| `CallMediaType` | `POPOPXSwitch/CallTypes.swift` | `.audio` or `.video` |
+| `CallCapabilities` | `POPOPXSwitch/CallTypes.swift` | `encryption: Bool` for E2E call encryption support |
+| `RcvCallInvitation` | `POPOPXSwitch/CallTypes.swift` | Incoming call: user, contact, callType, sharedKey, callUUID, callTs |
+| `WebRTCCallOffer` | `POPOPXSwitch/CallTypes.swift` | SDP offer with call type and WebRTC session data |
+| `WebRTCSession` | `POPOPXSwitch/CallTypes.swift` | `rtcSession` (SDP) and `rtcIceCandidates` (serialized) |
+| `WebRTCExtraInfo` | `POPOPXSwitch/CallTypes.swift` | Additional ICE candidates sent after initial offer/answer |
+| `WebRTCCallStatus` | `POPOPXSwitch/CallTypes.swift` | Call lifecycle states for status reporting |
+| `CallMediaSource` | `POPOPXSwitch/CallTypes.swift` | `.mic`, `.camera`, `.screenAudio`, `.screenVideo`, `.unknown` |
+| `VideoCamera` | `POPOPXSwitch/CallTypes.swift` | `.user` (front) or `.environment` (rear) camera |
 
 ## Error Cases
 
@@ -170,8 +170,8 @@ All signaling messages are exchanged via E2E encrypted SMP messages (no central 
 | `Shared/Views/Call/AudioDevicePicker.swift` | Audio device selection UI |
 | `Shared/Views/Call/SoundPlayer.swift` | Ringtone and call sound playback |
 | `Shared/Views/Call/WebRTC.swift` | WebRTC configuration and utilities |
-| `SimpleXChat/CallTypes.swift` | All call-related type definitions |
-| `Shared/Model/SimpleXAPI.swift` | Call API functions: `apiSendCallInvitation`, `apiSendCallOffer`, `apiSendCallAnswer`, `apiSendCallExtraInfo`, `apiEndCall`, `apiRejectCall`, `apiCallStatus` |
+| `POPOPXSwitch/CallTypes.swift` | All call-related type definitions |
+| `Shared/Model/POPOPXAPI.swift` | Call API functions: `apiSendCallInvitation`, `apiSendCallOffer`, `apiSendCallAnswer`, `apiSendCallExtraInfo`, `apiEndCall`, `apiRejectCall`, `apiCallStatus` |
 
 ## Related Specifications
 

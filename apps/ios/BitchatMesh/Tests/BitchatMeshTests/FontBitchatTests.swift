@@ -1,0 +1,18 @@
+// Copyright (C) 2026 POPOPX Team <chat@popopx.xyz>
+// This file is part of POPOPX iOS. Licensed under AGPL-3.0.
+
+import SwiftUI
+import XCTest
+
+final class FontBitchatTests: XCTestCase {
+//    func testMonospacedMapping() {
+//        XCTAssertEqual(Font.bitchatSystem(size: 10, design: .monospaced), Font.system(.caption2, design: .monospaced))
+//        XCTAssertEqual(Font.bitchatSystem(size: 14, design: .monospaced), Font.system(.body, design: .monospaced))
+//        XCTAssertEqual(Font.bitchatSystem(size: 20, design: .monospaced), Font.system(.title2, design: .monospaced))
+//    }
+//
+//    func testWeightIsPreserved() {
+//        let bold = Font.bitchatSystem(size: 14, weight: .bold, design: .monospaced)
+//        XCTAssertEqual(bold, Font.system(.body, design: .monospaced).weight(.bold))
+//    }
+}

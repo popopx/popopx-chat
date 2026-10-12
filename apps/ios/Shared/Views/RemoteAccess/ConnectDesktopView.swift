@@ -1,23 +1,22 @@
 //
 //  ConnectDesktopView.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by Evgeny on 13/10/2023.
-//  Copyright © 2023 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 import CodeScanner
 
 struct ConnectDesktopView: View {
     @EnvironmentObject var m: ChatModel
     @EnvironmentObject var theme: AppTheme
     @Environment(\.dismiss) var dismiss: DismissAction
-    @AppStorage(DEFAULT_DEVICE_NAME_FOR_REMOTE_ACCESS) private var deviceName = UIDevice.current.name
     @AppStorage(DEFAULT_CONFIRM_REMOTE_SESSIONS) private var confirmRemoteSessions = false
-    @AppStorage(DEFAULT_CONNECT_REMOTE_VIA_MULTICAST) private var connectRemoteViaMulticast = true
-    @AppStorage(DEFAULT_CONNECT_REMOTE_VIA_MULTICAST_AUTO) private var connectRemoteViaMulticastAuto = true
     @AppStorage(DEFAULT_DEVELOPER_TOOLS) private var developerTools = false
     @State private var sessionAddress: String = ""
     @State private var remoteCtrls: [RemoteCtrlInfo] = []
@@ -25,10 +24,7 @@ struct ConnectDesktopView: View {
     @State private var showConnectScreen = true
     @State private var showQRCodeScanner = true
     @State private var firstAppearance = true
-
-    private var useMulticast: Bool {
-        connectRemoteViaMulticast && !remoteCtrls.isEmpty
-    }
+    @State private var qrWorkItem: DispatchWorkItem?
 
     private enum ConnectDesktopAlert: Identifiable {
         case unlinkDesktop(rc: RemoteCtrlInfo)
@@ -52,7 +48,7 @@ struct ConnectDesktopView: View {
 
     private enum UserDisconnectAction: String {
         case back
-        case dismiss // TODO dismiss settings after confirmation
+        case dismiss
     }
 
     var body: some View {
@@ -85,72 +81,71 @@ struct ConnectDesktopView: View {
             }
         }
         .onAppear {
-            setDeviceName(deviceName)
+            setDeviceName()
             updateRemoteCtrls()
-            showConnectScreen = !useMulticast
             if m.remoteCtrlSession != nil {
                 disconnectDesktop()
-            } else if useMulticast {
-                findKnownDesktop()
             }
             // The hack below prevents camera freezing when exiting linked devices view.
             // `firstAppearance` prevents camera flicker when the view first opens.
             // moving `showQRCodeScanner = false` to `onDisappear` (to avoid `firstAppearance`) does not prevent freeze.
             showQRCodeScanner = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                firstAppearance = false
-                showQRCodeScanner = true
-            }
+            let workItem = DispatchWorkItem { firstAppearance = false; showQRCodeScanner = true }
+            qrWorkItem = workItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: workItem)
         }
         .onDisappear {
+            qrWorkItem?.cancel()
+            qrWorkItem = nil
             if m.remoteCtrlSession != nil {
                 showConnectScreen = false
                 disconnectDesktop()
             }
         }
-        .onChange(of: deviceName) {
-            setDeviceName($0)
-        }
-        .onChange(of: m.activeRemoteCtrl) {
-            UIApplication.shared.isIdleTimerDisabled = $0
+        .onChange(of: m.activeRemoteCtrl) { _, newCtrl in
+            UIApplication.shared.isIdleTimerDisabled = newCtrl
         }
         .alert(item: $alert) { a in
             switch a {
             case let .unlinkDesktop(rc):
                 Alert(
-                    title: Text("Unlink desktop?"),
-                    primaryButton: .destructive(Text("Unlink")) {
+                    title: Text(NSLocalizedString("Unlink desktop?", comment: "")),
+                    primaryButton: .destructive(Text(NSLocalizedString("Unlink", comment: ""))) {
                         unlinkDesktop(rc)
                     },
                     secondaryButton: .cancel()
                 )
             case let .disconnectDesktop(action):
                 Alert(
-                    title: Text("Disconnect desktop?"),
-                    primaryButton: .destructive(Text("Disconnect")) {
+                    title: Text(NSLocalizedString("Disconnect desktop?", comment: "")),
+                    primaryButton: .destructive(Text(NSLocalizedString("Disconnect", comment: ""))) {
                         disconnectDesktop(action)
                     },
                     secondaryButton: .cancel()
                 )
             case .badInvitationError:
-                Alert(title: Text("Bad desktop address"))
+                Alert(title: Text(NSLocalizedString("Bad desktop address", comment: "")))
             case let .badVersionError(v):
                 Alert(
-                    title: Text("Incompatible version"),
-                    message: Text("Desktop app version \(v ?? "") is not compatible with this app.")
+                    title: Text(NSLocalizedString("Incompatible version", comment: "")),
+                    message: Text(String.localizedStringWithFormat(NSLocalizedString("Desktop app version %@ is not compatible with this app.", comment: ""), v ?? ""))
                 )
             case .desktopDisconnectedError:
-                Alert(title: Text("Connection terminated"))
+                Alert(title: Text(NSLocalizedString("Connection terminated", comment: "")))
             case let .error(title, error):
                 mkAlert(title: title, message: error)
             }
         }
         .interactiveDismissDisabled(m.activeRemoteCtrl)
+        .popopxBranded()
     }
 
     private func connectDesktopView(showScanner: Bool = true) -> some View {
         List {
-            Section(header: Text("This device name").foregroundColor(theme.colors.secondary)) {
+            Section(header: Text(NSLocalizedString("This device name", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
                 devicesView()
             }
             if showScanner {
@@ -160,20 +155,28 @@ struct ConnectDesktopView: View {
                 desktopAddressView()
             }
         }
-        .navigationTitle("Connect to desktop")
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .navigationTitle(NSLocalizedString("Connect to desktop", comment: ""))
         .modifier(ThemedBackground(grouped: true))
     }
 
     private func connectingDesktopView(_ session: RemoteCtrlSession, _ rc: RemoteCtrlInfo?) -> some View {
         ZStack {
             List {
-                Section(header: Text("Connecting to desktop").foregroundColor(theme.colors.secondary)) {
+                Section(header: Text(NSLocalizedString("Connecting to desktop", comment: ""))
+                    .font(.caption.weight(.bold))
+                    .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                    .textCase(.uppercase)) {
                     ctrlDeviceNameText(session, rc)
                     ctrlDeviceVersionText(session)
                 }
 
                 if let sessCode = session.sessionCode {
-                    Section(header: Text("Session code").foregroundColor(theme.colors.secondary)) {
+                    Section(header: Text(NSLocalizedString("Session code", comment: ""))
+                        .font(.caption.weight(.bold))
+                        .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                        .textCase(.uppercase)) {
                         sessionCodeText(sessCode)
                     }
                 }
@@ -182,7 +185,9 @@ struct ConnectDesktopView: View {
                     disconnectButton()
                 }
             }
-            .navigationTitle("Connecting to desktop")
+            .listRowBackground(Color.clear)
+            .scrollContentBackground(.hidden)
+            .navigationTitle(NSLocalizedString("Connecting to desktop", comment: ""))
 
             ProgressView().scaleEffect(2)
         }
@@ -191,69 +196,85 @@ struct ConnectDesktopView: View {
 
     private func searchingDesktopView() -> some View {
         List {
-            Section(header: Text("This device name").foregroundColor(theme.colors.secondary)) {
+            Section(header: Text(NSLocalizedString("This device name", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
                 devicesView()
             }
-            Section(header: Text("Found desktop").foregroundColor(theme.colors.secondary)) {
-                Text("Waiting for desktop...").italic()
+            Section(header: Text(NSLocalizedString("Found desktop", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
+                Text(NSLocalizedString("Waiting for desktop...", comment: "")).italic()
                 Button {
                     disconnectDesktop()
                 } label: {
-                    Label("Scan QR code", systemImage: "qrcode")
+                    Label(NSLocalizedString("Scan QR code", comment: ""), systemImage: "qrcode")
                 }
             }
         }
-        .navigationTitle("Connecting to desktop")
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .navigationTitle(NSLocalizedString("Connecting to desktop", comment: ""))
         .modifier(ThemedBackground(grouped: true))
     }
 
     @ViewBuilder private func foundDesktopView(_ session: RemoteCtrlSession, _ rc: RemoteCtrlInfo, _ compatible: Bool) -> some View {
-        let v = List {
-            Section(header: Text("This device name").foregroundColor(theme.colors.secondary)) {
+        List {
+            Section(header: Text(NSLocalizedString("This device name", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
                 devicesView()
             }
-            Section(header: Text("Found desktop").foregroundColor(theme.colors.secondary)) {
+            Section(header: Text(NSLocalizedString("Found desktop", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
                 ctrlDeviceNameText(session, rc)
                 ctrlDeviceVersionText(session)
                 if !compatible {
-                    Text("Not compatible!").foregroundColor(.red)
-                } else if !connectRemoteViaMulticastAuto {
+                    Text(NSLocalizedString("Not compatible!", comment: "")).foregroundColor(QuantumColors.error)
+                } else {
                     Button {
                         confirmKnownDesktop(rc)
                     } label: {
-                        Label("Connect", systemImage: "checkmark")
+                        Label(NSLocalizedString("Connect", comment: ""), systemImage: "checkmark")
                     }
                 }
             }
-            if !compatible && !connectRemoteViaMulticastAuto {
+            if !compatible {
                 Section {
-                    disconnectButton("Cancel")
+                    disconnectButton(LocalizedStringKey(NSLocalizedString("Cancel", comment: "")))
                 }
             }
         }
-        .navigationTitle("Found desktop")
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .navigationTitle(NSLocalizedString("Found desktop", comment: ""))
         .modifier(ThemedBackground(grouped: true))
-
-        if compatible && connectRemoteViaMulticastAuto {
-            v.onAppear { confirmKnownDesktop(rc) }
-        } else {
-            v
-        }
     }
 
     private func verifySessionView(_ session: RemoteCtrlSession, _ rc: RemoteCtrlInfo?, _ sessCode: String) -> some View {
         List {
-            Section(header: Text("Connected to desktop").foregroundColor(theme.colors.secondary)) {
+            Section(header: Text(NSLocalizedString("Connected to desktop", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
                 ctrlDeviceNameText(session, rc)
                 ctrlDeviceVersionText(session)
             }
 
-            Section(header: Text("Verify code with desktop").foregroundColor(theme.colors.secondary)) {
+            Section(header: Text(NSLocalizedString("Verify code with desktop", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
                 sessionCodeText(sessCode)
                 Button {
                     verifyDesktopSessionCode(sessCode)
                 } label: {
-                    Label("Confirm", systemImage: "checkmark")
+                    Label(NSLocalizedString("Confirm", comment: ""), systemImage: "checkmark")
                 }
             }
 
@@ -261,36 +282,44 @@ struct ConnectDesktopView: View {
                 disconnectButton()
             }
         }
-        .navigationTitle("Verify connection")
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .navigationTitle(NSLocalizedString("Verify connection", comment: ""))
         .modifier(ThemedBackground(grouped: true))
     }
 
     private func ctrlDeviceNameText(_ session: RemoteCtrlSession, _ rc: RemoteCtrlInfo?) -> Text {
         var t = Text(rc?.deviceViewName ?? session.ctrlAppInfo?.deviceName ?? "")
         if (rc == nil) {
-            t = t + textSpace + Text("(new)").italic()
+            t = t + textSpace + Text(NSLocalizedString("connect_device_new", comment: "")).italic()
         }
         return t
     }
 
     private func ctrlDeviceVersionText(_ session: RemoteCtrlSession) -> Text {
         let v = session.ctrlAppInfo?.appVersionRange.maxVersion
-        var t = Text("v\(v ?? "")")
+        var t = Text(verbatim: "v\(v ?? "")")
         if v != session.appVersion {
-            t = t + textSpace + Text("(this device v\(session.appVersion))").italic()
+            t = t + textSpace + Text(String(format: NSLocalizedString("connect_this_device_version", comment: ""), session.appVersion)).italic()
         }
         return t
     }
 
     private func activeSessionView(_ session: RemoteCtrlSession, _ rc: RemoteCtrlInfo) -> some View {
         List {
-            Section(header: Text("Connected desktop").foregroundColor(theme.colors.secondary)) {
+            Section(header: Text(NSLocalizedString("Connected desktop", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
                 Text(rc.deviceViewName)
                 ctrlDeviceVersionText(session)
             }
 
             if let sessCode = session.sessionCode {
-                Section(header: Text("Session code").foregroundColor(theme.colors.secondary)) {
+                Section(header: Text(NSLocalizedString("Session code", comment: ""))
+                    .font(.caption.weight(.bold))
+                    .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                    .textCase(.uppercase)) {
                     sessionCodeText(sessCode)
                 }
             }
@@ -299,11 +328,13 @@ struct ConnectDesktopView: View {
                 disconnectButton()
             } footer: {
                 // This is specific to iOS
-                Text("Keep the app open to use it from desktop")
+                Text(NSLocalizedString("Keep the app open to use it from desktop", comment: ""))
                     .foregroundColor(theme.colors.secondary)
             }
         }
-        .navigationTitle("Connected to desktop")
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .navigationTitle(NSLocalizedString("Connected to desktop", comment: ""))
         .modifier(ThemedBackground(grouped: true))
     }
 
@@ -313,30 +344,36 @@ struct ConnectDesktopView: View {
 
     private func devicesView() -> some View {
         Group {
-            TextField("Enter this device name…", text: $deviceName)
+            Text(m.currentUser?.displayName ?? "")
             if !remoteCtrls.isEmpty {
                 NavigationLink {
                     linkedDesktopsView()
                 } label: {
-                    Text("Linked desktops")
+                    Text(NSLocalizedString("Linked desktops", comment: ""))
                 }
             }
         }
     }
 
     private func scanDesctopAddressView() -> some View {
-        Section(header: Text("Scan QR code from desktop").foregroundColor(theme.colors.secondary)) {
+        Section(header: Text(NSLocalizedString("Scan QR code from desktop", comment: ""))
+            .font(.caption.weight(.bold))
+            .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+            .textCase(.uppercase)) {
             ScannerInView(showQRCodeScanner: $showQRCodeScanner,  processQRCode: processDesktopQRCode, scanMode: .oncePerCode)
         }
     }
 
     private func desktopAddressView() -> some View {
-        Section(header: Text("Desktop address").foregroundColor(theme.colors.secondary)) {
+        Section(header: Text(NSLocalizedString("Desktop address", comment: ""))
+            .font(.caption.weight(.bold))
+            .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+            .textCase(.uppercase)) {
             if sessionAddress.isEmpty {
                 Button {
                     sessionAddress = UIPasteboard.general.string ?? ""
                 } label: {
-                    Label("Paste desktop address", systemImage: "doc.plaintext")
+                    Label(NSLocalizedString("Paste desktop address", comment: ""), systemImage: "doc.plaintext")
                 }
                 .disabled(!UIPasteboard.general.hasStrings)
             } else {
@@ -351,7 +388,7 @@ struct ConnectDesktopView: View {
             Button {
                 connectDesktopAddress(sessionAddress)
             } label: {
-                Label("Connect to desktop", systemImage: "rectangle.connected.to.line.below")
+                Label(NSLocalizedString("Connect to desktop", comment: ""), systemImage: "rectangle.connected.to.line.below")
             }
             .disabled(sessionAddress.isEmpty)
         }
@@ -359,7 +396,10 @@ struct ConnectDesktopView: View {
 
     private func linkedDesktopsView() -> some View {
         List {
-            Section(header: Text("Desktop devices").foregroundColor(theme.colors.secondary)) {
+            Section(header: Text(NSLocalizedString("Desktop devices", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
                 ForEach(remoteCtrls, id: \.remoteCtrlId) { rc in
                     remoteCtrlView(rc)
                 }
@@ -370,15 +410,16 @@ struct ConnectDesktopView: View {
                 }
             }
 
-            Section(header: Text("Linked desktop options").foregroundColor(theme.colors.secondary)) {
-                Toggle("Verify connections", isOn: $confirmRemoteSessions)
-                Toggle("Discover via local network", isOn: $connectRemoteViaMulticast)
-                if connectRemoteViaMulticast {
-                    Toggle("Connect automatically", isOn: $connectRemoteViaMulticastAuto)
-                }
+            Section(header: Text(NSLocalizedString("Linked desktop options", comment: ""))
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor().opacity(0.9) : theme.colors.secondary)
+                .textCase(.uppercase)) {
+                Toggle(NSLocalizedString("Verify connections", comment: ""), isOn: $confirmRemoteSessions)
             }
         }
-        .navigationTitle("Linked desktops")
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .navigationTitle(NSLocalizedString("Linked desktops", comment: ""))
         .modifier(ThemedBackground(grouped: true))
     }
 
@@ -387,9 +428,10 @@ struct ConnectDesktopView: View {
     }
 
 
-    private func setDeviceName(_ name: String) {
+    private func setDeviceName() {
+        guard let name = m.currentUser?.displayName else { return }
         do {
-            try setLocalDeviceName(deviceName)
+            try setLocalDeviceName(name)
         } catch let e {
             errorAlert(e)
         }
@@ -407,26 +449,6 @@ struct ConnectDesktopView: View {
         switch resp {
         case let .success(r): connectDesktopAddress(r.string)
         case let .failure(e): errorAlert(e)
-        }
-    }
-
-    private func findKnownDesktop() {
-        Task {
-            do {
-                try await findKnownRemoteCtrl()
-                await MainActor.run {
-                    m.remoteCtrlSession = RemoteCtrlSession(
-                        ctrlAppInfo: nil,
-                        appVersion: "",
-                        sessionState: .searching
-                    )
-                    showConnectScreen = true
-                }
-            } catch let e {
-                await MainActor.run {
-                    errorAlert(e)
-                }
-            }
         }
     }
 
@@ -487,7 +509,7 @@ struct ConnectDesktopView: View {
         }
     }
 
-    private func disconnectButton(_ label: LocalizedStringKey = "Disconnect") -> some View {
+    private func disconnectButton(_ label: LocalizedStringKey = LocalizedStringKey(NSLocalizedString("Disconnect", comment: ""))) -> some View {
         Button {
             disconnectDesktop(.dismiss)
         } label: {
@@ -535,10 +557,12 @@ struct ConnectDesktopView: View {
     }
 
     private func errorAlert(_ error: Error) {
-        showErrorAlert(error, NSLocalizedString("Error", comment: ""))
+        let a = getErrorAlert(error, LocalizedStringKey(NSLocalizedString("Error", comment: "")))
+        alert = .error(title: a.title, error: a.message)
     }
 }
 
 #Preview {
     ConnectDesktopView()
+        .previewEnvironment()
 }

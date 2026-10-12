@@ -1,0 +1,7 @@
+/* Localized permission strings */
+"NSBluetoothAlwaysUsageDescription" = "POPOPX verwendet Bluetooth, um eine Verbindung zu Geräten in der Nähe herzustellen, wenn kein Internet verfügbar ist, und ermöglicht so die Nachrichtenübermittlung über ein sicheres Mesh-Netzwerk.";
+"NSBluetoothPeripheralUsageDescription" = "POPOPX verwendet Bluetooth (im Hintergrund), um sich über ein Mesh-Netzwerk mit Geräten in der Nähe zu verbinden, wenn kein Internet verfügbar ist.";
+"NSLocationWhenInUseUsageDescription" = "Ihr Standort wird nur verwendet, um ihn in einem Chat zu teilen. Er wird niemals erfasst oder gesendet, außer an den Chat, den Sie auswählen.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Ihr Standort wird nur verwendet, um ihn in einem Chat zu teilen. Er wird niemals erfasst oder gesendet, außer an den Chat, den Sie auswählen.";
+"NSPhotoLibraryUsageDescription" = "POPOPX benötigt Zugriff auf Ihre Fotobibliothek, um Fotos in Chats auszuwählen und zu senden.";
+"NSPhotoLibraryAddUsageDescription" = "POPOPX benötigt Zugriff, um Fotos und Videos in Ihrer Fotobibliothek zu speichern.";

@@ -1,0 +1,79 @@
+{
+  "" : {
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/POPOPX SE-primary.dia",
+    "emit-module-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/POPOPX SE-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/POPOPX SE-primary-emit-module.dia",
+    "pch" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/POPOPX SE-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/POPOPX SE-primary.swiftdeps"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/POPOP SE/SEChatState.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEChatState.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEChatState.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEChatState.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEChatState.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEChatState.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEChatState.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEChatState.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEChatState~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/POPOP SE/SEMeshPeerSelector.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEMeshPeerSelector.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEMeshPeerSelector.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEMeshPeerSelector.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEMeshPeerSelector.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEMeshPeerSelector.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEMeshPeerSelector.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEMeshPeerSelector.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/SEMeshPeerSelector~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/POPOP SE/ShareAPI.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareAPI.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareAPI.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareAPI.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareAPI.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareAPI.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareAPI.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareAPI.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareAPI~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/POPOP SE/ShareModel.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareModel.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareModel.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareModel.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareModel.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareModel.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareModel.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareModel.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareModel~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/POPOP SE/ShareView.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareView.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareView.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareView.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareView.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareView.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareView.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareView.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareView~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/POPOP SE/ShareViewController.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareViewController.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareViewController.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareViewController.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareViewController.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareViewController.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareViewController.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareViewController.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/ShareViewController~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX SE.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}

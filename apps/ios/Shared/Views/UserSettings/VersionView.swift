@@ -1,42 +1,39 @@
 //
 //  VersionView.swift
-//  SimpleXChat
+//  POPOPXSwitch
 //
 //  Created by Evgeny on 22/01/2023.
-//  Copyright © 2023 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
 struct VersionView: View {
-    @EnvironmentObject var theme: AppTheme
     @State var versionInfo: CoreVersionInfo?
 
     var body: some View {
-        List {
-            Section {
-                Text("App version: v\(appVersion ?? "?")")
-                Text("App build: \(appBuild ?? "?")")
-                if let info = versionInfo {
-                    Text("Core version: v\(info.version)")
-                    if let v = try? AttributedString(markdown: "simplexmq: v\(info.simplexmqVersion) ([\(info.simplexmqCommit.prefix(7))](https://github.com/simplex-chat/simplexmq/commit/\(info.simplexmqCommit)))") {
-                        Text(v)
-                    }
-                }
-            }
-
-            Section {
-                NavigationLink {
-                    DeveloperView()
-                        .navigationTitle("Developer")
-                        .modifier(ThemedBackground(grouped: true))
-                } label: {
-                    Text("Developer")
-                }
+        VStack(alignment: .leading) {
+            Text(String(format: NSLocalizedString("app_version_label", comment: "App version label"), appVersion ?? "?"))
+                .font(isInDarkTheme() ? .subheadline : .body)
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
+            Text(String(format: NSLocalizedString("app_build_label", comment: "App build label"), appBuild ?? "?"))
+                .font(isInDarkTheme() ? .subheadline : .body)
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
+            if let info = versionInfo {
+                Text(String(format: NSLocalizedString("settings_core_version_fmt", comment: "Core library version label"), info.version))
+                    .font(isInDarkTheme() ? .subheadline : .body)
+                    .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
+                Text(String(format: NSLocalizedString("settings_core_engine_fmt", comment: "Core engine version label"), info.popopxmqVersion))
+                    .font(isInDarkTheme() ? .subheadline : .body)
+                    .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding()
+        .modifier(ThemedBackground(grouped: true))
         .onAppear {
             do {
                 versionInfo = try apiGetVersion()
@@ -44,6 +41,7 @@ struct VersionView: View {
                 logger.error("apiGetVersion error: \(responseError(error))")
             }
         }
+        .popopxBranded()
     }
 }
 

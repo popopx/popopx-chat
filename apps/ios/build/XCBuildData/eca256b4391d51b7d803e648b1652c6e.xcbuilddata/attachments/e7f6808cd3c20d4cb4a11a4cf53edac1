@@ -1,0 +1,39 @@
+{
+  "" : {
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/POPOPX NSE-primary.dia",
+    "emit-module-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/POPOPX NSE-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/POPOPX NSE-primary-emit-module.dia",
+    "pch" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/POPOPX NSE-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/POPOPX NSE-primary.swiftdeps"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/POPOP NSE/NSEAPITypes.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NSEAPITypes.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NSEAPITypes.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NSEAPITypes.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NSEAPITypes.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NSEAPITypes.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NSEAPITypes.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NSEAPITypes.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NSEAPITypes~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/POPOP NSE/NotificationService.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NotificationService.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NotificationService.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NotificationService.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NotificationService.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NotificationService.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NotificationService.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NotificationService.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/NotificationService~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/Shared/Views/PXZoomableScrollView.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/PXZoomableScrollView.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/PXZoomableScrollView.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/PXZoomableScrollView.dia",
+    "index-unit-output-path" : "/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/PXZoomableScrollView.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/PXZoomableScrollView.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/PXZoomableScrollView.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/PXZoomableScrollView.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/build/POPOPX.build/Debug-iphoneos/POPOPX NSE.build/Objects-normal/arm64/PXZoomableScrollView~partial.swiftmodule"
+  }
+}

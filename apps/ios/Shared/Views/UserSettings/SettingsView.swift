@@ -1,19 +1,20 @@
 //
 //  SettingsView.swift
-//  SimpleX
+//  POPOPX
 //
 //  Created by Evgeny Poberezkin on 31/01/2022.
-//  Copyright © 2022 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 // Spec: spec/client/navigation.md
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 
 import SwiftUI
 import StoreKit
-import SimpleXChat
+import POPOPXSwitch
+import BitchatMesh
 
-let simplexTeamURL = URL(string: "simplex:/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw?h=smp6.simplex.im")!
-
-let simplexNewsURL = URL(string: "simplex:/c#grcfG3ulVI4Sh6ow33qBsmSk7uEy3gRSl2KkJ5ER6tA?h=smp18.simplex.im")!
+let popopxTeamURL = URL(string: "popopx:/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw?h=smp6.popopxchat.com")
 
 let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
 
@@ -32,13 +33,11 @@ let DEFAULT_WEBRTC_ICE_SERVERS = "webrtcICEServers"
 let DEFAULT_CALL_KIT_CALLS_IN_RECENTS = "callKitCallsInRecents"
 let DEFAULT_PRIVACY_ACCEPT_IMAGES = "privacyAcceptImages" // unused. Use GROUP_DEFAULT_PRIVACY_ACCEPT_IMAGES instead
 let DEFAULT_PRIVACY_LINK_PREVIEWS = "privacyLinkPreviews" // deprecated, moved to app group
-let DEFAULT_PRIVACY_SIMPLEX_LINK_MODE = "privacySimplexLinkMode"
+let DEFAULT_PRIVACY_POPOPX_LINK_MODE = "privacyPopopxLinkMode"
 let DEFAULT_PRIVACY_SHOW_CHAT_PREVIEWS = "privacyShowChatPreviews"
-let DEFAULT_PRIVACY_VERIFY_SIMPLEX_NAMES = "privacyVerifySimplexNames"
-let DEFAULT_PRIVACY_SHOW_SIGNATURE = "privacyShowSignature"
-let DEFAULT_PRIVACY_SHOW_FILE_ENCRYPTION = "privacyShowEncryption"
 let DEFAULT_PRIVACY_SAVE_LAST_DRAFT = "privacySaveLastDraft"
 let DEFAULT_PRIVACY_PROTECT_SCREEN = "privacyProtectScreen"
+let DEFAULT_BINTHERE_SECURITY = "binThereSecurityEnhanced"
 let DEFAULT_PRIVACY_DELIVERY_RECEIPTS_SET = "privacyDeliveryReceiptsSet"
 let DEFAULT_PRIVACY_MEDIA_BLUR_RADIUS = "privacyMediaBlurRadius"
 let DEFAULT_EXPERIMENTAL_CALLS = "experimentalCalls"
@@ -66,7 +65,6 @@ let DEFAULT_GET_STAKE_BANNER_DISMISSED = "getStakeBannerDismissed"
 let DEFAULT_TOOLBAR_MATERIAL = "toolbarMaterial"
 let DEFAULT_CONNECT_VIA_LINK_TAB = "connectViaLinkTab"
 let DEFAULT_LIVE_MESSAGE_ALERT_SHOWN = "liveMessageAlertShown"
-let DEFAULT_SIGN_MESSAGE_ALERT_SHOWN = "signMessageAlertShown"
 let DEFAULT_SHOW_HIDDEN_PROFILES_NOTICE = "showHiddenProfilesNotice"
 let DEFAULT_SHOW_MUTE_PROFILE_ALERT = "showMuteProfileAlert"
 let DEFAULT_SHOW_REPORTS_IN_SUPPORT_CHAT_ALERT = "showReportsInSupportChatAlert"
@@ -76,13 +74,13 @@ let DEFAULT_MIGRATION_TO_STAGE = "migrationToStage"
 let DEFAULT_MIGRATION_FROM_STAGE = "migrationFromStage"
 let DEFAULT_CUSTOM_DISAPPEARING_MESSAGE_TIME = "customDisappearingMessageTime"
 let DEFAULT_SHOW_UNREAD_AND_FAVORITES = "showUnreadAndFavorites"
-let DEFAULT_DEVICE_NAME_FOR_REMOTE_ACCESS = "deviceNameForRemoteAccess"
 let DEFAULT_CONFIRM_REMOTE_SESSIONS = "confirmRemoteSessions"
-let DEFAULT_CONNECT_REMOTE_VIA_MULTICAST = "connectRemoteViaMulticast"
-let DEFAULT_CONNECT_REMOTE_VIA_MULTICAST_AUTO = "connectRemoteViaMulticastAuto"
 let DEFAULT_SHOW_DELETE_CONVERSATION_NOTICE = "showDeleteConversationNotice"
 let DEFAULT_SHOW_DELETE_CONTACT_NOTICE = "showDeleteContactNotice"
 let DEFAULT_SHOW_SENT_VIA_RPOXY = "showSentViaProxy"
+let DEFAULT_PRIVACY_SHOW_SIGNATURE = "privacyShowSignature"
+let DEFAULT_PRIVACY_SHOW_FILE_ENCRYPTION = "privacyShowFileEncryption"
+let DEFAULT_PRIVACY_VERIFY_POPOPX_NAMES = "privacyVerifyPopopxNames"
 let DEFAULT_SHOW_SUBSCRIPTION_PERCENTAGE = "showSubscriptionPercentage"
 
 let DEFAULT_CURRENT_THEME = "currentTheme"
@@ -108,11 +106,11 @@ let appDefaults: [String: Any] = [
     DEFAULT_CALL_KIT_CALLS_IN_RECENTS: false,
     DEFAULT_PRIVACY_ACCEPT_IMAGES: true,
     DEFAULT_PRIVACY_LINK_PREVIEWS: true,
-    DEFAULT_PRIVACY_SIMPLEX_LINK_MODE: SimpleXLinkMode.description.rawValue,
+    DEFAULT_PRIVACY_POPOPX_LINK_MODE: LinkDisplayMode.description.rawValue,
     DEFAULT_PRIVACY_SHOW_CHAT_PREVIEWS: true,
-    DEFAULT_PRIVACY_VERIFY_SIMPLEX_NAMES: false,
     DEFAULT_PRIVACY_SAVE_LAST_DRAFT: true,
     DEFAULT_PRIVACY_PROTECT_SCREEN: false,
+    DEFAULT_BINTHERE_SECURITY: true,
     DEFAULT_PRIVACY_DELIVERY_RECEIPTS_SET: false,
     DEFAULT_PRIVACY_MEDIA_BLUR_RADIUS: 0,
     DEFAULT_EXPERIMENTAL_CALLS: false,
@@ -131,7 +129,6 @@ let appDefaults: [String: Any] = [
     DEFAULT_TOOLBAR_MATERIAL: ToolbarMaterial.defaultMaterial,
     DEFAULT_CONNECT_VIA_LINK_TAB: ConnectViaLinkTab.scan.rawValue,
     DEFAULT_LIVE_MESSAGE_ALERT_SHOWN: false,
-    DEFAULT_SIGN_MESSAGE_ALERT_SHOWN: false,
     DEFAULT_SHOW_HIDDEN_PROFILES_NOTICE: true,
     DEFAULT_SHOW_MUTE_PROFILE_ALERT: true,
     DEFAULT_SHOW_REPORTS_IN_SUPPORT_CHAT_ALERT: true,
@@ -139,8 +136,6 @@ let appDefaults: [String: Any] = [
     DEFAULT_CUSTOM_DISAPPEARING_MESSAGE_TIME: 300,
     DEFAULT_SHOW_UNREAD_AND_FAVORITES: false,
     DEFAULT_CONFIRM_REMOTE_SESSIONS: false,
-    DEFAULT_CONNECT_REMOTE_VIA_MULTICAST: true,
-    DEFAULT_CONNECT_REMOTE_VIA_MULTICAST_AUTO: true,
     DEFAULT_SHOW_DELETE_CONVERSATION_NOTICE: true,
     DEFAULT_SHOW_DELETE_CONTACT_NOTICE: true,
     DEFAULT_SHOW_SENT_VIA_RPOXY: false,
@@ -164,7 +159,6 @@ let hintDefaults = [
     DEFAULT_GET_STAKE_BANNER_TAPPED,
     DEFAULT_GET_STAKE_BANNER_DISMISSED,
     DEFAULT_LIVE_MESSAGE_ALERT_SHOWN,
-    DEFAULT_SIGN_MESSAGE_ALERT_SHOWN,
     DEFAULT_SHOW_HIDDEN_PROFILES_NOTICE,
     DEFAULT_SHOW_MUTE_PROFILE_ALERT,
     DEFAULT_SHOW_REPORTS_IN_SUPPORT_CHAT_ALERT,
@@ -182,12 +176,12 @@ enum ConnectViaLinkTab: String {
     case paste
 }
 
-enum SimpleXLinkMode: String, Identifiable {
+enum LinkDisplayMode: String, Identifiable {
     case description
     case full
     case browser
 
-    static var values: [SimpleXLinkMode] = [.description, .full]
+    static var values: [LinkDisplayMode] = [.description, .full]
 
     public var id: Self { self }
 
@@ -212,7 +206,7 @@ let shouldDeleteDatabaseBackupsDefault = BoolDefault(defaults: UserDefaults.stan
 
 let connectViaLinkTabDefault = EnumDefault<ConnectViaLinkTab>(defaults: UserDefaults.standard, forKey: DEFAULT_CONNECT_VIA_LINK_TAB, withDefault: .scan)
 
-let privacySimplexLinkModeDefault = EnumDefault<SimpleXLinkMode>(defaults: UserDefaults.standard, forKey: DEFAULT_PRIVACY_SIMPLEX_LINK_MODE, withDefault: .description)
+let privacyPopopxLinkModeDefault = EnumDefault<LinkDisplayMode>(defaults: UserDefaults.standard, forKey: DEFAULT_PRIVACY_POPOPX_LINK_MODE, withDefault: .description)
 
 let privacyLocalAuthModeDefault = EnumDefault<LAMode>(defaults: UserDefaults.standard, forKey: DEFAULT_LA_MODE, withDefault: .system)
 
@@ -229,7 +223,7 @@ let showReportsInSupportChatAlertDefault = BoolDefault(defaults: UserDefaults.st
 
 /// after importing new database, this flag will be set and unset only after importing app settings in `initializeChat` */
 let shouldImportAppSettingsDefault = BoolDefault(defaults: UserDefaults.standard, forKey: DEFAULT_SHOULD_IMPORT_APP_SETTINGS)
-let currentThemeDefault = StringDefault(defaults: UserDefaults.standard, forKey: DEFAULT_CURRENT_THEME, withDefault: DefaultTheme.SYSTEM_THEME_NAME)
+let currentThemeDefault = StringDefault(defaults: UserDefaults.standard, forKey: DEFAULT_CURRENT_THEME, withDefault: DefaultTheme.DARK.themeName)
 let systemDarkThemeDefault = StringDefault(defaults: UserDefaults.standard, forKey: DEFAULT_SYSTEM_DARK_THEME, withDefault: DefaultTheme.DARK.themeName)
 let currentThemeIdsDefault = CodableDefault<[String: String]>(defaults: UserDefaults.standard, forKey: DEFAULT_CURRENT_THEME_IDS, withDefault: [:] )
 let themeOverridesDefault: CodableDefault<[ThemeOverrides]> = CodableDefault(defaults: UserDefaults.standard, forKey: DEFAULT_THEME_OVERRIDES, withDefault: [])
@@ -258,7 +252,6 @@ public class StringDefault {
 
     public func set(_ value: String) {
         defaults.set(value, forKey: key)
-        defaults.synchronize()
     }
 }
 
@@ -273,23 +266,15 @@ public class CodableDefault<T: Codable> {
         self.defaultValue = withDefault
     }
 
-    var cache: T? = nil
-
     public func get() -> T {
-        if let cache {
-            return cache
-        } else if let value = defaults.string(forKey: key) {
-            let res = decodeJSON(value) ?? defaultValue
-            cache = res
-            return res
+        if let value = defaults.string(forKey: key) {
+            return decodeJSON(value) ?? defaultValue
         }
         return defaultValue
     }
 
     public func set(_ value: T) {
         defaults.set(encodeJSON(value), forKey: key)
-        cache = value
-        //defaults.synchronize()
     }
 }
 
@@ -301,60 +286,172 @@ struct SettingsView: View {
     @EnvironmentObject var chatModel: ChatModel
     @EnvironmentObject var sceneDelegate: SceneDelegate
     @EnvironmentObject var theme: AppTheme
+    @EnvironmentObject var subscription: SubscriptionManager
     @State private var showProgress: Bool = false
+    @State private var settingsTab: SettingsTab = .regular
+
+    private enum SettingsTab: String, CaseIterable {
+        case regular = "settings_tab_general"
+        case advanced = "settings_tab_advanced"
+        case custom = "settings_tab_help"
+    }
 
     var body: some View {
         ZStack {
+            if isInDarkTheme() {
+                Circle()
+                    .fill(darkThemeAccentColor().opacity(0.03))
+                    .frame(width: 400, height: 400)
+                    .offset(x: -120, y: -300)
+                    .blur(radius: 50)
+                Circle()
+                    .fill(neonGradientSecondary().opacity(0.02))
+                    .frame(width: 350, height: 350)
+                    .offset(x: 140, y: 250)
+                    .blur(radius: 40)
+            }
             settingsView()
             if showProgress {
                 progressView()
             }
         }
+        .popopxBranded()
     }
 
     func settingsView() -> some View {
-        List {
-            Section(header: Text(verbatim: "").foregroundColor(theme.colors.secondary)) {
-                if UIApplication.shared.supportsAlternateIcons {
-                    NavigationLink {
-                        AppearanceSettings()
-                            .navigationTitle("Appearance")
-                            .modifier(ThemedBackground(grouped: true))
-                    } label: {
-                        settingsRow("sun.max", color: theme.colors.secondary) { Text("Appearance") }
-                    }
-                    .disabled(chatModel.chatRunning != true)
+        VStack(spacing: 0) {
+            Picker(LocalizedStringKey(NSLocalizedString("settings_tab_picker", comment: "Settings tab picker label")), selection: $settingsTab) {
+                ForEach(SettingsTab.allCases, id: \.self) { tab in
+                    Text(verbatim: NSLocalizedString(tab.rawValue, comment: "settings tab")).tag(tab)
                 }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
 
+            switch settingsTab {
+            case .regular: regularTab()
+            case .advanced: advancedTab()
+            case .custom: customTab()
+            }
+        }
+        .navigationTitle(NSLocalizedString("settings_title", comment: "Settings page title"))
+        .modifier(ThemedBackground(grouped: true, glass: true))
+        .onDisappear {
+            chatModel.showingTerminal = false
+            chatModel.terminalItems = []
+        }
+    }
+
+    // MARK: - General tab
+
+    private func regularTab() -> some View {
+        List {
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Settings", comment: "Settings section header"))) {
                 NavigationLink {
-                    PrivacySettings()
-                        .navigationTitle("Your privacy")
-                        .modifier(ThemedBackground(grouped: true))
+                    PXNotifications()
+                        .environmentObject(theme)
+                        .navigationTitle(NSLocalizedString("Notifications", comment: "Notifications settings title"))
+                        .modifier(ThemedBackground(grouped: true, glass: true))
                 } label: {
-                    settingsRow("lock", color: theme.colors.secondary) { Text("Your privacy") }
+                    HStack {
+                        notificationsIcon()
+                        Text(NSLocalizedString("Notifications", comment: "Notifications settings row"))
+                    }
                 }
                 .disabled(chatModel.chatRunning != true)
 
                 NavigationLink {
-                    helpAndSupportView
+                    CallSettings()
+                        .environmentObject(theme)
+                        .navigationTitle(NSLocalizedString("Your calls", comment: "Call settings title"))
+                        .modifier(ThemedBackground(grouped: true, glass: true))
                 } label: {
-                    settingsRow("questionmark", color: theme.colors.secondary) { Text("Help & support") }
+                    settingsRow("video", color: theme.colors.secondary) { Text(NSLocalizedString("Audio & video calls", comment: "Audio & video calls settings row")) }
                 }
-
-                chatDatabaseRow()
+                .disabled(chatModel.chatRunning != true)
 
                 NavigationLink {
-                    MigrateFromDevice(showProgressOnSettings: $showProgress)
-                        .toolbar {
-                            // Redaction broken for `.navigationTitle` - using a toolbar item instead.
-                            ToolbarItem(placement: .principal) {
-                                Text("Migrate device").font(.headline)
-                            }
-                        }
-                        .modifier(ThemedBackground(grouped: true))
-                        .navigationBarTitleDisplayMode(.large)
+                    PrivacySettings()
+                        .environmentObject(theme)
+                        .navigationTitle(NSLocalizedString("Your privacy", comment: "Privacy settings title"))
+                        .modifier(ThemedBackground(grouped: true, glass: true))
                 } label: {
-                    settingsRow("tray.and.arrow.up", color: theme.colors.secondary) { Text("Migrate to another device") }
+                    settingsRow("lock", color: theme.colors.secondary) { Text(NSLocalizedString("Privacy & security", comment: "Privacy & security settings row")) }
+                }
+                .disabled(chatModel.chatRunning != true)
+
+                NavigationLink {
+                    PXAppearanceConfig()
+                        .environmentObject(theme)
+                        .navigationTitle(NSLocalizedString("Appearance", comment: "Appearance settings title"))
+                        .modifier(ThemedBackground(grouped: true, glass: true))
+                } label: {
+                    settingsRow("sun.max", color: theme.colors.secondary) { Text(NSLocalizedString("Appearance", comment: "Appearance settings row")) }
+                }
+                .disabled(chatModel.chatRunning != true)
+            }
+
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Quantum", comment: "Quantum section header"))) {
+                NavigationLink {
+                    SubscriptionView()
+                } label: {
+                    settingsRow("crown", color: theme.colors.secondary) { Text(NSLocalizedString("Membership", comment: "Membership settings row")) }
+                }
+                NavigationLink {
+                    MembershipCardView()
+                } label: {
+                    settingsRow("creditcard.fill", color: theme.colors.secondary) { Text(NSLocalizedString("Membership Card", comment: "Membership card purchase and redemption")) }
+                }
+                NavigationLink {
+                    ComputeStoreView()
+                } label: {
+                    settingsRow("bolt", color: theme.colors.secondary) { Text(NSLocalizedString("Compute store", comment: "Compute store settings row")) }
+                }
+            }
+
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Bluetooth Mesh", comment: "Bluetooth Mesh section header"))) {
+                NavigationLink {
+                    TransportSettingsView(chatModel: chatModel)
+                } label: {
+                    settingsRow("antenna.radiowaves.left.and.right", color: theme.colors.secondary) { Text(NSLocalizedString("Mesh transport", comment: "Mesh transport settings row")) }
+                }
+                NavigationLink {
+                    BitchatBridgeView()
+                } label: {
+                    settingsRow("message.badge.fill", color: theme.colors.secondary) { Text(NSLocalizedString("Mesh Chat", comment: "Mesh Chat settings row")) }
+                }
+            }
+
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Privacy Features", comment: "Privacy Features section header"))) {
+                NavigationLink {
+                    AIChatView()
+                        .environmentObject(theme)
+                        .environmentObject(AIChatManager.shared)
+                } label: {
+                    settingsRow("brain.head.profile", color: theme.colors.secondary) { Text(NSLocalizedString("AI Assistant", comment: "AI Assistant settings row")) }
+                }
+                NavigationLink {
+                    SecureVotingView()
+                        .environmentObject(theme)
+                        .environmentObject(MPCManager.shared)
+                } label: {
+                    settingsRow("lock.shield.fill", color: theme.colors.secondary) { Text(NSLocalizedString("Privacy Computing", comment: "Privacy Computing settings row")) }
+                }
+                NavigationLink {
+                    DIDCardView(card: DIDManager.shared.currentCard)
+                        .environmentObject(DIDManager.shared)
+                } label: {
+                    settingsRow("person.badge.key.fill", color: theme.colors.secondary) { Text(NSLocalizedString("DID Identity", comment: "DID Identity settings row")) }
+                }
+            }
+
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Community", comment: "settings section header"))) {
+                NavigationLink {
+                    CommunityListView()
+                        .environmentObject(CommunityManager.shared)
+                } label: {
+                    settingsRow("bubble.left.and.bubble.right.fill", color: theme.colors.secondary) { Text(NSLocalizedString("settings_community_channels", comment: "Community channels settings row")) }
                 }
             }
 
@@ -369,83 +466,220 @@ struct SettingsView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 24, height: 24)
-                        Text("Supporter perks").padding(.leading, indent)
+                        Text(NSLocalizedString("Supporter perks", comment: "Badges and supporter perks row")).padding(.leading, indent)
                     }
                 }
             }
 
-            Section(header: Text("Advanced settings").foregroundColor(theme.colors.secondary)) {
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Generative Art", comment: "Generative Art settings section header"))) {
+                NavigationLink {
+                    GenerativeArtGalleryView()
+                } label: {
+                    settingsRow("paintpalette.fill", color: theme.colors.secondary) { Text(NSLocalizedString("Art Gallery", comment: "Generative art gallery settings row")) }
+                }
+                Toggle(isOn: Binding(
+                    get: { CyberThemeManager.shared.isCyberMode },
+                    set: { CyberThemeManager.shared.setCyberMode($0) }
+                )) {
+                    settingsRow("sparkles", color: theme.colors.secondary) { Text(NSLocalizedString("Cyber Mode", comment: "Cyber mode toggle in settings")) }
+                }
+            }
+
+        }
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.05) : .clear, radius: 20, x: 0, y: 0)
+    }
+
+    // MARK: - Advanced tab
+
+    private func advancedTab() -> some View {
+        List {
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Network", comment: "settings section header"))) {
                 NavigationLink {
                     NetworkAndServers()
-                        .navigationTitle("Network & servers")
-                        .modifier(ThemedBackground(grouped: true))
+                        .navigationTitle(NSLocalizedString("settings_network_servers_title", comment: "Network and servers navigation title"))
+                        .modifier(ThemedBackground(grouped: true, glass: true))
                 } label: {
-                    settingsRow("externaldrive.connected.to.line.below", color: theme.colors.secondary) { Text("Network & servers") }
-                }
-                .disabled(chatModel.chatRunning != true)
-
-                NavigationLink {
-                    NotificationsView()
-                        .navigationTitle("Notifications")
-                        .modifier(ThemedBackground(grouped: true))
-                } label: {
-                    HStack {
-                        notificationsIcon()
-                        Text("Notifications")
+                    settingsRow("externaldrive.connected.to.line.below", color: theme.colors.secondary) {
+                        HStack {
+                            Text(NSLocalizedString("settings_network_servers", comment: "Network and servers settings row"))
+                            if !subscription.hasActiveSubscription {
+                                Text(NSLocalizedString("settings_premium", comment: "Premium badge label"))
+                                    .font(.caption)
+                                    .foregroundColor(theme.colors.secondary)
+                            }
+                        }
                     }
                 }
                 .disabled(chatModel.chatRunning != true)
+            }
 
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Cryptography", comment: "settings section header"))) {
                 NavigationLink {
-                    CallSettings()
-                        .navigationTitle("Your calls")
-                        .modifier(ThemedBackground(grouped: true))
+                    KyberKeyExchangeView()
                 } label: {
-                    settingsRow("video", color: theme.colors.secondary) { Text("Audio & video calls") }
+                    settingsRow("key.fill", color: theme.colors.secondary) {
+                        HStack {
+                            Text(NSLocalizedString("settings_x25519_key_exchange", comment: "X25519 key exchange settings row"))
+                            Text(NSLocalizedString("settings_demo", comment: "Demo badge label")).font(.caption2).padding(.horizontal, 6).padding(.vertical, 2).background(Capsule().fill(QuantumColors.accent.opacity(0.2)))
+                        }
+                    }
                 }
-                .disabled(chatModel.chatRunning != true)
-
                 NavigationLink {
-                    VersionView()
-                        .navigationBarTitle("App version")
-                        .modifier(ThemedBackground(grouped: true))
+                    DilithiumSignatureView()
                 } label: {
-                    Text(verbatim: "v\(appVersion ?? "?")")
+                    settingsRow("pencil.and.outline", color: theme.colors.secondary) {
+                        HStack {
+                            Text(NSLocalizedString("settings_ed25519_signatures", comment: "Ed25519 signatures settings row"))
+                            Text(NSLocalizedString("settings_demo", comment: "Demo badge label")).font(.caption2).padding(.horizontal, 6).padding(.vertical, 2).background(Capsule().fill(QuantumColors.accent.opacity(0.2)))
+                        }
+                    }
+                }
+                NavigationLink {
+                    DataMarketView()
+                } label: {
+                    settingsRow("cart.fill", color: theme.colors.secondary) { Text(NSLocalizedString("settings_data_market", comment: "Data market settings row")) }
+                }
+                NavigationLink {
+                    ComplianceSettingsView()
+                } label: {
+                    settingsRow("checkmark.shield.fill", color: theme.colors.secondary) { Text(NSLocalizedString("settings_compliance", comment: "Compliance settings row")) }
                 }
             }
 
-            if isInUS {
-                Section(header: Text("You can now invest in SimpleX Chat").foregroundColor(theme.colors.secondary)) {
-                    NavigationLink {
-                        GetStakeView(fromSettings: true, showFirstImage: true)
-                            .navigationBarTitle("", displayMode: .inline)
-                    } label: {
-                        settingsRow("dollarsign.circle", color: theme.colors.secondary) { Text("Crowdfunding on Wefunder") }
-                    }
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Chat database", comment: "settings section header"))) {
+                chatDatabaseRow()
+                NavigationLink {
+                    MigrateFromDevice(showProgressOnSettings: $showProgress)
+                        .toolbar {
+                            ToolbarItem(placement: .principal) {
+                                Text(NSLocalizedString("settings_migrate_device", comment: "Migrate device toolbar title")).font(.headline)
+                            }
+                        }
+                        .modifier(ThemedBackground(grouped: true, glass: true))
+                        .navigationBarTitleDisplayMode(.large)
+                } label: {
+                    settingsRow("tray.and.arrow.up", color: theme.colors.secondary) { Text(NSLocalizedString("settings_migrate_to_device", comment: "Migrate to another device settings row")) }
+                }
+            }
+
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Bots & Bridges", comment: "settings section header"))) {
+                NavigationLink {
+                    BotSettingsView()
+                        .environmentObject(BotManager.shared)
+                } label: {
+                    settingsRow("gearshape.2.fill", color: theme.colors.secondary) { Text(NSLocalizedString("settings_bot_settings", comment: "Bot settings row")) }
+                }
+                NavigationLink {
+                    EmailBridgeView()
+                } label: {
+                    settingsRow("envelope.fill", color: theme.colors.secondary) { Text(NSLocalizedString("settings_email_bridge", comment: "Email bridge settings row")) }
+                }
+                NavigationLink {
+                    SMSBridgeView()
+                } label: {
+                    settingsRow("message.fill", color: theme.colors.secondary) { Text(NSLocalizedString("settings_sms_bridge", comment: "SMS bridge settings row")) }
                 }
             }
         }
-        .navigationTitle("Your settings")
-        .modifier(ThemedBackground(grouped: true))
-        .onDisappear {
-            chatModel.showingTerminal = false
-            chatModel.terminalItems = []
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.05) : .clear, radius: 20, x: 0, y: 0)
+    }
+
+    // MARK: - Help tab
+
+    @ViewBuilder
+    private func membershipStatusRow() -> some View {
+        if subscription.hasActiveSubscription {
+            VStack(spacing: 12) {
+                HStack {
+                    Image(systemName: "crown.fill")
+                        .foregroundStyle(LinearGradient(colors: [QuantumColors.accent, QuantumColors.accentSecondary], startPoint: .leading, endPoint: .trailing))
+                    Text(NSLocalizedString("Active Member", comment: ""))
+                        .font(.subheadline.weight(.semibold))
+                    Spacer()
+                    if let days = subscription.daysUntilExpiration {
+                        Text(String(format: NSLocalizedString("%d days remaining", comment: ""), days))
+                            .font(.caption)
+                            .foregroundColor(days <= 7 ? QuantumColors.warning : theme.colors.secondary)
+                    }
+                }
+
+                if let expiry = subscription.subscriptionExpirationDate {
+                    HStack {
+                        Text(NSLocalizedString("Expires", comment: ""))
+                            .font(.caption)
+                            .foregroundColor(theme.colors.secondary)
+                        Spacer()
+                        Text(expiry.formatted(date: .abbreviated, time: .omitted))
+                            .font(.caption)
+                            .foregroundColor(theme.colors.secondary)
+                    }
+                }
+
+                Button {
+                    Task {
+                        #if canImport(UIKit)
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                            await subscription.showManageSubscriptions(in: windowScene)
+                        }
+                        #endif
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.clockwise")
+                        Text(NSLocalizedString("Renew / Manage", comment: ""))
+                    }
+                    .font(.subheadline.weight(.medium))
+                    .foregroundColor(QuantumColors.accent)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(QuantumColors.accent.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                }
+            }
+        } else {
+            NavigationLink {
+                SubscriptionView()
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "crown")
+                        .font(.subheadline.weight(.medium))
+                        .foregroundColor(theme.colors.secondary)
+                        .frame(width: 32, height: 32)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(QuantumColors.accent.opacity(0.1))
+                        )
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(NSLocalizedString("Membership", comment: ""))
+                            .foregroundColor(isInDarkTheme() ? .white : .primary)
+                        Text(NSLocalizedString("Not subscribed", comment: ""))
+                            .font(.caption)
+                            .foregroundColor(theme.colors.secondary)
+                    }
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundColor(theme.colors.secondary)
+                }
+            }
         }
     }
 
-    @ViewBuilder
-    private var helpAndSupportView: some View {
+    private func customTab() -> some View {
         List {
-            let user = chatModel.currentUser
-            Section(header: Text("Help").foregroundColor(theme.colors.secondary)) {
-                if let user = user {
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Help", comment: "settings section header"))) {
+                if let user = chatModel.currentUser {
                     NavigationLink {
                         ChatHelp(dismissSettingsSheet: dismiss)
-                            .navigationTitle("Welcome \(user.displayName)!")
+                            .navigationTitle(String(format: NSLocalizedString("settings_welcome_user", comment: "Welcome navigation title with user name"), user.displayName))
                             .modifier(ThemedBackground())
                             .frame(maxHeight: .infinity, alignment: .top)
                     } label: {
-                        settingsRow("questionmark", color: theme.colors.secondary) { Text("How to use it") }
+                        settingsRow("questionmark", color: theme.colors.secondary) { Text(NSLocalizedString("settings_how_to_use", comment: "How to use help row")) }
                     }
                 }
                 NavigationLink {
@@ -453,84 +687,93 @@ struct SettingsView: View {
                         .modifier(ThemedBackground())
                         .navigationBarTitleDisplayMode(.inline)
                 } label: {
-                    settingsRow("plus", color: theme.colors.secondary) { Text("What's new") }
+                    settingsRow("plus", color: theme.colors.secondary) { Text(NSLocalizedString("settings_whats_new", comment: "What's new settings row")) }
                 }
-
                 NavigationLink {
-                    SimpleXInfo(onboarding: false)
-                        .navigationBarTitle("", displayMode: .inline)
+                    AppInfoView(onboarding: false)
+                        .navigationTitle("")
+                        .navigationBarTitleDisplayMode(.inline)
                         .modifier(ThemedBackground())
                         .frame(maxHeight: .infinity, alignment: .top)
                 } label: {
-                    settingsRow("info", color: theme.colors.secondary) { Text("About SimpleX Chat") }
+                    settingsRow("info", color: theme.colors.secondary) { Text(NSLocalizedString("settings_about_app", comment: "About app settings row")) }
                 }
+                NavigationLink {
+                    OpenSourceLicenseView()
+                        .modifier(ThemedBackground())
+                } label: {
+                    settingsRow("doc.text", color: theme.colors.secondary) { Text(NSLocalizedString("settings_licenses", comment: "Open source licenses settings row")) }
+                }
+                Button {
+                    dismiss()
+                    if let url = popopxTeamURL {
+                        DispatchQueue.main.async {
+                            ChatModel.shared.appOpenUrl = url
+                        }
+                    }
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: "number")
+                            .font(.subheadline.weight(.medium))
+                            .foregroundColor(theme.colors.secondary)
+                            .frame(width: 32, height: 32)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(isInDarkTheme() ? darkThemeAccentColor().opacity(0.15) : theme.colors.primary.opacity(0.15))
+                            )
+                            .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.2) : theme.colors.primary.opacity(0.2), radius: 4, x: 0, y: 2)
+                        Text(NSLocalizedString("settings_send_feedback", comment: "Send questions and ideas button label"))
+                            .foregroundColor(isInDarkTheme() ? .white : .primary)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                            .foregroundColor(theme.colors.secondary)
+                    }
+                }
+                .buttonStyle(GlassButtonStyle(tint: theme.colors.primary))
+                .disabled(chatModel.chatRunning != true)
+                settingsRow("envelope", color: theme.colors.secondary) { Text("[\(NSLocalizedString("settings_send_us_email", comment: "Send us email link"))](mailto:support@popopxchat.com)") }
             }
 
-            Section(header: Text("Contact").foregroundColor(theme.colors.secondary)) {
-                settingsRow("antenna.radiowaves.left.and.right", color: theme.colors.secondary) {
-                    Button("Follow SimpleX Network News") {
-                        dismiss()
-                        DispatchQueue.main.async {
-                            ChatModel.shared.appOpenUrl = simplexNewsURL
-                        }
-                    }
-                }
-                .disabled(chatModel.chatRunning != true)
-                settingsRow("number", color: theme.colors.secondary) {
-                    Button("Send questions and ideas") {
-                        dismiss()
-                        DispatchQueue.main.async {
-                            // simplexTeamURL targets this same app; route to the in-app connect flow
-                            // (UIApplication.shared.open is dropped for self-owned URLs in the foreground)
-                            ChatModel.shared.appOpenUrl = simplexTeamURL
-                        }
-                    }
-                }
-                .disabled(chatModel.chatRunning != true)
-                settingsRow("envelope", color: theme.colors.secondary) { Text("[Send us email](mailto:chat@simplex.chat)") }
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Membership", comment: "Membership section header"))) {
+                membershipStatusRow()
             }
 
-            Section(header: Text("Support the project").foregroundColor(theme.colors.secondary)) {
-                settingsRow("keyboard", color: theme.colors.secondary) {
-                    ExternalLink("Contribute", destination: URL(string: "https://github.com/simplex-chat/simplex-chat#contribute")!)
+            Section(header: GradientSectionHeader(title: NSLocalizedString("Develop", comment: "settings section header"))) {
+                NavigationLink {
+                    DeveloperView()
+                        .navigationTitle(NSLocalizedString("settings_developer_tools_title", comment: "Developer tools navigation title"))
+                        .modifier(ThemedBackground(grouped: true, glass: true))
+                } label: {
+                    settingsRow("chevron.left.forwardslash.chevron.right", color: theme.colors.secondary) { Text(NSLocalizedString("settings_developer_tools", comment: "Developer tools settings row")) }
                 }
-                settingsRow("star", color: theme.colors.secondary) {
-                    Button("Rate the app") {
-                        if let scene = sceneDelegate.windowScene {
-                            SKStoreReviewController.requestReview(in: scene)
-                        }
-                    }
-                }
-                ExternalLink(destination: URL(string: "https://github.com/simplex-chat/simplex-chat")!) {
-                    ZStack(alignment: .leading) {
-                        Image(colorScheme == .dark ? "github_light" : "github")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .opacity(0.5)
-                            .colorMultiply(theme.colors.secondary)
-                        Text("Star on GitHub")
-                            .padding(.leading, indent)
-                    }
+                NavigationLink {
+                    VersionView()
+                        .navigationTitle(NSLocalizedString("settings_app_version_title", comment: "App version navigation title"))
+                        .modifier(ThemedBackground())
+                } label: {
+                    Text(String(format: NSLocalizedString("settings_version_format", comment: "Version format string like v1.0 (123)"), appVersion ?? "?", appBuild ?? "?"))
                 }
             }
         }
-        .navigationTitle("Help & support")
-        .modifier(ThemedBackground(grouped: true))
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.05) : .clear, radius: 20, x: 0, y: 0)
     }
-
+    
     private func chatDatabaseRow() -> some View {
         NavigationLink {
             DatabaseView(dismissSettingsSheet: dismiss, chatItemTTL: chatModel.chatItemTTL)
-                .navigationTitle("Chat data")
+                .navigationTitle(NSLocalizedString("settings_chat_database_title", comment: "Chat database navigation title"))
                 .modifier(ThemedBackground(grouped: true))
         } label: {
-            let color: Color = chatModel.chatDbEncrypted == false ? .orange : theme.colors.secondary
+            let color: Color = chatModel.chatDbEncrypted == false ? QuantumColors.warning : theme.colors.secondary
             settingsRow("internaldrive", color: color) {
                 HStack {
-                    Text("Chat data")
+                    Text(NSLocalizedString("settings_db_passphrase_export", comment: "Database passphrase and export row label"))
                     Spacer()
                     if chatModel.chatRunning == false {
-                        Image(systemName: "exclamationmark.octagon.fill").foregroundColor(.red)
+                        Image(systemName: "exclamationmark.octagon.fill").foregroundColor(theme.colors.error)
                     }
                 }
             }
@@ -539,7 +782,9 @@ struct SettingsView: View {
 
     private func progressView() -> some View {
         VStack {
-            ProgressView().scaleEffect(2)
+            // BrandedProgressView.swift is not yet in the Xcode project; using ProgressView as placeholder.
+            ProgressView()
+                .scaleEffect(1.5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity )
     }
@@ -568,10 +813,10 @@ struct SettingsView: View {
             color = theme.colors.secondary
         case .confirmed:
             icon = "bolt.fill"
-            color = .yellow
+            color = QuantumColors.warning
         case .active:
             icon = "bolt.fill"
-            color = .green
+            color = QuantumColors.success
         case .expired:
             icon = "bolt.slash.fill"
             color = theme.colors.secondary
@@ -585,12 +830,72 @@ struct SettingsView: View {
     }
 }
 
-func settingsRow<Content : View>(_ icon: String, color: Color/* = .secondary*/, content: @escaping () -> Content) -> some View {
-    ZStack(alignment: .leading) {
-        Image(systemName: icon).frame(maxWidth: 24, maxHeight: 24, alignment: .center)
-            .symbolRenderingMode(.monochrome)
-            .foregroundColor(color)
-        content().padding(.leading, indent)
+struct SettingsRow<Content: View>: View {
+    @EnvironmentObject var theme: AppTheme
+    let icon: String
+    let color: Color
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        ZStack(alignment: .leading) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(AnyShapeStyle(LinearGradient(
+                        colors: isInDarkTheme()
+                        ? [darkThemeAccentColor().opacity(0.15), neonGradientSecondary().opacity(0.1)]
+                        : [theme.colors.primary.opacity(0.15), theme.colors.primaryVariant.opacity(0.15)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )))
+                    .frame(width: 32, height: 32)
+                Image(systemName: icon)
+                    .font(.subheadline.weight(.medium))
+                    .symbolRenderingMode(.monochrome)
+                    .foregroundColor(color)
+            }
+            .frame(maxWidth: 32, maxHeight: 32, alignment: .center)
+            .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.2) : theme.colors.primary.opacity(0.2), radius: 4, x: 0, y: 2)
+            content().padding(.leading, indent)
+        }
+    }
+}
+
+func settingsRow<Content : View>(_ icon: String, color: Color, content: @escaping () -> Content) -> some View {
+    SettingsRow(icon: icon, color: color, content: content)
+}
+
+struct GradientSectionHeader: View {
+    @EnvironmentObject var theme: AppTheme
+    let title: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.caption.weight(.bold))
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.primary)
+                .textCase(.uppercase)
+                .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.4) : .clear, radius: 6, x: 0, y: 0)
+            Rectangle()
+                .fill(AnyShapeStyle(LinearGradient(
+                    colors: isInDarkTheme()
+                    ? [darkThemeAccentColor().opacity(0.9), neonGradientSecondary().opacity(0.7)]
+                    : [theme.colors.primary.opacity(0.7), theme.colors.primaryVariant.opacity(0.7)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )))
+                .frame(height: 1.5)
+                .cornerRadius(1)
+                .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.5) : .clear, radius: 6, x: 0, y: 1)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(.ultraThinMaterial)
+                .opacity(0.5)
+        )
+        .padding(.top, 8)
+        .padding(.bottom, 4)
     }
 }
 
@@ -601,7 +906,7 @@ struct ProfilePreview: View {
 
     var body: some View {
         HStack {
-            ProfileImage(imageStr: profileOf.image, size: 44, color: color)
+            ProfileImage(imageStr: profileOf.image, size: 44, color: color, showTierBadge: true)
                 .padding(.trailing, 6)
             NameWithBadge(profileName(profileOf), badge, .title2)
                 .lineLimit(1)

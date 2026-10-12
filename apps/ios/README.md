@@ -1,114 +1,117 @@
-# SimpleX Chat iOS app
+# POPOPX iOS
 
-This file provides guidance when working with code in this repository.
+## Derivative Work Notice (AGPL v3)
 
-## iOS App Overview
+This project is a derivative work of [simplex-chat](https://github.com/simplex-chat/simplex-chat) (author: [simplex.chat](https://simplex.chat)).
 
-The iOS app is a SwiftUI application that interfaces with the Haskell core library via FFI. It shares the SimpleXChat framework with two extensions: Notification Service Extension (NSE) for push notifications and Share Extension (SE) for sharing content from other apps.
+In compliance with the **GNU Affero General Public License v3 (AGPL v3)**, the following modification information is provided:
 
-## Build & Development
+- **Modified by**: POPOPX Team (<chat@popopx.xyz>)
+- **Modification start date**: July 2026
 
-Open `SimpleX.xcodeproj` in Xcode. The project has five targets:
-- **SimpleX (iOS)** - Main app (Bundle ID: `chat.simplex.app`)
-- **SimpleXChat** - Framework containing FFI bridge and shared types
-- **SimpleX NSE** - Notification Service Extension
-- **SimpleX SE** - Share Extension
-- **Tests iOS** - UI tests
+This derivative version is also strictly open-sourced under the GNU AGPL v3 license.
 
-Build and run via Xcode (Product > Build/Run). Tests run via Product > Test or:
+### Principal modifications
+
+- Rebranded from SimpleX Chat to POPOPX
+- Added quantum-resistant cryptographic protocols (BBS signatures, blst)
+- Added dual-transport architecture: internet + BLE mesh (via bitchat)
+- Added unified identity management across multiple devices
+- Added token-based economy and badge system
+- Added encrypted document sharing
+- Added community features and bot platform
+- Added Nostr relay bridge
+- Merged upstream simplex-chat iOS 7.1 updates (2026-10-08)
+
+All modified source files carry prominent modification notices with dates, as required by AGPL v3 Section 5(a). See [NOTICE](NOTICE) for full details.
+
+---
+
+POPOPX is a privacy-focused messaging app built as a derivative of [simplex-chat](https://github.com/simplex-chat/simplex-chat), with additional features including quantum-resistant cryptography, dual-transport architecture (BLE mesh + internet), unified identity management, and token-based monetization.
+
+## Features
+
+- End-to-end encrypted messaging and calls
+- Quantum-resistant cryptographic protocols
+- Dual-transport: internet + BLE mesh (via bitchat)
+- Unified identity across multiple devices
+- Token-based economy
+- Encrypted document sharing
+- Bot platform
+- Nostr relay bridge
+
+## Building from Source
+
+### Requirements
+
+- Xcode 15+
+- iOS 17.6+ SDK
+- Swift 5.9+
+
+### Steps
+
 ```bash
-xcodebuild test -scheme "SimpleX (iOS)" -destination 'platform=iOS Simulator,name=iPhone 15'
+git clone https://github.com/popopx/popopx-ios.git
+cd popopx-ios
+open POPOPX.xcodeproj
 ```
 
-Deployment target: iOS 15.0+, Swift 5.0.
+Build and run the `POPOPX (iOS)` scheme in Xcode.
 
 ## Architecture
 
-### Haskell Core Integration
+- **POPOPXSwitch** — Core framework (FFI bindings, types, file utilities)
+- **Shared/** — App logic, views, models
+- **POPOPX NSE** — Notification Service Extension
+- **POPOPX SE** — Share Extension
+- **Libraries/** — Prebuilt Haskell FFI libraries
 
-The app calls the Haskell core library through C FFI defined in `SimpleXChat/SimpleX.h`:
-- `chat_migrate_init_key()` - Initialize/migrate database
-- `chat_send_cmd_retry()` - Send command to chat controller
-- `chat_recv_msg_wait()` - Receive messages from controller
+## Source Code Availability (AGPL v3 Section 13)
 
-Swift wrappers in `SimpleXChat/API.swift`:
-- `chatMigrateInit()` - Initialize chat controller
-- `sendSimpleXCmd<R>()` - Send typed commands and parse responses
-- `recvSimpleXMsg<R>()` - Receive typed messages
+This software is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). Under Section 13, if you modify this software and operate it as a network service, you must make the complete corresponding source code available to users interacting with it remotely.
 
-Haskell runtime initialization (`SimpleXChat/hs_init.c`) uses different memory configurations:
-- Main app: 64MB heap
-- NSE: 512KB heap (minimal footprint for background processing)
-- SE: 1MB heap
+### How to obtain source code
 
-Pre-compiled Haskell libraries are in `Libraries/{ios,mac,sim}/`.
+1. **Download**: https://github.com/popopx/popopx-ios
+2. **Build from source**: See "Building from Source" section above
+3. **Request via email**: chat@popopx.xyz
 
-### State Management
+### Downstream compliance
 
-- **ChatModel** (`Shared/Model/ChatModel.swift`) - Main singleton `ObservableObject` for app-wide state (chat list, active chat, users)
-- **ItemsModel** - Manages chat items within a selected chat (similar to Kotlin's ChatsContext)
-- **AppTheme** - Theme management and customization
+If you modify and distribute this software, or deploy it as a network service, you are required under AGPL v3 to:
 
-### App Structure
+- Offer the corresponding source code to your users
+- Include prominent notices stating that you modified the files
+- Preserve all copyright notices and the license text
+- Include the NOTICE file with any distribution
 
-Entry point: `Shared/SimpleXApp.swift`
+## License
 
-Key directories in `Shared/`:
-- `Model/` - Data models and API layer (`ChatModel.swift`, `SimpleXAPI.swift`)
-- `Views/` - SwiftUI views organized by feature:
-  - `ChatList/` - Chat list and user picker
-  - `Chat/` - Message display and composition
-  - `Call/` - VoIP call UI
-  - `UserSettings/` - App settings
-  - `LocalAuth/` - Passcode and biometric authentication
-  - `Database/` - Database initialization and migration
+Licensed under the [GNU Affero General Public License v3.0](LICENSE).
 
-### Shared Data Between Targets
-
-All three targets share data via App Group (`group.chat.simplex.app`):
-- `SimpleXChat/AppGroup.swift` - GroupDefaults wrapper for typed shared preferences
-- Keychain for sensitive data: `kcDatabasePassword`, `kcAppPassword`, `kcSelfDestructPassword`
-
-### Key Types
-
-Types are defined in `SimpleXChat/`:
-- `ChatTypes.swift` - User, Chat, Message, Group types
-- `APITypes.swift` - API request/response types
-
-Commands follow `ChatCmdProtocol` (has `cmdString` property), sent as JSON through FFI.
-
-## Localization
-
-31 languages supported. Localization files in `SimpleX Localizations/`.
-
-Workflow:
-- `Product > Export Localizations` - Export XLIFF files
-- `Product > Import Localizations` - Import updated translations
-
-## SimpleX Assets
-
-The app includes optional assets behind the `SIMPLEX_ASSETS` Swift compilation flag. Without setup, the app builds normally without them.
-
-### Setup
-
-Create `Local.xcconfig` (gitignored) in the `apps/ios/` directory:
 ```
-SIMPLEX_ASSETS_DIR = /path/to/assets
-SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) SIMPLEX_ASSETS
+POPOPX iOS
+Copyright (C) 2025-2026 POPOPX Team
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, version 3.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
 ```
 
-The copy script (`scripts/ios/copy-assets.sh`) runs as a build phase on each build but exits immediately if `SIMPLEX_ASSETS` is not set.
+### Original work
 
-### Updating assets
+POPOPX is a derivative of [simplex-chat](https://github.com/simplex-chat/simplex-chat), Copyright (C) 2020-2025 simplex.chat, also licensed under AGPL-3.0.
 
-When source images change, regenerate resized images (requires ImageMagick):
-```bash
-cd path/to/assets && ./resize.sh
-```
+See [NOTICE](NOTICE) for full attribution details.
 
-## Background Capabilities
+### Third-party components
 
-Configured in Info.plist:
-- Background modes: audio, fetch, remote-notification, voip
-- URL scheme: `simplex://` for deep linking
-- BGTaskScheduler: `chat.simplex.app.receive`
+- **bitchat** by Jack Dorsey — The Unlicense (Public Domain)
+- **blst** — Apache 2.0
+- **libbbs** — Apache 2.0
+- **WebRTC** — Google WebRTC (BSD license)

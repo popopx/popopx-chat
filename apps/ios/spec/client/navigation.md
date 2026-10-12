@@ -1,4 +1,4 @@
-# SimpleX Chat iOS -- Navigation Architecture
+# POPOPX Chat iOS -- Navigation Architecture
 
 > Technical specification for the navigation stack, deep linking, sheet presentation, and call overlay.
 >
@@ -27,7 +27,7 @@
 The app's navigation follows a hierarchical model with a single navigation stack rooted in `ContentView`. Modal sheets and full-screen overlays augment the primary navigation path.
 
 ```
-SimpleXApp
+POPOPXApp
 └── ContentView (root)
     ├── Authentication gate (LocalAuthView / SetAppPasscodeView)
     ├── Onboarding flow (if first launch / migration)
@@ -55,7 +55,7 @@ SimpleXApp
 
 **File**: [`Shared/ContentView.swift`](../../Shared/ContentView.swift)
 
-`ContentView` is the root view injected by `SimpleXApp`. It manages:
+`ContentView` is the root view injected by `POPOPXApp`. It manages:
 
 ### [Environment](../../Shared/ContentView.swift#L25-L37)
 - `@EnvironmentObject var chatModel: ChatModel`
@@ -186,7 +186,7 @@ When the user taps a notification:
 
 ### [URL Deep Link](../../Shared/ContentView.swift#L281)
 
-SimpleX links (`simplex:/chat#...`) are handled via [`connectViaUrl()`](../../Shared/ContentView.swift#L439):
+POPOPX links (`simplex:/chat#...`) are handled via [`connectViaUrl()`](../../Shared/ContentView.swift#L439):
 
 ```swift
 .onOpenURL { url in
@@ -278,9 +278,9 @@ First-launch experience controlled by [`ChatModel.onboardingStage`](../../Shared
 
 ```swift
 enum OnboardingStage: String, Identifiable {
-    case step1_SimpleXInfo              // Welcome screen
+    case step1_POPOPXInfo              // Welcome screen
     case step2_CreateProfile            // deprecated
-    case step3_CreateSimpleXAddress     // deprecated
+    case step3_CreatePOPOPXAddress     // deprecated
     case step3_ChooseServerOperators    // Choose server operators
     case step4_SetNotificationsMode     // Set notification preferences
     case onboardingComplete             // Normal operation
@@ -334,7 +334,7 @@ if path == "/r" {
 }
 ```
 
-Similarly, in `planAndConnect()` (`NewChatView.swift`), `.simplexLink(_, .relay, _, _)` patterns trigger the same alert and block connection.
+Similarly, in `planAndConnect()` (`NewChatView.swift`), `.popopxLink(_, .relay, _, _)` patterns trigger the same alert and block connection.
 
 ## 11. Channel-Specific NewChatView Behavior
 
@@ -344,7 +344,7 @@ Similarly, in `planAndConnect()` (`NewChatView.swift`), `.simplexLink(_, .relay,
 
 When `groupShortLinkInfo?.direct == false` (channel relay link), the prepare alert uses:
 - Channel icon: `antenna.radiowaves.left.and.right.circle.fill`
-- Title: "Open channel"
+- Title: "Open new channel"
 - Error: "Error opening channel"
 - `apiPrepareGroup` call passes `directLink: false`
 - Stores `groupShortLinkInfo.groupRelays` in `ChatModel.shared.channelRelayHostnames`
@@ -355,7 +355,7 @@ For channels: shows "This is your link for channel" with only "Open channel" + "
 
 ### Known Group Alert (`showOpenKnownGroupAlert`)
 
-For channels (`groupInfo.useRelays`): the title is "Open channel"; for groups, "Open group"; business chats keep "Open chat" / "Open new chat". Unless the chat is merely prepared (`nextConnectPrepared`) or a business chat, the alert shows an information line with the user's membership role (`memberRoleInformation`) in the secondary color: subscriber/contributor for channels, observer/member for groups, moderator/admin/owner for both.
+For channels (`groupInfo.useRelays`): titles become "Open channel" / "Open new channel".
 
 ---
 
@@ -364,7 +364,7 @@ For channels (`groupInfo.useRelays`): the title is "Open channel"; for groups, "
 | File | Path |
 |------|------|
 | Root view | [`Shared/ContentView.swift`](../../Shared/ContentView.swift) |
-| App entry point | `Shared/SimpleXApp.swift` |
+| App entry point | `Shared/POPOPXApp.swift` |
 | Navigation compat | [`Shared/Views/Helpers/NavStackCompat.swift`](../../Shared/Views/Helpers/NavStackCompat.swift) |
 | Chat list (nav root) | `Shared/Views/ChatList/ChatListView.swift` |
 | Nav link wrapper | `Shared/Views/ChatList/ChatListNavLink.swift` |

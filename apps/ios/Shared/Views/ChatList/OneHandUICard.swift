@@ -1,85 +1,214 @@
 //
 //  OneHandUICard.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by EP on 06/08/2024.
-//  Copyright © 2024 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
+
+// MARK: - POPOPX Layout Configuration
+private enum PxOneHandMetrics {
+    static let outerSpacing: CGFloat = 2
+    static let innerSpacing: CGFloat = 8
+    static let horizontalPad: CGFloat = 16
+    static let verticalPad: CGFloat = 4
+    static let dismissBtnSide: CGFloat = 44
+    static let dismissTrailPad: CGFloat = 12
+    static let capsuleBorderWidth: CGFloat = 0.5
+    static let shadowRadius: CGFloat = 4
+    static let shadowYOffset: CGFloat = 2
+    static let dismissIcon: Font = .title3
+}
+
+// MARK: - POPOPX Theme-aware Colors
+private enum PxOneHandPalette {
+    static let lightSegmentFill = Color(uiColor: .systemGray5)
+    static let darkBorderPrimaryOpacity: Double = 0.3
+    static let darkBorderSecondaryOpacity: Double = 0.15
+    static let lightBorderPrimaryOpacity: Double = 0.3
+    static let lightBorderSecondaryOpacity: Double = 0.1
+    static let darkShadowOpacity: Double = 0.06
+    static let selectedBgDarkOpacity: Double = 0.1
+}
+
+// MARK: - POPOPX Segment Descriptor
+private struct PxToolbarSegment {
+    let pxSymbolName: String
+    let pxTitle: LocalizedStringKey
+    let pxIsActive: Bool
+    let pxOnTap: () -> Void
+}
 
 struct OneHandUICard: View {
     @EnvironmentObject var theme: AppTheme
     @AppStorage(GROUP_DEFAULT_ONE_HAND_UI, store: groupDefaults) private var oneHandUI = true
     @AppStorage(DEFAULT_ONE_HAND_UI_CARD_SHOWN) private var oneHandUICardShown = false
     @AppStorage(DEFAULT_TOOLBAR_MATERIAL) private var toolbarMaterial = ToolbarMaterial.defaultMaterial
-    @State private var showOneHandUIAlert = false
+    @State private var pxPresentDismissAlert = false
 
     var body: some View {
-        HStack(spacing: 2) {
-            segment(
-                icon: "platter.filled.bottom.and.arrow.down.iphone",
-                text: "Bottom bar",
-                isSelected: oneHandUI
-            ) {
-                withAnimation { oneHandUI = true }
+        pxOuterContainer
+            .clipShape(Capsule())
+            .overlay(pxCapsuleStroke)
+            .shadow(color: pxShadowTint, radius: PxOneHandMetrics.shadowRadius, x: 0, y: PxOneHandMetrics.shadowYOffset)
+            .alert(isPresented: $pxPresentDismissAlert) {
+                pxAlertDefinition
             }
-            .background { if oneHandUI { Color(uiColor: .systemGray5) } }
-            .background(ToolbarMaterial.material(toolbarMaterial))
-            ZStack(alignment: .trailing) {
-                segment(
-                    icon: "platter.filled.top.and.arrow.up.iphone",
-                    text: "Top bar",
-                    isSelected: !oneHandUI
-                ) {
-                    withAnimation { oneHandUI = false }
-                }
-                Image(systemName: "multiply")
-                    .foregroundColor(theme.colors.secondary)
-                    .frame(width: 12, height: 12)
-                    .padding(.vertical, 4)
-                    .padding(.trailing, 16)
-                    .padding(.leading, 4)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        showOneHandUIAlert = true
-                    }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background { if !oneHandUI { Color(uiColor: .systemGray5) } }
-            .background(ToolbarMaterial.material(toolbarMaterial))
-        }
-        .clipShape(Capsule())
-        .alert(isPresented: $showOneHandUIAlert) {
-            Alert(
-                title: Text("Reachable chat toolbar"),
-                message: Text("You can change it in Appearance settings."),
-                dismissButton: .default(Text("Ok")) {
-                    withAnimation {
-                        oneHandUICardShown = true
-                    }
-                }
-            )
+            .popopxBranded()
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel(Text(NSLocalizedString("Toolbar position", comment: "One hand UI card accessibility")))
+    }
+
+    // MARK: - POPOPX Outer Container
+
+    @ViewBuilder
+    private var pxOuterContainer: some View {
+        HStack(spacing: PxOneHandMetrics.outerSpacing) {
+            pxBottomBarSegment
+            pxTopBarSegmentWithDismiss
         }
     }
 
-    private func segment(icon: String, text: LocalizedStringKey, isSelected: Bool, action: @escaping () -> Void) -> some View {
-        HStack(spacing: 8) {
-            Image(systemName: icon)
-                .font(.body)
-                .foregroundColor(isSelected ? theme.colors.secondary : theme.colors.primary)
-            Text(text)
-                .font(.subheadline)
-                .foregroundColor(isSelected ? theme.colors.secondary : theme.colors.onBackground)
+    // MARK: - POPOPX Segments
+
+    @ViewBuilder
+    private var pxBottomBarSegment: some View {
+        pxSegmentView(
+            PxToolbarSegment(
+                pxSymbolName: "platter.filled.bottom.and.arrow.down.iphone",
+                pxTitle: LocalizedStringKey("Bottom bar"),
+                pxIsActive: oneHandUI,
+                pxOnTap: { withAnimation { oneHandUI = true } }
+            )
+        )
+        .background { if oneHandUI { pxActiveSegmentFill } }
+        .background(ToolbarMaterial.material(toolbarMaterial))
+    }
+
+    @ViewBuilder
+    private var pxTopBarSegmentWithDismiss: some View {
+        ZStack(alignment: .trailing) {
+            pxSegmentView(
+                PxToolbarSegment(
+                    pxSymbolName: "platter.filled.top.and.arrow.up.iphone",
+                    pxTitle: LocalizedStringKey("Top bar"),
+                    pxIsActive: !oneHandUI,
+                    pxOnTap: { withAnimation { oneHandUI = false } }
+                )
+            )
+            pxCloseButton
+                .frame(width: PxOneHandMetrics.dismissBtnSide, height: PxOneHandMetrics.dismissBtnSide)
+                .contentShape(Circle())
+                .padding(.trailing, PxOneHandMetrics.dismissTrailPad)
         }
-        .padding(.leading, 16)
-        .padding(.vertical, 4)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background { if !oneHandUI { pxInactiveSegmentFill } }
+        .background(ToolbarMaterial.material(toolbarMaterial))
+    }
+
+    // MARK: - POPOPX Segment Builder
+
+    @ViewBuilder
+    private func pxSegmentView(_ descriptor: PxToolbarSegment) -> some View {
+        HStack(spacing: PxOneHandMetrics.innerSpacing) {
+            Image(systemName: descriptor.pxSymbolName)
+                .font(.body)
+                .foregroundColor(descriptor.pxIsActive ? theme.colors.secondary : theme.colors.primary)
+            Text(descriptor.pxTitle)
+                .font(.subheadline)
+                .foregroundColor(descriptor.pxIsActive ? theme.colors.secondary : theme.colors.onBackground)
+        }
+        .padding(.horizontal, PxOneHandMetrics.horizontalPad)
+        .padding(.vertical, PxOneHandMetrics.verticalPad)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .contentShape(Rectangle())
-        .onTapGesture { action() }
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAddTraits(descriptor.pxIsActive ? .isSelected : [])
+        .accessibilityLabel(pxSegmentAccessibilityText(descriptor))
+        .onTapGesture { descriptor.pxOnTap() }
+    }
+
+    // MARK: - POPOPX Close Button
+
+    @ViewBuilder
+    private var pxCloseButton: some View {
+        Button {
+            pxPresentDismissAlert = true
+        } label: {
+            Image(systemName: "multiply.circle.fill")
+                .font(PxOneHandMetrics.dismissIcon)
+                .foregroundColor(theme.colors.secondary)
+        }
+        .accessibilityLabel(Text(NSLocalizedString("Dismiss", comment: "Dismiss one hand UI card")))
+    }
+
+    // MARK: - POPOPX Alert Definition
+
+    private var pxAlertDefinition: Alert {
+        Alert(
+            title: Text(LocalizedStringKey(NSLocalizedString("one_hand_toolbar_title", comment: "One hand UI toolbar alert title"))),
+            message: Text(LocalizedStringKey(NSLocalizedString("one_hand_toolbar_message", comment: "One hand UI toolbar alert message"))),
+            dismissButton: .default(Text(LocalizedStringKey(NSLocalizedString("common_ok", comment: "")))) {
+                withAnimation {
+                    oneHandUICardShown = true
+                }
+            }
+        )
+    }
+
+    // MARK: - POPOPX Appearance Helpers
+
+    private var pxActiveSegmentFill: Color {
+        isInDarkTheme() ? darkThemeAccentColor().opacity(PxOneHandPalette.selectedBgDarkOpacity) : PxOneHandPalette.lightSegmentFill
+    }
+
+    private var pxInactiveSegmentFill: Color {
+        isInDarkTheme() ? neonGradientSecondary().opacity(PxOneHandPalette.selectedBgDarkOpacity) : PxOneHandPalette.lightSegmentFill
+    }
+
+    private var pxCapsuleStroke: some View {
+        Capsule()
+            .strokeBorder(
+                LinearGradient(
+                    colors: pxCapsuleGradientStops,
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ),
+                lineWidth: PxOneHandMetrics.capsuleBorderWidth
+            )
+    }
+
+    private var pxCapsuleGradientStops: [Color] {
+        if isInDarkTheme() {
+            return [
+                darkThemeAccentColor().opacity(PxOneHandPalette.darkBorderPrimaryOpacity),
+                neonGradientSecondary().opacity(PxOneHandPalette.darkBorderSecondaryOpacity)
+            ]
+        }
+        return [
+            Color.white.opacity(PxOneHandPalette.lightBorderPrimaryOpacity),
+            Color.white.opacity(PxOneHandPalette.lightBorderSecondaryOpacity)
+        ]
+    }
+
+    private var pxShadowTint: Color {
+        isInDarkTheme() ? darkThemeAccentColor().opacity(PxOneHandPalette.darkShadowOpacity) : .clear
+    }
+
+    private func pxSegmentAccessibilityText(_ descriptor: PxToolbarSegment) -> Text {
+        let stateKey = descriptor.pxIsActive
+            ? NSLocalizedString("selected_state", comment: "Accessibility label for selected state")
+            : NSLocalizedString("not_selected_state", comment: "Accessibility label for not selected state")
+        return Text(stateKey) + Text(" ") + Text(descriptor.pxTitle)
     }
 }
+
+// MARK: - POPOPX Previews
 
 #Preview {
     OneHandUICard()

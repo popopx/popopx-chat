@@ -1,0 +1,15 @@
+vocab_size=8192
+eos_token_id=1
+pad_token_id=0
+bos_token_id=2
+unk_token_id=3
+model_max_length=1024
+tokenizer_type=sentencepiece
+sp_model_type=bpe
+sp_add_dummy_prefix=true
+sp_remove_extra_whitespaces=true
+sp_escape_whitespaces=true
+sp_byte_fallback=true
+has_chat_template=false
+has_tool_support=true
+tool_token_count=2

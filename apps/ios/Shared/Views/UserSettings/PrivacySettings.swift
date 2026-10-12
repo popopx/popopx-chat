@@ -1,22 +1,31 @@
 //
 //  PrivacySettings.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by Evgeny on 29/05/2022.
-//  Copyright © 2022 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
+
+// MARK: - Haptic Feedback Helper
+
+private func triggerHapticFeedback(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
+    let generator = UIImpactFeedbackGenerator(style: style)
+    generator.impactOccurred()
+}
 
 struct PrivacySettings: View {
     @EnvironmentObject var m: ChatModel
     @EnvironmentObject var theme: AppTheme
-    @AppStorage(DEFAULT_PRIVACY_ACCEPT_IMAGES) private var autoAcceptImages = true
+    @AppStorage(GROUP_DEFAULT_PRIVACY_ACCEPT_IMAGES, store: groupDefaults) private var autoAcceptImages = true
     @AppStorage(GROUP_DEFAULT_PRIVACY_LINK_PREVIEWS, store: groupDefaults) private var useLinkPreviews = true
     @AppStorage(GROUP_DEFAULT_PRIVACY_SANITIZE_LINKS, store: groupDefaults) private var privacySanitizeLinks = false
     @AppStorage(DEFAULT_PRIVACY_SHOW_CHAT_PREVIEWS) private var showChatPreviews = true
-    @AppStorage(DEFAULT_PRIVACY_VERIFY_SIMPLEX_NAMES) private var verifySimplexNames = false
+    @AppStorage(DEFAULT_PRIVACY_VERIFY_POPOPX_NAMES) private var verifyPopopxNames = false
     @AppStorage(DEFAULT_PRIVACY_SAVE_LAST_DRAFT) private var saveLastDraft = true
     @AppStorage(DEFAULT_PRIVACY_SHOW_SIGNATURE) private var showSignature = true
     @AppStorage(DEFAULT_PRIVACY_SHOW_FILE_ENCRYPTION) private var showFileEncryption = true
@@ -24,6 +33,7 @@ struct PrivacySettings: View {
     @AppStorage(GROUP_DEFAULT_PRIVACY_ASK_TO_APPROVE_RELAYS, store: groupDefaults) private var askToApproveRelays = true
     @AppStorage(DEFAULT_DEVELOPER_TOOLS) private var developerTools = false
     @AppStorage(DEFAULT_PRIVACY_PROTECT_SCREEN) private var protectScreen = false
+    @AppStorage(DEFAULT_BINTHERE_SECURITY) private var binThereSecurity = true
     @AppStorage(DEFAULT_PERFORM_LA) private var prefPerformLA = false
     @State private var currentLAMode = privacyLocalAuthModeDefault.get()
     @AppStorage(DEFAULT_PRIVACY_MEDIA_BLUR_RADIUS) private var privacyMediaBlurRadius: Int = 0
@@ -54,100 +64,43 @@ struct PrivacySettings: View {
     var body: some View {
         VStack {
             List {
-                Section(header: Text("Device").foregroundColor(theme.colors.secondary)) {
-                    NavigationLink {
-                        SimplexLockView(prefPerformLA: $prefPerformLA, currentLAMode: $currentLAMode)
-                            .navigationTitle("SimpleX Lock")
-                            .modifier(ThemedBackground(grouped: true))
-                    } label: {
-                        if prefPerformLA {
-                            settingsRow("lock.fill", color: .green) {
-                                simplexLockRow(currentLAMode.text)
-                            }
-                        } else {
-                            settingsRow("lock", color: theme.colors.secondary) {
-                                simplexLockRow("Off")
-                            }
-                        }
-                    }
-                    settingsRow("eye.slash", color: theme.colors.secondary) {
-                        Toggle("Protect app screen", isOn: $protectScreen)
-                    }
-                }
-
-                Section {
-                    settingsRow("network", color: theme.colors.secondary) {
-                        Toggle("Send link previews", isOn: $useLinkPreviews)
-                            .onChange(of: useLinkPreviews) { linkPreviews in
-                                UserDefaults.standard.set(linkPreviews, forKey: DEFAULT_PRIVACY_LINK_PREVIEWS)
-                                privacyLinkPreviewsShowAlertGroupDefault.set(false)
-                            }
-                    }
-                    settingsRow("link", color: theme.colors.secondary) {
-                        Toggle("Remove link tracking", isOn: $privacySanitizeLinks)
-                    }
-                } header: {
-                    Text("Chats")
-                        .foregroundColor(theme.colors.secondary)
-                }
-
-                Section {
-                    settingsRow("photo", color: theme.colors.secondary) {
-                        Toggle("Auto-accept images", isOn: $autoAcceptImages)
-                            .onChange(of: autoAcceptImages) {
-                                privacyAcceptImagesGroupDefault.set($0)
-                            }
-                    }
-                    settingsRow("circle.filled.pattern.diagonalline.rectangle", color: theme.colors.secondary) {
-                        WrappedPicker("Blur media", selection: $privacyMediaBlurRadius) {
-                            let values = [0, 12, 24, 48] + ([0, 12, 24, 48].contains(privacyMediaBlurRadius) ? [] : [privacyMediaBlurRadius])
-                            ForEach(values, id: \.self) { radius in
-                                let text: String = switch radius {
-                                case 0: NSLocalizedString("Off", comment: "blur media")
-                                case 12: NSLocalizedString("Soft", comment: "blur media")
-                                case 24: NSLocalizedString("Medium", comment: "blur media")
-                                case 48: NSLocalizedString("Strong", comment: "blur media")
-                                default: "\(radius)"
-                                }
-                                Text(text)
-                            }
-                        }
-                    }
-                } header: {
-                    Text("Files")
-                        .foregroundColor(theme.colors.secondary)
-                }
-
-                Section {
-                    settingsRow("person", color: theme.colors.secondary) {
-                        Toggle("Contact requests in groups", isOn: $autoAcceptMemberContacts)
-                    }
-                    settingsRow("person.2", color: theme.colors.secondary) {
-                        Toggle("Group invitations", isOn: $autoAcceptGroupInvitations)
-                    }
-                } header: {
-                    Text("Auto-accept")
-                        .foregroundColor(theme.colors.secondary)
-                } footer: {
-                    Text("These settings are for your current profile **\(m.currentUser?.displayName ?? "")**.")
-                        .foregroundColor(theme.colors.secondary)
-                }
-
-                Section {
-                    NavigationLink(destination: morePrivacyView) {
-                        settingsRow("ellipsis", color: theme.colors.secondary) { Text("More privacy") }
-                    }
-                }
+                deviceSection()
+                chatsSection()
+                filesSection()
+                contactRequestsSection()
+                deliveryReceiptsSection()
+                notificationsSection()
+                receiptsSection()
             }
         }
-        .onChange(of: autoAcceptMemberContacts) { _ in
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .onChange(of: contactReceipts) {_, _ in
+            triggerHapticFeedback(.light)
+            if contactReceiptsReset {
+                contactReceiptsReset = false
+            } else {
+                setOrAskSendReceiptsContacts(contactReceipts)
+            }
+        }
+        .onChange(of: groupReceipts) {_, _ in
+            triggerHapticFeedback(.light)
+            if groupReceiptsReset {
+                groupReceiptsReset = false
+            } else {
+                setOrAskSendReceiptsGroups(groupReceipts)
+            }
+        }
+        .onChange(of: autoAcceptMemberContacts) {_, _ in
+            triggerHapticFeedback(.light)
             if autoAcceptMemberContactsReset {
                 autoAcceptMemberContactsReset = false
             } else {
                 setAutoAcceptMemberContacts(autoAcceptMemberContacts)
             }
         }
-        .onChange(of: autoAcceptGroupInvitations) { _ in
+        .onChange(of: autoAcceptGroupInvitations) {_, _ in
+            triggerHapticFeedback(.light)
             if autoAcceptGroupInvitationsReset {
                 autoAcceptGroupInvitationsReset = false
             } else {
@@ -166,174 +119,7 @@ struct PrivacySettings: View {
                 }
             }
         }
-        .alert(item: $alert) { alert in
-            switch alert {
-            case let .error(title, error):
-                return Alert(title: Text(title), message: Text(error))
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func morePrivacyView() -> some View {
-        List {
-            Section {
-                settingsRow("message", color: theme.colors.secondary) {
-                    Toggle("Show last messages", isOn: $showChatPreviews)
-                }
-                settingsRow("rectangle.and.pencil.and.ellipsis", color: theme.colors.secondary) {
-                    Toggle("Message draft", isOn: $saveLastDraft)
-                }
-                .onChange(of: saveLastDraft) { saveDraft in
-                    if !saveDraft {
-                        m.draft = nil
-                        m.draftChatId = nil
-                    }
-                }
-                settingsRow("number", color: theme.colors.secondary) {
-                    Toggle("Verify SimpleX names", isOn: $verifySimplexNames)
-                }
-                // hidden until message signing is user-facing (recipient-only stage)
-//                settingsRow("checkmark.seal", color: theme.colors.secondary) {
-//                    Toggle("Show signature", isOn: $showSignature)
-//                }
-            } header: {
-                Text("Chats")
-                    .foregroundColor(theme.colors.secondary)
-            }
-
-            Section {
-                settingsRow("lock.doc", color: theme.colors.secondary) {
-                    Toggle("Encrypt local files", isOn: $encryptLocalFiles)
-                        .onChange(of: encryptLocalFiles) {
-                            setEncryptLocalFiles($0)
-                        }
-                }
-                settingsRow("network.badge.shield.half.filled", color: theme.colors.secondary) {
-                    Toggle("Protect IP address", isOn: $askToApproveRelays)
-                }
-                settingsRow("lock", color: theme.colors.secondary) {
-                    Toggle("Show encryption", isOn: $showFileEncryption)
-                }
-            } header: {
-                Text("Files")
-                    .foregroundColor(theme.colors.secondary)
-            } footer: {
-                if askToApproveRelays {
-                    Text("The app will ask to confirm downloads from unknown file servers (except .onion).")
-                        .foregroundColor(theme.colors.secondary)
-                } else {
-                    Text("Without Tor or VPN, your IP address will be visible to file servers.")
-                        .foregroundColor(theme.colors.secondary)
-                }
-            }
-
-            Section {
-                NavigationLink {
-                    List {
-                        Section {
-                            SelectionListView(list: NotificationPreviewMode.values, selection: $m.notificationPreview) { previewMode in
-                                ntfPreviewModeGroupDefault.set(previewMode)
-                                m.notificationPreview = previewMode
-                            }
-                        } footer: {
-                            VStack(alignment: .leading, spacing: 1) {
-                                Text("You can set lock screen notification preview via settings.")
-                                    .foregroundColor(theme.colors.secondary)
-                                Button("Open Settings") {
-                                    DispatchQueue.main.async {
-                                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .navigationTitle("Show preview")
-                    .modifier(ThemedBackground(grouped: true))
-                    .navigationBarTitleDisplayMode(.inline)
-                } label: {
-                    HStack {
-                        Text("Show preview")
-                        Spacer()
-                        Text(m.notificationPreview.label)
-                    }
-                }
-            } header: {
-                Text("Notifications")
-                    .foregroundColor(theme.colors.secondary)
-            }
-
-            Section {
-                settingsRow("person", color: theme.colors.secondary) {
-                    Toggle("Contacts", isOn: $contactReceipts)
-                }
-                settingsRow("person.2", color: theme.colors.secondary) {
-                    Toggle("Small groups (max 20)", isOn: $groupReceipts)
-                }
-            } header: {
-                Text("Send delivery receipts to")
-                    .foregroundColor(theme.colors.secondary)
-            } footer: {
-                VStack(alignment: .leading) {
-                    Text("These settings are for your current profile **\(m.currentUser?.displayName ?? "")**.")
-                    Text("They can be overridden in contact and group settings.")
-                }
-                .foregroundColor(theme.colors.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .confirmationDialog(contactReceiptsDialogTitle, isPresented: $contactReceiptsDialogue, titleVisibility: .visible) {
-                Button(contactReceipts ? "Enable (keep overrides)" : "Disable (keep overrides)") {
-                    setSendReceiptsContacts(contactReceipts, clearOverrides: false)
-                }
-                Button(contactReceipts ? "Enable for all" : "Disable for all", role: .destructive) {
-                    setSendReceiptsContacts(contactReceipts, clearOverrides: true)
-                }
-                Button("Cancel", role: .cancel) {
-                    contactReceiptsReset = true
-                    contactReceipts.toggle()
-                }
-            }
-            .confirmationDialog(groupReceiptsDialogTitle, isPresented: $groupReceiptsDialogue, titleVisibility: .visible) {
-                Button(groupReceipts ? "Enable (keep overrides)" : "Disable (keep overrides)") {
-                    setSendReceiptsGroups(groupReceipts, clearOverrides: false)
-                }
-                Button(groupReceipts ? "Enable for all" : "Disable for all", role: .destructive) {
-                    setSendReceiptsGroups(groupReceipts, clearOverrides: true)
-                }
-                Button("Cancel", role: .cancel) {
-                    groupReceiptsReset = true
-                    groupReceipts.toggle()
-                }
-            }
-        }
-        .onChange(of: contactReceipts) { _ in
-            if contactReceiptsReset {
-                contactReceiptsReset = false
-            } else {
-                setOrAskSendReceiptsContacts(contactReceipts)
-            }
-        }
-        .onChange(of: groupReceipts) { _ in
-            if groupReceiptsReset {
-                groupReceiptsReset = false
-            } else {
-                setOrAskSendReceiptsGroups(groupReceipts)
-            }
-        }
-        .onAppear {
-            if let u = m.currentUser {
-                if contactReceipts != u.sendRcptsContacts {
-                    contactReceiptsReset = true
-                    contactReceipts = u.sendRcptsContacts
-                }
-                if groupReceipts != u.sendRcptsSmallGroups {
-                    groupReceiptsReset = true
-                    groupReceipts = u.sendRcptsSmallGroups
-                }
-            }
-        }
-        .navigationTitle("More privacy")
-        .modifier(ThemedBackground(grouped: true))
+        .popopxBranded()
     }
 
     private func setEncryptLocalFiles(_ enable: Bool) {
@@ -342,7 +128,7 @@ struct PrivacySettings: View {
         } catch let error {
             let err = responseError(error)
             logger.error("apiSetEncryptLocalFiles \(err)")
-            alert = .error(title: "Error", error: "\(err)")
+            alert = .error(title: LocalizedStringKey(NSLocalizedString("privacy_error_title", comment: "")), error: LocalizedStringKey(err))
         }
     }
 
@@ -360,8 +146,8 @@ struct PrivacySettings: View {
 
     private var contactReceiptsDialogTitle: LocalizedStringKey {
         contactReceipts
-        ? "Sending receipts is disabled for \(contactReceiptsOverrides) contacts"
-        : "Sending receipts is enabled for \(contactReceiptsOverrides) contacts"
+        ? LocalizedStringKey(NSLocalizedString("privacy_receipts_disabled_contacts", comment: ""))
+        : LocalizedStringKey(NSLocalizedString("privacy_receipts_enabled_contacts", comment: ""))
     }
 
     private func setSendReceiptsContacts(_ enable: Bool, clearOverrides: Bool) {
@@ -388,8 +174,8 @@ struct PrivacySettings: View {
                         }
                     }
                 }
-            } catch let error {
-                alert = .error(title: "Error setting delivery receipts!", error: "Error: \(responseError(error))")
+            } catch {
+                alert = .error(title: LocalizedStringKey(NSLocalizedString("privacy_error_setting_receipts", comment: "")), error: LocalizedStringKey("Error: ^[responseError(error)]"))
             }
         }
     }
@@ -408,8 +194,8 @@ struct PrivacySettings: View {
 
     private var groupReceiptsDialogTitle: LocalizedStringKey {
         groupReceipts
-        ? "Sending receipts is disabled for \(groupReceiptsOverrides) groups"
-        : "Sending receipts is enabled for \(groupReceiptsOverrides) groups"
+        ? LocalizedStringKey(NSLocalizedString("privacy_receipts_disabled_groups", comment: ""))
+        : LocalizedStringKey(NSLocalizedString("privacy_receipts_enabled_groups", comment: ""))
     }
 
     private func setSendReceiptsGroups(_ enable: Bool, clearOverrides: Bool) {
@@ -436,8 +222,8 @@ struct PrivacySettings: View {
                         }
                     }
                 }
-            } catch let error {
-                alert = .error(title: "Error setting delivery receipts!", error: "Error: \(responseError(error))")
+            } catch {
+                alert = .error(title: LocalizedStringKey(NSLocalizedString("privacy_error_setting_receipts", comment: "")), error: LocalizedStringKey("Error: ^[responseError(error)]"))
             }
         }
     }
@@ -453,8 +239,8 @@ struct PrivacySettings: View {
                         m.updateUser(updatedUser)
                     }
                 }
-            } catch let error {
-                alert = .error(title: "Error setting auto-accept", error: "Error: \(responseError(error))")
+            } catch {
+                alert = .error(title: LocalizedStringKey(NSLocalizedString("privacy_error_setting_auto_accept", comment: "")), error: LocalizedStringKey("Error: ^[responseError(error)]"))
             }
         }
     }
@@ -470,17 +256,268 @@ struct PrivacySettings: View {
                         m.updateUser(updatedUser)
                     }
                 }
-            } catch let error {
-                alert = .error(title: "Error setting auto-accept", error: "Error: \(responseError(error))")
+            } catch {
+                alert = .error(title: LocalizedStringKey(NSLocalizedString("privacy_error_setting_auto_accept", comment: "")), error: LocalizedStringKey("Error: ^[responseError(error)]"))
             }
         }
     }
 
-    private func simplexLockRow(_ value: LocalizedStringKey) -> some View {
+    private func popopxLockRow(_ value: LocalizedStringKey) -> some View {
         HStack {
-            Text("SimpleX Lock")
+            Text(String(localized: "POPOPX Lock", comment: "App lock feature name"))
             Spacer()
             Text(value)
+        }
+    }
+
+    private func blurRadiusText(_ radius: Int) -> String {
+        switch radius {
+        case 0: return NSLocalizedString("Off", comment: "blur media")
+        case 12: return NSLocalizedString("Soft", comment: "blur media")
+        case 24: return NSLocalizedString("Medium", comment: "blur media")
+        case 48: return NSLocalizedString("Strong", comment: "blur media")
+        default: return "\(radius)"
+        }
+    }
+
+    private func updateLinkPreviews(_ enabled: Bool) {
+        groupDefaults.set(enabled, forKey: GROUP_DEFAULT_PRIVACY_LINK_PREVIEWS)
+        privacyLinkPreviewsShowAlertGroupDefault.set(false)
+    }
+
+    private func updateMessageDraft(_ enabled: Bool) {
+        if !enabled {
+            m.draft = nil
+            m.draftChatId = nil
+        }
+    }
+
+    @ViewBuilder
+    private func deviceSection() -> some View {
+        Section(header: Text(String(localized: "Device", comment: "Privacy settings section header for device-level security options")).font(isInDarkTheme() ? darkThemeHeaderFont() : .body).foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)) {
+            NavigationLink {
+                PopopxLockView(prefPerformLA: $prefPerformLA, currentLAMode: $currentLAMode)
+                    .navigationTitle(String(localized: "POPOPX Lock", comment: "App lock feature name"))
+                    .modifier(ThemedBackground(grouped: true))
+            } label: {
+                if prefPerformLA {
+                    settingsRow("lock.fill", color: QuantumColors.success) {
+                        popopxLockRow(currentLAMode.text)
+                    }
+                } else {
+                    settingsRow("lock", color: theme.colors.secondary) {
+                        popopxLockRow(LocalizedStringKey("Off"))
+                    }
+                }
+            }
+            settingsRow("eye.slash", color: theme.colors.secondary) {
+                Toggle(String(localized: "Protect app screen", comment: "Toggle to enable screen protection - prevents screenshots and screen recording"), isOn: $protectScreen)
+            }
+            settingsRow("shield.checkered", color: QuantumColors.accent) {
+                Toggle(String(localized: "binthere_security_enhanced", comment: "Toggle to enable BinThere burn-after-read enhanced security (gaze tracking, anti-photography, evidence capture)"), isOn: $binThereSecurity)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func chatsSection() -> some View {
+        Section {
+            settingsRow("network", color: theme.colors.secondary) {
+                Toggle(String(localized: "Send link previews", comment: "Toggle to enable/disable URL link preview generation in chat messages"), isOn: $useLinkPreviews)
+                    .onChange(of: useLinkPreviews) {_, linkPreviews in
+                        updateLinkPreviews(linkPreviews)
+                    }
+            }
+            settingsRow("link", color: theme.colors.secondary) {
+                Toggle(String(localized: "Remove link tracking", comment: "Toggle to strip tracking parameters from URLs for privacy"), isOn: $privacySanitizeLinks)
+            }
+            settingsRow("message", color: theme.colors.secondary) {
+                Toggle(String(localized: "Show last messages", comment: "Toggle to display message previews in chat list"), isOn: $showChatPreviews)
+            }
+            settingsRow("rectangle.and.pencil.and.ellipsis", color: theme.colors.secondary) {
+                Toggle(String(localized: "Message draft", comment: "Toggle to save unsent message drafts when switching chats"), isOn: $saveLastDraft)
+            }
+            .onChange(of: saveLastDraft) {_, saveDraft in
+                updateMessageDraft(saveDraft)
+            }
+        } header: {
+            Text(String(localized: "Chats", comment: "Privacy settings section header for chat-related options"))
+                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
+        }
+    }
+
+    @ViewBuilder
+    private func filesSection() -> some View {
+        Section {
+            settingsRow("lock.doc", color: theme.colors.secondary) {
+                Toggle(String(localized: "Encrypt local files", comment: "Toggle to enable encryption of downloaded files stored on device"), isOn: $encryptLocalFiles)
+                    .onChange(of: encryptLocalFiles) { _, newValue in
+                        triggerHapticFeedback(.light)
+                        setEncryptLocalFiles(newValue)
+                    }
+            }
+            settingsRow("photo", color: theme.colors.secondary) {
+                Toggle(String(localized: "Auto-accept images", comment: "Toggle to automatically accept incoming image files without confirmation"), isOn: $autoAcceptImages)
+                    .onChange(of: autoAcceptImages) { _, newValue in
+                        triggerHapticFeedback(.light)
+                        privacyAcceptImagesGroupDefault.set(newValue)
+                    }
+            }
+            settingsRow("circle.filled.pattern.diagonalline.rectangle", color: theme.colors.secondary) {
+                Picker(LocalizedStringKey(NSLocalizedString("privacy_blur_media", comment: "")), selection: $privacyMediaBlurRadius) {
+                    let values = [0, 12, 24, 48] + ([0, 12, 24, 48].contains(privacyMediaBlurRadius) ? [] : [privacyMediaBlurRadius])
+                    ForEach(values, id: \.self) { radius in
+                        Text(blurRadiusText(radius)).tag(radius)
+                    }
+                }
+            }
+        } header: {
+            Text(String(localized: "Files", comment: "Privacy settings section header for file and media handling options"))
+                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
+        } footer: {
+            if askToApproveRelays {
+                Text(String(localized: "The app will ask to confirm downloads from unknown file servers (except .onion).", comment: "Footer explaining file server approval behavior - .onion refers to Tor hidden services"))
+                    .foregroundColor(theme.colors.secondary)
+            } else {
+                Text(String(localized: "Without Tor or VPN, your IP address will be visible to file servers.", comment: "Warning about IP exposure when not using privacy networks"))
+                    .foregroundColor(theme.colors.secondary)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func contactRequestsSection() -> some View {
+        Section {
+            settingsRow("person", color: theme.colors.secondary) {
+                Toggle(String(localized: "Contact requests in groups", comment: "Toggle to automatically accept contact requests from group members"), isOn: $autoAcceptMemberContacts)
+            }
+            settingsRow("person.2", color: theme.colors.secondary) {
+                Toggle(String(localized: "Group invitations", comment: "Toggle to automatically accept group invitations"), isOn: $autoAcceptGroupInvitations)
+            }
+        } header: {
+            Text(String(localized: "Auto-accept", comment: "Section header for auto-accept settings"))
+                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
+        } footer: {
+            Text(String(localized: "These settings are for your current profile **\(m.currentUser?.displayName ?? "")**.", comment: "Footer indicating which user profile the settings apply to"))
+                .foregroundColor(theme.colors.secondary)
+        }
+    }
+
+    @ViewBuilder
+    private func deliveryReceiptsSection() -> some View {
+        Section {
+            // TODO [TODO-FEATURE: medium] morePrivacyView not available
+            // NavigationLink(destination: morePrivacyView) {
+            //     settingsRow("ellipsis", color: theme.colors.secondary) { Text(String(localized: "More privacy", comment: "Navigation link to additional privacy settings")) }
+            // }
+            settingsRow("person.2", color: theme.colors.secondary) {
+                Toggle(String(localized: "Small groups (max 20)", comment: "Toggle to send delivery receipts only to small groups with 20 or fewer members"), isOn: $groupReceipts)
+            }
+        } header: {
+            Text(String(localized: "Send delivery receipts to", comment: "Section header for configuring who receives message delivery confirmations"))
+                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
+        } footer: {
+            VStack(alignment: .leading) {
+                Text(String(localized: "These settings are for your current profile **\(m.currentUser?.displayName ?? "")**.", comment: "Footer indicating which user profile the settings apply to - markdown bold syntax preserved"))
+                Text(String(localized: "They can be overridden in contact and group settings.", comment: "Note that individual chat settings take precedence over these global defaults"))
+            }
+        }
+        settingsRow("number", color: theme.colors.secondary) {
+            Toggle(String(localized: "Verify POPOPX names", comment: "Toggle to enable verification of POPOPX protocol identifiers for security"), isOn: $verifyPopopxNames)
+        }
+    }
+
+    @ViewBuilder
+    private func notificationsSection() -> some View {
+        Section {
+            NavigationLink {
+                List {
+                    Section {
+                        SelectionListView(list: NotificationPreviewMode.values, selection: $m.notificationPreview) { previewMode in
+                            ntfPreviewModeGroupDefault.set(previewMode)
+                            m.notificationPreview = previewMode
+                        }
+                    } footer: {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(String(localized: "You can set lock screen notification preview via settings.", comment: "Instructions that users can configure notification previews in system Settings app"))
+                                .foregroundColor(theme.colors.secondary)
+                            Button(String(localized: "Open Settings", comment: "Button to launch iOS Settings app")) {
+                                DispatchQueue.main.async {
+                                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                    }
+                                }
+                            }
+                            .buttonStyle(GlassButtonStyle(tint: theme.colors.primary))
+                            .foregroundColor(isInDarkTheme() ? .white : .primary)
+                        }
+                    }
+                }
+                .listRowBackground(Color.clear)
+                .scrollContentBackground(.hidden)
+                .navigationTitle(String(localized: "Show preview", comment: "Navigation title for notification preview mode selection screen"))
+                .modifier(ThemedBackground(grouped: true))
+                .navigationBarTitleDisplayMode(.inline)
+            } label: {
+                HStack {
+                    Text(String(localized: "Show preview", comment: "Label for notification preview setting"))
+                    Spacer()
+                    Text(m.notificationPreview.label)
+                }
+            }
+        } header: {
+            Text(String(localized: "Notifications", comment: "Section header for notification-related privacy settings"))
+                .foregroundColor(theme.colors.secondary)
+        }
+    }
+
+    @ViewBuilder
+    private func receiptsSection() -> some View {
+        Section {
+            settingsRow("person", color: theme.colors.secondary) {
+                Toggle(String(localized: "Contacts", comment: "Toggle to send delivery receipts to individual contacts"), isOn: $contactReceipts)
+            }
+            settingsRow("person.2", color: theme.colors.secondary) {
+                Toggle(String(localized: "Small groups (max 20)", comment: "Toggle to send delivery receipts to small groups with 20 or fewer members"), isOn: $groupReceipts)
+            }
+        } header: {
+            Text(String(localized: "Send delivery receipts to", comment: "Section header for configuring who receives message delivery confirmations"))
+                .foregroundColor(theme.colors.secondary)
+        } footer: {
+            VStack(alignment: .leading) {
+                Text(String(localized: "These settings are for your current profile **\(m.currentUser?.displayName ?? "")**.", comment: "Footer indicating which user profile the settings apply to - markdown bold syntax preserved"))
+                Text(String(localized: "They can be overridden in contact and group settings.", comment: "Note that individual chat settings take precedence over these global defaults"))
+            }
+            .foregroundColor(theme.colors.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .confirmationDialog(contactReceiptsDialogTitle, isPresented: $contactReceiptsDialogue, titleVisibility: .visible) {
+            Button(contactReceipts ? String(localized: "Enable (keep overrides)", comment: "Button to enable feature while preserving per-contact custom settings") : String(localized: "Disable (keep overrides)", comment: "Button to disable feature while preserving per-contact custom settings")) {
+                setSendReceiptsContacts(contactReceipts, clearOverrides: false)
+            }
+            Button(contactReceipts ? String(localized: "Enable for all", comment: "Button to enable feature for all contacts, removing custom settings") : String(localized: "Disable for all", comment: "Button to disable feature for all contacts, removing custom settings"), role: .destructive) {
+                setSendReceiptsContacts(contactReceipts, clearOverrides: true)
+            }
+            Button(String(localized: "Cancel", comment: "Standard cancel button text"), role: .cancel) {
+                contactReceiptsReset = true
+                contactReceipts.toggle()
+            }
+        }
+        .confirmationDialog(groupReceiptsDialogTitle, isPresented: $groupReceiptsDialogue, titleVisibility: .visible) {
+            Button(groupReceipts ? String(localized: "Enable (keep overrides)", comment: "Button to enable feature while preserving per-group custom settings") : String(localized: "Disable (keep overrides)", comment: "Button to disable feature while preserving per-group custom settings")) {
+                setSendReceiptsGroups(groupReceipts, clearOverrides: false)
+            }
+            Button(groupReceipts ? String(localized: "Enable for all", comment: "Button to enable feature for all groups, removing custom settings") : String(localized: "Disable for all", comment: "Button to disable feature for all groups, removing custom settings"), role: .destructive) {
+                setSendReceiptsGroups(groupReceipts, clearOverrides: true)
+            }
+            Button(String(localized: "Cancel", comment: "Standard cancel button text"), role: .cancel) {
+                groupReceiptsReset = true
+                groupReceipts.toggle()
+            }
         }
     }
 }
@@ -493,13 +530,13 @@ enum LAMode: String, Identifiable, CaseIterable {
 
     var text: LocalizedStringKey {
         switch self {
-        case .system: return "System"
-        case .passcode: return "Passcode"
+        case .system: return LocalizedStringKey(NSLocalizedString("privacy_lock_system", comment: ""))
+        case .passcode: return LocalizedStringKey(NSLocalizedString("privacy_lock_passcode", comment: ""))
         }
     }
 }
 
-struct SimplexLockView: View {
+struct PopopxLockView: View {
     @Binding var prefPerformLA: Bool
     @Binding var currentLAMode: LAMode
     @EnvironmentObject var m: ChatModel
@@ -550,25 +587,25 @@ struct SimplexLockView: View {
         let m = t / 60
         let s = t % 60
         return t == 0
-            ? "Immediately"
+            ? LocalizedStringKey(NSLocalizedString("privacy_timeout_immediately", comment: ""))
             : m == 0 || s != 0
-            ? "\(s) seconds" // there are no options where both minutes and seconds are needed
-            : "\(m) minutes"
+            ? LocalizedStringKey("^[\(s)] seconds](inflect: true)")
+            : LocalizedStringKey("^[\(m)] minutes](inflect: true)")
     }
 
     var body: some View {
         VStack {
             List {
                 Section("") {
-                    Toggle("Enable lock", isOn: $performLA)
-                    Picker("Lock mode", selection: $laMode) {
+                    Toggle(String(localized: "Enable lock", comment: "Toggle to enable app lock security feature"), isOn: $performLA)
+                    Picker(String(localized: "Lock mode", comment: "Picker label for selecting authentication method"), selection: $laMode) {
                         ForEach(LAMode.allCases) { mode in
                             Text(mode.text)
                         }
                     }
                     .frame(height: 36)
                     if performLA {
-                        Picker("Lock after", selection: $laLockDelay) {
+                        Picker(String(localized: "Lock after", comment: "Picker label for selecting auto-lock timeout duration"), selection: $laLockDelay) {
                             let delays = laDelays.contains(laLockDelay) ? laDelays : [laLockDelay] + laDelays
                             ForEach(delays, id: \.self) { t in
                                 Text(laDelayText(t))
@@ -576,43 +613,53 @@ struct SimplexLockView: View {
                         }
                         .frame(height: 36)
                         if showChangePassword && laMode == .passcode {
-                            Button("Change passcode") {
+                            Button(String(localized: "Change passcode", comment: "Button to modify the current app passcode")) {
                                 changeLAPassword()
                             }
+                            .buttonStyle(GlassButtonStyle(tint: theme.colors.primary))
+                            .foregroundColor(isInDarkTheme() ? .white : .primary)
                         }
                     }
                 }
 
                 if performLA {
-                    Section("Share to SimpleX") {
-                        Toggle("Allow sharing", isOn: $allowShareExtension)
+                    Section(String(localized: "Share to POPOPX", comment: "Section header for iOS share extension permissions")) {
+                        Toggle(String(localized: "Allow sharing", comment: "Toggle to permit other apps to share content to POPOPX"), isOn: $allowShareExtension)
                     }
                 }
 
                 if performLA && laMode == .passcode {
-                    Section(header: Text("Self-destruct passcode").foregroundColor(theme.colors.secondary)) {
+                    Section(header: Text(String(localized: "Self-destruct passcode", comment: "Section header for emergency data wipe passcode settings")).font(isInDarkTheme() ? darkThemeHeaderFont() : .body).foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)) {
                         Toggle(isOn: $selfDestruct) {
                             HStack(spacing: 6) {
-                                Text("Enable self-destruct")
+                                Text(String(localized: "Enable self-destruct", comment: "Toggle to activate emergency data deletion feature"))
                                 Image(systemName: "info.circle")
                                     .foregroundColor(theme.colors.primary)
-                                    .font(.system(size: 14))
+                                    .font(.subheadline)
+                                    .accessibilityAddTraits(.isButton)
+                                    .accessibilityLabel(NSLocalizedString("self_destruct_passcode_info", comment: "Self-destruct passcode info accessibility label"))
                             }
                             .onTapGesture {
                                 showPasswordAction = .selfDestructInfo
                             }
                         }
                         if selfDestruct {
-                            TextField("New display name", text: $selfDestructDisplayName)
-                            Button("Change self-destruct passcode") {
+                            TextField(String(localized: "New display name", comment: "Placeholder text for entering profile name after self-destruct"), text: $selfDestructDisplayName)
+                            Button(String(localized: "Change self-destruct passcode", comment: "Button to modify the emergency wipe passcode")) {
                                 changeSelfDestructPassword()
                             }
+                            .buttonStyle(GlassButtonStyle(tint: theme.colors.primary))
+                            .foregroundColor(isInDarkTheme() ? .white : .primary)
                         }
                     }
                 }
             }
         }
-        .onChange(of: performLA) { performLAToggle in
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
+        .modifier(ThemedBackground(grouped: true))
+        .onChange(of: performLA) {_,  performLAToggle in
+            triggerHapticFeedback(.light)
             appLocalAuthEnabledGroupDefault.set(performLAToggle)
             prefLANoticeShown = true
             if performLAToggleReset {
@@ -629,7 +676,7 @@ struct SimplexLockView: View {
                 disableLA()
             }
         }
-        .onChange(of: laMode) { _ in
+        .onChange(of: laMode) {_, _ in
             if performLAModeReset {
                 performLAModeReset = false
             } else if prefPerformLA {
@@ -638,7 +685,8 @@ struct SimplexLockView: View {
                 updateLAMode()
             }
         }
-        .onChange(of: selfDestruct) { _ in
+        .onChange(of: selfDestruct) {_, _ in
+            triggerHapticFeedback(.light)
             if performLASelfDestructReset {
                 performLASelfDestructReset = false
             } else if prefPerformLA {
@@ -651,11 +699,11 @@ struct SimplexLockView: View {
             case .laFailedAlert: return laFailedAlert()
             case .laUnavailableInstructionAlert: return laUnavailableInstructionAlert()
             case .laUnavailableTurningOffAlert: return laUnavailableTurningOffAlert()
-            case .laPasscodeSetAlert: return passcodeAlert("Passcode set!")
-            case .laPasscodeChangedAlert: return passcodeAlert("Passcode changed!")
-            case .laSelfDestructPasscodeSetAlert: return selfDestructPasscodeAlert("Self-destruct passcode enabled!")
-            case .laSelfDestructPasscodeChangedAlert: return selfDestructPasscodeAlert("Self-destruct passcode changed!")
-            case .laPasscodeNotChangedAlert: return mkAlert(title: "Passcode not changed!")
+            case .laPasscodeSetAlert: return passcodeAlert(LocalizedStringKey(NSLocalizedString("privacy_passcode_set", comment: "alert title")))
+            case .laPasscodeChangedAlert: return passcodeAlert(LocalizedStringKey(NSLocalizedString("privacy_passcode_changed", comment: "alert title")))
+            case .laSelfDestructPasscodeSetAlert: return selfDestructPasscodeAlert(LocalizedStringKey(NSLocalizedString("privacy_self_destruct_enabled", comment: "alert title")))
+            case .laSelfDestructPasscodeChangedAlert: return selfDestructPasscodeAlert(LocalizedStringKey(NSLocalizedString("privacy_self_destruct_changed", comment: "alert title")))
+            case .laPasscodeNotChangedAlert: return mkAlert(title: LocalizedStringKey(NSLocalizedString("privacy_passcode_not_changed", comment: "alert title")))
             }
         }
         .sheet(item: $showPasswordAction) { a in
@@ -689,7 +737,7 @@ struct SimplexLockView: View {
                 SetAppPasscodeView(
                     passcodeKeychain: kcSelfDestructPassword,
                     prohibitedPasscodeKeychain: kcAppPassword,
-                    title: "Set passcode",
+                    title: LocalizedStringKey(NSLocalizedString("privacy_set_passcode", comment: "set passcode view title")),
                     reason: NSLocalizedString("Enable self-destruct passcode", comment: "set passcode view")
                 ) {
                     updateSelfDestruct()
@@ -721,18 +769,18 @@ struct SimplexLockView: View {
 
     private func selfDestructInfoView() -> some View {
         VStack(alignment: .leading) {
-            Text("Self-destruct")
+            Text(String(localized: "Self-destruct", comment: "Title for emergency data deletion feature explanation screen"))
                 .font(.largeTitle)
                 .bold()
                 .padding(.vertical)
             ScrollView {
                 VStack(alignment: .leading) {
                     Group {
-                        Text("If you enter your self-destruct passcode while opening the app:")
+                        Text(String(localized: "If you enter your self-destruct passcode while opening the app:", comment: "Introduction explaining when self-destruct sequence triggers"))
                         VStack(spacing: 8) {
-                            textListItem("1.", "All app data is deleted.")
-                            textListItem("2.", "App passcode is replaced with self-destruct passcode.")
-                            textListItem("3.", "An empty chat profile with the provided name is created, and the app opens as usual.")
+                            textListItem("1.", String(localized: "All app data is deleted."))
+                            textListItem("2.", String(localized: "App passcode is replaced with self-destruct passcode."))
+                            textListItem("3.", String(localized: "An empty chat profile with the provided name is created, and the app opens as usual."))
                         }
                     }
                     .padding(.bottom)
@@ -759,7 +807,7 @@ struct SimplexLockView: View {
                 switch laMode {
                 case .system:
                     updateLAMode()
-                    authenticate(reason: NSLocalizedString("Enable SimpleX Lock", comment: "authentication reason")) { laResult in
+                    authenticate(reason: NSLocalizedString("Enable POPOPX Lock", comment: "authentication reason")) { laResult in
                         switch laResult {
                         case .success:
                             _ = kcAppPassword.remove()
@@ -800,7 +848,7 @@ struct SimplexLockView: View {
     }
 
     private func changeLAPassword() {
-        authenticate(title: "Current Passcode", reason: NSLocalizedString("Change passcode", comment: "authentication reason")) { laResult in
+        authenticate(title: LocalizedStringKey(NSLocalizedString("privacy_current_passcode", comment: "authentication title")), reason: NSLocalizedString("Change passcode", comment: "authentication reason")) { laResult in
             switch laResult {
             case .failed: laAlert = .laFailedAlert
             case .success: showPasswordAction = .changePasscode
@@ -821,7 +869,7 @@ struct SimplexLockView: View {
 
     private func enableLA() {
         resetLA()
-        authenticate(reason: NSLocalizedString("Enable SimpleX Lock", comment: "authentication reason")) { laResult in
+        authenticate(reason: NSLocalizedString("Enable POPOPX Lock", comment: "authentication reason")) { laResult in
             switch laResult {
             case .success:
                 m.contentViewAccessAuthenticated = true
@@ -844,7 +892,7 @@ struct SimplexLockView: View {
     }
 
     private func disableLA() {
-        authenticate(reason: NSLocalizedString("Disable SimpleX Lock", comment: "authentication reason")) { laResult in
+        authenticate(reason: NSLocalizedString("Disable POPOPX Lock", comment: "authentication reason")) { laResult in
             switch (laResult) {
             case .success:
                 prefPerformLA = false
@@ -899,11 +947,11 @@ struct SimplexLockView: View {
     }
 
     private func passcodeAlert(_ title: LocalizedStringKey) -> Alert {
-        mkAlert(title: title, message: "Please remember or store it securely - there is no way to recover a lost passcode!")
+        mkAlert(title: title, message: LocalizedStringKey(NSLocalizedString("privacy_remember_passcode_warning", comment: "passcode alert message")))
     }
 
     private func selfDestructPasscodeAlert(_ title: LocalizedStringKey) -> Alert {
-        mkAlert(title: title, message: "If you enter this passcode when opening the app, all app data will be irreversibly removed!")
+        mkAlert(title: title, message: LocalizedStringKey(NSLocalizedString("privacy_self_destruct_data_warning", comment: "self-destruct passcode alert message")))
     }
 }
 

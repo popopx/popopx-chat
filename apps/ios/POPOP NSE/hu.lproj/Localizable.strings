@@ -1,0 +1,921 @@
+/*
+  Localizable.strings
+  POPOP NSE
+
+  Created by EP on 30/07/2024.
+  Copyright © 2024 POPOP Chat. All rights reserved.
+*/
+
+
+"New messages" = "Új üzenetek";
+
+"New events" = "Új események";
+
+"From %d chat(s)" = "%d chat(ből)";
+
+"From: %@" = "Feladó: %@";
+
+"%d new events" = "%d új esemény";
+
+" and " = " és ";
+
+", " = ", ";
+
+" other chats" = " további chat";
+
+"new message" = "új üzenet";
+
+"%@ wants to connect!" = "%@ csatlakozni szeretne!";
+
+"Accept contact request from %@?" = "Elfogadja %@ kapcsolatfelvételi kérését?";
+
+"%@ is connected!" = "%@ csatlakozott!";
+
+"Incoming video call" = "Bejövő videohívás";
+
+"Incoming audio call" = "Bejövő hanghívás";
+
+"Encrypted message: app is stopped" = "Titkosított üzenet: az app leállt";
+
+"Contact hidden:" = "Rejtett kontakt:";
+
+"Somebody" = "Valaki";
+
+"this contact" = "ez a kontakt";
+
+"A new contact" = "Egy új kontakt";
+
+"You can now chat with %@" = "Most már cseveghet %@ partnerrel";
+
+"New contact:" = "Új kontakt:";
+
+"message received" = "üzenet érkezett";
+
+"New contact request" = "Új kapcsolatfelvételi kérés";
+
+"Group message:" = "Csoportos üzenet:";
+
+"Report: %@" = "Jelentés: %@";
+
+"Encrypted message: no passphrase" = "Titkosított üzenet: nincs jelszó";
+
+"Encrypted message: database migration error" = "Titkosított üzenet: adatbázis-migrálási hiba";
+
+"Encrypted message: database error" = "Titkosított üzenet: adatbázishiba";
+
+"Encrypted message: keychain error" = "Titkosított üzenet: kulcslánchiba";
+
+"Encrypted message: unexpected error" = "Titkosított üzenet: váratlan hiba";
+
+"Encrypted message or another event" = "Titkosított üzenet vagy más esemény";
+
+/* RadialActionMenu - Chat actions */
+"accept_contact_request" = "Elfogadás";
+"incognito_accept" = "Inkognitó";
+"reject_contact_request" = "Elutasítás";
+"join_group" = "Csatlakozás";
+"archive_reports" = "Archiválás";
+"leave_group_action" = "Kilépés";
+"mark_read" = "Olvasott";
+"mark_unread" = "Olvasatlan";
+"unfavorite_chat" = "Nem kedv";
+"favorite_chat" = "Kedv";
+"chat_list" = "Lista";
+"clear_conversation" = "Törlés";
+"delete_chat" = "Törlés";
+
+/* RadialActionMenu - Alert dialogs */
+"clear_private_notes_title" = "Privát jegyzetek törlése?";
+"clear_conversation_title" = "Beszélgetés törlése?";
+"clear_private_notes_message" = "Minden üzenet törlésre kerül – ez nem vonható vissza!";
+"clear_conversation_message" = "Minden üzenet törlésre kerül – ez nem vonható vissza! Az üzenetek CSAK Öntől lesznek törölve.";
+"clear_action" = "Törlés";
+"archive_reports_title" = "Összes jelentés archiválása?";
+"archive_reports_message" = "Minden jelentés archiválásra kerül Önnél.";
+"archive_action" = "Archiválás";
+"leave_group_title" = "Kilép a csoportból?";
+"leave_group_message" = "Többé nem kap üzeneteket ebből a csoportból.";
+"leave_action" = "Kilépés";
+
+/* OneHandUICard - Accessibility */
+"selected_state" = "Kiválasztva";
+"not_selected_state" = "Nincs kiválasztva";
+
+/* PXContactConnectionInfo - Connection status */
+"you_invited_contact" = "Meghívott egy kontaktot";
+"you_accepted_connection" = "Elfogadta a kapcsolatot";
+"group_connection_pending" = "Akkor lesz csatlakoztatva a csoporthoz, amikor a csoportgazda eszköze online lesz, kérjük, várjon vagy ellenőrizze később!";
+"connection_request_pending" = "Akkor lesz csatlakoztatva, amikor a kapcsolatfelvételi kérését elfogadják, kérjük, várjon vagy ellenőrizze később!";
+"contact_device_pending" = "Akkor lesz csatlakoztatva, amikor a kontaktja eszköze online lesz, kérjük, várjon vagy ellenőrizze később!";
+"incognito_mode" = "Inkognitó";
+"delete_connection" = "Kapcsolat törlése";
+"share_onetime_link" = "Egyhasználatos link megosztása";
+"onetime_invitation_title" = "Egyszer használatos meghívó link";
+"learn_more" = "További információ";
+
+/* PXTagListView - Tag management */
+"delete_list_title" = "Lista törlése?";
+"delete_list_message" = "Minden chat eltávolításra kerül a(z) %@ listából, és a lista törlésre kerül.";
+"delete_action" = "Törlés";
+"edit_action" = "Szerkesztés";
+"create_list" = "Lista létrehozása";
+"error_reordering_lists" = "Hiba a listák átrendezésekor";
+"error_saving_chat_list" = "Hiba a chatlista mentésekor";
+"add_to_list" = "Hozzáadás listához";
+"save_list" = "Lista mentése";
+"unique_list_name_emoji" = "A lista nevének és emoji-jának minden listánál különbözőnek kell lennie.";
+"error_creating_list" = "Hiba a lista létrehozásakor";
+
+/* PXChatRelayView - Relay settings (Batch 3) */
+"relay_test_failed_title" = "Relay teszt sikertelen!";
+"your_relay_name" = "Az Ön relay neve";
+"preset_relay_address" = "Előre beállított relay cím";
+"preset_relay_name" = "Előre beállított relay név";
+"your_relay_address" = "Az Ön relay címe";
+"test_relay_footer" = "**Relay tesztelése** a nevének lekérdezéséhez.";
+"delete_relay" = "Relay törlése";
+"use_relay" = "Relay használata";
+"test_relay_button" = "Relay tesztelése";
+"use_for_new_channels" = "Használat új csatornákhoz";
+"chat_relay_nav_title" = "Chat közvetítő";
+"enter_relay_name_placeholder" = "Adja meg a relay nevét…";
+
+/* UserAddressLearnMore - Address help (Batch 3) */
+"share_address_publicly" = "POPOPX-cím megosztása a közösségi médiában.";
+"address_wont_lose_contacts" = "Nem veszíti el a kontaktjait, ha később törli a címét.";
+"onetime_link_usage_hint" = "Az egyszer használatos link *csak egy kontakttal* használható – ossza meg személyesen vagy bármely futáron keresztül.";
+"set_connection_name_hint" = "Beállíthatja a kapcsolat nevét, hogy emlékezzen, kivel osztotta meg a linket.";
+"connection_security" = "Kapcsolatbiztonság";
+"address_links_safe_share" = "A POPOPX-cím és az egyszer használatos linkek biztonságosan megoszthatók bármely futáron keresztül.";
+"compare_security_codes" = "A link cseréje elleni védelem érdekében összehasonlíthatja a kontakt biztonsági kódjait.";
+"read_more_user_guide" = "Olvasson többet a Felhasználói kézikönyvben.";
+"create_popopx_address" = "POPOPX-cím létrehozása";
+"create_onetime_link" = "Egyszer használatos link létrehozása";
+"popopx_address_title" = "POPOPX-cím";
+"new_chat_title" = "Új chat";
+
+/* PXRTCServers - WebRTC settings (Batch 3) */
+"configure_ice_servers" = "ICE-szerverek konfigurálása";
+"use_popopx_servers_confirm" = "POPOPX Chat szerverek használata?";
+"saved_webrtc_removed" = "A mentett WebRTC ICE-szerverek eltávolításra kerülnek";
+"confirm_action" = "Megerősítés";
+"using_popopx_servers" = "POPOPX Chat szerverek használatban.";
+"ice_servers_one_per_line" = "ICE-szerverek (soronként egy)";
+"error_saving_ice_servers" = "Hiba az ICE-szerverek mentésekor";
+"ice_servers_format_error" = "Győződjön meg róla, hogy a WebRTC ICE-szervercímek helyes formátumban vannak, soronként elválasztva és nincsenek duplikálva.";
+"how_to" = "Hogyan";
+
+/* PXChatItemInfoView - Chat item info (Batch 4) */
+"delivery_tab" = "Kézbesítés";
+"history_tab" = "Előzmények";
+"in_reply_to_tab" = "Válaszként";
+"saved_message" = "Mentett";
+"forwarded_message" = "Továbbított";
+"history_section" = "Előzmények";
+"no_history" = "Nincs előzmény";
+"share_action" = "Megosztás";
+"copy_action" = "Másolás";
+"current_version" = "(jelenlegi)";
+"no_text_content" = "nincs szöveg";
+"in_reply_to_section" = "Válaszként";
+"recipients_cant_see_sender" = "A címzett(ek) nem láthatják, ki küldte ezt az üzenetet.";
+"you_sent_label" = "ön";
+"delivery_section" = "Kézbesítés";
+"no_delivery_info" = "Nincs kézbesítési információ";
+
+/* PXFramedItemView - Chat item framing (Batch 5) */
+"only_you_and_mods_see" = "Csak Ön és a moderátorok látják";
+"only_sender_and_mods_see" = "Csak a feladó és a moderátorok látják";
+"archived_report" = "archivált jelentés";
+"moderated_by_user" = "moderálta";
+"blocked_status" = "letiltva";
+"blocked_by_admin" = "admin által letiltva";
+"marked_deleted" = "töröltnek jelölve";
+"live_message" = "ÉLŐ";
+
+/* PXIntegrityErrorItemView - Error alerts (Batch 5) */
+"skipped_messages_title" = "Kihagyott üzenetek";
+"skipped_messages_message" = "Ez előfordulhat, amikor:\n1. Az üzenetek a küldő kliensben 2 nap, vagy a szerveren 30 nap után lejártak.\n2. Az üzenet visszafejtése sikertelen, mert Ön vagy a kontaktja régi adatbázis-mentést használt.\n3. A kapcsolat compromittálódott.";
+"bad_message_hash" = "Hibás üzenet hash";
+"hash_mismatch_description" = "Az előző üzenet hash-e eltérő.";
+"report_to_developers" = "Kérjük, jelentse a fejlesztőknek.";
+"bad_message_id" = "Hibás üzenetazonosító";
+"message_id_incorrect" = "A következő üzenet azonosítója helytelen (kisebb vagy egyenlő, mint az előző).\nEz hiba miatt vagy compromittálódott kapcsolat esetén fordulhat elő.";
+"message_receive_error" = "Az app %d próbálkozás után eltávolította ezt az üzenetet.";
+"message_error_title" = "Üzenethiba";
+
+"chat_audio_call" = "Hanghívás";
+"chat_video_call" = "Videohívás";
+"chat_all_messages" = "Összes üzenet";
+"chat_search" = "Keresés";
+"chat_filter" = "Szűrés";
+"chat_invite_member" = "Tag meghívása";
+
+"compose_member_deleted_cant_accept" = "A tag törölve lett – nem fogadható el a kérés";
+"compose_reject" = "Elutasítás";
+"compose_accept" = "Elfogadás";
+"compose_your_profile" = "Az Ön profilja";
+"compose_incognito" = "Inkognitó";
+"compose_send_live_message" = "Élő üzenet küldése";
+"compose_disappearing_message" = "Eltűnő üzenet";
+"compose_char_count_format" = "%d/65536";
+"compose_scan_security_code" = "Olvassa le a biztonsági kódot a kontaktja appjából.";
+"compose_incorrect_security_code" = "Helytelen biztonsági kód!";
+"compose_no_filtered_chats" = "Nincsenek szűrt chatek";
+"compose_share" = "Megosztás";
+"compose_copy" = "Másolás";
+"compose_mark_read" = "Megjelölés olvasottként";
+"compose_delete_from_history" = "Törlés az előzményekből";
+"compose_archive_report" = "Jelentés archiválása";
+"compose_answer_call" = "Hívás fogadása";
+"compose_tap_to_open" = "Koppintson a megnyitáshoz";
+"compose_invalid_data" = "érvénytelen adat";
+"compose_event_happened" = "esemény történt";
+
+"group_no_contacts_to_add" = "Nincsenek hozzáadható kontaktok";
+"group_clear_selection" = "Törlés";
+"group_contacts_selected_fmt" = "%d kontakt kiválasztva";
+"group_no_contacts_selected" = "Nincsenek kiválasztott kontaktok";
+"group_cant_invite_contact_title" = "A kontakt nem hívható meg!";
+"group_cant_invite_contact_msg" = "Olyan kontaktot próbál meghívni, akivel megosztott egy inkognitó profilt, abba a csoportba, amelyben a fő profilját használja";
+"group_enabled_for" = "Engedélyezve";
+"group_set_member_admission" = "Tagfelvétel beállítása";
+"group_member_admission" = "Tagfelvétel";
+"group_no_available_relays" = "Nincsenek elérhető relay-k";
+"group_channel_delete_all" = "A csatorna minden előfizető számára törlésre kerül – ez nem vonható vissza!";
+"group_channel_delete_you" = "A csatorna Önnél lesz törölve – ez nem vonható vissza!";
+"group_group_delete_all" = "A csoport minden tag számára törlésre kerül – ez nem vonható vissza!";
+"group_group_delete_you" = "A csoport Önnél lesz törölve – ez nem vonható vissza!";
+"group_chat_delete_all" = "A chat minden tag számára törlésre kerül – ez nem vonható vissza!";
+"group_chat_delete_you" = "A chat Önnél lesz törölve – ez nem vonható vissza!";
+"group_cant_invite_contacts_title" = "A kontaktok nem hívhatók meg!";
+"group_cant_invite_contacts_msg" = "Inkognitó profilt használ ehhez a csoporthoz – a fő profilja megosztásának megakadályozása érdekében a kontaktok meghívása nem engedélyezett";
+"group_receipts_disabled_title" = "Az átvételi visszaigazolások le vannak tiltva";
+"group_receipts_disabled_msg_fmt" = "Ebben a csoportban több mint %d tag van, az átvételi visszaigazolások nem kerülnek küldésre.";
+"group_copy_code" = "Kód másolása";
+"group_webpage_code" = "Weboldal kód";
+"group_webpage_code_instructions" = "Adja hozzá ezt a kódot a weboldalához. Megjeleníti a csatorna / csoport előnézetét.";
+"group_enter_webpage_url" = "Adja meg a weboldal URL-jét";
+"group_webpage_url_instructions" = "Ez megjelenik az előfizetők számára és az előnézet betöltésének engedélyezésére szolgál.";
+"group_chat_with_admins" = "Chat az adminokkal";
+"group_member_reports" = "Tagjelentések";
+"group_set_group_preferences" = "Csoportbeállítások megadása";
+"group_owners_section" = "Tulajdonosok";
+"group_you_label" = "ön";
+"group_no_chat_relays" = "Nincsenek chat relay-k";
+"group_chat_relays_forward_info" = "A chat relay-k továbbítják az üzeneteket a csatorna előfizetőinek.";
+"group_reset_button" = "Visszaállítás";
+"group_take_picture" = "Fénykép készítése";
+"group_choose_from_library" = "Választás a könyvtárból";
+"group_paste_image" = "Kép beillesztése";
+"group_read_action" = "Olvasás";
+"group_accept_action" = "Elfogadás";
+"group_delete_action_member" = "Törlés";
+"group_share_link_desc_channel" = "Megoszthat egy linket vagy QR-kódot – bárki csatlakozhat a csatornához.";
+"group_share_link_desc_group" = "Megoszthat egy linket vagy QR-kódot – bárki csatlakozhat a csoporthoz. Nem veszíti el a csoport tagjait, ha később törli azt.";
+"group_upgrade_link" = "Link frissítése";
+"group_share_link_button" = "Link megosztása";
+"group_share_via_chat_button" = "Megosztás chaten keresztül";
+"group_delete_link" = "Link törlése";
+"group_create_link_button" = "Link létrehozása";
+"group_delete_link_title" = "Link törlése?";
+"group_delete_link_message" = "Minden csoporttag kapcsolatban marad.";
+"group_delete_link_action" = "Törlés";
+
+"settings_send_notifications" = "Értesítések küldése";
+"settings_lock_screen_preview" = "A zárképernyő értesítési előnézetét a beállításokon keresztül állíthatja be.";
+"settings_open_settings_button" = "Beállítások megnyitása";
+"settings_show_preview" = "Előnézet megjelenítése";
+"settings_push_notifications" = "Push értesítések";
+"settings_restart_migrate_notice" = "Kérjük, újra indítsa az appot és migrálja az adatbázist a push értesítések engedélyezéséhez.";
+"settings_server_test_failed" = "Szverteszt sikertelen!";
+"settings_test_notifications" = "Értesítések tesztelése";
+"settings_core_version_fmt" = "Mag verzió: v%@";
+"settings_core_engine_fmt" = "Mag motor: v%@";
+"settings_markdown_usage" = "Markdown-t használhat az üzenetek formázásához:";
+"settings_incognito_mode" = "Inkognitó mód";
+"settings_incognito_description_1" = "Az inkognitó mód védi a magánszféráját azáltal, hogy minden kontakthoz új véletlenszerű profilt használ.";
+"settings_incognito_description_2" = "Lehetővé teszi sok névtelen kapcsolat létrehozását megosztott adatok nélkül egyetlen chatprofilban.";
+"settings_incognito_description_3" = "Amikor megoszt egy inkognitó profilt valakivel, ez a profil lesz használva azokhoz a csoportokhoz, amelyekbe meghívja Önt.";
+"settings_chat_console" = "Chat konzol";
+"settings_reset_hints" = "Összes tipp visszaállítása";
+"settings_show_hide_db_ids" = "Adatbázis-azonosítók és a transport izoláció beállítása.";
+"settings_storage_label" = "Tárhely";
+"settings_developer_options" = "Fejlesztői beállítások";
+"settings_compute_store_url" = "Compute Store URL";
+"settings_compute_store_label" = "Compute Store";
+"settings_compute_store_hint" = "Hagyja üresen a helyi szimulált mód használatához. Állítson be egy backend URL-t a valós StoreKit vásárlások engedélyezéséhez szerver oldali ellenőrzéssel.";
+"settings_profile_stored_notice" = "Profilja az eszközén tárolódik és csak a kontaktjaival kerül megosztásra. A POPOPX szerverek nem látják az Ön profilját.";
+"settings_reset_button" = "Visszaállítás";
+"settings_save_notify_contacts" = "Mentés (és kontaktok értesítése)";
+"settings_take_picture" = "Fénykép készítése";
+"settings_choose_from_library" = "Választás a könyvtárból";
+"settings_paste_image" = "Kép beillesztése";
+"settings_hide_profile" = "Profil elrejtése";
+"settings_hidden_profile_password" = "Rejtett profil jelszava";
+"settings_hidden_profile_instructions" = "A rejtett profil megjelenítéséhez adjon meg egy teljes jelszót a **Chat profiljai** oldal keresőmezőjébe.";
+"settings_error_saving_password" = "Hiba a felhasználói jelszó mentésekor";
+"settings_time_disappear_new_contacts" = "Az eltűnési idő csak az új kontaktokra van beállítva.";
+"settings_webrtc_ice_servers" = "WebRTC ICE-szerverek";
+"settings_call_settings_header" = "Beállítások";
+"settings_relay_protects_ip" = "A relay szerver védi az IP-címét, de megfigyelheti a hívás időtartamát.";
+"settings_relay_only_if_necessary" = "A relay szerver csak szükség esetén használt. A másik fél megfigyelheti az IP-címét.";
+"settings_interface_section" = "Felület";
+"settings_accept_calls_lockscreen" = "A zárképernyőről is fogadhat hívásokat, eszköz- és app-hitelesítés nélkül.";
+"settings_auth_required_before_connect" = "A hívás csatlakoztatása előtt hitelesítés szükséges, de lemaradhat hívásokról.";
+"settings_limitations_section" = "Korlátozások";
+"settings_preset_server_address" = "Előre beállított szervercím";
+"settings_your_server_address" = "Az Ön szervercíme";
+"settings_add_to_another_device" = "Hozzáadás egy másik eszközhöz";
+"settings_use_for_messages" = "Használat üzenetekhez";
+"settings_yes_option" = "igen";
+"settings_no_option" = "nem";
+"settings_use_server" = "Szerver használata";
+"settings_chat_relays_header" = "Chat relay-k";
+"settings_chat_relays_forward_desc" = "A chat relay-k továbbítják az üzeneteket a csatornákban, amelyeket létrehoz.";
+"settings_message_servers" = "Üzenetszerverek";
+"settings_media_file_servers" = "Média- és fájl szerverek";
+"settings_add_server" = "Szerver hozzáadása";
+"settings_enter_server_manually" = "Szerver manuális megadása";
+"settings_scan_server_qr" = "Szerver QR-kód beolvasása";
+"settings_chat_relay_link" = "Chat relay";
+"settings_how_to_use_servers" = "Hogyan használja a szervereit";
+"settings_test_servers" = "Szerverek tesztelése";
+"settings_scan_server_qr_title" = "Szerver QR-kód beolvasása";
+
+
+/* NewChat - Group Creation */
+"group_create_button" = "Csoport létrehozása";
+"group_decentralized_footer" = "Teljesen decentralizált – csak a tagok számára látható.";
+"group_create_error_title" = "Hiba a csoport létrehozásakor";
+
+/* NewChat - Channel Creation */
+"channel_configure_relays" = "Relay-k konfigurálása";
+"channel_create_button" = "Nyilvános csatorna létrehozása";
+
+/* Developer Settings */
+"dev_compute_store_header" = "Compute Store";
+"dev_compute_store_footer" = "Hagyja üresen a helyi szimulált mód használatához. Állítson be egy backend URL-t a valós StoreKit vásárlások engedélyezéséhez szerver oldali ellenőrzéssel.";
+
+/* Network & Servers */
+"scan_server_qr_title" = "Szerver QR-kód beolvasása";
+
+/* NewChat Menu */
+"newchat_archived_contacts" = "Archivált kontaktok";
+"search_cancel_button" = "Mégse";
+
+/* Onboarding */
+"profile_name_placeholder" = "Adja meg a profil nevét...";
+"onboarding_back_button" = "Vissza";
+
+
+/* Nostr Square - Reply View */
+"nostr_reply_original_label" = "Eredeti";
+"nostr_reply_privacy_notice" = "A válasza névtelen és titkosított";
+"nostr_reply_title" = "Válasz";
+"nostr_reply_send_button" = "Küldés";
+
+/* Nostr Square - Broadcast Composer */
+"nostr_composer_privacy_title" = "Névtelen Közvetítés";
+"nostr_composer_privacy_subtitle" = "Az önazonossága végpontok közötti titkosítással védett";
+"nostr_composer_char_count" = "%d/%d";
+"nostr_composer_title" = "Új Közvetítés";
+"nostr_composer_send_button" = "Közzététel";
+
+/* Nostr Square - Broadcast Card */
+"nostr_card_anonymous_label" = "Névtelen";
+"nostr_card_resonate_button" = "Rezonálás";
+"nostr_card_ttl_label" = "TTL";
+
+
+/* Developer Settings - Additional */
+"dev_show_label" = "Megjelenítés:";
+"dev_hide_label" = "Elrejtés:";
+"dev_storage_button" = "Tárhely";
+"back_to_label" = "Vissza ide: %@";
+"duration_picker_label" = "Időtartam";
+"unit_picker_label" = "Egység";
+"theme_all_modes" = "Összes mód";
+"theme_light_mode" = "Világos mód";
+"theme_dark_mode" = "Sötét mód";
+"theme_apply_to_label" = "Alkalmazás erre";
+"error_failed_load_server_operators" = "A szerveroperátorok betöltése 3 próbálkozás után sikertelen. Az alkalmazás nem tud kommunikálni az alap szolgáltatással.";
+"error_cannot_set_empty_operators" = "Nem lehet üres operátorlistát beállítani";
+"error_failed_set_server_operators" = "A szerveroperátorok beállítása 5 próbálkozás után sikertelen.";
+"error_failed_save_servers" = "A szerverek mentése több próbálkozás után sikertelen";
+"error_failed_validate_servers" = "A szerverek ellenőrzése több próbálkozás után sikertelen";
+"error_failed_load_conditions" = "A feltételek szövegének betöltése 3 próbálkozás után sikertelen.";
+"error_no_operators_for_conditions" = "Nincsenek megadva operátorok a feltételek elfogadásához.";
+"error_invalid_conditions_id" = "Érvénytelen feltétel ID. Indítsa újra az alkalmazást.";
+"error_and_others_count" = "és még %d további hiba";
+"group_short_description_placeholder" = "Rövid leírás";
+"error_saving_channel_profile" = "Hiba a csatorna profil mentésekor";
+"error_saving_group_profile" = "Hiba a csoport profil mentésekor";
+"channel_profile_nav_title" = "Csatorna profil";
+"group_profile_nav_title" = "Csoport profil";
+"channel_webpage_create_description" = "Hozzon létre egy weboldalt, amely megmutatja a csatorna előnézetét a látogatóknak, mielőtt feliratkoznak. Hosztolja saját maga vagy használjon bármilyen statikus tárhelyet.";
+"channel_webpage_not_supported" = "A használt chat közvetítők nem támogatják a weboldalakat.";
+"channel_webpage_url_placeholder" = "https://";
+"channel_allow_embed_toggle" = "Bármelyik számára beágyazás engedélyezése";
+"channel_embed_any_page" = "Bármely weboldal megjelenítheti az előnézetet.";
+"channel_embed_only_your_page" = "Csak a fenti oldala jelenítheti meg az előnézetet.";
+"channel_save_notify_subscribers" = "Mentés és előfizetők értesítése";
+"channel_save_notify_members" = "Mentés és tagok értesítése";
+"app_version_label" = "Alkalmazás verzió: v%@";
+"app_build_label" = "Alkalmazás build: %@";
+"dev_show_options_toggle" = "Fejlesztői beállítások megjelenítése";
+"dev_confirm_db_upgrades_toggle" = "Adatbázis-frissítések megerősítése";
+"dev_deprecated_options_section" = "Elavult beállítások";
+"dev_popopx_links_picker" = "POPOPX linkek";
+"data_market_category_picker" = "Kategória";
+"data_market_category_label" = "Kategória";
+"group_initial_role_picker" = "Kezdeti szerep";
+"group_new_member_role_picker" = "Új tag szerepe";
+"bridge_sms_provider_picker" = "Szolgáltató";
+"wallpaper_scale_picker" = "Méretarány";
+"prefs_you_allow_picker" = "Ön engedélyezi";
+"prefs_you_allow_toggle" = "Ön engedélyezi";
+"prefs_contact_allows" = "A névjegy engedélyezi";
+"prefs_delete_after" = "Törlés ennyi idő után";
+"prefs_select_button" = "Kiválasztás";
+"chat_delete_messages_after" = "Üzenetek törlése ennyi idő után";
+"servers_user_selection_picker" = "Felhasználói kiválasztás";
+"servers_server_type_picker" = "Szerver típusa";
+"monetization_eula_link" = "EULA";
+"monetization_billing_period_picker" = "Számlázási időszak";
+"monetization_price_yearly" = "$99.9 / év";
+"monetization_price_monthly" = "$9.99 / hónap";
+"monetization_feature_chat_privacy" = "Összes chat és adatvédelmi funkció";
+"monetization_feature_compute_gifts" = "Számítási tokenek és ajándékok";
+"monetization_feature_own_servers" = "Saját SMP szerverek hozzáadása";
+"monetization_feature_quantum" = "Kiemelt kvantum funkciók";
+"db_delete_messages_after" = "Üzenetek törlése ennyi idő után";
+"mesh_hub_tab_chats" = "Mesh Csevegések";
+"mesh_hub_tab_public" = "Nyilvános csevegés";
+"mesh_hub_tab_groups" = "Csoportok";
+"mesh_hub_picker_label" = "Mesh Központ";
+"mesh_board_scope_picker" = "Hatókör";
+"migration_use_onion_hosts" = ".onion hosztok használata";
+"error_failed_load_protocol_info" = "A protokollinformációk betöltése sikertelen. Az alkalmazás nem tud kommunikálni az alap szolgáltatással. Zárja be kényszerítetten és indítsa újra az alkalmazást.";
+"error_invalid_conditions_id_detail" = "Érvénytelen feltétel ID (%lld). Az alkalmazás nem tudja azonosítani, melyik protokollverziót kell elfogadni. Indítsa újra teljesen az alkalmazást.";
+"error_no_operators_available" = "Nincsenek elérhető operátorok. Indítsa újra az alkalmazást.";
+"markdown_can_be_copied" = " (másolható)";
+"network_transport_isolation" = "Szállítás elkülönítés";
+"release_notes_transport_isolation_title" = "Szállítás elkülönítés";
+"release_notes_transport_isolation_desc" = "Chat profil szerint (alapértelmezett) vagy [kapcsolat szerint](https://popopxchat.com/blog/20230204-popopxchat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"voice_messages_prohibited_title" = "Hangüzenetek tiltva";
+"voice_messages_prohibited_ask_contact_message" = "Hangüzenetek nem engedélyezettek ebben a csevegésben. Kérjük, lépjen kapcsolatba a csevegés tulajdonosával.";
+"voice_messages_prohibited_group_owner_message" = "Hangüzenetek nem engedélyezettek ebben a csoportban. Kérjük, lépjen kapcsolatba a csoport tulajdonosával.";
+"voice_messages_prohibited_other_message" = "Hangüzenetek nem engedélyezettek ebben a csevegésben.";
+"waiting_for_file_title" = "Várakozás a fájlra";
+"waiting_for_file_xftp_message" = "A fájl átvitele XFTP protokollon keresztül történik.";
+"waiting_for_file_smp_message" = "A fájl átvitele SMP protokollon keresztül történik.";
+"waiting_for_image_title" = "Várakozás a képre";
+"waiting_for_image_xftp_message" = "A kép átvitele XFTP protokollon keresztül történik.";
+"waiting_for_image_smp_message" = "A kép átvitele SMP protokollon keresztül történik.";
+"waiting_for_video_title" = "Várakozás a videóra";
+"waiting_for_video_xftp_message" = "A videó átvitele XFTP protokollon keresztül történik.";
+"waiting_for_video_smp_message" = "A videó átvitele SMP protokollon keresztül történik.";
+"cannot_forward_message_title" = "Az üzenet nem továbbítható";
+"cannot_forward_message_message" = "Ez az üzenet nem továbbítható a csevegés beállításai miatt.";
+"la_lock_turned_on_title" = "POPOPX zár bekapcsolva";
+"la_lock_turned_on_message" = "A POPOPX zár bekapcsolásra került. Az alkalmazás eléréséhez hitelesítenie kell magát.";
+"la_lock_not_enabled_title" = "POPOPX zár nincs engedélyezve";
+"la_lock_not_enabled_message" = "A POPOPX zár nincs engedélyezve. Kérjük, engedélyezze a Beállításokban.";
+"la_auth_failed_title" = "Hitelesítés sikertelen";
+"la_auth_failed_message" = "Hitelesítés sikertelen. Kérjük, próbálja újra.";
+"la_auth_unavailable_title" = "Hitelesítés nem elérhető";
+"la_auth_unavailable_instruction_message" = "A hitelesítés nem elérhető ezen az eszközön. Kérjük, használjon másik hitelesítési módot.";
+"la_auth_unavailable_turning_off_message" = "A hitelesítés nem elérhető. A POPOPX zár kikapcsolásra kerül.";
+"delete_message_title" = "Üzenet törlése";
+"delete_messages_title" = "%d üzenet törlése";
+"delete_button" = "Törlés";
+"ok_button" = "OK";
+"cancel_button" = "Mégse";
+"unlock_button" = "Feloldás";
+"continue_button" = "Folytatás";
+"accept_button" = "Elfogadás";
+"reject_button" = "Elutasítás";
+"export_json_button" = "JSON exportálás";
+"back_button" = "Vissza";
+"chats_nav_title" = "Csevegések";
+"add_contact_nav_title" = "Névjegy hozzáadása";
+"group_link_nav_title" = "Csoport link";
+"channel_link_nav_title" = "Csatorna link";
+"creating_channel_nav_title" = "Csatorna létrehozása";
+"network_servers_nav_title" = "Hálózat és szerverek";
+"new_server_nav_title" = "Új szerver";
+"send_notifications_nav_title" = "Értesítések küldése";
+"show_preview_nav_title" = "Előnézet megjelenítése";
+"member_admission_nav_title" = "Tagfelvétel";
+"popopx_address_nav_title" = "POPOPX cím";
+"archived_contacts_nav_title" = "Archivált névjegyek";
+"profile_address_label" = "Az Ön POPOPX címe";
+"profile_chat_profiles_label" = "Chat profilok";
+"profile_connect_desktop_label" = "Csatlakozás asztali gépről";
+"profile_preferences_label" = "Beállítások";
+"profile_settings_label" = "Beállítások";
+"needle_extractions_accessibility" = "Needle kinyerések";
+"new_chat_accessibility" = "Új csevegés";
+"switch_to_mesh_accessibility" = "Váltás meshre";
+"switch_to_broadcast_accessibility" = "Váltás műsorszórásra";
+"call_toggle_video_fit" = "Videó illeszkedés váltása";
+"call_end_call" = "Hívás befejezése";
+"call_mute_microphone" = "Mikrofon némítása";
+"call_speaker" = "Hangszóró";
+"call_camera" = "Kamera";
+"call_flip_camera" = "Kamera váltása";
+"call_back_button" = "Vissza";
+"binthere_look_at_screen" = "Nézzen a képernyőre";
+"binthere_multiple_faces" = "Több arc észlelve";
+
+"add_contact_scan_qr" = "A csatlakozáshoz ismerőse beolvashatja a QR-kódot vagy használhatja az alkalmazásban található hivatkozást.";
+"add_contact_video_call" = "Ha nem tudnak személyesen találkozni, mutassa meg a QR-kódot videohívásban, vagy ossza meg a hivatkozást.";
+"api_contact_blocked_message" = "A kapcsolatot a szerverüzemeltető blokkolta:
+%@";
+%@";
+"api_contact_blocked_title" = "Kapcsolat blokkolva";
+"api_contact_how_it_works" = "Hogyan működik";
+"api_contact_ok" = "OK";
+"api_desktop_connection_stopped_message" = "Ellenőrizze, hogy a mobil és az asztali eszköz ugyanahhoz a helyi hálózathoz csatlakozik-e, és hogy az asztali tűzfal engedélyezi-e a kapcsolatot.
+Kérjük, ossza meg a többi problémát is a fejlesztőkkel.";
+Please share any other issues with the developers.";
+"api_desktop_connection_stopped_title" = "Az asztali géppel való kapcsolat megszakadt";
+"api_desktop_copy_error" = "Másolási hiba";
+"api_desktop_ok" = "OK";
+"api_start_chat_message" = "A csevegés leállt. Ha már használta ezt az adatbázist egy másik eszközön, a csevegés indítása előtt vissza kell szállítania.";
+"api_start_chat_ok" = "OK";
+"api_start_chat_title" = "Csevegés indítása?";
+"chat_console_title" = "Csevegés konzol";
+"chat_list_mesh_section" = "Mesh";
+"confirm_passcode_title" = "Jelkód megerősítése";
+"connect_banner_new_link" = "Új egyszeri hivatkozás";
+"connect_banner_paste_scan" = "Hivatkozás beillesztése / Beolvasás";
+"connection_error_title" = "Csatlakozási hiba";
+"data_market_sample1_desc" = "Összesített böngészési kategóriák személyes azonosítók nélkül";
+"data_market_sample1_title" = "Anonim böngészési minták";
+"data_market_sample2_desc" = "Alkalmazáskategóriákban töltött idő, anonimizálva";
+"data_market_sample2_title" = "Alkalmazáshasználati statisztikák";
+"data_market_sample3_desc" = "Pontatlan helyadatok a forgalomelemzéshez";
+"data_market_sample3_title" = "Regionális helytrendek";
+"data_market_sample4_desc" = "Étkezési preferenciák és korlátozások, anonimizálva";
+"data_market_sample4_title" = "Étkezési preferencia felmérés";
+"db_key_rotation_action" = "Az optimális biztonság érdekében frissítse adatbázisa jelszavát a Beállításokban.";
+"db_key_rotation_desc" = "Az adatbázis titkosítási kulcsa elérte az ajánlott rotációs időszakot.";
+"db_key_rotation_title" = "Adatbázis kulcs rotáció";
+"db_key_rotation_understood" = "Értettem";
+"delete_report_label" = "Jelentés törlése";
+"error_adding_short_link" = "Hiba a rövid hivatkozás hozzáadásakor";
+"invalid_qr_code_title" = "Érvénytelen QR-kód";
+"large_file_contact_message" = "Ismerőse olyan fájlt küldött, amely meghaladja a jelenleg támogatott maximális méretet (%@).";
+"large_file_title" = "Nagy fájl!";
+"mesh_board_title" = "Mesh tábla";
+"mesh_cancel" = "Mégse";
+"mesh_chat_list_title" = "Mesh csevegések";
+"mesh_compose_placeholder" = "Üzenet...";
+"mesh_create_group_button" = "Csoport létrehozása";
+"mesh_create_group_hint" = "Hozzon létre csoportot a titkosított csoportos üzenetküldéshez";
+"mesh_edges" = "Élek";
+"mesh_edges_header" = "Élek";
+"mesh_enter_group_name" = "Adja meg az új mesh csoport nevét";
+"mesh_last_updated" = "Utoljára frissítve";
+"mesh_local_peer" = "Helyi csomópont";
+"mesh_new_post" = "Új bejegyzés";
+"mesh_no_groups" = "Nincsenek mesh csoportok";
+"mesh_no_posts" = "Még nincsenek bejegyzések";
+"mesh_no_posts_description" = "Legyen az első, aki bejegyzést ír a mesh táblára";
+"mesh_no_topology" = "Nincs elérhető topológia";
+"mesh_nodes" = "Csomópontok";
+"mesh_nodes_header" = "Csomópontok";
+"mesh_overview_header" = "Áttekintés";
+"mesh_post_to_board" = "Bejegyzés a táblára";
+"mesh_urgent_label" = "Sürgős";
+"mesh_urgent_toggle" = "Megjelölés sürgősként";
+"migration_apply_button" = "Alkalmaz";
+"migration_check_internet" = "Ellenőrizze az internetkapcsolatot, és próbálja újra";
+"migration_error_deleting_db" = "Hiba az adatbázis törlésekor";
+"migration_error_exporting_db" = "Hiba a csevegés adatbázis exportálásakor";
+"migration_error_file_not_exist" = "Az exportált fájl nem létezik";
+"migration_error_generic" = "Hiba";
+"migration_error_migrating_settings" = "Hiba a beállítások migrálásakor";
+"migration_error_saving_settings" = "Hiba a beállítások mentésekor";
+"migration_error_starting_chat" = "Hiba a csevegés indításakor";
+"migration_error_uploading_archive" = "Hiba az archívum feltöltésekor";
+"migration_upload_failed" = "A feltöltés sikertelen";
+"needle_extractions_label" = "Kinyerések";
+"needle_no_data_found" = "A szövegben nem található strukturált adat.";
+"needle_no_extractions_found" = "Nem találhatók kinyerések.";
+"no_chats_in_list" = "Nincsenek csevegések a listában %@";
+"no_email_account_message" = "Nincs e-mail fiók beállítva ezen az eszközön. Kérjük, állítson be egy e-mail fiókot a Beállításokban a címe megosztásához.";
+"nostr_publish_failed" = "GlobalSquare.Publish.Failed";
+"nostr_publish_success" = "GlobalSquare.Publish.Success";
+"ntf_error_checking_token" = "Hiba a token állapotának ellenőrzésekor";
+"ntf_error_deleting_token" = "Hiba a token törlésekor";
+"ntf_error_enabling" = "Hiba az értesítések engedélyezésekor";
+"ntf_error_testing_server" = "Hiba a szerverkapcsolat tesztelésekor";
+"onboarding_connect_via_link" = "Csatlakozás hivatkozáson vagy QR-kódon keresztül";
+"onboarding_create_public_address" = "Hozza létre nyilvános címét";
+"onboarding_create_your_link" = "Hozza létre hivatkozását";
+"onboarding_for_anyone_to_reach" = "Hogy bárki elérhesse Önt";
+"onboarding_invite_privately" = "Hívjon meg valakit privátban";
+"onboarding_invite_privately_subtitle" = "Hivatkozás egy személy csatlakoztatásához";
+"onboarding_let_someone_connect" = "Engedje, hogy valaki csatlakozzon Önhöz";
+"onboarding_talk_to_someone" = "Beszélgessen valakivel";
+"onboarding_your_public_address" = "Az Ön nyilvános címe";
+"one_hand_toolbar_message" = "A Megjelenés beállításaiban módosíthatja.";
+"one_hand_toolbar_title" = "Elérhető csevegés eszköztár";
+"protocol_server_title" = "%@ szerver";
+"rn_v42_auto_accept" = "Választható üdvözlőüzenettel.";
+"rn_v42_auto_accept_desc" = "Választható üdvözlőüzenettel.";
+"rn_v42_group_links" = "Az adminisztrátorok hivatkozásokat hozhatnak létre a csoportokhoz való csatlakozáshoz.";
+"rn_v42_group_links_desc" = "Az adminisztrátorok hivatkozásokat hozhatnak létre a csoportokhoz való csatlakozáshoz.";
+"rn_v42_security_assessment" = "A POPOPX Chat biztonságát a Trail of Bits auditálta.";
+"rn_v42_security_assessment_desc" = "A POPOPX Chat biztonságát a Trail of Bits auditálta.";
+"rn_v43_irreversible_deletion" = "Ismerősei engedélyezhetik az üzenetek teljes törlését.";
+"rn_v43_irreversible_deletion_desc" = "Ismerősei engedélyezhetik az üzenetek teljes törlését.";
+"rn_v43_privacy_security" = "Az alkalmazás képernyőjének elrejtése a legutóbbi alkalmazásokban.";
+"rn_v43_privacy_security_desc" = "Az alkalmazás képernyőjének elrejtése a legutóbbi alkalmazásokban.";
+"rn_v43_server_config" = "Adjon hozzá szervereket QR-kódok beolvasásával.";
+"rn_v43_server_config_desc" = "Adjon hozzá szervereket QR-kódok beolvasásával.";
+"rn_v43_voice_messages" = "Max. 30 másodperc, azonnal fogadható.";
+"rn_v43_voice_messages_desc" = "Max. 30 másodperc, azonnal fogadható.";
+"rn_v44_disappearing_messages" = "Az elküldött üzenetek a beállított idő után törlődnek.";
+"rn_v44_disappearing_messages_desc" = "Az elküldött üzenetek a beállított idő után törlődnek.";
+"rn_v44_french_interface" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v44_french_interface_desc" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v44_gifs_stickers" = "Küldje őket a galériából vagy egyéni billentyűzetekről.";
+"rn_v44_gifs_stickers_desc" = "Küldje őket a galériából vagy egyéni billentyűzetekről.";
+"rn_v44_live_messages" = "A címzettek látják a frissítéseket gépelés közben.";
+"rn_v44_live_messages_desc" = "A címzettek látják a frissítéseket gépelés közben.";
+"rn_v44_verify_security" = "Hasonlítsa össze a biztonsági kódokat ismerőseivel.";
+"rn_v44_verify_security_desc" = "Hasonlítsa össze a biztonsági kódokat ismerőseivel.";
+"rn_v45_italian_interface" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v45_italian_interface_desc" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v45_message_draft" = "Az utolsó üzenetvázlat megőrzése mellékletekkel.";
+"rn_v45_message_draft_desc" = "Az utolsó üzenetvázlat megőrzése mellékletekkel.";
+"rn_v45_multiple_profiles" = "Különböző nevek, avatarok és közlekedési izoláció.";
+"rn_v45_multiple_profiles_desc" = "Különböző nevek, avatarok és közlekedési izoláció.";
+"rn_v45_private_filenames" = "Az időzóna védelme érdekében a kép/hang fájlok UTC-t használnak.";
+"rn_v45_private_filenames_desc" = "Az időzóna védelme érdekében a kép/hang fájlok UTC-t használnak.";
+"rn_v45_reduced_battery" = "További fejlesztések hamarosan!";
+"rn_v45_reduced_battery_desc" = "További fejlesztések hamarosan!";
+"rn_v46_audio_video_calls" = "Teljesen újraimplementálva — a háttérben működnek!";
+"rn_v46_audio_video_calls_desc" = "Teljesen újraimplementálva — a háttérben működnek!";
+"rn_v46_chinese_spanish" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v46_chinese_spanish_desc" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v46_further_battery" = "További fejlesztések hamarosan!";
+"rn_v46_further_battery_desc" = "További fejlesztések hamarosan!";
+"rn_v46_group_moderation" = "Most az adminisztrátorok:\\n- törölhetik a tagok üzeneteit.\\n- letilthatják a tagokat (";
+"rn_v46_group_moderation_desc" = "Most az adminisztrátorok:\\n- törölhetik a tagok üzeneteit.\\n- letilthatják a tagokat (";
+"rn_v46_group_welcome" = "Állítsa be az új tagoknak megjelenített üzenetet!";
+"rn_v46_group_welcome_desc" = "Állítsa be az új tagoknak megjelenített üzenetet!";
+"rn_v46_hidden_profiles" = "Védje csevegési profiljait jelszóval!";
+"rn_v46_hidden_profiles_desc" = "Védje csevegési profiljait jelszóval!";
+"rn_v50_app_passcode" = "Állítsa be a rendszerhitelesítés helyett.";
+"rn_v50_app_passcode_desc" = "Állítsa be a rendszerhitelesítés helyett.";
+"rn_v50_polish_interface" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v50_polish_interface_desc" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v50_videos_files" = "Gyorsan, és nem kell várni, amíg a feladó online lesz!";
+"rn_v50_videos_files_desc" = "Gyorsan, és nem kell várni, amíg a feladó online lesz!";
+"rn_v51_better_messages" = "- hangüzenetek akár 5 percig.\\n- egyedi eltűnési idő.\\n- szerkesztési előzmények.";
+"rn_v51_better_messages_desc" = "- hangüzenetek akár 5 percig.\\n- egyedi eltűnési idő.\\n- szerkesztési előzmények.";
+"rn_v51_japanese_interface" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v51_japanese_interface_desc" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v51_message_reactions" = "Végre, megvannak! 🚀";
+"rn_v51_message_reactions_desc" = "Végre, megvannak! 🚀";
+"rn_v51_self_destruct_passcode" = "Minden adat törlődik, amikor megadják.";
+"rn_v51_self_destruct_passcode_desc" = "Minden adat törlődik, amikor megadják.";
+"rn_v52_delivery_receipts" = "A második pipa, ami hiányzott! ✅";
+"rn_v52_delivery_receipts_desc" = "A második pipa, ami hiányzott! ✅";
+"rn_v52_few_more_things" = "- stabilabb üzenetkézbesítés.\\n- kicsit jobb csoportok.\\n- és még más!";
+"rn_v52_few_more_things_desc" = "- stabilabb üzenetkézbesítés.\\n- kicsit jobb csoportok.\\n- és még más!";
+"rn_v52_find_chats" = "Szűrje az olvasatlan és kedvenc csevegéseket.";
+"rn_v52_find_chats_desc" = "Szűrje az olvasatlan és kedvenc csevegéseket.";
+"rn_v52_keep_connections" = "A titkosítás javítása biztonsági mentések visszaállítása után.";
+"rn_v52_keep_connections_desc" = "A titkosítás javítása biztonsági mentések visszaállítása után.";
+"rn_v52_one_message_disappear" = "Még akkor is, ha a beszélgetésben le van tiltva.";
+"rn_v52_one_message_disappear_desc" = "Még akkor is, ha a beszélgetésben le van tiltva.";
+"rn_v53_desktop_app" = "Hozzon létre új profilt az [asztali alkalmazásban](https://popopxchat.com/downloads/). 💻";
+"rn_v53_desktop_app_desc" = "Hozzon létre új profilt az [asztali alkalmazásban](https://popopxchat.com/downloads/). 💻";
+"rn_v53_discover_groups" = "- csatlakozzon a [címtárszolgáltatáshoz](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BÉTA)!\\n- kézbesítési visszaigazolások (legfeljebb 20 tag).\\n- gyorsabb és stabilabb.";
+"rn_v53_discover_groups_desc" = "- csatlakozzon a [címtárszolgáltatáshoz](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BÉTA)!\\n- kézbesítési visszaigazolások (legfeljebb 20 tag).\\n- gyorsabb és stabilabb.";
+"rn_v53_encrypt_files" = "Az alkalmazás titkosítja az új helyi fájlokat (a videókat kivéve).";
+"rn_v53_encrypt_files_desc" = "Az alkalmazás titkosítja az új helyi fájlokat (a videókat kivéve).";
+"rn_v53_incognito_mode" = "Váltson inkognitó módba csatlakozáskor.";
+"rn_v53_incognito_mode_desc" = "Váltson inkognitó módba csatlakozáskor.";
+"rn_v53_new_languages %d" = "%d új felületi nyelv";
+"rn_v53_new_languages_desc" = "Bolgár, finn, thai és ukrán — köszönet a felhasználóknak és a Weblate-nek!";
+"rn_v54_better_groups" = "Gyorsabb csatlakozás és megbízhatóbb üzenetek.";
+"rn_v54_better_groups_desc" = "Gyorsabb csatlakozás és megbízhatóbb üzenetek.";
+"rn_v54_block_members" = "A nem kívánt üzenetek elrejtéséhez.";
+"rn_v54_block_members_desc" = "A nem kívánt üzenetek elrejtéséhez.";
+"rn_v54_few_more_things" = "- opcionálisan értesítheti a törölt ismerősöket.\\n- profilnevek szóközökkel.\\n- és még más!";
+"rn_v54_few_more_things_desc" = "- opcionálisan értesítheti a törölt ismerősöket.\\n- profilnevek szóközökkel.\\n- és még más!";
+"rn_v54_incognito_groups" = "Hozzon létre csoportot véletlenszerű profillal.";
+"rn_v54_incognito_groups_desc" = "Hozzon létre csoportot véletlenszerű profillal.";
+"rn_v54_link_apps" = "Biztonságos kvantumrezisztens protokollon keresztül.";
+"rn_v54_link_apps_desc" = "Biztonságos kvantumrezisztens protokollon keresztül.";
+"rn_v55_improved_delivery" = "Csökkentett akkuhasználat mellett.";
+"rn_v55_improved_delivery_desc" = "Csökkentett akkuhasználat mellett.";
+"rn_v55_join_groups" = "Közelmúltbeli előzmények és továbbfejlesztett [címtárbot](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_join_groups_desc" = "Közelmúltbeli előzmények és továbbfejlesztett [címtárbot](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_paste_link" = "A keresősáv elfogadja a meghívó hivatkozásokat.";
+"rn_v55_paste_link_desc" = "A keresősáv elfogadja a meghívó hivatkozásokat.";
+"rn_v55_private_notes" = "Titkosított fájlokkal és médiával.";
+"rn_v55_private_notes_desc" = "Titkosított fájlokkal és médiával.";
+"rn_v55_turkish_interface" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v55_turkish_interface_desc" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v56_data_migration" = "Migráljon másik eszközre QR-kóddal.";
+"rn_v56_data_migration_desc" = "Migráljon másik eszközre QR-kóddal.";
+"rn_v56_hungarian_interface" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v56_hungarian_interface_desc" = "Köszönet a felhasználóknak — járuljon hozzá a Weblate-en keresztül!";
+"rn_v56_pip_calls" = "Használja az alkalmazást hívás közben.";
+"rn_v56_pip_calls_desc" = "Használja az alkalmazást hívás közben.";
+"rn_v56_quantum_encryption" = "Engedélyezze közvetlen csevegésekben (BÉTA)!";
+"rn_v56_quantum_encryption_desc" = "Engedélyezze közvetlen csevegésekben (BÉTA)!";
+"rn_v56_safer_groups" = "Az adminisztrátorok blokkolhatnak egy tagot mindenki számára.";
+"rn_v56_safer_groups_desc" = "Az adminisztrátorok blokkolhatnak egy tagot mindenki számára.";
+"rn_v57_forward_save" = "Az üzenet forrása privát marad.";
+"rn_v57_forward_save_desc" = "Az üzenet forrása privát marad.";
+"rn_v57_incall_sounds" = "Hang- és videohívások csatlakoztatásakor.";
+"rn_v57_incall_sounds_desc" = "Hang- és videohívások csatlakoztatásakor.";
+"rn_v57_network_management" = "Megbízhatóbb hálózati kapcsolat.";
+"rn_v57_network_management_desc" = "Megbízhatóbb hálózati kapcsolat.";
+"rn_v57_quantum_encryption" = "Közvetlen csevegésekben lesz engedélyezve!";
+"rn_v57_quantum_encryption_desc" = "Közvetlen csevegésekben lesz engedélyezve!";
+"rn_v57_shape_images" = "Négyzet, kör, vagy bármi a kettő között.";
+"rn_v57_shape_images_desc" = "Négyzet, kör, vagy bármi a kettő között.";
+"rn_v58_improved_delivery" = "Csökkentett akkuhasználat mellett.";
+"rn_v58_improved_delivery_desc" = "Csökkentett akkuhasználat mellett.";
+"rn_v58_private_routing" = "Védje IP-címét az ismerősei által választott üzenettovábbító szerverektől.\\nEngedélyezze a *Hálózat és szerverek* beállításaiban.";
+"rn_v58_private_routing_desc" = "Védje IP-címét az ismerősei által választott üzenettovábbító szerverektől.\\nEngedélyezze a *Hálózat és szerverek* beállításaiban.";
+"rn_v58_safely_receive_files" = "Erősítse meg az ismeretlen szerverekről érkező fájlokat.";
+"rn_v58_safely_receive_files_desc" = "Erősítse meg az ismeretlen szerverekről érkező fájlokat.";
+"rn_v60_better_networking" = "Kapcsolat és szerverek állapota.";
+"rn_v60_better_networking_desc" = "Kapcsolat és szerverek állapota.";
+"rn_v60_new_chat_experience" = "Új csevegési élmény 🎉";
+"rn_v60_new_media_options" = "Új médiaopciók";
+"rn_v60_private_routing" = "Védi az IP-címét és a kapcsolatait.";
+"rn_v60_private_routing_desc" = "Védi az IP-címét és a kapcsolatait.";
+"rn_v60_sub_archive_contacts" = "Archiválja az ismerősöket a későbbi csevegéshez.";
+"rn_v60_sub_blur_privacy" = "Új médiaopciók";
+"rn_v60_sub_color_themes" = "Színezze a csevegéseket az új témákkal.";
+"rn_v60_sub_connect_faster" = "Új csevegési élmény 🎉";
+"rn_v60_sub_delete_messages" = "Töröljön akár 20 üzenetet egyszerre.";
+"rn_v60_sub_one_hand" = "Használja az alkalmazást egy kézzel.";
+"rn_v60_sub_play_chat_list" = "Új médiaopciók";
+"rn_v60_sub_share_apps" = "Új médiaopciók";
+"rn_v61_better_calls" = "Váltson hang és videó között hívás közben.";
+"rn_v61_better_calls_desc" = "Váltson hang és videó között hívás közben.";
+"rn_v61_better_notifications" = "Továbbfejlesztett kézbesítés, csökkentett forgalomhasználat.\\nTovábbi fejlesztések hamarosan!";
+"rn_v61_better_notifications_desc" = "Továbbfejlesztett kézbesítés, csökkentett forgalomhasználat.\\nTovábbi fejlesztések hamarosan!";
+"rn_v61_better_security" = "A POPOPX protokollokat a Trail of Bits felülvizsgálta.";
+"rn_v61_better_security_desc" = "A POPOPX protokollokat a Trail of Bits felülvizsgálta.";
+"rn_v61_better_ux" = "Jobb felhasználói élmény";
+"rn_v61_sub_forward_messages" = "Továbbítson akár 20 üzenetet egyszerre.";
+"rn_v61_sub_message_dates" = "Jobb üzenetdátumok.";
+"rn_v61_sub_message_shape" = "Testreszabható üzenetalak.";
+"rn_v61_sub_moderate_messages" = "Töröljön vagy moderáljon akár 200 üzenetet.";
+"rn_v61_sub_switch_profile" = "Jobb felhasználói élmény";
+"rn_v62_business_chats" = "Adatvédelem az ügyfelei számára.";
+"rn_v62_business_chats_desc" = "Adatvédelem az ügyfelei számára.";
+"rn_v62_network_decentralization" = "A hálózat decentralizációja";
+"rn_v62_reliable_notifications" = "Megérkeznek, még akkor is, ha az Apple elveti őket.";
+"rn_v62_reliable_notifications_desc" = "Megérkeznek, még akkor is, ha az Apple elveti őket.";
+"rn_v63_better_groups_perf" = "Jobb csoportteljesítmény";
+"rn_v63_better_privacy" = "Jobb adatvédelem és biztonság";
+"rn_v63_mention_members" = "Értesítést kap, amikor megemlítik.";
+"rn_v63_mention_members_desc" = "Értesítést kap, amikor megemlítik.";
+"rn_v63_organize_lists" = "Ne hagyjon ki fontos üzeneteket.";
+"rn_v63_organize_lists_desc" = "Ne hagyjon ki fontos üzeneteket.";
+"rn_v63_private_reports" = "Segítsen az adminisztrátoroknak a csoportjaik moderálásában.";
+"rn_v63_private_reports_desc" = "Segítsen az adminisztrátoroknak a csoportjaik moderálásában.";
+"rn_v63_sub_faster_deletion" = "Jobb csoportteljesítmény";
+"rn_v63_sub_faster_sending" = "Jobb csoportteljesítmény";
+"rn_v63_sub_message_expiration" = "Jobb adatvédelem és biztonság";
+"rn_v63_sub_private_media" = "Jobb adatvédelem és biztonság";
+"rn_v641_chats_clean" = "Engedélyezze az eltűnő üzeneteket alapértelmezettként.";
+"rn_v641_chats_clean_desc" = "Engedélyezze az eltűnő üzeneteket alapértelmezettként.";
+"rn_v641_short_address" = "Rövid POPOPX cím";
+"rn_v641_welcome_contacts" = "Állítsa be a profil életrajzát és az üdvözlőüzenetet.";
+"rn_v641_welcome_contacts_desc" = "Állítsa be a profil életrajzát és az üdvözlőüzenetet.";
+"rn_v64_chat_admins" = "Küldjön privát visszajelzést a csoportoknak.";
+"rn_v64_chat_admins_desc" = "Küldjön privát visszajelzést a csoportoknak.";
+"rn_v64_connect_faster" = "Üzenet azonnal a Csatlakozás gomb megnyomása után.";
+"rn_v64_connect_faster_desc" = "Üzenet azonnal a Csatlakozás gomb megnyomása után.";
+"rn_v64_group_moderator" = "Eltávolítja az üzeneteket és blokkolja a tagokat.";
+"rn_v64_group_moderator_desc" = "Eltávolítja az üzeneteket és blokkolja a tagokat.";
+"rn_v64_improved_delivery" = "Kevesebb forgalom mobilhálózatokon.";
+"rn_v64_improved_delivery_desc" = "Kevesebb forgalom mobilhálózatokon.";
+"rn_v64_review_members" = "Csevegjen a tagokkal, mielőtt csatlakoznak.";
+"rn_v64_review_members_desc" = "Csevegjen a tagokkal, mielőtt csatlakoznak.";
+"rn_v65_invite_friends" = "Egyszerűbbé tettük a csatlakozást az új felhasználók számára.";
+"rn_v65_invite_friends_desc" = "Egyszerűbbé tettük a csatlakozást az új felhasználók számára.";
+"rn_v65_nonprofit_governance" = "Hogy a POPOPX hálózat fennmaradjon.";
+"rn_v65_nonprofit_governance_desc" = "Hogy a POPOPX hálózat fennmaradjon.";
+"rn_v65_public_channels" = "Nyilvános csatornák — beszéljen szabadon 🚀";
+"rn_v65_safe_web_links" = "- opcionálisan küldjön hivatkozás előnézeteket.\\n- hiperhivatkozásos adathalászat megakadályozása.\\n- hivatkozáskövetés eltávolítása.";
+"rn_v65_safe_web_links_desc" = "- opcionálisan küldjön hivatkozás előnézeteket.\\n- hiperhivatkozásos adathalászat megakadályozása.\\n- hivatkozáskövetés eltávolítása.";
+"rn_v65_sub_ownership" = "Nyilvános csatornák — beszéljen szabadon 🚀";
+"rn_v65_sub_privacy" = "Privát médiafájl nevek.";
+"rn_v65_sub_reliability" = "Nyilvános csatornák — beszéljen szabadon 🚀";
+"rn_v65_sub_security" = "Állítsa be az üzenetek lejáratát a csevegésekben.";
+"save_button" = "Mentés";
+"self_destruct_passcode_info" = "Önmegsemmisítő jelkód információ";
+"settings_tab_picker" = "Beállítások fül";
+"share_channel_title" = "Csatorna megosztása";
+"swipe_action_clear" = "Törlés";
+"swipe_action_delete" = "Törlés";
+"swipe_action_favorite" = "Kedvenc";
+"swipe_action_list" = "Lista";
+"swipe_action_mute" = "Némítás";
+"swipe_action_read" = "Olvasott";
+"swipe_action_unfavorite" = "Eltávolítás a kedvencekből";
+"tab_chats" = "Csevegések";
+"tab_mesh" = "Mesh";
+"tab_profiler" = "Profiler";
+"tab_vortex" = "Vortex";
+"user_picker_chat_preferences" = "Csevegési beállítások";
+"user_picker_chat_profiles" = "Az Ön csevegési profiljai";
+"user_picker_create_address" = "POPOPX cím létrehozása";
+"user_picker_settings" = "Beállítások";
+"user_picker_use_from_desktop" = "Használat asztali gépről";
+"user_picker_your_address" = "Az Ön POPOPX címe";
+"db_hide_passphrase" = "Jelmondat elrejtése";
+"db_show_passphrase" = "Jelmondat megjelenítése";
+"marked_deleted_moderated_by_list" = "%d üzenetet moderált %@";
+"marked_deleted_blocked_by_admin" = "%d üzenetet blokkolt az adminisztrátor";
+"marked_deleted_blocked" = "%d üzenet blokkolva";
+"marked_deleted_marked_deleted" = "%d üzenet töröltnek jelölve";
+"marked_deleted_moderated_by" = "moderálta: %@";
+"marked_deleted_blocked_single" = "blokkolva";
+"marked_deleted_blocked_by_admin_single" = "adminisztrátor által blokkolva";
+"marked_deleted_deleted" = "töröltnek jelölve";
+"ntf_register_button" = "Regisztráció";
+"ntf_mode_desc_off" = "**Legprivátabb**: ne használja a POPOPX Chat push szervert. Az alkalmazás a rendszer által engedélyezett időközönként a háttérben ellenőrzi az üzeneteket, attól függően, milyen gyakran használod az alkalmazást.";
+"ntf_mode_desc_periodic" = "**Privátabb**: új üzenetek ellenőrzése 20 percenként. Csak az eszköztoken kerül megosztásra a push szerverünkkel. Nem látja, hány kontaktusod van, semmilyen üzenet-metaadatot sem.";
+"ntf_mode_desc_instant" = "**Ajánlott**: az eszköztoken és a végpontok között titkosított értesítések elküldésre kerülnek a POPOPX Chat push szerverre, de az nem látja az üzenet tartalmát, méretét sem a feladót.";
+"ntf_mode_short_off" = "Üzenetek ellenőrzése, ha engedélyezett.";
+"ntf_mode_short_periodic" = "Üzenetek ellenőrzése 20 percenként.";
+"ntf_mode_short_instant" = "E2E titkosított értesítések.";
+"protocol_server_no_servers_for" = "Nincs %@ szerver ehhez: %@";
+"protocol_server_no_servers_configured" = "Nincs %@ szerver konfigurálva";
+"protocol_server_storage_missing_for" = "Tárhely hiányzik ehhez: %@ itt: %@";
+"protocol_server_storage_missing" = "Tárhely hiányzik ehhez: %@";
+"protocol_server_proxy_missing_for" = "Proxy hiányzik ehhez: %@ itt: %@";
+"protocol_server_proxy_missing" = "Proxy hiányzik ehhez: %@";
+"protocol_server_duplicate" = "Duplikált szerver: %@ itt: %@";
+"protocol_server_duplicate_relay" = "Duplikált chat relay: %@ itt: %@";
+"protocol_server_no_relays_for" = "Figyelmeztetés: Nincs chat relay ehhez: %@";
+"protocol_server_no_relays_configured" = "Figyelmeztetés: Nincs chat relay konfigurálva";
+"protocol_server_no_name_servers_for" = "Figyelmeztetés: Nincs névszerver ehhez: %@";
+"protocol_server_no_name_servers_configured" = "Figyelmeztetés: Nincs névszerver konfigurálva";
+"member_support_delete_button" = "Törlés";
+"migration_error_title" = "Hiba";
+"compliance_data_retention_desc" = "Az adatok automatikusan %d napig kerülnek megőrzésre. Ezen időszak után véglegesen törlődnek.";
+"location_precision_exact" = "Pontos";
+"location_precision_fuzzy" = "Hozzávetőleges (~1 km)";
+"location_precision_region" = "Régió (~10 km)";
+"location_precision_exact_desc" = "Pontos GPS-koordinátáid megosztása";
+"location_precision_fuzzy_desc" = "Kerekítés ~1 km pontosságra";
+"location_precision_region_desc" = "Kerekítés ~10 km-re véletlen eltolással";
+"art_generator_flow_field" = "Áramlási mező";
+"art_generator_circuit_board" = "Áramköri lap";
+"art_generator_geometric_harmony" = "Geometriai harmónia";
+"art_generator_wave_interference" = "Hulláminterferencia";
+"art_generator_cellular_automata" = "Celluláris automata";
+"pq_crypto_kyber768_desc" = "Kísérleti kulcscsere (X25519 ECDH) — NEM kvantumbiztos";
+"pq_crypto_dilithium3_desc" = "Kísérleti aláírás (Ed25519) — NEM kvantumbiztos";
+"pq_crypto_falcon512_desc" = "Kísérleti kompakt aláírás (Ed25519) — NEM kvantumbiztos";
+"config_bot_not_configured" = "Konfigurációs bot nincs konfigurálva";
+"config_bot_invalid_response" = "Érvénytelen konfigurációs válasz";
+"config_bot_timeout" = "Konfigurációs bot kérés időtúllépés";
+"server_api_invalid_url" = "Érvénytelen szerver URL";
+"server_api_invalid_body" = "Érvénytelen kéréstörzs";
+"server_api_error" = "Szerverhiba: %d";
+"server_api_parse_failed" = "Szerverválasz feldolgozása sikertelen";
+"nostr_broadcast_empty" = "A tartalom nem lehet üres";
+"nostr_broadcast_too_long" = "A tartalom meghaladja az 500 karakteres korlátot";
+"art_vault_encode_failed" = "A kép PNG-ként történő kódolása sikertelen";
+"art_vault_decrypt_failed" = "A műalkotás visszafejtése sikertelen";
+"art_engine_script_not_found" = "Generátor szkript nem található: %@";
+"art_engine_render_failed" = "Megjelenítés sikertelen: %@";
+"art_engine_context_failed" = "Bitmap megjelenítési kontextus létrehozása sikertelen";
+"binthere_encrypt_failed" = "Az üzenet titkosítása sikertelen";
+"binthere_decrypt_failed" = "A visszafejtés sikertelen — az üzenet sérült lehet";
+"binthere_invalid_key" = "Érvénytelen visszafejtési kulcs";
+"binthere_bot_timeout" = "A bot nem válaszolt időben";
+"binthere_message_expired" = "Ezt az üzenetet már elolvasták vagy lejárt";
+"binthere_bot_not_configured" = "A BinThere bot nincs konfigurálva";
+"binthere_compress_failed" = "A kép nem tömöríthető a méretkorlát alá";
+"binthere_operation_in_progress" = "Egy másik tárolási művelet már folyamatban van";
+"needle_encrypt_failed" = "Titkosítás sikertelen";
+"needle_decrypt_failed" = "Visszafejtés sikertelen";
+"needle_keychain_error" = "Kulcskarika hiba: %d";
+"needle_not_initialized" = "A Needle motor nincs inicializálva";
+"needle_encode_failed" = "Az üzenetek kódolása sikertelen";
+"needle_completion_failed" = "Kiegészítés sikertelen: %@";
+"needle_parse_failed" = "A kinyerési eredmény feldolgozása sikertelen";
+"encrypted_doc_encode_failed" = "A dokumentumszöveg kódolása sikertelen";
+"encrypted_doc_encrypt_failed" = "A dokumentum titkosítása sikertelen";
+"encrypted_doc_decrypt_failed" = "A dokumentum visszafejtése sikertelen — az adatok sérültek lehetnek";

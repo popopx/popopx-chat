@@ -4,7 +4,7 @@
 
 ## Overview
 
-Complete group management in SimpleX Chat iOS: creating groups, inviting members, joining via links, managing roles and admission, and group deletion. Groups use the same E2E encryption as direct messages -- each member pair has independent encrypted channels. Group metadata (name, image, preferences) is distributed via the group protocol.
+Complete group management in POPOPX Chat iOS: creating groups, inviting members, joining via links, managing roles and admission, and group deletion. Groups use the same E2E encryption as direct messages -- each member pair has independent encrypted channels. Group metadata (name, image, preferences) is distributed via the group protocol.
 
 ## Prerequisites
 
@@ -182,14 +182,14 @@ Complete group management in SimpleX Chat iOS: creating groups, inviting members
 
 | Type | Location | Description |
 |------|----------|-------------|
-| `GroupInfo` | `SimpleXChat/ChatTypes.swift` | Full group model: ID, profile, membership, preferences, business chat info |
-| `GroupProfile` | `SimpleXChat/ChatTypes.swift` | Name, full name, image, description, preferences |
-| `GroupMember` | `SimpleXChat/ChatTypes.swift` | Member model: role, status, profile, connection info |
-| `GroupMemberRole` | `SimpleXChat/ChatTypes.swift` | `.owner`, `.admin`, `.moderator`, `.member`, `.observer`, `.relay` |
-| `GroupMemberStatus` | `SimpleXChat/ChatTypes.swift` | Member lifecycle: `.invited`, `.accepted`, `.connected`, `.complete`, etc. |
+| `GroupInfo` | `POPOPXSwitch/ChatTypes.swift` | Full group model: ID, profile, membership, preferences, business chat info |
+| `GroupProfile` | `POPOPXSwitch/ChatTypes.swift` | Name, full name, image, description, preferences |
+| `GroupMember` | `POPOPXSwitch/ChatTypes.swift` | Member model: role, status, profile, connection info |
+| `GroupMemberRole` | `POPOPXSwitch/ChatTypes.swift` | `.owner`, `.admin`, `.moderator`, `.member`, `.observer`, `.relay` |
+| `GroupMemberStatus` | `POPOPXSwitch/ChatTypes.swift` | Member lifecycle: `.invited`, `.accepted`, `.connected`, `.complete`, etc. |
 | `GroupLink` | `Shared/Model/AppAPITypes.swift` | Group link with URI, member role, and short link data |
-| `BusinessChatInfo` | `SimpleXChat/ChatTypes.swift` | Business chat metadata for commercial group chats |
-| `JoinGroupResult` | `Shared/Model/SimpleXAPI.swift` | `.joined(groupInfo)`, `.invitationRemoved`, `.groupNotFound` |
+| `BusinessChatInfo` | `POPOPXSwitch/ChatTypes.swift` | Business chat metadata for commercial group chats |
+| `JoinGroupResult` | `Shared/Model/POPOPXAPI.swift` | `.joined(groupInfo)`, `.invitationRemoved`, `.groupNotFound` |
 | `GMember` | `Shared/Views/Chat/Group/` | View-layer wrapper around `GroupMember` for list display |
 
 ## Error Cases
@@ -217,9 +217,9 @@ Complete group management in SimpleX Chat iOS: creating groups, inviting members
 | `Shared/Views/Chat/Group/MemberSupportView.swift` | Admin-to-pending-member chat |
 | `Shared/Views/Chat/Group/MemberSupportChatToolbar.swift` | Support chat accept/reject toolbar |
 | `Shared/Views/Chat/Group/SecondaryChatView.swift` | Secondary chat view for member support |
-| `Shared/Model/SimpleXAPI.swift` | All group API functions |
+| `Shared/Model/POPOPXAPI.swift` | All group API functions |
 | `Shared/Model/AppAPITypes.swift` | `GroupLink`, `ConnectionPlan` |
-| `SimpleXChat/ChatTypes.swift` | `GroupInfo`, `GroupProfile`, `GroupMember`, `GroupMemberRole` |
+| `POPOPXSwitch/ChatTypes.swift` | `GroupInfo`, `GroupProfile`, `GroupMember`, `GroupMemberRole` |
 
 ## Related Specifications
 

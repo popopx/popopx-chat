@@ -22,7 +22,7 @@ Configure all aspects of app behavior including notifications, network/servers, 
 | Notifications | `bolt` (color varies by token status) | `NotificationsView` | Push notification mode and preview settings |
 | Network & servers | `externaldrive.connected.to.line.below` | `NetworkAndServers` | SMP/XFTP servers, proxy, .onion hosts, advanced network |
 | Audio & video calls | `video` | `CallSettings` | WebRTC relay policy, ICE servers, CallKit options |
-| Your privacy | `lock` | `PrivacySettings` | SimpleX Lock, screen protection, delivery receipts, auto-accept |
+| Your privacy | `lock` | `PrivacySettings` | POPOPX Lock, screen protection, delivery receipts, auto-accept |
 | Appearance | `sun.max` | `AppearanceSettings` | Theme, language, wallpapers, chat bubbles, toolbar opacity |
 
 All rows disabled when `chatModel.chatRunning != true`. Appearance row only shown when `UIApplication.shared.supportsAlternateIcons`.
@@ -61,7 +61,7 @@ Each relay is managed via `ChatRelayView`:
 | Element | Preset relay | Custom relay |
 |---|---|---|
 | Name | Read-only display | Editable text field |
-| Address | Read-only display | Editable text field (validates as `.simplexLink(_, .relay, _, _)`) |
+| Address | Read-only display | Editable text field (validates as `.popopxLink(_, .relay, _, _)`) |
 | Test button | "Test relay" (shows "Not implemented" alert) | Same |
 | Enable toggle | "Use for new channels" | Same |
 | Delete | Not available | "Delete relay" button |
@@ -81,7 +81,7 @@ Server validation (`validateServers_`) now returns both errors and warnings.
 
 | Setting | Description |
 |---|---|
-| SimpleX Lock | Enable biometric (Face ID / Touch ID) or passcode lock |
+| POPOPX Lock | Enable biometric (Face ID / Touch ID) or passcode lock |
 | Lock mode | System biometric or custom passcode |
 | Lock timeout | Delay before lock activates (0s to 30min) |
 | Self-destruct | Optional self-destruct passcode that wipes all data |
@@ -89,7 +89,7 @@ Server validation (`validateServers_`) now returns both errors and warnings.
 | Encrypt local files | Encrypt media and files stored on device |
 | Auto-accept images | Automatically download received images |
 | Link previews | Generate link previews for sent URLs |
-| SimpleX link mode | Description / Full link / Via browser |
+| POPOPX link mode | Description / Full link / Via browser |
 | Chat previews | Show message previews in chat list |
 | Save last draft | Remember unsent message drafts |
 | Delivery receipts | Enable/disable read receipts globally |
@@ -102,7 +102,7 @@ Server validation (`validateServers_`) now returns both errors and warnings.
 | App icon | Alternative app icon selection |
 | Language | Interface language |
 | Theme | System / Light / Dark |
-| Dark theme variant | Dark / SimpleX / Black |
+| Dark theme variant | Dark / POPOPX / Black |
 | Active theme colors | Accent color, chat bubble colors, text colors |
 | Wallpapers | Chat background wallpaper selection and customization |
 | Profile image corner radius | Adjust avatar roundness |
@@ -136,11 +136,11 @@ Database row shows exclamation octagon icon in red when `chatRunning == false`.
 |---|---|---|---|
 | How to use it | `questionmark` | `ChatHelp` | Usage guide with user's display name |
 | What's new | `plus` | `WhatsNewView` | Changelog and new features |
-| About SimpleX Chat | `info` | `SimpleXInfo` | About page with privacy explanation |
-| Send questions and ideas | `number` | Opens SimpleX team chat link | Direct contact with developers |
-| Send us email | `envelope` | `mailto:chat@simplex.chat` | Email link |
+| About POPOPX Chat | `info` | `POPOPXInfo` | About page with privacy explanation |
+| Send questions and ideas | `number` | Opens POPOPX team chat link | Direct contact with developers |
+| Send us email | `envelope` | `mailto:chat@popopxchat.com` | Email link |
 
-### Support SimpleX Chat Section
+### Support POPOPX Chat Section
 
 | Row | Icon | Action |
 |---|---|---|

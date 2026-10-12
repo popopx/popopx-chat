@@ -1,0 +1,4450 @@
+{
+  "weights": [
+    {
+      "adapter_family": "needle",
+      "adapter_name": "lm_head.weight",
+      "component": "embedding",
+      "hf_name": "lm_head.weight",
+      "output_name": "output_weight.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        8192,
+        512
+      ],
+      "source_name": "lm_head.weight",
+      "source_names": [
+        "lm_head.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.cross_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.cross_attn_gate",
+      "output_name": "layer_0_cross_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.0.cross_attn_gate",
+      "source_names": [
+        "model.decoder.layers.0.cross_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.encoder_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.encoder_attn.k_norm.weight",
+      "output_name": "layer_0_encoder_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.0.encoder_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.0.encoder_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.encoder_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.encoder_attn.k_proj.weight",
+      "output_name": "layer_0_encoder_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.0.encoder_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.0.encoder_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.encoder_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.encoder_attn.out_proj.weight",
+      "output_name": "layer_0_encoder_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.0.encoder_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.0.encoder_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.encoder_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.encoder_attn.q_norm.weight",
+      "output_name": "layer_0_encoder_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.0.encoder_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.0.encoder_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.encoder_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.encoder_attn.q_proj.weight",
+      "output_name": "layer_0_encoder_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.0.encoder_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.0.encoder_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.encoder_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.encoder_attn.v_proj.weight",
+      "output_name": "layer_0_encoder_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.0.encoder_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.0.encoder_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.encoder_attn_layer_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.encoder_attn_layer_norm.weight",
+      "output_name": "layer_0_encoder_attn_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.0.encoder_attn_layer_norm.weight",
+      "source_names": [
+        "model.decoder.layers.0.encoder_attn_layer_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.input_layernorm.weight",
+      "output_name": "layer_0_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.0.input_layernorm.weight",
+      "source_names": [
+        "model.decoder.layers.0.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.self_attn.k_norm.weight",
+      "output_name": "layer_0_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.0.self_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.0.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.self_attn.k_proj.weight",
+      "output_name": "layer_0_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.0.self_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.0.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.self_attn.out_proj.weight",
+      "output_name": "layer_0_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.0.self_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.0.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.self_attn.q_norm.weight",
+      "output_name": "layer_0_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.0.self_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.0.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.self_attn.q_proj.weight",
+      "output_name": "layer_0_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.0.self_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.0.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.self_attn.v_proj.weight",
+      "output_name": "layer_0_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.0.self_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.0.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.0.self_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.0.self_attn_gate",
+      "output_name": "layer_0_self_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.0.self_attn_gate",
+      "source_names": [
+        "model.decoder.layers.0.self_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.cross_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.cross_attn_gate",
+      "output_name": "layer_1_cross_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.1.cross_attn_gate",
+      "source_names": [
+        "model.decoder.layers.1.cross_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.encoder_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.encoder_attn.k_norm.weight",
+      "output_name": "layer_1_encoder_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.1.encoder_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.1.encoder_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.encoder_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.encoder_attn.k_proj.weight",
+      "output_name": "layer_1_encoder_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.1.encoder_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.1.encoder_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.encoder_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.encoder_attn.out_proj.weight",
+      "output_name": "layer_1_encoder_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.1.encoder_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.1.encoder_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.encoder_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.encoder_attn.q_norm.weight",
+      "output_name": "layer_1_encoder_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.1.encoder_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.1.encoder_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.encoder_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.encoder_attn.q_proj.weight",
+      "output_name": "layer_1_encoder_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.1.encoder_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.1.encoder_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.encoder_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.encoder_attn.v_proj.weight",
+      "output_name": "layer_1_encoder_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.1.encoder_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.1.encoder_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.encoder_attn_layer_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.encoder_attn_layer_norm.weight",
+      "output_name": "layer_1_encoder_attn_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.1.encoder_attn_layer_norm.weight",
+      "source_names": [
+        "model.decoder.layers.1.encoder_attn_layer_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.input_layernorm.weight",
+      "output_name": "layer_1_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.1.input_layernorm.weight",
+      "source_names": [
+        "model.decoder.layers.1.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.self_attn.k_norm.weight",
+      "output_name": "layer_1_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.1.self_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.1.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.self_attn.k_proj.weight",
+      "output_name": "layer_1_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.1.self_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.1.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.self_attn.out_proj.weight",
+      "output_name": "layer_1_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.1.self_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.1.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.self_attn.q_norm.weight",
+      "output_name": "layer_1_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.1.self_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.1.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.self_attn.q_proj.weight",
+      "output_name": "layer_1_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.1.self_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.1.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.self_attn.v_proj.weight",
+      "output_name": "layer_1_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.1.self_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.1.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.1.self_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.1.self_attn_gate",
+      "output_name": "layer_1_self_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.1.self_attn_gate",
+      "source_names": [
+        "model.decoder.layers.1.self_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.cross_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.cross_attn_gate",
+      "output_name": "layer_2_cross_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.2.cross_attn_gate",
+      "source_names": [
+        "model.decoder.layers.2.cross_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.encoder_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.encoder_attn.k_norm.weight",
+      "output_name": "layer_2_encoder_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.2.encoder_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.2.encoder_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.encoder_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.encoder_attn.k_proj.weight",
+      "output_name": "layer_2_encoder_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.2.encoder_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.2.encoder_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.encoder_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.encoder_attn.out_proj.weight",
+      "output_name": "layer_2_encoder_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.2.encoder_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.2.encoder_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.encoder_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.encoder_attn.q_norm.weight",
+      "output_name": "layer_2_encoder_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.2.encoder_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.2.encoder_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.encoder_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.encoder_attn.q_proj.weight",
+      "output_name": "layer_2_encoder_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.2.encoder_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.2.encoder_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.encoder_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.encoder_attn.v_proj.weight",
+      "output_name": "layer_2_encoder_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.2.encoder_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.2.encoder_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.encoder_attn_layer_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.encoder_attn_layer_norm.weight",
+      "output_name": "layer_2_encoder_attn_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.2.encoder_attn_layer_norm.weight",
+      "source_names": [
+        "model.decoder.layers.2.encoder_attn_layer_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.input_layernorm.weight",
+      "output_name": "layer_2_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.2.input_layernorm.weight",
+      "source_names": [
+        "model.decoder.layers.2.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.self_attn.k_norm.weight",
+      "output_name": "layer_2_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.2.self_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.2.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.self_attn.k_proj.weight",
+      "output_name": "layer_2_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.2.self_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.2.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.self_attn.out_proj.weight",
+      "output_name": "layer_2_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.2.self_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.2.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.self_attn.q_norm.weight",
+      "output_name": "layer_2_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.2.self_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.2.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.self_attn.q_proj.weight",
+      "output_name": "layer_2_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.2.self_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.2.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.self_attn.v_proj.weight",
+      "output_name": "layer_2_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.2.self_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.2.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.2.self_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.2.self_attn_gate",
+      "output_name": "layer_2_self_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.2.self_attn_gate",
+      "source_names": [
+        "model.decoder.layers.2.self_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.cross_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.cross_attn_gate",
+      "output_name": "layer_3_cross_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.3.cross_attn_gate",
+      "source_names": [
+        "model.decoder.layers.3.cross_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.encoder_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.encoder_attn.k_norm.weight",
+      "output_name": "layer_3_encoder_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.3.encoder_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.3.encoder_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.encoder_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.encoder_attn.k_proj.weight",
+      "output_name": "layer_3_encoder_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.3.encoder_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.3.encoder_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.encoder_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.encoder_attn.out_proj.weight",
+      "output_name": "layer_3_encoder_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.3.encoder_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.3.encoder_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.encoder_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.encoder_attn.q_norm.weight",
+      "output_name": "layer_3_encoder_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.3.encoder_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.3.encoder_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.encoder_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.encoder_attn.q_proj.weight",
+      "output_name": "layer_3_encoder_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.3.encoder_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.3.encoder_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.encoder_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.encoder_attn.v_proj.weight",
+      "output_name": "layer_3_encoder_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.3.encoder_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.3.encoder_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.encoder_attn_layer_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.encoder_attn_layer_norm.weight",
+      "output_name": "layer_3_encoder_attn_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.3.encoder_attn_layer_norm.weight",
+      "source_names": [
+        "model.decoder.layers.3.encoder_attn_layer_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.input_layernorm.weight",
+      "output_name": "layer_3_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.3.input_layernorm.weight",
+      "source_names": [
+        "model.decoder.layers.3.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.self_attn.k_norm.weight",
+      "output_name": "layer_3_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.3.self_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.3.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.self_attn.k_proj.weight",
+      "output_name": "layer_3_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.3.self_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.3.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.self_attn.out_proj.weight",
+      "output_name": "layer_3_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.3.self_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.3.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.self_attn.q_norm.weight",
+      "output_name": "layer_3_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.3.self_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.3.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.self_attn.q_proj.weight",
+      "output_name": "layer_3_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.3.self_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.3.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.self_attn.v_proj.weight",
+      "output_name": "layer_3_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.3.self_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.3.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.3.self_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.3.self_attn_gate",
+      "output_name": "layer_3_self_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.3.self_attn_gate",
+      "source_names": [
+        "model.decoder.layers.3.self_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.cross_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.cross_attn_gate",
+      "output_name": "layer_4_cross_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.4.cross_attn_gate",
+      "source_names": [
+        "model.decoder.layers.4.cross_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.encoder_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.encoder_attn.k_norm.weight",
+      "output_name": "layer_4_encoder_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.4.encoder_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.4.encoder_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.encoder_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.encoder_attn.k_proj.weight",
+      "output_name": "layer_4_encoder_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.4.encoder_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.4.encoder_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.encoder_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.encoder_attn.out_proj.weight",
+      "output_name": "layer_4_encoder_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.4.encoder_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.4.encoder_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.encoder_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.encoder_attn.q_norm.weight",
+      "output_name": "layer_4_encoder_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.4.encoder_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.4.encoder_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.encoder_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.encoder_attn.q_proj.weight",
+      "output_name": "layer_4_encoder_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.4.encoder_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.4.encoder_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.encoder_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.encoder_attn.v_proj.weight",
+      "output_name": "layer_4_encoder_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.4.encoder_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.4.encoder_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.encoder_attn_layer_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.encoder_attn_layer_norm.weight",
+      "output_name": "layer_4_encoder_attn_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.4.encoder_attn_layer_norm.weight",
+      "source_names": [
+        "model.decoder.layers.4.encoder_attn_layer_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.input_layernorm.weight",
+      "output_name": "layer_4_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.4.input_layernorm.weight",
+      "source_names": [
+        "model.decoder.layers.4.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.self_attn.k_norm.weight",
+      "output_name": "layer_4_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.4.self_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.4.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.self_attn.k_proj.weight",
+      "output_name": "layer_4_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.4.self_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.4.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.self_attn.out_proj.weight",
+      "output_name": "layer_4_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.4.self_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.4.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.self_attn.q_norm.weight",
+      "output_name": "layer_4_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.4.self_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.4.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.self_attn.q_proj.weight",
+      "output_name": "layer_4_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.4.self_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.4.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.self_attn.v_proj.weight",
+      "output_name": "layer_4_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.4.self_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.4.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.4.self_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.4.self_attn_gate",
+      "output_name": "layer_4_self_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.4.self_attn_gate",
+      "source_names": [
+        "model.decoder.layers.4.self_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.cross_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.cross_attn_gate",
+      "output_name": "layer_5_cross_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.5.cross_attn_gate",
+      "source_names": [
+        "model.decoder.layers.5.cross_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.encoder_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.encoder_attn.k_norm.weight",
+      "output_name": "layer_5_encoder_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.5.encoder_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.5.encoder_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.encoder_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.encoder_attn.k_proj.weight",
+      "output_name": "layer_5_encoder_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.5.encoder_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.5.encoder_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.encoder_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.encoder_attn.out_proj.weight",
+      "output_name": "layer_5_encoder_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.5.encoder_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.5.encoder_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.encoder_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.encoder_attn.q_norm.weight",
+      "output_name": "layer_5_encoder_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.5.encoder_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.5.encoder_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.encoder_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.encoder_attn.q_proj.weight",
+      "output_name": "layer_5_encoder_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.5.encoder_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.5.encoder_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.encoder_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.encoder_attn.v_proj.weight",
+      "output_name": "layer_5_encoder_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.5.encoder_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.5.encoder_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.encoder_attn_layer_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.encoder_attn_layer_norm.weight",
+      "output_name": "layer_5_encoder_attn_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.5.encoder_attn_layer_norm.weight",
+      "source_names": [
+        "model.decoder.layers.5.encoder_attn_layer_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.input_layernorm.weight",
+      "output_name": "layer_5_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.5.input_layernorm.weight",
+      "source_names": [
+        "model.decoder.layers.5.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.self_attn.k_norm.weight",
+      "output_name": "layer_5_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.5.self_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.5.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.self_attn.k_proj.weight",
+      "output_name": "layer_5_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.5.self_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.5.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.self_attn.out_proj.weight",
+      "output_name": "layer_5_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.5.self_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.5.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.self_attn.q_norm.weight",
+      "output_name": "layer_5_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.5.self_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.5.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.self_attn.q_proj.weight",
+      "output_name": "layer_5_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.5.self_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.5.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.self_attn.v_proj.weight",
+      "output_name": "layer_5_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.5.self_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.5.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.5.self_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.5.self_attn_gate",
+      "output_name": "layer_5_self_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.5.self_attn_gate",
+      "source_names": [
+        "model.decoder.layers.5.self_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.cross_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.cross_attn_gate",
+      "output_name": "layer_6_cross_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.6.cross_attn_gate",
+      "source_names": [
+        "model.decoder.layers.6.cross_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.encoder_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.encoder_attn.k_norm.weight",
+      "output_name": "layer_6_encoder_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.6.encoder_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.6.encoder_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.encoder_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.encoder_attn.k_proj.weight",
+      "output_name": "layer_6_encoder_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.6.encoder_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.6.encoder_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.encoder_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.encoder_attn.out_proj.weight",
+      "output_name": "layer_6_encoder_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.6.encoder_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.6.encoder_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.encoder_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.encoder_attn.q_norm.weight",
+      "output_name": "layer_6_encoder_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.6.encoder_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.6.encoder_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.encoder_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.encoder_attn.q_proj.weight",
+      "output_name": "layer_6_encoder_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.6.encoder_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.6.encoder_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.encoder_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.encoder_attn.v_proj.weight",
+      "output_name": "layer_6_encoder_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.6.encoder_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.6.encoder_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.encoder_attn_layer_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.encoder_attn_layer_norm.weight",
+      "output_name": "layer_6_encoder_attn_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.6.encoder_attn_layer_norm.weight",
+      "source_names": [
+        "model.decoder.layers.6.encoder_attn_layer_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.input_layernorm.weight",
+      "output_name": "layer_6_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.6.input_layernorm.weight",
+      "source_names": [
+        "model.decoder.layers.6.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.self_attn.k_norm.weight",
+      "output_name": "layer_6_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.6.self_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.6.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.self_attn.k_proj.weight",
+      "output_name": "layer_6_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.6.self_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.6.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.self_attn.out_proj.weight",
+      "output_name": "layer_6_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.6.self_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.6.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.self_attn.q_norm.weight",
+      "output_name": "layer_6_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.6.self_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.6.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.self_attn.q_proj.weight",
+      "output_name": "layer_6_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.6.self_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.6.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.self_attn.v_proj.weight",
+      "output_name": "layer_6_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.6.self_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.6.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.6.self_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.6.self_attn_gate",
+      "output_name": "layer_6_self_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.6.self_attn_gate",
+      "source_names": [
+        "model.decoder.layers.6.self_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.cross_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.cross_attn_gate",
+      "output_name": "layer_7_cross_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.7.cross_attn_gate",
+      "source_names": [
+        "model.decoder.layers.7.cross_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.encoder_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.encoder_attn.k_norm.weight",
+      "output_name": "layer_7_encoder_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.7.encoder_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.7.encoder_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.encoder_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.encoder_attn.k_proj.weight",
+      "output_name": "layer_7_encoder_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.7.encoder_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.7.encoder_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.encoder_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.encoder_attn.out_proj.weight",
+      "output_name": "layer_7_encoder_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.7.encoder_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.7.encoder_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.encoder_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.encoder_attn.q_norm.weight",
+      "output_name": "layer_7_encoder_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.7.encoder_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.7.encoder_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.encoder_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.encoder_attn.q_proj.weight",
+      "output_name": "layer_7_encoder_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.7.encoder_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.7.encoder_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.encoder_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.encoder_attn.v_proj.weight",
+      "output_name": "layer_7_encoder_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.7.encoder_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.7.encoder_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.encoder_attn_layer_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.encoder_attn_layer_norm.weight",
+      "output_name": "layer_7_encoder_attn_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.7.encoder_attn_layer_norm.weight",
+      "source_names": [
+        "model.decoder.layers.7.encoder_attn_layer_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.input_layernorm.weight",
+      "output_name": "layer_7_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.layers.7.input_layernorm.weight",
+      "source_names": [
+        "model.decoder.layers.7.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.self_attn.k_norm.weight",
+      "output_name": "layer_7_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.7.self_attn.k_norm.weight",
+      "source_names": [
+        "model.decoder.layers.7.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.self_attn.k_proj.weight",
+      "output_name": "layer_7_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.7.self_attn.k_proj.weight",
+      "source_names": [
+        "model.decoder.layers.7.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.self_attn.out_proj.weight",
+      "output_name": "layer_7_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.7.self_attn.out_proj.weight",
+      "source_names": [
+        "model.decoder.layers.7.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.self_attn.q_norm.weight",
+      "output_name": "layer_7_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.decoder.layers.7.self_attn.q_norm.weight",
+      "source_names": [
+        "model.decoder.layers.7.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.self_attn.q_proj.weight",
+      "output_name": "layer_7_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.decoder.layers.7.self_attn.q_proj.weight",
+      "source_names": [
+        "model.decoder.layers.7.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.self_attn.v_proj.weight",
+      "output_name": "layer_7_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.decoder.layers.7.self_attn.v_proj.weight",
+      "source_names": [
+        "model.decoder.layers.7.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.layers.7.self_attn_gate",
+      "component": "language",
+      "hf_name": "model.decoder.layers.7.self_attn_gate",
+      "output_name": "layer_7_self_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.decoder.layers.7.self_attn_gate",
+      "source_names": [
+        "model.decoder.layers.7.self_attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.decoder.norm.weight",
+      "component": "language",
+      "hf_name": "model.decoder.norm.weight",
+      "output_name": "output_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.decoder.norm.weight",
+      "source_names": [
+        "model.decoder.norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.embed_tokens.weight",
+      "component": "embedding",
+      "hf_name": "model.embed_tokens.weight",
+      "output_name": "token_embeddings.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        8192,
+        512
+      ],
+      "source_name": "model.embed_tokens.weight",
+      "source_names": [
+        "model.embed_tokens.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.final_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.final_norm.weight",
+      "output_name": "encoder_layer_norm_weight.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.final_norm.weight",
+      "source_names": [
+        "model.encoder.final_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.0.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.0.attn_gate",
+      "output_name": "encoder_layer_0_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.0.attn_gate",
+      "source_names": [
+        "model.encoder.layers.0.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.0.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.0.input_layernorm.weight",
+      "output_name": "encoder_layer_0_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.0.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.0.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.0.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.0.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_0_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.0.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.0.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.0.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.0.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_0_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.0.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.0.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.0.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.0.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_0_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.0.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.0.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.0.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.0.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_0_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.0.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.0.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.0.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.0.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_0_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.0.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.0.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.0.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.0.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_0_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.0.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.0.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.1.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.1.attn_gate",
+      "output_name": "encoder_layer_1_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.1.attn_gate",
+      "source_names": [
+        "model.encoder.layers.1.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.1.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.1.input_layernorm.weight",
+      "output_name": "encoder_layer_1_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.1.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.1.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.1.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.1.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_1_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.1.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.1.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.1.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.1.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_1_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.1.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.1.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.1.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.1.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_1_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.1.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.1.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.1.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.1.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_1_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.1.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.1.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.1.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.1.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_1_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.1.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.1.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.1.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.1.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_1_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.1.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.1.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.10.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.10.attn_gate",
+      "output_name": "encoder_layer_10_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.10.attn_gate",
+      "source_names": [
+        "model.encoder.layers.10.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.10.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.10.input_layernorm.weight",
+      "output_name": "encoder_layer_10_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.10.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.10.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.10.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.10.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_10_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.10.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.10.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.10.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.10.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_10_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.10.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.10.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.10.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.10.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_10_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.10.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.10.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.10.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.10.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_10_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.10.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.10.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.10.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.10.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_10_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.10.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.10.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.10.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.10.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_10_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.10.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.10.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.11.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.11.attn_gate",
+      "output_name": "encoder_layer_11_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.11.attn_gate",
+      "source_names": [
+        "model.encoder.layers.11.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.11.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.11.input_layernorm.weight",
+      "output_name": "encoder_layer_11_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.11.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.11.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.11.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.11.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_11_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.11.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.11.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.11.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.11.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_11_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.11.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.11.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.11.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.11.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_11_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.11.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.11.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.11.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.11.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_11_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.11.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.11.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.11.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.11.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_11_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.11.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.11.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.11.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.11.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_11_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.11.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.11.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.2.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.2.attn_gate",
+      "output_name": "encoder_layer_2_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.2.attn_gate",
+      "source_names": [
+        "model.encoder.layers.2.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.2.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.2.input_layernorm.weight",
+      "output_name": "encoder_layer_2_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.2.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.2.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.2.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.2.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_2_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.2.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.2.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.2.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.2.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_2_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.2.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.2.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.2.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.2.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_2_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.2.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.2.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.2.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.2.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_2_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.2.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.2.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.2.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.2.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_2_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.2.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.2.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.2.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.2.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_2_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.2.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.2.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.3.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.3.attn_gate",
+      "output_name": "encoder_layer_3_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.3.attn_gate",
+      "source_names": [
+        "model.encoder.layers.3.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.3.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.3.input_layernorm.weight",
+      "output_name": "encoder_layer_3_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.3.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.3.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.3.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.3.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_3_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.3.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.3.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.3.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.3.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_3_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.3.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.3.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.3.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.3.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_3_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.3.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.3.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.3.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.3.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_3_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.3.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.3.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.3.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.3.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_3_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.3.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.3.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.3.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.3.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_3_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.3.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.3.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.4.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.4.attn_gate",
+      "output_name": "encoder_layer_4_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.4.attn_gate",
+      "source_names": [
+        "model.encoder.layers.4.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.4.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.4.input_layernorm.weight",
+      "output_name": "encoder_layer_4_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.4.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.4.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.4.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.4.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_4_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.4.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.4.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.4.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.4.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_4_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.4.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.4.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.4.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.4.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_4_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.4.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.4.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.4.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.4.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_4_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.4.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.4.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.4.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.4.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_4_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.4.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.4.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.4.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.4.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_4_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.4.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.4.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.5.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.5.attn_gate",
+      "output_name": "encoder_layer_5_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.5.attn_gate",
+      "source_names": [
+        "model.encoder.layers.5.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.5.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.5.input_layernorm.weight",
+      "output_name": "encoder_layer_5_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.5.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.5.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.5.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.5.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_5_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.5.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.5.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.5.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.5.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_5_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.5.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.5.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.5.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.5.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_5_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.5.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.5.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.5.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.5.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_5_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.5.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.5.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.5.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.5.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_5_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.5.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.5.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.5.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.5.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_5_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.5.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.5.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.6.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.6.attn_gate",
+      "output_name": "encoder_layer_6_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.6.attn_gate",
+      "source_names": [
+        "model.encoder.layers.6.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.6.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.6.input_layernorm.weight",
+      "output_name": "encoder_layer_6_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.6.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.6.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.6.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.6.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_6_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.6.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.6.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.6.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.6.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_6_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.6.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.6.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.6.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.6.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_6_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.6.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.6.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.6.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.6.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_6_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.6.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.6.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.6.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.6.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_6_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.6.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.6.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.6.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.6.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_6_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.6.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.6.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.7.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.7.attn_gate",
+      "output_name": "encoder_layer_7_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.7.attn_gate",
+      "source_names": [
+        "model.encoder.layers.7.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.7.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.7.input_layernorm.weight",
+      "output_name": "encoder_layer_7_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.7.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.7.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.7.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.7.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_7_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.7.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.7.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.7.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.7.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_7_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.7.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.7.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.7.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.7.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_7_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.7.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.7.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.7.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.7.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_7_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.7.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.7.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.7.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.7.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_7_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.7.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.7.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.7.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.7.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_7_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.7.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.7.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.8.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.8.attn_gate",
+      "output_name": "encoder_layer_8_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.8.attn_gate",
+      "source_names": [
+        "model.encoder.layers.8.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.8.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.8.input_layernorm.weight",
+      "output_name": "encoder_layer_8_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.8.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.8.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.8.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.8.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_8_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.8.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.8.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.8.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.8.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_8_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.8.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.8.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.8.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.8.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_8_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.8.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.8.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.8.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.8.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_8_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.8.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.8.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.8.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.8.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_8_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.8.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.8.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.8.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.8.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_8_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.8.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.8.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.9.attn_gate",
+      "component": "language",
+      "hf_name": "model.encoder.layers.9.attn_gate",
+      "output_name": "encoder_layer_9_attn_gate.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        1
+      ],
+      "source_name": "model.encoder.layers.9.attn_gate",
+      "source_names": [
+        "model.encoder.layers.9.attn_gate"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.9.input_layernorm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.9.input_layernorm.weight",
+      "output_name": "encoder_layer_9_input_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512
+      ],
+      "source_name": "model.encoder.layers.9.input_layernorm.weight",
+      "source_names": [
+        "model.encoder.layers.9.input_layernorm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.9.self_attn.k_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.9.self_attn.k_norm.weight",
+      "output_name": "encoder_layer_9_attn_k_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.9.self_attn.k_norm.weight",
+      "source_names": [
+        "model.encoder.layers.9.self_attn.k_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.9.self_attn.k_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.9.self_attn.k_proj.weight",
+      "output_name": "encoder_layer_9_attn_k.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.9.self_attn.k_proj.weight",
+      "source_names": [
+        "model.encoder.layers.9.self_attn.k_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.9.self_attn.out_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.9.self_attn.out_proj.weight",
+      "output_name": "encoder_layer_9_attn_output.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.9.self_attn.out_proj.weight",
+      "source_names": [
+        "model.encoder.layers.9.self_attn.out_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.9.self_attn.q_norm.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.9.self_attn.q_norm.weight",
+      "output_name": "encoder_layer_9_attn_q_norm.weights",
+      "precision": "FP16",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        64
+      ],
+      "source_name": "model.encoder.layers.9.self_attn.q_norm.weight",
+      "source_names": [
+        "model.encoder.layers.9.self_attn.q_norm.weight"
+      ],
+      "status": "fallback",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.9.self_attn.q_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.9.self_attn.q_proj.weight",
+      "output_name": "encoder_layer_9_attn_q.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "model.encoder.layers.9.self_attn.q_proj.weight",
+      "source_names": [
+        "model.encoder.layers.9.self_attn.q_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    },
+    {
+      "adapter_family": "needle",
+      "adapter_name": "model.encoder.layers.9.self_attn.v_proj.weight",
+      "component": "language",
+      "hf_name": "model.encoder.layers.9.self_attn.v_proj.weight",
+      "output_name": "encoder_layer_9_attn_v.weights",
+      "precision": "CQ4",
+      "qdq_restore": "hf_key",
+      "scale_factor": 1.0,
+      "shape": [
+        256,
+        512
+      ],
+      "source_name": "model.encoder.layers.9.self_attn.v_proj.weight",
+      "source_names": [
+        "model.encoder.layers.9.self_attn.v_proj.weight"
+      ],
+      "status": "converted",
+      "transform": "none"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# SimpleX Chat iOS -- Message Composition Module
+# POPOPX Chat iOS -- Message Composition Module
 
 > Technical specification for the compose bar, attachment types, reply/edit/forward modes, voice recording, and mentions.
 >
@@ -312,7 +312,7 @@ Optional feature where the recipient sees typing in real-time.
 |----------|------|-------------|
 | [`showLinkPreview()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1677) | L1677 | Triggers link preview loading |
 | [`getMessageLinks()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1697) | L1697 | Extracts URLs from formatted text |
-| [`isSimplexLink()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1708) | L1708 | Checks if URL is a SimpleX link |
+| [`isSimplexLink()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1708) | L1708 | Checks if URL is a POPOPX link |
 | [`cancelLinkPreview()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1712) | L1712 | Cancels pending preview |
 | [`loadLinkPreview()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1724) | L1724 | Fetches OpenGraph metadata |
 | [`resetLinkPreview()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1741) | L1741 | Resets preview state |
@@ -350,10 +350,10 @@ When `chat.chatInfo.groupInfo?.useRelays == true` (channel mode), compose behave
 - [`send()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1498) passes `sendAsGroup: true` to `apiSendMessages` when `useRelays && memberRole >= .owner`
 - [`forwardItems()`](../../Shared/Views/Chat/ComposeMessage/ComposeView.swift#L1526) passes `sendAsGroup: true` to `apiForwardChatItems` under same condition
 - Placeholder text shows "Broadcast" instead of "Message" (via `sendMessageView()` `placeholder:` parameter)
-- Share Extension ([`ShareAPI.swift`](../../SimpleX%20SE/ShareAPI.swift#L71)) uses the same `sendAsGroup` expression
+- Share Extension ([`ShareAPI.swift`](../../POPOP%20SE/ShareAPI.swift#L71)) uses the same `sendAsGroup` expression
 
 ### Subscriber Compose
-- [`userCantSendReason`](../../SimpleXChat/ChatTypes.swift#L1566) returns `("you are subscriber", nil)` when `useRelays && memberRole == .observer`
+- [`userCantSendReason`](../../POPOPXSwitch/ChatTypes.swift#L1566) returns `("you are subscriber", nil)` when `useRelays && memberRole == .observer`
 - This check is evaluated after `memberPending` (which takes priority) but replaces the `observer` message
 - Compose field is disabled; tapping shows "You can't send messages!" alert with no body text
 

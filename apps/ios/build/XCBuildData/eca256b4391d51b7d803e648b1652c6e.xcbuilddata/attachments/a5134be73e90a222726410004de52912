@@ -1,0 +1,4 @@
+module ElegantEmojiPicker {
+header "ElegantEmojiPicker-Swift.h"
+export *
+}

@@ -1,24 +1,23 @@
 //
 //  UserProfile.swift
-//  SimpleX
+//  POPOPX
 //
 //  Created by Evgeny Poberezkin on 31/01/2022.
-//  Copyright © 2022 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
 struct UserProfile: View {
     @EnvironmentObject var chatModel: ChatModel
     @EnvironmentObject var theme: AppTheme
-    @EnvironmentObject var ss: SaveableSettings
     @AppStorage(DEFAULT_PROFILE_IMAGE_CORNER_RADIUS) private var radius = defaultProfileImageCorner
     @State private var profile = Profile(displayName: "", fullName: "")
     @State private var currentProfileHash: Int?
-    @State private var loaded = false
     @State private var shortDescr = ""
-    @State private var description = ""
     // Modals
     @State private var showChooseSource = false
     @State private var showImagePicker = false
@@ -34,65 +33,68 @@ struct UserProfile: View {
 
             Section {
                 HStack {
-                    TextField("Enter your name…", text: $profile.displayName)
+                    TextField(NSLocalizedString("profile_enter_name_placeholder", comment: "Enter your name placeholder"), text: $profile.displayName)
                         .focused($focusDisplayName)
                     if !validNewProfileName {
                         Button {
                             alert = .invalidNameError(validName: mkValidName(profile.displayName))
                         } label: {
-                            Image(systemName: "exclamationmark.circle").foregroundColor(.red)
+                            Image(systemName: "exclamationmark.circle").foregroundColor(QuantumColors.error)
                         }
                     }
                 }
                 if let user = chatModel.currentUser, showFullName(user) {
-                    TextField("Full name (optional)", text: $profile.fullName)
+                    TextField(NSLocalizedString("profile_full_name_optional", comment: "Full name optional placeholder"), text: $profile.fullName)
                 }
                 HStack {
-                    TextField("Bio", text: $shortDescr)
+                    TextField(NSLocalizedString("profile_bio_placeholder", comment: "Bio placeholder"), text: $shortDescr)
                     if !bioFitsLimit() {
                         Button {
-                            showAlert(NSLocalizedString("Bio too large", comment: "alert title"))
+                            showAlert(NSLocalizedString("profile_bio_too_large", comment: "Bio too large alert title"))
                         } label: {
-                            Image(systemName: "exclamationmark.circle").foregroundColor(.red)
+                            Image(systemName: "exclamationmark.circle").foregroundColor(QuantumColors.error)
                         }
                     }
                 }
-                NavigationLink {
-                    ProfileDescriptionEditor(description: $description)
-                        .navigationTitle("Description")
-                        .modifier(ThemedBackground(grouped: true))
-                } label: {
-                    Text(description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Add description" : "Edit description")
-                }
             } footer: {
-                Text("Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile.")
+                Text(NSLocalizedString("profile_stored_notice", comment: "Profile storage notice"))
             }
 
             Section {
-                Button(action: getCurrentProfile) {
-                    Text("Reset")
+                Button(NSLocalizedString("profile_reset_button", comment: "Reset button")) {
+                    getCurrentProfile()
                 }
                 .disabled(
                     currentProfileHash == profile.hashValue &&
-                    (profile.shortDescr ?? "") == shortDescr.trimmingCharacters(in: .whitespaces) &&
-                    (profile.description ?? "") == description.trimmingCharacters(in: .whitespacesAndNewlines)
+                    (profile.shortDescr ?? "") == shortDescr.trimmingCharacters(in: .whitespaces)
                 )
-                Button(action: saveProfile) {
-                    Text("Save (and notify contacts)")
+                Button(NSLocalizedString("profile_save_notify", comment: "Save and notify contacts button")) {
+                    saveProfile()
                 }
                 .disabled(!canSaveProfile)
+                .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.15) : .clear, radius: 8, x: 0, y: 4)
             }
         }
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+        .scrollContentBackground(.hidden)
+        .modifier(ThemedBackground(grouped: true))
         // Lifecycle
         .onAppear {
-            // load once — returning from the description editor re-fires onAppear and would discard edits
-            if !loaded {
-                getCurrentProfile()
-                loaded = true
+            getCurrentProfile()
+        }
+        .onDisappear {
+            if canSaveProfile {
+                showAlert(
+                    title: NSLocalizedString("Save your profile?", comment: "alert title"),
+                    message: NSLocalizedString("Your profile was changed. If you save it, the updated profile will be sent to all your contacts.", comment: "alert message"),
+                    buttonTitle: NSLocalizedString("Save (and notify contacts)", comment: "alert button"),
+                    buttonAction: saveProfile,
+                    cancelButton: true
+                )
             }
         }
-        .onChange(of: editSnapshot) { _ in updateProfileSaver() }
-        .onChange(of: chosenImage) { image in
+        .onChange(of: chosenImage) {_,  image in
             Task {
                 let resized: String? = if let image {
                     await resizeImageToStrSize(cropToSquare(image), maxDataSize: 12500)
@@ -103,22 +105,22 @@ struct UserProfile: View {
             }
         }
         // Modals
-        .confirmationDialog("Profile image", isPresented: $showChooseSource, titleVisibility: .visible) {
-            Button("Take picture") {
+        .confirmationDialog(NSLocalizedString("profile_image_source_title", comment: "Profile image source dialog title"), isPresented: $showChooseSource, titleVisibility: .visible) {
+            Button(NSLocalizedString("profile_take_picture", comment: "Take picture button")) {
                 showTakePhoto = true
             }
-            Button("Choose from library") {
+            Button(NSLocalizedString("profile_choose_from_library", comment: "Choose from library button")) {
                 showImagePicker = true
             }
             if UIPasteboard.general.hasImages {
-                Button("Paste image") {
+                Button(NSLocalizedString("profile_paste_image", comment: "Paste image button")) {
                     chosenImage = UIPasteboard.general.image
                 }
             }
         }
         .fullScreenCover(isPresented: $showTakePhoto) {
             ZStack {
-                Color.black.edgesIgnoringSafeArea(.all)
+                theme.colors.background.edgesIgnoringSafeArea(.all)
                 CameraImagePicker(image: $chosenImage)
             }
         }
@@ -130,6 +132,7 @@ struct UserProfile: View {
             }
         }
         .alert(item: $alert) { a in userProfileAlert(a, $profile.displayName) }
+        .popopxBranded()
     }
 
     private func showFullName(_ user: User) -> Bool {
@@ -143,8 +146,7 @@ struct UserProfile: View {
     private var canSaveProfile: Bool {
         (
             currentProfileHash != profile.hashValue ||
-            (chatModel.currentUser?.profile.shortDescr ?? "") != shortDescr.trimmingCharacters(in: .whitespaces) ||
-            (chatModel.currentUser?.profile.description ?? "") != description.trimmingCharacters(in: .whitespacesAndNewlines)
+            (chatModel.currentUser?.profile.shortDescr ?? "") != shortDescr.trimmingCharacters(in: .whitespaces)
         ) &&
         profile.displayName.trimmingCharacters(in: .whitespaces) != "" &&
         validNewProfileName &&
@@ -162,14 +164,10 @@ struct UserProfile: View {
             do {
                 profile.displayName = profile.displayName.trimmingCharacters(in: .whitespaces)
                 profile.shortDescr = shortDescr.trimmingCharacters(in: .whitespaces)
-                let d = description.trimmingCharacters(in: .whitespacesAndNewlines)
-                profile.description = d.isEmpty ? nil : d
                 if let (newProfile, _) = try await apiUpdateProfile(profile: profile) {
                     await MainActor.run {
                         chatModel.updateCurrentUser(newProfile)
                         getCurrentProfile()
-                        // onChange(editSnapshot) won't fire when saved values equal typed, so clear the pending dismiss-save here
-                        ss.profileSave = nil
                     }
                 } else {
                     alert = .duplicateUserError
@@ -185,34 +183,6 @@ struct UserProfile: View {
             profile = fromLocalProfile(user.profile)
             currentProfileHash = profile.hashValue
             shortDescr = profile.shortDescr ?? ""
-            description = profile.description ?? ""
-        }
-    }
-
-    private var editSnapshot: [String] {
-        [profile.displayName, profile.fullName, profile.image ?? "", shortDescr, description]
-    }
-
-    private func updateProfileSaver() {
-        guard loaded, canSaveProfile else {
-            ss.profileSave = nil
-            return
-        }
-        var edited = profile
-        edited.displayName = profile.displayName.trimmingCharacters(in: .whitespaces)
-        edited.shortDescr = shortDescr.trimmingCharacters(in: .whitespaces)
-        let d = description.trimmingCharacters(in: .whitespacesAndNewlines)
-        edited.description = d.isEmpty ? nil : d
-        ss.profileSave = {
-            Task {
-                do {
-                    if let (newProfile, _) = try await apiUpdateProfile(profile: edited) {
-                        await MainActor.run { ChatModel.shared.updateCurrentUser(newProfile) }
-                    }
-                } catch {
-                    logger.error("UserProfile save on dismiss error: \(responseError(error))")
-                }
-            }
         }
     }
 }
@@ -276,45 +246,5 @@ func editImageButton(action: @escaping () -> Void) -> some View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 48)
-    }
-}
-
-struct ProfileDescriptionEditor: View {
-    @EnvironmentObject var theme: AppTheme
-    @Binding var description: String
-    @FocusState private var keyboardVisible: Bool
-
-    var body: some View {
-        List {
-            Section {
-                if #available(iOS 16.0, *) {
-                    TextField("Enter description (optional)", text: $description, axis: .vertical)
-                        .lineLimit(6...12)
-                        .focused($keyboardVisible)
-                } else {
-                    // iOS 15 has no vertically-growing TextField (axis:) — fixed-height editor instead
-                    ZStack {
-                        Group {
-                            if description.isEmpty {
-                                TextEditor(text: Binding.constant(NSLocalizedString("Enter description (optional)", comment: "placeholder")))
-                                    .foregroundColor(theme.colors.secondary)
-                                    .disabled(true)
-                            }
-                            TextEditor(text: $description)
-                                .focused($keyboardVisible)
-                        }
-                        .padding(.horizontal, -5)
-                        .padding(.top, -8)
-                        .frame(height: 130, alignment: .topLeading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-            }
-        }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                keyboardVisible = true
-            }
-        }
     }
 }

@@ -1,0 +1,439 @@
+{
+  "" : {
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K-primary.dia",
+    "emit-module-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K-primary-emit-module.dia",
+    "pch" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K-primary.swiftdeps"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/ASN1.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ASN1Any.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Any.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Any.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Any.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Any.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Any.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Any.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Any.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Any~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ASN1BitString.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1BitString.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1BitString.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1BitString.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1BitString.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1BitString.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1BitString.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1BitString.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1BitString~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ASN1Boolean.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Boolean.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Boolean.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Boolean.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Boolean.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Boolean.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Boolean.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Boolean.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Boolean~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ASN1Identifier.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Identifier.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Identifier.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Identifier.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Identifier.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Identifier.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Identifier.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Identifier.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Identifier~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ASN1Integer.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Integer.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Integer.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Integer.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Integer.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Integer.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Integer.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Integer.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Integer~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ASN1Null.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Null.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Null.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Null.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Null.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Null.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Null.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Null.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Null~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ASN1OctetString.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1OctetString.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1OctetString.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1OctetString.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1OctetString.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1OctetString.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1OctetString.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1OctetString.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1OctetString~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ASN1Strings.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Strings.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Strings.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Strings.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Strings.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Strings.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Strings.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Strings.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ASN1Strings~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ArraySliceBigint.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ArraySliceBigint.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ArraySliceBigint.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ArraySliceBigint.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ArraySliceBigint.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ArraySliceBigint.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ArraySliceBigint.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ArraySliceBigint.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ArraySliceBigint~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/GeneralizedTime.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/GeneralizedTime.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/GeneralizedTime.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/GeneralizedTime.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/GeneralizedTime.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/GeneralizedTime.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/GeneralizedTime.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/GeneralizedTime.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/GeneralizedTime~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/Basic ASN1 Types/ObjectIdentifier.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ObjectIdentifier.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ObjectIdentifier.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ObjectIdentifier.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ObjectIdentifier.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ObjectIdentifier.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ObjectIdentifier.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ObjectIdentifier.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ObjectIdentifier~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/ECDSASignature.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSASignature.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSASignature.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSASignature.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSASignature.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSASignature.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSASignature.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSASignature.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSASignature~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/PEMDocument.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PEMDocument.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PEMDocument.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PEMDocument.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PEMDocument.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PEMDocument.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PEMDocument.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PEMDocument.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PEMDocument~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/PKCS8PrivateKey.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PKCS8PrivateKey.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PKCS8PrivateKey.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PKCS8PrivateKey.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PKCS8PrivateKey.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PKCS8PrivateKey.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PKCS8PrivateKey.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PKCS8PrivateKey.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PKCS8PrivateKey~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/SEC1PrivateKey.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SEC1PrivateKey.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SEC1PrivateKey.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SEC1PrivateKey.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SEC1PrivateKey.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SEC1PrivateKey.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SEC1PrivateKey.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SEC1PrivateKey.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SEC1PrivateKey~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ASN1/SubjectPublicKeyInfo.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SubjectPublicKeyInfo.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SubjectPublicKeyInfo.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SubjectPublicKeyInfo.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SubjectPublicKeyInfo.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SubjectPublicKeyInfo.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SubjectPublicKeyInfo.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SubjectPublicKeyInfo.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SubjectPublicKeyInfo~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Asymmetric.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Asymmetric.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Asymmetric.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Asymmetric.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Asymmetric.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Asymmetric.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Asymmetric.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Asymmetric.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Asymmetric~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Combine.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Combine.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Combine.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Combine.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Combine.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Combine.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Combine.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Combine.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Combine~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Context.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Context.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Context.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Context.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Context.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Context.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Context.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Context.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Context~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/CryptoKitErrors.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/CryptoKitErrors.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/CryptoKitErrors.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/CryptoKitErrors.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/CryptoKitErrors.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/CryptoKitErrors.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/CryptoKitErrors.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/CryptoKitErrors.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/CryptoKitErrors~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/DH.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/DH.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/DH.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/DH.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/DH.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/DH.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/DH.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/DH.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/DH~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Digest.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Digest.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Digest.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Digest.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Digest.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Digest.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Digest.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Digest.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Digest~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ECDH.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDH.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDH.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDH.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDH.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDH.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDH.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDH.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDH~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/ECDSA.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSA.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSA.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSA.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSA.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSA.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSA.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSA.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/ECDSA~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/EdDSA.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/EdDSA.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/EdDSA.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/EdDSA.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/EdDSA.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/EdDSA.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/EdDSA.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/EdDSA.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/EdDSA~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Errors.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Errors.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Errors.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Errors.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Errors.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Errors.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Errors.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Errors.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Errors~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/HashDigest.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/HashDigest.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/HashDigest.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/HashDigest.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/HashDigest.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/HashDigest.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/HashDigest.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/HashDigest.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/HashDigest~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/MuSig.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/MuSig.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/MuSig.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/MuSig.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/MuSig.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/MuSig.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/MuSig.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/MuSig.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/MuSig~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Nonces.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Nonces.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Nonces.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Nonces.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Nonces.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Nonces.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Nonces.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Nonces.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Nonces~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/P256K.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/P256K~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/PrettyBytes.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PrettyBytes.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PrettyBytes.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PrettyBytes.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PrettyBytes.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PrettyBytes.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PrettyBytes.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PrettyBytes.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/PrettyBytes~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/RNG_boring.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/RNG_boring.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/RNG_boring.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/RNG_boring.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/RNG_boring.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/RNG_boring.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/RNG_boring.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/RNG_boring.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/RNG_boring~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Recovery.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Recovery.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Recovery.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Recovery.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Recovery.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Recovery.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Recovery.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Recovery.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Recovery~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/SHA256.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SHA256.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SHA256.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SHA256.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SHA256.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SHA256.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SHA256.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SHA256.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SHA256~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/SafeCompare.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SafeCompare.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SafeCompare.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SafeCompare.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SafeCompare.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SafeCompare.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SafeCompare.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SafeCompare.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SafeCompare~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Schnorr.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Schnorr.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Schnorr.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Schnorr.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Schnorr.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Schnorr.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Schnorr.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Schnorr.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Schnorr~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/SecureBytes.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SecureBytes.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SecureBytes.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SecureBytes.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SecureBytes.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SecureBytes.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SecureBytes.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SecureBytes.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/SecureBytes~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Signature.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Signature.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Signature.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Signature.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Signature.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Signature.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Signature.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Signature.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Signature~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Tweak.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Tweak.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Tweak.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Tweak.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Tweak.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Tweak.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Tweak.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Tweak.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Tweak~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/UInt256.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/UInt256.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/UInt256.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/UInt256.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/UInt256.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/UInt256.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/UInt256.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/UInt256.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/UInt256~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Utility.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Utility.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Utility.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Utility.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Utility.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Utility.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Utility.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Utility.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Utility~partial.swiftmodule"
+  },
+  "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/Sources/P256K/Zeroization.swift" : {
+    "const-values" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Zeroization.swiftconstvalues",
+    "dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Zeroization.d",
+    "diagnostics" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Zeroization.dia",
+    "index-unit-output-path" : "/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Zeroization.o",
+    "llvm-bc" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Zeroization.bc",
+    "object" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Zeroization.o",
+    "swift-dependencies" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Zeroization.swiftdeps",
+    "swiftmodule" : "/Users/elliot/simple-chat/POPOPX/apps/ios/swift-secp256k1/build/swift-secp256k1.build/Debug-iphoneos/P256K-t.build/Objects-normal/arm64/Zeroization~partial.swiftmodule"
+  }
+}

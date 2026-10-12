@@ -1,0 +1,921 @@
+/*
+  Localizable.strings
+  POPOP NSE
+
+  Created by EP on 30/07/2024.
+  Copyright © 2024 POPOP Chat. All rights reserved.
+*/
+
+
+"New messages" = "Новые сообщения";
+
+"New events" = "Новые события";
+
+"From %d chat(s)" = "Из %d чат(ов)";
+
+"From: %@" = "От: %@";
+
+"%d new events" = "%d новых событий";
+
+" and " = " и ";
+
+", " = ", ";
+
+" other chats" = " других чатов";
+
+"new message" = "новое сообщение";
+
+"%@ wants to connect!" = "%@ хочет подключиться!";
+
+"Accept contact request from %@?" = "Принять запрос на контакт от %@?";
+
+"%@ is connected!" = "%@ подключён!";
+
+"Incoming video call" = "Входящий видеозвонок";
+
+"Incoming audio call" = "Входящий аудиозвонок";
+
+"Encrypted message: app is stopped" = "Зашифрованное сообщение: приложение остановлено";
+
+"Contact hidden:" = "Контакт скрыт:";
+
+"Somebody" = "Кто-то";
+
+"this contact" = "этот контакт";
+
+"A new contact" = "Новый контакт";
+
+"You can now chat with %@" = "Теперь вы можете общаться с %@";
+
+"New contact:" = "Новый контакт:";
+
+"message received" = "сообщение получено";
+
+"New contact request" = "Новый запрос на контакт";
+
+"Group message:" = "Групповое сообщение:";
+
+"Report: %@" = "Жалоба: %@";
+
+"Encrypted message: no passphrase" = "Зашифрованное сообщение: нет парольной фразы";
+
+"Encrypted message: database migration error" = "Зашифрованное сообщение: ошибка миграции базы данных";
+
+"Encrypted message: database error" = "Зашифрованное сообщение: ошибка базы данных";
+
+"Encrypted message: keychain error" = "Зашифрованное сообщение: ошибка связки ключей";
+
+"Encrypted message: unexpected error" = "Зашифрованное сообщение: непредвиденная ошибка";
+
+"Encrypted message or another event" = "Зашифрованное сообщение или другое событие";
+
+/* RadialActionMenu - Chat actions */
+"accept_contact_request" = "Принять";
+"incognito_accept" = "Инкогнито";
+"reject_contact_request" = "Отклонить";
+"join_group" = "Присоединиться";
+"archive_reports" = "Архивировать";
+"leave_group_action" = "Покинуть";
+"mark_read" = "Прочитано";
+"mark_unread" = "Не прочитано";
+"unfavorite_chat" = "Убрать из избр.";
+"favorite_chat" = "В избр.";
+"chat_list" = "Список";
+"clear_conversation" = "Очистить";
+"delete_chat" = "Удалить";
+
+/* RadialActionMenu - Alert dialogs */
+"clear_private_notes_title" = "Очистить личные заметки?";
+"clear_conversation_title" = "Очистить беседу?";
+"clear_private_notes_message" = "Все сообщения будут удалены - это нельзя отменить!";
+"clear_conversation_message" = "Все сообщения будут удалены - это нельзя отменить! Сообщения будут удалены ТОЛЬКО для вас.";
+"clear_action" = "Очистить";
+"archive_reports_title" = "Архивировать все жалобы?";
+"archive_reports_message" = "Все жалобы будут архивированы для вас.";
+"archive_action" = "Архивировать";
+"leave_group_title" = "Покинуть группу?";
+"leave_group_message" = "Вы больше не будете получать сообщения из этой группы.";
+"leave_action" = "Покинуть";
+
+/* OneHandUICard - Accessibility */
+"selected_state" = "Выбрано";
+"not_selected_state" = "Не выбрано";
+
+/* PXContactConnectionInfo - Connection status */
+"you_invited_contact" = "Вы пригласили контакт";
+"you_accepted_connection" = "Вы приняли соединение";
+"group_connection_pending" = "Вы будете подключены к группе, когда устройство хоста группы будет онлайн. Пожалуйста, подождите или проверьте позже!";
+"connection_request_pending" = "Вы будете подключены, когда ваш запрос на подключение будет принят. Пожалуйста, подождите или проверьте позже!";
+"contact_device_pending" = "Вы будете подключены, когда устройство вашего контакта будет онлайн. Пожалуйста, подождите или проверьте позже!";
+"incognito_mode" = "Инкогнито";
+"delete_connection" = "Удалить соединение";
+"share_onetime_link" = "Поделиться одноразовой ссылкой";
+"onetime_invitation_title" = "Одноразовая ссылка-приглашение";
+"learn_more" = "Подробнее";
+
+/* PXTagListView - Tag management */
+"delete_list_title" = "Удалить список?";
+"delete_list_message" = "Все чаты будут удалены из списка %@, и список будет удалён.";
+"delete_action" = "Удалить";
+"edit_action" = "Изменить";
+"create_list" = "Создать список";
+"error_reordering_lists" = "Ошибка изменения порядка списков";
+"error_saving_chat_list" = "Ошибка сохранения списка чатов";
+"add_to_list" = "Добавить в список";
+"save_list" = "Сохранить список";
+"unique_list_name_emoji" = "Название списка и эмодзи должны отличаться для всех списков.";
+"error_creating_list" = "Ошибка создания списка";
+
+/* PXChatRelayView - Relay settings (Batch 3) */
+"relay_test_failed_title" = "Тест реле не удался!";
+"your_relay_name" = "Имя вашего реле";
+"preset_relay_address" = "Предустановленный адрес реле";
+"preset_relay_name" = "Предустановленное имя реле";
+"your_relay_address" = "Адрес вашего реле";
+"test_relay_footer" = "**Протестируйте реле**, чтобы получить его имя.";
+"delete_relay" = "Удалить реле";
+"use_relay" = "Использовать реле";
+"test_relay_button" = "Тестировать реле";
+"use_for_new_channels" = "Использовать для новых каналов";
+"chat_relay_nav_title" = "Чат-ретранслятор";
+"enter_relay_name_placeholder" = "Введите имя реле…";
+
+/* UserAddressLearnMore - Address help (Batch 3) */
+"share_address_publicly" = "Поделитесь адресом POPOPX в социальных сетях.";
+"address_wont_lose_contacts" = "Вы не потеряете свои контакты, если позже удалите свой адрес.";
+"onetime_link_usage_hint" = "Одноразовую ссылку можно использовать *только с одним контактом* - поделитесь лично или через любой мессенджер.";
+"set_connection_name_hint" = "Вы можете задать имя соединения, чтобы помнить, с кем была опубликована ссылка.";
+"connection_security" = "Безопасность соединения";
+"address_links_safe_share" = "Адрес POPOPX и одноразовые ссылки безопасно делиться через любой мессенджер.";
+"compare_security_codes" = "Для защиты от замены ссылки вы можете сравнить коды безопасности контакта.";
+"read_more_user_guide" = "Подробнее в Руководстве пользователя.";
+"create_popopx_address" = "Создать адрес POPOPX";
+"create_onetime_link" = "Создать одноразовую ссылку";
+"popopx_address_title" = "Адрес POPOPX";
+"new_chat_title" = "Новый чат";
+
+/* PXRTCServers - WebRTC settings (Batch 3) */
+"configure_ice_servers" = "Настроить серверы ICE";
+"use_popopx_servers_confirm" = "Использовать серверы POPOPX Chat?";
+"saved_webrtc_removed" = "Сохранённые серверы WebRTC ICE будут удалены";
+"confirm_action" = "Подтвердить";
+"using_popopx_servers" = "Используются серверы POPOPX Chat.";
+"ice_servers_one_per_line" = "Серверы ICE (по одному на строку)";
+"error_saving_ice_servers" = "Ошибка сохранения серверов ICE";
+"ice_servers_format_error" = "Убедитесь, что адреса серверов WebRTC ICE в правильном формате, разделены по строкам и не дублируются.";
+"how_to" = "Как";
+
+/* PXChatItemInfoView - Chat item info (Batch 4) */
+"delivery_tab" = "Доставка";
+"history_tab" = "История";
+"in_reply_to_tab" = "В ответ на";
+"saved_message" = "Сохранено";
+"forwarded_message" = "Переслано";
+"history_section" = "История";
+"no_history" = "Нет истории";
+"share_action" = "Поделиться";
+"copy_action" = "Копировать";
+"current_version" = "(текущая)";
+"no_text_content" = "нет текста";
+"in_reply_to_section" = "В ответ на";
+"recipients_cant_see_sender" = "Получатель(и) не могут видеть, от кого это сообщение.";
+"you_sent_label" = "вы";
+"delivery_section" = "Доставка";
+"no_delivery_info" = "Нет информации о доставке";
+
+/* PXFramedItemView - Chat item framing (Batch 5) */
+"only_you_and_mods_see" = "Только вы и модераторы видят это";
+"only_sender_and_mods_see" = "Только отправитель и модераторы видят это";
+"archived_report" = "архивированная жалоба";
+"moderated_by_user" = "модерируется";
+"blocked_status" = "заблокировано";
+"blocked_by_admin" = "заблокировано администратором";
+"marked_deleted" = "помечено как удалённое";
+"live_message" = "LIVE";
+
+/* PXIntegrityErrorItemView - Error alerts (Batch 5) */
+"skipped_messages_title" = "Пропущенные сообщения";
+"skipped_messages_message" = "Это может произойти, когда:\n1. Сообщения истекли в клиенте отправителя через 2 дня или на сервере через 30 дней.\n2. Расшифровка сообщения не удалась, потому что вы или ваш контакт использовали старую резервную копию базы данных.\n3. Соединение было скомпрометировано.";
+"bad_message_hash" = "Неверный хеш сообщения";
+"hash_mismatch_description" = "Хеш предыдущего сообщения отличается.";
+"report_to_developers" = "Пожалуйста, сообщите об этом разработчикам.";
+"bad_message_id" = "Неверный ID сообщения";
+"message_id_incorrect" = "ID следующего сообщения неверен (меньше или равен предыдущему).\nЭто может произойти из-за ошибки или когда соединение скомпрометировано.";
+"message_receive_error" = "Приложение удалило это сообщение после %d попыток получения.";
+"message_error_title" = "Ошибка сообщения";
+
+"chat_audio_call" = "Аудиозвонок";
+"chat_video_call" = "Видеозвонок";
+"chat_all_messages" = "Все сообщения";
+"chat_search" = "Поиск";
+"chat_filter" = "Фильтр";
+"chat_invite_member" = "Пригласить участника";
+
+"compose_member_deleted_cant_accept" = "Участник удалён - невозможно принять запрос";
+"compose_reject" = "Отклонить";
+"compose_accept" = "Принять";
+"compose_your_profile" = "Ваш профиль";
+"compose_incognito" = "Инкогнито";
+"compose_send_live_message" = "Отправить live-сообщение";
+"compose_disappearing_message" = "Исчезающее сообщение";
+"compose_char_count_format" = "%d/65536";
+"compose_scan_security_code" = "Отсканируйте код безопасности из приложения вашего контакта.";
+"compose_incorrect_security_code" = "Неверный код безопасности!";
+"compose_no_filtered_chats" = "Нет отфильтрованных чатов";
+"compose_share" = "Поделиться";
+"compose_copy" = "Копировать";
+"compose_mark_read" = "Отметить как прочитанное";
+"compose_delete_from_history" = "Удалить из истории";
+"compose_archive_report" = "Архивировать жалобу";
+"compose_answer_call" = "Ответить на звонок";
+"compose_tap_to_open" = "Нажмите, чтобы открыть";
+"compose_invalid_data" = "неверные данные";
+"compose_event_happened" = "произошло событие";
+
+"group_no_contacts_to_add" = "Нет контактов для добавления";
+"group_clear_selection" = "Очистить";
+"group_contacts_selected_fmt" = "Выбрано %d контакт(ов)";
+"group_no_contacts_selected" = "Контакты не выбраны";
+"group_cant_invite_contact_title" = "Невозможно пригласить контакт!";
+"group_cant_invite_contact_msg" = "Вы пытаетесь пригласить контакт, с которым поделились профилем инкогнито, в группу, в которой используете свой основной профиль";
+"group_enabled_for" = "Включено для";
+"group_set_member_admission" = "Установить приём участников";
+"group_member_admission" = "Приём участников";
+"group_no_available_relays" = "Нет доступных реле";
+"group_channel_delete_all" = "Канал будет удалён для всех подписчиков - это нельзя отменить!";
+"group_channel_delete_you" = "Канал будет удалён для вас - это нельзя отменить!";
+"group_group_delete_all" = "Группа будет удалена для всех участников - это нельзя отменить!";
+"group_group_delete_you" = "Группа будет удалена для вас - это нельзя отменить!";
+"group_chat_delete_all" = "Чат будет удалён для всех участников - это нельзя отменить!";
+"group_chat_delete_you" = "Чат будет удалён для вас - это нельзя отменить!";
+"group_cant_invite_contacts_title" = "Невозможно пригласить контакты!";
+"group_cant_invite_contacts_msg" = "Вы используете профиль инкогнито для этой группы - для предотвращения раскрытия вашего основного профиля приглашение контактов запрещено";
+"group_receipts_disabled_title" = "Квитанции отключены";
+"group_receipts_disabled_msg_fmt" = "В этой группе более %d участников, квитанции о доставке не отправляются.";
+"group_copy_code" = "Копировать код";
+"group_webpage_code" = "Код веб-страницы";
+"group_webpage_code_instructions" = "Добавьте этот код на вашу веб-страницу. Он будет отображать превью вашего канала / группы.";
+"group_enter_webpage_url" = "Введите URL веб-страницы";
+"group_webpage_url_instructions" = "Он будет показан подписчикам и использован для разрешения загрузки превью.";
+"group_chat_with_admins" = "Чат с администраторами";
+"group_member_reports" = "Жалобы участников";
+"group_set_group_preferences" = "Установить настройки группы";
+"group_owners_section" = "Владельцы";
+"group_you_label" = "вы";
+"group_no_chat_relays" = "Нет чат-реле";
+"group_chat_relays_forward_info" = "Чат-реле пересылают сообщения подписчикам канала.";
+"group_reset_button" = "Сбросить";
+"group_take_picture" = "Сделать фото";
+"group_choose_from_library" = "Выбрать из библиотеки";
+"group_paste_image" = "Вставить изображение";
+"group_read_action" = "Прочитано";
+"group_accept_action" = "Принять";
+"group_delete_action_member" = "Удалить";
+"group_share_link_desc_channel" = "Вы можете поделиться ссылкой или QR-кодом - любой сможет присоединиться к каналу.";
+"group_share_link_desc_group" = "Вы можете поделиться ссылкой или QR-кодом - любой сможет присоединиться к группе. Вы не потеряете участников группы, если позже удалите её.";
+"group_upgrade_link" = "Обновить ссылку";
+"group_share_link_button" = "Поделиться ссылкой";
+"group_share_via_chat_button" = "Поделиться через чат";
+"group_delete_link" = "Удалить ссылку";
+"group_create_link_button" = "Создать ссылку";
+"group_delete_link_title" = "Удалить ссылку?";
+"group_delete_link_message" = "Все участники группы останутся подключёнными.";
+"group_delete_link_action" = "Удалить";
+
+"settings_send_notifications" = "Отправлять уведомления";
+"settings_lock_screen_preview" = "Вы можете настроить предварительный просмотр уведомлений на экране блокировки в настройках.";
+"settings_open_settings_button" = "Открыть настройки";
+"settings_show_preview" = "Показать предпросмотр";
+"settings_push_notifications" = "Push-уведомления";
+"settings_restart_migrate_notice" = "Пожалуйста, перезапустите приложение и выполните миграцию базы данных для включения push-уведомлений.";
+"settings_server_test_failed" = "Тест сервера не удался!";
+"settings_test_notifications" = "Тестировать уведомления";
+"settings_core_version_fmt" = "Версия ядра: v%@";
+"settings_core_engine_fmt" = "Движок ядра: v%@";
+"settings_markdown_usage" = "Вы можете использовать markdown для форматирования сообщений:";
+"settings_incognito_mode" = "Режим инкогнито";
+"settings_incognito_description_1" = "Режим инкогнито защищает вашу конфиденциальность, используя новый случайный профиль для каждого контакта.";
+"settings_incognito_description_2" = "Он позволяет иметь множество анонимных соединений без общих данных между ними в одном профиле чата.";
+"settings_incognito_description_3" = "Когда вы делитесь профилем инкогнито с кем-то, этот профиль будет использоваться для групп, в которые вас приглашают.";
+"settings_chat_console" = "Консоль чата";
+"settings_reset_hints" = "Сбросить все подсказки";
+"settings_show_hide_db_ids" = "ID базы данных и опция изоляции транспорта.";
+"settings_storage_label" = "Хранилище";
+"settings_developer_options" = "Опции разработчика";
+"settings_compute_store_url" = "URL Compute Store";
+"settings_compute_store_label" = "Compute Store";
+"settings_compute_store_hint" = "Оставьте пустым для использования локального тестового режима. Установите URL бэкенда для включения реальных покупок StoreKit с проверкой на стороне сервера.";
+"settings_profile_stored_notice" = "Ваш профиль хранится на вашем устройстве и делится только с вашими контактами. Серверы POPOPX не могут видеть ваш профиль.";
+"settings_reset_button" = "Сбросить";
+"settings_save_notify_contacts" = "Сохранить (и уведомить контакты)";
+"settings_take_picture" = "Сделать фото";
+"settings_choose_from_library" = "Выбрать из библиотеки";
+"settings_paste_image" = "Вставить изображение";
+"settings_hide_profile" = "Скрыть профиль";
+"settings_hidden_profile_password" = "Пароль скрытого профиля";
+"settings_hidden_profile_instructions" = "Чтобы раскрыть скрытый профиль, введите полный пароль в поле поиска на странице **Ваши профили чата**.";
+"settings_error_saving_password" = "Ошибка сохранения пароля пользователя";
+"settings_time_disappear_new_contacts" = "Время исчезновения устанавливается только для новых контактов.";
+"settings_webrtc_ice_servers" = "Серверы WebRTC ICE";
+"settings_call_settings_header" = "Настройки";
+"settings_relay_protects_ip" = "Сервер реле защищает ваш IP-адрес, но может наблюдать за продолжительностью звонка.";
+"settings_relay_only_if_necessary" = "Сервер реле используется только при необходимости. Другая сторона может наблюдать ваш IP-адрес.";
+"settings_interface_section" = "Интерфейс";
+"settings_accept_calls_lockscreen" = "Вы можете принимать звонки с экрана блокировки, без аутентификации устройства и приложения.";
+"settings_auth_required_before_connect" = "Аутентификация требуется до подключения звонка, но вы можете пропустить звонки.";
+"settings_limitations_section" = "Ограничения";
+"settings_preset_server_address" = "Предустановленный адрес сервера";
+"settings_your_server_address" = "Адрес вашего сервера";
+"settings_add_to_another_device" = "Добавить на другое устройство";
+"settings_use_for_messages" = "Использовать для сообщений";
+"settings_yes_option" = "да";
+"settings_no_option" = "нет";
+"settings_use_server" = "Использовать сервер";
+"settings_chat_relays_header" = "Чат-реле";
+"settings_chat_relays_forward_desc" = "Чат-реле пересылают сообщения в каналах, которые вы создаёте.";
+"settings_message_servers" = "Серверы сообщений";
+"settings_media_file_servers" = "Серверы медиа и файлов";
+"settings_add_server" = "Добавить сервер";
+"settings_enter_server_manually" = "Ввести сервер вручную";
+"settings_scan_server_qr" = "Сканировать QR-код сервера";
+"settings_chat_relay_link" = "Чат-реле";
+"settings_how_to_use_servers" = "Как использовать ваши серверы";
+"settings_test_servers" = "Тестировать серверы";
+"settings_scan_server_qr_title" = "Сканировать QR-код сервера";
+
+
+/* NewChat - Group Creation */
+"group_create_button" = "Создать группу";
+"group_decentralized_footer" = "Полностью децентрализовано - видно только участникам.";
+"group_create_error_title" = "Ошибка создания группы";
+
+/* NewChat - Channel Creation */
+"channel_configure_relays" = "Настроить реле";
+"channel_create_button" = "Создать публичный канал";
+
+/* Developer Settings */
+"dev_compute_store_header" = "Compute Store";
+"dev_compute_store_footer" = "Оставьте пустым для использования локального тестового режима. Установите URL бэкенда для включения реальных покупок StoreKit с проверкой на стороне сервера.";
+
+/* Network & Servers */
+"scan_server_qr_title" = "Сканировать QR-код сервера";
+
+/* NewChat Menu */
+"newchat_archived_contacts" = "Архивированные контакты";
+"search_cancel_button" = "Отмена";
+
+/* Onboarding */
+"profile_name_placeholder" = "Введите имя профиля...";
+"onboarding_back_button" = "Назад";
+
+
+/* Nostr Square - Reply View */
+"nostr_reply_original_label" = "Оригинал";
+"nostr_reply_privacy_notice" = "Ваш ответ анонимен и зашифрован";
+"nostr_reply_title" = "Ответить";
+"nostr_reply_send_button" = "Отправить";
+
+/* Nostr Square - Broadcast Composer */
+"nostr_composer_privacy_title" = "Анонимная трансляция";
+"nostr_composer_privacy_subtitle" = "Ваша личность защищена сквозным шифрованием";
+"nostr_composer_char_count" = "%d/%d";
+"nostr_composer_title" = "Новая трансляция";
+"nostr_composer_send_button" = "Опубликовать";
+
+/* Nostr Square - Broadcast Card */
+"nostr_card_anonymous_label" = "Анонимный";
+"nostr_card_resonate_button" = "Откликнуться";
+"nostr_card_ttl_label" = "TTL";
+
+
+/* Developer Settings - Additional */
+"dev_show_label" = "Показать:";
+"dev_hide_label" = "Скрыть:";
+"dev_storage_button" = "Хранилище";
+"back_to_label" = "Назад к %@";
+"duration_picker_label" = "Продолжительность";
+"unit_picker_label" = "Единица";
+"theme_all_modes" = "Все режимы";
+"theme_light_mode" = "Светлый режим";
+"theme_dark_mode" = "Темный режим";
+"theme_apply_to_label" = "Применить к";
+"error_failed_load_server_operators" = "Не удалось загрузить операторов сервера после 3 попыток. Приложение не может связаться с основным сервисом.";
+"error_cannot_set_empty_operators" = "Невозможно установить пустой список операторов";
+"error_failed_set_server_operators" = "Не удалось установить операторов сервера после 5 попыток.";
+"error_failed_save_servers" = "Не удалось сохранить серверы после нескольких попыток";
+"error_failed_validate_servers" = "Не удалось проверить серверы после нескольких попыток";
+"error_failed_load_conditions" = "Не удалось загрузить текст условий после 3 попыток.";
+"error_no_operators_for_conditions" = "Не указаны операторы для принятия условий.";
+"error_invalid_conditions_id" = "Неверный ID условий. Пожалуйста, перезапустите приложение.";
+"error_and_others_count" = "и еще %d других ошибок";
+"group_short_description_placeholder" = "Краткое описание";
+"error_saving_channel_profile" = "Ошибка сохранения профиля канала";
+"error_saving_group_profile" = "Ошибка сохранения профиля группы";
+"channel_profile_nav_title" = "Профиль канала";
+"group_profile_nav_title" = "Профиль группы";
+"channel_webpage_create_description" = "Создайте веб-страницу, чтобы показать превью вашего канала посетителям перед подпиской. Разместите ее самостоятельно или используйте любой статический хостинг.";
+"channel_webpage_not_supported" = "Используемые чат-ретрансляторы не поддерживают веб-страницы.";
+"channel_webpage_url_placeholder" = "https://";
+"channel_allow_embed_toggle" = "Разрешить встраивание всем";
+"channel_embed_any_page" = "Любая веб-страница может показывать превью.";
+"channel_embed_only_your_page" = "Только ваша страница выше может показывать превью.";
+"channel_save_notify_subscribers" = "Сохранить и уведомить подписчиков";
+"channel_save_notify_members" = "Сохранить и уведомить участников";
+"app_version_label" = "Версия приложения: v%@";
+"app_build_label" = "Сборка приложения: %@";
+"dev_show_options_toggle" = "Показать опции разработчика";
+"dev_confirm_db_upgrades_toggle" = "Подтвердить обновления базы данных";
+"dev_deprecated_options_section" = "Устаревшие опции";
+"dev_popopx_links_picker" = "Ссылки POPOPX";
+"data_market_category_picker" = "Категория";
+"data_market_category_label" = "Категория";
+"group_initial_role_picker" = "Начальная роль";
+"group_new_member_role_picker" = "Роль нового участника";
+"bridge_sms_provider_picker" = "Провайдер";
+"wallpaper_scale_picker" = "Масштаб";
+"prefs_you_allow_picker" = "Вы разрешаете";
+"prefs_you_allow_toggle" = "Вы разрешаете";
+"prefs_contact_allows" = "Контакт разрешает";
+"prefs_delete_after" = "Удалить через";
+"prefs_select_button" = "Выбрать";
+"chat_delete_messages_after" = "Удалять сообщения через";
+"servers_user_selection_picker" = "Выбор пользователя";
+"servers_server_type_picker" = "Тип сервера";
+"monetization_eula_link" = "EULA";
+"monetization_billing_period_picker" = "Период оплаты";
+"monetization_price_yearly" = "$99.9 / год";
+"monetization_price_monthly" = "$9.99 / месяц";
+"monetization_feature_chat_privacy" = "Все функции чата и конфиденциальности";
+"monetization_feature_compute_gifts" = "Хранилище вычислительных токенов и подарки";
+"monetization_feature_own_servers" = "Добавьте свои собственные SMP серверы";
+"monetization_feature_quantum" = "Приоритетные квантовые функции";
+"db_delete_messages_after" = "Удалять сообщения через";
+"mesh_hub_tab_chats" = "Mesh чаты";
+"mesh_hub_tab_public" = "Публичный чат";
+"mesh_hub_tab_groups" = "Группы";
+"mesh_hub_picker_label" = "Mesh хаб";
+"mesh_board_scope_picker" = "Область";
+"migration_use_onion_hosts" = "Использовать .onion хосты";
+"error_failed_load_protocol_info" = "Не удалось загрузить информацию о протоколе. Приложение не может связаться с основным сервисом. Пожалуйста, принудительно закройте и перезапустите приложение.";
+"error_invalid_conditions_id_detail" = "Неверный ID условий (%lld). Приложение не может определить версию протокола для принятия. Пожалуйста, полностью перезапустите приложение.";
+"error_no_operators_available" = "Нет доступных операторов. Пожалуйста, перезапустите приложение.";
+"markdown_can_be_copied" = " (можно скопировать)";
+"network_transport_isolation" = "Изоляция транспорта";
+"release_notes_transport_isolation_title" = "Изоляция транспорта";
+"release_notes_transport_isolation_desc" = "По профилю чата (по умолчанию) или [по соединению](https://popopxchat.com/blog/20230204-popopx-v4-5-user-chat-profiles.html#transport-isolation) (БЕТА).";
+"voice_messages_prohibited_title" = "Голосовые сообщения запрещены";
+"voice_messages_prohibited_ask_contact_message" = "Голосовые сообщения не разрешены в этом чате. Пожалуйста, свяжитесь с владельцем чата.";
+"voice_messages_prohibited_group_owner_message" = "Голосовые сообщения не разрешены в этой группе. Пожалуйста, свяжитесь с владельцем группы.";
+"voice_messages_prohibited_other_message" = "Голосовые сообщения не разрешены в этом чате.";
+"waiting_for_file_title" = "Ожидание файла";
+"waiting_for_file_xftp_message" = "Файл передается по протоколу XFTP.";
+"waiting_for_file_smp_message" = "Файл передается по протоколу SMP.";
+"waiting_for_image_title" = "Ожидание изображения";
+"waiting_for_image_xftp_message" = "Изображение передается по протоколу XFTP.";
+"waiting_for_image_smp_message" = "Изображение передается по протоколу SMP.";
+"waiting_for_video_title" = "Ожидание видео";
+"waiting_for_video_xftp_message" = "Видео передается по протоколу XFTP.";
+"waiting_for_video_smp_message" = "Видео передается по протоколу SMP.";
+"cannot_forward_message_title" = "Невозможно переслать сообщение";
+"cannot_forward_message_message" = "Это сообщение не может быть переслано из-за настроек чата.";
+"la_lock_turned_on_title" = "Блокировка POPOPX включена";
+"la_lock_turned_on_message" = "Блокировка POPOPX включена. Вам потребуется аутентификация для доступа к приложению.";
+"la_lock_not_enabled_title" = "Блокировка POPOPX не включена";
+"la_lock_not_enabled_message" = "Блокировка POPOPX не включена. Пожалуйста, включите ее в Настройках.";
+"la_auth_failed_title" = "Ошибка аутентификации";
+"la_auth_failed_message" = "Ошибка аутентификации. Пожалуйста, попробуйте снова.";
+"la_auth_unavailable_title" = "Аутентификация недоступна";
+"la_auth_unavailable_instruction_message" = "Аутентификация недоступна на этом устройстве. Пожалуйста, используйте другой метод аутентификации.";
+"la_auth_unavailable_turning_off_message" = "Аутентификация недоступна. Блокировка POPOPX будет отключена.";
+"delete_message_title" = "Удалить сообщение";
+"delete_messages_title" = "Удалить %d сообщений";
+"delete_button" = "Удалить";
+"ok_button" = "ОК";
+"cancel_button" = "Отмена";
+"unlock_button" = "Разблокировать";
+"continue_button" = "Продолжить";
+"accept_button" = "Принять";
+"reject_button" = "Отклонить";
+"export_json_button" = "Экспорт JSON";
+"back_button" = "Назад";
+"chats_nav_title" = "Чаты";
+"add_contact_nav_title" = "Добавить контакт";
+"group_link_nav_title" = "Ссылка на группу";
+"channel_link_nav_title" = "Ссылка на канал";
+"creating_channel_nav_title" = "Создание канала";
+"network_servers_nav_title" = "Сеть и серверы";
+"new_server_nav_title" = "Новый сервер";
+"send_notifications_nav_title" = "Отправлять уведомления";
+"show_preview_nav_title" = "Показывать превью";
+"member_admission_nav_title" = "Допуск участников";
+"popopx_address_nav_title" = "Адрес POPOPX";
+"archived_contacts_nav_title" = "Архивированные контакты";
+"profile_address_label" = "Ваш адрес POPOPX";
+"profile_chat_profiles_label" = "Профили чата";
+"profile_connect_desktop_label" = "Подключиться с рабочего стола";
+"profile_preferences_label" = "Настройки";
+"profile_settings_label" = "Настройки";
+"needle_extractions_accessibility" = "Извлечения Needle";
+"new_chat_accessibility" = "Новый чат";
+"switch_to_mesh_accessibility" = "Переключиться на mesh";
+"switch_to_broadcast_accessibility" = "Переключиться на трансляцию";
+"call_toggle_video_fit" = "Переключить подгонку видео";
+"call_end_call" = "Завершить вызов";
+"call_mute_microphone" = "Отключить микрофон";
+"call_speaker" = "Динамик";
+"call_camera" = "Камера";
+"call_flip_camera" = "Переключить камеру";
+"call_back_button" = "Назад";
+"binthere_look_at_screen" = "Смотрите на экран";
+"binthere_multiple_faces" = "Обнаружено несколько лиц";
+
+"add_contact_scan_qr" = "Для подключения ваш контакт может отсканировать QR-код или использовать ссылку в приложении.";
+"add_contact_video_call" = "Если не можете встретиться лично, покажите QR-код в видеозвонке или поделитесь ссылкой.";
+"api_contact_blocked_message" = "Соединение заблокировано оператором сервера:
+%@";
+%@";
+"api_contact_blocked_title" = "Соединение заблокировано";
+"api_contact_how_it_works" = "Как это работает";
+"api_contact_ok" = "ОК";
+"api_desktop_connection_stopped_message" = "Пожалуйста, убедитесь, что мобильное устройство и компьютер подключены к одной локальной сети и что брандмауэр компьютера разрешает соединение.
+Сообщите разработчикам о других проблемах.";
+Please share any other issues with the developers.";
+"api_desktop_connection_stopped_title" = "Соединение с компьютером прекращено";
+"api_desktop_copy_error" = "Ошибка копирования";
+"api_desktop_ok" = "ОК";
+"api_start_chat_message" = "Чат остановлен. Если вы уже использовали эту базу данных на другом устройстве, необходимо сначала перенести её обратно перед запуском чата.";
+"api_start_chat_ok" = "ОК";
+"api_start_chat_title" = "Запустить чат?";
+"chat_console_title" = "Консоль чата";
+"chat_list_mesh_section" = "Mesh";
+"confirm_passcode_title" = "Подтвердить код-пароль";
+"connect_banner_new_link" = "Новая одноразовая ссылка";
+"connect_banner_paste_scan" = "Вставить ссылку / Сканировать";
+"connection_error_title" = "Ошибка соединения";
+"data_market_sample1_desc" = "Агрегированные категории просмотра без личных идентификаторов";
+"data_market_sample1_title" = "Анонимные шаблоны просмотра";
+"data_market_sample2_desc" = "Время использования в категориях приложений, анонимизировано";
+"data_market_sample2_title" = "Статистика использования приложений";
+"data_market_sample3_desc" = "Приблизительные данные о местоположении для анализа трафика";
+"data_market_sample3_title" = "Региональные тенденции местоположения";
+"data_market_sample4_desc" = "Пищевые предпочтения и ограничения, анонимизировано";
+"data_market_sample4_title" = "Опрос о пищевых предпочтениях";
+"db_key_rotation_action" = "Для оптимальной безопасности обновите парольную фразу базы данных в Настройках.";
+"db_key_rotation_desc" = "Ключ шифрования вашей базы данных достиг рекомендуемого периода ротации.";
+"db_key_rotation_title" = "Ротация ключа базы данных";
+"db_key_rotation_understood" = "Понятно";
+"delete_report_label" = "Удалить отчёт";
+"error_adding_short_link" = "Ошибка добавления короткой ссылки";
+"invalid_qr_code_title" = "Недействительный QR-код";
+"large_file_contact_message" = "Ваш контакт отправил файл, превышающий текущий максимальный поддерживаемый размер (%@).";
+"large_file_title" = "Большой файл!";
+"mesh_board_title" = "Доска Mesh";
+"mesh_cancel" = "Отмена";
+"mesh_chat_list_title" = "Mesh-чаты";
+"mesh_compose_placeholder" = "Сообщение...";
+"mesh_create_group_button" = "Создать группу";
+"mesh_create_group_hint" = "Создайте группу для начала зашифрованного группового обмена сообщениями";
+"mesh_edges" = "Рёбра";
+"mesh_edges_header" = "Рёбра";
+"mesh_enter_group_name" = "Введите имя для новой mesh-группы";
+"mesh_last_updated" = "Последнее обновление";
+"mesh_local_peer" = "Локальный узел";
+"mesh_new_post" = "Новая запись";
+"mesh_no_groups" = "Нет mesh-групп";
+"mesh_no_posts" = "Пока нет записей";
+"mesh_no_posts_description" = "Будьте первым, кто опубликует запись на доске mesh";
+"mesh_no_topology" = "Топология недоступна";
+"mesh_nodes" = "Узлы";
+"mesh_nodes_header" = "Узлы";
+"mesh_overview_header" = "Обзор";
+"mesh_post_to_board" = "Опубликовать на доске";
+"mesh_urgent_label" = "Срочно";
+"mesh_urgent_toggle" = "Отметить как срочное";
+"migration_apply_button" = "Применить";
+"migration_check_internet" = "Проверьте подключение к интернету и повторите попытку";
+"migration_error_deleting_db" = "Ошибка удаления базы данных";
+"migration_error_exporting_db" = "Ошибка экспорта базы данных чата";
+"migration_error_file_not_exist" = "Экспортированный файл не существует";
+"migration_error_generic" = "Ошибка";
+"migration_error_migrating_settings" = "Ошибка миграции настроек";
+"migration_error_saving_settings" = "Ошибка сохранения настроек";
+"migration_error_starting_chat" = "Ошибка запуска чата";
+"migration_error_uploading_archive" = "Ошибка загрузки архива";
+"migration_upload_failed" = "Загрузка не удалась";
+"needle_extractions_label" = "Извлечения";
+"needle_no_data_found" = "В тексте не найдено структурированных данных.";
+"needle_no_extractions_found" = "Извлечения не найдены.";
+"no_chats_in_list" = "Нет чатов в списке %@";
+"no_email_account_message" = "На этом устройстве не настроена учётная запись электронной почты. Пожалуйста, настройте учётную запись в Настройках, чтобы поделиться вашим адресом.";
+"nostr_publish_failed" = "GlobalSquare.Publish.Failed";
+"nostr_publish_success" = "GlobalSquare.Publish.Success";
+"ntf_error_checking_token" = "Ошибка проверки статуса токена";
+"ntf_error_deleting_token" = "Ошибка удаления токена";
+"ntf_error_enabling" = "Ошибка включения уведомлений";
+"ntf_error_testing_server" = "Ошибка проверки соединения с сервером";
+"onboarding_connect_via_link" = "Подключиться по ссылке или QR-коду";
+"onboarding_create_public_address" = "Создать публичный адрес";
+"onboarding_create_your_link" = "Создайте свою ссылку";
+"onboarding_for_anyone_to_reach" = "Чтобы любой мог связаться с вами";
+"onboarding_invite_privately" = "Пригласить кого-то приватно";
+"onboarding_invite_privately_subtitle" = "Ссылка для подключения одного человека";
+"onboarding_let_someone_connect" = "Позвольте кому-то подключиться к вам";
+"onboarding_talk_to_someone" = "Поговорить с кем-то";
+"onboarding_your_public_address" = "Ваш публичный адрес";
+"one_hand_toolbar_message" = "Можно изменить в настройках внешнего вида.";
+"one_hand_toolbar_title" = "Доступная панель инструментов чата";
+"protocol_server_title" = "Сервер %@";
+"rn_v42_auto_accept" = "С необязательным приветственным сообщением.";
+"rn_v42_auto_accept_desc" = "С необязательным приветственным сообщением.";
+"rn_v42_group_links" = "Администраторы могут создавать ссылки для присоединения к группам.";
+"rn_v42_group_links_desc" = "Администраторы могут создавать ссылки для присоединения к группам.";
+"rn_v42_security_assessment" = "Безопасность POPOPX Chat была аудирована Trail of Bits.";
+"rn_v42_security_assessment_desc" = "Безопасность POPOPX Chat была аудирована Trail of Bits.";
+"rn_v43_irreversible_deletion" = "Ваши контакты могут разрешить полное удаление сообщений.";
+"rn_v43_irreversible_deletion_desc" = "Ваши контакты могут разрешить полное удаление сообщений.";
+"rn_v43_privacy_security" = "Скрытие экрана приложения в недавних приложениях.";
+"rn_v43_privacy_security_desc" = "Скрытие экрана приложения в недавних приложениях.";
+"rn_v43_server_config" = "Добавляйте серверы, сканируя QR-коды.";
+"rn_v43_server_config_desc" = "Добавляйте серверы, сканируя QR-коды.";
+"rn_v43_voice_messages" = "Максимум 30 секунд, мгновенное получение.";
+"rn_v43_voice_messages_desc" = "Максимум 30 секунд, мгновенное получение.";
+"rn_v44_disappearing_messages" = "Отправленные сообщения будут удалены через заданное время.";
+"rn_v44_disappearing_messages_desc" = "Отправленные сообщения будут удалены через заданное время.";
+"rn_v44_french_interface" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v44_french_interface_desc" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v44_gifs_stickers" = "Отправляйте из галереи или пользовательских клавиатур.";
+"rn_v44_gifs_stickers_desc" = "Отправляйте из галереи или пользовательских клавиатур.";
+"rn_v44_live_messages" = "Получатели видят обновления по мере ввода.";
+"rn_v44_live_messages_desc" = "Получатели видят обновления по мере ввода.";
+"rn_v44_verify_security" = "Сравнивайте коды безопасности с вашими контактами.";
+"rn_v44_verify_security_desc" = "Сравнивайте коды безопасности с вашими контактами.";
+"rn_v45_italian_interface" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v45_italian_interface_desc" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v45_message_draft" = "Сохранение последнего черновика сообщения с вложениями.";
+"rn_v45_message_draft_desc" = "Сохранение последнего черновика сообщения с вложениями.";
+"rn_v45_multiple_profiles" = "Разные имена, аватары и изоляция транспорта.";
+"rn_v45_multiple_profiles_desc" = "Разные имена, аватары и изоляция транспорта.";
+"rn_v45_private_filenames" = "Для защиты часового зоны файлы изображений/голоса используют UTC.";
+"rn_v45_private_filenames_desc" = "Для защиты часового зоны файлы изображений/голоса используют UTC.";
+"rn_v45_reduced_battery" = "Больше улучшений уже скоро!";
+"rn_v45_reduced_battery_desc" = "Больше улучшений уже скоро!";
+"rn_v46_audio_video_calls" = "Полностью переделано – работают в фоновом режиме!";
+"rn_v46_audio_video_calls_desc" = "Полностью переделано – работают в фоновом режиме!";
+"rn_v46_chinese_spanish" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v46_chinese_spanish_desc" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v46_further_battery" = "Больше улучшений уже скоро!";
+"rn_v46_further_battery_desc" = "Больше улучшений уже скоро!";
+"rn_v46_group_moderation" = "Теперь администраторы могут:\\n- удалять сообщения участников.\\n- отключать участников (";
+"rn_v46_group_moderation_desc" = "Теперь администраторы могут:\\n- удалять сообщения участников.\\n- отключать участников (";
+"rn_v46_group_welcome" = "Установите сообщение, показываемое новым участникам!";
+"rn_v46_group_welcome_desc" = "Установите сообщение, показываемое новым участникам!";
+"rn_v46_hidden_profiles" = "Защитите профили чата паролем!";
+"rn_v46_hidden_profiles_desc" = "Защитите профили чата паролем!";
+"rn_v50_app_passcode" = "Установите вместо системной аутентификации.";
+"rn_v50_app_passcode_desc" = "Установите вместо системной аутентификации.";
+"rn_v50_polish_interface" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v50_polish_interface_desc" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v50_videos_files" = "Быстро и без ожидания, пока отправитель будет онлайн!";
+"rn_v50_videos_files_desc" = "Быстро и без ожидания, пока отправитель будет онлайн!";
+"rn_v51_better_messages" = "- голосовые сообщения до 5 минут.\\n- настраиваемое время исчезновения.\\n- история редактирования.";
+"rn_v51_better_messages_desc" = "- голосовые сообщения до 5 минут.\\n- настраиваемое время исчезновения.\\n- история редактирования.";
+"rn_v51_japanese_interface" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v51_japanese_interface_desc" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v51_message_reactions" = "Наконец-то они есть! 🚀";
+"rn_v51_message_reactions_desc" = "Наконец-то они есть! 🚀";
+"rn_v51_self_destruct_passcode" = "Все данные стираются при вводе.";
+"rn_v51_self_destruct_passcode_desc" = "Все данные стираются при вводе.";
+"rn_v52_delivery_receipts" = "Вторая галочка, которой нам не хватала! ✅";
+"rn_v52_delivery_receipts_desc" = "Вторая галочка, которой нам не хватала! ✅";
+"rn_v52_few_more_things" = "- более стабильная доставка сообщений.\\n- немного улучшенные группы.\\n- и многое другое!";
+"rn_v52_few_more_things_desc" = "- более стабильная доставка сообщений.\\n- немного улучшенные группы.\\n- и многое другое!";
+"rn_v52_find_chats" = "Фильтр непрочитанных и избранных чатов.";
+"rn_v52_find_chats_desc" = "Фильтр непрочитанных и избранных чатов.";
+"rn_v52_keep_connections" = "Исправление шифрования после восстановления из резервных копий.";
+"rn_v52_keep_connections_desc" = "Исправление шифрования после восстановления из резервных копий.";
+"rn_v52_one_message_disappear" = "Даже когда отключено в разговоре.";
+"rn_v52_one_message_disappear_desc" = "Даже когда отключено в разговоре.";
+"rn_v53_desktop_app" = "Создайте новый профиль в [настольном приложении](https://popopxchat.com/downloads/). 💻";
+"rn_v53_desktop_app_desc" = "Создайте новый профиль в [настольном приложении](https://popopxchat.com/downloads/). 💻";
+"rn_v53_discover_groups" = "- подключайтесь к [службе каталогов](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (БЕТА)!\\n- квитанции о доставке (до 20 участников).\\n- быстрее и стабильнее.";
+"rn_v53_discover_groups_desc" = "- подключайтесь к [службе каталогов](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (БЕТА)!\\n- квитанции о доставке (до 20 участников).\\n- быстрее и стабильнее.";
+"rn_v53_encrypt_files" = "Приложение шифрует новые локальные файлы (кроме видео).";
+"rn_v53_encrypt_files_desc" = "Приложение шифрует новые локальные файлы (кроме видео).";
+"rn_v53_incognito_mode" = "Переключение режима инкогнито при подключении.";
+"rn_v53_incognito_mode_desc" = "Переключение режима инкогнито при подключении.";
+"rn_v53_new_languages %d" = "%d новых языков интерфейса";
+"rn_v53_new_languages_desc" = "Болгарский, финский, тайский и украинский – спасибо пользователям и Weblate!";
+"rn_v54_better_groups" = "Более быстрое присоединение и более надёжная доставка сообщений.";
+"rn_v54_better_groups_desc" = "Более быстрое присоединение и более надёжная доставка сообщений.";
+"rn_v54_block_members" = "Чтобы скрыть нежелательные сообщения.";
+"rn_v54_block_members_desc" = "Чтобы скрыть нежелательные сообщения.";
+"rn_v54_few_more_things" = "- по желанию уведомлять удалённые контакты.\\n- имена профилей с пробелами.\\n- и многое другое!";
+"rn_v54_few_more_things_desc" = "- по желанию уведомлять удалённые контакты.\\n- имена профилей с пробелами.\\n- и многое другое!";
+"rn_v54_incognito_groups" = "Создайте группу с использованием случайного профиля.";
+"rn_v54_incognito_groups_desc" = "Создайте группу с использованием случайного профиля.";
+"rn_v54_link_apps" = "По безопасному квантово-устойчивому протоколу.";
+"rn_v54_link_apps_desc" = "По безопасному квантово-устойчивому протоколу.";
+"rn_v55_improved_delivery" = "С пониженным расходом батареи.";
+"rn_v55_improved_delivery_desc" = "С пониженным расходом батареи.";
+"rn_v55_join_groups" = "Недавняя история и улучшенный [бот каталогов](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_join_groups_desc" = "Недавняя история и улучшенный [бот каталогов](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"rn_v55_paste_link" = "Строка поиска принимает пригласительные ссылки.";
+"rn_v55_paste_link_desc" = "Строка поиска принимает пригласительные ссылки.";
+"rn_v55_private_notes" = "С зашифрованными файлами и медиа.";
+"rn_v55_private_notes_desc" = "С зашифрованными файлами и медиа.";
+"rn_v55_turkish_interface" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v55_turkish_interface_desc" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v56_data_migration" = "Перенос на другое устройство по QR-коду.";
+"rn_v56_data_migration_desc" = "Перенос на другое устройство по QR-коду.";
+"rn_v56_hungarian_interface" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v56_hungarian_interface_desc" = "Благодарим пользователей – вносите вклад через Weblate!";
+"rn_v56_pip_calls" = "Используйте приложение во время разговора.";
+"rn_v56_pip_calls_desc" = "Используйте приложение во время разговора.";
+"rn_v56_quantum_encryption" = "Включите в прямых чатах (БЕТА)!";
+"rn_v56_quantum_encryption_desc" = "Включите в прямых чатах (БЕТА)!";
+"rn_v56_safer_groups" = "Администраторы могут заблокировать участника для всех.";
+"rn_v56_safer_groups_desc" = "Администраторы могут заблокировать участника для всех.";
+"rn_v57_forward_save" = "Источник сообщения остаётся конфиденциальным.";
+"rn_v57_forward_save_desc" = "Источник сообщения остаётся конфиденциальным.";
+"rn_v57_incall_sounds" = "При подключении аудио- и видеозвонков.";
+"rn_v57_incall_sounds_desc" = "При подключении аудио- и видеозвонков.";
+"rn_v57_network_management" = "Более надёжное сетевое соединение.";
+"rn_v57_network_management_desc" = "Более надёжное сетевое соединение.";
+"rn_v57_quantum_encryption" = "Будет включено в прямых чатах!";
+"rn_v57_quantum_encryption_desc" = "Будет включено в прямых чатах!";
+"rn_v57_shape_images" = "Квадрат, круг или что-то между.";
+"rn_v57_shape_images_desc" = "Квадрат, круг или что-то между.";
+"rn_v58_improved_delivery" = "С пониженным расходом батареи.";
+"rn_v58_improved_delivery_desc" = "С пониженным расходом батареи.";
+"rn_v58_private_routing" = "Защитите свой IP-адрес от ретрансляторов сообщений, выбранных вашими контактами.\\nВключите в настройках *Сеть и серверы*.";
+"rn_v58_private_routing_desc" = "Защитите свой IP-адрес от ретрансляторов сообщений, выбранных вашими контактами.\\nВключите в настройках *Сеть и серверы*.";
+"rn_v58_safely_receive_files" = "Подтверждайте файлы с неизвестных серверов.";
+"rn_v58_safely_receive_files_desc" = "Подтверждайте файлы с неизвестных серверов.";
+"rn_v60_better_networking" = "Статус соединения и серверов.";
+"rn_v60_better_networking_desc" = "Статус соединения и серверов.";
+"rn_v60_new_chat_experience" = "Новый опыт чата 🎉";
+"rn_v60_new_media_options" = "Новые медиа-возможности";
+"rn_v60_private_routing" = "Защищает ваш IP-адрес и соединения.";
+"rn_v60_private_routing_desc" = "Защищает ваш IP-адрес и соединения.";
+"rn_v60_sub_archive_contacts" = "Архивируйте контакты для последующего общения.";
+"rn_v60_sub_blur_privacy" = "Новые медиа-возможности";
+"rn_v60_sub_color_themes" = "Раскрасьте чаты новыми темами.";
+"rn_v60_sub_connect_faster" = "Новый опыт чата 🎉";
+"rn_v60_sub_delete_messages" = "Удаляйте до 20 сообщений за раз.";
+"rn_v60_sub_one_hand" = "Используйте приложение одной рукой.";
+"rn_v60_sub_play_chat_list" = "Новые медиа-возможности";
+"rn_v60_sub_share_apps" = "Новые медиа-возможности";
+"rn_v61_better_calls" = "Переключайте аудио и видео во время звонка.";
+"rn_v61_better_calls_desc" = "Переключайте аудио и видео во время звонка.";
+"rn_v61_better_notifications" = "Улучшенная доставка, сниженный расход трафика.\\nБольше улучшений уже скоро!";
+"rn_v61_better_notifications_desc" = "Улучшенная доставка, сниженный расход трафика.\\nБольше улучшений уже скоро!";
+"rn_v61_better_security" = "Протоколы POPOPX проверены Trail of Bits.";
+"rn_v61_better_security_desc" = "Протоколы POPOPX проверены Trail of Bits.";
+"rn_v61_better_ux" = "Улучшенный пользовательский опыт";
+"rn_v61_sub_forward_messages" = "Пересылайте до 20 сообщений за раз.";
+"rn_v61_sub_message_dates" = "Улучшенные даты сообщений.";
+"rn_v61_sub_message_shape" = "Настраиваемая форма сообщений.";
+"rn_v61_sub_moderate_messages" = "Удаляйте или модерируйте до 200 сообщений.";
+"rn_v61_sub_switch_profile" = "Улучшенный пользовательский опыт";
+"rn_v62_business_chats" = "Конфиденциальность для ваших клиентов.";
+"rn_v62_business_chats_desc" = "Конфиденциальность для ваших клиентов.";
+"rn_v62_network_decentralization" = "Децентрализация сети";
+"rn_v62_reliable_notifications" = "Доставляются, даже когда Apple их отбрасывает.";
+"rn_v62_reliable_notifications_desc" = "Доставляются, даже когда Apple их отбрасывает.";
+"rn_v63_better_groups_perf" = "Улучшенная производительность групп";
+"rn_v63_better_privacy" = "Лучшая конфиденциальность и безопасность";
+"rn_v63_mention_members" = "Получайте уведомления при упоминании.";
+"rn_v63_mention_members_desc" = "Получайте уведомления при упоминании.";
+"rn_v63_organize_lists" = "Не пропускайте важные сообщения.";
+"rn_v63_organize_lists_desc" = "Не пропускайте важные сообщения.";
+"rn_v63_private_reports" = "Помогайте администраторам модерировать группы.";
+"rn_v63_private_reports_desc" = "Помогайте администраторам модерировать группы.";
+"rn_v63_sub_faster_deletion" = "Улучшенная производительность групп";
+"rn_v63_sub_faster_sending" = "Улучшенная производительность групп";
+"rn_v63_sub_message_expiration" = "Лучшая конфиденциальность и безопасность";
+"rn_v63_sub_private_media" = "Лучшая конфиденциальность и безопасность";
+"rn_v641_chats_clean" = "Включить исчезающие сообщения по умолчанию.";
+"rn_v641_chats_clean_desc" = "Включить исчезающие сообщения по умолчанию.";
+"rn_v641_short_address" = "Короткий адрес POPOPX";
+"rn_v641_welcome_contacts" = "Установите био профиля и приветственное сообщение.";
+"rn_v641_welcome_contacts_desc" = "Установите био профиля и приветственное сообщение.";
+"rn_v64_chat_admins" = "Отправляйте приватные отзывы в группы.";
+"rn_v64_chat_admins_desc" = "Отправляйте приватные отзывы в группы.";
+"rn_v64_connect_faster" = "Мгновенные сообщения после нажатия «Подключиться».";
+"rn_v64_connect_faster_desc" = "Мгновенные сообщения после нажатия «Подключиться».";
+"rn_v64_group_moderator" = "Удаляет сообщения и блокирует участников.";
+"rn_v64_group_moderator_desc" = "Удаляет сообщения и блокирует участников.";
+"rn_v64_improved_delivery" = "Меньше трафика в мобильных сетях.";
+"rn_v64_improved_delivery_desc" = "Меньше трафика в мобильных сетях.";
+"rn_v64_review_members" = "Общайтесь с участниками до их вступления.";
+"rn_v64_review_members_desc" = "Общайтесь с участниками до их вступления.";
+"rn_v65_invite_friends" = "Мы упростили подключение для новых пользователей.";
+"rn_v65_invite_friends_desc" = "Мы упростили подключение для новых пользователей.";
+"rn_v65_nonprofit_governance" = "Чтобы сеть POPOPX существовала долго.";
+"rn_v65_nonprofit_governance_desc" = "Чтобы сеть POPOPX существовала долго.";
+"rn_v65_public_channels" = "Публичные каналы – говорите свободно 🚀";
+"rn_v65_safe_web_links" = "- по желанию отправлять превью ссылок.\\n- предотвращать фишинг по гиперссылкам.\\n- убирать отслеживание ссылок.";
+"rn_v65_safe_web_links_desc" = "- по желанию отправлять превью ссылок.\\n- предотвращать фишинг по гиперссылкам.\\n- убирать отслеживание ссылок.";
+"rn_v65_sub_ownership" = "Публичные каналы – говорите свободно 🚀";
+"rn_v65_sub_privacy" = "Приватные имена медиафайлов.";
+"rn_v65_sub_reliability" = "Публичные каналы – говорите свободно 🚀";
+"rn_v65_sub_security" = "Установите срок действия сообщений в чатах.";
+"save_button" = "Сохранить";
+"self_destruct_passcode_info" = "Информация о саморазрушающем код-пароле";
+"settings_tab_picker" = "Вкладка настроек";
+"share_channel_title" = "Поделиться каналом";
+"swipe_action_clear" = "Очистить";
+"swipe_action_delete" = "Удалить";
+"swipe_action_favorite" = "Избранное";
+"swipe_action_list" = "Список";
+"swipe_action_mute" = "Без звука";
+"swipe_action_read" = "Прочитано";
+"swipe_action_unfavorite" = "Убрать из избранного";
+"tab_chats" = "Чаты";
+"tab_mesh" = "Mesh";
+"tab_profiler" = "Профайлер";
+"tab_vortex" = "Vortex";
+"user_picker_chat_preferences" = "Настройки чата";
+"user_picker_chat_profiles" = "Ваши профили чата";
+"user_picker_create_address" = "Создать адрес POPOPX";
+"user_picker_settings" = "Настройки";
+"user_picker_use_from_desktop" = "Использовать с компьютера";
+"user_picker_your_address" = "Ваш адрес POPOPX";
+"db_hide_passphrase" = "Скрыть парольную фразу";
+"db_show_passphrase" = "Показать парольную фразу";
+"marked_deleted_moderated_by_list" = "%d сообщений промодерировано %@";
+"marked_deleted_blocked_by_admin" = "%d сообщений заблокировано администратором";
+"marked_deleted_blocked" = "%d сообщений заблокировано";
+"marked_deleted_marked_deleted" = "%d сообщений помечено как удалённые";
+"marked_deleted_moderated_by" = "промодерировано %@";
+"marked_deleted_blocked_single" = "заблокировано";
+"marked_deleted_blocked_by_admin_single" = "заблокировано администратором";
+"marked_deleted_deleted" = "помечено как удалённое";
+"ntf_register_button" = "Регистрация";
+"ntf_mode_desc_off" = "**Максимальная конфиденциальность**: не использовать push-сервер POPOPX Chat. Приложение будет проверять сообщения в фоновом режиме, когда система это позволяет, в зависимости от частоты использования приложения.";
+"ntf_mode_desc_periodic" = "**Повышенная конфиденциальность**: проверять новые сообщения каждые 20 минут. Только токен устройства передаётся нашему push-серверу. Сервер не видит количество ваших контактов и метаданные сообщений.";
+"ntf_mode_desc_instant" = "**Рекомендуется**: токен устройства и сквозные зашифрованные уведомления отправляются на push-сервер POPOPX Chat, но сервер не видит содержимое сообщений, их размер или отправителя.";
+"ntf_mode_short_off" = "Проверять сообщения, когда разрешено.";
+"ntf_mode_short_periodic" = "Проверять сообщения каждые 20 мин.";
+"ntf_mode_short_instant" = "Сквозные зашифрованные уведомления.";
+"protocol_server_no_servers_for" = "Нет серверов %@ для %@";
+"protocol_server_no_servers_configured" = "Серверы %@ не настроены";
+"protocol_server_storage_missing_for" = "Хранилище отсутствует для %@ в %@";
+"protocol_server_storage_missing" = "Хранилище отсутствует для %@";
+"protocol_server_proxy_missing_for" = "Прокси отсутствует для %@ в %@";
+"protocol_server_proxy_missing" = "Прокси отсутствует для %@";
+"protocol_server_duplicate" = "Дубликат сервера: %@ на %@";
+"protocol_server_duplicate_relay" = "Дубликат чат-реле: %@ на %@";
+"protocol_server_no_relays_for" = "Предупреждение: нет чат-реле для %@";
+"protocol_server_no_relays_configured" = "Предупреждение: чат-реле не настроены";
+"protocol_server_no_name_servers_for" = "Предупреждение: нет серверов имён для %@";
+"protocol_server_no_name_servers_configured" = "Предупреждение: серверы имён не настроены";
+"member_support_delete_button" = "Удалить";
+"migration_error_title" = "Ошибка";
+"compliance_data_retention_desc" = "Данные автоматически хранятся в течение %d дней. По истечении этого срока они будут безвозвратно удалены.";
+"location_precision_exact" = "Точное";
+"location_precision_fuzzy" = "Приблизительное (~1 км)";
+"location_precision_region" = "Регион (~10 км)";
+"location_precision_exact_desc" = "Поделиться точными координатами GPS";
+"location_precision_fuzzy_desc" = "Округлить до точности ~1 км";
+"location_precision_region_desc" = "Округлить до ~10 км со случайным смещением";
+"art_generator_flow_field" = "Поле потока";
+"art_generator_circuit_board" = "Печатная плата";
+"art_generator_geometric_harmony" = "Геометрическая гармония";
+"art_generator_wave_interference" = "Интерференция волн";
+"art_generator_cellular_automata" = "Клеточный автомат";
+"pq_crypto_kyber768_desc" = "Экспериментальное согласование ключей (X25519 ECDH) — НЕ квантовоустойчивое";
+"pq_crypto_dilithium3_desc" = "Экспериментальная подпись (Ed25519) — НЕ квантовоустойчивая";
+"pq_crypto_falcon512_desc" = "Экспериментальная компактная подпись (Ed25519) — НЕ квантовоустойчивая";
+"config_bot_not_configured" = "Бот конфигурации не настроен";
+"config_bot_invalid_response" = "Недопустимый ответ конфигурации";
+"config_bot_timeout" = "Превышено время ожидания запроса бота конфигурации";
+"server_api_invalid_url" = "Недопустимый URL сервера";
+"server_api_invalid_body" = "Недопустимое тело запроса";
+"server_api_error" = "Ошибка сервера: %d";
+"server_api_parse_failed" = "Не удалось разобрать ответ сервера";
+"nostr_broadcast_empty" = "Содержимое не может быть пустым";
+"nostr_broadcast_too_long" = "Содержимое превышает лимит в 500 символов";
+"art_vault_encode_failed" = "Не удалось закодировать изображение в PNG";
+"art_vault_decrypt_failed" = "Не удалось расшифровать произведение искусства";
+"art_engine_script_not_found" = "Скрипт генератора не найден: %@";
+"art_engine_render_failed" = "Ошибка рендеринга: %@";
+"art_engine_context_failed" = "Не удалось создать контекст растрового рендеринга";
+"binthere_encrypt_failed" = "Не удалось зашифровать сообщение";
+"binthere_decrypt_failed" = "Не удалось расшифровать — сообщение может быть повреждено";
+"binthere_invalid_key" = "Недопустимый ключ расшифровки";
+"binthere_bot_timeout" = "Бот не ответил вовремя";
+"binthere_message_expired" = "Это сообщение уже было прочитано или срок его действия истёк";
+"binthere_bot_not_configured" = "Бот BinThere не настроен";
+"binthere_compress_failed" = "Не удалось сжать изображение до допустимого размера";
+"binthere_operation_in_progress" = "Другая операция сохранения уже выполняется";
+"needle_encrypt_failed" = "Ошибка шифрования";
+"needle_decrypt_failed" = "Ошибка расшифровки";
+"needle_keychain_error" = "Ошибка связки ключей: %d";
+"needle_not_initialized" = "Движок Needle не инициализирован";
+"needle_encode_failed" = "Не удалось закодировать сообщения";
+"needle_completion_failed" = "Ошибка завершения: %@";
+"needle_parse_failed" = "Не удалось разобрать результат извлечения";
+"encrypted_doc_encode_failed" = "Не удалось закодировать текст документа";
+"encrypted_doc_encrypt_failed" = "Не удалось зашифровать документ";
+"encrypted_doc_decrypt_failed" = "Не удалось расшифровать документ — данные могут быть повреждены";

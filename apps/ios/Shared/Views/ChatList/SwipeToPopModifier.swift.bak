@@ -1,0 +1,336 @@
+//
+//  SwipeToPopModifier.swift
+//  POPOPX
+//
+//  "Swipe to Pop" — right-swipe gesture that pops/deletes a chat bubble
+//  Copyright © 2026 POPOPX. All rights reserved.
+//
+
+import SwiftUI
+import POPOPXSwitch
+
+struct SwipeToPopModifier: ViewModifier {
+    @ObservedObject var chat: Chat
+    @EnvironmentObject var chatModel: ChatModel
+    @State private var dragOffset: CGFloat = 0
+    @State private var isPopping = false
+
+    private let popThreshold: CGFloat = 140
+
+    func body(content: Content) -> some View {
+        content
+            .offset(x: max(0, dragOffset))
+            .scaleEffect(isPopping ? 1.08 : 1.0)
+            .opacity(isPopping ? 0 : 1)
+            .overlay(alignment: .leading) {
+                if dragOffset > 10 {
+                    needleLine
+                        .transition(.opacity)
+                }
+            }
+            .overlay {
+                if isPopping {
+                    Color(hex: "#6E25C4")
+                        .opacity(0.6)
+                        .blendMode(.screen)
+                        .allowsHitTesting(false)
+                }
+            }
+            .gesture(
+                DragGesture(minimumDistance: 8)
+                    .onChanged { value in
+                        guard !isPopping else { return }
+                        let dx = value.translation.width
+                        if dx > 0 {
+                            dragOffset = dx
+                            if dx > 20 {
+                                BubbleHapticsManager.shared.swipeTrail(intensity: Float(min(dx / popThreshold, 1.0)) * 0.3)
+                            }
+                        }
+                    }
+                    .onEnded { value in
+                        guard !isPopping else { return }
+                        let dx = value.translation.width
+                        if dx > popThreshold {
+                            triggerPop()
+                        } else {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                dragOffset = 0
+                            }
+                        }
+                    }
+            )
+            .animation(.easeOut(duration: 0.1), value: dragOffset)
+    }
+
+    private var needleLine: some View {
+        let width = min(dragOffset, 300)
+        return ZStack(alignment: .leading) {
+            LinearGradient(
+                colors: [
+                    .clear,
+                    Color(hex: "#C0C0C0").opacity(0.4),
+                    Color.white.opacity(0.95),
+                    Color(hex: "#C0C0C0").opacity(0.4),
+                    .clear
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+            .frame(width: width, height: 2)
+
+            LinearGradient(
+                colors: [.clear, Color.white.opacity(0.4), .clear],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+            .frame(width: width, height: 10)
+            .blur(radius: 4)
+        }
+        .offset(x: max(0, dragOffset) - 2)
+    }
+
+    private func triggerPop() {
+        isPopping = true
+        dragOffset = 0
+
+        BubbleHapticsManager.shared.popExplosion()
+
+        let chatId = chat.chatInfo.id
+
+        ChatPopCoordinator.shared.triggerPop(chatId: chatId)
+
+        Task {
+            try? await Task.sleep(for: .milliseconds(150))
+            await deleteChat(chat)
+            try? await Task.sleep(for: .milliseconds(300))
+            await MainActor.run {
+                isPopping = false
+            }
+        }
+    }
+}
+
+// MARK: - SwipeActionsModifier
+
+// MARK: - Swipe Coordinator
+
+final class SwipeCoordinator: ObservableObject {
+    static let shared = SwipeCoordinator()
+    @Published var activeSwipeChatId: Chat.ID?
+}
+
+struct SwipeActionsModifier: ViewModifier {
+    @ObservedObject var chat: Chat
+    let theme: AppTheme
+    
+    let onMarkRead: () -> Void
+    let onToggleFavorite: () -> Void
+    let onToggleNtfs: () -> Void
+    let onTag: () -> Void
+    let onClear: () -> Void
+    let onDelete: () -> Void
+    
+    @State private var dragOffset: CGFloat = 0
+    @State private var isDragging: Bool = false
+    @EnvironmentObject private var swipeCoordinator: SwipeCoordinator
+    
+    private let actionThreshold: CGFloat = 80
+    private let buttonWidth: CGFloat = 70
+    
+    func body(content: Content) -> some View {
+        ZStack {
+            // Action buttons layer (always on top, always tappable when visible)
+            ZStack {
+                if dragOffset < 0 {
+                    HStack(spacing: 8) {
+                        Spacer()
+                        leftActionButtons
+                    }
+                    .padding(.trailing, 12)
+                }
+                
+                if dragOffset > 0 {
+                    HStack(spacing: 8) {
+                        rightActionButtons
+                        Spacer()
+                    }
+                    .padding(.leading, 12)
+                }
+            }
+            .allowsHitTesting(dragOffset != 0 || isDragging)
+            
+            // Main content layer
+            content
+                .offset(x: dragOffset)
+                .allowsHitTesting(true)
+        }
+        .onChange(of: swipeCoordinator.activeSwipeChatId) { oldId, newId in
+                if newId != chat.chatInfo.id && dragOffset != 0 {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                        dragOffset = 0
+                    }
+                    isDragging = false
+                }
+            }
+            .onAppear {
+                // Reset swipe state when view appears (prevents stuck state after QR scan/sheet dismissal)
+                if swipeCoordinator.activeSwipeChatId == chat.chatInfo.id && dragOffset != 0 {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                        dragOffset = 0
+                    }
+                    swipeCoordinator.activeSwipeChatId = nil
+                }
+            }
+            .onDisappear {
+                // Reset swipe state when view disappears (prevents stuck state after navigation)
+                if dragOffset != 0 {
+                    dragOffset = 0
+                    swipeCoordinator.activeSwipeChatId = nil
+                }
+            }
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 8)
+                    .onChanged { value in
+                        let dx = value.translation.width
+                        let dy = value.translation.height
+                        // Only process horizontal drags (swipe), allow vertical scroll
+                        guard abs(dx) > abs(dy) else { return }
+                        isDragging = true
+                        swipeCoordinator.activeSwipeChatId = chat.chatInfo.id
+                        dragOffset = dx
+                        if abs(dragOffset) > 20 {
+                            BubbleHapticsManager.shared.swipeTrail(intensity: Float(min(abs(dragOffset) / (buttonWidth * 3), 1.0)) * 0.3)
+                        }
+                    }
+                    .onEnded { value in
+                        let dx = value.translation.width
+                        let dy = value.translation.height
+                        // Only process if it was a horizontal swipe
+                        guard abs(dx) > abs(dy) else {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                dragOffset = 0
+                            }
+                            isDragging = false
+                            return
+                        }
+                        
+                        if abs(dx) < actionThreshold {
+                            // Not enough swipe - reset
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                dragOffset = 0
+                            }
+                            swipeCoordinator.activeSwipeChatId = nil
+                        } else {
+                            // Snap to action buttons
+                            let targetOffset = dx > 0 ? buttonWidth * 3 : -buttonWidth * 3
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                dragOffset = targetOffset
+                            }
+                        }
+                        // Reset immediately, no delay
+                        isDragging = false
+                    }
+            )
+            .onTapGesture {
+                // Tap on the row itself should dismiss swipe
+                if dragOffset != 0 {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                        dragOffset = 0
+                    }
+                    swipeCoordinator.activeSwipeChatId = nil
+                    isDragging = false
+                }
+            }
+            .animation(.easeOut(duration: 0.1), value: dragOffset)
+    }
+    
+    private var leftActionButtons: some View {
+        HStack(spacing: 8) {
+            actionButton(
+                title: "Read",
+                systemImage: "checkmark",
+                color: theme.colors.primary,
+                show: chat.chatStats.unreadCount > 0 || chat.chatStats.unreadChat
+            ) {
+                onMarkRead()
+            }
+            
+            actionButton(
+                title: chat.chatInfo.chatSettings?.favorite == true ? "Unfavorite" : "Favorite",
+                systemImage: chat.chatInfo.chatSettings?.favorite == true ? "star.slash" : "star.fill",
+                color: chat.chatInfo.chatSettings?.favorite == true ? QuantumColors.warning : QuantumColors.success
+            ) {
+                onToggleFavorite()
+            }
+            
+            actionButton(
+                title: chat.chatInfo.nextNtfMode?.text(mentions: chat.chatInfo.hasMentions) ?? "Mute",
+                systemImage: chat.chatInfo.nextNtfMode?.iconFilled ?? "bell.slash",
+                color: theme.colors.primary,
+                show: chat.chatInfo.nextNtfMode != nil
+            ) {
+                onToggleNtfs()
+            }
+        }
+    }
+    
+    private var rightActionButtons: some View {
+        HStack(spacing: 8) {
+            actionButton(
+                title: "List",
+                systemImage: "tag.fill",
+                color: theme.colors.primary
+            ) {
+                onTag()
+            }
+            
+            actionButton(
+                title: "Clear",
+                systemImage: "gobackward",
+                color: QuantumColors.warning,
+                show: !chat.chatItems.isEmpty
+            ) {
+                onClear()
+            }
+            
+            actionButton(
+                title: "Delete",
+                systemImage: "trash",
+                color: theme.colors.error
+            ) {
+                onDelete()
+            }
+        }
+    }
+    
+    private func actionButton(
+        title: String,
+        systemImage: String,
+        color: Color,
+        show: Bool = true,
+        action: @escaping () -> Void
+    ) -> some View {
+        Group {
+            if show {
+                Button(action: action) {
+                    VStack(spacing: 4) {
+                        Image(systemName: systemImage)
+                            .font(.system(size: 18, weight: .semibold))
+                        Text(title)
+                            .font(.system(size: 10, weight: .medium))
+                    }
+                    .foregroundColor(.white)
+                    .frame(width: buttonWidth, height: buttonWidth)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(color)
+                    )
+                }
+            } else {
+                Color.clear
+                    .frame(width: buttonWidth, height: buttonWidth)
+            }
+        }
+    }
+}

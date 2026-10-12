@@ -1,16 +1,16 @@
-# SimpleX Chat iOS -- Specification Overview
+# POPOPX Chat iOS -- Specification Overview
 
-> Technical specification suite for the SimpleX Chat iOS application. Each document provides bidirectional links to product documentation and source code.
+> Technical specification suite for the POPOPX Chat iOS application. Each document provides bidirectional links to product documentation and source code.
 
 ## Executive Summary
 
-The SimpleX Chat iOS app is a native SwiftUI frontend that communicates with a Haskell core library via C FFI. All chat logic, encryption, protocol handling, and database operations happen in the Haskell core (`chat_ctrl`). The iOS layer handles UI rendering, system integration (CallKit, Push Notifications, Background Tasks), local preferences, and theming. The app shares its database with a Notification Service Extension (NSE) for decrypting push payloads while the main app is inactive.
+The POPOPX Chat iOS app is a native SwiftUI frontend that communicates with a Haskell core library via C FFI. All chat logic, encryption, protocol handling, and database operations happen in the Haskell core (`chat_ctrl`). The iOS layer handles UI rendering, system integration (CallKit, Push Notifications, Background Tasks), local preferences, and theming. The app shares its database with a Notification Service Extension (NSE) for decrypting push payloads while the main app is inactive.
 
 ## Dependency Graph
 
 ```
-SimpleXApp (root entry point)
-├── ChatModel (ObservableObject state) <-> SimpleXAPI (FFI bridge) <-> Haskell Core (chat_ctrl)
+POPOPXApp (root entry point)
+├── ChatModel (ObservableObject state) <-> POPOPXAPI (FFI bridge) <-> Haskell Core (chat_ctrl)
 ├── Views (SwiftUI)
 │   ├── ChatListView -> ChatView -> ComposeView
 │   ├── ChatItemView (renders individual messages)
@@ -27,8 +27,8 @@ SimpleXApp (root entry point)
 │   ├── CallController (CallKit + VoIP push)
 │   └── ThemeManager (theme resolution engine)
 └── Extensions
-    ├── SimpleX NSE (Notification Service Extension -- decrypts push payloads)
-    └── SimpleX SE (Share Extension)
+    ├── POPOPX NSE (Notification Service Extension -- decrypts push payloads)
+    └── POPOP SE (Share Extension)
 ```
 
 ## Specification Documents
@@ -63,12 +63,12 @@ SimpleXApp (root entry point)
 
 | File | Role |
 |------|------|
-| `Shared/SimpleXApp.swift` | App entry point, Haskell init, lifecycle management |
+| `Shared/POPOPXApp.swift` | App entry point, Haskell init, lifecycle management |
 | `Shared/AppDelegate.swift` | UIApplicationDelegate for push token registration |
 | `Shared/ContentView.swift` | Root view -- authentication gate, call overlay, navigation |
 | `Shared/Model/ChatModel.swift` | Primary observable state (ChatModel, ItemsModel, Chat) |
-| `Shared/Model/SimpleXAPI.swift` | FFI bridge -- chatSendCmd, chatApiSendCmd, sendSimpleXCmd |
+| `Shared/Model/POPOPXAPI.swift` | FFI bridge -- chatSendCmd, chatApiSendCmd, sendPopopxCmd |
 | `Shared/Model/AppAPITypes.swift` | ChatCommand, ChatResponse, ChatEvent enums (iOS app layer) |
-| `SimpleXChat/APITypes.swift` | APIResult, ChatError, ChatCmdProtocol (shared framework) |
-| `SimpleXChat/ChatTypes.swift` | User, ChatInfo, Contact, GroupInfo, ChatItem data types |
-| `SimpleXChat/SimpleX.h` | C header for Haskell FFI functions |
+| `POPOPXSwitch/APITypes.swift` | APIResult, ChatError, ChatCmdProtocol (shared framework) |
+| `POPOPXSwitch/ChatTypes.swift` | User, ChatInfo, Contact, GroupInfo, ChatItem data types |
+| `POPOPXSwitch/Popopx.h` | C header for Haskell FFI functions |

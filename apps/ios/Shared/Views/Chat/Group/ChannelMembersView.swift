@@ -1,68 +1,67 @@
 //
 //  ChannelMembersView.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 20.02.2026.
-//  Copyright © 2026 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
 struct ChannelMembersView: View {
     @ObservedObject var chat: Chat
     var groupInfo: GroupInfo
     @EnvironmentObject var chatModel: ChatModel
     @EnvironmentObject var theme: AppTheme
-    @State private var searchText: String = ""
-    @FocusState private var searchFocussed
 
     var body: some View {
-        let members = chatModel.groupMembers
+        Group {
+            let members = chatModel.groupMembers
             .filter { m in
                 let s = m.wrapped.memberStatus
                 return s != .memLeft && s != .memRemoved && m.wrapped.memberRole != .relay
             }
-            .sorted { $0.wrapped.memberRole > $1.wrapped.memberRole }
-        let subscriberCount = groupInfo.groupSummary.publicMemberCount ?? Int64(members.count + 1)
-        let s = searchText.trimmingCharacters(in: .whitespaces).localizedLowercase
         if groupInfo.isOwner {
+            let subscriberCount = groupInfo.groupSummary.publicMemberCount ?? Int64(members.count + 1)
             List {
-                Section(header: Text(subscriberCountStr(subscriberCount)).foregroundColor(theme.colors.secondary)) {
-                    searchFieldView(text: $searchText, focussed: $searchFocussed, theme.colors.onBackground, theme.colors.secondary)
-                        .padding(.leading, 8)
+                Section(header: Text(subscriberCountStr(subscriberCount))
+                    .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                    .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)) {
                     memberRow(GMember(groupInfo.membership), user: true, showRole: true)
-                    let filteredMembers = s == "" ? members : members.filter { $0.wrapped.localAliasAndFullName.localizedLowercase.contains(s) }
-                    ForEach(filteredMembers) { member in
-                        memberRow(member, user: false, showRole: member.wrapped.memberRole >= .member)
+                    ForEach(members) { member in
+                        memberRow(member, user: false, showRole: member.wrapped.memberRole >= .owner)
                     }
                 }
             }
+            .listRowBackground(Color.clear)
+            .scrollContentBackground(.hidden)
+            .modifier(ThemedBackground(grouped: true))
         } else {
-            let contributors = members.filter { $0.wrapped.memberRole >= .member && $0.wrapped.memberStatus != .memUnknown }
-            let contributorCount = contributors.count + (groupInfo.membership.memberRole >= .member ? 1 : 0)
-            let withContributors = contributors.contains { $0.wrapped.memberRole < .owner }
-                || groupInfo.membership.memberRole >= .member
+            let owners = members.filter { $0.wrapped.memberRole >= .owner }
             List {
-                Section(header: Text(ownersContributorsCountStr(contributorCount, withContributors: withContributors)).foregroundColor(theme.colors.secondary)) {
-                    searchFieldView(text: $searchText, focussed: $searchFocussed, theme.colors.onBackground, theme.colors.secondary)
-                        .padding(.leading, 8)
-                    if groupInfo.membership.memberRole >= .member {
-                        memberRow(GMember(groupInfo.membership), user: true, showRole: true)
-                    }
-                    let filteredContributors = s == "" ? contributors : contributors.filter { $0.wrapped.localAliasAndFullName.localizedLowercase.contains(s) }
-                    ForEach(filteredContributors) { member in
-                        memberRow(member, user: false, showRole: member.wrapped.memberRole >= .moderator)
+                Section(header: Text(NSLocalizedString("group_owners_section", comment: "Section header for channel/group owners"))
+                    .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                    .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)) {
+                    ForEach(owners) { member in
+                        memberRow(member, user: false, showRole: false)
                     }
                 }
             }
+            .listRowBackground(Color.clear)
+            .scrollContentBackground(.hidden)
+            .modifier(ThemedBackground(grouped: true))
         }
+        }
+        .popopxBranded()
     }
 
     @ViewBuilder private func memberRow(_ gMember: GMember, user: Bool, showRole: Bool) -> some View {
         let member = gMember.wrapped
         let nameText = Text(member.chatViewName)
-            .foregroundColor(member.memberIncognito ? .indigo : theme.colors.onBackground)
+            .foregroundColor(member.memberIncognito ? QuantumColors.accent : theme.colors.onBackground)
         let displayName = member.verified
             ? (Text(Image(systemName: "checkmark.shield")) + textSpace)
                 .font(.caption).baselineOffset(2).kerning(-2)
@@ -75,14 +74,14 @@ struct ChannelMembersView: View {
                 NameWithBadge(displayName, member.nameBadge)
                     .lineLimit(1)
                 if user {
-                    Text("you")
+                    Text(NSLocalizedString("group_you_label", comment: "Label indicating current user"))
                         .font(.caption)
                         .foregroundColor(theme.colors.secondary)
                 }
             }
             Spacer()
             if showRole {
-                Text(member.memberRole.text(isChannel: groupInfo.isChannel))
+                Text(member.memberRole.text)
                     .foregroundColor(theme.colors.secondary)
             }
         }
@@ -90,13 +89,13 @@ struct ChannelMembersView: View {
             row
         } else {
             NavigationLink {
-                GroupMemberInfoView(
+                PXGroupMemberDetail(
                     groupInfo: groupInfo,
                     chat: chat,
                     groupMember: gMember,
                     scrollToItemId: Binding.constant(nil)
                 )
-                .navigationBarHidden(false)
+                .toolbar(.visible, for: .navigationBar)
             } label: {
                 row
             }

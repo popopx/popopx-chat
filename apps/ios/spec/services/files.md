@@ -1,11 +1,11 @@
-# SimpleX Chat iOS -- File Transfer Service
+# POPOPX Chat iOS -- File Transfer Service
 
 > Technical specification for file transfer: inline/XFTP protocols, auto-receive thresholds, CryptoFile encryption, and file constants.
 >
 > Related specs: [Compose Module](../client/compose.md) | [Chat View](../client/chat-view.md) | [API Reference](../api.md) | [Database](../database.md) | [README](../README.md)
 > Related product: [Product Overview](../../product/README.md)
 
-**Source:** [`FileUtils.swift`](../../SimpleXChat/FileUtils.swift) | [`CryptoFile.swift`](../../SimpleXChat/CryptoFile.swift) | [`ChatTypes.swift`](../../SimpleXChat/ChatTypes.swift) | [`AppAPITypes.swift`](../../Shared/Model/AppAPITypes.swift) | [`SimpleXAPI.swift`](../../Shared/Model/SimpleXAPI.swift)
+**Source:** [`FileUtils.swift`](../../POPOPXSwitch/FileUtils.swift) | [`CryptoFile.swift`](../../POPOPXSwitch/CryptoFile.swift) | [`ChatTypes.swift`](../../POPOPXSwitch/ChatTypes.swift) | [`AppAPITypes.swift`](../../Shared/Model/AppAPITypes.swift) | [`POPOPXAPI.swift`](../../Shared/Model/POPOPXAPI.swift)
 
 ---
 
@@ -26,7 +26,7 @@
 
 ## 1. Overview
 
-SimpleX Chat supports two file transfer methods depending on file size:
+POPOPX Chat supports two file transfer methods depending on file size:
 
 ```
 File ≤ 255KB (inline)
@@ -49,14 +49,14 @@ All files are end-to-end encrypted. The XFTP protocol adds a second encryption l
 
 ### Inline Transfer
 
-- Files up to [`MAX_IMAGE_SIZE`](../../SimpleXChat/FileUtils.swift#L18) (255KB) are base64-encoded and embedded directly in the SMP message body
+- Files up to [`MAX_IMAGE_SIZE`](../../POPOPXSwitch/FileUtils.swift#L18) (255KB) are base64-encoded and embedded directly in the SMP message body
 - No additional protocol or server needed
 - Delivered with the same reliability guarantees as regular messages
 - Used primarily for compressed images
 
 ### XFTP Transfer
 
-For files exceeding the inline threshold (up to [`MAX_FILE_SIZE_XFTP`](../../SimpleXChat/FileUtils.swift#L30) = 1GB):
+For files exceeding the inline threshold (up to [`MAX_FILE_SIZE_XFTP`](../../POPOPXSwitch/FileUtils.swift#L30) = 1GB):
 
 1. **Sender side**:
    - File is AES-encrypted with a random key
@@ -75,7 +75,7 @@ For files exceeding the inline threshold (up to [`MAX_FILE_SIZE_XFTP`](../../Sim
 
 ### SMP Transfer (legacy)
 
-[`MAX_FILE_SIZE_SMP`](../../SimpleXChat/FileUtils.swift#L34) (8MB) exists as a constant for larger inline transfers through SMP, used in specific scenarios.
+[`MAX_FILE_SIZE_SMP`](../../POPOPXSwitch/FileUtils.swift#L34) (8MB) exists as a constant for larger inline transfers through SMP, used in specific scenarios.
 
 ---
 
@@ -85,9 +85,9 @@ Files below certain size thresholds are automatically accepted and downloaded wi
 
 | Media Type | Auto-Receive Threshold | Constant | Line |
 |------------|----------------------|----------|------|
-| Images | 510 KB | [`MAX_IMAGE_SIZE_AUTO_RCV`](../../SimpleXChat/FileUtils.swift#L21) | [L21](../../SimpleXChat/FileUtils.swift#L21) |
-| Voice messages | 510 KB | [`MAX_VOICE_SIZE_AUTO_RCV`](../../SimpleXChat/FileUtils.swift#L24) | [L24](../../SimpleXChat/FileUtils.swift#L24) |
-| Video | 1023 KB | [`MAX_VIDEO_SIZE_AUTO_RCV`](../../SimpleXChat/FileUtils.swift#L27) | [L27](../../SimpleXChat/FileUtils.swift#L27) |
+| Images | 510 KB | [`MAX_IMAGE_SIZE_AUTO_RCV`](../../POPOPXSwitch/FileUtils.swift#L21) | [L21](../../POPOPXSwitch/FileUtils.swift#L21) |
+| Voice messages | 510 KB | [`MAX_VOICE_SIZE_AUTO_RCV`](../../POPOPXSwitch/FileUtils.swift#L24) | [L24](../../POPOPXSwitch/FileUtils.swift#L24) |
+| Video | 1023 KB | [`MAX_VIDEO_SIZE_AUTO_RCV`](../../POPOPXSwitch/FileUtils.swift#L27) | [L27](../../POPOPXSwitch/FileUtils.swift#L27) |
 | Other files | Not auto-received | Requires manual acceptance | -- |
 
 ### Behavior
@@ -104,20 +104,20 @@ Files below certain size thresholds are automatically accepted and downloaded wi
 
 ---
 
-## [4. File Size Constants](../../SimpleXChat/FileUtils.swift#L18)
+## [4. File Size Constants](../../POPOPXSwitch/FileUtils.swift#L18)
 
-Defined in [`SimpleXChat/FileUtils.swift`](../../SimpleXChat/FileUtils.swift):
+Defined in [`POPOPXSwitch/FileUtils.swift`](../../POPOPXSwitch/FileUtils.swift):
 
 | Constant | Value | Line |
 |----------|-------|------|
-| `MAX_IMAGE_SIZE` | 261,120 (255 KB) | [L18](../../SimpleXChat/FileUtils.swift#L18) |
-| `MAX_IMAGE_SIZE_AUTO_RCV` | 522,240 (510 KB) | [L21](../../SimpleXChat/FileUtils.swift#L21) |
-| `MAX_VOICE_SIZE_AUTO_RCV` | 522,240 (510 KB) | [L24](../../SimpleXChat/FileUtils.swift#L24) |
-| `MAX_VIDEO_SIZE_AUTO_RCV` | 1,047,552 (1023 KB) | [L27](../../SimpleXChat/FileUtils.swift#L27) |
-| `MAX_FILE_SIZE_XFTP` | 1,073,741,824 (1 GB) | [L30](../../SimpleXChat/FileUtils.swift#L30) |
-| `MAX_FILE_SIZE_LOCAL` | Int64.max (no limit) | [L32](../../SimpleXChat/FileUtils.swift#L32) |
-| `MAX_FILE_SIZE_SMP` | 8,000,000 (~7.6 MB) | [L34](../../SimpleXChat/FileUtils.swift#L34) |
-| `MAX_VOICE_MESSAGE_LENGTH` | 300 s (5 min) | [L36](../../SimpleXChat/FileUtils.swift#L36) |
+| `MAX_IMAGE_SIZE` | 261,120 (255 KB) | [L18](../../POPOPXSwitch/FileUtils.swift#L18) |
+| `MAX_IMAGE_SIZE_AUTO_RCV` | 522,240 (510 KB) | [L21](../../POPOPXSwitch/FileUtils.swift#L21) |
+| `MAX_VOICE_SIZE_AUTO_RCV` | 522,240 (510 KB) | [L24](../../POPOPXSwitch/FileUtils.swift#L24) |
+| `MAX_VIDEO_SIZE_AUTO_RCV` | 1,047,552 (1023 KB) | [L27](../../POPOPXSwitch/FileUtils.swift#L27) |
+| `MAX_FILE_SIZE_XFTP` | 1,073,741,824 (1 GB) | [L30](../../POPOPXSwitch/FileUtils.swift#L30) |
+| `MAX_FILE_SIZE_LOCAL` | Int64.max (no limit) | [L32](../../POPOPXSwitch/FileUtils.swift#L32) |
+| `MAX_FILE_SIZE_SMP` | 8,000,000 (~7.6 MB) | [L34](../../POPOPXSwitch/FileUtils.swift#L34) |
+| `MAX_VOICE_MESSAGE_LENGTH` | 300 s (5 min) | [L36](../../POPOPXSwitch/FileUtils.swift#L36) |
 
 ```swift
 // Image compression target for inline transfer
@@ -144,7 +144,7 @@ public let MAX_VOICE_MESSAGE_LENGTH = TimeInterval(300) // 5 minutes (300 second
 ### Compression Pipeline
 
 1. User selects image (camera or photo library)
-2. Image is compressed to fit within [`MAX_IMAGE_SIZE`](../../SimpleXChat/FileUtils.swift#L18) (255KB):
+2. Image is compressed to fit within [`MAX_IMAGE_SIZE`](../../POPOPXSwitch/FileUtils.swift#L18) (255KB):
    - Progressive JPEG compression with decreasing quality
    - Resize if dimensions are too large
 3. Compressed image is base64-encoded into the message content
@@ -170,12 +170,12 @@ public let MAX_VOICE_MESSAGE_LENGTH = TimeInterval(300) // 5 minutes (300 second
 1. `ComposeVoiceView` manages the recording UI
 2. `AudioRecPlay` handles `AVAudioRecorder` lifecycle
 3. Recorded in compressed audio format
-4. Maximum duration: [`MAX_VOICE_MESSAGE_LENGTH`](../../SimpleXChat/FileUtils.swift#L36) = 300 seconds (5 minutes)
+4. Maximum duration: [`MAX_VOICE_MESSAGE_LENGTH`](../../POPOPXSwitch/FileUtils.swift#L36) = 300 seconds (5 minutes)
 5. Waveform data extracted for visualization
 
 ### Transfer
 
-- Voice files up to [`MAX_VOICE_SIZE_AUTO_RCV`](../../SimpleXChat/FileUtils.swift#L24) (510KB) are auto-received
+- Voice files up to [`MAX_VOICE_SIZE_AUTO_RCV`](../../POPOPXSwitch/FileUtils.swift#L24) (510KB) are auto-received
 - Larger voice files follow standard file transfer flow
 - Voice messages include waveform metadata for UI rendering
 
@@ -188,11 +188,11 @@ public let MAX_VOICE_MESSAGE_LENGTH = TimeInterval(300) // 5 minutes (300 second
 
 ---
 
-## [7. CryptoFile -- At-Rest Encryption](../../SimpleXChat/ChatTypes.swift#L4241)
+## [7. CryptoFile -- At-Rest Encryption](../../POPOPXSwitch/ChatTypes.swift#L4241)
 
-When [`apiSetEncryptLocalFiles(enable: true)`](../../Shared/Model/SimpleXAPI.swift#L384) is configured, files stored on the device are AES-encrypted.
+When [`apiSetEncryptLocalFiles(enable: true)`](../../Shared/Model/POPOPXAPI.swift#L384) is configured, files stored on the device are AES-encrypted.
 
-### [`CryptoFile`](../../SimpleXChat/ChatTypes.swift#L4241) Type
+### [`CryptoFile`](../../POPOPXSwitch/ChatTypes.swift#L4241) Type
 
 ```swift
 struct CryptoFile {
@@ -206,38 +206,38 @@ struct CryptoFileArgs {
 }
 ```
 
-> Defined in [`ChatTypes.swift` L4241](../../SimpleXChat/ChatTypes.swift#L4241) (`CryptoFile`) and [L4289](../../SimpleXChat/ChatTypes.swift#L4289) (`CryptoFileArgs`).
+> Defined in [`ChatTypes.swift` L4241](../../POPOPXSwitch/ChatTypes.swift#L4241) (`CryptoFile`) and [L4289](../../POPOPXSwitch/ChatTypes.swift#L4289) (`CryptoFileArgs`).
 
 ### Encryption Operations (C FFI)
 
-Implemented in [`CryptoFile.swift`](../../SimpleXChat/CryptoFile.swift):
+Implemented in [`CryptoFile.swift`](../../POPOPXSwitch/CryptoFile.swift):
 
 | Function | Purpose | Line |
 |----------|---------|------|
-| [`writeCryptoFile`](../../SimpleXChat/CryptoFile.swift#L18) | Write encrypted file, returns `CryptoFileArgs` | [L18](../../SimpleXChat/CryptoFile.swift#L18) |
-| [`readCryptoFile`](../../SimpleXChat/CryptoFile.swift#L31) | Read and decrypt file, returns `Data` | [L31](../../SimpleXChat/CryptoFile.swift#L31) |
-| [`encryptCryptoFile`](../../SimpleXChat/CryptoFile.swift#L54) | Encrypt existing file to new path | [L54](../../SimpleXChat/CryptoFile.swift#L54) |
-| [`decryptCryptoFile`](../../SimpleXChat/CryptoFile.swift#L66) | Decrypt file to new path | [L66](../../SimpleXChat/CryptoFile.swift#L66) |
+| [`writeCryptoFile`](../../POPOPXSwitch/CryptoFile.swift#L18) | Write encrypted file, returns `CryptoFileArgs` | [L18](../../POPOPXSwitch/CryptoFile.swift#L18) |
+| [`readCryptoFile`](../../POPOPXSwitch/CryptoFile.swift#L31) | Read and decrypt file, returns `Data` | [L31](../../POPOPXSwitch/CryptoFile.swift#L31) |
+| [`encryptCryptoFile`](../../POPOPXSwitch/CryptoFile.swift#L54) | Encrypt existing file to new path | [L54](../../POPOPXSwitch/CryptoFile.swift#L54) |
+| [`decryptCryptoFile`](../../POPOPXSwitch/CryptoFile.swift#L66) | Decrypt file to new path | [L66](../../POPOPXSwitch/CryptoFile.swift#L66) |
 
 ### Storage
 
 - Encrypted files stored alongside unencrypted files in `Documents/files/`
 - The `CryptoFileArgs` (key + nonce) are stored in the Haskell database, not on the filesystem
-- Toggle via privacy settings: [`apiSetEncryptLocalFiles(enable:)`](../../Shared/Model/SimpleXAPI.swift#L384)
+- Toggle via privacy settings: [`apiSetEncryptLocalFiles(enable:)`](../../Shared/Model/POPOPXAPI.swift#L384)
 
 ---
 
-## [8. File Storage Paths](../../SimpleXChat/FileUtils.swift#L199)
+## [8. File Storage Paths](../../POPOPXSwitch/FileUtils.swift#L199)
 
 ### Directory Structure
 
 | Function | Path | Line |
 |----------|------|------|
-| [`getAppFilesDirectory()`](../../SimpleXChat/FileUtils.swift#L208) | `Documents/files/` | [L208](../../SimpleXChat/FileUtils.swift#L208) |
-| [`getTempFilesDirectory()`](../../SimpleXChat/FileUtils.swift#L199) | `Documents/temp_files/` | [L199](../../SimpleXChat/FileUtils.swift#L199) |
-| [`getWallpaperDirectory()`](../../SimpleXChat/FileUtils.swift#L217) | `Documents/wallpapers/` | [L217](../../SimpleXChat/FileUtils.swift#L217) |
-| [`getAppFilePath(_:)`](../../SimpleXChat/FileUtils.swift#L212) | `Documents/files/{filename}` | [L212](../../SimpleXChat/FileUtils.swift#L212) |
-| [`getWallpaperFilePath(_:)`](../../SimpleXChat/FileUtils.swift#L221) | `Documents/wallpapers/{filename}` | [L221](../../SimpleXChat/FileUtils.swift#L221) |
+| [`getAppFilesDirectory()`](../../POPOPXSwitch/FileUtils.swift#L208) | `Documents/files/` | [L208](../../POPOPXSwitch/FileUtils.swift#L208) |
+| [`getTempFilesDirectory()`](../../POPOPXSwitch/FileUtils.swift#L199) | `Documents/temp_files/` | [L199](../../POPOPXSwitch/FileUtils.swift#L199) |
+| [`getWallpaperDirectory()`](../../POPOPXSwitch/FileUtils.swift#L217) | `Documents/wallpapers/` | [L217](../../POPOPXSwitch/FileUtils.swift#L217) |
+| [`getAppFilePath(_:)`](../../POPOPXSwitch/FileUtils.swift#L212) | `Documents/files/{filename}` | [L212](../../POPOPXSwitch/FileUtils.swift#L212) |
+| [`getWallpaperFilePath(_:)`](../../POPOPXSwitch/FileUtils.swift#L221) | `Documents/wallpapers/{filename}` | [L221](../../POPOPXSwitch/FileUtils.swift#L221) |
 
 ```swift
 func getAppFilesDirectory() -> URL    // Documents/files/
@@ -250,7 +250,7 @@ func getWallpaperDirectory() -> URL   // Documents/wallpapers/
 - Downloaded files: `Documents/files/{filename}`
 - Temporary files during transfer: `Documents/temp_files/`
 - Wallpaper images: `Documents/wallpapers/`
-- File paths are set via [`apiSetAppFilePaths(filesFolder:, tempFolder:, assetsFolder:)`](../../Shared/Model/SimpleXAPI.swift#L377) at startup
+- File paths are set via [`apiSetAppFilePaths(filesFolder:, tempFolder:, assetsFolder:)`](../../Shared/Model/POPOPXAPI.swift#L377) at startup
 
 ---
 
@@ -300,18 +300,18 @@ Cancels an in-progress upload or download. For XFTP transfers, also requests chu
 
 | Function | Purpose | Line |
 |----------|---------|------|
-| [`cleanupFile(_:)`](../../SimpleXChat/FileUtils.swift#L267) | Remove file associated with a chat item | [L267](../../SimpleXChat/FileUtils.swift#L267) |
-| [`cleanupDirectFile(_:)`](../../SimpleXChat/FileUtils.swift#L260) | Remove file only for direct chats | [L260](../../SimpleXChat/FileUtils.swift#L260) |
-| [`removeFile(_:)`](../../SimpleXChat/FileUtils.swift#L243) | Delete file at URL | [L243](../../SimpleXChat/FileUtils.swift#L243) |
-| [`removeFile(_:)`](../../SimpleXChat/FileUtils.swift#L251) | Delete file by name | [L251](../../SimpleXChat/FileUtils.swift#L251) |
-| [`deleteAppFiles()`](../../SimpleXChat/FileUtils.swift#L108) | Remove all app files (preserving databases) | [L108](../../SimpleXChat/FileUtils.swift#L108) |
-| [`deleteAppDatabaseAndFiles()`](../../SimpleXChat/FileUtils.swift#L86) | Remove everything | [L86](../../SimpleXChat/FileUtils.swift#L86) |
+| [`cleanupFile(_:)`](../../POPOPXSwitch/FileUtils.swift#L267) | Remove file associated with a chat item | [L267](../../POPOPXSwitch/FileUtils.swift#L267) |
+| [`cleanupDirectFile(_:)`](../../POPOPXSwitch/FileUtils.swift#L260) | Remove file only for direct chats | [L260](../../POPOPXSwitch/FileUtils.swift#L260) |
+| [`removeFile(_:)`](../../POPOPXSwitch/FileUtils.swift#L243) | Delete file at URL | [L243](../../POPOPXSwitch/FileUtils.swift#L243) |
+| [`removeFile(_:)`](../../POPOPXSwitch/FileUtils.swift#L251) | Delete file by name | [L251](../../POPOPXSwitch/FileUtils.swift#L251) |
+| [`deleteAppFiles()`](../../POPOPXSwitch/FileUtils.swift#L108) | Remove all app files (preserving databases) | [L108](../../POPOPXSwitch/FileUtils.swift#L108) |
+| [`deleteAppDatabaseAndFiles()`](../../POPOPXSwitch/FileUtils.swift#L86) | Remove everything | [L86](../../POPOPXSwitch/FileUtils.swift#L86) |
 
 - When a `ChatItem` is deleted, its associated file is deleted from disk
 - When a timed message expires, its file is deleted
 - `ChatModel.filesToDelete` queues files for deferred deletion
-- [`deleteAppFiles()`](../../SimpleXChat/FileUtils.swift#L108) removes all files (preserving databases)
-- [`deleteAppDatabaseAndFiles()`](../../SimpleXChat/FileUtils.swift#L86) removes everything
+- [`deleteAppFiles()`](../../POPOPXSwitch/FileUtils.swift#L108) removes all files (preserving databases)
+- [`deleteAppDatabaseAndFiles()`](../../POPOPXSwitch/FileUtils.swift#L86) removes everything
 
 ---
 
@@ -351,11 +351,11 @@ Cancels an in-progress upload or download. For XFTP transfers, also requests chu
 
 | File | Path | Key Definitions |
 |------|------|-----------------|
-| File utilities & constants | [`SimpleXChat/FileUtils.swift`](../../SimpleXChat/FileUtils.swift) | `MAX_IMAGE_SIZE`, `saveFile`, `removeFile`, `getMaxFileSize` |
-| CryptoFile FFI operations | [`SimpleXChat/CryptoFile.swift`](../../SimpleXChat/CryptoFile.swift) | `writeCryptoFile`, `readCryptoFile`, `encryptCryptoFile`, `decryptCryptoFile` |
-| CryptoFile / CryptoFileArgs types | [`SimpleXChat/ChatTypes.swift`](../../SimpleXChat/ChatTypes.swift) | `CryptoFile` (L4241), `CryptoFileArgs` (L4289) |
+| File utilities & constants | [`POPOPXSwitch/FileUtils.swift`](../../POPOPXSwitch/FileUtils.swift) | `MAX_IMAGE_SIZE`, `saveFile`, `removeFile`, `getMaxFileSize` |
+| CryptoFile FFI operations | [`POPOPXSwitch/CryptoFile.swift`](../../POPOPXSwitch/CryptoFile.swift) | `writeCryptoFile`, `readCryptoFile`, `encryptCryptoFile`, `decryptCryptoFile` |
+| CryptoFile / CryptoFileArgs types | [`POPOPXSwitch/ChatTypes.swift`](../../POPOPXSwitch/ChatTypes.swift) | `CryptoFile` (L4241), `CryptoFileArgs` (L4289) |
 | API command definitions | [`Shared/Model/AppAPITypes.swift`](../../Shared/Model/AppAPITypes.swift) | `receiveFile`, `cancelFile`, `ChatEvent` file events |
-| API implementations | [`Shared/Model/SimpleXAPI.swift`](../../Shared/Model/SimpleXAPI.swift) | `receiveFile` (L1471), `cancelFile` (L1590) |
+| API implementations | [`Shared/Model/POPOPXAPI.swift`](../../Shared/Model/POPOPXAPI.swift) | `receiveFile` (L1471), `cancelFile` (L1590) |
 | File view (chat item) | [`Shared/Views/Chat/ChatItem/CIFileView.swift`](../../Shared/Views/Chat/ChatItem/CIFileView.swift) | |
 | Image view (chat item) | [`Shared/Views/Chat/ChatItem/CIImageView.swift`](../../Shared/Views/Chat/ChatItem/CIImageView.swift) | |
 | Video view (chat item) | [`Shared/Views/Chat/ChatItem/CIVideoView.swift`](../../Shared/Views/Chat/ChatItem/CIVideoView.swift) | |
@@ -363,6 +363,6 @@ Cancels an in-progress upload or download. For XFTP transfers, also requests chu
 | Compose file preview | [`Shared/Views/Chat/ComposeMessage/ComposeFileView.swift`](../../Shared/Views/Chat/ComposeMessage/ComposeFileView.swift) | |
 | Compose image preview | [`Shared/Views/Chat/ComposeMessage/ComposeImageView.swift`](../../Shared/Views/Chat/ComposeMessage/ComposeImageView.swift) | |
 | Compose voice preview | [`Shared/Views/Chat/ComposeMessage/ComposeVoiceView.swift`](../../Shared/Views/Chat/ComposeMessage/ComposeVoiceView.swift) | |
-| C FFI (file encryption) | [`SimpleXChat/SimpleX.h`](../../SimpleXChat/SimpleX.h) | `chat_write_file`, `chat_read_file`, `chat_encrypt_file`, `chat_decrypt_file` |
+| C FFI (file encryption) | [`POPOPXSwitch/Popopx.h`](../../POPOPXSwitch/Popopx.h) | `chat_write_file`, `chat_read_file`, `chat_encrypt_file`, `chat_decrypt_file` |
 | Haskell file logic | `../../src/Simplex/Chat/Files.hs` | -- |
 | Haskell file store | `../../src/Simplex/Chat/Store/Files.hs` | -- |

@@ -1,0 +1,4 @@
+module LZString {
+header "LZString-Swift.h"
+export *
+}

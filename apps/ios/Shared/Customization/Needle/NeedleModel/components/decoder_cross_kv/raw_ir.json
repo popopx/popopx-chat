@@ -1,0 +1,8132 @@
+{
+  "component": "decoder_cross_kv",
+  "family": "needle",
+  "graph": {
+    "constants": {
+      "v_module_model_model_decoder_layers_0_encoder_attn_k_norm_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          64
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_0_encoder_attn_k_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_0_encoder_attn_v_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_1_encoder_attn_k_norm_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          64
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_1_encoder_attn_k_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_1_encoder_attn_v_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_2_encoder_attn_k_norm_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          64
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_2_encoder_attn_k_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_2_encoder_attn_v_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_3_encoder_attn_k_norm_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          64
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_3_encoder_attn_k_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_3_encoder_attn_v_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_4_encoder_attn_k_norm_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          64
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_4_encoder_attn_k_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_4_encoder_attn_v_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_5_encoder_attn_k_norm_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          64
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_5_encoder_attn_k_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_5_encoder_attn_v_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_6_encoder_attn_k_norm_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          64
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_6_encoder_attn_k_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_6_encoder_attn_v_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_7_encoder_attn_k_norm_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          64
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_7_encoder_attn_k_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      },
+      "v_module_model_model_decoder_layers_7_encoder_attn_v_proj_weight": {
+        "dtype": "torch.float16",
+        "shape": [
+          256,
+          512
+        ],
+        "type": "torch.Tensor"
+      }
+    },
+    "inputs": [
+      "v_args_0",
+      "v_args_1"
+    ],
+    "meta": {
+      "adapter_family": "needle",
+      "adapter_type": "component_pipeline",
+      "component": "decoder_cross_kv",
+      "component_counts": {
+        "decoder": 152
+      },
+      "input_names": [
+        "input_ids"
+      ],
+      "model_name_or_path": "/Users/jakmro/.cache/huggingface/hub/models--Cactus-Compute--needle/snapshots/f43da6ee14dbe95f712b03ea87556d25812aa8f6",
+      "task": "causal_lm_logits",
+      "transpile_metadata_providers": {
+        "_ComponentCaptureWrapper": {
+          "adapter_family": "needle",
+          "adapter_type": "component_pipeline",
+          "component": "decoder_cross_kv",
+          "input_names": [
+            "input_ids"
+          ],
+          "model_name_or_path": "/Users/jakmro/.cache/huggingface/hub/models--Cactus-Compute--needle/snapshots/f43da6ee14dbe95f712b03ea87556d25812aa8f6",
+          "task": "causal_lm_logits",
+          "weights_dir": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4"
+        },
+        "module": {
+          "adapter_family": "needle",
+          "adapter_type": "NeedleDecoderCrossKVComponentAdapter",
+          "input_names": [
+            "encoder_hidden_states",
+            "encoder_attention_mask"
+          ],
+          "model_name_or_path": "/Users/jakmro/.cache/huggingface/hub/models--Cactus-Compute--needle/snapshots/f43da6ee14dbe95f712b03ea87556d25812aa8f6",
+          "task": "causal_lm_logits"
+        }
+      },
+      "weight_bindings": {
+        "v_module_model_model_decoder_layers_0_encoder_attn_k_norm_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_0_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.0.encoder_attn.k_norm.weight"
+        },
+        "v_module_model_model_decoder_layers_0_encoder_attn_k_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_0_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.0.encoder_attn.k_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_0_encoder_attn_v_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_0_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.0.encoder_attn.v_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_1_encoder_attn_k_norm_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_1_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.1.encoder_attn.k_norm.weight"
+        },
+        "v_module_model_model_decoder_layers_1_encoder_attn_k_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_1_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.1.encoder_attn.k_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_1_encoder_attn_v_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_1_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.1.encoder_attn.v_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_2_encoder_attn_k_norm_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_2_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.2.encoder_attn.k_norm.weight"
+        },
+        "v_module_model_model_decoder_layers_2_encoder_attn_k_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_2_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.2.encoder_attn.k_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_2_encoder_attn_v_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_2_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.2.encoder_attn.v_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_3_encoder_attn_k_norm_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_3_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.3.encoder_attn.k_norm.weight"
+        },
+        "v_module_model_model_decoder_layers_3_encoder_attn_k_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_3_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.3.encoder_attn.k_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_3_encoder_attn_v_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_3_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.3.encoder_attn.v_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_4_encoder_attn_k_norm_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_4_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.4.encoder_attn.k_norm.weight"
+        },
+        "v_module_model_model_decoder_layers_4_encoder_attn_k_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_4_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.4.encoder_attn.k_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_4_encoder_attn_v_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_4_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.4.encoder_attn.v_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_5_encoder_attn_k_norm_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_5_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.5.encoder_attn.k_norm.weight"
+        },
+        "v_module_model_model_decoder_layers_5_encoder_attn_k_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_5_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.5.encoder_attn.k_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_5_encoder_attn_v_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_5_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.5.encoder_attn.v_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_6_encoder_attn_k_norm_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_6_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.6.encoder_attn.k_norm.weight"
+        },
+        "v_module_model_model_decoder_layers_6_encoder_attn_k_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_6_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.6.encoder_attn.k_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_6_encoder_attn_v_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_6_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.6.encoder_attn.v_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_7_encoder_attn_k_norm_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_7_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.7.encoder_attn.k_norm.weight"
+        },
+        "v_module_model_model_decoder_layers_7_encoder_attn_k_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_7_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.7.encoder_attn.k_proj.weight"
+        },
+        "v_module_model_model_decoder_layers_7_encoder_attn_v_proj_weight": {
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_7_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.7.encoder_attn.v_proj.weight"
+        }
+      },
+      "weights_dir": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4"
+    },
+    "nodes": [
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_0_encoder_attn_k_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view",
+        "inputs": [
+          "v_linear"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_1",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_0_encoder_attn_v_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_1",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_1"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_1",
+        "inputs": [
+          "v_linear_1"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_1",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_1"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default",
+        "inputs": [
+          "v_view"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to",
+        "inputs": [
+          "v_view"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": 2
+        },
+        "id": "n_pow_1",
+        "inputs": [
+          "v_to"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.pow.Tensor_Scalar",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "pow_1",
+          "torch_op": "aten.pow.Tensor_Scalar"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_pow_1"
+        ]
+      },
+      {
+        "attrs": {
+          "axis": [
+            -1
+          ],
+          "keepdim": true
+        },
+        "id": "n_mean",
+        "inputs": [
+          "v_pow_1"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mean.dim",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "mean",
+          "torch_op": "aten.mean.dim"
+        },
+        "op": "mean",
+        "outputs": [
+          "v_mean"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_1",
+        "inputs": [
+          "v_view"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_1",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_1"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_1",
+        "inputs": [
+          "v_view"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_1",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_1"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1e-06
+        },
+        "id": "n_add",
+        "inputs": [
+          "v_mean"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "add",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": -0.5
+        },
+        "id": "n_rsqrt",
+        "inputs": [
+          "v_add"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.rsqrt.default",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "rsqrt",
+          "torch_op": "aten.rsqrt.default"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_rsqrt"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul",
+        "inputs": [
+          "v_to_1",
+          "v_rsqrt"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_2",
+        "inputs": [
+          "v_mul"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_2",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_2"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_2",
+        "inputs": [
+          "v_mul"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_2",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_2"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_3",
+        "inputs": [
+          "v_module_model_model_decoder_layers_0_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_3",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_3"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_3",
+        "inputs": [
+          "v_module_model_model_decoder_layers_0_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "to_3",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_3"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1.0
+        },
+        "id": "n_add_1",
+        "inputs": [
+          "v_to_3"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "add_1",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_1"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_1",
+        "inputs": [
+          "v_to_2",
+          "v_add_1"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_1",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_1"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_2",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_1_encoder_attn_k_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_2",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_2"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_2",
+        "inputs": [
+          "v_linear_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_2",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_2"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_3",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_1_encoder_attn_v_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_3",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_3"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_3",
+        "inputs": [
+          "v_linear_3"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_3",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_3"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_4",
+        "inputs": [
+          "v_view_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_4",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_4"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_4",
+        "inputs": [
+          "v_view_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_4",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_4"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": 2
+        },
+        "id": "n_pow_2",
+        "inputs": [
+          "v_to_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.pow.Tensor_Scalar",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "pow_2",
+          "torch_op": "aten.pow.Tensor_Scalar"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_pow_2"
+        ]
+      },
+      {
+        "attrs": {
+          "axis": [
+            -1
+          ],
+          "keepdim": true
+        },
+        "id": "n_mean_1",
+        "inputs": [
+          "v_pow_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mean.dim",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "mean_1",
+          "torch_op": "aten.mean.dim"
+        },
+        "op": "mean",
+        "outputs": [
+          "v_mean_1"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_5",
+        "inputs": [
+          "v_view_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_5",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_5"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_5",
+        "inputs": [
+          "v_view_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_5",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_5"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1e-06
+        },
+        "id": "n_add_2",
+        "inputs": [
+          "v_mean_1"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "add_2",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_2"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": -0.5
+        },
+        "id": "n_rsqrt_1",
+        "inputs": [
+          "v_add_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.rsqrt.default",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "rsqrt_1",
+          "torch_op": "aten.rsqrt.default"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_rsqrt_1"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_2",
+        "inputs": [
+          "v_to_5",
+          "v_rsqrt_1"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_2",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_2"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_6",
+        "inputs": [
+          "v_mul_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_6",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_6"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_6",
+        "inputs": [
+          "v_mul_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_6",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_6"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_7",
+        "inputs": [
+          "v_module_model_model_decoder_layers_1_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_7",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_7"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_7",
+        "inputs": [
+          "v_module_model_model_decoder_layers_1_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "to_7",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_7"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1.0
+        },
+        "id": "n_add_3",
+        "inputs": [
+          "v_to_7"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "add_3",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_3"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_3",
+        "inputs": [
+          "v_to_6",
+          "v_add_3"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_3",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_3"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_4",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_2_encoder_attn_k_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_4",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_4"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_4",
+        "inputs": [
+          "v_linear_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_4",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_4"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_5",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_2_encoder_attn_v_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_5",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_5"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_5",
+        "inputs": [
+          "v_linear_5"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_5",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_5"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_8",
+        "inputs": [
+          "v_view_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_8",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_8"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_8",
+        "inputs": [
+          "v_view_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_8",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_8"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": 2
+        },
+        "id": "n_pow_3",
+        "inputs": [
+          "v_to_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.pow.Tensor_Scalar",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "pow_3",
+          "torch_op": "aten.pow.Tensor_Scalar"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_pow_3"
+        ]
+      },
+      {
+        "attrs": {
+          "axis": [
+            -1
+          ],
+          "keepdim": true
+        },
+        "id": "n_mean_2",
+        "inputs": [
+          "v_pow_3"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mean.dim",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "mean_2",
+          "torch_op": "aten.mean.dim"
+        },
+        "op": "mean",
+        "outputs": [
+          "v_mean_2"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_9",
+        "inputs": [
+          "v_view_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_9",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_9"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_9",
+        "inputs": [
+          "v_view_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_9",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_9"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1e-06
+        },
+        "id": "n_add_4",
+        "inputs": [
+          "v_mean_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "add_4",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_4"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": -0.5
+        },
+        "id": "n_rsqrt_2",
+        "inputs": [
+          "v_add_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.rsqrt.default",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "rsqrt_2",
+          "torch_op": "aten.rsqrt.default"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_rsqrt_2"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_4",
+        "inputs": [
+          "v_to_9",
+          "v_rsqrt_2"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_4",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_4"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_10",
+        "inputs": [
+          "v_mul_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_10",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_10"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_10",
+        "inputs": [
+          "v_mul_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_10",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_10"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_11",
+        "inputs": [
+          "v_module_model_model_decoder_layers_2_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_11",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_11"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_11",
+        "inputs": [
+          "v_module_model_model_decoder_layers_2_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "to_11",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_11"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1.0
+        },
+        "id": "n_add_5",
+        "inputs": [
+          "v_to_11"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "add_5",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_5"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_5",
+        "inputs": [
+          "v_to_10",
+          "v_add_5"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_5",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_5"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_6",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_3_encoder_attn_k_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_6",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_6"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_6",
+        "inputs": [
+          "v_linear_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_6",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_6"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_7",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_3_encoder_attn_v_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_7",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_7"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_7",
+        "inputs": [
+          "v_linear_7"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_7",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_7"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_12",
+        "inputs": [
+          "v_view_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_12",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_12"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_12",
+        "inputs": [
+          "v_view_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_12",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_12"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": 2
+        },
+        "id": "n_pow_4",
+        "inputs": [
+          "v_to_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.pow.Tensor_Scalar",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "pow_4",
+          "torch_op": "aten.pow.Tensor_Scalar"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_pow_4"
+        ]
+      },
+      {
+        "attrs": {
+          "axis": [
+            -1
+          ],
+          "keepdim": true
+        },
+        "id": "n_mean_3",
+        "inputs": [
+          "v_pow_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mean.dim",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "mean_3",
+          "torch_op": "aten.mean.dim"
+        },
+        "op": "mean",
+        "outputs": [
+          "v_mean_3"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_13",
+        "inputs": [
+          "v_view_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_13",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_13"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_13",
+        "inputs": [
+          "v_view_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_13",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_13"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1e-06
+        },
+        "id": "n_add_6",
+        "inputs": [
+          "v_mean_3"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "add_6",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_6"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": -0.5
+        },
+        "id": "n_rsqrt_3",
+        "inputs": [
+          "v_add_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.rsqrt.default",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "rsqrt_3",
+          "torch_op": "aten.rsqrt.default"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_rsqrt_3"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_6",
+        "inputs": [
+          "v_to_13",
+          "v_rsqrt_3"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_6",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_6"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_14",
+        "inputs": [
+          "v_mul_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_14",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_14"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_14",
+        "inputs": [
+          "v_mul_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_14",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_14"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_15",
+        "inputs": [
+          "v_module_model_model_decoder_layers_3_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_15",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_15"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_15",
+        "inputs": [
+          "v_module_model_model_decoder_layers_3_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "to_15",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_15"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1.0
+        },
+        "id": "n_add_7",
+        "inputs": [
+          "v_to_15"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "add_7",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_7"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_7",
+        "inputs": [
+          "v_to_14",
+          "v_add_7"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_7",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_7"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_8",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_4_encoder_attn_k_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_8",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_8"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_8",
+        "inputs": [
+          "v_linear_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_8",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_8"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_9",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_4_encoder_attn_v_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_9",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_9"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_9",
+        "inputs": [
+          "v_linear_9"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_9",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_9"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_16",
+        "inputs": [
+          "v_view_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_16",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_16"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_16",
+        "inputs": [
+          "v_view_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_16",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_16"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": 2
+        },
+        "id": "n_pow_5",
+        "inputs": [
+          "v_to_16"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.pow.Tensor_Scalar",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "pow_5",
+          "torch_op": "aten.pow.Tensor_Scalar"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_pow_5"
+        ]
+      },
+      {
+        "attrs": {
+          "axis": [
+            -1
+          ],
+          "keepdim": true
+        },
+        "id": "n_mean_4",
+        "inputs": [
+          "v_pow_5"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mean.dim",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "mean_4",
+          "torch_op": "aten.mean.dim"
+        },
+        "op": "mean",
+        "outputs": [
+          "v_mean_4"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_17",
+        "inputs": [
+          "v_view_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_17",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_17"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_17",
+        "inputs": [
+          "v_view_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_17",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_17"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1e-06
+        },
+        "id": "n_add_8",
+        "inputs": [
+          "v_mean_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "add_8",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_8"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": -0.5
+        },
+        "id": "n_rsqrt_4",
+        "inputs": [
+          "v_add_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.rsqrt.default",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "rsqrt_4",
+          "torch_op": "aten.rsqrt.default"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_rsqrt_4"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_8",
+        "inputs": [
+          "v_to_17",
+          "v_rsqrt_4"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_8",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_8"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_18",
+        "inputs": [
+          "v_mul_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_18",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_18"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_18",
+        "inputs": [
+          "v_mul_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_18",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_18"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_19",
+        "inputs": [
+          "v_module_model_model_decoder_layers_4_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_19",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_19"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_19",
+        "inputs": [
+          "v_module_model_model_decoder_layers_4_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "to_19",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_19"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1.0
+        },
+        "id": "n_add_9",
+        "inputs": [
+          "v_to_19"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "add_9",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_9"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_9",
+        "inputs": [
+          "v_to_18",
+          "v_add_9"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_9",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_9"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_10",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_5_encoder_attn_k_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_10",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_10"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_10",
+        "inputs": [
+          "v_linear_10"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_10",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_10"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_11",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_5_encoder_attn_v_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_11",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_11"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_11",
+        "inputs": [
+          "v_linear_11"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_11",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_11"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_20",
+        "inputs": [
+          "v_view_10"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_20",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_20"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_20",
+        "inputs": [
+          "v_view_10"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_20",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_20"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": 2
+        },
+        "id": "n_pow_6",
+        "inputs": [
+          "v_to_20"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.pow.Tensor_Scalar",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "pow_6",
+          "torch_op": "aten.pow.Tensor_Scalar"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_pow_6"
+        ]
+      },
+      {
+        "attrs": {
+          "axis": [
+            -1
+          ],
+          "keepdim": true
+        },
+        "id": "n_mean_5",
+        "inputs": [
+          "v_pow_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mean.dim",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "mean_5",
+          "torch_op": "aten.mean.dim"
+        },
+        "op": "mean",
+        "outputs": [
+          "v_mean_5"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_21",
+        "inputs": [
+          "v_view_10"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_21",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_21"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_21",
+        "inputs": [
+          "v_view_10"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_21",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_21"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1e-06
+        },
+        "id": "n_add_10",
+        "inputs": [
+          "v_mean_5"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "add_10",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_10"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": -0.5
+        },
+        "id": "n_rsqrt_5",
+        "inputs": [
+          "v_add_10"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.rsqrt.default",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "rsqrt_5",
+          "torch_op": "aten.rsqrt.default"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_rsqrt_5"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_10",
+        "inputs": [
+          "v_to_21",
+          "v_rsqrt_5"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_10",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_10"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_22",
+        "inputs": [
+          "v_mul_10"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_22",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_22"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_22",
+        "inputs": [
+          "v_mul_10"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_22",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_22"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_23",
+        "inputs": [
+          "v_module_model_model_decoder_layers_5_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_23",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_23"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_23",
+        "inputs": [
+          "v_module_model_model_decoder_layers_5_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "to_23",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_23"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1.0
+        },
+        "id": "n_add_11",
+        "inputs": [
+          "v_to_23"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "add_11",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_11"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_11",
+        "inputs": [
+          "v_to_22",
+          "v_add_11"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_11",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_11"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_12",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_6_encoder_attn_k_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_12",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_12"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_12",
+        "inputs": [
+          "v_linear_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_12",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_12"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_13",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_6_encoder_attn_v_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_13",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_13"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_13",
+        "inputs": [
+          "v_linear_13"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_13",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_13"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_24",
+        "inputs": [
+          "v_view_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_24",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_24"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_24",
+        "inputs": [
+          "v_view_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_24",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_24"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": 2
+        },
+        "id": "n_pow_7",
+        "inputs": [
+          "v_to_24"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.pow.Tensor_Scalar",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "pow_7",
+          "torch_op": "aten.pow.Tensor_Scalar"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_pow_7"
+        ]
+      },
+      {
+        "attrs": {
+          "axis": [
+            -1
+          ],
+          "keepdim": true
+        },
+        "id": "n_mean_6",
+        "inputs": [
+          "v_pow_7"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mean.dim",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "mean_6",
+          "torch_op": "aten.mean.dim"
+        },
+        "op": "mean",
+        "outputs": [
+          "v_mean_6"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_25",
+        "inputs": [
+          "v_view_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_25",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_25"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_25",
+        "inputs": [
+          "v_view_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_25",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_25"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1e-06
+        },
+        "id": "n_add_12",
+        "inputs": [
+          "v_mean_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "add_12",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_12"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": -0.5
+        },
+        "id": "n_rsqrt_6",
+        "inputs": [
+          "v_add_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.rsqrt.default",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "rsqrt_6",
+          "torch_op": "aten.rsqrt.default"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_rsqrt_6"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_12",
+        "inputs": [
+          "v_to_25",
+          "v_rsqrt_6"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_12",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_12"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_26",
+        "inputs": [
+          "v_mul_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_26",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_26"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_26",
+        "inputs": [
+          "v_mul_12"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_26",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_26"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_27",
+        "inputs": [
+          "v_module_model_model_decoder_layers_6_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_27",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_27"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_27",
+        "inputs": [
+          "v_module_model_model_decoder_layers_6_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "to_27",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_27"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1.0
+        },
+        "id": "n_add_13",
+        "inputs": [
+          "v_to_27"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "add_13",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_13"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_13",
+        "inputs": [
+          "v_to_26",
+          "v_add_13"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_13",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_13"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_14",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_7_encoder_attn_k_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_14",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_14"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_14",
+        "inputs": [
+          "v_linear_14"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_14",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_14"
+        ]
+      },
+      {
+        "attrs": {
+          "has_bias": false
+        },
+        "id": "n_linear_15",
+        "inputs": [
+          "v_args_0",
+          "v_module_model_model_decoder_layers_7_encoder_attn_v_proj_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.linear.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "semantic_source": "import",
+          "shape": [
+            1,
+            1024,
+            256
+          ],
+          "torch_name": "linear_15",
+          "torch_op": "aten.linear.default"
+        },
+        "op": "linear",
+        "outputs": [
+          "v_linear_15"
+        ]
+      },
+      {
+        "attrs": {
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ]
+        },
+        "id": "n_view_15",
+        "inputs": [
+          "v_linear_15"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.view.default",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "view_15",
+          "torch_op": "aten.view.default"
+        },
+        "op": "reshape",
+        "outputs": [
+          "v_view_15"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_28",
+        "inputs": [
+          "v_view_14"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_28",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_28"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_28",
+        "inputs": [
+          "v_view_14"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_28",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_28"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": 2
+        },
+        "id": "n_pow_8",
+        "inputs": [
+          "v_to_28"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.pow.Tensor_Scalar",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "pow_8",
+          "torch_op": "aten.pow.Tensor_Scalar"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_pow_8"
+        ]
+      },
+      {
+        "attrs": {
+          "axis": [
+            -1
+          ],
+          "keepdim": true
+        },
+        "id": "n_mean_7",
+        "inputs": [
+          "v_pow_8"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mean.dim",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "mean_7",
+          "torch_op": "aten.mean.dim"
+        },
+        "op": "mean",
+        "outputs": [
+          "v_mean_7"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_29",
+        "inputs": [
+          "v_view_14"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_29",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_29"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float32"
+        },
+        "id": "n_to_29",
+        "inputs": [
+          "v_view_14"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_29",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_29"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1e-06
+        },
+        "id": "n_add_14",
+        "inputs": [
+          "v_mean_7"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "add_14",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_14"
+        ]
+      },
+      {
+        "attrs": {
+          "exponent": -0.5
+        },
+        "id": "n_rsqrt_7",
+        "inputs": [
+          "v_add_14"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.rsqrt.default",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            1
+          ],
+          "torch_name": "rsqrt_7",
+          "torch_op": "aten.rsqrt.default"
+        },
+        "op": "pow",
+        "outputs": [
+          "v_rsqrt_7"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_14",
+        "inputs": [
+          "v_to_29",
+          "v_rsqrt_7"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp32",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_14",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_14"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_30",
+        "inputs": [
+          "v_mul_14"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_30",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_30"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_30",
+        "inputs": [
+          "v_mul_14"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "to_30",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_30"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n__assert_tensor_metadata_default_31",
+        "inputs": [
+          "v_module_model_model_decoder_layers_7_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten._assert_tensor_metadata.default",
+          "component": "decoder",
+          "dtype": null,
+          "shape": null,
+          "torch_name": "_assert_tensor_metadata_default_31",
+          "torch_op": "aten._assert_tensor_metadata.default"
+        },
+        "op": "identity",
+        "outputs": [
+          "v__assert_tensor_metadata_default_31"
+        ]
+      },
+      {
+        "attrs": {
+          "dtype": "torch.float16"
+        },
+        "id": "n_to_31",
+        "inputs": [
+          "v_module_model_model_decoder_layers_7_encoder_attn_k_norm_weight"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.to.dtype",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "to_31",
+          "torch_op": "aten.to.dtype"
+        },
+        "op": "precision_cast",
+        "outputs": [
+          "v_to_31"
+        ]
+      },
+      {
+        "attrs": {
+          "value": 1.0
+        },
+        "id": "n_add_15",
+        "inputs": [
+          "v_to_31"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.add.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            64
+          ],
+          "torch_name": "add_15",
+          "torch_op": "aten.add.Tensor"
+        },
+        "op": "scalar_add",
+        "outputs": [
+          "v_add_15"
+        ]
+      },
+      {
+        "attrs": {},
+        "id": "n_mul_15",
+        "inputs": [
+          "v_to_30",
+          "v_add_15"
+        ],
+        "kind": "generic",
+        "meta": {
+          "aten_op": "aten.mul.Tensor",
+          "component": "decoder",
+          "dtype": "fp16",
+          "shape": [
+            1,
+            1024,
+            4,
+            64
+          ],
+          "torch_name": "mul_15",
+          "torch_op": "aten.mul.Tensor"
+        },
+        "op": "multiply",
+        "outputs": [
+          "v_mul_15"
+        ]
+      }
+    ],
+    "outputs": [
+      "v_mul_1",
+      "v_view_1",
+      "v_mul_3",
+      "v_view_3",
+      "v_mul_5",
+      "v_view_5",
+      "v_mul_7",
+      "v_view_7",
+      "v_mul_9",
+      "v_view_9",
+      "v_mul_11",
+      "v_view_11",
+      "v_mul_13",
+      "v_view_13",
+      "v_mul_15",
+      "v_view_15"
+    ],
+    "values": {
+      "v__assert_tensor_metadata_default": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_1": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_1",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_10": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_10",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_10",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_11": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_11",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_11",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_12": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_12",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_12",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_13": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_13",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_13",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_14": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_14",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_14",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_15": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_15",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_15",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_16": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_16",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_16",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_17": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_17",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_17",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_18": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_18",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_18",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_19": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_19",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_19",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_2": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_2",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_20": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_20",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_20",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_21": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_21",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_21",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_22": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_22",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_22",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_23": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_23",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_23",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_24": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_24",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_24",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_25": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_25",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_25",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_26": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_26",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_26",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_27": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_27",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_27",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_28": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_28",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_28",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_29": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_29",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_29",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_3": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_3",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_30": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_30",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_30",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_31": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_31",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_31",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_4": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_4",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_5": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_5",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_6": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_6",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_7": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_7",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_8": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_8",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_8",
+        "shape": null,
+        "users": []
+      },
+      "v__assert_tensor_metadata_default_9": {
+        "dtype": null,
+        "id": "v__assert_tensor_metadata_default_9",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n__assert_tensor_metadata_default_9",
+        "shape": null,
+        "users": []
+      },
+      "v_add": {
+        "dtype": "fp32",
+        "id": "v_add",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_rsqrt"
+        ]
+      },
+      "v_add_1": {
+        "dtype": "fp16",
+        "id": "v_add_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_1",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_mul_1"
+        ]
+      },
+      "v_add_10": {
+        "dtype": "fp32",
+        "id": "v_add_10",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_10",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_rsqrt_5"
+        ]
+      },
+      "v_add_11": {
+        "dtype": "fp16",
+        "id": "v_add_11",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_11",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_mul_11"
+        ]
+      },
+      "v_add_12": {
+        "dtype": "fp32",
+        "id": "v_add_12",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_12",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_rsqrt_6"
+        ]
+      },
+      "v_add_13": {
+        "dtype": "fp16",
+        "id": "v_add_13",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_13",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_mul_13"
+        ]
+      },
+      "v_add_14": {
+        "dtype": "fp32",
+        "id": "v_add_14",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_14",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_rsqrt_7"
+        ]
+      },
+      "v_add_15": {
+        "dtype": "fp16",
+        "id": "v_add_15",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_15",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_mul_15"
+        ]
+      },
+      "v_add_2": {
+        "dtype": "fp32",
+        "id": "v_add_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_2",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_rsqrt_1"
+        ]
+      },
+      "v_add_3": {
+        "dtype": "fp16",
+        "id": "v_add_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_3",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_mul_3"
+        ]
+      },
+      "v_add_4": {
+        "dtype": "fp32",
+        "id": "v_add_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_4",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_rsqrt_2"
+        ]
+      },
+      "v_add_5": {
+        "dtype": "fp16",
+        "id": "v_add_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_5",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_mul_5"
+        ]
+      },
+      "v_add_6": {
+        "dtype": "fp32",
+        "id": "v_add_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_6",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_rsqrt_3"
+        ]
+      },
+      "v_add_7": {
+        "dtype": "fp16",
+        "id": "v_add_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_7",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_mul_7"
+        ]
+      },
+      "v_add_8": {
+        "dtype": "fp32",
+        "id": "v_add_8",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_8",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_rsqrt_4"
+        ]
+      },
+      "v_add_9": {
+        "dtype": "fp16",
+        "id": "v_add_9",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_add_9",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_mul_9"
+        ]
+      },
+      "v_args_0": {
+        "dtype": "fp16",
+        "id": "v_args_0",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": null,
+        "shape": [
+          1,
+          1024,
+          512
+        ],
+        "users": [
+          "n_linear",
+          "n_linear_1",
+          "n_linear_2",
+          "n_linear_3",
+          "n_linear_4",
+          "n_linear_5",
+          "n_linear_6",
+          "n_linear_7",
+          "n_linear_8",
+          "n_linear_9",
+          "n_linear_10",
+          "n_linear_11",
+          "n_linear_12",
+          "n_linear_13",
+          "n_linear_14",
+          "n_linear_15"
+        ]
+      },
+      "v_args_1": {
+        "dtype": "fp16",
+        "id": "v_args_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": null,
+        "shape": [
+          1,
+          8,
+          1,
+          1024
+        ],
+        "users": []
+      },
+      "v_linear": {
+        "dtype": "fp16",
+        "id": "v_linear",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view"
+        ]
+      },
+      "v_linear_1": {
+        "dtype": "fp16",
+        "id": "v_linear_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_1",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_1"
+        ]
+      },
+      "v_linear_10": {
+        "dtype": "fp16",
+        "id": "v_linear_10",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_10",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_10"
+        ]
+      },
+      "v_linear_11": {
+        "dtype": "fp16",
+        "id": "v_linear_11",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_11",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_11"
+        ]
+      },
+      "v_linear_12": {
+        "dtype": "fp16",
+        "id": "v_linear_12",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_12",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_12"
+        ]
+      },
+      "v_linear_13": {
+        "dtype": "fp16",
+        "id": "v_linear_13",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_13",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_13"
+        ]
+      },
+      "v_linear_14": {
+        "dtype": "fp16",
+        "id": "v_linear_14",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_14",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_14"
+        ]
+      },
+      "v_linear_15": {
+        "dtype": "fp16",
+        "id": "v_linear_15",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_15",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_15"
+        ]
+      },
+      "v_linear_2": {
+        "dtype": "fp16",
+        "id": "v_linear_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_2",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_2"
+        ]
+      },
+      "v_linear_3": {
+        "dtype": "fp16",
+        "id": "v_linear_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_3",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_3"
+        ]
+      },
+      "v_linear_4": {
+        "dtype": "fp16",
+        "id": "v_linear_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_4",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_4"
+        ]
+      },
+      "v_linear_5": {
+        "dtype": "fp16",
+        "id": "v_linear_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_5",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_5"
+        ]
+      },
+      "v_linear_6": {
+        "dtype": "fp16",
+        "id": "v_linear_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_6",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_6"
+        ]
+      },
+      "v_linear_7": {
+        "dtype": "fp16",
+        "id": "v_linear_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_7",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_7"
+        ]
+      },
+      "v_linear_8": {
+        "dtype": "fp16",
+        "id": "v_linear_8",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_8",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_8"
+        ]
+      },
+      "v_linear_9": {
+        "dtype": "fp16",
+        "id": "v_linear_9",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_linear_9",
+        "shape": [
+          1,
+          1024,
+          256
+        ],
+        "users": [
+          "n_view_9"
+        ]
+      },
+      "v_mean": {
+        "dtype": "fp32",
+        "id": "v_mean",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mean",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_add"
+        ]
+      },
+      "v_mean_1": {
+        "dtype": "fp32",
+        "id": "v_mean_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mean_1",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_add_2"
+        ]
+      },
+      "v_mean_2": {
+        "dtype": "fp32",
+        "id": "v_mean_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mean_2",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_add_4"
+        ]
+      },
+      "v_mean_3": {
+        "dtype": "fp32",
+        "id": "v_mean_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mean_3",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_add_6"
+        ]
+      },
+      "v_mean_4": {
+        "dtype": "fp32",
+        "id": "v_mean_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mean_4",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_add_8"
+        ]
+      },
+      "v_mean_5": {
+        "dtype": "fp32",
+        "id": "v_mean_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mean_5",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_add_10"
+        ]
+      },
+      "v_mean_6": {
+        "dtype": "fp32",
+        "id": "v_mean_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mean_6",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_add_12"
+        ]
+      },
+      "v_mean_7": {
+        "dtype": "fp32",
+        "id": "v_mean_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mean_7",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_add_14"
+        ]
+      },
+      "v_module_model_model_decoder_layers_0_encoder_attn_k_norm_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_0_encoder_attn_k_norm_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_0_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.0.encoder_attn.k_norm.weight"
+        },
+        "producer": null,
+        "shape": [
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_3",
+          "n_to_3"
+        ]
+      },
+      "v_module_model_model_decoder_layers_0_encoder_attn_k_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_0_encoder_attn_k_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_0_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.0.encoder_attn.k_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear"
+        ]
+      },
+      "v_module_model_model_decoder_layers_0_encoder_attn_v_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_0_encoder_attn_v_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_0_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.0.encoder_attn.v_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_1"
+        ]
+      },
+      "v_module_model_model_decoder_layers_1_encoder_attn_k_norm_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_1_encoder_attn_k_norm_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_1_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.1.encoder_attn.k_norm.weight"
+        },
+        "producer": null,
+        "shape": [
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_7",
+          "n_to_7"
+        ]
+      },
+      "v_module_model_model_decoder_layers_1_encoder_attn_k_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_1_encoder_attn_k_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_1_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.1.encoder_attn.k_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_2"
+        ]
+      },
+      "v_module_model_model_decoder_layers_1_encoder_attn_v_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_1_encoder_attn_v_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_1_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.1.encoder_attn.v_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_3"
+        ]
+      },
+      "v_module_model_model_decoder_layers_2_encoder_attn_k_norm_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_2_encoder_attn_k_norm_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_2_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.2.encoder_attn.k_norm.weight"
+        },
+        "producer": null,
+        "shape": [
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_11",
+          "n_to_11"
+        ]
+      },
+      "v_module_model_model_decoder_layers_2_encoder_attn_k_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_2_encoder_attn_k_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_2_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.2.encoder_attn.k_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_4"
+        ]
+      },
+      "v_module_model_model_decoder_layers_2_encoder_attn_v_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_2_encoder_attn_v_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_2_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.2.encoder_attn.v_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_5"
+        ]
+      },
+      "v_module_model_model_decoder_layers_3_encoder_attn_k_norm_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_3_encoder_attn_k_norm_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_3_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.3.encoder_attn.k_norm.weight"
+        },
+        "producer": null,
+        "shape": [
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_15",
+          "n_to_15"
+        ]
+      },
+      "v_module_model_model_decoder_layers_3_encoder_attn_k_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_3_encoder_attn_k_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_3_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.3.encoder_attn.k_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_6"
+        ]
+      },
+      "v_module_model_model_decoder_layers_3_encoder_attn_v_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_3_encoder_attn_v_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_3_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.3.encoder_attn.v_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_7"
+        ]
+      },
+      "v_module_model_model_decoder_layers_4_encoder_attn_k_norm_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_4_encoder_attn_k_norm_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_4_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.4.encoder_attn.k_norm.weight"
+        },
+        "producer": null,
+        "shape": [
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_19",
+          "n_to_19"
+        ]
+      },
+      "v_module_model_model_decoder_layers_4_encoder_attn_k_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_4_encoder_attn_k_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_4_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.4.encoder_attn.k_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_8"
+        ]
+      },
+      "v_module_model_model_decoder_layers_4_encoder_attn_v_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_4_encoder_attn_v_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_4_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.4.encoder_attn.v_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_9"
+        ]
+      },
+      "v_module_model_model_decoder_layers_5_encoder_attn_k_norm_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_5_encoder_attn_k_norm_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_5_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.5.encoder_attn.k_norm.weight"
+        },
+        "producer": null,
+        "shape": [
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_23",
+          "n_to_23"
+        ]
+      },
+      "v_module_model_model_decoder_layers_5_encoder_attn_k_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_5_encoder_attn_k_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_5_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.5.encoder_attn.k_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_10"
+        ]
+      },
+      "v_module_model_model_decoder_layers_5_encoder_attn_v_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_5_encoder_attn_v_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_5_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.5.encoder_attn.v_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_11"
+        ]
+      },
+      "v_module_model_model_decoder_layers_6_encoder_attn_k_norm_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_6_encoder_attn_k_norm_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_6_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.6.encoder_attn.k_norm.weight"
+        },
+        "producer": null,
+        "shape": [
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_27",
+          "n_to_27"
+        ]
+      },
+      "v_module_model_model_decoder_layers_6_encoder_attn_k_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_6_encoder_attn_k_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_6_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.6.encoder_attn.k_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_12"
+        ]
+      },
+      "v_module_model_model_decoder_layers_6_encoder_attn_v_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_6_encoder_attn_v_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_6_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.6.encoder_attn.v_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_13"
+        ]
+      },
+      "v_module_model_model_decoder_layers_7_encoder_attn_k_norm_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_7_encoder_attn_k_norm_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_7_encoder_attn_k_norm.weights",
+          "source_name": "module.model.model.decoder.layers.7.encoder_attn.k_norm.weight"
+        },
+        "producer": null,
+        "shape": [
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_31",
+          "n_to_31"
+        ]
+      },
+      "v_module_model_model_decoder_layers_7_encoder_attn_k_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_7_encoder_attn_k_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_7_encoder_attn_k.weights",
+          "source_name": "module.model.model.decoder.layers.7.encoder_attn.k_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_14"
+        ]
+      },
+      "v_module_model_model_decoder_layers_7_encoder_attn_v_proj_weight": {
+        "dtype": "fp16",
+        "id": "v_module_model_model_decoder_layers_7_encoder_attn_v_proj_weight",
+        "meta": {
+          "component": "decoder",
+          "kind": "weight",
+          "path": "/Users/jakmro/dev/needle/cactus/weights/needle-cq4/layer_7_encoder_attn_v.weights",
+          "source_name": "module.model.model.decoder.layers.7.encoder_attn.v_proj.weight"
+        },
+        "producer": null,
+        "shape": [
+          256,
+          512
+        ],
+        "users": [
+          "n_linear_15"
+        ]
+      },
+      "v_mul": {
+        "dtype": "fp32",
+        "id": "v_mul",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_2",
+          "n_to_2"
+        ]
+      },
+      "v_mul_1": {
+        "dtype": "fp16",
+        "id": "v_mul_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_1",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_mul_10": {
+        "dtype": "fp32",
+        "id": "v_mul_10",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_10",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_22",
+          "n_to_22"
+        ]
+      },
+      "v_mul_11": {
+        "dtype": "fp16",
+        "id": "v_mul_11",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_11",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_mul_12": {
+        "dtype": "fp32",
+        "id": "v_mul_12",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_12",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_26",
+          "n_to_26"
+        ]
+      },
+      "v_mul_13": {
+        "dtype": "fp16",
+        "id": "v_mul_13",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_13",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_mul_14": {
+        "dtype": "fp32",
+        "id": "v_mul_14",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_14",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_30",
+          "n_to_30"
+        ]
+      },
+      "v_mul_15": {
+        "dtype": "fp16",
+        "id": "v_mul_15",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_15",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_mul_2": {
+        "dtype": "fp32",
+        "id": "v_mul_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_2",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_6",
+          "n_to_6"
+        ]
+      },
+      "v_mul_3": {
+        "dtype": "fp16",
+        "id": "v_mul_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_3",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_mul_4": {
+        "dtype": "fp32",
+        "id": "v_mul_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_4",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_10",
+          "n_to_10"
+        ]
+      },
+      "v_mul_5": {
+        "dtype": "fp16",
+        "id": "v_mul_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_5",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_mul_6": {
+        "dtype": "fp32",
+        "id": "v_mul_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_6",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_14",
+          "n_to_14"
+        ]
+      },
+      "v_mul_7": {
+        "dtype": "fp16",
+        "id": "v_mul_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_7",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_mul_8": {
+        "dtype": "fp32",
+        "id": "v_mul_8",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_8",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_18",
+          "n_to_18"
+        ]
+      },
+      "v_mul_9": {
+        "dtype": "fp16",
+        "id": "v_mul_9",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_mul_9",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_pow_1": {
+        "dtype": "fp32",
+        "id": "v_pow_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_pow_1",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mean"
+        ]
+      },
+      "v_pow_2": {
+        "dtype": "fp32",
+        "id": "v_pow_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_pow_2",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mean_1"
+        ]
+      },
+      "v_pow_3": {
+        "dtype": "fp32",
+        "id": "v_pow_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_pow_3",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mean_2"
+        ]
+      },
+      "v_pow_4": {
+        "dtype": "fp32",
+        "id": "v_pow_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_pow_4",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mean_3"
+        ]
+      },
+      "v_pow_5": {
+        "dtype": "fp32",
+        "id": "v_pow_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_pow_5",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mean_4"
+        ]
+      },
+      "v_pow_6": {
+        "dtype": "fp32",
+        "id": "v_pow_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_pow_6",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mean_5"
+        ]
+      },
+      "v_pow_7": {
+        "dtype": "fp32",
+        "id": "v_pow_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_pow_7",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mean_6"
+        ]
+      },
+      "v_pow_8": {
+        "dtype": "fp32",
+        "id": "v_pow_8",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_pow_8",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mean_7"
+        ]
+      },
+      "v_rsqrt": {
+        "dtype": "fp32",
+        "id": "v_rsqrt",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_rsqrt",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_mul"
+        ]
+      },
+      "v_rsqrt_1": {
+        "dtype": "fp32",
+        "id": "v_rsqrt_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_rsqrt_1",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_mul_2"
+        ]
+      },
+      "v_rsqrt_2": {
+        "dtype": "fp32",
+        "id": "v_rsqrt_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_rsqrt_2",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_mul_4"
+        ]
+      },
+      "v_rsqrt_3": {
+        "dtype": "fp32",
+        "id": "v_rsqrt_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_rsqrt_3",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_mul_6"
+        ]
+      },
+      "v_rsqrt_4": {
+        "dtype": "fp32",
+        "id": "v_rsqrt_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_rsqrt_4",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_mul_8"
+        ]
+      },
+      "v_rsqrt_5": {
+        "dtype": "fp32",
+        "id": "v_rsqrt_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_rsqrt_5",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_mul_10"
+        ]
+      },
+      "v_rsqrt_6": {
+        "dtype": "fp32",
+        "id": "v_rsqrt_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_rsqrt_6",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_mul_12"
+        ]
+      },
+      "v_rsqrt_7": {
+        "dtype": "fp32",
+        "id": "v_rsqrt_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_rsqrt_7",
+        "shape": [
+          1,
+          1024,
+          4,
+          1
+        ],
+        "users": [
+          "n_mul_14"
+        ]
+      },
+      "v_to": {
+        "dtype": "fp32",
+        "id": "v_to",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_pow_1"
+        ]
+      },
+      "v_to_1": {
+        "dtype": "fp32",
+        "id": "v_to_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_1",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul"
+        ]
+      },
+      "v_to_10": {
+        "dtype": "fp16",
+        "id": "v_to_10",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_10",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_5"
+        ]
+      },
+      "v_to_11": {
+        "dtype": "fp16",
+        "id": "v_to_11",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_11",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_add_5"
+        ]
+      },
+      "v_to_12": {
+        "dtype": "fp32",
+        "id": "v_to_12",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_12",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_pow_4"
+        ]
+      },
+      "v_to_13": {
+        "dtype": "fp32",
+        "id": "v_to_13",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_13",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_6"
+        ]
+      },
+      "v_to_14": {
+        "dtype": "fp16",
+        "id": "v_to_14",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_14",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_7"
+        ]
+      },
+      "v_to_15": {
+        "dtype": "fp16",
+        "id": "v_to_15",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_15",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_add_7"
+        ]
+      },
+      "v_to_16": {
+        "dtype": "fp32",
+        "id": "v_to_16",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_16",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_pow_5"
+        ]
+      },
+      "v_to_17": {
+        "dtype": "fp32",
+        "id": "v_to_17",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_17",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_8"
+        ]
+      },
+      "v_to_18": {
+        "dtype": "fp16",
+        "id": "v_to_18",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_18",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_9"
+        ]
+      },
+      "v_to_19": {
+        "dtype": "fp16",
+        "id": "v_to_19",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_19",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_add_9"
+        ]
+      },
+      "v_to_2": {
+        "dtype": "fp16",
+        "id": "v_to_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_2",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_1"
+        ]
+      },
+      "v_to_20": {
+        "dtype": "fp32",
+        "id": "v_to_20",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_20",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_pow_6"
+        ]
+      },
+      "v_to_21": {
+        "dtype": "fp32",
+        "id": "v_to_21",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_21",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_10"
+        ]
+      },
+      "v_to_22": {
+        "dtype": "fp16",
+        "id": "v_to_22",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_22",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_11"
+        ]
+      },
+      "v_to_23": {
+        "dtype": "fp16",
+        "id": "v_to_23",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_23",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_add_11"
+        ]
+      },
+      "v_to_24": {
+        "dtype": "fp32",
+        "id": "v_to_24",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_24",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_pow_7"
+        ]
+      },
+      "v_to_25": {
+        "dtype": "fp32",
+        "id": "v_to_25",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_25",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_12"
+        ]
+      },
+      "v_to_26": {
+        "dtype": "fp16",
+        "id": "v_to_26",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_26",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_13"
+        ]
+      },
+      "v_to_27": {
+        "dtype": "fp16",
+        "id": "v_to_27",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_27",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_add_13"
+        ]
+      },
+      "v_to_28": {
+        "dtype": "fp32",
+        "id": "v_to_28",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_28",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_pow_8"
+        ]
+      },
+      "v_to_29": {
+        "dtype": "fp32",
+        "id": "v_to_29",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_29",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_14"
+        ]
+      },
+      "v_to_3": {
+        "dtype": "fp16",
+        "id": "v_to_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_3",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_add_1"
+        ]
+      },
+      "v_to_30": {
+        "dtype": "fp16",
+        "id": "v_to_30",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_30",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_15"
+        ]
+      },
+      "v_to_31": {
+        "dtype": "fp16",
+        "id": "v_to_31",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_31",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_add_15"
+        ]
+      },
+      "v_to_4": {
+        "dtype": "fp32",
+        "id": "v_to_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_4",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_pow_2"
+        ]
+      },
+      "v_to_5": {
+        "dtype": "fp32",
+        "id": "v_to_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_5",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_2"
+        ]
+      },
+      "v_to_6": {
+        "dtype": "fp16",
+        "id": "v_to_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_6",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_3"
+        ]
+      },
+      "v_to_7": {
+        "dtype": "fp16",
+        "id": "v_to_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_7",
+        "shape": [
+          64
+        ],
+        "users": [
+          "n_add_3"
+        ]
+      },
+      "v_to_8": {
+        "dtype": "fp32",
+        "id": "v_to_8",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_8",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_pow_3"
+        ]
+      },
+      "v_to_9": {
+        "dtype": "fp32",
+        "id": "v_to_9",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_to_9",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n_mul_4"
+        ]
+      },
+      "v_view": {
+        "dtype": "fp16",
+        "id": "v_view",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default",
+          "n_to",
+          "n__assert_tensor_metadata_default_1",
+          "n_to_1"
+        ]
+      },
+      "v_view_1": {
+        "dtype": "fp16",
+        "id": "v_view_1",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_1",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_view_10": {
+        "dtype": "fp16",
+        "id": "v_view_10",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_10",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_20",
+          "n_to_20",
+          "n__assert_tensor_metadata_default_21",
+          "n_to_21"
+        ]
+      },
+      "v_view_11": {
+        "dtype": "fp16",
+        "id": "v_view_11",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_11",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_view_12": {
+        "dtype": "fp16",
+        "id": "v_view_12",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_12",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_24",
+          "n_to_24",
+          "n__assert_tensor_metadata_default_25",
+          "n_to_25"
+        ]
+      },
+      "v_view_13": {
+        "dtype": "fp16",
+        "id": "v_view_13",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_13",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_view_14": {
+        "dtype": "fp16",
+        "id": "v_view_14",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_14",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_28",
+          "n_to_28",
+          "n__assert_tensor_metadata_default_29",
+          "n_to_29"
+        ]
+      },
+      "v_view_15": {
+        "dtype": "fp16",
+        "id": "v_view_15",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_15",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_view_2": {
+        "dtype": "fp16",
+        "id": "v_view_2",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_2",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_4",
+          "n_to_4",
+          "n__assert_tensor_metadata_default_5",
+          "n_to_5"
+        ]
+      },
+      "v_view_3": {
+        "dtype": "fp16",
+        "id": "v_view_3",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_3",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_view_4": {
+        "dtype": "fp16",
+        "id": "v_view_4",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_4",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_8",
+          "n_to_8",
+          "n__assert_tensor_metadata_default_9",
+          "n_to_9"
+        ]
+      },
+      "v_view_5": {
+        "dtype": "fp16",
+        "id": "v_view_5",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_5",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_view_6": {
+        "dtype": "fp16",
+        "id": "v_view_6",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_6",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_12",
+          "n_to_12",
+          "n__assert_tensor_metadata_default_13",
+          "n_to_13"
+        ]
+      },
+      "v_view_7": {
+        "dtype": "fp16",
+        "id": "v_view_7",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_7",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      },
+      "v_view_8": {
+        "dtype": "fp16",
+        "id": "v_view_8",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_8",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": [
+          "n__assert_tensor_metadata_default_16",
+          "n_to_16",
+          "n__assert_tensor_metadata_default_17",
+          "n_to_17"
+        ]
+      },
+      "v_view_9": {
+        "dtype": "fp16",
+        "id": "v_view_9",
+        "meta": {
+          "component": "decoder"
+        },
+        "producer": "n_view_9",
+        "shape": [
+          1,
+          1024,
+          4,
+          64
+        ],
+        "users": []
+      }
+    }
+  },
+  "inputs": {
+    "enable_thinking": false,
+    "input_ids": [
+      [
+        7318,
+        363,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "max_new_tokens": 1022,
+    "padding_token_id": 0,
+    "prompt": "Hello",
+    "prompt_input_ids": [
+      [
+        7318,
+        363
+      ]
+    ],
+    "prompt_token_count": 2,
+    "target_token_count": 1024
+  },
+  "model_id": "Cactus-Compute/needle",
+  "model_source": "/Users/jakmro/.cache/huggingface/hub/models--Cactus-Compute--needle/snapshots/f43da6ee14dbe95f712b03ea87556d25812aa8f6",
+  "task": "causal_lm_logits"
+}

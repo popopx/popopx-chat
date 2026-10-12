@@ -1,11 +1,11 @@
-# SimpleX Chat iOS -- WebRTC Calling Service
+# POPOPX Chat iOS -- WebRTC Calling Service
 
 > Technical specification for the calling system: CallController, WebRTCClient, CallKit integration, and signaling via SMP.
 >
 > Related specs: [Architecture](../architecture.md) | [API Reference](../api.md) | [Notifications](notifications.md) | [README](../README.md)
 > Related product: [Chat View](../../product/views/chat.md)
 
-**Source:** [`CallController.swift`](../../Shared/Views/Call/CallController.swift) | [`WebRTCClient.swift`](../../Shared/Views/Call/WebRTCClient.swift) | [`ActiveCallView.swift`](../../Shared/Views/Call/ActiveCallView.swift) | [`CallTypes.swift`](../../SimpleXChat/CallTypes.swift)
+**Source:** [`CallController.swift`](../../Shared/Views/Call/CallController.swift) | [`WebRTCClient.swift`](../../Shared/Views/Call/WebRTCClient.swift) | [`ActiveCallView.swift`](../../Shared/Views/Call/ActiveCallView.swift) | [`CallTypes.swift`](../../POPOPXSwitch/CallTypes.swift)
 
 ---
 
@@ -25,7 +25,7 @@
 
 ## 1. Overview
 
-SimpleX Chat provides end-to-end encrypted audio and video calls using WebRTC. The unique aspect is that all call signaling (SDP offers/answers, ICE candidates) is transmitted through the same encrypted SMP messaging channels used for chat, eliminating the need for a separate signaling server.
+POPOPX Chat provides end-to-end encrypted audio and video calls using WebRTC. The unique aspect is that all call signaling (SDP offers/answers, ICE candidates) is transmitted through the same encrypted SMP messaging channels used for chat, eliminating the need for a separate signaling server.
 
 ```
 Caller                          SMP Relay              Callee
@@ -51,7 +51,7 @@ Caller                          SMP Relay              Callee
 
 **File**: `Shared/Views/Call/CallController.swift`
 
-Central call coordinator that bridges SimpleX call protocol with iOS CallKit (or non-CallKit fallback).
+Central call coordinator that bridges POPOPX call protocol with iOS CallKit (or non-CallKit fallback).
 
 ### [Class Definition](../../Shared/Views/Call/CallController.swift#L19-L48)
 
@@ -89,7 +89,7 @@ class CallController: NSObject, CXProviderDelegate, PKPushRegistryDelegate, Obse
 `CallManager` tracks call state internally:
 - Maps call UUIDs to `Call` objects
 - Handles call state transitions
-- Coordinates between CallKit actions and SimpleX API calls
+- Coordinates between CallKit actions and POPOPX API calls
 
 ---
 
@@ -125,7 +125,7 @@ Manages the WebRTC peer connection, media streams, and data channels.
 
 ### [Additional Encryption](../../Shared/Views/Call/WebRTCClient.swift#L513-L546)
 
-Beyond WebRTC's built-in SRTP encryption, SimpleX adds an extra encryption layer:
+Beyond WebRTC's built-in SRTP encryption, POPOPX adds an extra encryption layer:
 - A shared key from the E2E SMP channel is used
 - Applied via `chat_encrypt_media` / `chat_decrypt_media` C FFI functions
 - Each media frame is encrypted/decrypted with this additional key
@@ -167,7 +167,7 @@ All call signaling travels through the same encrypted SMP message channels used 
    └── CallController reports to CallKit (or shows in-app notification)
 
 2. User accepts
-   └── WebRTCClient creates SDP offer (callee creates offer in SimpleX protocol)
+   └── WebRTCClient creates SDP offer (callee creates offer in POPOPX protocol)
        └── apiSendCallOffer(contact:, callOffer:)
 
 3. Caller sends answer
@@ -274,9 +274,9 @@ The `WebRTCClient` observes `AVAudioSession.routeChangeNotification` to handle:
 
 ---
 
-## [8. Key Types](../../SimpleXChat/CallTypes.swift#L1-L115)
+## [8. Key Types](../../POPOPXSwitch/CallTypes.swift#L1-L115)
 
-### [RcvCallInvitation](../../SimpleXChat/CallTypes.swift#L45-L71)
+### [RcvCallInvitation](../../POPOPXSwitch/CallTypes.swift#L45-L71)
 
 ```swift
 struct RcvCallInvitation {
@@ -289,7 +289,7 @@ struct RcvCallInvitation {
 }
 ```
 
-### [CallType](../../SimpleXChat/CallTypes.swift#L74-L82)
+### [CallType](../../POPOPXSwitch/CallTypes.swift#L74-L82)
 
 ```swift
 struct CallType {
@@ -303,7 +303,7 @@ enum CallMediaType: String {
 }
 ```
 
-### [WebRTCCallOffer](../../SimpleXChat/CallTypes.swift#L14-L22) / [WebRTCSession](../../SimpleXChat/CallTypes.swift#L25-L33)
+### [WebRTCCallOffer](../../POPOPXSwitch/CallTypes.swift#L14-L22) / [WebRTCSession](../../POPOPXSwitch/CallTypes.swift#L25-L33)
 
 ```swift
 struct WebRTCCallOffer {
@@ -317,7 +317,7 @@ struct WebRTCSession {
 }
 ```
 
-### [WebRTCExtraInfo](../../SimpleXChat/CallTypes.swift#L36-L42)
+### [WebRTCExtraInfo](../../POPOPXSwitch/CallTypes.swift#L36-L42)
 
 ```swift
 struct WebRTCExtraInfo {
@@ -379,5 +379,5 @@ When `ChatModel.activeCallViewIsCollapsed == true`:
 | [WebRTC client](../../Shared/Views/Call/WebRTCClient.swift) | `Shared/Views/Call/WebRTCClient.swift` | 1139 |
 | [Active call UI](../../Shared/Views/Call/ActiveCallView.swift) | `Shared/Views/Call/ActiveCallView.swift` | 528 |
 | WebRTC helpers | `Shared/Views/Call/WebRTC.swift` | |
-| [Call types (Swift)](../../SimpleXChat/CallTypes.swift) | `SimpleXChat/CallTypes.swift` | 115 |
+| [Call types (Swift)](../../POPOPXSwitch/CallTypes.swift) | `POPOPXSwitch/CallTypes.swift` | 115 |
 | Call types (Haskell) | `../../src/Simplex/Chat/Call.hs` | |

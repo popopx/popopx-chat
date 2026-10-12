@@ -1,18 +1,23 @@
 //
 //  APITypes.swift
-//  SimpleX
+//  POPOPX
 //
 //  Created by EP on 01/05/2025.
-//  Copyright © 2025 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 // Spec: spec/api.md
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 
-import SimpleXChat
+import POPOPXSwitch
 import SwiftUI
+import os
+
+private let apiTypesLogger = Logger(subsystem: "com.popopxchat.popopx", category: "APITypes")
 
 // some constructors are used in SEChatCommand or NSEChatCommand types as well - they must be syncronised
 // Spec: spec/api.md#ChatCommand
-enum ChatCommand: ChatCmdProtocol {
+enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
     case showActiveUser
     case createActiveUser(profile: Profile?, pastTimestamp: Bool)
     case listUsers
@@ -22,6 +27,8 @@ enum ChatCommand: ChatCmdProtocol {
     case apiSetUserGroupReceipts(userId: Int64, userMsgReceiptSettings: UserMsgReceiptSettings)
     case apiSetUserAutoAcceptMemberContacts(userId: Int64, enable: Bool)
     case apiSetUserAutoAcceptGroupInvitations(userId: Int64, enable: Bool)
+    case apiSetUserChatRelay(userId: Int64, enable: Bool)
+    case apiSetClientService(userId: Int64, enable: Bool)
     case apiHideUser(userId: Int64, viewPwd: String)
     case apiUnhideUser(userId: Int64, viewPwd: String)
     case apiMuteUser(userId: Int64)
@@ -46,7 +53,7 @@ enum ChatCommand: ChatCmdProtocol {
     case apiGetChat(chatId: ChatId, scope: GroupChatScope?, contentTag: MsgContentTag?, pagination: ChatPagination, search: String)
     case apiGetChatContentTypes(chatId: ChatId, scope: GroupChatScope?)
     case apiGetChatItemInfo(type: ChatType, id: Int64, scope: GroupChatScope?, itemId: Int64)
-    case apiSendMessages(type: ChatType, id: Int64, scope: GroupChatScope?, sendAsGroup: Bool, live: Bool, ttl: Int?, sign: Bool, composedMessages: [ComposedMessage])
+    case apiSendMessages(type: ChatType, id: Int64, scope: GroupChatScope?, sendAsGroup: Bool, live: Bool, ttl: Int?, composedMessages: [ComposedMessage])
     case apiCreateChatTag(tag: ChatTagData)
     case apiSetChatTags(type: ChatType, id: Int64, tagIds: [Int64])
     case apiDeleteChatTag(tagId: Int64)
@@ -64,7 +71,6 @@ enum ChatCommand: ChatCmdProtocol {
     case apiPlanForwardChatItems(fromChatType: ChatType, fromChatId: Int64, fromScope: GroupChatScope?, itemIds: [Int64])
     case apiForwardChatItems(toChatType: ChatType, toChatId: Int64, toScope: GroupChatScope?, sendAsGroup: Bool, fromChatType: ChatType, fromChatId: Int64, fromScope: GroupChatScope?, itemIds: [Int64], ttl: Int?)
     case apiShareChatMsgContent(shareChatType: ChatType, shareChatId: Int64, toChatType: ChatType, toChatId: Int64, toScope: GroupChatScope?, sendAsGroup: Bool)
-    case apiShareMyAddress(toChatType: ChatType, toChatId: Int64, toScope: GroupChatScope?, sendAsGroup: Bool)
     case apiGetNtfToken
     case apiRegisterToken(token: DeviceToken, notificationMode: NotificationsMode)
     case apiVerifyToken(token: DeviceToken, nonce: String, code: String)
@@ -86,7 +92,6 @@ enum ChatCommand: ChatCmdProtocol {
     case apiLeaveGroup(groupId: Int64)
     case apiListMembers(groupId: Int64)
     case apiUpdateGroupProfile(groupId: Int64, groupProfile: GroupProfile)
-    case apiSetPublicGroupAccess(groupId: Int64, access: PublicGroupAccess)
     case apiCreateGroupLink(groupId: Int64, memberRole: GroupMemberRole)
     case apiGroupLinkMemberRole(groupId: Int64, memberRole: GroupMemberRole)
     case apiDeleteGroupLink(groupId: Int64)
@@ -101,7 +106,12 @@ enum ChatCommand: ChatCmdProtocol {
     case apiSetServerOperators(operators: [ServerOperator])
     case apiGetUserServers(userId: Int64)
     case apiSetUserServers(userId: Int64, userServers: [UserOperatorServers])
+    case apiUpdateRemoteConfig(json: String)
     case apiValidateServers(userId: Int64, userServers: [UserOperatorServers])
+    case apiGetBinThereBots(userId: Int64, botType: String)
+    case apiInsertBinThereBot(userId: Int64, address: String, name: String?, botType: String)
+    case apiReportBinThereBotUse(userId: Int64, botId: Int64)
+    case apiSyncBotDirectory(userId: Int64, json: String)
     case apiGetUsageConditions
     case apiSetConditionsNotified(conditionsId: Int64)
     case apiAcceptConditions(conditionsId: Int64, operatorIds: [Int64])
@@ -133,9 +143,9 @@ enum ChatCommand: ChatCmdProtocol {
     case apiAddContact(userId: Int64, incognito: Bool)
     case apiSetConnectionIncognito(connId: Int64, incognito: Bool)
     case apiChangeConnectionUser(connId: Int64, userId: Int64)
-    case apiConnectPlan(userId: Int64, connLink: String, resolveMode: PlanResolveMode, linkOwnerSig: LinkOwnerSig?)
-    case apiPrepareContact(userId: Int64, connLink: CreatedConnLink, contactShortLinkData: ContactShortLinkData, verifiedDomain: SimplexDomain?)
-    case apiPrepareGroup(userId: Int64, connLink: CreatedConnLink, directLink: Bool, groupShortLinkData: GroupShortLinkData, verifiedDomain: SimplexDomain?)
+    case apiConnectPlan(userId: Int64, connLink: String, linkOwnerSig: LinkOwnerSig?)
+    case apiPrepareContact(userId: Int64, connLink: CreatedConnLink, contactShortLinkData: ContactShortLinkData)
+    case apiPrepareGroup(userId: Int64, connLink: CreatedConnLink, directLink: Bool, groupShortLinkData: GroupShortLinkData)
     case apiChangePreparedContactUser(contactId: Int64, newUserId: Int64)
     case apiChangePreparedGroupUser(groupId: Int64, newUserId: Int64)
     case apiConnectPreparedContact(contactId: Int64, incognito: Bool, msg: MsgContent?)
@@ -158,9 +168,6 @@ enum ChatCommand: ChatCmdProtocol {
     case apiAddMyAddressShortLink(userId: Int64)
     case apiSetProfileAddress(userId: Int64, on: Bool)
     case apiSetAddressSettings(userId: Int64, addressSettings: AddressSettings)
-    case apiSetUserDomain(userId: Int64, simplexDomain: String?)
-    case apiVerifyContactDomain(contactId: Int64)
-    case apiVerifyGroupDomain(groupId: Int64)
     case apiAcceptContact(incognito: Bool, contactReqId: Int64)
     case apiRejectContact(contactReqId: Int64)
     // WebRTC calls
@@ -182,7 +189,6 @@ enum ChatCommand: ChatCmdProtocol {
     // remote desktop commands
     case setLocalDeviceName(displayName: String)
     case connectRemoteCtrl(xrcpInvitation: String)
-    case findKnownRemoteCtrl
     case confirmRemoteCtrl(remoteCtrlId: Int64)
     case verifyRemoteCtrlSession(sessionCode: String)
     case listRemoteCtrls
@@ -223,6 +229,10 @@ enum ChatCommand: ChatCmdProtocol {
                 return "/_set accept member contacts \(userId) \(onOff(enable))"
             case let .apiSetUserAutoAcceptGroupInvitations(userId, enable):
                 return "/_set accept group invitations \(userId) \(onOff(enable))"
+            case let .apiSetUserChatRelay(userId, enable):
+                return "/_set chat relay \(userId) \(onOff(enable))"
+            case let .apiSetClientService(userId, enable):
+                return "/_set client service \(userId) \(onOff(enable))"
             case let .apiHideUser(userId, viewPwd): return "/_hide user \(userId) \(encodeJSON(viewPwd))"
             case let .apiUnhideUser(userId, viewPwd): return "/_unhide user \(userId) \(encodeJSON(viewPwd))"
             case let .apiMuteUser(userId): return "/_mute user \(userId)"
@@ -245,15 +255,15 @@ enum ChatCommand: ChatCmdProtocol {
             case let .apiGetChatTags(userId): return "/_get tags \(userId)"
             case let .apiGetChats(userId): return "/_get chats \(userId) pcc=on"
             case let .apiGetChat(chatId, scope, contentTag, pagination, search):
-                let tag = contentTag != nil ? " content=\(contentTag!.rawValue)" : ""
+                let tag = contentTag != nil ? " content=\(contentTag?.rawValue ?? "")" : ""
                 return "/_get chat \(chatId)\(scopeRef(scope))\(tag) \(pagination.cmdString)" + (search == "" ? "" : " search=\(search)")
             case let .apiGetChatContentTypes(chatId, scope): return "/_get content types \(chatId)\(scopeRef(scope))"
             case let .apiGetChatItemInfo(type, id, scope, itemId): return "/_get item info \(ref(type, id, scope: scope)) \(itemId)"
-            case let .apiSendMessages(type, id, scope, sendAsGroup, live, ttl, sign, composedMessages):
+            case let .apiSendMessages(type, id, scope, sendAsGroup, live, ttl, composedMessages):
                 let msgs = encodeJSON(composedMessages)
-                let ttlStr = ttl != nil ? "\(ttl!)" : "default"
+                let ttlStr = ttl != nil ? "\(ttl ?? 0)" : "default"
                 let asGroup = sendAsGroup ? "(as_group=on)" : ""
-                return "/_send \(ref(type, id, scope: scope))\(asGroup) live=\(onOff(live)) ttl=\(ttlStr) sign=\(onOff(sign)) json \(msgs)"
+                return "/_send \(ref(type, id, scope: scope))\(asGroup) live=\(onOff(live)) ttl=\(ttlStr) json \(msgs)"
             case let .apiCreateChatTag(tag): return "/_create tag \(encodeJSON(tag))"
             case let .apiSetChatTags(type, id, tagIds): return "/_tags \(ref(type, id, scope: nil)) \(tagIds.map({ "\($0)" }).joined(separator: ","))"
             case let .apiDeleteChatTag(tagId): return "/_delete tag \(tagId)"
@@ -263,7 +273,8 @@ enum ChatCommand: ChatCmdProtocol {
                 let msgs = encodeJSON(composedMessages)
                 return "/_create *\(noteFolderId) json \(msgs)"
             case let .apiReportMessage(groupId, chatItemId, reportReason, reportText):
-                return "/_report #\(groupId) \(chatItemId) reason=\(reportReason) \(reportText)"
+                let safeText = sanitizeFFIParam(reportText, maxLen: 2048)
+                return "/_report #\(groupId) \(chatItemId) reason=\(reportReason) \(safeText)"
             case let .apiUpdateChatItem(type, id, scope, itemId, um, live): return "/_update item \(ref(type, id, scope: scope)) \(itemId) live=\(onOff(live)) \(um.cmdString)"
             case let .apiDeleteChatItem(type, id, scope, itemIds, mode): return "/_delete item \(ref(type, id, scope: scope)) \(itemIds.map({ "\($0)" }).joined(separator: ",")) \(mode.rawValue)"
             case let .apiDeleteMemberChatItem(groupId, itemIds): return "/_delete member item #\(groupId) \(itemIds.map({ "\($0)" }).joined(separator: ","))"
@@ -273,15 +284,12 @@ enum ChatCommand: ChatCmdProtocol {
             case let .apiGetReactionMembers(userId, groupId, itemId, reaction): return "/_reaction members \(userId) #\(groupId) \(itemId) \(encodeJSON(reaction))"
             case let .apiPlanForwardChatItems(type, id, scope, itemIds): return "/_forward plan \(ref(type, id, scope: scope)) \(itemIds.map({ "\($0)" }).joined(separator: ","))"
             case let .apiForwardChatItems(toChatType, toChatId, toScope, sendAsGroup, fromChatType, fromChatId, fromScope, itemIds, ttl):
-                let ttlStr = ttl != nil ? "\(ttl!)" : "default"
+                let ttlStr = ttl != nil ? "\(ttl ?? 0)" : "default"
                 let asGroup = sendAsGroup ? " as_group=on" : ""
                 return "/_forward \(ref(toChatType, toChatId, scope: toScope))\(asGroup) \(ref(fromChatType, fromChatId, scope: fromScope)) \(itemIds.map({ "\($0)" }).joined(separator: ",")) ttl=\(ttlStr)"
             case let .apiShareChatMsgContent(shareChatType, shareChatId, toChatType, toChatId, toScope, sendAsGroup):
                 let asGroup = sendAsGroup ? "(as_group=on)" : ""
                 return "/_share chat content \(ref(shareChatType, shareChatId, scope: nil)) \(ref(toChatType, toChatId, scope: toScope))\(asGroup)"
-            case let .apiShareMyAddress(toChatType, toChatId, toScope, sendAsGroup):
-                let asGroup = sendAsGroup ? "(as_group=on)" : ""
-                return "/_share address \(ref(toChatType, toChatId, scope: toScope))\(asGroup)"
             case .apiGetNtfToken: return "/_ntf get "
             case let .apiRegisterToken(token, notificationMode): return "/_ntf register \(token.cmdString) \(notificationMode.rawValue)"
             case let .apiVerifyToken(token, nonce, code): return "/_ntf verify \(token.cmdString) \(nonce) \(code)"
@@ -317,7 +325,12 @@ enum ChatCommand: ChatCmdProtocol {
             case let .apiSetServerOperators(operators): return "/_operators \(encodeJSON(operators))"
             case let .apiGetUserServers(userId): return "/_servers \(userId)"
             case let .apiSetUserServers(userId, userServers): return "/_servers \(userId) \(encodeJSON(userServers))"
+            case let .apiUpdateRemoteConfig(json): return "/_remote_config \(json)"
             case let .apiValidateServers(userId, userServers): return "/_validate_servers \(userId) \(encodeJSON(userServers))"
+            case let .apiGetBinThereBots(userId, botType): return "/_binthere_bots \(userId) \(botType)"
+            case let .apiInsertBinThereBot(userId, address, name, botType): return "/_binthere_bot_add \(userId) \(address) \(name ?? "") \(botType)"
+            case let .apiReportBinThereBotUse(userId, botId): return "/_binthere_bot_use \(userId) \(botId)"
+            case let .apiSyncBotDirectory(userId, json): return "/_bot_directory_sync \(userId) \(json)"
             case .apiGetUsageConditions: return "/_conditions"
             case let .apiSetConditionsNotified(conditionsId): return "/_conditions_notified \(conditionsId)"
             case let .apiAcceptConditions(conditionsId, operatorIds): return "/_accept_conditions \(conditionsId) \(joinedIds(operatorIds))"
@@ -359,12 +372,11 @@ enum ChatCommand: ChatCmdProtocol {
             case let .apiAddContact(userId, incognito): return "/_connect \(userId) incognito=\(onOff(incognito))"
             case let .apiSetConnectionIncognito(connId, incognito): return "/_set incognito :\(connId) \(onOff(incognito))"
             case let .apiChangeConnectionUser(connId, userId): return "/_set conn user :\(connId) \(userId)"
-            case let .apiConnectPlan(userId, connLink, resolveMode, linkOwnerSig):
-                let resolveStr = resolveMode == .unknown ? "" : " resolve=\(resolveMode.rawValue)"
+            case let .apiConnectPlan(userId, connLink, linkOwnerSig):
                 let sigStr = if let linkOwnerSig { " sig=\(encodeJSON(linkOwnerSig))" } else { "" }
-                return "/_connect plan \(userId) \(connLink)\(resolveStr)\(sigStr)"
-            case let .apiPrepareContact(userId, connLink, contactShortLinkData, verifiedDomain): return "/_prepare contact \(userId) \(connLink.cmdString)\(verifiedDomain.map{ " \($0.cmdString)" } ?? "") \(encodeJSON(contactShortLinkData))"
-            case let .apiPrepareGroup(userId, connLink, directLink, groupShortLinkData, verifiedDomain): return "/_prepare group \(userId) \(connLink.cmdString) direct=\(onOff(directLink))\(verifiedDomain.map{ " \($0.cmdString)" } ?? "") \(encodeJSON(groupShortLinkData))"
+                return "/_connect plan \(userId) \(connLink)\(sigStr)"
+            case let .apiPrepareContact(userId, connLink, contactShortLinkData): return "/_prepare contact \(userId) \(connLink.connFullLink) \(connLink.connShortLink ?? "") \(encodeJSON(contactShortLinkData))"
+            case let .apiPrepareGroup(userId, connLink, directLink, groupShortLinkData): return "/_prepare group \(userId) \(connLink.connFullLink) \(connLink.connShortLink ?? "") direct=\(onOff(directLink)) \(encodeJSON(groupShortLinkData))"
             case let .apiChangePreparedContactUser(contactId, newUserId): return "/_set contact user @\(contactId) \(newUserId)"
             case let .apiChangePreparedGroupUser(groupId, newUserId): return "/_set group user #\(groupId) \(newUserId)"
             case let .apiConnectPreparedContact(contactId, incognito, mc): return "/_connect contact @\(contactId) incognito=\(onOff(incognito))\(maybeContent(mc))"
@@ -376,9 +388,9 @@ enum ChatCommand: ChatCmdProtocol {
             case let .apiListContacts(userId): return "/_contacts \(userId)"
             case let .apiUpdateProfile(userId, profile): return "/_profile \(userId) \(encodeJSON(profile))"
             case let .apiSetContactPrefs(contactId, preferences): return "/_set prefs @\(contactId) \(encodeJSON(preferences))"
-            case let .apiSetContactAlias(contactId, localAlias): return "/_set alias @\(contactId) \(localAlias.trimmingCharacters(in: .whitespaces))"
-            case let .apiSetGroupAlias(groupId, localAlias): return "/_set alias #\(groupId) \(localAlias.trimmingCharacters(in: .whitespaces))"
-            case let .apiSetConnectionAlias(connId, localAlias): return "/_set alias :\(connId) \(localAlias.trimmingCharacters(in: .whitespaces))"
+            case let .apiSetContactAlias(contactId, localAlias): return "/_set alias @\(contactId) \(sanitizeFFIParam(localAlias, maxLen: 256))"
+            case let .apiSetGroupAlias(groupId, localAlias): return "/_set alias #\(groupId) \(sanitizeFFIParam(localAlias, maxLen: 256))"
+            case let .apiSetConnectionAlias(connId, localAlias): return "/_set alias :\(connId) \(sanitizeFFIParam(localAlias, maxLen: 256))"
             case let .apiSetUserUIThemes(userId, themes): return "/_set theme user \(userId) \(themes != nil ? encodeJSON(themes) : "")"
             case let .apiSetChatUIThemes(chatId, themes): return "/_set theme \(chatId) \(themes != nil ? encodeJSON(themes) : "")"
             case let .apiCreateMyAddress(userId): return "/_address \(userId)"
@@ -387,10 +399,6 @@ enum ChatCommand: ChatCmdProtocol {
             case let .apiAddMyAddressShortLink(userId): return "/_short_link_address \(userId)"
             case let .apiSetProfileAddress(userId, on): return "/_profile_address \(userId) \(onOff(on))"
             case let .apiSetAddressSettings(userId, addressSettings): return "/_address_settings \(userId) \(encodeJSON(addressSettings))"
-            case let .apiSetUserDomain(userId, simplexDomain): return "/_set domain \(userId)" + (simplexDomain.map { " " + $0 } ?? "")
-            case let .apiSetPublicGroupAccess(groupId, access): return "/_public group access #\(groupId) \(encodeJSON(access))"
-            case let .apiVerifyContactDomain(contactId): return "/_verify domain @\(contactId)"
-            case let .apiVerifyGroupDomain(groupId): return "/_verify domain #\(groupId)"
             case let .apiAcceptContact(incognito, contactReqId): return "/_accept incognito=\(onOff(incognito)) \(contactReqId)"
             case let .apiRejectContact(contactReqId): return "/_reject \(contactReqId)"
             case let .apiSendCallInvitation(contact, callType): return "/_call invite @\(contact.apiId) \(encodeJSON(callType))"
@@ -409,15 +417,14 @@ enum ChatCommand: ChatCmdProtocol {
             case let .cancelFile(fileId): return "/fcancel \(fileId)"
             case let .setLocalDeviceName(displayName): return "/set device name \(displayName)"
             case let .connectRemoteCtrl(xrcpInv): return "/connect remote ctrl \(xrcpInv)"
-            case .findKnownRemoteCtrl: return "/find remote ctrl"
             case let .confirmRemoteCtrl(rcId): return "/confirm remote ctrl \(rcId)"
             case let .verifyRemoteCtrlSession(sessCode): return "/verify remote ctrl \(sessCode)"
             case .listRemoteCtrls: return "/list remote ctrls"
             case .stopRemoteCtrl: return "/stop remote ctrl"
             case let .deleteRemoteCtrl(rcId): return "/delete remote ctrl \(rcId)"
-            case let .apiUploadStandaloneFile(userId, file): return "/_upload \(userId) \(file.filePath)"
-            case let .apiDownloadStandaloneFile(userId, link, file): return "/_download \(userId) \(link) \(file.filePath)"
-            case let .apiStandaloneFileInfo(link): return "/_download info \(link)"
+            case let .apiUploadStandaloneFile(userId, file): return "/_upload \(userId) \(sanitizeFFIParam(file.filePath, maxLen: 4096))"
+            case let .apiDownloadStandaloneFile(userId, link, file): return "/_download \(userId) \(sanitizeFFIParam(link, maxLen: 4096)) \(sanitizeFFIParam(file.filePath, maxLen: 4096))"
+            case let .apiStandaloneFileInfo(link): return "/_download info \(sanitizeFFIParam(link, maxLen: 4096))"
             case let .apiRedeemBadgeCode(userId, code): return "/_redeem_badge_code \(userId) \(code)"
             case let .apiGetBadgeState(userId): return "/_badge state \(userId)"
             case let .apiGetBadgeLedger(userId, badgePurchaseId): return "/_badge ledger \(userId) \(badgePurchaseId)"
@@ -444,6 +451,8 @@ enum ChatCommand: ChatCmdProtocol {
             case .apiSetUserGroupReceipts: return "apiSetUserGroupReceipts"
             case .apiSetUserAutoAcceptMemberContacts: return "apiSetUserAutoAcceptMemberContacts"
             case .apiSetUserAutoAcceptGroupInvitations: return "apiSetUserAutoAcceptGroupInvitations"
+            case .apiSetUserChatRelay: return "apiSetUserChatRelay"
+            case .apiSetClientService: return "apiSetClientService"
             case .apiHideUser: return "apiHideUser"
             case .apiUnhideUser: return "apiUnhideUser"
             case .apiMuteUser: return "apiMuteUser"
@@ -487,7 +496,6 @@ enum ChatCommand: ChatCmdProtocol {
             case .apiPlanForwardChatItems: return "apiPlanForwardChatItems"
             case .apiForwardChatItems: return "apiForwardChatItems"
             case .apiShareChatMsgContent: return "apiShareChatMsgContent"
-            case .apiShareMyAddress: return "apiShareMyAddress"
             case .apiGetNtfToken: return "apiGetNtfToken"
             case .apiRegisterToken: return "apiRegisterToken"
             case .apiVerifyToken: return "apiVerifyToken"
@@ -509,7 +517,6 @@ enum ChatCommand: ChatCmdProtocol {
             case .apiLeaveGroup: return "apiLeaveGroup"
             case .apiListMembers: return "apiListMembers"
             case .apiUpdateGroupProfile: return "apiUpdateGroupProfile"
-            case .apiSetPublicGroupAccess: return "apiSetPublicGroupAccess"
             case .apiCreateGroupLink: return "apiCreateGroupLink"
             case .apiGroupLinkMemberRole: return "apiGroupLinkMemberRole"
             case .apiDeleteGroupLink: return "apiDeleteGroupLink"
@@ -524,6 +531,7 @@ enum ChatCommand: ChatCmdProtocol {
             case .apiSetServerOperators: return "apiSetServerOperators"
             case .apiGetUserServers: return "apiGetUserServers"
             case .apiSetUserServers: return "apiSetUserServers"
+            case .apiUpdateRemoteConfig: return "apiUpdateRemoteConfig"
             case .apiValidateServers: return "apiValidateServers"
             case .apiGetUsageConditions: return "apiGetUsageConditions"
             case .apiSetConditionsNotified: return "apiSetConditionsNotified"
@@ -580,9 +588,6 @@ enum ChatCommand: ChatCmdProtocol {
             case .apiAddMyAddressShortLink: return "apiAddMyAddressShortLink"
             case .apiSetProfileAddress: return "apiSetProfileAddress"
             case .apiSetAddressSettings: return "apiSetAddressSettings"
-            case .apiSetUserDomain: return "apiSetUserDomain"
-            case .apiVerifyContactDomain: return "apiVerifyContactDomain"
-            case .apiVerifyGroupDomain: return "apiVerifyGroupDomain"
             case .apiAcceptContact: return "apiAcceptContact"
             case .apiRejectContact: return "apiRejectContact"
             case .apiSendCallInvitation: return "apiSendCallInvitation"
@@ -601,7 +606,6 @@ enum ChatCommand: ChatCmdProtocol {
             case .cancelFile: return "cancelFile"
             case .setLocalDeviceName: return "setLocalDeviceName"
             case .connectRemoteCtrl: return "connectRemoteCtrl"
-            case .findKnownRemoteCtrl: return "findKnownRemoteCtrl"
             case .confirmRemoteCtrl: return "confirmRemoteCtrl"
             case .verifyRemoteCtrlSession: return "verifyRemoteCtrlSession"
             case .listRemoteCtrls: return "listRemoteCtrls"
@@ -619,6 +623,10 @@ enum ChatCommand: ChatCmdProtocol {
             case .getAgentServersSummary: return "getAgentServersSummary"
             case .resetAgentServersStats: return "resetAgentServersStats"
             case .string: return "console command"
+            case .apiGetBinThereBots: return "apiGetBinThereBots"
+            case .apiInsertBinThereBot: return "apiInsertBinThereBot"
+            case .apiReportBinThereBotUse: return "apiReportBinThereBotUse"
+            case .apiSyncBotDirectory: return "apiSyncBotDirectory"
             }
         }
     }
@@ -721,7 +729,7 @@ enum ChatCommand: ChatCmdProtocol {
 
 // ChatResponse is split to three enums to reduce stack size used when parsing it, parsing large enums is very inefficient.
 // Spec: spec/api.md#ChatResponse0
-enum ChatResponse0: Decodable, ChatAPIResult {
+enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
     case activeUser(user: User)
     case usersList(users: [UserInfo])
     case chatStarted
@@ -732,10 +740,11 @@ enum ChatResponse0: Decodable, ChatAPIResult {
     case chatContentTypes(contentTypes: [MsgContentTag])
     case chatTags(user: UserRef, userTags: [ChatTag])
     case chatItemInfo(user: UserRef, chatItem: AChatItem, chatItemInfo: ChatItemInfo)
-    case serverTestResult(user: UserRef, testServer: String, testFailure: ProtocolTestFailure?)
+    case serverTestResult(user: UserRef, testServer: String, testFailure: ProtocolTestFailure?, serverInfo: ServerInfoEither?)
     case chatRelayTestResult(user: UserRef, relayProfile: RelayProfile?, relayTestFailure: RelayTestFailure?)
     case serverOperatorConditions(conditions: ServerOperatorConditions)
     case userServers(user: UserRef, userServers: [UserOperatorServers])
+    case binThereBots(user: UserRef, bots: [BinThereBotInfo])
     case userServersValidation(user: UserRef, serverErrors: [UserServersError], serverWarnings: [UserServersWarning])
     case usageConditions(usageConditions: UsageConditions, conditionsText: String, acceptedConditions: UsageConditions?)
     case chatItemTTL(user: UserRef, chatItemTTL: Int64?)
@@ -754,6 +763,13 @@ enum ChatResponse0: Decodable, ChatAPIResult {
     case groupMemberCode(user: UserRef, groupInfo: GroupInfo, member: GroupMember, connectionCode: String)
     case connectionVerified(user: UserRef, verified: Bool, expectedCode: String)
     case tagsUpdated(user: UserRef, userTags: [ChatTag], chatTags: [Int64])
+    // Additional upstream constructors for full parity
+    case chats(user: UserRef, chats: [ChatData])  // CRChats - list all chats without pagination
+    case chatItems(user: UserRef, chatItems: [AChatItem])  // CRChatItems - batch chat items response
+    case chatItemId(user: UserRef, chatItemId: Int64?)  // CRChatItemId - single chat item ID reference (Maybe)
+    case broadcastSent(user: UserRef, successes: Int64)  // CRBroadcastSent - broadcast message sent confirmation
+    case chatHelp(helpSection: String)  // CRChatHelp - help documentation response
+    case welcome(user: UserRef)  // CRWelcome - welcome with user reference
 
     var responseType: String {
         switch self {
@@ -769,8 +785,9 @@ enum ChatResponse0: Decodable, ChatAPIResult {
         case .chatItemInfo: "chatItemInfo"
         case .serverTestResult: "serverTestResult"
         case .chatRelayTestResult: "chatRelayTestResult"
-        case .serverOperatorConditions: "serverOperators"
+        case .serverOperatorConditions: "serverOperatorConditions"
         case .userServers: "userServers"
+        case .binThereBots: "binThereBots"
         case .userServersValidation: "userServersValidation"
         case .usageConditions: "usageConditions"
         case .chatItemTTL: "chatItemTTL"
@@ -789,6 +806,12 @@ enum ChatResponse0: Decodable, ChatAPIResult {
         case .groupMemberCode: "groupMemberCode"
         case .connectionVerified: "connectionVerified"
         case .tagsUpdated: "tagsUpdated"
+        case .chats: "chats"
+        case .chatItems: "chatItems"
+        case .chatItemId: "chatItemId"
+        case .broadcastSent: "broadcastSent"
+        case .chatHelp: "chatHelp"
+        case .welcome: "welcome"
         }
     }
 
@@ -804,10 +827,11 @@ enum ChatResponse0: Decodable, ChatAPIResult {
         case let .chatContentTypes(types): return "content types: \(String(describing: types))"
         case let .chatTags(u, userTags): return withUser(u, "userTags: \(String(describing: userTags))")
         case let .chatItemInfo(u, chatItem, chatItemInfo): return withUser(u, "chatItem: \(String(describing: chatItem))\nchatItemInfo: \(String(describing: chatItemInfo))")
-        case let .serverTestResult(u, server, testFailure): return withUser(u, "server: \(server)\nresult: \(String(describing: testFailure))")
+        case let .serverTestResult(u, server, testFailure, serverInfo): return withUser(u, "server: \(server)\nresult: \(String(describing: testFailure))\nserverInfo: \(String(describing: serverInfo))")
         case let .chatRelayTestResult(u, relayProfile, relayTestFailure): return withUser(u, "relayProfile: \(String(describing: relayProfile))\nresult: \(String(describing: relayTestFailure))")
         case let .serverOperatorConditions(conditions): return "conditions: \(String(describing: conditions))"
         case let .userServers(u, userServers): return withUser(u, "userServers: \(String(describing: userServers))")
+        case let .binThereBots(u, bots): return withUser(u, "binThereBots: \(String(describing: bots))")
         case let .userServersValidation(u, serverErrors, serverWarnings): return withUser(u, "serverErrors: \(String(describing: serverErrors))\nserverWarnings: \(String(describing: serverWarnings))")
         case let .usageConditions(usageConditions, _, acceptedConditions): return "usageConditions: \(String(describing: usageConditions))\nacceptedConditions: \(String(describing: acceptedConditions))"
         case let .chatItemTTL(u, chatItemTTL): return withUser(u, String(describing: chatItemTTL))
@@ -828,32 +852,333 @@ enum ChatResponse0: Decodable, ChatAPIResult {
         case let .groupMemberCode(u, groupInfo, member, connectionCode): return withUser(u, "groupInfo: \(String(describing: groupInfo))\nmember: \(String(describing: member))\nconnectionCode: \(connectionCode)")
         case let .connectionVerified(u, verified, expectedCode): return withUser(u, "verified: \(verified)\nconnectionCode: \(expectedCode)")
         case let .tagsUpdated(u, userTags, chatTags): return withUser(u, "userTags: \(String(describing: userTags))\nchatTags: \(String(describing: chatTags))")
+        // New constructors for parity
+        case let .chats(u, chats): return withUser(u, String(describing: chats))
+        case let .chatItems(u, items): return withUser(u, "items: \(items.count)")
+        case let .chatItemId(u, itemId): return withUser(u, "itemId: \(String(describing: itemId))")
+        case let .broadcastSent(u, successes): return withUser(u, "successes: \(successes)")
+        case let .chatHelp(section): return "helpSection: \(section.prefix(100))"
+        case let .welcome(u): return withUser(u, "welcome")
         }
     }
 
     static func fallbackResult(_ type: String, _ json: NSDictionary) -> ChatResponse0? {
-        if type == "apiChats" {
+        if type == "activeUser" {
+            if let jActiveUser = json["activeUser"] as? NSDictionary,
+               let userObj = jActiveUser["user"] {
+                do {
+                    let user: User = try decodeObject(userObj)
+                    return .activeUser(user: user)
+                } catch {
+                    logger.error("ChatResponse0.fallbackResult: failed to decode activeUser: \(error)")
+                    return nil
+                }
+            }
+        } else if type == "usersList" {
+            if let jUsersList = json["usersList"] as? NSDictionary,
+               let usersData = jUsersList["users"] as? [Any] {
+                do {
+                    let users = try usersData.compactMap({ try decodeObject($0) as UserInfo })
+                    return .usersList(users: users)
+                } catch {
+                    logger.error("ChatResponse0.fallbackResult: failed to decode usersList: \(error)")
+                    return nil
+                }
+            }
+        } else if type == "chatStarted" {
+            return .chatStarted
+        } else if type == "chatRunning" {
+            return .chatRunning
+        } else if type == "chatStopped" {
+            return .chatStopped
+        } else if type == "chatItemTTL" {
+            if let jTTL = json["chatItemTTL"] as? NSDictionary,
+               let userObj = jTTL["user"] {
+                do {
+                    let user: UserRef = try decodeObject(userObj)
+                    let ttl = jTTL["chatItemTTL"] as? Int64
+                    return .chatItemTTL(user: user, chatItemTTL: ttl)
+                } catch {
+                    logger.error("ChatResponse0.fallbackResult: failed to decode chatItemTTL user: \(error)")
+                    return nil
+                }
+            }
+        } else if type == "networkConfig" {
+            if let jCfg = json["networkConfig"] as? NSDictionary {
+                do {
+                    let cfg: NetCfg = try decodeObject(jCfg)
+                    return .networkConfig(networkConfig: cfg)
+                } catch {
+                    logger.error("ChatResponse0.fallbackResult: failed to decode networkConfig: \(error)")
+                    return nil
+                }
+            }
+        } else if type == "chatContentTypes" {
+            if let jTypes = json["chatContentTypes"] as? [Any] {
+                do {
+                    let types = try jTypes.compactMap({ try decodeObject($0) as MsgContentTag })
+                    return .chatContentTypes(contentTypes: types)
+                } catch {
+                    logger.error("ChatResponse0.fallbackResult: failed to decode chatContentTypes: \(error)")
+                    return nil
+                }
+            }
+        } else if type == "chatTags" {
+            if let jTags = json["chatTags"] as? NSDictionary,
+               let userObj = jTags["user"],
+               let userTagsData = jTags["userTags"] as? [Any] {
+                do {
+                    let user: UserRef = try decodeObject(userObj)
+                    let userTags = try userTagsData.compactMap({ try decodeObject($0) as ChatTag })
+                    return .chatTags(user: user, userTags: userTags)
+                } catch {
+                    logger.error("ChatResponse0.fallbackResult: failed to decode chatTags: \(error)")
+                    return nil
+                }
+            }
+        } else if type == "usageConditions" {
+            if let jCond = json["usageConditions"] as? NSDictionary,
+               let conditionsText = jCond["conditionsText"] as? String {
+                let conditions = UsageConditions()
+                let accepted: UsageConditions? = (jCond["acceptedConditions"] as? NSDictionary).flatMap { try? decodeObject($0) }
+                return .usageConditions(usageConditions: conditions, conditionsText: conditionsText, acceptedConditions: accepted)
+            }
+        } else if type == "chatRelayTestResult" {
+            guard let jRelay = json["chatRelayTestResult"] as? NSDictionary,
+                  let userObj = jRelay["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            let relayProfile: RelayProfile? = (jRelay["relayProfile"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            let relayTestFailure: RelayTestFailure? = (jRelay["relayTestFailure"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .chatRelayTestResult(user: user, relayProfile: relayProfile, relayTestFailure: relayTestFailure)
+        } else if type == "binThereBots" {
+            guard let jVal = json["binThereBots"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            let bots: [BinThereBotInfo] = (jVal["bots"] as? [Any])?.compactMap { try? decodeObject($0) } ?? []
+            return .binThereBots(user: user, bots: bots)
+        } else if type == "userServersValidation" {
+            guard let jVal = json["userServersValidation"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            let serverErrors: [UserServersError] = (jVal["serverErrors"] as? [Any])?.compactMap { try? decodeObject($0) } ?? []
+            let serverWarnings: [UserServersWarning] = (jVal["serverWarnings"] as? [Any])?.compactMap { try? decodeObject($0) } ?? []
+            return .userServersValidation(user: user, serverErrors: serverErrors, serverWarnings: serverWarnings)
+        } else if type == "queueInfo" {
+            guard let jQ = json["queueInfo"] as? NSDictionary,
+                  let userObj = jQ["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            let rcvMsgInfo: RcvMsgInfo? = (jQ["rcvMsgInfo"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            guard let queueObj = jQ["queueInfo"],
+                  let queueInfo: ServerQueueInfo = try? decodeObject(queueObj) else { return nil }
+            return .queueInfo(user: user, rcvMsgInfo: rcvMsgInfo, queueInfo: queueInfo)
+        } else if type == "contactSwitchStarted" {
+            guard let jEvt = json["contactSwitchStarted"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = jEvt["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let statsObj = jEvt["connectionStats"],
+                  let connectionStats: ConnectionStats = try? decodeObject(statsObj) else { return nil }
+            return .contactSwitchStarted(user: user, contact: contact, connectionStats: connectionStats)
+        } else if type == "groupMemberSwitchStarted" {
+            guard let jEvt = json["groupMemberSwitchStarted"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let groupObj = jEvt["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(groupObj),
+                  let memberObj = jEvt["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let statsObj = jEvt["connectionStats"],
+                  let connectionStats: ConnectionStats = try? decodeObject(statsObj) else { return nil }
+            return .groupMemberSwitchStarted(user: user, groupInfo: groupInfo, member: member, connectionStats: connectionStats)
+        } else if type == "contactSwitchAborted" {
+            guard let jEvt = json["contactSwitchAborted"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = jEvt["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let statsObj = jEvt["connectionStats"],
+                  let connectionStats: ConnectionStats = try? decodeObject(statsObj) else { return nil }
+            return .contactSwitchAborted(user: user, contact: contact, connectionStats: connectionStats)
+        } else if type == "groupMemberSwitchAborted" {
+            guard let jEvt = json["groupMemberSwitchAborted"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let groupObj = jEvt["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(groupObj),
+                  let memberObj = jEvt["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let statsObj = jEvt["connectionStats"],
+                  let connectionStats: ConnectionStats = try? decodeObject(statsObj) else { return nil }
+            return .groupMemberSwitchAborted(user: user, groupInfo: groupInfo, member: member, connectionStats: connectionStats)
+        } else if type == "contactRatchetSyncStarted" {
+            guard let jEvt = json["contactRatchetSyncStarted"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = jEvt["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let statsObj = jEvt["connectionStats"],
+                  let connectionStats: ConnectionStats = try? decodeObject(statsObj) else { return nil }
+            return .contactRatchetSyncStarted(user: user, contact: contact, connectionStats: connectionStats)
+        } else if type == "groupMemberRatchetSyncStarted" {
+            guard let jEvt = json["groupMemberRatchetSyncStarted"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let groupObj = jEvt["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(groupObj),
+                  let memberObj = jEvt["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let statsObj = jEvt["connectionStats"],
+                  let connectionStats: ConnectionStats = try? decodeObject(statsObj) else { return nil }
+            return .groupMemberRatchetSyncStarted(user: user, groupInfo: groupInfo, member: member, connectionStats: connectionStats)
+        } else if type == "contactCode" {
+            guard let jEvt = json["contactCode"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = jEvt["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let connectionCode = jEvt["connectionCode"] as? String else { return nil }
+            return .contactCode(user: user, contact: contact, connectionCode: connectionCode)
+        } else if type == "groupMemberCode" {
+            guard let jEvt = json["groupMemberCode"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let groupObj = jEvt["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(groupObj),
+                  let memberObj = jEvt["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let connectionCode = jEvt["connectionCode"] as? String else { return nil }
+            return .groupMemberCode(user: user, groupInfo: groupInfo, member: member, connectionCode: connectionCode)
+        } else if type == "connectionVerified" {
+            guard let jEvt = json["connectionVerified"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let verified = jEvt["verified"] as? Bool,
+                  let expectedCode = jEvt["expectedCode"] as? String else { return nil }
+            return .connectionVerified(user: user, verified: verified, expectedCode: expectedCode)
+        } else if type == "tagsUpdated" {
+            guard let jEvt = json["tagsUpdated"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let userTagsData = jEvt["userTags"] as? [Any],
+                  let userTags = try? userTagsData.compactMap({ try decodeObject($0) as ChatTag }),
+                  let chatTags = jEvt["chatTags"] as? [Int64] else { return nil }
+            return .tagsUpdated(user: user, userTags: userTags, chatTags: chatTags)
+        } else if type == "chatItemInfo" {
+            if let jInfo = json["chatItemInfo"] as? NSDictionary,
+               let userObj = jInfo["user"],
+               let user: UserRef = try? decodeObject(userObj),
+               let chatItemObj = jInfo["chatItem"],
+               let chatItem: AChatItem = try? decodeObject(chatItemObj),
+               let chatItemInfoObj = jInfo["chatItemInfo"],
+               let chatItemInfo: ChatItemInfo = try? decodeObject(chatItemInfoObj) {
+                return .chatItemInfo(user: user, chatItem: chatItem, chatItemInfo: chatItemInfo)
+            }
+        } else if type == "apiChats" {
             if let r = parseApiChats(json) {
                 return .apiChats(user: r.user, chats: r.chats)
             }
         } else if type == "apiChat" {
             if let jApiChat = json["apiChat"] as? NSDictionary,
-               let user: UserRef = try? decodeObject(jApiChat["user"] as Any),
+               let userObj = jApiChat["user"],
+               let user: UserRef = try? decodeObject(userObj),
                let jChat = jApiChat["chat"] as? NSDictionary,
                let (chat, navInfo) = try? parseChatData(jChat, jApiChat["navInfo"] as? NSDictionary) {
                 return .apiChat(user: user, chat: chat, navInfo: navInfo)
             }
+        } else if type == "serverOperatorConditions" {
+            if let conditions = parseServerOperatorConditions(json) {
+                return .serverOperatorConditions(conditions: conditions)
+            }
+        } else if type == "userServers" {
+            if let (user, servers) = parseUserServers(json) {
+                return .userServers(user: user, userServers: servers)
+            }
+        } else if type == "contactInfo" {
+            if let (user, contact, connStats, profile) = parseContactInfo(json) {
+                return .contactInfo(user: user, contact: contact, connectionStats_: connStats, customUserProfile: profile)
+            }
+        } else if type == "groupInfo" {
+            if let (user, groupInfo) = parseGroupInfoResponse(json) {
+                return .groupInfo(user: user, groupInfo: groupInfo)
+            }
+        } else if type == "groupMemberInfo" {
+            if let (user, groupInfo, member, connStats) = parseGroupMemberInfo(json) {
+                return .groupMemberInfo(user: user, groupInfo: groupInfo, member: member, connectionStats_: connStats)
+            }
+        } else if type == "chats" {
+            logger.warning("ChatResponse0.fallbackResult: 'chats' response has no user field in Haskell CRChats, returning nil")
+            return nil
+        } else if type == "chatItems" {
+            guard let jEvt = json["chatItems"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let itemsData = jEvt["chatItems"] as? [Any],
+                  let items = try? itemsData.compactMap({ try decodeObject($0) as AChatItem }) else { return nil }
+            return .chatItems(user: user, chatItems: items)
+        } else if type == "chatItemId" {
+            guard let jEvt = json["chatItemId"] as? NSDictionary else { return nil }
+            let user: UserRef
+            if let userObj = jEvt["user"], let u: UserRef = try? decodeObject(userObj) {
+                user = u
+            } else if let userObj = jEvt[""], let u: UserRef = try? decodeObject(userObj) {
+                user = u
+            } else {
+                return nil
+            }
+            let itemId = jEvt["chatItemId"] as? Int64
+            return .chatItemId(user: user, chatItemId: itemId)
+        } else if type == "broadcastSent" {
+            guard let jEvt = json["broadcastSent"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            let successes = jEvt["successes"] as? Int64 ?? 0
+            return .broadcastSent(user: user, successes: successes)
+        } else if type == "chatHelp" {
+            let section: String
+            if let jEvt = json["chatHelp"] as? NSDictionary {
+                section = jEvt["helpSection"] as? String ?? String(describing: jEvt["helpSection"])
+            } else {
+                section = json["helpSection"] as? String ?? String(describing: json["helpSection"])
+            }
+            return .chatHelp(helpSection: section)
+        } else if type == "welcome" {
+            guard let jEvt = json["welcome"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            return .welcome(user: user)
+        } else if type == "serverTestResult" {
+            guard let jEvt = json["serverTestResult"] as? NSDictionary,
+                  let userObj = jEvt["user"],
+                  let user: UserRef = try? decodeObject(userObj) else {
+                logger.error("ChatResponse0.fallbackResult: serverTestResult missing user field, JSON: \(json)")
+                return nil
+            }
+            let testServer: String
+            if let s = jEvt["testServer"] as? String {
+                testServer = s
+            } else if let obj = jEvt["testServer"] {
+                testServer = String(describing: obj)
+            } else {
+                testServer = ""
+            }
+            let testFailure: ProtocolTestFailure? = (jEvt["testFailure"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            let serverInfo: ServerInfoEither? = (jEvt["serverInfo"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .serverTestResult(user: user, testServer: testServer, testFailure: testFailure, serverInfo: serverInfo)
         }
+        logger.warning("ChatResponse0.fallbackResult: unhandled response type '\(type)', full JSON: \(json)")
         return nil
     }
+
+    static let useManualDecoding = true
 }
 
 // Spec: spec/api.md#ChatResponse1
-enum ChatResponse1: Decodable, ChatAPIResult {
-    case invitation(user: UserRef, connLinkInvitation: CreatedConnLink, connection: PendingContactConnection)
+enum ChatResponse1: Decodable, ChatAPIResult, @unchecked Sendable {
+    case invitation(user: UserRef, connLinkInvitation: CreatedConnLink, encryptedConnLink: String?, connection: PendingContactConnection)
     case connectionIncognitoUpdated(user: UserRef, toConnection: PendingContactConnection)
     case connectionUserChanged(user: UserRef, fromConnection: PendingContactConnection, toConnection: PendingContactConnection, newUser: UserRef)
-    case connectionPlan(user: UserRef, connLink: CreatedConnLink, planSimplexName: SimplexNameInfo?, otherSimplexName: SimplexNameInfo?, connectionPlan: ConnectionPlan)
+    case connectionPlan(user: UserRef, connLink: CreatedConnLink, connectionPlan: ConnectionPlan)
     case newPreparedChat(user: UserRef, chat: ChatData)
     case contactUserChanged(user: UserRef, fromContact: Contact, newUser: UserRef, toContact: Contact)
     case groupUserChanged(user: UserRef, fromGroup: GroupInfo, newUser: UserRef, toGroup: GroupInfo)
@@ -865,7 +1190,7 @@ enum ChatResponse1: Decodable, ChatAPIResult {
     case contactAlreadyExists(user: UserRef, contact: Contact)
     case contactDeleted(user: UserRef, contact: Contact)
     case contactConnectionDeleted(user: UserRef, connection: PendingContactConnection)
-    case groupDeletedUser(user: UserRef, groupInfo: GroupInfo)
+    case groupDeletedUser(user: UserRef, groupInfo: GroupInfo, msgSigned: Bool)
     case itemsReadForChat(user: UserRef, chatInfo: ChatInfo)
     case chatCleared(user: UserRef, chatInfo: ChatInfo)
     case userProfileNoChange(user: User)
@@ -877,19 +1202,19 @@ enum ChatResponse1: Decodable, ChatAPIResult {
     case contactPrefsUpdated(user: User, fromContact: Contact, toContact: Contact)
     case userContactLink(user: User, contactLink: UserContactLink)
     case userContactLinkUpdated(user: User, contactLink: UserContactLink)
-    case userContactLinkCreated(user: User, connLinkContact: CreatedConnLink)
+    case userContactLinkCreated(user: User, connLinkContact: CreatedConnLink, encryptedConnLink: String?)
     case userContactLinkDeleted(user: User)
     case acceptingContactRequest(user: UserRef, contact: Contact)
     case contactRequestRejected(user: UserRef, contactRequest: UserContactRequest, contact_: Contact?)
     case newChatItems(user: UserRef, chatItems: [AChatItem])
     case chatMsgContent(user: UserRef, msgContent: MsgContent)
     case groupChatItemsDeleted(user: UserRef, groupInfo: GroupInfo, chatItemIDs: Set<Int64>, byUser: Bool, member_: GroupMember?)
-    case forwardPlan(user: UserRef, chatItemIds: [Int64], forwardConfirmation: ForwardConfirmation?)
+    case forwardPlan(user: UserRef, itemsCount: Int, chatItemIds: [Int64], forwardConfirmation: ForwardConfirmation?)
     case chatItemUpdated(user: UserRef, chatItem: AChatItem)
     case chatItemNotChanged(user: UserRef, chatItem: AChatItem)
     case chatItemReaction(user: UserRef, added: Bool, reaction: ACIReaction)
     case reactionMembers(user: UserRef, memberReactions: [MemberReaction])
-    case chatItemsDeleted(user: UserRef, chatItemDeletions: [ChatItemDeletion], byUser: Bool)
+    case chatItemsDeleted(user: UserRef, chatItemDeletions: [ChatItemDeletion], byUser: Bool, timed: Bool)
     case contactsList(user: UserRef, contacts: [Contact])
 
     var responseType: String {
@@ -942,7 +1267,7 @@ enum ChatResponse1: Decodable, ChatAPIResult {
         switch self {
         case let .contactDeleted(u, contact): return withUser(u, String(describing: contact))
         case let .contactConnectionDeleted(u, connection): return withUser(u, String(describing: connection))
-        case let .groupDeletedUser(u, groupInfo): return withUser(u, String(describing: groupInfo))
+        case let .groupDeletedUser(u, groupInfo, _): return withUser(u, String(describing: groupInfo))
         case let .itemsReadForChat(u, chatInfo): return withUser(u, String(describing: chatInfo))
         case let .chatCleared(u, chatInfo): return withUser(u, String(describing: chatInfo))
         case .userProfileNoChange: return noDetails
@@ -954,7 +1279,7 @@ enum ChatResponse1: Decodable, ChatAPIResult {
         case let .contactPrefsUpdated(u, fromContact, toContact): return withUser(u, "fromContact: \(String(describing: fromContact))\ntoContact: \(String(describing: toContact))")
         case let .userContactLink(u, contactLink): return withUser(u, String(describing: contactLink))
         case let .userContactLinkUpdated(u, contactLink): return withUser(u, String(describing: contactLink))
-        case let .userContactLinkCreated(u, connLink): return withUser(u, String(describing: connLink))
+        case let .userContactLinkCreated(u, connLink, _): return withUser(u, String(describing: connLink))
         case .userContactLinkDeleted: return noDetails
         case let .acceptingContactRequest(u, contact): return withUser(u, String(describing: contact))
         case let .contactRequestRejected(u, contactRequest, contact_): return withUser(u, "contactRequest: \(String(describing: contactRequest))\ncontact_: \(String(describing: contact_))")
@@ -964,20 +1289,20 @@ enum ChatResponse1: Decodable, ChatAPIResult {
         case let .chatMsgContent(u, mc): return withUser(u, String(describing: mc))
         case let .groupChatItemsDeleted(u, gInfo, chatItemIDs, byUser, member_):
             return withUser(u, "chatItemIDs: \(String(describing: chatItemIDs))\ngroupInfo: \(String(describing: gInfo))\nbyUser: \(byUser)\nmember_: \(String(describing: member_))")
-        case let .forwardPlan(u, chatItemIds, forwardConfirmation): return withUser(u, "items: \(chatItemIds) forwardConfirmation: \(String(describing: forwardConfirmation))")
+        case let .forwardPlan(u, itemsCount, chatItemIds, forwardConfirmation): return withUser(u, "itemsCount: \(itemsCount)\nitems: \(chatItemIds) forwardConfirmation: \(String(describing: forwardConfirmation))")
         case let .chatItemUpdated(u, chatItem): return withUser(u, String(describing: chatItem))
         case let .chatItemNotChanged(u, chatItem): return withUser(u, String(describing: chatItem))
         case let .chatItemReaction(u, added, reaction): return withUser(u, "added: \(added)\n\(String(describing: reaction))")
         case let .reactionMembers(u, reaction): return withUser(u, "memberReactions: \(String(describing: reaction))")
-        case let .chatItemsDeleted(u, items, byUser):
+        case let .chatItemsDeleted(u, items, byUser, timed):
             let itemsString = items.map { item in
                 "deletedChatItem:\n\(String(describing: item.deletedChatItem))\ntoChatItem:\n\(String(describing: item.toChatItem))" }.joined(separator: "\n")
-            return withUser(u, itemsString + "\nbyUser: \(byUser)")
+            return withUser(u, itemsString + "\nbyUser: \(byUser)\ntimed: \(timed)")
         case let .contactsList(u, contacts): return withUser(u, String(describing: contacts))
-        case let .invitation(u, connLinkInvitation, connection): return withUser(u, "connLinkInvitation: \(connLinkInvitation)\nconnection: \(connection)")
+        case let .invitation(u, connLinkInvitation, _, connection): return withUser(u, "connLinkInvitation: \(connLinkInvitation)\nconnection: \(connection)")
         case let .connectionIncognitoUpdated(u, toConnection): return withUser(u, String(describing: toConnection))
         case let .connectionUserChanged(u, fromConnection, toConnection, newUser): return withUser(u, "fromConnection: \(String(describing: fromConnection))\ntoConnection: \(String(describing: toConnection))\nnewUserId: \(String(describing: newUser.userId))")
-        case let .connectionPlan(u, connLink, _, _, connectionPlan): return withUser(u, "connLink: \(String(describing: connLink))\nconnectionPlan: \(String(describing: connectionPlan))")
+        case let .connectionPlan(u, connLink, connectionPlan): return withUser(u, "connLink: \(String(describing: connLink))\nconnectionPlan: \(String(describing: connectionPlan))")
         case let .newPreparedChat(u, chat): return withUser(u, String(describing: chat))
         case let .contactUserChanged(u, fromContact, newUser, toContact): return withUser(u, "fromContact: \(String(describing: fromContact))\nnewUserId: \(String(describing: newUser.userId))\ntoContact: \(String(describing: toContact))")
         case let .groupUserChanged(u, fromGroup, newUser, toGroup): return withUser(u, "fromGroup: \(String(describing: fromGroup))\nnewUserId: \(String(describing: newUser.userId))\ntoGroup: \(String(describing: toGroup))")
@@ -989,30 +1314,338 @@ enum ChatResponse1: Decodable, ChatAPIResult {
         case let .contactAlreadyExists(u, contact): return withUser(u, String(describing: contact))
         }
     }
+
+    static func fallbackResult(_ type: String, _ json: NSDictionary) -> ChatResponse1? {
+        #if DEBUG
+        apiTypesLogger.debug("fallbackResult CALLED with type='\(type)', json keys=\(json.allKeys)")
+        #endif
+        let data = json[type] as? NSDictionary ?? json
+        switch type {
+        case "invitation":
+            #if DEBUG
+            apiTypesLogger.debug("fallbackResult: processing invitation, data keys=\(data.allKeys)")
+            #endif
+            let encLinkRaw = data["encryptedConnLink"]
+            #if DEBUG
+            apiTypesLogger.debug("fallbackResult: encLinkRaw = \(String(describing: encLinkRaw))")
+            #endif
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cliObj = data["connLinkInvitation"],
+                  var connLinkInvitation: CreatedConnLink = try? decodeObject(cliObj),
+                  let cObj = data["connection"],
+                  let connection: PendingContactConnection = try? decodeObject(cObj) else { return nil }
+            let encryptedConnLink = data["encryptedConnLink"] as? String
+            #if DEBUG
+            apiTypesLogger.debug("fallbackResult: decoded encryptedConnLink = \(String(describing: encryptedConnLink))")
+            #endif
+            if let enc = encryptedConnLink {
+                connLinkInvitation.encryptedConnLink = enc
+                #if DEBUG
+                apiTypesLogger.debug("fallbackResult: set connLinkInvitation.encryptedConnLink")
+                #endif
+            }
+            return .invitation(user: user, connLinkInvitation: connLinkInvitation, encryptedConnLink: encryptedConnLink, connection: connection)
+        case "connectionIncognitoUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["toConnection"],
+                  let toConnection: PendingContactConnection = try? decodeObject(cObj) else { return nil }
+            return .connectionIncognitoUpdated(user: user, toConnection: toConnection)
+        case "connectionUserChanged":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let fcObj = data["fromConnection"],
+                  let fromConnection: PendingContactConnection = try? decodeObject(fcObj),
+                  let tcObj = data["toConnection"],
+                  let toConnection: PendingContactConnection = try? decodeObject(tcObj),
+                  let nuObj = data["newUser"],
+                  let newUser: UserRef = try? decodeObject(nuObj) else { return nil }
+            return .connectionUserChanged(user: user, fromConnection: fromConnection, toConnection: toConnection, newUser: newUser)
+        case "connectionPlan":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let clObj = data["connLink"],
+                  let connLink: CreatedConnLink = try? decodeObject(clObj),
+                  let cpObj = data["connectionPlan"],
+                  let connectionPlan: ConnectionPlan = try? decodeObject(cpObj) else { return nil }
+            return .connectionPlan(user: user, connLink: connLink, connectionPlan: connectionPlan)
+        case "newPreparedChat":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let chObj = data["chat"],
+                  let chat: ChatData = try? decodeObject(chObj) else { return nil }
+            return .newPreparedChat(user: user, chat: chat)
+        case "contactUserChanged":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let fcObj = data["fromContact"],
+                  let fromContact: Contact = try? decodeObject(fcObj),
+                  let nuObj = data["newUser"],
+                  let newUser: UserRef = try? decodeObject(nuObj),
+                  let tcObj = data["toContact"],
+                  let toContact: Contact = try? decodeObject(tcObj) else { return nil }
+            return .contactUserChanged(user: user, fromContact: fromContact, newUser: newUser, toContact: toContact)
+        case "groupUserChanged":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let fgObj = data["fromGroup"],
+                  let fromGroup: GroupInfo = try? decodeObject(fgObj),
+                  let nuObj = data["newUser"],
+                  let newUser: UserRef = try? decodeObject(nuObj),
+                  let tgObj = data["toGroup"],
+                  let toGroup: GroupInfo = try? decodeObject(tgObj) else { return nil }
+            return .groupUserChanged(user: user, fromGroup: fromGroup, newUser: newUser, toGroup: toGroup)
+        case "sentConfirmation":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["connection"],
+                  let connection: PendingContactConnection = try? decodeObject(cObj) else { return nil }
+            return .sentConfirmation(user: user, connection: connection)
+        case "sentInvitation":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["connection"],
+                  let connection: PendingContactConnection = try? decodeObject(cObj) else { return nil }
+            return .sentInvitation(user: user, connection: connection)
+        case "startedConnectionToContact":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj) else { return nil }
+            return .startedConnectionToContact(user: user, contact: contact)
+        case "startedConnectionToGroup":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let rrData = data["relayResults"] as? [Any],
+                  let relayResults = try? rrData.compactMap({ try decodeObject($0) as RelayConnectionResult }) else { return nil }
+            return .startedConnectionToGroup(user: user, groupInfo: groupInfo, relayResults: relayResults)
+        case "sentInvitationToContact":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj) else { return nil }
+            let customUserProfile: Profile? = (data["customUserProfile"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .sentInvitationToContact(user: user, contact: contact, customUserProfile: customUserProfile)
+        case "contactAlreadyExists":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj) else { return nil }
+            return .contactAlreadyExists(user: user, contact: contact)
+        case "contactDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj) else { return nil }
+            return .contactDeleted(user: user, contact: contact)
+        case "contactConnectionDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["connection"],
+                  let connection: PendingContactConnection = try? decodeObject(cObj) else { return nil }
+            return .contactConnectionDeleted(user: user, connection: connection)
+        case "groupDeletedUser":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let msgSigned = data["msgSigned"] as? Bool else { return nil }
+            return .groupDeletedUser(user: user, groupInfo: groupInfo, msgSigned: msgSigned)
+        case "itemsReadForChat":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatInfo"],
+                  let chatInfo: ChatInfo = try? decodeObject(ciObj) else { return nil }
+            return .itemsReadForChat(user: user, chatInfo: chatInfo)
+        case "chatCleared":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatInfo"],
+                  let chatInfo: ChatInfo = try? decodeObject(ciObj) else { return nil }
+            return .chatCleared(user: user, chatInfo: chatInfo)
+        case "userProfileNoChange":
+            guard let uObj = data["user"],
+                  let user: User = try? decodeObject(uObj) else { return nil }
+            return .userProfileNoChange(user: user)
+        case "userProfileUpdated":
+            guard let uObj = data["user"],
+                  let user: User = try? decodeObject(uObj),
+                  let fpObj = data["fromProfile"],
+                  let fromProfile: Profile = try? decodeObject(fpObj),
+                  let tpObj = data["toProfile"],
+                  let toProfile: Profile = try? decodeObject(tpObj),
+                  let usObj = data["updateSummary"],
+                  let updateSummary: UserProfileUpdateSummary = try? decodeObject(usObj) else { return nil }
+            return .userProfileUpdated(user: user, fromProfile: fromProfile, toProfile: toProfile, updateSummary: updateSummary)
+        case "userPrivacy":
+            guard let uObj = data["user"],
+                  let user: User = try? decodeObject(uObj),
+                  let uuObj = data["updatedUser"],
+                  let updatedUser: User = try? decodeObject(uuObj) else { return nil }
+            return .userPrivacy(user: user, updatedUser: updatedUser)
+        case "contactAliasUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["toContact"],
+                  let toContact: Contact = try? decodeObject(cObj) else { return nil }
+            return .contactAliasUpdated(user: user, toContact: toContact)
+        case "groupAliasUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let gObj = data["toGroup"],
+                  let toGroup: GroupInfo = try? decodeObject(gObj) else { return nil }
+            return .groupAliasUpdated(user: user, toGroup: toGroup)
+        case "connectionAliasUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["toConnection"],
+                  let toConnection: PendingContactConnection = try? decodeObject(cObj) else { return nil }
+            return .connectionAliasUpdated(user: user, toConnection: toConnection)
+        case "contactPrefsUpdated":
+            guard let uObj = data["user"],
+                  let user: User = try? decodeObject(uObj),
+                  let fcObj = data["fromContact"],
+                  let fromContact: Contact = try? decodeObject(fcObj),
+                  let tcObj = data["toContact"],
+                  let toContact: Contact = try? decodeObject(tcObj) else { return nil }
+            return .contactPrefsUpdated(user: user, fromContact: fromContact, toContact: toContact)
+        case "userContactLink":
+            guard let uObj = data["user"],
+                  let user: User = try? decodeObject(uObj),
+                  let clObj = data["contactLink"],
+                  let contactLink: UserContactLink = try? decodeObject(clObj) else { return nil }
+            return .userContactLink(user: user, contactLink: contactLink)
+        case "userContactLinkUpdated":
+            guard let uObj = data["user"],
+                  let user: User = try? decodeObject(uObj),
+                  let clObj = data["contactLink"],
+                  let contactLink: UserContactLink = try? decodeObject(clObj) else { return nil }
+            return .userContactLinkUpdated(user: user, contactLink: contactLink)
+        case "userContactLinkCreated":
+            guard let uObj = data["user"],
+                  let user: User = try? decodeObject(uObj),
+                  let clObj = data["connLinkContact"],
+                  let connLinkContact: CreatedConnLink = try? decodeObject(clObj) else { return nil }
+            let encryptedConnLink: String? = data["encryptedConnLink"] as? String
+            return .userContactLinkCreated(user: user, connLinkContact: connLinkContact, encryptedConnLink: encryptedConnLink)
+        case "userContactLinkDeleted":
+            guard let uObj = data["user"],
+                  let user: User = try? decodeObject(uObj) else { return nil }
+            return .userContactLinkDeleted(user: user)
+        case "acceptingContactRequest":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj) else { return nil }
+            return .acceptingContactRequest(user: user, contact: contact)
+        case "contactRequestRejected":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let crObj = data["contactRequest"],
+                  let contactRequest: UserContactRequest = try? decodeObject(crObj) else { return nil }
+            let contact_: Contact? = (data["contact_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .contactRequestRejected(user: user, contactRequest: contactRequest, contact_: contact_)
+        case "newChatItems":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let itemsData = data["chatItems"] as? [Any],
+                  let chatItems = try? itemsData.compactMap({ try decodeObject($0) as AChatItem }) else { return nil }
+            return .newChatItems(user: user, chatItems: chatItems)
+        case "chatMsgContent":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let mcObj = data["msgContent"],
+                  let msgContent: MsgContent = try? decodeObject(mcObj) else { return nil }
+            return .chatMsgContent(user: user, msgContent: msgContent)
+        case "groupChatItemsDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let idsData = data["chatItemIDs"] as? [Int64],
+                  let byUser = data["byUser"] as? Bool else { return nil }
+            let chatItemIDs = Set(idsData)
+            let member_: GroupMember? = (data["member_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .groupChatItemsDeleted(user: user, groupInfo: groupInfo, chatItemIDs: chatItemIDs, byUser: byUser, member_: member_)
+        case "forwardPlan":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let itemsCount = data["itemsCount"] as? Int,
+                  let idsData = data["chatItemIds"] as? [Int64] else { return nil }
+            let forwardConfirmation: ForwardConfirmation? = (data["forwardConfirmation"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .forwardPlan(user: user, itemsCount: itemsCount, chatItemIds: idsData, forwardConfirmation: forwardConfirmation)
+        case "chatItemUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj) else { return nil }
+            return .chatItemUpdated(user: user, chatItem: chatItem)
+        case "chatItemNotChanged":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj) else { return nil }
+            return .chatItemNotChanged(user: user, chatItem: chatItem)
+        case "chatItemReaction":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let added = data["added"] as? Bool,
+                  let rObj = data["reaction"],
+                  let reaction: ACIReaction = try? decodeObject(rObj) else { return nil }
+            return .chatItemReaction(user: user, added: added, reaction: reaction)
+        case "reactionMembers":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let mrData = data["memberReactions"] as? [Any],
+                  let memberReactions = try? mrData.compactMap({ try decodeObject($0) as MemberReaction }) else { return nil }
+            return .reactionMembers(user: user, memberReactions: memberReactions)
+        case "chatItemsDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let deletionsData = data["chatItemDeletions"] as? [Any],
+                  let chatItemDeletions = try? deletionsData.compactMap({ try decodeObject($0) as ChatItemDeletion }),
+                  let byUser = data["byUser"] as? Bool,
+                  let timed = data["timed"] as? Bool else { return nil }
+            return .chatItemsDeleted(user: user, chatItemDeletions: chatItemDeletions, byUser: byUser, timed: timed)
+        case "contactsList":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactsData = data["contacts"] as? [Any],
+                  let contacts = try? contactsData.compactMap({ try decodeObject($0) as Contact }) else { return nil }
+            return .contactsList(user: user, contacts: contacts)
+        default:
+            return nil
+        }
+    }
+
+    static let useManualDecoding = true
 }
 
 // Spec: spec/api.md#ChatResponse2
-enum ChatResponse2: Decodable, ChatAPIResult {
+enum ChatResponse2: Decodable, ChatAPIResult, @unchecked Sendable {
     // group responses
     case groupCreated(user: UserRef, groupInfo: GroupInfo)
     case publicGroupCreated(user: UserRef, groupInfo: GroupInfo, groupLink: GroupLink, groupRelays: [GroupRelay])
     case publicGroupCreationFailed(user: UserRef, addRelayResults: [AddRelayResult])
     case groupRelays(user: UserRef, groupInfo: GroupInfo, groupRelays: [GroupRelay])
+    case relayGroupAllowed(user: UserRef, groupInfo: GroupInfo)
     case groupRelaysAdded(user: UserRef, groupInfo: GroupInfo, groupLink: GroupLink, groupRelays: [GroupRelay])
     case groupRelaysAddFailed(user: UserRef, addRelayResults: [AddRelayResult])
     case sentGroupInvitation(user: UserRef, groupInfo: GroupInfo, contact: Contact, member: GroupMember)
     case userAcceptedGroupSent(user: UserRef, groupInfo: GroupInfo, hostContact: Contact?)
-    case userDeletedMembers(user: UserRef, groupInfo: GroupInfo, members: [GroupMember], withMessages: Bool)
+    case userDeletedMembers(user: UserRef, groupInfo: GroupInfo, members: [GroupMember], withMessages: Bool, msgSigned: Bool)
     case leftMemberUser(user: UserRef, groupInfo: GroupInfo)
-    case groupMembers(user: UserRef, group: SimpleXChat.Group)
+    case groupMembers(user: UserRef, group: POPOPXSwitch.Group)
     case memberAccepted(user: UserRef, groupInfo: GroupInfo, member: GroupMember)
+    case memberSupportChats(user: UserRef, groupInfo: GroupInfo, members: [GroupMember])  // CRMemberSupportChats - list all member support chats
     case memberSupportChatRead(user: UserRef, groupInfo: GroupInfo, member: GroupMember)
     case memberSupportChatDeleted(user: UserRef, groupInfo: GroupInfo, member: GroupMember)
-    case membersRoleUser(user: UserRef, groupInfo: GroupInfo, members: [GroupMember], toRole: GroupMemberRole)
-    case membersBlockedForAllUser(user: UserRef, groupInfo: GroupInfo, members: [GroupMember], blocked: Bool)
-    case groupUpdated(user: UserRef, toGroup: GroupInfo)
-    case contactDomainVerified(user: UserRef, contact: Contact, verificationFailure: String?)
-    case groupDomainVerified(user: UserRef, groupInfo: GroupInfo, verificationFailure: String?)
+    case membersRoleUser(user: UserRef, groupInfo: GroupInfo, members: [GroupMember], toRole: GroupMemberRole, msgSigned: Bool)
+    case membersBlockedForAllUser(user: UserRef, groupInfo: GroupInfo, members: [GroupMember], blocked: Bool, msgSigned: Bool)
+    case groupUpdated(user: UserRef, fromGroup: GroupInfo, toGroup: GroupInfo, member_: GroupMember?, msgSigned: Bool)
     case groupLinkCreated(user: UserRef, groupInfo: GroupInfo, groupLink: GroupLink)
     case groupLink(user: UserRef, groupInfo: GroupInfo, groupLink: GroupLink)
     case groupLinkDeleted(user: UserRef, groupInfo: GroupInfo)
@@ -1038,7 +1671,7 @@ enum ChatResponse2: Decodable, ChatAPIResult {
     // remote desktop responses
     case remoteCtrlList(remoteCtrls: [RemoteCtrlInfo])
     case remoteCtrlConnecting(remoteCtrl_: RemoteCtrlInfo?, ctrlAppInfo: CtrlAppInfo, appVersion: String)
-    case remoteCtrlConnected(remoteCtrl: RemoteCtrlInfo)
+    case remoteCtrlConnected(remoteCtrl: RemoteCtrlInfo, compression: Bool)
     // misc
     case versionInfo(versionInfo: CoreVersionInfo, chatMigrations: [UpMigration], agentMigrations: [UpMigration])
     case cmdOk(user_: UserRef?)
@@ -1053,6 +1686,9 @@ enum ChatResponse2: Decodable, ChatAPIResult {
     case badgeRedeemed(user: User, redeemedBadge: LocalBadge, newBadge: Bool, badgeState: BadgeState?)
     case badgeState(user: UserRef, badgeState: BadgeState?)
     case badgeLedger(user: UserRef, badgeLedger: [StatementEntry])
+    // domain verification events
+    case contactDomainVerified(user: UserRef, contact: Contact, verificationFailure: String?)
+    case groupDomainVerified(user: UserRef, groupInfo: GroupInfo, verificationFailure: String?)
 
     var responseType: String {
         switch self {
@@ -1073,8 +1709,6 @@ enum ChatResponse2: Decodable, ChatAPIResult {
         case .membersRoleUser: "membersRoleUser"
         case .membersBlockedForAllUser: "membersBlockedForAllUser"
         case .groupUpdated: "groupUpdated"
-        case .contactDomainVerified: "contactDomainVerified"
-        case .groupDomainVerified: "groupDomainVerified"
         case .groupLinkCreated: "groupLinkCreated"
         case .groupLink: "groupLink"
         case .groupLinkDeleted: "groupLinkDeleted"
@@ -1107,6 +1741,10 @@ enum ChatResponse2: Decodable, ChatAPIResult {
         case .badgeRedeemed: "badgeRedeemed"
         case .badgeState: "badgeState"
         case .badgeLedger: "badgeLedger"
+        case .relayGroupAllowed: "relayGroupAllowed"
+        case .memberSupportChats: "memberSupportChats"
+        case .contactDomainVerified: "contactDomainVerified"
+        case .groupDomainVerified: "groupDomainVerified"
         }
     }
 
@@ -1116,21 +1754,21 @@ enum ChatResponse2: Decodable, ChatAPIResult {
         case let .publicGroupCreated(u, groupInfo, groupLink, groupRelays): return withUser(u, "groupInfo: \(groupInfo)\ngroupLink: \(groupLink)\ngroupRelays: \(groupRelays)")
         case let .publicGroupCreationFailed(u, addRelayResults): return withUser(u, "addRelayResults: \(addRelayResults)")
         case let .groupRelays(u, groupInfo, groupRelays): return withUser(u, "groupInfo: \(groupInfo)\ngroupRelays: \(groupRelays)")
+        case let .relayGroupAllowed(u, groupInfo): return withUser(u, "groupInfo: \(groupInfo)")
         case let .groupRelaysAdded(u, groupInfo, groupLink, groupRelays): return withUser(u, "groupInfo: \(groupInfo)\ngroupLink: \(groupLink)\ngroupRelays: \(groupRelays)")
         case let .groupRelaysAddFailed(u, addRelayResults): return withUser(u, "addRelayResults: \(addRelayResults)")
         case let .sentGroupInvitation(u, groupInfo, contact, member): return withUser(u, "groupInfo: \(groupInfo)\ncontact: \(contact)\nmember: \(member)")
         case let .userAcceptedGroupSent(u, groupInfo, hostContact): return withUser(u, "groupInfo: \(groupInfo)\nhostContact: \(String(describing: hostContact))")
-        case let .userDeletedMembers(u, groupInfo, members, withMessages): return withUser(u, "groupInfo: \(groupInfo)\nmembers: \(members)\nwithMessages: \(withMessages)")
+        case let .userDeletedMembers(u, groupInfo, members, withMessages, _): return withUser(u, "groupInfo: \(groupInfo)\nmembers: \(members)\nwithMessages: \(withMessages)")
         case let .leftMemberUser(u, groupInfo): return withUser(u, String(describing: groupInfo))
         case let .groupMembers(u, group): return withUser(u, String(describing: group))
         case let .memberAccepted(u, groupInfo, member): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)")
+        case let .memberSupportChats(u, groupInfo, members): return withUser(u, "groupInfo: \(groupInfo)\nmembers: \(members.count)")
         case let .memberSupportChatRead(u, groupInfo, member): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)")
         case let .memberSupportChatDeleted(u, groupInfo, member): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)")
-        case let .membersRoleUser(u, groupInfo, members, toRole): return withUser(u, "groupInfo: \(groupInfo)\nmembers: \(members)\ntoRole: \(toRole)")
-        case let .membersBlockedForAllUser(u, groupInfo, members, blocked): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(members)\nblocked: \(blocked)")
-        case let .groupUpdated(u, toGroup): return withUser(u, String(describing: toGroup))
-        case let .contactDomainVerified(u, contact, verificationFailure): return withUser(u, "contact: \(contact)\nverificationFailure: \(verificationFailure ?? "ok")")
-        case let .groupDomainVerified(u, groupInfo, verificationFailure): return withUser(u, "groupInfo: \(groupInfo)\nverificationFailure: \(verificationFailure ?? "ok")")
+        case let .membersRoleUser(u, groupInfo, members, toRole, _): return withUser(u, "groupInfo: \(groupInfo)\nmembers: \(members)\ntoRole: \(toRole)")
+        case let .membersBlockedForAllUser(u, groupInfo, members, blocked, _): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(members)\nblocked: \(blocked)")
+        case let .groupUpdated(u, _, toGroup, _, _): return withUser(u, String(describing: toGroup))
         case let .groupLinkCreated(u, groupInfo, groupLink): return withUser(u, "groupInfo: \(groupInfo)\ngroupLink: \(groupLink)")
         case let .groupLink(u, groupInfo, groupLink): return withUser(u, "groupInfo: \(groupInfo)\ngroupLink: \(groupLink)")
         case let .groupLinkDeleted(u, groupInfo): return withUser(u, String(describing: groupInfo))
@@ -1151,7 +1789,7 @@ enum ChatResponse2: Decodable, ChatAPIResult {
         case let .connNtfMessages(receivedMsgs): return "receivedMsgs: \(String(describing: receivedMsgs))"
         case let .remoteCtrlList(remoteCtrls): return String(describing: remoteCtrls)
         case let .remoteCtrlConnecting(remoteCtrl_, ctrlAppInfo, appVersion): return "remoteCtrl_:\n\(String(describing: remoteCtrl_))\nctrlAppInfo:\n\(String(describing: ctrlAppInfo))\nappVersion: \(appVersion)"
-        case let .remoteCtrlConnected(remoteCtrl): return String(describing: remoteCtrl)
+        case let .remoteCtrlConnected(remoteCtrl, compression): return "\(String(describing: remoteCtrl))\ncompression: \(compression)"
         case let .versionInfo(versionInfo, chatMigrations, agentMigrations): return "\(String(describing: versionInfo))\n\nchat migrations: \(chatMigrations.map(\.upName))\n\nagent migrations: \(agentMigrations.map(\.upName))"
         case .cmdOk: return noDetails
         case let .agentSubsTotal(u, subsTotal, hasSession): return withUser(u, "subsTotal: \(String(describing: subsTotal))\nhasSession: \(hasSession)")
@@ -1163,12 +1801,396 @@ enum ChatResponse2: Decodable, ChatAPIResult {
         case let .badgeRedeemed(u, redeemedBadge, newBadge, badgeState): return withUser(u, "redeemedBadge: \(String(describing: redeemedBadge))\nnewBadge: \(newBadge)\nbadgeState: \(String(describing: badgeState))")
         case let .badgeState(u, badgeState): return withUser(u, String(describing: badgeState))
         case let .badgeLedger(u, badgeLedger): return withUser(u, String(describing: badgeLedger))
+        case let .contactDomainVerified(u, contact, verificationFailure): return withUser(u, "contact: \(String(describing: contact))\nverificationFailure: \(String(describing: verificationFailure))")
+        case let .groupDomainVerified(u, groupInfo, verificationFailure): return withUser(u, "groupInfo: \(String(describing: groupInfo))\nverificationFailure: \(String(describing: verificationFailure))")
         }
     }
+
+    static func fallbackResult(_ type: String, _ json: NSDictionary) -> ChatResponse2? {
+        let data = json[type] as? NSDictionary ?? json
+        switch type {
+        case "cmdOk":
+            let user: UserRef? = (data["user_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .cmdOk(user_: user)
+        case "groupCreated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            return .groupCreated(user: user, groupInfo: groupInfo)
+        case "publicGroupCreated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let glObj = data["groupLink"],
+                  let groupLink: GroupLink = try? decodeObject(glObj),
+                  let groupRelays = data["groupRelays"] as? [Any],
+                  let relays = try? groupRelays.map({ try decodeObject($0) as GroupRelay }) else { return nil }
+            return .publicGroupCreated(user: user, groupInfo: groupInfo, groupLink: groupLink, groupRelays: relays)
+        case "versionInfo":
+            guard let viObj = data["versionInfo"],
+                  let versionInfo: CoreVersionInfo = try? decodeObject(viObj),
+                  let chatMigrations = data["chatMigrations"] as? [Any],
+                  let agentMigrations = data["agentMigrations"] as? [Any],
+                  let chatMigs = try? chatMigrations.map({ try decodeObject($0) as UpMigration }),
+                  let agentMigs = try? agentMigrations.map({ try decodeObject($0) as UpMigration }) else { return nil }
+            return .versionInfo(versionInfo: versionInfo, chatMigrations: chatMigs, agentMigrations: agentMigs)
+        case "appSettings":
+            guard let asObj = data["appSettings"],
+                  let appSettings: AppSettings = try? decodeObject(asObj) else { return nil }
+            return .appSettings(appSettings: appSettings)
+        case "ntfTokenStatus":
+            guard let stObj = data["status"],
+                  let status: NtfTknStatus = decodeRaw(stObj) else { return nil }
+            return .ntfTokenStatus(status: status)
+        case "contactDomainVerified":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            let verificationFailure: String? = data["verificationFailure"] as? String
+            return .contactDomainVerified(user: user, contact: contact, verificationFailure: verificationFailure)
+        case "groupDomainVerified":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            let verificationFailure: String? = data["verificationFailure"] as? String
+            return .groupDomainVerified(user: user, groupInfo: groupInfo, verificationFailure: verificationFailure)
+        case "relayGroupAllowed":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            return .relayGroupAllowed(user: user, groupInfo: groupInfo)
+        case "memberSupportChats":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let membersData = data["members"] as? [Any],
+                  let members = try? membersData.compactMap({ try decodeObject($0) as GroupMember }) else { return nil }
+            return .memberSupportChats(user: user, groupInfo: groupInfo, members: members)
+        case "publicGroupCreationFailed":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let resultsData = data["addRelayResults"] as? [Any],
+                  let addRelayResults = try? resultsData.compactMap({ try decodeObject($0) as AddRelayResult }) else { return nil }
+            return .publicGroupCreationFailed(user: user, addRelayResults: addRelayResults)
+        case "groupRelays":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let relaysData = data["groupRelays"] as? [Any],
+                  let groupRelays = try? relaysData.compactMap({ try decodeObject($0) as GroupRelay }) else { return nil }
+            return .groupRelays(user: user, groupInfo: groupInfo, groupRelays: groupRelays)
+        case "groupRelaysAdded":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let glObj = data["groupLink"],
+                  let groupLink: GroupLink = try? decodeObject(glObj),
+                  let relaysData = data["groupRelays"] as? [Any],
+                  let groupRelays = try? relaysData.compactMap({ try decodeObject($0) as GroupRelay }) else { return nil }
+            return .groupRelaysAdded(user: user, groupInfo: groupInfo, groupLink: groupLink, groupRelays: groupRelays)
+        case "groupRelaysAddFailed":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let resultsData = data["addRelayResults"] as? [Any],
+                  let addRelayResults = try? resultsData.compactMap({ try decodeObject($0) as AddRelayResult }) else { return nil }
+            return .groupRelaysAddFailed(user: user, addRelayResults: addRelayResults)
+        case "sentGroupInvitation":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj),
+                  let mObj = data["member"],
+                  let member: GroupMember = try? decodeObject(mObj) else { return nil }
+            return .sentGroupInvitation(user: user, groupInfo: groupInfo, contact: contact, member: member)
+        case "userAcceptedGroupSent":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            let hostContact: Contact? = (data["hostContact"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .userAcceptedGroupSent(user: user, groupInfo: groupInfo, hostContact: hostContact)
+        case "userDeletedMembers":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let membersData = data["members"] as? [Any],
+                  let members = try? membersData.compactMap({ try decodeObject($0) as GroupMember }),
+                  let withMessages = data["withMessages"] as? Bool,
+                  let msgSigned = data["msgSigned"] as? Bool else { return nil }
+            return .userDeletedMembers(user: user, groupInfo: groupInfo, members: members, withMessages: withMessages, msgSigned: msgSigned)
+        case "leftMemberUser":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            return .leftMemberUser(user: user, groupInfo: groupInfo)
+        case "groupMembers":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let gObj = data["group"],
+                  let group: POPOPXSwitch.Group = try? decodeObject(gObj) else { return nil }
+            return .groupMembers(user: user, group: group)
+        case "memberAccepted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let mObj = data["member"],
+                  let member: GroupMember = try? decodeObject(mObj) else { return nil }
+            return .memberAccepted(user: user, groupInfo: groupInfo, member: member)
+        case "memberSupportChatRead":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let mObj = data["member"],
+                  let member: GroupMember = try? decodeObject(mObj) else { return nil }
+            return .memberSupportChatRead(user: user, groupInfo: groupInfo, member: member)
+        case "memberSupportChatDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let mObj = data["member"],
+                  let member: GroupMember = try? decodeObject(mObj) else { return nil }
+            return .memberSupportChatDeleted(user: user, groupInfo: groupInfo, member: member)
+        case "membersRoleUser":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let membersData = data["members"] as? [Any],
+                  let members = try? membersData.compactMap({ try decodeObject($0) as GroupMember }),
+                  let toRoleRaw = data["toRole"],
+                  let toRole: GroupMemberRole = decodeRaw(toRoleRaw),
+                  let msgSigned = data["msgSigned"] as? Bool else { return nil }
+            return .membersRoleUser(user: user, groupInfo: groupInfo, members: members, toRole: toRole, msgSigned: msgSigned)
+        case "membersBlockedForAllUser":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let membersData = data["members"] as? [Any],
+                  let members = try? membersData.compactMap({ try decodeObject($0) as GroupMember }),
+                  let blocked = data["blocked"] as? Bool,
+                  let msgSigned = data["msgSigned"] as? Bool else { return nil }
+            return .membersBlockedForAllUser(user: user, groupInfo: groupInfo, members: members, blocked: blocked, msgSigned: msgSigned)
+        case "groupUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let fgObj = data["fromGroup"],
+                  let fromGroup: GroupInfo = try? decodeObject(fgObj),
+                  let tgObj = data["toGroup"],
+                  let toGroup: GroupInfo = try? decodeObject(tgObj),
+                  let msgSigned = data["msgSigned"] as? Bool else { return nil }
+            let member_: GroupMember? = (data["member_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .groupUpdated(user: user, fromGroup: fromGroup, toGroup: toGroup, member_: member_, msgSigned: msgSigned)
+        case "groupLinkCreated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let glObj = data["groupLink"],
+                  let groupLink: GroupLink = try? decodeObject(glObj) else { return nil }
+            return .groupLinkCreated(user: user, groupInfo: groupInfo, groupLink: groupLink)
+        case "groupLink":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let glObj = data["groupLink"],
+                  let groupLink: GroupLink = try? decodeObject(glObj) else { return nil }
+            return .groupLink(user: user, groupInfo: groupInfo, groupLink: groupLink)
+        case "groupLinkDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            return .groupLinkDeleted(user: user, groupInfo: groupInfo)
+        case "newMemberContact":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let mObj = data["member"],
+                  let member: GroupMember = try? decodeObject(mObj) else { return nil }
+            return .newMemberContact(user: user, contact: contact, groupInfo: groupInfo, member: member)
+        case "newMemberContactSentInv":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let mObj = data["member"],
+                  let member: GroupMember = try? decodeObject(mObj) else { return nil }
+            return .newMemberContactSentInv(user: user, contact: contact, groupInfo: groupInfo, member: member)
+        case "memberContactAccepted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let cObj = data["contact"],
+                  let contact: Contact = try? decodeObject(cObj) else { return nil }
+            return .memberContactAccepted(user: user, contact: contact)
+        case "rcvFileAccepted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj) else { return nil }
+            return .rcvFileAccepted(user: user, chatItem: chatItem)
+        case "rcvFileAcceptedSndCancelled":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(ftObj) else { return nil }
+            return .rcvFileAcceptedSndCancelled(user: user, rcvFileTransfer: rcvFileTransfer)
+        case "standaloneFileInfo":
+            let fileMeta: MigrationFileLinkData? = (data["fileMeta"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .standaloneFileInfo(fileMeta: fileMeta)
+        case "rcvStandaloneFileCreated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(ftObj) else { return nil }
+            return .rcvStandaloneFileCreated(user: user, rcvFileTransfer: rcvFileTransfer)
+        case "rcvFileCancelled":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(ftObj) else { return nil }
+            let chatItem_: AChatItem? = (data["chatItem_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .rcvFileCancelled(user: user, chatItem_: chatItem_, rcvFileTransfer: rcvFileTransfer)
+        case "sndFileCancelled":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftmObj = data["fileTransferMeta"],
+                  let fileTransferMeta: FileTransferMeta = try? decodeObject(ftmObj),
+                  let sndData = data["sndFileTransfers"] as? [Any],
+                  let sndFileTransfers = try? sndData.compactMap({ try decodeObject($0) as SndFileTransfer }) else { return nil }
+            let chatItem_: AChatItem? = (data["chatItem_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .sndFileCancelled(user: user, chatItem_: chatItem_, fileTransferMeta: fileTransferMeta, sndFileTransfers: sndFileTransfers)
+        case "sndStandaloneFileCreated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftmObj = data["fileTransferMeta"],
+                  let fileTransferMeta: FileTransferMeta = try? decodeObject(ftmObj) else { return nil }
+            return .sndStandaloneFileCreated(user: user, fileTransferMeta: fileTransferMeta)
+        case "callInvitations":
+            guard let invsData = data["callInvitations"] as? [Any],
+                  let callInvitations = try? invsData.compactMap({ try decodeObject($0) as RcvCallInvitation }) else { return nil }
+            return .callInvitations(callInvitations: callInvitations)
+        case "ntfToken":
+            // Fields are at top level of data (not nested under "ntfToken")
+            guard let tObj = data["token"] else {
+                logger.error("ntfToken: missing token field")
+                return nil
+            }
+            guard let token: DeviceToken = try? decodeObject(tObj) else {
+                logger.error("ntfToken: failed to decode DeviceToken from \(String(describing: tObj))")
+                return nil
+            }
+            guard let stObj = data["status"] else {
+                logger.error("ntfToken: missing status field")
+                return nil
+            }
+            guard let status: NtfTknStatus = decodeRaw(stObj) else {
+                logger.error("ntfToken: failed to decode NtfTknStatus from \(String(describing: stObj))")
+                return nil
+            }
+            guard let nmObj = data["ntfMode"] else {
+                logger.error("ntfToken: missing ntfMode field")
+                return nil
+            }
+            guard let ntfMode: NotificationsMode = decodeRaw(nmObj) else {
+                logger.error("ntfToken: failed to decode NotificationsMode from \(String(describing: nmObj))")
+                return nil
+            }
+            guard let ntfServer = data["ntfServer"] as? String else {
+                logger.error("ntfToken: missing or invalid ntfServer field: \(String(describing: data["ntfServer"]))")
+                return nil
+            }
+            return .ntfToken(token: token, status: status, ntfMode: ntfMode, ntfServer: ntfServer)
+        case "ntfConns":
+            guard let connsData = data["ntfConns"] as? [Any],
+                  let ntfConns = try? connsData.compactMap({ try decodeObject($0) as NtfConn }) else { return nil }
+            return .ntfConns(ntfConns: ntfConns)
+        case "connNtfMessages":
+            guard let msgsData = data["receivedMsgs"] as? [Any],
+                  let receivedMsgs = try? msgsData.compactMap({ try decodeObject($0) as RcvNtfMsgInfo }) else { return nil }
+            return .connNtfMessages(receivedMsgs: receivedMsgs)
+        case "remoteCtrlList":
+            guard let rcsData = data["remoteCtrls"] as? [Any],
+                  let remoteCtrls = try? rcsData.compactMap({ try decodeObject($0) as RemoteCtrlInfo }) else { return nil }
+            return .remoteCtrlList(remoteCtrls: remoteCtrls)
+        case "remoteCtrlConnecting":
+            guard let caiObj = data["ctrlAppInfo"],
+                  let ctrlAppInfo: CtrlAppInfo = try? decodeObject(caiObj),
+                  let appVersion = data["appVersion"] as? String else { return nil }
+            let remoteCtrl_: RemoteCtrlInfo? = (data["remoteCtrl_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .remoteCtrlConnecting(remoteCtrl_: remoteCtrl_, ctrlAppInfo: ctrlAppInfo, appVersion: appVersion)
+        case "remoteCtrlConnected":
+            guard let rcObj = data["remoteCtrl"],
+                  let remoteCtrl: RemoteCtrlInfo = try? decodeObject(rcObj) else { return nil }
+            let compression = data["compression"] as? Bool ?? false
+            return .remoteCtrlConnected(remoteCtrl: remoteCtrl, compression: compression)
+        case "agentSubsTotal":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let stObj = data["subsTotal"],
+                  let subsTotal: SMPServerSubs = try? decodeObject(stObj),
+                  let hasSession = data["hasSession"] as? Bool else { return nil }
+            return .agentSubsTotal(user: user, subsTotal: subsTotal, hasSession: hasSession)
+        case "agentServersSummary":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ssObj = data["serversSummary"],
+                  let serversSummary: PresentedServersSummary = try? decodeObject(ssObj) else { return nil }
+            return .agentServersSummary(user: user, serversSummary: serversSummary)
+        case "agentSubsSummary":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ssObj = data["subsSummary"],
+                  let subsSummary: SMPServerSubs = try? decodeObject(ssObj) else { return nil }
+            return .agentSubsSummary(user: user, subsSummary: subsSummary)
+        case "archiveExported":
+            guard let errorsData = data["archiveErrors"] as? [Any],
+                  let archiveErrors = try? errorsData.compactMap({ try decodeObject($0) as ArchiveError }) else { return nil }
+            return .archiveExported(archiveErrors: archiveErrors)
+        case "archiveImported":
+            guard let errorsData = data["archiveErrors"] as? [Any],
+                  let archiveErrors = try? errorsData.compactMap({ try decodeObject($0) as ArchiveError }) else { return nil }
+            return .archiveImported(archiveErrors: archiveErrors)
+        default:
+            return nil
+        }
+    }
+
+    static let useManualDecoding = true
+}
+
+// Placeholder types for ChatEvent cases
+struct ServiceSubEvent: Decodable, Equatable {}
+struct DatabaseDiff: Decodable, Equatable {}
+struct DeletedRcvQueue: Decodable, Equatable {}
+struct RcvFileDescr: Decodable, Equatable {}
+enum TerminalEvent: Decodable, Equatable {
+    case unknown
 }
 
 // Spec: spec/api.md#ChatEvent
-enum ChatEvent: Decodable, ChatAPIResult {
+enum ChatEvent: ChatAPIResult, @unchecked Sendable {
     case chatSuspended
     case contactSwitch(user: UserRef, contact: Contact, switchProgress: SwitchProgress)
     case groupMemberSwitch(user: UserRef, groupInfo: GroupInfo, member: GroupMember, switchProgress: SwitchProgress)
@@ -1179,33 +2201,33 @@ enum ChatEvent: Decodable, ChatAPIResult {
     case contactConnecting(user: UserRef, contact: Contact)
     case contactSndReady(user: UserRef, contact: Contact)
     case receivedContactRequest(user: UserRef, contactRequest: UserContactRequest, chat_: ChatData?)
-    case contactUpdated(user: UserRef, toContact: Contact)
+    case contactUpdated(user: UserRef, fromContact: Contact, toContact: Contact)
     case groupMemberUpdated(user: UserRef, groupInfo: GroupInfo, fromMember: GroupMember, toMember: GroupMember)
-    case subscriptionStatus(subscriptionStatus: SubscriptionStatus, connections: [String])
+    case subscriptionStatus(server: String, subscriptionStatus: SubscriptionStatus, connections: [String])
     case chatInfoUpdated(user: UserRef, chatInfo: ChatInfo)
     case newChatItems(user: UserRef, chatItems: [AChatItem])
     case chatItemsStatusesUpdated(user: UserRef, chatItems: [AChatItem])
     case chatItemUpdated(user: UserRef, chatItem: AChatItem)
     case chatItemReaction(user: UserRef, added: Bool, reaction: ACIReaction)
-    case chatItemsDeleted(user: UserRef, chatItemDeletions: [ChatItemDeletion], byUser: Bool)
+    case chatItemsDeleted(user: UserRef, chatItemDeletions: [ChatItemDeletion], byUser: Bool, timed: Bool)
     // group events
     case groupChatItemsDeleted(user: UserRef, groupInfo: GroupInfo, chatItemIDs: Set<Int64>, byUser: Bool, member_: GroupMember?)
-    case receivedGroupInvitation(user: UserRef, groupInfo: GroupInfo, contact: Contact, memberRole: GroupMemberRole)
+    case receivedGroupInvitation(user: UserRef, groupInfo: GroupInfo, contact: Contact, fromMemberRole: GroupMemberRole, memberRole: GroupMemberRole)
     case userAcceptedGroupSent(user: UserRef, groupInfo: GroupInfo, hostContact: Contact?)
     case groupLinkConnecting(user: UserRef, groupInfo: GroupInfo, hostMember: GroupMember)
     case businessLinkConnecting(user: UserRef, groupInfo: GroupInfo, hostMember: GroupMember, fromContact: Contact)
     case joinedGroupMemberConnecting(user: UserRef, groupInfo: GroupInfo, hostMember: GroupMember, member: GroupMember)
     case memberAcceptedByOther(user: UserRef, groupInfo: GroupInfo, acceptingMember: GroupMember, member: GroupMember)
-    case memberRole(user: UserRef, groupInfo: GroupInfo, byMember: GroupMember, member: GroupMember, fromRole: GroupMemberRole, toRole: GroupMemberRole)
-    case memberBlockedForAll(user: UserRef, groupInfo: GroupInfo, byMember: GroupMember, member: GroupMember, blocked: Bool)
-    case deletedMemberUser(user: UserRef, groupInfo: GroupInfo, member: GroupMember, withMessages: Bool)
-    case deletedMember(user: UserRef, groupInfo: GroupInfo, byMember: GroupMember, deletedMember: GroupMember, withMessages: Bool)
-    case leftMember(user: UserRef, groupInfo: GroupInfo, member: GroupMember)
-    case groupDeleted(user: UserRef, groupInfo: GroupInfo, member: GroupMember)
+    case memberRole(user: UserRef, groupInfo: GroupInfo, byMember: GroupMember, member: GroupMember, fromRole: GroupMemberRole, toRole: GroupMemberRole, msgSigned: MsgSigStatus?)
+    case memberBlockedForAll(user: UserRef, groupInfo: GroupInfo, byMember: GroupMember, member: GroupMember, blocked: Bool, msgSigned: MsgSigStatus?)
+    case deletedMemberUser(user: UserRef, groupInfo: GroupInfo, member: GroupMember, withMessages: Bool, msgSigned: MsgSigStatus?)
+    case deletedMember(user: UserRef, groupInfo: GroupInfo, byMember: GroupMember, deletedMember: GroupMember, withMessages: Bool, msgSigned: MsgSigStatus?)
+    case leftMember(user: UserRef, groupInfo: GroupInfo, member: GroupMember, msgSigned: MsgSigStatus?)
+    case groupDeleted(user: UserRef, groupInfo: GroupInfo, member: GroupMember, msgSigned: MsgSigStatus?)
     case userJoinedGroup(user: UserRef, groupInfo: GroupInfo, hostMember: GroupMember)
     case joinedGroupMember(user: UserRef, groupInfo: GroupInfo, member: GroupMember)
     case connectedToGroupMember(user: UserRef, groupInfo: GroupInfo, member: GroupMember, memberContact: Contact?)
-    case groupUpdated(user: UserRef, toGroup: GroupInfo)
+    case groupUpdated(user: UserRef, fromGroup: GroupInfo, toGroup: GroupInfo, member_: GroupMember?, msgSigned: MsgSigStatus?)
     case groupLinkDataUpdated(user: UserRef, groupInfo: GroupInfo, groupLink: GroupLink, groupRelays: [GroupRelay], relaysChanged: Bool)
     case groupRelayUpdated(user: UserRef, groupInfo: GroupInfo, member: GroupMember, groupRelay: GroupRelay)
     case newMemberContactReceivedInv(user: UserRef, contact: Contact, groupInfo: GroupInfo, member: GroupMember)
@@ -1238,6 +2260,9 @@ enum ChatEvent: Decodable, ChatAPIResult {
     case contactDisabled(user: UserRef, contact: Contact)
     // notification marker
     case ntfMessage(user: UserRef, connEntity: ConnectionEntity, ntfMessage: NtfMsgAckInfo)
+    // host connection events
+    case hostConnected(protocol: String, transportHost: String)
+    case hostDisconnected(protocol: String, transportHost: String)
     // remote desktop responses
     case remoteCtrlFound(remoteCtrl: RemoteCtrlInfo, ctrlAppInfo_: CtrlAppInfo?, appVersion: String, compatible: Bool)
     case remoteCtrlSessionCode(remoteCtrl_: RemoteCtrlInfo?, sessionCode: String)
@@ -1248,6 +2273,39 @@ enum ChatEvent: Decodable, ChatAPIResult {
     // badges
     case badgeChanged(user: User, badgeState: BadgeState?)
     case badgeAlert(user: UserRef, badgeAlert: BadgeAlert)
+    // additional events to match Haskell ChatEvent
+    case contactAnotherClient(user: UserRef, contact: Contact)
+    case connectionsDiff(userIds: DatabaseDiff, connIds: DatabaseDiff)
+    case subscriptionEnd(user: UserRef, connectionEntity: ConnectionEntity)
+    case serviceSubStatus(server: String, serviceSubEvent: ServiceSubEvent)
+    case chatItemNotChanged(user: UserRef, chatItem: AChatItem)
+    case chatItemDeletedNotFound(user: UserRef, contact: Contact, sharedMsgId: String)
+    case serviceRequest(user: UserRef, requestId: String, signerKey: String?, requestData: [String: String])
+    case serviceReplySent(connectionId: String)
+    case contactRequestRejected(user: UserRef, contact: Contact, rejectionReason: String?)
+    case acceptingContactRequest(user: UserRef, contact: Contact)
+    case acceptingBusinessRequest(user: UserRef, groupInfo: GroupInfo)
+    case contactRequestAlreadyAccepted(user: UserRef, contact: Contact)
+    case businessRequestAlreadyAccepted(user: UserRef, groupInfo: GroupInfo)
+    case rcvFileDescrReady(user: UserRef, chatItem: AChatItem, rcvFileTransfer: RcvFileTransfer, rcvFileDescr: RcvFileDescr)
+    case contactAndMemberAssociated(user: UserRef, contact: Contact, groupInfo: GroupInfo, member: GroupMember, updatedContact: Contact)
+    case unknownMemberCreated(user: UserRef, groupInfo: GroupInfo, forwardedByMember: GroupMember, member: GroupMember)
+    case unknownMemberBlocked(user: UserRef, groupInfo: GroupInfo, blockedByMember: GroupMember, member: GroupMember)
+    case unknownMemberAnnounced(user: UserRef, groupInfo: GroupInfo, announcingMember: GroupMember, unknownMember: GroupMember, announcedMember: GroupMember)
+    case acceptingGroupJoinRequestMember(user: UserRef, groupInfo: GroupInfo, member: GroupMember)
+    case noMemberContactCreating(user: UserRef, groupInfo: GroupInfo, member: GroupMember)
+    case connectionDisabled(connectionEntity: ConnectionEntity)
+    case connectionInactive(connectionEntity: ConnectionEntity, inactive: Bool)
+    case agentRcvQueuesDeleted(deletedRcvQueues: [DeletedRcvQueue])
+    case agentConnsDeleted(agentConnIds: [String])
+    case agentUserDeleted(agentUserId: Int64)
+    case messageError(user: UserRef, severity: String, errorMessage: String)
+    case chatErrors(chatErrors: [ChatError])
+    case timedAction(action: String, durationMilliseconds: Int64)
+    case terminalEvent(terminalEvent: TerminalEvent)
+    case customChatEvent(user_: UserRef?, response: String)
+
+    static let useManualDecoding = true
 
     var responseType: String {
         switch self {
@@ -1315,6 +2373,8 @@ enum ChatEvent: Decodable, ChatAPIResult {
         case .callEnded: "callEnded"
         case .contactDisabled: "contactDisabled"
         case .ntfMessage: "ntfMessage"
+        case .hostConnected: "hostConnected"
+        case .hostDisconnected: "hostDisconnected"
         case .remoteCtrlFound: "remoteCtrlFound"
         case .remoteCtrlSessionCode: "remoteCtrlSessionCode"
         case .remoteCtrlConnected: "remoteCtrlConnected"
@@ -1322,6 +2382,36 @@ enum ChatEvent: Decodable, ChatAPIResult {
         case .contactPQEnabled: "contactPQEnabled"
         case .badgeChanged: "badgeChanged"
         case .badgeAlert: "badgeAlert"
+        case .contactAnotherClient: "contactAnotherClient"
+        case .connectionsDiff: "connectionsDiff"
+        case .subscriptionEnd: "subscriptionEnd"
+        case .serviceSubStatus: "serviceSubStatus"
+        case .chatItemNotChanged: "chatItemNotChanged"
+        case .chatItemDeletedNotFound: "chatItemDeletedNotFound"
+        case .serviceRequest: "serviceRequest"
+        case .serviceReplySent: "serviceReplySent"
+        case .contactRequestRejected: "contactRequestRejected"
+        case .acceptingContactRequest: "acceptingContactRequest"
+        case .acceptingBusinessRequest: "acceptingBusinessRequest"
+        case .contactRequestAlreadyAccepted: "contactRequestAlreadyAccepted"
+        case .businessRequestAlreadyAccepted: "businessRequestAlreadyAccepted"
+        case .rcvFileDescrReady: "rcvFileDescrReady"
+        case .contactAndMemberAssociated: "contactAndMemberAssociated"
+        case .unknownMemberCreated: "unknownMemberCreated"
+        case .unknownMemberBlocked: "unknownMemberBlocked"
+        case .unknownMemberAnnounced: "unknownMemberAnnounced"
+        case .acceptingGroupJoinRequestMember: "acceptingGroupJoinRequestMember"
+        case .noMemberContactCreating: "noMemberContactCreating"
+        case .connectionDisabled: "connectionDisabled"
+        case .connectionInactive: "connectionInactive"
+        case .agentRcvQueuesDeleted: "agentRcvQueuesDeleted"
+        case .agentConnsDeleted: "agentConnsDeleted"
+        case .agentUserDeleted: "agentUserDeleted"
+        case .messageError: "messageError"
+        case .chatErrors: "chatErrors"
+        case .timedAction: "timedAction"
+        case .terminalEvent: "terminalEvent"
+        case .customChatEvent: "customChatEvent"
         }
     }
 
@@ -1337,9 +2427,9 @@ enum ChatEvent: Decodable, ChatAPIResult {
         case let .contactConnecting(u, contact): return withUser(u, String(describing: contact))
         case let .contactSndReady(u, contact): return withUser(u, String(describing: contact))
         case let .receivedContactRequest(u, contactRequest, chat_): return withUser(u, "contactRequest: \(String(describing: contactRequest))\nchat_: \(String(describing: chat_))")
-        case let .contactUpdated(u, toContact): return withUser(u, String(describing: toContact))
+        case let .contactUpdated(u, fromContact, toContact): return withUser(u, "fromContact: \(String(describing: fromContact))\ntoContact: \(String(describing: toContact))")
         case let .groupMemberUpdated(u, groupInfo, fromMember, toMember): return withUser(u, "groupInfo: \(groupInfo)\nfromMember: \(fromMember)\ntoMember: \(toMember)")
-        case let .subscriptionStatus(status, conns): return "subscriptionStatus: \(String(describing: status))\nconnections: \(String(describing: conns))"
+        case let .subscriptionStatus(server, status, conns): return "server: \(server)\nsubscriptionStatus: \(String(describing: status))\nconnections: \(String(describing: conns))"
         case let .chatInfoUpdated(u, chatInfo): return withUser(u, String(describing: chatInfo))
         case let .newChatItems(u, chatItems):
             let itemsString = chatItems.map { chatItem in String(describing: chatItem) }.joined(separator: "\n")
@@ -1349,28 +2439,28 @@ enum ChatEvent: Decodable, ChatAPIResult {
             return withUser(u, itemsString)
         case let .chatItemUpdated(u, chatItem): return withUser(u, String(describing: chatItem))
         case let .chatItemReaction(u, added, reaction): return withUser(u, "added: \(added)\n\(String(describing: reaction))")
-        case let .chatItemsDeleted(u, items, byUser):
+        case let .chatItemsDeleted(u, items, byUser, timed):
             let itemsString = items.map { item in
                 "deletedChatItem:\n\(String(describing: item.deletedChatItem))\ntoChatItem:\n\(String(describing: item.toChatItem))" }.joined(separator: "\n")
-            return withUser(u, itemsString + "\nbyUser: \(byUser)")
+            return withUser(u, itemsString + "\nbyUser: \(byUser)\ntimed: \(timed)")
         case let .groupChatItemsDeleted(u, gInfo, chatItemIDs, byUser, member_):
             return withUser(u, "chatItemIDs: \(String(describing: chatItemIDs))\ngroupInfo: \(String(describing: gInfo))\nbyUser: \(byUser)\nmember_: \(String(describing: member_))")
-        case let .receivedGroupInvitation(u, groupInfo, contact, memberRole): return withUser(u, "groupInfo: \(groupInfo)\ncontact: \(contact)\nmemberRole: \(memberRole)")
+        case let .receivedGroupInvitation(u, groupInfo, contact, fromMemberRole, memberRole): return withUser(u, "groupInfo: \(groupInfo)\ncontact: \(contact)\nfromMemberRole: \(fromMemberRole)\nmemberRole: \(memberRole)")
         case let .userAcceptedGroupSent(u, groupInfo, hostContact): return withUser(u, "groupInfo: \(groupInfo)\nhostContact: \(String(describing: hostContact))")
         case let .groupLinkConnecting(u, groupInfo, hostMember): return withUser(u, "groupInfo: \(groupInfo)\nhostMember: \(String(describing: hostMember))")
         case let .businessLinkConnecting(u, groupInfo, hostMember, fromContact): return withUser(u, "groupInfo: \(groupInfo)\nhostMember: \(String(describing: hostMember))\nfromContact: \(String(describing: fromContact))")
         case let .joinedGroupMemberConnecting(u, groupInfo, hostMember, member): return withUser(u, "groupInfo: \(groupInfo)\nhostMember: \(hostMember)\nmember: \(member)")
         case let .memberAcceptedByOther(u, groupInfo, acceptingMember, member): return withUser(u, "groupInfo: \(groupInfo)\nacceptingMember: \(acceptingMember)\nmember: \(member)")
-        case let .memberRole(u, groupInfo, byMember, member, fromRole, toRole): return withUser(u, "groupInfo: \(groupInfo)\nbyMember: \(byMember)\nmember: \(member)\nfromRole: \(fromRole)\ntoRole: \(toRole)")
-        case let .memberBlockedForAll(u, groupInfo, byMember, member, blocked): return withUser(u, "groupInfo: \(groupInfo)\nbyMember: \(byMember)\nmember: \(member)\nblocked: \(blocked)")
-        case let .deletedMemberUser(u, groupInfo, member, withMessages): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)\nwithMessages: \(withMessages)")
-        case let .deletedMember(u, groupInfo, byMember, deletedMember, withMessages): return withUser(u, "groupInfo: \(groupInfo)\nbyMember: \(byMember)\ndeletedMember: \(deletedMember)\nwithMessages: \(withMessages)")
-        case let .leftMember(u, groupInfo, member): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)")
-        case let .groupDeleted(u, groupInfo, member): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)")
+        case let .memberRole(u, groupInfo, byMember, member, fromRole, toRole, _): return withUser(u, "groupInfo: \(groupInfo)\nbyMember: \(byMember)\nmember: \(member)\nfromRole: \(fromRole)\ntoRole: \(toRole)")
+        case let .memberBlockedForAll(u, groupInfo, byMember, member, blocked, _): return withUser(u, "groupInfo: \(groupInfo)\nbyMember: \(byMember)\nmember: \(member)\nblocked: \(blocked)")
+        case let .deletedMemberUser(u, groupInfo, member, withMessages, _): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)\nwithMessages: \(withMessages)")
+        case let .deletedMember(u, groupInfo, byMember, deletedMember, withMessages, _): return withUser(u, "groupInfo: \(groupInfo)\nbyMember: \(byMember)\ndeletedMember: \(deletedMember)\nwithMessages: \(withMessages)")
+        case let .leftMember(u, groupInfo, member, _): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)")
+        case let .groupDeleted(u, groupInfo, member, _): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)")
         case let .userJoinedGroup(u, groupInfo, _): return withUser(u, String(describing: groupInfo))
         case let .joinedGroupMember(u, groupInfo, member): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)")
         case let .connectedToGroupMember(u, groupInfo, member, memberContact): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)\nmemberContact: \(String(describing: memberContact))")
-        case let .groupUpdated(u, toGroup): return withUser(u, String(describing: toGroup))
+        case let .groupUpdated(u, _, toGroup, _, _): return withUser(u, String(describing: toGroup))
         case let .groupLinkDataUpdated(u, groupInfo, groupLink, groupRelays, relaysChanged): return withUser(u, "groupInfo: \(groupInfo)\ngroupLink: \(groupLink)\ngroupRelays: \(groupRelays)\nrelaysChanged: \(relaysChanged)")
         case let .groupRelayUpdated(u, groupInfo, member, groupRelay): return withUser(u, "groupInfo: \(groupInfo)\nmember: \(member)\ngroupRelay: \(groupRelay)")
         case let .newMemberContactReceivedInv(u, contact, groupInfo, member): return withUser(u, "contact: \(contact)\ngroupInfo: \(groupInfo)\nmember: \(member)")
@@ -1399,6 +2489,8 @@ enum ChatEvent: Decodable, ChatAPIResult {
         case let .callEnded(u, contact): return withUser(u, "contact: \(contact.id)")
         case let .contactDisabled(u, contact): return withUser(u, String(describing: contact))
         case let .ntfMessage(u, connEntity, ntfMessage): return withUser(u, "connEntity: \(String(describing: connEntity))\nntfMessage: \(String(describing: ntfMessage))")
+        case let .hostConnected(protocol_, transportHost): return "protocol: \(protocol_)\ntransportHost: \(transportHost)"
+        case let .hostDisconnected(protocol_, transportHost): return "protocol: \(protocol_)\ntransportHost: \(transportHost)"
         case let .remoteCtrlFound(remoteCtrl, ctrlAppInfo_, appVersion, compatible): return "remoteCtrl:\n\(String(describing: remoteCtrl))\nctrlAppInfo_:\n\(String(describing: ctrlAppInfo_))\nappVersion: \(appVersion)\ncompatible: \(compatible)"
         case let .remoteCtrlSessionCode(remoteCtrl_, sessionCode): return "remoteCtrl_:\n\(String(describing: remoteCtrl_))\nsessionCode: \(sessionCode)"
         case let .remoteCtrlConnected(remoteCtrl): return String(describing: remoteCtrl)
@@ -1406,6 +2498,823 @@ enum ChatEvent: Decodable, ChatAPIResult {
         case let .contactPQEnabled(u, contact, pqEnabled): return withUser(u, "contact: \(String(describing: contact))\npqEnabled: \(pqEnabled)")
         case let .badgeChanged(u, badgeState): return withUser(u, String(describing: badgeState))
         case let .badgeAlert(u, badgeAlert): return withUser(u, String(describing: badgeAlert))
+        case let .contactAnotherClient(u, contact): return withUser(u, String(describing: contact))
+        case let .connectionsDiff(userIds, connIds): return "userIds: \(String(describing: userIds))\nconnIds: \(String(describing: connIds))"
+        case let .subscriptionEnd(u, connectionEntity): return withUser(u, String(describing: connectionEntity))
+        case let .serviceSubStatus(server, serviceSubEvent): return "server: \(server)\nserviceSubEvent: \(String(describing: serviceSubEvent))"
+        case let .chatItemNotChanged(u, chatItem): return withUser(u, String(describing: chatItem))
+        case let .chatItemDeletedNotFound(u, contact, sharedMsgId): return withUser(u, "contact: \(String(describing: contact))\nsharedMsgId: \(sharedMsgId)")
+        case let .serviceRequest(u, requestId, signerKey, requestData): return withUser(u, "requestId: \(requestId)\nsignerKey: \(String(describing: signerKey))\nrequestData: \(String(describing: requestData))")
+        case let .serviceReplySent(connectionId): return "connectionId: \(connectionId)"
+        case let .contactRequestRejected(u, contact, rejectionReason): return withUser(u, "contact: \(String(describing: contact))\nrejectionReason: \(String(describing: rejectionReason))")
+        case let .acceptingContactRequest(u, contact): return withUser(u, String(describing: contact))
+        case let .acceptingBusinessRequest(u, groupInfo): return withUser(u, String(describing: groupInfo))
+        case let .contactRequestAlreadyAccepted(u, contact): return withUser(u, String(describing: contact))
+        case let .businessRequestAlreadyAccepted(u, groupInfo): return withUser(u, String(describing: groupInfo))
+        case let .rcvFileDescrReady(u, chatItem, rcvFileTransfer, rcvFileDescr): return withUser(u, "chatItem: \(String(describing: chatItem))\nrcvFileTransfer: \(String(describing: rcvFileTransfer))\nrcvFileDescr: \(String(describing: rcvFileDescr))")
+        case let .contactAndMemberAssociated(u, contact, groupInfo, member, updatedContact): return withUser(u, "contact: \(String(describing: contact))\ngroupInfo: \(String(describing: groupInfo))\nmember: \(String(describing: member))\nupdatedContact: \(String(describing: updatedContact))")
+        case let .unknownMemberCreated(u, groupInfo, forwardedByMember, member): return withUser(u, "groupInfo: \(String(describing: groupInfo))\nforwardedByMember: \(String(describing: forwardedByMember))\nmember: \(String(describing: member))")
+        case let .unknownMemberBlocked(u, groupInfo, blockedByMember, member): return withUser(u, "groupInfo: \(String(describing: groupInfo))\nblockedByMember: \(String(describing: blockedByMember))\nmember: \(String(describing: member))")
+        case let .unknownMemberAnnounced(u, groupInfo, announcingMember, unknownMember, announcedMember): return withUser(u, "groupInfo: \(String(describing: groupInfo))\nannouncingMember: \(String(describing: announcingMember))\nunknownMember: \(String(describing: unknownMember))\nannouncedMember: \(String(describing: announcedMember))")
+        case let .acceptingGroupJoinRequestMember(u, groupInfo, member): return withUser(u, "groupInfo: \(String(describing: groupInfo))\nmember: \(String(describing: member))")
+        case let .noMemberContactCreating(u, groupInfo, member): return withUser(u, "groupInfo: \(String(describing: groupInfo))\nmember: \(String(describing: member))")
+        case let .connectionDisabled(connectionEntity): return String(describing: connectionEntity)
+        case let .connectionInactive(connectionEntity, inactive): return "connectionEntity: \(String(describing: connectionEntity))\ninactive: \(inactive)"
+        case let .agentRcvQueuesDeleted(deletedRcvQueues): return "deletedRcvQueues: \(String(describing: deletedRcvQueues))"
+        case let .agentConnsDeleted(agentConnIds): return "agentConnIds: \(String(describing: agentConnIds))"
+        case let .agentUserDeleted(agentUserId): return "agentUserId: \(agentUserId)"
+        case let .messageError(u, severity, errorMessage): return withUser(u, "severity: \(severity)\nerrorMessage: \(errorMessage)")
+        case let .chatErrors(chatErrors): return "chatErrors: \(String(describing: chatErrors))"
+        case let .timedAction(action, durationMilliseconds): return "action: \(action)\ndurationMilliseconds: \(durationMilliseconds)"
+        case let .terminalEvent(terminalEvent): return String(describing: terminalEvent)
+        case let .customChatEvent(user_, response): return "\(String(describing: user_))\nresponse: \(response)"
+        }
+    }
+
+    static func fallbackResult(_ type: String, _ json: NSDictionary) -> ChatEvent? {
+        let inner = json[type] as? NSDictionary ?? json
+        if let event = decodeEvent(type: type, data: inner) {
+            return event
+        }
+        logger.warning("ChatEvent: unknown event type '\(type)', treating as customChatEvent")
+        let user: UserRef? = (inner["user"] as? NSDictionary).flatMap { try? decodeObject($0) }
+        return .customChatEvent(user_: user, response: "{\"type\":\"\(type)\",\"data\":\(inner)}")
+    }
+
+    private static func decodeEvent(type: String, data: NSDictionary) -> ChatEvent? {
+        if let e = decodeEvent1(type: type, data: data) { return e }
+        if let e = decodeEvent2(type: type, data: data) { return e }
+        if let e = decodeEvent3(type: type, data: data) { return e }
+        return decodeEvent4(type: type, data: data)
+    }
+
+    private static func decodeEvent1(type: String, data: NSDictionary) -> ChatEvent? {
+        switch type {
+        case "chatSuspended":
+            return .chatSuspended
+        case "contactSwitch":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let spObj = data["switchProgress"],
+                  let switchProgress: SwitchProgress = try? decodeObject(spObj) else { return nil }
+            return .contactSwitch(user: user, contact: contact, switchProgress: switchProgress)
+        case "groupMemberSwitch":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let spObj = data["switchProgress"],
+                  let switchProgress: SwitchProgress = try? decodeObject(spObj) else { return nil }
+            return .groupMemberSwitch(user: user, groupInfo: groupInfo, member: member, switchProgress: switchProgress)
+        case "contactRatchetSync":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let rspObj = data["ratchetSyncProgress"],
+                  let ratchetSyncProgress: RatchetSyncProgress = try? decodeObject(rspObj) else { return nil }
+            return .contactRatchetSync(user: user, contact: contact, ratchetSyncProgress: ratchetSyncProgress)
+        case "groupMemberRatchetSync":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let rspObj = data["ratchetSyncProgress"],
+                  let ratchetSyncProgress: RatchetSyncProgress = try? decodeObject(rspObj) else { return nil }
+            return .groupMemberRatchetSync(user: user, groupInfo: groupInfo, member: member, ratchetSyncProgress: ratchetSyncProgress)
+        case "contactDeletedByContact":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            return .contactDeletedByContact(user: user, contact: contact)
+        case "contactConnected":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            let userCustomProfile: Profile? = data["userCustomProfile"].flatMap { try? decodeObject($0) }
+            return .contactConnected(user: user, contact: contact, userCustomProfile: userCustomProfile)
+        case "contactConnecting":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            return .contactConnecting(user: user, contact: contact)
+        case "contactSndReady":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            return .contactSndReady(user: user, contact: contact)
+        case "receivedContactRequest":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let crObj = data["contactRequest"],
+                  let contactRequest: UserContactRequest = try? decodeObject(crObj) else { return nil }
+            let chat: ChatData? = data["chat_"].flatMap { try? decodeObject($0) }
+            return .receivedContactRequest(user: user, contactRequest: contactRequest, chat_: chat)
+        case "contactUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let fcObj = data["fromContact"],
+                  let fromContact: Contact = try? decodeObject(fcObj),
+                  let tcObj = data["toContact"],
+                  let toContact: Contact = try? decodeObject(tcObj) else { return nil }
+            return .contactUpdated(user: user, fromContact: fromContact, toContact: toContact)
+        case "groupMemberUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let fmObj = data["fromMember"],
+                  let fromMember: GroupMember = try? decodeObject(fmObj),
+                  let tmObj = data["toMember"],
+                  let toMember: GroupMember = try? decodeObject(tmObj) else { return nil }
+            return .groupMemberUpdated(user: user, groupInfo: groupInfo, fromMember: fromMember, toMember: toMember)
+        case "subscriptionStatus":
+            guard let server = data["server"] as? String,
+                  let ssObj = data["subscriptionStatus"],
+                  let subscriptionStatus: SubscriptionStatus = try? decodeObject(ssObj),
+                  let connections = data["connections"] as? [String] else { return nil }
+            return .subscriptionStatus(server: server, subscriptionStatus: subscriptionStatus, connections: connections)
+        case "chatInfoUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatInfo"],
+                  let chatInfo: ChatInfo = try? decodeObject(ciObj) else { return nil }
+            return .chatInfoUpdated(user: user, chatInfo: chatInfo)
+        case "newChatItems":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let chatItems = data["chatItems"] as? [Any],
+                  let items = try? chatItems.map({ try decodeObject($0) as AChatItem }) else { return nil }
+            return .newChatItems(user: user, chatItems: items)
+        case "chatItemsStatusesUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let chatItems = data["chatItems"] as? [Any],
+                  let items = try? chatItems.map({ try decodeObject($0) as AChatItem }) else { return nil }
+            return .chatItemsStatusesUpdated(user: user, chatItems: items)
+        case "chatItemUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj) else { return nil }
+            return .chatItemUpdated(user: user, chatItem: chatItem)
+        case "chatItemReaction":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let added = data["added"] as? Bool,
+                  let rObj = data["reaction"],
+                  let reaction: ACIReaction = try? decodeObject(rObj) else { return nil }
+            return .chatItemReaction(user: user, added: added, reaction: reaction)
+        case "chatItemsDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let chatItemDeletions = data["chatItemDeletions"] as? [Any],
+                  let deletions = try? chatItemDeletions.map({ try decodeObject($0) as ChatItemDeletion }),
+                  let byUser = data["byUser"] as? Bool,
+                  let timed = data["timed"] as? Bool else { return nil }
+            return .chatItemsDeleted(user: user, chatItemDeletions: deletions, byUser: byUser, timed: timed)
+        case "groupChatItemsDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let chatItemIDs = data["chatItemIDs"] as? [Int64],
+                  let byUser = data["byUser"] as? Bool else { return nil }
+            let member: GroupMember? = data["member_"].flatMap { try? decodeObject($0) }
+            return .groupChatItemsDeleted(user: user, groupInfo: groupInfo, chatItemIDs: Set(chatItemIDs), byUser: byUser, member_: member)
+        default:
+            return nil
+        }
+    }
+
+    private static func decodeEvent2(type: String, data: NSDictionary) -> ChatEvent? {
+        switch type {
+        case "receivedGroupInvitation":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let fmrObj = data["fromMemberRole"],
+                  let fromMemberRole: GroupMemberRole = try? decodeObject(fmrObj),
+                  let mrObj = data["memberRole"],
+                  let memberRole: GroupMemberRole = try? decodeObject(mrObj) else { return nil }
+            return .receivedGroupInvitation(user: user, groupInfo: groupInfo, contact: contact, fromMemberRole: fromMemberRole, memberRole: memberRole)
+        case "userAcceptedGroupSent":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            let hostContact: Contact? = data["hostContact"].flatMap { try? decodeObject($0) }
+            return .userAcceptedGroupSent(user: user, groupInfo: groupInfo, hostContact: hostContact)
+        case "groupLinkConnecting":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let hmObj = data["hostMember"],
+                  let hostMember: GroupMember = try? decodeObject(hmObj) else { return nil }
+            return .groupLinkConnecting(user: user, groupInfo: groupInfo, hostMember: hostMember)
+        case "businessLinkConnecting":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let hmObj = data["hostMember"],
+                  let hostMember: GroupMember = try? decodeObject(hmObj),
+                  let fcObj = data["fromContact"],
+                  let fromContact: Contact = try? decodeObject(fcObj) else { return nil }
+            return .businessLinkConnecting(user: user, groupInfo: groupInfo, hostMember: hostMember, fromContact: fromContact)
+        case "joinedGroupMemberConnecting":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let hmObj = data["hostMember"],
+                  let hostMember: GroupMember = try? decodeObject(hmObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .joinedGroupMemberConnecting(user: user, groupInfo: groupInfo, hostMember: hostMember, member: member)
+        case "memberAcceptedByOther":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let amObj = data["acceptingMember"],
+                  let acceptingMember: GroupMember = try? decodeObject(amObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .memberAcceptedByOther(user: user, groupInfo: groupInfo, acceptingMember: acceptingMember, member: member)
+        case "memberRole":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let bmObj = data["byMember"],
+                  let byMember: GroupMember = try? decodeObject(bmObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let frObj = data["fromRole"],
+                  let fromRole: GroupMemberRole = try? decodeObject(frObj),
+                  let trObj = data["toRole"],
+                  let toRole: GroupMemberRole = try? decodeObject(trObj) else { return nil }
+            let msgSigned: MsgSigStatus? = data["msgSigned"].flatMap { try? decodeObject($0) }
+            return .memberRole(user: user, groupInfo: groupInfo, byMember: byMember, member: member, fromRole: fromRole, toRole: toRole, msgSigned: msgSigned)
+        case "memberBlockedForAll":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let bmObj = data["byMember"],
+                  let byMember: GroupMember = try? decodeObject(bmObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let blocked = data["blocked"] as? Bool else { return nil }
+            let msgSigned: MsgSigStatus? = data["msgSigned"].flatMap { try? decodeObject($0) }
+            return .memberBlockedForAll(user: user, groupInfo: groupInfo, byMember: byMember, member: member, blocked: blocked, msgSigned: msgSigned)
+        case "deletedMemberUser":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let withMessages = data["withMessages"] as? Bool else { return nil }
+            let msgSigned: MsgSigStatus? = data["msgSigned"].flatMap { try? decodeObject($0) }
+            return .deletedMemberUser(user: user, groupInfo: groupInfo, member: member, withMessages: withMessages, msgSigned: msgSigned)
+        case "deletedMember":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let bmObj = data["byMember"],
+                  let byMember: GroupMember = try? decodeObject(bmObj),
+                  let dmObj = data["deletedMember"],
+                  let deletedMember: GroupMember = try? decodeObject(dmObj),
+                  let withMessages = data["withMessages"] as? Bool else { return nil }
+            let msgSigned: MsgSigStatus? = data["msgSigned"].flatMap { try? decodeObject($0) }
+            return .deletedMember(user: user, groupInfo: groupInfo, byMember: byMember, deletedMember: deletedMember, withMessages: withMessages, msgSigned: msgSigned)
+        case "leftMember":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            let msgSigned: MsgSigStatus? = data["msgSigned"].flatMap { try? decodeObject($0) }
+            return .leftMember(user: user, groupInfo: groupInfo, member: member, msgSigned: msgSigned)
+        case "groupDeleted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            let msgSigned: MsgSigStatus? = data["msgSigned"].flatMap { try? decodeObject($0) }
+            return .groupDeleted(user: user, groupInfo: groupInfo, member: member, msgSigned: msgSigned)
+        case "userJoinedGroup":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let hmObj = data["hostMember"],
+                  let hostMember: GroupMember = try? decodeObject(hmObj) else { return nil }
+            return .userJoinedGroup(user: user, groupInfo: groupInfo, hostMember: hostMember)
+        case "joinedGroupMember":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .joinedGroupMember(user: user, groupInfo: groupInfo, member: member)
+        case "connectedToGroupMember":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            let memberContact: Contact? = data["memberContact"].flatMap { try? decodeObject($0) }
+            return .connectedToGroupMember(user: user, groupInfo: groupInfo, member: member, memberContact: memberContact)
+        case "groupUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let fgObj = data["fromGroup"],
+                  let fromGroup: GroupInfo = try? decodeObject(fgObj),
+                  let tgObj = data["toGroup"],
+                  let toGroup: GroupInfo = try? decodeObject(tgObj) else { return nil }
+            let member: GroupMember? = data["member_"].flatMap { try? decodeObject($0) }
+            let msgSigned: MsgSigStatus? = data["msgSigned"].flatMap { try? decodeObject($0) }
+            return .groupUpdated(user: user, fromGroup: fromGroup, toGroup: toGroup, member_: member, msgSigned: msgSigned)
+        case "groupLinkDataUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let glObj = data["groupLink"],
+                  let groupLink: GroupLink = try? decodeObject(glObj),
+                  let groupRelays = data["groupRelays"] as? [Any],
+                  let relays = try? groupRelays.map({ try decodeObject($0) as GroupRelay }),
+                  let relaysChanged = data["relaysChanged"] as? Bool else { return nil }
+            return .groupLinkDataUpdated(user: user, groupInfo: groupInfo, groupLink: groupLink, groupRelays: relays, relaysChanged: relaysChanged)
+        case "groupRelayUpdated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let grObj = data["groupRelay"],
+                  let groupRelay: GroupRelay = try? decodeObject(grObj) else { return nil }
+            return .groupRelayUpdated(user: user, groupInfo: groupInfo, member: member, groupRelay: groupRelay)
+        case "newMemberContactReceivedInv":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .newMemberContactReceivedInv(user: user, contact: contact, groupInfo: groupInfo, member: member)
+        default:
+            return nil
+        }
+    }
+
+    private static func decodeEvent3(type: String, data: NSDictionary) -> ChatEvent? {
+        switch type {
+        case "rcvFileAccepted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj) else { return nil }
+            return .rcvFileAccepted(user: user, chatItem: chatItem)
+        case "rcvFileAcceptedSndCancelled":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let rftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(rftObj) else { return nil }
+            return .rcvFileAcceptedSndCancelled(user: user, rcvFileTransfer: rcvFileTransfer)
+        case "rcvFileStart":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj) else { return nil }
+            return .rcvFileStart(user: user, chatItem: chatItem)
+        case "rcvFileProgressXFTP":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let receivedSize = data["receivedSize"] as? Int64,
+                  let totalSize = data["totalSize"] as? Int64,
+                  let rftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(rftObj) else { return nil }
+            let chatItem: AChatItem? = data["chatItem_"].flatMap { try? decodeObject($0) }
+            return .rcvFileProgressXFTP(user: user, chatItem_: chatItem, receivedSize: receivedSize, totalSize: totalSize, rcvFileTransfer: rcvFileTransfer)
+        case "rcvFileComplete":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj) else { return nil }
+            return .rcvFileComplete(user: user, chatItem: chatItem)
+        case "rcvStandaloneFileComplete":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let targetPath = data["targetPath"] as? String,
+                  let rftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(rftObj) else { return nil }
+            return .rcvStandaloneFileComplete(user: user, targetPath: targetPath, rcvFileTransfer: rcvFileTransfer)
+        case "rcvFileSndCancelled":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj),
+                  let rftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(rftObj) else { return nil }
+            return .rcvFileSndCancelled(user: user, chatItem: chatItem, rcvFileTransfer: rcvFileTransfer)
+        case "rcvFileError":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let aeObj = data["agentError"],
+                  let agentError: AgentErrorType = try? decodeObject(aeObj),
+                  let rftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(rftObj) else { return nil }
+            let chatItem: AChatItem? = data["chatItem_"].flatMap { try? decodeObject($0) }
+            return .rcvFileError(user: user, chatItem_: chatItem, agentError: agentError, rcvFileTransfer: rcvFileTransfer)
+        case "rcvFileWarning":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let aeObj = data["agentError"],
+                  let agentError: AgentErrorType = try? decodeObject(aeObj),
+                  let rftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(rftObj) else { return nil }
+            let chatItem: AChatItem? = data["chatItem_"].flatMap { try? decodeObject($0) }
+            return .rcvFileWarning(user: user, chatItem_: chatItem, agentError: agentError, rcvFileTransfer: rcvFileTransfer)
+        case "sndFileStart":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj),
+                  let sftObj = data["sndFileTransfer"],
+                  let sndFileTransfer: SndFileTransfer = try? decodeObject(sftObj) else { return nil }
+            return .sndFileStart(user: user, chatItem: chatItem, sndFileTransfer: sndFileTransfer)
+        case "sndFileComplete":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj),
+                  let sftObj = data["sndFileTransfer"],
+                  let sndFileTransfer: SndFileTransfer = try? decodeObject(sftObj) else { return nil }
+            return .sndFileComplete(user: user, chatItem: chatItem, sndFileTransfer: sndFileTransfer)
+        case "sndFileRcvCancelled":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj),
+                  let sftObj = data["sndFileTransfer"],
+                  let sndFileTransfer: SndFileTransfer = try? decodeObject(sftObj) else { return nil }
+            return .sndFileRcvCancelled(user: user, chatItem_: chatItem, sndFileTransfer: sndFileTransfer)
+        case "sndFileProgressXFTP":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftmObj = data["fileTransferMeta"],
+                  let fileTransferMeta: FileTransferMeta = try? decodeObject(ftmObj),
+                  let sentSize = data["sentSize"] as? Int64,
+                  let totalSize = data["totalSize"] as? Int64 else { return nil }
+            let chatItem: AChatItem? = data["chatItem_"].flatMap { try? decodeObject($0) }
+            return .sndFileProgressXFTP(user: user, chatItem_: chatItem, fileTransferMeta: fileTransferMeta, sentSize: sentSize, totalSize: totalSize)
+        case "sndFileRedirectStartXFTP":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftmObj = data["fileTransferMeta"],
+                  let fileTransferMeta: FileTransferMeta = try? decodeObject(ftmObj),
+                  let rmObj = data["redirectMeta"],
+                  let redirectMeta: FileTransferMeta = try? decodeObject(rmObj) else { return nil }
+            return .sndFileRedirectStartXFTP(user: user, fileTransferMeta: fileTransferMeta, redirectMeta: redirectMeta)
+        case "sndFileCompleteXFTP":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj),
+                  let ftmObj = data["fileTransferMeta"],
+                  let fileTransferMeta: FileTransferMeta = try? decodeObject(ftmObj) else { return nil }
+            return .sndFileCompleteXFTP(user: user, chatItem: chatItem, fileTransferMeta: fileTransferMeta)
+        case "sndStandaloneFileComplete":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftmObj = data["fileTransferMeta"],
+                  let fileTransferMeta: FileTransferMeta = try? decodeObject(ftmObj),
+                  let rcvURIs = data["rcvURIs"] as? [String] else { return nil }
+            return .sndStandaloneFileComplete(user: user, fileTransferMeta: fileTransferMeta, rcvURIs: rcvURIs)
+        case "sndFileError":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftmObj = data["fileTransferMeta"],
+                  let fileTransferMeta: FileTransferMeta = try? decodeObject(ftmObj),
+                  let errorMessage = data["errorMessage"] as? String else { return nil }
+            let chatItem: AChatItem? = data["chatItem_"].flatMap { try? decodeObject($0) }
+            return .sndFileError(user: user, chatItem_: chatItem, fileTransferMeta: fileTransferMeta, errorMessage: errorMessage)
+        case "sndFileWarning":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ftmObj = data["fileTransferMeta"],
+                  let fileTransferMeta: FileTransferMeta = try? decodeObject(ftmObj),
+                  let errorMessage = data["errorMessage"] as? String else { return nil }
+            let chatItem: AChatItem? = data["chatItem_"].flatMap { try? decodeObject($0) }
+            return .sndFileWarning(user: user, chatItem_: chatItem, fileTransferMeta: fileTransferMeta, errorMessage: errorMessage)
+        case "callInvitation":
+            guard let ciObj = data["callInvitation"],
+                  let callInvitation: RcvCallInvitation = try? decodeObject(ciObj) else { return nil }
+            return .callInvitation(callInvitation: callInvitation)
+        case "callOffer":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let ctObj = data["callType"],
+                  let callType: CallType = try? decodeObject(ctObj),
+                  let offerObj = data["offer"],
+                  let offer: WebRTCSession = try? decodeObject(offerObj),
+                  let askConfirmation = data["askConfirmation"] as? Bool else { return nil }
+            let sharedKey: String? = data["sharedKey"] as? String
+            return .callOffer(user: user, contact: contact, callType: callType, offer: offer, sharedKey: sharedKey, askConfirmation: askConfirmation)
+        case "callAnswer":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let answerObj = data["answer"],
+                  let answer: WebRTCSession = try? decodeObject(answerObj) else { return nil }
+            return .callAnswer(user: user, contact: contact, answer: answer)
+        case "callExtraInfo":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let eiObj = data["extraInfo"],
+                  let extraInfo: WebRTCExtraInfo = try? decodeObject(eiObj) else { return nil }
+            return .callExtraInfo(user: user, contact: contact, extraInfo: extraInfo)
+        case "callEnded":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            return .callEnded(user: user, contact: contact)
+        case "contactDisabled":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            return .contactDisabled(user: user, contact: contact)
+        case "ntfMessage":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ceObj = data["connEntity"],
+                  let connEntity: ConnectionEntity = try? decodeObject(ceObj),
+                  let nmObj = data["ntfMessage"],
+                  let ntfMessage: NtfMsgAckInfo = try? decodeObject(nmObj) else { return nil }
+            return .ntfMessage(user: user, connEntity: connEntity, ntfMessage: ntfMessage)
+        case "hostConnected":
+            guard let protocol_ = data["protocol"] as? String,
+                  let transportHost = data["transportHost"] as? String else { return nil }
+            return .hostConnected(protocol: protocol_, transportHost: transportHost)
+        case "hostDisconnected":
+            guard let protocol_ = data["protocol"] as? String,
+                  let transportHost = data["transportHost"] as? String else { return nil }
+            return .hostDisconnected(protocol: protocol_, transportHost: transportHost)
+        default:
+            return nil
+        }
+    }
+
+    private static func decodeEvent4(type: String, data: NSDictionary) -> ChatEvent? {
+        switch type {
+        case "remoteCtrlFound":
+            guard let rcObj = data["remoteCtrl"],
+                  let remoteCtrl: RemoteCtrlInfo = try? decodeObject(rcObj),
+                  let appVersion = data["appVersion"] as? String,
+                  let compatible = data["compatible"] as? Bool else { return nil }
+            let ctrlAppInfo: CtrlAppInfo? = data["ctrlAppInfo_"].flatMap { try? decodeObject($0) }
+            return .remoteCtrlFound(remoteCtrl: remoteCtrl, ctrlAppInfo_: ctrlAppInfo, appVersion: appVersion, compatible: compatible)
+        case "remoteCtrlSessionCode":
+            guard let sessionCode = data["sessionCode"] as? String else { return nil }
+            let remoteCtrl: RemoteCtrlInfo? = data["remoteCtrl_"].flatMap { try? decodeObject($0) }
+            return .remoteCtrlSessionCode(remoteCtrl_: remoteCtrl, sessionCode: sessionCode)
+        case "remoteCtrlConnected":
+            guard let rcObj = data["remoteCtrl"],
+                  let remoteCtrl: RemoteCtrlInfo = try? decodeObject(rcObj) else { return nil }
+            return .remoteCtrlConnected(remoteCtrl: remoteCtrl)
+        case "remoteCtrlStopped":
+            guard let rcsObj = data["rcsState"],
+                  let rcsState: RemoteCtrlSessionState = try? decodeObject(rcsObj),
+                  let rcrObj = data["rcStopReason"],
+                  let rcStopReason: RemoteCtrlStopReason = try? decodeObject(rcrObj) else { return nil }
+            return .remoteCtrlStopped(rcsState: rcsState, rcStopReason: rcStopReason)
+        case "contactPQEnabled":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let pqEnabled = data["pqEnabled"] as? Bool else { return nil }
+            return .contactPQEnabled(user: user, contact: contact, pqEnabled: pqEnabled)
+        case "contactAnotherClient":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            return .contactAnotherClient(user: user, contact: contact)
+        case "connectionsDiff":
+            guard let uidObj = data["userIds"],
+                  let userIds: DatabaseDiff = try? decodeObject(uidObj),
+                  let cidObj = data["connIds"],
+                  let connIds: DatabaseDiff = try? decodeObject(cidObj) else { return nil }
+            return .connectionsDiff(userIds: userIds, connIds: connIds)
+        case "subscriptionEnd":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ceObj = data["connectionEntity"],
+                  let connectionEntity: ConnectionEntity = try? decodeObject(ceObj) else { return nil }
+            return .subscriptionEnd(user: user, connectionEntity: connectionEntity)
+        case "serviceSubStatus":
+            guard let server = data["server"] as? String,
+                  let sseObj = data["serviceSubEvent"],
+                  let serviceSubEvent: ServiceSubEvent = try? decodeObject(sseObj) else { return nil }
+            return .serviceSubStatus(server: server, serviceSubEvent: serviceSubEvent)
+        case "chatItemNotChanged":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj) else { return nil }
+            return .chatItemNotChanged(user: user, chatItem: chatItem)
+        case "chatItemDeletedNotFound":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let sharedMsgId = data["sharedMsgId"] as? String else { return nil }
+            return .chatItemDeletedNotFound(user: user, contact: contact, sharedMsgId: sharedMsgId)
+        case "serviceRequest":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let requestId = data["requestId"] as? String,
+                  let requestData = data["requestData"] as? [String: String] else { return nil }
+            let signerKey: String? = data["signerKey"] as? String
+            return .serviceRequest(user: user, requestId: requestId, signerKey: signerKey, requestData: requestData)
+        case "serviceReplySent":
+            guard let connectionId = data["connectionId"] as? String else { return nil }
+            return .serviceReplySent(connectionId: connectionId)
+        case "contactRequestRejected":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            let rejectionReason: String? = data["rejectionReason"] as? String
+            return .contactRequestRejected(user: user, contact: contact, rejectionReason: rejectionReason)
+        case "acceptingContactRequest":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            return .acceptingContactRequest(user: user, contact: contact)
+        case "acceptingBusinessRequest":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            return .acceptingBusinessRequest(user: user, groupInfo: groupInfo)
+        case "contactRequestAlreadyAccepted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj) else { return nil }
+            return .contactRequestAlreadyAccepted(user: user, contact: contact)
+        case "businessRequestAlreadyAccepted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj) else { return nil }
+            return .businessRequestAlreadyAccepted(user: user, groupInfo: groupInfo)
+        case "rcvFileDescrReady":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let ciObj = data["chatItem"],
+                  let chatItem: AChatItem = try? decodeObject(ciObj),
+                  let rftObj = data["rcvFileTransfer"],
+                  let rcvFileTransfer: RcvFileTransfer = try? decodeObject(rftObj),
+                  let rfdObj = data["rcvFileDescr"],
+                  let rcvFileDescr: RcvFileDescr = try? decodeObject(rfdObj) else { return nil }
+            return .rcvFileDescrReady(user: user, chatItem: chatItem, rcvFileTransfer: rcvFileTransfer, rcvFileDescr: rcvFileDescr)
+        case "contactAndMemberAssociated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let contactObj = data["contact"],
+                  let contact: Contact = try? decodeObject(contactObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj),
+                  let ucObj = data["updatedContact"],
+                  let updatedContact: Contact = try? decodeObject(ucObj) else { return nil }
+            return .contactAndMemberAssociated(user: user, contact: contact, groupInfo: groupInfo, member: member, updatedContact: updatedContact)
+        case "unknownMemberCreated":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let fbmObj = data["forwardedByMember"],
+                  let forwardedByMember: GroupMember = try? decodeObject(fbmObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .unknownMemberCreated(user: user, groupInfo: groupInfo, forwardedByMember: forwardedByMember, member: member)
+        case "unknownMemberBlocked":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let bbmObj = data["blockedByMember"],
+                  let blockedByMember: GroupMember = try? decodeObject(bbmObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .unknownMemberBlocked(user: user, groupInfo: groupInfo, blockedByMember: blockedByMember, member: member)
+        case "unknownMemberAnnounced":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let amObj = data["announcingMember"],
+                  let announcingMember: GroupMember = try? decodeObject(amObj),
+                  let umObj = data["unknownMember"],
+                  let unknownMember: GroupMember = try? decodeObject(umObj),
+                  let anmObj = data["announcedMember"],
+                  let announcedMember: GroupMember = try? decodeObject(anmObj) else { return nil }
+            return .unknownMemberAnnounced(user: user, groupInfo: groupInfo, announcingMember: announcingMember, unknownMember: unknownMember, announcedMember: announcedMember)
+        case "acceptingGroupJoinRequestMember":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .acceptingGroupJoinRequestMember(user: user, groupInfo: groupInfo, member: member)
+        case "noMemberContactCreating":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .noMemberContactCreating(user: user, groupInfo: groupInfo, member: member)
+        case "connectionDisabled":
+            guard let ceObj = data["connectionEntity"],
+                  let connectionEntity: ConnectionEntity = try? decodeObject(ceObj) else { return nil }
+            return .connectionDisabled(connectionEntity: connectionEntity)
+        case "connectionInactive":
+            guard let ceObj = data["connectionEntity"],
+                  let connectionEntity: ConnectionEntity = try? decodeObject(ceObj),
+                  let inactive = data["inactive"] as? Bool else { return nil }
+            return .connectionInactive(connectionEntity: connectionEntity, inactive: inactive)
+        case "agentRcvQueuesDeleted":
+            guard let deletedRcvQueues = data["deletedRcvQueues"] as? [Any],
+                  let queues = try? deletedRcvQueues.map({ try decodeObject($0) as DeletedRcvQueue }) else { return nil }
+            return .agentRcvQueuesDeleted(deletedRcvQueues: queues)
+        case "agentConnsDeleted":
+            guard let agentConnIds = data["agentConnIds"] as? [String] else { return nil }
+            return .agentConnsDeleted(agentConnIds: agentConnIds)
+        case "agentUserDeleted":
+            guard let agentUserId = data["agentUserId"] as? Int64 else { return nil }
+            return .agentUserDeleted(agentUserId: agentUserId)
+        case "messageError":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let severity = data["severity"] as? String,
+                  let errorMessage = data["errorMessage"] as? String else { return nil }
+            return .messageError(user: user, severity: severity, errorMessage: errorMessage)
+        case "chatErrors":
+            guard let chatErrors = data["chatErrors"] as? [Any],
+                  let errors = try? chatErrors.map({ try decodeObject($0) as ChatError }) else { return nil }
+            return .chatErrors(chatErrors: errors)
+        case "timedAction":
+            guard let action = data["action"] as? String,
+                  let durationMilliseconds = data["durationMilliseconds"] as? Int64 else { return nil }
+            return .timedAction(action: action, durationMilliseconds: durationMilliseconds)
+        case "terminalEvent":
+            guard let teObj = data["terminalEvent"],
+                  let terminalEvent: TerminalEvent = try? decodeObject(teObj) else { return nil }
+            return .terminalEvent(terminalEvent: terminalEvent)
+        default:
+            return nil
         }
     }
 }
@@ -1441,20 +3350,6 @@ enum ChatPagination {
 enum OwnerVerification: Decodable, Hashable {
     case verified
     case failed(reason: String)
-}
-
-struct ConnectionPlanResult {
-    var connLink: CreatedConnLink
-    var planSimplexName: SimplexNameInfo?
-    var otherSimplexName: SimplexNameInfo?
-    var connectionPlan: ConnectionPlan
-}
-
-// APIConnectPlan resolution scope; .never is local-store-only (no network), used for per-keystroke name search
-enum PlanResolveMode: String {
-    case allGroups
-    case unknown
-    case never
 }
 
 enum ConnectionPlan: Decodable, Hashable {
@@ -1543,23 +3438,23 @@ struct UserMsgReceiptSettings: Codable {
     var clearOverrides: Bool
 }
 
-protocol SimplexAddress {
+protocol PopopxAddress {
     var connLinkContact: CreatedConnLink { get }
     var shortLinkDataSet: Bool { get }
     var shortLinkLargeDataSet: Bool { get }
 }
 
-extension SimplexAddress {
+extension PopopxAddress {
     var shouldBeUpgraded: Bool {
         connLinkContact.connShortLink == nil || !shortLinkDataSet || !shortLinkLargeDataSet
     }
 
     func shareAddress(short: Bool) {
-        showShareSheet(items: [simplexChatLink(connLinkContact.simplexChatUri(short: short))])
+        showShareSheet(items: [popopxChatLink(connLinkContact.popopxChatUri(short: short))])
     }
 }
 
-struct UserContactLink: Decodable, Hashable, SimplexAddress {
+struct UserContactLink: Decodable, Hashable, PopopxAddress {
     var connLinkContact: CreatedConnLink
     var shortLinkDataSet: Bool
     var shortLinkLargeDataSet: Bool
@@ -1584,7 +3479,7 @@ struct AutoAccept: Codable, Hashable {
     var acceptIncognito: Bool
 }
 
-struct GroupLink: Decodable, Hashable, SimplexAddress {
+struct GroupLink: Decodable, Hashable, PopopxAddress {
     var userContactLinkId: Int64
     var connLinkContact: CreatedConnLink
     var shortLinkDataSet: Bool
@@ -1628,9 +3523,9 @@ enum NotificationsMode: String, Decodable, SelectableItem {
 
     var label: LocalizedStringKey {
         switch self {
-        case .off: "No push server"
-        case .periodic: "Periodic"
-        case .instant: "Instant"
+        case .off: LocalizedStringKey(NSLocalizedString("No push server", comment: ""))
+        case .periodic: LocalizedStringKey(NSLocalizedString("Periodic", comment: ""))
+        case .instant: LocalizedStringKey(NSLocalizedString("Instant", comment: ""))
         }
     }
 
@@ -1684,8 +3579,8 @@ struct AppVersionRange: Decodable {
 
 struct CoreVersionInfo: Decodable {
     var version: String
-    var simplexmqVersion: String
-    var simplexmqCommit: String
+    var popopxmqVersion: String
+    var popopxmqCommit: String
 }
 
 struct ArchiveConfig: Encodable {
@@ -1699,8 +3594,8 @@ struct DBEncryptionConfig: Codable {
 }
 
 enum OperatorTag: String, Codable {
-    case simplex = "simplex"
     case flux = "flux"
+    case popopx = "popopx"
 }
 
 struct ServerOperatorInfo {
@@ -1714,37 +3609,37 @@ struct ServerOperatorInfo {
 }
 
 let operatorsInfo: Dictionary<OperatorTag, ServerOperatorInfo> = [
-    .simplex: ServerOperatorInfo(
-        description: [
-            "SimpleX Chat is the first communication network that has no user profile IDs of any kind, not even random numbers or identity keys.",
-            "SimpleX Chat Ltd develops the communication software for SimpleX network."
-        ],
-        website: URL(string: "https://simplex.chat")!,
-        logo: "decentralized",
-        largeLogo: "logo",
-        logoDarkMode: "decentralized-light",
-        largeLogoDarkMode: "logo-light"
-    ),
     .flux: ServerOperatorInfo(
         description: [
             "Flux is the largest decentralized cloud, based on a global network of user-operated nodes.",
             "Flux offers a powerful, scalable, and affordable cutting edge technology platform for all.",
-            "Flux operates servers in SimpleX network to improve its privacy and decentralization."
+            "Flux operates servers in POPOPX network to improve its privacy and decentralization."
         ],
-        website: URL(string: "https://runonflux.com")!,
-        selfhost: (text: "Self-host SimpleX servers on Flux", link: URL(string: "https://home.runonflux.io/apps/marketplace?q=simplex")!),
+        website: URL(string: "https://runonflux.com") ?? URL(fileURLWithPath: "/dev/null"),
+        selfhost: (text: "Self-host POPOPX servers on Flux", link: URL(string: "https://home.runonflux.io/apps/marketplace?q=popopx") ?? URL(fileURLWithPath: "/dev/null")),
         logo: "flux_logo_symbol",
         largeLogo: "flux_logo",
         logoDarkMode: "flux_logo_symbol",
         largeLogoDarkMode: "flux_logo-light"
     ),
+    .popopx: ServerOperatorInfo(
+        description: [
+            "POPOPX Chat is a decentralized communication operator running infrastructure on POPOPX network.",
+            "POPOPX Chat Ltd operates SMP, XFTP, and chat relay servers for message routing and file storage."
+        ],
+        website: URL(string: "https://popopxchat.com") ?? URL(fileURLWithPath: "/dev/null"),
+        logo: "popopx_app_icon",
+        largeLogo: "logo",
+        logoDarkMode: "popopx_app_icon",
+        largeLogoDarkMode: "logo"
+    ),
 ]
 
 struct UsageConditions: Decodable {
-    var conditionsId: Int64
-    var conditionsCommit: String
+    var conditionsId: Int64 = 0
+    var conditionsCommit: String = ""
     var notifiedAt: Date?
-    var createdAt: Date
+    var createdAt: Date = Date.distantPast
 
     static var sampleData = UsageConditions(
         conditionsId: 1,
@@ -1776,6 +3671,409 @@ struct ServerOperatorConditions: Decodable {
         currentConditions: UsageConditions(conditionsId: 0, conditionsCommit: "empty", notifiedAt: nil, createdAt: .now),
         conditionsAction: nil
     )
+}
+
+private func parseServerRoles(_ dict: NSDictionary) -> ServerRoles {
+    ServerRoles(
+        storage: dict["storage"] as? Bool ?? false,
+        proxy: dict["proxy"] as? Bool ?? false,
+        names: dict["names"] as? Bool ?? false
+    )
+}
+
+private func parseConditionsAcceptance(_ dict: NSDictionary) -> ConditionsAcceptance {
+    let inner = dict["_owsf"] as? NSDictionary ?? dict
+    if let jAccepted = inner["accepted"] as? NSDictionary {
+        let acceptedAt = jAccepted["acceptedAt"] as? Date
+        let autoAccepted = jAccepted["autoAccepted"] as? Bool ?? false
+        return .accepted(acceptedAt: acceptedAt, autoAccepted: autoAccepted)
+    } else if let jRequired = inner["required"] as? NSDictionary {
+        let deadline = jRequired["deadline"] as? Date
+        return .required(deadline: deadline)
+    }
+    return .required(deadline: nil)
+}
+
+private func parseServerOperator(_ jOp: NSDictionary) -> ServerOperator? {
+    guard let operatorId = jOp["operatorId"] as? Int64,
+          let tradeName = jOp["tradeName"] as? String,
+          let serverDomains = jOp["serverDomains"] as? [String],
+          let enabled = jOp["enabled"] as? Bool else { return nil }
+
+    let operatorTag: OperatorTag? = (jOp["operatorTag"] as? String).flatMap { OperatorTag(rawValue: $0) }
+    let legalName = jOp["legalName"] as? String
+
+    let conditionsAcceptance: ConditionsAcceptance
+    if let jAcceptance = jOp["conditionsAcceptance"] as? NSDictionary {
+        conditionsAcceptance = parseConditionsAcceptance(jAcceptance)
+    } else {
+        conditionsAcceptance = .required(deadline: nil)
+    }
+
+    let smpRoles = (jOp["smpRoles"] as? NSDictionary).map { parseServerRoles($0) } ?? ServerRoles(storage: false, proxy: false, names: false)
+    let xftpRoles = (jOp["xftpRoles"] as? NSDictionary).map { parseServerRoles($0) } ?? ServerRoles(storage: false, proxy: false, names: false)
+
+    return ServerOperator(
+        operatorId: operatorId,
+        operatorTag: operatorTag,
+        tradeName: tradeName,
+        legalName: legalName,
+        serverDomains: serverDomains,
+        conditionsAcceptance: conditionsAcceptance,
+        enabled: enabled,
+        smpRoles: smpRoles,
+        xftpRoles: xftpRoles
+    )
+}
+
+private func parseUsageConditionsAction(_ dict: NSDictionary) -> UsageConditionsAction? {
+    let inner = dict["_owsf"] as? NSDictionary ?? dict
+    if let jReview = inner["review"] as? NSDictionary {
+        let ops: [ServerOperator]
+        if let jOps = jReview["operators"] as? [NSDictionary] {
+            ops = jOps.compactMap { parseServerOperator($0) }
+        } else {
+            ops = []
+        }
+        let deadline = jReview["deadline"] as? Date
+        let showNotice = jReview["showNotice"] as? Bool ?? false
+        return .review(operators: ops, deadline: deadline, showNotice: showNotice)
+    } else if let jAccepted = inner["accepted"] as? NSDictionary {
+        let ops: [ServerOperator]
+        if let jOps = jAccepted["operators"] as? [NSDictionary] {
+            ops = jOps.compactMap { parseServerOperator($0) }
+        } else {
+            ops = []
+        }
+        return .accepted(operators: ops)
+    }
+    return nil
+}
+
+func parseServerOperatorConditions(_ json: NSDictionary) -> ServerOperatorConditions? {
+    guard let jWrapper = json["serverOperatorConditions"] as? NSDictionary else {
+        logger.warning("parseServerOperatorConditions: missing serverOperatorConditions key")
+        return nil
+    }
+    guard let jConditions = jWrapper["conditions"] as? NSDictionary else {
+        logger.warning("parseServerOperatorConditions: missing conditions key inside wrapper")
+        return nil
+    }
+
+    let serverOperators: [ServerOperator]
+    if let jOps = jConditions["serverOperators"] as? [NSDictionary] {
+        serverOperators = jOps.compactMap { parseServerOperator($0) }
+    } else {
+        serverOperators = []
+    }
+
+    let currentConditions: UsageConditions
+    if let jCurrent = jConditions["currentConditions"] as? NSDictionary,
+       let conditionsId = jCurrent["conditionsId"] as? Int64,
+       let conditionsCommit = jCurrent["conditionsCommit"] as? String {
+        let createdAt = parseISODate(jCurrent["createdAt"]) ?? .now
+        let notifiedAt: Date?
+        if let notifiedAtStr = jCurrent["notifiedAt"] as? String {
+            notifiedAt = parseISODate(notifiedAtStr)
+        } else {
+            notifiedAt = jCurrent["notifiedAt"] as? Date
+        }
+        currentConditions = UsageConditions(
+            conditionsId: conditionsId,
+            conditionsCommit: conditionsCommit,
+            notifiedAt: notifiedAt,
+            createdAt: createdAt
+        )
+    } else {
+        currentConditions = UsageConditions(conditionsId: 0, conditionsCommit: "empty", notifiedAt: nil, createdAt: .now)
+    }
+
+    let conditionsAction: UsageConditionsAction?
+    if let jAction = jConditions["conditionsAction"] as? NSDictionary {
+        conditionsAction = parseUsageConditionsAction(jAction)
+    } else {
+        conditionsAction = nil
+    }
+
+    return ServerOperatorConditions(
+        serverOperators: serverOperators,
+        currentConditions: currentConditions,
+        conditionsAction: conditionsAction
+    )
+}
+
+private func parseISODate(_ value: Any?) -> Date? {
+    guard let str = value as? String else { return value as? Date }
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    if let date = formatter.date(from: str) { return date }
+    formatter.formatOptions = [.withInternetDateTime]
+    return formatter.date(from: str)
+}
+
+private func parseUserServer(_ jServer: NSDictionary) -> UserServer? {
+    let serverId = jServer["serverId"] as? Int64
+    guard let server = jServer["server"] as? String,
+          let preset = jServer["preset"] as? Bool,
+          let enabled = jServer["enabled"] as? Bool,
+          let deleted = jServer["deleted"] as? Bool else { return nil }
+    let tested = jServer["tested"] as? Bool
+    
+    // Parse roles field (ServerRolesOverride) - added in commit 2ea5940e8
+    var roles = ServerRolesOverride.default
+    if let jRoles = jServer["roles"] as? NSDictionary {
+        roles = ServerRolesOverride(
+            storage: jRoles["storage"] as? Bool,
+            proxy: jRoles["proxy"] as? Bool,
+            names: jRoles["names"] as? Bool
+        )
+    }
+    
+    let createdAt: Date
+    if let dateStr = jServer["createdAt"] as? String {
+        createdAt = parseISODate(dateStr) ?? .now
+    } else if let date = jServer["createdAt"] as? Date {
+        createdAt = date
+    } else {
+        createdAt = .now
+    }
+    return UserServer(
+        serverId: serverId,
+        server: server,
+        preset: preset,
+        tested: tested,
+        enabled: enabled,
+        roles: roles,
+        deleted: deleted,
+        createdAt: createdAt
+    )
+}
+
+private func parseUserChatRelay(_ jRelay: NSDictionary) -> UserChatRelay? {
+    let chatRelayId = jRelay["chatRelayId"] as? Int64
+    guard let address = jRelay["address"] as? String,
+          let domains = jRelay["domains"] as? [String],
+          let preset = jRelay["preset"] as? Bool,
+          let enabled = jRelay["enabled"] as? Bool,
+          let deleted = jRelay["deleted"] as? Bool else { return nil }
+    let tested = jRelay["tested"] as? Bool
+    let name: String
+    if let profile = jRelay["relayProfile"] as? NSDictionary {
+        name = profile["displayName"] as? String ?? ""
+    } else {
+        name = ""
+    }
+    let createdAt: Date
+    if let dateStr = jRelay["createdAt"] as? String {
+        createdAt = parseISODate(dateStr) ?? .now
+    } else if let date = jRelay["createdAt"] as? Date {
+        createdAt = date
+    } else {
+        createdAt = .now
+    }
+    return UserChatRelay(
+        chatRelayId: chatRelayId,
+        address: address,
+        name: name,
+        domains: domains,
+        preset: preset,
+        tested: tested,
+        enabled: enabled,
+        deleted: deleted,
+        createdAt: createdAt
+    )
+}
+
+private func parseUserOperatorServers(_ jOpServers: NSDictionary) -> UserOperatorServers? {
+    let operator_: ServerOperator?
+    if let jOp = jOpServers["operator"] as? NSDictionary {
+        operator_ = parseServerOperator(jOp)
+    } else {
+        operator_ = nil
+    }
+
+    let smpServers: [UserServer]
+    if let jServers = jOpServers["smpServers"] as? [NSDictionary] {
+        smpServers = jServers.compactMap { parseUserServer($0) }
+    } else {
+        smpServers = []
+    }
+
+    let xftpServers: [UserServer]
+    if let jServers = jOpServers["xftpServers"] as? [NSDictionary] {
+        xftpServers = jServers.compactMap { parseUserServer($0) }
+    } else {
+        xftpServers = []
+    }
+
+    let chatRelays: [UserChatRelay]
+    if let jRelays = jOpServers["chatRelays"] as? [NSDictionary] {
+        chatRelays = jRelays.compactMap { parseUserChatRelay($0) }
+    } else {
+        chatRelays = []
+    }
+
+    return UserOperatorServers(
+        operator: operator_,
+        smpServers: smpServers,
+        xftpServers: xftpServers,
+        chatRelays: chatRelays
+    )
+}
+
+func parseUserServers(_ json: NSDictionary) -> (UserRef, [UserOperatorServers])? {
+    guard let jUserServers = json["userServers"] as? NSDictionary else { return nil }
+    guard let jUser = jUserServers["user"] as? NSDictionary,
+          let user: UserRef = try? decodeObject(jUser) else { return nil }
+
+    let servers: [UserOperatorServers]
+    if let jOps = jUserServers["userServers"] as? [NSDictionary] {
+        servers = jOps.compactMap { parseUserOperatorServers($0) }
+    } else {
+        servers = []
+    }
+
+    return (user, servers)
+}
+
+// MARK: - ConnStatus Parser
+
+private func parseConnStatus(_ jStatus: NSDictionary) -> ConnStatus? {
+    if jStatus["new"] is NSDictionary {
+        return .new
+    } else if jStatus["prepared"] is NSDictionary {
+        return .prepared
+    } else if jStatus["joined"] is NSDictionary {
+        return .joined
+    } else if jStatus["requested"] is NSDictionary {
+        return .requested
+    } else if jStatus["accepted"] is NSDictionary {
+        return .accepted
+    } else if jStatus["sndReady"] is NSDictionary {
+        return .sndReady
+    } else if jStatus["ready"] is NSDictionary {
+        return .ready
+    } else if jStatus["deleted"] is NSDictionary {
+        return .deleted
+    } else if let jFailed = jStatus["failed"] as? NSDictionary {
+        let connError = jFailed["connError"] as? String ?? ""
+        return .failed(connError: connError)
+    }
+    return nil
+}
+
+// MARK: - InvitedBy Parser
+
+private func parseInvitedBy(_ jInvited: NSDictionary) -> InvitedBy? {
+    if let jContact = jInvited["contact"] as? NSDictionary {
+        let byContactId = jContact["byContactId"] as? Int64 ?? 0
+        return .contact(byContactId: byContactId)
+    } else if let _ = jInvited["user"] as? NSDictionary {
+        return .user
+    } else if let _ = jInvited["unknown"] as? NSDictionary {
+        return .unknown
+    }
+    return nil
+}
+
+// MARK: - Connection Parser
+
+private func parseConnection(_ jConn: NSDictionary) -> Connection? {
+    if let data = try? JSONSerialization.data(withJSONObject: jConn, options: []) {
+        return try? jsonDecoder.decode(Connection.self, from: data)
+    }
+    return nil
+}
+
+// MARK: - Contact Parser
+
+private func parseContact(_ jContact: NSDictionary) -> Contact? {
+    if let data = try? JSONSerialization.data(withJSONObject: jContact, options: []) {
+        if let contact = try? jsonDecoder.decode(Contact.self, from: data) {
+            return contact
+        }
+    }
+    return nil
+}
+
+// MARK: - GroupMember Parser
+
+private func parseGroupMember(_ jMember: NSDictionary) -> GroupMember? {
+    if let data = try? JSONSerialization.data(withJSONObject: jMember, options: []) {
+        if let member = try? jsonDecoder.decode(GroupMember.self, from: data) {
+            return member
+        }
+    }
+    return nil
+}
+
+// MARK: - GroupInfo Parser
+
+private func parseGroupInfo(_ jGroupInfo: NSDictionary) -> GroupInfo? {
+    if let data = try? JSONSerialization.data(withJSONObject: jGroupInfo, options: []) {
+        if let groupInfo = try? jsonDecoder.decode(GroupInfo.self, from: data) {
+            return groupInfo
+        }
+    }
+    return nil
+}
+
+// MARK: - Response Parsers
+
+func parseContactInfo(_ json: NSDictionary) -> (UserRef, Contact, ConnectionStats?, Profile?)? {
+    guard let jContactInfo = json["contactInfo"] as? NSDictionary else { return nil }
+    guard let jUser = jContactInfo["user"] as? NSDictionary,
+          let user: UserRef = try? decodeObject(jUser) else { return nil }
+    guard let jContact = jContactInfo["contact"] as? NSDictionary,
+          let contact = parseContact(jContact) else { return nil }
+
+    let connStats: ConnectionStats?
+    if let jStats = jContactInfo["connectionStats_"] as? NSDictionary,
+       let data = try? JSONSerialization.data(withJSONObject: jStats, options: []) {
+        connStats = try? jsonDecoder.decode(ConnectionStats.self, from: data)
+    } else {
+        connStats = nil
+    }
+
+    let profile: Profile?
+    if let jProfile = jContactInfo["customUserProfile"] as? NSDictionary,
+       let data = try? JSONSerialization.data(withJSONObject: jProfile, options: []) {
+        profile = try? jsonDecoder.decode(Profile.self, from: data)
+    } else {
+        profile = nil
+    }
+
+    return (user, contact, connStats, profile)
+}
+
+func parseGroupInfoResponse(_ json: NSDictionary) -> (UserRef, GroupInfo)? {
+    guard let jGroupInfo = json["groupInfo"] as? NSDictionary else { return nil }
+    guard let jUser = jGroupInfo["user"] as? NSDictionary,
+          let user: UserRef = try? decodeObject(jUser) else { return nil }
+    guard let jInfo = jGroupInfo["groupInfo"] as? NSDictionary,
+          let groupInfo = parseGroupInfo(jInfo) else { return nil }
+
+    return (user, groupInfo)
+}
+
+func parseGroupMemberInfo(_ json: NSDictionary) -> (UserRef, GroupInfo, GroupMember, ConnectionStats?)? {
+    guard let jMemberInfo = json["groupMemberInfo"] as? NSDictionary else { return nil }
+    guard let jUser = jMemberInfo["user"] as? NSDictionary,
+          let user: UserRef = try? decodeObject(jUser) else { return nil }
+    guard let jInfo = jMemberInfo["groupInfo"] as? NSDictionary,
+          let groupInfo = parseGroupInfo(jInfo) else { return nil }
+    guard let jMember = jMemberInfo["member"] as? NSDictionary,
+          let member = parseGroupMember(jMember) else { return nil }
+
+    let connStats: ConnectionStats?
+    if let jStats = jMemberInfo["connectionStats_"] as? NSDictionary,
+       let data = try? JSONSerialization.data(withJSONObject: jStats, options: []) {
+        connStats = try? jsonDecoder.decode(ConnectionStats.self, from: data)
+    } else {
+        connStats = nil
+    }
+
+    return (user, groupInfo, member, connStats)
 }
 
 enum ConditionsAcceptance: Equatable, Codable, Hashable {
@@ -1832,11 +4130,11 @@ struct ServerOperator: Identifiable, Equatable, Codable {
 
     static let dummyOperatorInfo = ServerOperatorInfo(
         description: ["Default"],
-        website: URL(string: "https://simplex.chat")!,
-        logo: "decentralized",
+        website: URL(string: "https://popopxchat.com") ?? URL(fileURLWithPath: "/dev/null"),
+        logo: "logo-light",
         largeLogo: "logo",
-        logoDarkMode: "decentralized-light",
-        largeLogoDarkMode: "logo-light"
+        logoDarkMode: "logo-light",
+        largeLogoDarkMode: "logo"
     )
 
     func logo(_ colorScheme: ColorScheme) -> String {
@@ -1849,14 +4147,14 @@ struct ServerOperator: Identifiable, Equatable, Codable {
 
     static var sampleData1 = ServerOperator(
         operatorId: 1,
-        operatorTag: .simplex,
-        tradeName: "SimpleX Chat",
-        legalName: "SimpleX Chat Ltd",
-        serverDomains: ["simplex.im"],
+        operatorTag: .popopx,
+        tradeName: "POPOPX Chat",
+        legalName: "POPOPX Chat Ltd",
+        serverDomains: ["popopxchat.com"],
         conditionsAcceptance: .accepted(acceptedAt: nil, autoAccepted: false),
         enabled: true,
         smpRoles: ServerRoles(storage: true, proxy: true, names: true),
-        xftpRoles: ServerRoles(storage: true, proxy: true, names: false)
+        xftpRoles: ServerRoles(storage: true, proxy: true, names: true)
     )
 }
 
@@ -1865,14 +4163,12 @@ struct ServerRoles: Equatable, Codable {
     var proxy: Bool
     var names: Bool
 
-    // roles applied when a server matches no operator, mirrors core resolveServerRoles (Operators.hs)
-    static let noOperatorDefault = ServerRoles(storage: true, proxy: true, names: false)
+    static let noOperatorDefault = ServerRoles(storage: false, proxy: false, names: false)
 }
 
-struct ServerRolesOverride: Equatable, Codable, Hashable {
-    var storage: Bool?
-    var proxy: Bool?
-    var names: Bool?
+enum MsgSigStatus: String, Codable, Hashable {
+    case verified = "verified"
+    case signedNoKey = "signedNoKey"
 }
 
 struct UserOperatorServers: Identifiable, Equatable, Codable {
@@ -1899,8 +4195,8 @@ struct UserOperatorServers: Identifiable, Equatable, Codable {
                 serverDomains: [],
                 conditionsAcceptance: .accepted(acceptedAt: nil, autoAccepted: false),
                 enabled: false,
-                smpRoles: ServerRoles.noOperatorDefault,
-                xftpRoles: ServerRoles.noOperatorDefault
+                smpRoles: ServerRoles(storage: true, proxy: true, names: true),
+                xftpRoles: ServerRoles(storage: true, proxy: true, names: true)
             )
         }
         set { `operator` = newValue }
@@ -1919,6 +4215,47 @@ struct UserOperatorServers: Identifiable, Equatable, Codable {
         xftpServers: [UserServer.sampleData.xftpPreset],
         chatRelays: []
     )
+}
+
+// MARK: - BinThere Bot
+
+struct BinThereBotInfo: Identifiable, Equatable, Codable {
+    var botId: Int64
+    var botAddress: String
+    var botName: String?
+    var botType: String
+    var usageCount: Int64
+    var description: String?
+    var iconUrl: String?
+    var tokenCount: Int64
+    var pricingUnit: String?
+    var pricingAmount: Int64
+
+    var id: Int64 { botId }
+}
+
+struct BotDirectoryEntry: Identifiable, Equatable, Codable {
+    var botAddress: String
+    var botName: String
+    var botType: String
+    var description: String?
+    var iconUrl: String?
+    var tokenCount: Int64
+    var pricingUnit: String?
+    var pricingAmount: Int64
+
+    var id: String { botAddress }
+
+    enum CodingKeys: String, CodingKey {
+        case botAddress = "bot_address"
+        case botName = "bot_name"
+        case botType = "bot_type"
+        case description
+        case iconUrl = "icon_url"
+        case tokenCount = "token_count"
+        case pricingUnit = "pricing_unit"
+        case pricingAmount = "pricing_amount"
+    }
 }
 
 public enum UserServersWarning: Decodable {
@@ -2020,24 +4357,173 @@ enum UserServersError: Decodable {
     }
 }
 
+// Server roles override - matches Haskell's ServerRolesOverride in Operators.hs
+struct ServerRolesOverride: Codable, Hashable {
+    var storage: Bool?
+    var proxy: Bool?
+    var names: Bool?
+    
+    static let `default` = ServerRolesOverride(storage: nil, proxy: nil, names: nil)
+
+    init(storage: Bool? = nil, proxy: Bool? = nil, names: Bool? = nil) {
+        self.storage = storage
+        self.proxy = proxy
+        self.names = names
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case storage
+        case proxy
+        case names
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.storage = try container.decodeIfPresent(Bool.self, forKey: .storage)
+        self.proxy = try container.decodeIfPresent(Bool.self, forKey: .proxy)
+        self.names = try container.decodeIfPresent(Bool.self, forKey: .names)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(storage, forKey: .storage)
+        try container.encode(proxy, forKey: .proxy)
+        try container.encode(names, forKey: .names)
+    }
+}
+
+// MARK: - Server Information Types (from popopxmq library)
+
+public struct ServerPublicInfo: Decodable, Hashable {
+    public var sourceCode: String  // Required by AGPLv3 license
+    public var usageConditions: ServerConditions?
+    public var `operator`: Entity?
+    public var website: String?
+    public var adminContacts: ServerContactAddress?
+    public var complaintsContacts: ServerContactAddress?
+    public var hosting: Entity?
+    public var hostingType: HostingType?
+    public var serverCountry: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case sourceCode = "source_code"
+        case usageConditions = "usage_conditions"
+        case `operator`
+        case website
+        case adminContacts = "admin_contacts"
+        case complaintsContacts = "complaints_contacts"
+        case hosting
+        case hostingType = "hosting_type"
+        case serverCountry = "server_country"
+    }
+}
+
+public struct ServerConditions: Decodable, Hashable {
+    public var conditions: String
+    public var amendments: String?
+}
+
+public enum HostingType: String, Decodable, Hashable {
+    case virtual = "virtual"
+    case dedicated = "dedicated"
+    case colocation = "colocation"
+    case owned = "owned"
+}
+
+public struct Entity: Decodable, Hashable {
+    public var name: String
+    public var country: String?
+}
+
+public struct ServerContactAddress: Decodable, Hashable {
+    public var popopx: String?  // Connection link
+    public var email: String?
+    public var pgp: PGPKey?
+
+    enum CodingKeys: String, CodingKey {
+        case popopx
+        case email
+        case pgp
+    }
+}
+
+public struct PGPKey: Decodable, Hashable {
+    public var pkURI: String
+    public var pkFingerprint: String
+    
+    enum CodingKeys: String, CodingKey {
+        case pkURI = "pk_uri"
+        case pkFingerprint = "pk_fingerprint"
+    }
+}
+
+// Wrapper for Either<String, ServerPublicInfo> from Haskell
+public enum ServerInfoEither: Decodable, Hashable {
+    case left(String)   // Error message
+    case right(ServerPublicInfo)  // Success with info
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        
+        // Try to decode as String first (error case)
+        if let errorString = try? container.decode(String.self) {
+            self = .left(errorString)
+            return
+        }
+        
+        // Try to decode as ServerPublicInfo (success case)
+        if let info = try? container.decode(ServerPublicInfo.self) {
+            self = .right(info)
+            return
+        }
+        
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "Expected either String or ServerPublicInfo"
+        )
+    }
+    
+    public static func == (lhs: ServerInfoEither, rhs: ServerInfoEither) -> Bool {
+        switch (lhs, rhs) {
+        case let (.left(l), .left(r)):
+            return l == r
+        case let (.right(l), .right(r)):
+            return l == r
+        default:
+            return false
+        }
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .left(let str):
+            hasher.combine(0)
+            hasher.combine(str)
+        case .right(let info):
+            hasher.combine(1)
+            hasher.combine(info)
+        }
+    }
+}
+
 struct UserServer: Identifiable, Equatable, Codable, Hashable {
     var serverId: Int64?
     var server: String
     var preset: Bool
     var tested: Bool?
     var enabled: Bool
+    var roles: ServerRolesOverride = .default
     var deleted: Bool
-    var roles: ServerRolesOverride = ServerRolesOverride()
     var createdAt = Date()
 
     static func == (l: UserServer, r: UserServer) -> Bool {
         l.serverId == r.serverId && l.server == r.server && l.preset == r.preset && l.tested == r.tested &&
-        l.enabled == r.enabled && l.deleted == r.deleted && l.roles == r.roles
+        l.enabled == r.enabled && l.roles == r.roles && l.deleted == r.deleted
     }
 
     var id: String { "\(server) \(createdAt)" }
 
-    static var empty = UserServer(serverId: nil, server: "", preset: false, tested: nil, enabled: false, deleted: false)
+    static var empty = UserServer(serverId: nil, server: "", preset: false, tested: nil, enabled: false, roles: .default, deleted: false)
 
     var isEmpty: Bool {
         server.trimmingCharacters(in: .whitespaces) == ""
@@ -2053,34 +4539,38 @@ struct UserServer: Identifiable, Equatable, Codable, Hashable {
     static var sampleData = SampleData(
         preset: UserServer(
             serverId: 1,
-            server: "smp://abcd@smp8.simplex.im",
+            server: "smp://abcd@smp8.popopxchat.com",
             preset: true,
             tested: true,
             enabled: true,
+            roles: .default,
             deleted: false
         ),
         custom: UserServer(
             serverId: 2,
-            server: "smp://abcd@smp9.simplex.im",
+            server: "smp://abcd@smp9.popopxchat.com",
             preset: false,
             tested: false,
             enabled: false,
+            roles: .default,
             deleted: false
         ),
         untested: UserServer(
             serverId: 3,
-            server: "smp://abcd@smp10.simplex.im",
+            server: "smp://abcd@smp10.popopxchat.com",
             preset: false,
             tested: nil,
             enabled: true,
+            roles: .default,
             deleted: false
         ),
         xftpPreset: UserServer(
             serverId: 4,
-            server: "xftp://abcd@xftp8.simplex.im",
+            server: "xftp://abcd@xftp8.popopxchat.com",
             preset: true,
             tested: true,
             enabled: true,
+            roles: .default,
             deleted: false
         )
     )
@@ -2091,8 +4581,19 @@ struct UserServer: Identifiable, Equatable, Codable, Hashable {
         case preset
         case tested
         case enabled
-        case deleted
         case roles
+        case deleted
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(serverId, forKey: .serverId)
+        try container.encode(server, forKey: .server)
+        try container.encode(preset, forKey: .preset)
+        try container.encode(tested, forKey: .tested)
+        try container.encode(enabled, forKey: .enabled)
+        try container.encode(roles, forKey: .roles)
+        try container.encode(deleted, forKey: .deleted)
     }
 }
 
@@ -2214,7 +4715,7 @@ struct MigrationFileLinkData: Codable {
     }
 
     func addToLink(link: String) -> String {
-        "\(link)&data=\(encodeJSON(self).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
+        "\(link)&data=\(encodeJSON(self).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
     }
 
     static func readFromLink(link: String) -> MigrationFileLinkData? {
@@ -2240,8 +4741,6 @@ struct AppSettings: Codable, Equatable {
     var webrtcPolicyRelay: Bool? = nil
     var webrtcICEServers: [String]? = nil
     var confirmRemoteSessions: Bool? = nil
-    var connectRemoteViaMulticast: Bool? = nil
-    var connectRemoteViaMulticastAuto: Bool? = nil
     var developerTools: Bool? = nil
     var confirmDBUpgrades: Bool? = nil
     var androidCallOnLockScreen: AppSettingsLockScreenCalls? = nil
@@ -2276,8 +4775,6 @@ struct AppSettings: Codable, Equatable {
         if webrtcPolicyRelay != def.webrtcPolicyRelay { empty.webrtcPolicyRelay = webrtcPolicyRelay }
         if webrtcICEServers != def.webrtcICEServers { empty.webrtcICEServers = webrtcICEServers }
         if confirmRemoteSessions != def.confirmRemoteSessions { empty.confirmRemoteSessions = confirmRemoteSessions }
-        if connectRemoteViaMulticast != def.connectRemoteViaMulticast {empty.connectRemoteViaMulticast = connectRemoteViaMulticast }
-        if connectRemoteViaMulticastAuto != def.connectRemoteViaMulticastAuto { empty.connectRemoteViaMulticastAuto = connectRemoteViaMulticastAuto }
         if developerTools != def.developerTools { empty.developerTools = developerTools }
         if confirmDBUpgrades != def.confirmDBUpgrades { empty.confirmDBUpgrades = confirmDBUpgrades }
         if androidCallOnLockScreen != def.androidCallOnLockScreen { empty.androidCallOnLockScreen = androidCallOnLockScreen }
@@ -2313,8 +4810,6 @@ struct AppSettings: Codable, Equatable {
             webrtcPolicyRelay: true,
             webrtcICEServers: [],
             confirmRemoteSessions: false,
-            connectRemoteViaMulticast: true,
-            connectRemoteViaMulticastAuto: true,
             developerTools: false,
             confirmDBUpgrades: false,
             androidCallOnLockScreen: AppSettingsLockScreenCalls.show,
@@ -2323,8 +4818,8 @@ struct AppSettings: Codable, Equatable {
             uiProfileImageCornerRadius: 22.5,
             uiChatItemRoundness: 0.75,
             uiChatItemTail: true,
-            uiColorScheme: DefaultTheme.SYSTEM_THEME_NAME,
-            uiDarkColorScheme: DefaultTheme.SIMPLEX.themeName,
+            uiColorScheme: DefaultTheme.DARK.themeName,
+            uiDarkColorScheme: DefaultTheme.DARK.themeName,
             uiCurrentThemeIds: nil as [String: String]?,
             uiThemes: nil as [ThemeOverrides]?,
             oneHandUI: true,
@@ -2381,11 +4876,11 @@ enum UserNetworkType: String, Codable {
 
     var text: LocalizedStringKey {
         switch self {
-        case .none: "No network connection"
-        case .cellular: "Cellular"
-        case .wifi: "WiFi"
-        case .ethernet: "Wired ethernet"
-        case .other: "Other"
+        case .none: LocalizedStringKey(NSLocalizedString("No network connection", comment: ""))
+        case .cellular: LocalizedStringKey(NSLocalizedString("Cellular", comment: ""))
+        case .wifi: LocalizedStringKey(NSLocalizedString("WiFi", comment: ""))
+        case .ethernet: LocalizedStringKey(NSLocalizedString("Wired ethernet", comment: ""))
+        case .other: LocalizedStringKey(NSLocalizedString("Other", comment: ""))
         }
     }
 }
@@ -2586,4 +5081,16 @@ struct AgentNtfServerStatsData: Codable {
     var _ntfCheckAttempts: Int
     var _ntfDeleted: Int
     var _ntfDelAttempts: Int
+}
+
+private func sanitizeFFIParam(_ input: String, maxLen: Int) -> String {
+    let dangerous = CharacterSet(charactersIn: "'\"\\;|&$`(){}[]!#~<>")
+    let cleaned = input.unicodeScalars.filter { scalar in
+        !scalar.properties.isWhitespace
+        && scalar.value >= 0x20
+        && scalar.value != 0x7F
+        && !dangerous.contains(scalar)
+    }
+    let truncated = cleaned.prefix(maxLen)
+    return String(truncated)
 }

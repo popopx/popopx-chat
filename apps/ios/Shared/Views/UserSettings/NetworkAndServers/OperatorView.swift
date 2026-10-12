@@ -1,14 +1,16 @@
 //
 //  OperatorView.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 28.10.2024.
-//  Copyright © 2024 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 // Spec: spec/architecture.md
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 import Ink
 
 struct OperatorView: View {
@@ -38,40 +40,45 @@ struct OperatorView: View {
                 }
             }
             .allowsHitTesting(!testing)
+        .popopxBranded()
     }
 
     private func operatorView() -> some View {
         let duplicateHosts = findDuplicateHosts(serverErrors)
         let duplicateRelayAddresses = findDuplicateRelayAddresses(serverErrors)
-        return VStack {
+        guard userServers.indices.contains(operatorIndex) else {
+            return AnyView(
+                VStack {
+                    Text(NSLocalizedString("Server configuration has changed. Please go back and try again.", comment: ""))
+                        .multilineTextAlignment(.center)
+                        .padding()
+                }
+            )
+        }
+        return AnyView(VStack {
             List {
                 Section {
                     infoViewLink()
                     useOperatorToggle()
                 } header: {
-                    Text("Operator")
-                        .foregroundColor(theme.colors.secondary)
+                    Text(NSLocalizedString("Operator", comment: ""))
+                        .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                        .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                 } footer: {
-                    let errs = globalServersErrors(serverErrors)
-                    let warns = globalServersWarnings(serverWarnings)
-                    if !errs.isEmpty {
-                        ForEach(errs, id: \.self) { err in
-                            ServersErrorView(errStr: err)
-                        }
-                    } else if !warns.isEmpty {
-                        ForEach(warns, id: \.self) { warn in
-                            ServersWarningView(warnStr: warn)
-                        }
+                    if let errStr = globalServersError(serverErrors) {
+                        ServersErrorView(errStr: errStr)
+                    } else if let warnStr = globalServersWarning(serverWarnings) {
+                        ServersWarningView(warnStr: warnStr)
                     } else {
                         switch (userServers[operatorIndex].operator_.conditionsAcceptance) {
                         case let .accepted(acceptedAt, _):
                             if let acceptedAt = acceptedAt {
-                                Text("Conditions accepted on: \(conditionsTimestamp(acceptedAt)).")
+                                Text(String.localizedStringWithFormat(NSLocalizedString("Conditions accepted on: %@.", comment: ""), conditionsTimestamp(acceptedAt)))
                                     .foregroundColor(theme.colors.secondary)
                             }
                         case let .required(deadline):
                             if userServers[operatorIndex].operator_.enabled, let deadline = deadline {
-                                Text("Conditions will be accepted on: \(conditionsTimestamp(deadline)).")
+                                Text(String.localizedStringWithFormat(NSLocalizedString("Conditions will be accepted on: %@.", comment: ""), conditionsTimestamp(deadline)))
                                     .foregroundColor(theme.colors.secondary)
                             }
                         }
@@ -83,7 +90,7 @@ struct OperatorView: View {
                         Section {
                             ForEach(bindingForChatRelays($userServers, operatorIndex)) { relay in
                                 if !relay.wrappedValue.deleted {
-                                    ChatRelayViewLink(
+                                    PXChatRelayLink(
                                         userServers: $userServers,
                                         serverErrors: $serverErrors,
                                         serverWarnings: $serverWarnings,
@@ -95,29 +102,26 @@ struct OperatorView: View {
                                 } else { EmptyView() }
                             }
                         } header: {
-                            Text("Chat relays").foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("Chat relays", comment: "")).font(isInDarkTheme() ? darkThemeHeaderFont() : .body).foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                         } footer: {
-                            Text("Chat relays forward messages in channels you create.").foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("Chat relays forward messages in channels you create.", comment: "")).foregroundColor(theme.colors.secondary)
                         }
                     }
 
                     if !userServers[operatorIndex].smpServers.filter({ !$0.deleted }).isEmpty {
                         Section {
-                            Toggle("To receive", isOn: $userServers[operatorIndex].operator_.smpRoles.storage)
-                                .onChange(of: userServers[operatorIndex].operator_.smpRoles.storage) { _ in
+                            Toggle(NSLocalizedString("To receive", comment: ""), isOn: $userServers[operatorIndex].operator_.smpRoles.storage)
+                                .onChange(of: userServers[operatorIndex].operator_.smpRoles.storage) {_, _ in
                                     validateServers_($userServers, $serverErrors, $serverWarnings)
                                 }
-                            Toggle("For private routing", isOn: $userServers[operatorIndex].operator_.smpRoles.proxy)
-                                .onChange(of: userServers[operatorIndex].operator_.smpRoles.proxy) { _ in
-                                    validateServers_($userServers, $serverErrors, $serverWarnings)
-                                }
-                            Toggle("To resolve names", isOn: $userServers[operatorIndex].operator_.smpRoles.names)
-                                .onChange(of: userServers[operatorIndex].operator_.smpRoles.names) { _ in
+                            Toggle(NSLocalizedString("For private routing", comment: ""), isOn: $userServers[operatorIndex].operator_.smpRoles.proxy)
+                                .onChange(of: userServers[operatorIndex].operator_.smpRoles.proxy) {_, _ in
                                     validateServers_($userServers, $serverErrors, $serverWarnings)
                                 }
                         } header: {
-                            Text("Use for messages")
-                                .foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("Use for messages", comment: ""))
+                                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                         } footer: {
                             if let errStr = globalSMPServersError(serverErrors) {
                                 ServersErrorView(errStr: errStr)
@@ -145,13 +149,14 @@ struct OperatorView: View {
                                 }
                             }
                         } header: {
-                            Text("Message servers")
-                                .foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("Message servers", comment: ""))
+                                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                         } footer: {
                             if let errStr = globalSMPServersError(serverErrors) {
                                 ServersErrorView(errStr: errStr)
                             } else {
-                                Text("The servers for new connections of your current chat profile **\(ChatModel.shared.currentUser?.displayName ?? "")**.")
+                                Text(String.localizedStringWithFormat(NSLocalizedString("The servers for new connections of your current chat profile **%@**.", comment: ""), ChatModel.shared.currentUser?.displayName ?? ""))
                                     .foregroundColor(theme.colors.secondary)
                                     .lineLimit(10)
                             }
@@ -181,20 +186,22 @@ struct OperatorView: View {
                                 validateServers_($userServers, $serverErrors, $serverWarnings)
                             }
                         } header: {
-                            Text("Added message servers")
-                                .foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("Added message servers", comment: ""))
+                                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                         }
                     }
 
                     if !userServers[operatorIndex].xftpServers.filter({ !$0.deleted }).isEmpty {
                         Section {
-                            Toggle("To send", isOn: $userServers[operatorIndex].operator_.xftpRoles.storage)
-                                .onChange(of: userServers[operatorIndex].operator_.xftpRoles.storage) { _ in
+                            Toggle(NSLocalizedString("To send", comment: ""), isOn: $userServers[operatorIndex].operator_.xftpRoles.storage)
+                                .onChange(of: userServers[operatorIndex].operator_.xftpRoles.storage) {_, _ in
                                     validateServers_($userServers, $serverErrors, $serverWarnings)
                                 }
                         } header: {
-                            Text("Use for files")
-                                .foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("Use for files", comment: ""))
+                                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                         } footer: {
                             if let errStr = globalXFTPServersError(serverErrors) {
                                 ServersErrorView(errStr: errStr)
@@ -222,13 +229,14 @@ struct OperatorView: View {
                                 }
                             }
                         } header: {
-                            Text("Media & file servers")
-                                .foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("Media & file servers", comment: ""))
+                                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                         } footer: {
                             if let errStr = globalXFTPServersError(serverErrors) {
                                 ServersErrorView(errStr: errStr)
                             } else {
-                                Text("The servers for new files of your current chat profile **\(ChatModel.shared.currentUser?.displayName ?? "")**.")
+                                Text(String.localizedStringWithFormat(NSLocalizedString("The servers for new files of your current chat profile **%@**.", comment: ""), ChatModel.shared.currentUser?.displayName ?? ""))
                                     .foregroundColor(theme.colors.secondary)
                                     .lineLimit(10)
                             }
@@ -258,8 +266,9 @@ struct OperatorView: View {
                                 validateServers_($userServers, $serverErrors, $serverWarnings)
                             }
                         } header: {
-                            Text("Added media & file servers")
-                                .foregroundColor(theme.colors.secondary)
+                            Text(NSLocalizedString("Added media & file servers", comment: ""))
+                                .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
+                                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                         }
                     }
 
@@ -292,12 +301,13 @@ struct OperatorView: View {
             )
             .modifier(ThemedBackground(grouped: true))
         }
+        )
     }
 
     private func infoViewLink() -> some View {
         NavigationLink() {
             OperatorInfoView(serverOperator: userServers[operatorIndex].operator_)
-                .navigationBarTitle("Network operator")
+                .navigationTitle(NSLocalizedString("Network operator", comment: ""))
                 .modifier(ThemedBackground(grouped: true))
                 .navigationBarTitleDisplayMode(.large)
         } label: {
@@ -310,8 +320,8 @@ struct OperatorView: View {
     }
 
     private func useOperatorToggle() -> some View {
-        Toggle("Use servers", isOn: $useOperator)
-            .onChange(of: useOperator) { useOperatorToggle in
+        Toggle(NSLocalizedString("Use servers", comment: ""), isOn: $useOperator)
+            .onChange(of: useOperator) {_,  useOperatorToggle in
                 if useOperatorToggleReset {
                     useOperatorToggleReset = false
                 } else if useOperatorToggle {
@@ -386,78 +396,147 @@ struct OperatorInfoView: View {
                     }
                 }
             }
+            .listRowBackground(Color.clear)
+            .scrollContentBackground(.hidden)
+            .modifier(ThemedBackground(grouped: true))
         }
     }
 }
 
 struct ConditionsTextView: View {
+    @EnvironmentObject var theme: AppTheme
     @State private var conditionsData: (UsageConditions, String?, UsageConditions?)?
     @State private var failedToLoad: Bool = false
     @State private var conditionsHTML: String? = nil
+    @State private var errorMessage: String? = nil
+    @State private var reloadTrigger = 0
 
-    let defaultConditionsLink = "https://github.com/simplex-chat/simplex-chat/blob/stable/PRIVACY.md"
+    let defaultConditionsLink = "https://popopxchat.com/conditions"
 
     var body: some View {
         viewBody()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .task {
+            .task(id: reloadTrigger) {
                 do {
+                    logger.debug("ConditionsTextView: Starting getUsageConditions()")
                     let conditions = try await getUsageConditions()
+                    logger.debug("ConditionsTextView: getUsageConditions() succeeded")
                     let conditionsText = conditions.1
-                    let parentLink =  "https://github.com/simplex-chat/simplex-chat/blob/\(conditions.0.conditionsCommit)"
+                    logger.debug("ConditionsTextView: conditionsText is nil? \(conditionsText == nil), length = \(conditionsText?.count ?? 0)")
+
+                    let parentLink =  "https://popopxchat.com/conditions/\(conditions.0.conditionsCommit)"
                     let preparedText: String?
+
                     if let conditionsText {
+                        logger.debug("ConditionsTextView: About to call prepareMarkdown")
                         let prepared = prepareMarkdown(conditionsText.trimmingCharacters(in: .whitespacesAndNewlines), parentLink)
-                        conditionsHTML = MarkdownParser().html(from: prepared)
+                        logger.debug("ConditionsTextView: prepareMarkdown returned, length = \(prepared.count)")
+
+                        logger.debug("ConditionsTextView: About to call MarkdownParser")
+                        let html = MarkdownParser().html(from: prepared)
+                        logger.debug("ConditionsTextView: MarkdownParser returned, HTML length = \(html.count)")
+
+                        conditionsHTML = html
                         preparedText = prepared
                     } else {
+                        logger.warning("ConditionsTextView: conditionsText is nil, will show fallback link")
                         preparedText = nil
                     }
+
+                    logger.debug("ConditionsTextView: Setting conditionsData")
                     conditionsData = (conditions.0, preparedText, conditions.2)
+                    logger.debug("ConditionsTextView: conditionsData set successfully")
                 } catch let error {
-                    logger.error("ConditionsTextView getUsageConditions error: \(responseError(error))")
+                    let errorMsg = responseError(error)
+                    logger.error("ConditionsTextView getUsageConditions error: \(errorMsg)")
+                    errorMessage = errorMsg
                     failedToLoad = true
                 }
             }
     }
 
-    // TODO Diff rendering
+    // TODO [TODO-FEATURE: medium] Diff rendering for conditions changes
     @ViewBuilder private func viewBody() -> some View {
-        if let (usageConditions, _, _) = conditionsData {
+        if let (_, _, _) = conditionsData {
             if let conditionsHTML {
                 ConditionsWebView(html: conditionsHTML)
                     .padding(6)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Color(uiColor: .secondarySystemGroupedBackground))
-                    )
+                    .glassBackground(cornerRadius: 10)
             } else {
-                let conditionsLink = "https://github.com/simplex-chat/simplex-chat/blob/\(usageConditions.conditionsCommit)/PRIVACY.md"
-                conditionsLinkView(conditionsLink)
+                let conditionsLink = "https://popopxchat.com/conditions"
+                conditionsLinkView(conditionsLink, errorMessage: nil)
             }
         } else if failedToLoad {
-            conditionsLinkView(defaultConditionsLink)
+            conditionsLinkView(defaultConditionsLink, errorMessage: errorMessage)
         } else {
             ProgressView()
                 .scaleEffect(2)
         }
     }
 
-    private func conditionsLinkView(_ conditionsLink: String) -> some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Current conditions text couldn't be loaded, you can review conditions via this link:")
-            ExternalLink(destination: URL(string: conditionsLink)!) {
-                Text(conditionsLink)
-                    .multilineTextAlignment(.leading)
+    private func conditionsLinkView(_ conditionsLink: String, errorMessage: String?) -> some View {
+        VStack(alignment: .center, spacing: 16) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.largeTitle)
+                .foregroundStyle(LinearGradient(
+                    colors: [QuantumColors.accent, QuantumColors.accentSecondary],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ))
+                .padding(.top, 20)
+
+            Text(NSLocalizedString("Unable to load conditions of use", comment: "Conditions load error title"))
+                .font(.headline)
+                .foregroundColor(QuantumColors.textPrimary)
+                .multilineTextAlignment(.center)
+
+            Text(NSLocalizedString("The conditions text is temporarily unavailable. You can review them via the link below, or try again.", comment: "Conditions load error message"))
+                .font(.callout)
+                .foregroundColor(QuantumColors.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 20)
+
+            if let url = URL(string: conditionsLink) {
+                ExternalLink(destination: url) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "link")
+                        Text(conditionsLink)
+                    }
+                    .font(.callout)
+                    .foregroundColor(QuantumColors.accent)
+                }
+                .padding(.top, 4)
             }
+
+            Button {
+                retryLoadConditions()
+            } label: {
+                Text(NSLocalizedString("Try Again", comment: "Retry loading conditions"))
+                    .fontWeight(.semibold)
+            }
+            .buttonStyle(QuantumButtonStyle(primary: true))
+            .frame(maxWidth: 200)
+            .padding(.top, 8)
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
+    private func retryLoadConditions() {
+        failedToLoad = false
+        errorMessage = nil
+        conditionsData = nil
+        conditionsHTML = nil
+        reloadTrigger += 1
+    }
+
+    private static let localLinkRegex = (try? NSRegularExpression(pattern: "\\[([^\\(]*)\\]\\(#.*?\\)")) ?? NSRegularExpression()
+    private static let h1Regex = (try? NSRegularExpression(pattern: "^# ", options: .anchorsMatchLines)) ?? NSRegularExpression()
+
     private func prepareMarkdown(_ text: String, _ parentLink: String) -> String {
-        let localLinkRegex = try! NSRegularExpression(pattern: "\\[([^\\(]*)\\]\\(#.*\\)")
-        let h1Regex = try! NSRegularExpression(pattern: "^# ")
-        var text = localLinkRegex.stringByReplacingMatches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count), withTemplate: "$1")
-        text = h1Regex.stringByReplacingMatches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count), withTemplate: "")
+        var text = Self.localLinkRegex.stringByReplacingMatches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count), withTemplate: "$1")
+        text = Self.h1Regex.stringByReplacingMatches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count), withTemplate: "")
         return text
             .replacingOccurrences(of: "](/", with: "](\(parentLink)/")
             .replacingOccurrences(of: "](./", with: "](\(parentLink)/")
@@ -478,58 +557,66 @@ struct SingleOperatorUsageConditionsView: View {
     }
 
     @ViewBuilder private func viewBody() -> some View {
-        let operatorsWithConditionsAccepted = ChatModel.shared.conditions.serverOperators.filter { $0.conditionsAcceptance.conditionsAccepted }
-        if case .accepted = userServers[operatorIndex].operator_.conditionsAcceptance {
-
-            // In current UI implementation this branch doesn't get shown - as conditions can't be opened from inside operator once accepted
-            VStack(alignment: .leading, spacing: 20) {
-                viewHeader()
-                ConditionsTextView()
+        if !userServers.indices.contains(operatorIndex) {
+            VStack {
+                Text(NSLocalizedString("Server configuration has changed. Please go back and try again.", comment: ""))
+                    .multilineTextAlignment(.center)
+                    .padding()
             }
-            .padding(.bottom)
-            .padding(.bottom)
-            .padding(.horizontal)
-            .frame(maxHeight: .infinity)
+        } else {
+            let operatorsWithConditionsAccepted = ChatModel.shared.conditions.serverOperators.filter { $0.conditionsAcceptance.conditionsAccepted }
+            if case .accepted = userServers[operatorIndex].operator_.conditionsAcceptance {
 
-        } else if !operatorsWithConditionsAccepted.isEmpty {
-
-            NavigationView {
+                // In current UI implementation this branch doesn't get shown - as conditions can't be opened from inside operator once accepted
                 VStack(alignment: .leading, spacing: 20) {
                     viewHeader()
-                    Text("Conditions are already accepted for these operator(s): **\(operatorsWithConditionsAccepted.map { $0.legalName_ }.joined(separator: ", "))**.")
-                    Text("The same conditions will apply to operator **\(userServers[operatorIndex].operator_.legalName_)**.")
-                    conditionsAppliedToOtherOperatorsText()
-                    Spacer()
-
-                    acceptConditionsButton()
-                    usageConditionsNavLinkButton()
+                    ConditionsTextView()
                 }
                 .padding(.bottom)
                 .padding(.bottom)
                 .padding(.horizontal)
                 .frame(maxHeight: .infinity)
-            }
 
-        } else {
+            } else if !operatorsWithConditionsAccepted.isEmpty {
 
-            VStack(alignment: .leading, spacing: 20) {
-                viewHeader()
-                Text("To use the servers of **\(userServers[operatorIndex].operator_.legalName_)**, accept conditions of use.")
-                conditionsAppliedToOtherOperatorsText()
-                ConditionsTextView()
-                acceptConditionsButton()
+                NavigationStack {
+                    VStack(alignment: .leading, spacing: 20) {
+                        viewHeader()
+                        Text(String.localizedStringWithFormat(NSLocalizedString("Conditions are already accepted for these operator(s): **%@**.", comment: ""), operatorsWithConditionsAccepted.map { $0.legalName_ }.joined(separator: ", ")))
+                        Text(String.localizedStringWithFormat(NSLocalizedString("The same conditions will apply to operator **%@**.", comment: ""), userServers[operatorIndex].operator_.legalName_))
+                        conditionsAppliedToOtherOperatorsText()
+                        Spacer()
+
+                        acceptConditionsButton()
+                        usageConditionsNavLinkButton()
+                    }
                     .padding(.bottom)
                     .padding(.bottom)
-            }
-            .padding(.horizontal)
-            .frame(maxHeight: .infinity)
+                    .padding(.horizontal)
+                    .frame(maxHeight: .infinity)
+                }
 
+            } else {
+
+                VStack(alignment: .leading, spacing: 20) {
+                    viewHeader()
+                    Text(String.localizedStringWithFormat(NSLocalizedString("To use the servers of **%@**, accept conditions of use.", comment: ""), userServers[operatorIndex].operator_.legalName_))
+                    conditionsAppliedToOtherOperatorsText()
+                    ConditionsTextView()
+                    acceptConditionsButton()
+                        .padding(.bottom)
+                        .padding(.bottom)
+                }
+                .padding(.horizontal)
+                .frame(maxHeight: .infinity)
+
+            }
         }
     }
 
     private func viewHeader() -> some View {
         HStack {
-            Text("Use \(userServers[operatorIndex].operator_.tradeName)").font(.largeTitle).bold()
+            Text(String.localizedStringWithFormat(NSLocalizedString("Use %@", comment: "operator trade name"), userServers[operatorIndex].operator_.tradeName)).font(.largeTitle).bold()
             Spacer()
             conditionsLinkButton()
         }
@@ -544,7 +631,7 @@ struct SingleOperatorUsageConditionsView: View {
             $0.operatorId != userServers[operatorIndex].operator_.operatorId
         }
         if !otherOperatorsToApply.isEmpty {
-            Text("These conditions will also apply for: **\(otherOperatorsToApply.map { $0.legalName_ }.joined(separator: ", "))**.")
+            Text(String.localizedStringWithFormat(NSLocalizedString("These conditions will also apply for: **%@**.", comment: ""), otherOperatorsToApply.map { $0.legalName_ }.joined(separator: ", ")))
         }
     }
     
@@ -555,62 +642,140 @@ struct SingleOperatorUsageConditionsView: View {
                 ($0.enabled && !$0.conditionsAcceptance.conditionsAccepted) // Other enabled operators with conditions not accepted
             }
             .map { $0.operatorId }
+        logger.debug("acceptConditionsButton: operatorIds=\(operatorIds), conditionsId=\(ChatModel.shared.conditions.currentConditions.conditionsId)")
         return Button {
-            acceptForOperators(operatorIds, operatorIndex)
+            Task {
+                await acceptForOperators(operatorIds, operatorIndex)
+            }
         } label: {
-            Text("Accept conditions")
+            Text(NSLocalizedString("Accept conditions", comment: ""))
         }
-        .buttonStyle(OnboardingButtonStyle())
+        .buttonStyle(QuantumButtonStyle(primary: true))
+        .disabled(operatorIds.isEmpty)
     }
 
-    func acceptForOperators(_ operatorIds: [Int64], _ operatorIndexToEnable: Int) {
-        Task {
-            do {
-                let conditionsId = ChatModel.shared.conditions.currentConditions.conditionsId
-                let r = try await acceptConditions(conditionsId: conditionsId, operatorIds: operatorIds)
+    func acceptForOperators(_ operatorIds: [Int64], _ operatorIndexToEnable: Int) async {
+        logger.debug("acceptForOperators CALLED with operatorIds=\(operatorIds), operatorIndex=\(operatorIndexToEnable)")
+        do {
+            var resolvedOperatorIds = operatorIds
+            logger.debug("acceptForOperators START: initial operatorIds=\(operatorIds), operatorIndex=\(operatorIndexToEnable)")
+            logger.debug("acceptForOperators: current conditions - serverOperators.count=\(ChatModel.shared.conditions.serverOperators.count), conditionsId=\(ChatModel.shared.conditions.currentConditions.conditionsId)")
+
+            if ChatModel.shared.conditions.serverOperators.isEmpty || ChatModel.shared.conditions.currentConditions.conditionsId == 0 {
+                logger.debug("acceptForOperators: Conditions not loaded (operators empty or conditionsId=0), reloading from server...")
+
+                var loadedConditions: ServerOperatorConditions? = nil
+
+                for attempt in 1...5 {
+                    do {
+                        logger.debug("acceptForOperators: Attempt \(attempt)/5 to load conditions from server")
+                        let conditions = try await apiGetServerOperators()
+                        logger.debug("acceptForOperators: Load attempt \(attempt) succeeded - conditionsId=\(conditions.currentConditions.conditionsId), operators count=\(conditions.serverOperators.count)")
+
+                        if conditions.currentConditions.conditionsId > 0 && !conditions.serverOperators.isEmpty {
+                            loadedConditions = conditions
+                            logger.debug("acceptForOperators: Got valid conditionsId=\(conditions.currentConditions.conditionsId) with \(conditions.serverOperators.count) operators, breaking retry loop")
+                            break
+                        } else {
+                            logger.warning("acceptForOperators: Attempt \(attempt) returned invalid data - conditionsId=\(conditions.currentConditions.conditionsId), operators count=\(conditions.serverOperators.count)")
+                            try await Task.sleep(nanoseconds: UInt64(1_000_000_000))
+                        }
+                    } catch let error {
+                        logger.warning("acceptForOperators: Attempt \(attempt) failed: \(responseError(error))")
+                        if attempt < 5 {
+                            logger.debug("acceptForOperators: Waiting 1 second before retry...")
+                            try await Task.sleep(nanoseconds: UInt64(1_000_000_000))
+                        }
+                    }
+                }
+
+                guard let conditions = loadedConditions else {
+                    logger.error("acceptForOperators: FAILED to load conditions after 5 attempts")
+                    logger.error("acceptForOperators: This likely means the Haskell core is not responding or database is corrupted")
+                    throw ChatError.error(errorType: ChatErrorType.commandError(message: NSLocalizedString("error_failed_load_protocol_info", comment: "Error when protocol info fails to load")))
+                }
+
+                logger.debug("acceptForOperators: Successfully loaded conditions with valid ID=\(conditions.currentConditions.conditionsId)")
                 await MainActor.run {
-                    ChatModel.shared.conditions = r
-                    updateOperatorsConditionsAcceptance($currUserServers, r.serverOperators)
-                    updateOperatorsConditionsAcceptance($userServers, r.serverOperators)
+                    ChatModel.shared.conditions = conditions
+                }
+            } else {
+                logger.debug("acceptForOperators: Conditions already loaded with valid ID=\(ChatModel.shared.conditions.currentConditions.conditionsId), skipping reload")
+            }
+
+            let conditionsId = ChatModel.shared.conditions.currentConditions.conditionsId
+            logger.debug("acceptForOperators: Final validation - conditionsId=\(conditionsId), resolvedOperatorIds count=\(resolvedOperatorIds.count)")
+
+            if resolvedOperatorIds.isEmpty {
+                logger.debug("acceptForOperators: operatorIds is empty, applying fallback logic")
+                resolvedOperatorIds = ChatModel.shared.conditions.serverOperators
+                    .filter { $0.enabled }
+                    .map { $0.operatorId }
+                logger.debug("acceptForOperators: fallback operatorIds=\(resolvedOperatorIds)")
+            }
+
+            guard conditionsId > 0 else {
+                logger.error("acceptForOperators: BLOCKED - Invalid conditionsId=\(conditionsId). Cannot proceed without valid protocol ID.")
+                throw ChatError.error(errorType: ChatErrorType.commandError(message: String(format: NSLocalizedString("error_invalid_conditions_id_detail", comment: "Error when conditions ID is invalid with detail"), conditionsId)))
+            }
+
+            guard !resolvedOperatorIds.isEmpty else {
+                logger.error("acceptForOperators: BLOCKED - Empty operatorIds after fallback")
+                throw ChatError.error(errorType: ChatErrorType.commandError(message: NSLocalizedString("error_no_operators_for_conditions", comment: "Error when no operators specified for conditions")))
+            }
+
+            logger.debug("acceptForOperators: All validations passed, calling acceptConditions API - conditionsId=\(conditionsId), operatorIds=\(resolvedOperatorIds)")
+            let r = try await acceptConditions(conditionsId: conditionsId, operatorIds: resolvedOperatorIds)
+            logger.debug("acceptForOperators: acceptConditions API call succeeded, updating UI")
+            await MainActor.run {
+                ChatModel.shared.conditions = r
+                updateOperatorsConditionsAcceptance($currUserServers, r.serverOperators)
+                updateOperatorsConditionsAcceptance($userServers, r.serverOperators)
+                if userServers.indices.contains(operatorIndexToEnable) {
                     userServers[operatorIndexToEnable].operator?.enabled = true
-                    validateServers_($userServers, $serverErrors, $serverWarnings)
-                    dismiss()
                 }
-            } catch let error {
-                await MainActor.run {
-                    showAlert(
-                        NSLocalizedString("Error accepting conditions", comment: "alert title"),
-                        message: responseError(error)
-                    )
-                }
+                validateServers_($userServers, $serverErrors, $serverWarnings)
+                dismiss()
+            }
+        } catch let error {
+            let errorMsg = responseError(error)
+            logger.error("acceptForOperators FAILED with error: \(errorMsg)")
+            await MainActor.run {
+                showAlert(
+                    NSLocalizedString("Error accepting conditions", comment: "alert title"),
+                    message: errorMsg
+                )
             }
         }
     }
 
     private func usageConditionsNavLinkButton() -> some View {
-        NavigationLink("View conditions") {
+        NavigationLink(NSLocalizedString("View conditions", comment: "")) {
             ConditionsTextView()
                 .padding()
-                .navigationTitle("Conditions of use")
+                .navigationTitle(NSLocalizedString("Conditions of use", comment: ""))
                 .navigationBarTitleDisplayMode(.large)
                 .toolbar { ToolbarItem(placement: .navigationBarTrailing, content: conditionsLinkButton) }
                 .modifier(ThemedBackground(grouped: true))
         }
+        .listRowBackground(Color.clear)
+        .scrollContentBackground(.hidden)
         .font(.callout)
         .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
+@MainActor
 func conditionsLinkButton() -> some View {
     let commit = ChatModel.shared.conditions.currentConditions.conditionsCommit
-    let mdUrl = URL(string: "https://github.com/simplex-chat/simplex-chat/blob/\(commit)/PRIVACY.md") ?? conditionsURL
+    let mdUrl = URL(string: "https://popopxchat.com/conditions") ?? conditionsURL
     return Menu {
         ExternalLink(destination: mdUrl) {
-            Label("Open conditions", systemImage: "doc")
+            Label(NSLocalizedString("Open conditions", comment: ""), systemImage: "doc")
         }
-        if let commitUrl = URL(string: "https://github.com/simplex-chat/simplex-chat/commit/\(commit)") {
+        if let commitUrl = URL(string: "https://popopxchat.com/conditions/\(commit)") {
             ExternalLink(destination: commitUrl) {
-                Label("Open changes", systemImage: "ellipsis")
+                Label(NSLocalizedString("Open changes", comment: ""), systemImage: "ellipsis")
             }
         }
     } label: {
@@ -629,7 +794,8 @@ func conditionsLinkButton() -> some View {
         userServers: Binding.constant([UserOperatorServers.sampleData1, UserOperatorServers.sampleDataNilOperator]),
         serverErrors: Binding.constant([]),
         serverWarnings: Binding.constant([]),
-        operatorIndex: 1,
+        operatorIndex: 0,
         useOperator: ServerOperator.sampleData1.enabled
     )
+    .previewEnvironment()
 }

@@ -1,40 +1,91 @@
 //
 //  ProfileImage.swift
-//  SimpleX
+//  POPOPX
 //
 //  Created by Evgeny on 23/03/2022.
-//  Copyright © 2022 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
-struct ProfileImage: View {
+// MARK: - POPOPX Configuration
+
+private enum PXProfileImageConfig {
+    static let componentTag: String = "PX_PROFILE_IMAGE"
+    static let defaultIconName: String = "person.crop.circle.fill"
+    static let tierBadgeOffset: CGFloat = 2
+    static let innerCircleInset: CGFloat = 2
+}
+
+// MARK: - Profile Image View
+
+struct PXProfileImageView: View {
     @EnvironmentObject var theme: AppTheme
+    @ObservedObject var pxSubscription = SubscriptionManager.shared
     var imageStr: String? = nil
-    var iconName: String = "person.crop.circle.fill"
+    var iconName: String = PXProfileImageConfig.defaultIconName
     var size: CGFloat
     var color = Color(uiColor: .tertiarySystemGroupedBackground)
     var backgroundColor: Color? = nil
     var blurred = false
-    @AppStorage(DEFAULT_PROFILE_IMAGE_CORNER_RADIUS) private var radius = defaultProfileImageCorner
+    var showTierBadge: Bool = false
+    @AppStorage(DEFAULT_PROFILE_IMAGE_CORNER_RADIUS) private var pxRadius = defaultProfileImageCorner
 
     var body: some View {
-        if let uiImage = imageFromBase64(imageStr) {
-            clipProfileImage(Image(uiImage: uiImage), size: size, radius: radius, blurred: blurred)
-        } else {
-            let c = color.asAnotherColorFromSecondaryVariant(theme)
-            Image(systemName: iconName)
-                .resizable()
-                .foregroundColor(c)
-                .scaledToFit()
-                .frame(width: size, height: size)
-                .background(
-                    Circle()
-                        .fill(backgroundColor != nil ? backgroundColor! : .clear)
-                        .frame(width: size - 2, height: size - 2) // less than size of Image to avoid slightly visible border
-                )
+        ZStack(alignment: .bottomTrailing) {
+            if let uiImage = imageFromBase64(imageStr) {
+                clipProfileImage(Image(uiImage: uiImage), size: size, radius: pxRadius, blurred: blurred)
+            } else {
+                let c = color.asAnotherColorFromSecondaryVariant(theme)
+                Image(systemName: iconName)
+                    .resizable()
+                    .foregroundColor(c)
+                    .scaledToFit()
+                    .frame(width: size, height: size)
+                    .background(
+                        Circle()
+                            .fill(backgroundColor ?? .clear)
+                            .frame(width: size - PXProfileImageConfig.innerCircleInset, height: size - PXProfileImageConfig.innerCircleInset)
+                    )
+            }
+
+            if showTierBadge {
+                pxTierBadge
+                    .offset(x: PXProfileImageConfig.tierBadgeOffset, y: PXProfileImageConfig.tierBadgeOffset)
+            }
         }
+        .popopxBranded()
+    }
+
+    private var pxTierBadge: some View {
+        let tier = pxSubscription.effectiveTier
+        return Group {
+            switch tier {
+            case .premium:
+                Image(systemName: "crown.fill")
+                    .font(.system(size: size * 0.25, weight: .bold))
+                    .foregroundColor(.white)
+                    .padding(size * 0.06)
+                    .background(LinearGradient(colors: [Color(red: 0, green: 1, blue: 0.88), Color(red: 0.58, green: 0.36, blue: 1)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .clipShape(Circle())
+                    .overlay(Circle().strokeBorder(Color.white, lineWidth: 1.5))
+            case .basic:
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.system(size: size * 0.25, weight: .bold))
+                    .foregroundColor(.white)
+                    .padding(size * 0.06)
+                    .background(LinearGradient(colors: [Color(0xFFFFB74D), Color(0xFFFF5470)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .clipShape(Circle())
+                    .overlay(Circle().strokeBorder(Color.white, lineWidth: 1.5))
+            case .free:
+                EmptyView()
+            }
+        }
+        .frame(width: size * 0.4, height: size * 0.4)
+        .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
     }
 }
 
@@ -43,6 +94,7 @@ extension Color {
         return self
     }
 
+    @MainActor
     func asAnotherColorFromSecondaryVariant(_ theme: AppTheme) -> Color {
         let s = theme.colors.secondaryVariant
         let l = theme.colors.isLight
@@ -67,3 +119,6 @@ struct ProfileImage_Previews: PreviewProvider {
             .background(.black)
     }
 }
+
+// MARK: - Backward Compatibility
+typealias ProfileImage = PXProfileImageView

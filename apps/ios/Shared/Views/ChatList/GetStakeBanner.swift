@@ -1,13 +1,15 @@
 //
 //  GetStakeBanner.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 21.09.2026.
 //  Copyright © 2026 SimpleX Chat. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
-import SimpleXChat
+import POPOPXSwitch
 
 // Spec: spec/client/chat-list.md#GetStakeBanner
 struct GetStakeBanner: View {
@@ -22,7 +24,7 @@ struct GetStakeBanner: View {
             Button(action: onTap) {
                 HStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Invest in SimpleX Chat!")
+                        Text("Invest in POPOPX!")
                             .font(.headline)
                             .foregroundColor(theme.colors.primary)
                             .lineLimit(2)
@@ -75,11 +77,11 @@ struct BannerCard: ViewModifier {
             let aspect = max(geo.size.height, 1) / max(geo.size.width, 1)
             let startScale: CGFloat = colorScheme == .light ? 2.5 : 3.0
             let endScale: CGFloat = colorScheme == .light ? 1.7 : 2.1
-            let gp = OnboardingCardView.gradientPoints(aspectRatio: aspect, scale: 1.0)
+            let gp = PXOnboardingCard.gradientPoints(aspectRatio: aspect, scale: 1.0)
             let start = UnitPoint(x: 0.5 + (gp.start.x - 0.5) * startScale, y: 0.5 + (gp.start.y - 0.5) * startScale)
             let end = UnitPoint(x: 0.5 + (gp.end.x - 0.5) * endScale, y: 0.5 + (gp.end.y - 0.5) * endScale)
             return LinearGradient(
-                stops: colorScheme == .light ? OnboardingCardView.lightStops : OnboardingCardView.darkStops,
+                stops: colorScheme == .light ? PXOnboardingCard.lightStops : PXOnboardingCard.darkStops,
                 startPoint: start,
                 endPoint: end
             )

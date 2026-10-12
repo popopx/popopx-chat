@@ -1,11 +1,13 @@
 //
 //  UserAddressLearnMore.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by spaced4ndy on 27.04.2023.
-//  Copyright © 2023 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import SwiftUI
 
 struct UserAddressLearnMore: View {
@@ -17,29 +19,30 @@ struct UserAddressLearnMore: View {
         VStack {
             List {
                 VStack(alignment: .leading, spacing: 12) {
-                    (Text(Image(systemName: "envelope")).foregroundColor(.secondary) + textSpace + Text("Share address publicly").bold().font(.title2))
-                    Text("Share SimpleX address on social media.")
-                    Text("You won't lose your contacts if you later delete your address.")
+                    (Text(Image(systemName: "envelope")).foregroundColor(.secondary) + textSpace + Text(NSLocalizedString("share_address_publicly", comment: "Bold header for sharing address publicly")).bold().font(QuantumFonts.sectionHeader).foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary))
+                    Text(NSLocalizedString("address_wont_lose_contacts", comment: "Hint that deleting address won't lose contacts"))
 
-                    (Text(Image(systemName: "link.badge.plus")).foregroundColor(.secondary) + textSpace + Text("Share 1-time link with a friend").font(.title2).bold())
+                    (Text(Image(systemName: "link.badge.plus")).foregroundColor(.secondary) + textSpace + Text(NSLocalizedString("share_onetime_link_friend", comment: "Bold header for 1-time link sharing")).font(QuantumFonts.sectionHeader).bold().foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary))
                         .padding(.top)
-                    Text("1-time link can be used *with one contact only* - share in person or via any messenger.")
-                    Text("You can set connection name, to remember who the link was shared with.")
+                    Text(NSLocalizedString("onetime_link_usage_hint", comment: "Explanation of 1-time link usage"))
+                    Text(NSLocalizedString("set_connection_name_hint", comment: "Hint about setting connection name"))
 
                     if !showCreateAddressButton {
-                        (Text(Image(systemName: "shield")).foregroundColor(.secondary) + textSpace + Text("Connection security").font(.title2).bold())
+                        (Text(Image(systemName: "shield")).foregroundColor(.secondary) + textSpace + Text(NSLocalizedString("connection_security", comment: "Bold header for connection security")).font(QuantumFonts.sectionHeader).bold().foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary))
                             .padding(.top)
-                        Text("SimpleX address and 1-time links are safe to share via any messenger.")
-                        Text("To protect against your link being replaced, you can compare contact security codes.")
-                        ExternalLink("Read more in User Guide.", destination: URL(string: "https://simplex.chat/docs/guide/making-connections.html#comparison-of-1-time-invitation-links-and-simplex-contact-addresses")!)
+                        Text(NSLocalizedString("address_links_safe_share", comment: "Reassurance that addresses are safe to share"))
+                        Text(NSLocalizedString("compare_security_codes", comment: "Suggestion to compare security codes"))
+                        ExternalLink("read_more_user_guide", destination: URL(string: "https://popopxchat.com/docs/guide/making-connections.html#comparison-of-1-time-invitation-links-and-simplex-contact-addresses") ?? URL(fileURLWithPath: NSTemporaryDirectory()))
                             .padding(.top)
                     }
 
                 }
-                .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
+            .listRowBackground(Color.clear)
+            .scrollContentBackground(.hidden)
+            .modifier(ThemedBackground(grouped: true))
             .frame(maxHeight: .infinity, alignment: .top)
 
             Spacer()
@@ -55,6 +58,7 @@ struct UserAddressLearnMore: View {
             }
         }
         .frame(maxHeight: .infinity, alignment: .top)
+        .popopxBranded()
     }
     
     private func addressCreationButton() -> some View {
@@ -62,19 +66,14 @@ struct UserAddressLearnMore: View {
             Button {
                 createAddressLinkActive = true
             } label: {
-                Text("Create SimpleX address")
+                Text(NSLocalizedString("create_popopx_address", comment: "Button to create POPOPX address"))
             }
             .buttonStyle(OnboardingButtonStyle())
-
-            NavigationLink(isActive: $createAddressLinkActive) {
-                UserAddressView(autoCreate: true)
-                    .navigationTitle("SimpleX address")
-                    .navigationBarTitleDisplayMode(.large)
-            } label: {
-                EmptyView()
-            }
-            .frame(width: 1, height: 1)
-            .hidden()
+        }
+        .navigationDestination(isPresented: $createAddressLinkActive) {
+            UserAddressView(autoCreate: true)
+                .navigationTitle(NSLocalizedString("popopx_address_title", comment: "Navigation title for POPOPX address"))
+                .navigationBarTitleDisplayMode(.large)
         }
     }
 
@@ -83,20 +82,15 @@ struct UserAddressLearnMore: View {
             Button {
                 createOneTimeLinkActive = true
             } label: {
-                Text("Create 1-time link")
+                Text(NSLocalizedString("create_onetime_link", comment: "Button to create 1-time link"))
                     .font(.callout)
             }
-
-            NavigationLink(isActive: $createOneTimeLinkActive) {
-                NewChatView(selection: .invite)
-                    .navigationTitle("New chat")
-                    .navigationBarTitleDisplayMode(.large)
-                    .modifier(ThemedBackground(grouped: true))
-            } label: {
-                EmptyView()
-            }
-            .frame(width: 1, height: 1)
-            .hidden()
+        }
+        .navigationDestination(isPresented: $createOneTimeLinkActive) {
+            PXNewChat(selection: .invite)
+                .navigationTitle(NSLocalizedString("new_chat_title", comment: "Navigation title for new chat"))
+                .navigationBarTitleDisplayMode(.large)
+                .modifier(ThemedBackground(grouped: true))
         }
     }
 }

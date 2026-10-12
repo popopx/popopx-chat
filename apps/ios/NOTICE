@@ -1,0 +1,66 @@
+POPOPX iOS - Derivative Work
+Copyright (C) 2026 POPOPX Team <chat@popopx.xyz>
+https://github.com/popopx/popopx-ios
+
+This repository contains modifications to the original code by simplex.chat.
+In accordance with AGPL v3 Section 5(a), all modified source files have been
+marked with prominent modification notices and dates.
+
+===============================================================================
+ORIGINAL WORK
+===============================================================================
+
+This software is a derivative of simplex-chat.
+
+  Original project:  simplex-chat
+  Original URL:      https://github.com/simplex-chat/simplex-chat
+  Original copyright: Copyright (C) 2020-2025 simplex.chat
+  Original license:  GNU Affero General Public License v3.0 (AGPL-3.0)
+
+===============================================================================
+MODIFICATIONS (AGPL v3 Section 5.a)
+===============================================================================
+
+POPOPX Team has modified this software. A summary of the principal changes:
+
+  - Rebranded from SimpleX Chat to POPOPX
+  - Added quantum-resistant cryptographic protocols (BBS signatures, blst)
+  - Added dual-transport architecture: internet + BLE mesh (via bitchat)
+  - Added unified identity management across multiple devices
+  - Added token-based monetization and badge system
+  - Added encrypted document sharing
+  - Added community features and bot platform
+  - Added Nostr relay bridge
+  - Merged upstream simplex-chat iOS 7.1 updates (2026-10-08)
+
+All modified source files contain prominent notices identifying the
+modifications and their dates, as required by AGPL v3 Section 5(a).
+
+===============================================================================
+THIRD-PARTY COMPONENTS
+===============================================================================
+
+  - bitchat by Jack Dorsey (permissionless.tech) — The Unlicense (Public Domain)
+    https://github.com/permissionlesstech/bitchat
+  - blst — Apache License 2.0
+  - libbbs — Apache License 2.0
+  - WebRTC by Google — BSD License
+
+===============================================================================
+SOURCE CODE AVAILABILITY (AGPL v3 Section 13)
+===============================================================================
+
+If you modify this software and operate it as a network service, you must
+make the complete corresponding source code available to users interacting
+with it remotely.
+
+Source code is available at:
+  - https://github.com/popopx/popopx-ios
+  - Request via email: chat@popopx.xyz
+
+===============================================================================
+LICENSE
+===============================================================================
+
+Licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+Full license text: see LICENSE file or https://www.gnu.org/licenses/agpl-3.0.html

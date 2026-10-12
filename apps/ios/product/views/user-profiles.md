@@ -133,5 +133,5 @@ Two-stage confirmation:
 
 - `Shared/Views/UserSettings/UserProfilesView.swift` -- Main profiles list, search/password, profile actions, delete confirmation
 - `Shared/Views/Onboarding/CreateProfile.swift` -- Profile creation form (shared with onboarding and profiles view)
-- `Shared/Views/UserSettings/UserAddressView.swift` -- User's SimpleX address management (create, share, delete)
+- `Shared/Views/UserSettings/UserAddressView.swift` -- User's POPOPX address management (create, share, delete)
 - `Shared/Views/ChatList/UserPicker.swift` -- Profile switcher sheet that navigates to this view

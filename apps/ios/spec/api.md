@@ -1,11 +1,11 @@
-# SimpleX Chat iOS -- Chat API Reference
+# POPOPX Chat iOS -- Chat API Reference
 
 > Complete specification of the ChatCommand, ChatResponse, ChatEvent, and ChatError types that form the API between the Swift UI layer and the Haskell core.
 >
 > Related specs: [Architecture](architecture.md) | [State Management](state.md) | [README](README.md)
 > Related product: [Concept Index](../product/concepts.md)
 
-**Source:** [`AppAPITypes.swift`](../Shared/Model/AppAPITypes.swift) | [`SimpleXAPI.swift`](../Shared/Model/SimpleXAPI.swift) | [`APITypes.swift`](../SimpleXChat/APITypes.swift) | [`API.swift`](../SimpleXChat/API.swift)
+**Source:** [`AppAPITypes.swift`](../Shared/Model/AppAPITypes.swift) | [`POPOPXAPI.swift`](../Shared/Model/POPOPXAPI.swift) | [`APITypes.swift`](../POPOPXSwitch/APITypes.swift) | [`API.swift`](../POPOPXSwitch/API.swift)
 
 ---
 
@@ -33,10 +33,10 @@ The iOS app communicates with the Haskell core exclusively through a command/res
 
 **Source files**:
 - [`Shared/Model/AppAPITypes.swift`](../Shared/Model/AppAPITypes.swift) -- `ChatCommand` ([L15](../Shared/Model/AppAPITypes.swift#L15)), `ChatResponse0` ([L657](../Shared/Model/AppAPITypes.swift#L657)), `ChatResponse1` ([L779](../Shared/Model/AppAPITypes.swift#L779)), `ChatResponse2` ([L919](../Shared/Model/AppAPITypes.swift#L919)), `ChatEvent` ([L1069](../Shared/Model/AppAPITypes.swift#L1069)) enums
-- [`SimpleXChat/APITypes.swift`](../SimpleXChat/APITypes.swift) -- `APIResult<R>` ([L27](../SimpleXChat/APITypes.swift#L27)), `ChatAPIResult` ([L65](../SimpleXChat/APITypes.swift#L65)), `ChatError` ([L699](../SimpleXChat/APITypes.swift#L699))
-- [`Shared/Model/SimpleXAPI.swift`](../Shared/Model/SimpleXAPI.swift) -- FFI bridge functions (`chatSendCmd` [L121](../Shared/Model/SimpleXAPI.swift#L121), `chatRecvMsg` [L237](../Shared/Model/SimpleXAPI.swift#L237))
-- [`SimpleXChat/API.swift`](../SimpleXChat/API.swift) -- Low-level FFI (`sendSimpleXCmd` [L115](../SimpleXChat/API.swift#L115), `recvSimpleXMsg` [L137](../SimpleXChat/API.swift#L137))
-- `SimpleXChat/ChatTypes.swift` -- Data types used in commands/responses (User, Contact, GroupInfo, ChatItem, etc.)
+- [`POPOPXSwitch/APITypes.swift`](../POPOPXSwitch/APITypes.swift) -- `APIResult<R>` ([L27](../POPOPXSwitch/APITypes.swift#L27)), `ChatAPIResult` ([L65](../POPOPXSwitch/APITypes.swift#L65)), `ChatError` ([L699](../POPOPXSwitch/APITypes.swift#L699))
+- [`Shared/Model/POPOPXAPI.swift`](../Shared/Model/POPOPXAPI.swift) -- FFI bridge functions (`chatSendCmd` [L121](../Shared/Model/POPOPXAPI.swift#L121), `chatRecvMsg` [L237](../Shared/Model/POPOPXAPI.swift#L237))
+- [`POPOPXSwitch/API.swift`](../POPOPXSwitch/API.swift) -- Low-level FFI (`sendPopopxCmd` [L115](../POPOPXSwitch/API.swift#L115), `recvPopopxMsg` [L137](../POPOPXSwitch/API.swift#L137))
+- `POPOPXSwitch/ChatTypes.swift` -- Data types used in commands/responses (User, Contact, GroupInfo, ChatItem, etc.)
 - `../../src/Simplex/Chat/Controller.hs` -- Haskell controller (function `chat_send_cmd_retry`, `chat_recv_msg_wait`)
 
 ---
@@ -268,8 +268,8 @@ The `ChatCommand` enum ([`AppAPITypes.swift` L15](../Shared/Model/AppAPITypes.sw
 
 | Command | Parameters | Description | Source |
 |---------|-----------|-------------|--------|
-| `apiCreateMyAddress` | `userId` | Create SimpleX address | [L148](../Shared/Model/AppAPITypes.swift#L148) |
-| `apiDeleteMyAddress` | `userId` | Delete SimpleX address | [L149](../Shared/Model/AppAPITypes.swift#L149) |
+| `apiCreateMyAddress` | `userId` | Create POPOPX address | [L148](../Shared/Model/AppAPITypes.swift#L148) |
+| `apiDeleteMyAddress` | `userId` | Delete POPOPX address | [L149](../Shared/Model/AppAPITypes.swift#L149) |
 | `apiShowMyAddress` | `userId` | Show current address | [L150](../Shared/Model/AppAPITypes.swift#L150) |
 | `apiAddMyAddressShortLink` | `userId` | Add short link to address | [L151](../Shared/Model/AppAPITypes.swift#L151) |
 | `apiSetProfileAddress` | `userId, on: Bool` | Toggle address in profile | [L152](../Shared/Model/AppAPITypes.swift#L152) |
@@ -369,7 +369,7 @@ Group, file, call, notification, and misc responses ([`AppAPITypes.swift` L919](
 
 The `ChatEvent` enum ([`AppAPITypes.swift` L1069](../Shared/Model/AppAPITypes.swift#L1069)) represents async events from the Haskell core. These arrive via `chat_recv_msg_wait` polling, not as responses to commands.
 
-Event processing entry point: [`processReceivedMsg`](../Shared/Model/SimpleXAPI.swift#L2282) in `SimpleXAPI.swift`.
+Event processing entry point: [`processReceivedMsg`](../Shared/Model/POPOPXAPI.swift#L2282) in `POPOPXAPI.swift`.
 
 ### Connection Events
 
@@ -461,7 +461,7 @@ Event processing entry point: [`processReceivedMsg`](../Shared/Model/SimpleXAPI.
 
 ## 5. Error Types
 
-Defined in [`SimpleXChat/APITypes.swift` L699](../SimpleXChat/APITypes.swift#L699):
+Defined in [`POPOPXSwitch/APITypes.swift` L699](../POPOPXSwitch/APITypes.swift#L699):
 
 ```swift
 public enum ChatError: Decodable, Hashable, Error {
@@ -479,25 +479,25 @@ public enum ChatError: Decodable, Hashable, Error {
 
 | Category | Enum | Description | Source |
 |----------|------|-------------|--------|
-| Chat logic | `ChatErrorType` | Business logic errors (e.g., invalid state, permission denied, `chatRelayExists`) | [`APITypes.swift` L722](../SimpleXChat/APITypes.swift#L722) |
-| SMP Agent | `AgentErrorType` | Protocol/network errors from the SMP agent layer | [`APITypes.swift` L884](../SimpleXChat/APITypes.swift#L884) |
-| Database store | `StoreError` | SQLite query/constraint errors (includes relay-related: `relayUserNotFound`, `duplicateMemberId`, `userChatRelayNotFound`, `groupRelayNotFound`, `groupRelayNotFoundByMemberId`) | [`APITypes.swift` L802](../SimpleXChat/APITypes.swift#L802) |
-| Database engine | `DatabaseError` | DB open/migration/encryption errors | [`APITypes.swift` L871](../SimpleXChat/APITypes.swift#L871) |
-| Remote control | `RemoteCtrlError` | Remote desktop session errors | [`APITypes.swift` L1054](../SimpleXChat/APITypes.swift#L1054) |
-| Parse failure | `invalidJSON` | Failed to decode response JSON | [`APITypes.swift` L699](../SimpleXChat/APITypes.swift#L699) |
-| Unexpected | `unexpectedResult` | Response type does not match expected | [`APITypes.swift` L699](../SimpleXChat/APITypes.swift#L699) |
+| Chat logic | `ChatErrorType` | Business logic errors (e.g., invalid state, permission denied, `chatRelayExists`) | [`APITypes.swift` L722](../POPOPXSwitch/APITypes.swift#L722) |
+| SMP Agent | `AgentErrorType` | Protocol/network errors from the SMP agent layer | [`APITypes.swift` L884](../POPOPXSwitch/APITypes.swift#L884) |
+| Database store | `StoreError` | SQLite query/constraint errors (includes relay-related: `relayUserNotFound`, `duplicateMemberId`, `userChatRelayNotFound`, `groupRelayNotFound`, `groupRelayNotFoundByMemberId`) | [`APITypes.swift` L802](../POPOPXSwitch/APITypes.swift#L802) |
+| Database engine | `DatabaseError` | DB open/migration/encryption errors | [`APITypes.swift` L871](../POPOPXSwitch/APITypes.swift#L871) |
+| Remote control | `RemoteCtrlError` | Remote desktop session errors | [`APITypes.swift` L1054](../POPOPXSwitch/APITypes.swift#L1054) |
+| Parse failure | `invalidJSON` | Failed to decode response JSON | [`APITypes.swift` L699](../POPOPXSwitch/APITypes.swift#L699) |
+| Unexpected | `unexpectedResult` | Response type does not match expected | [`APITypes.swift` L699](../POPOPXSwitch/APITypes.swift#L699) |
 
 ---
 
 ## 6. FFI Bridge Functions
 
-Defined in [`Shared/Model/SimpleXAPI.swift`](../Shared/Model/SimpleXAPI.swift):
+Defined in [`Shared/Model/POPOPXAPI.swift`](../Shared/Model/POPOPXAPI.swift):
 
 ### Synchronous (blocking current thread)
 
 ```swift
 // Throws on error, returns typed result
-func chatSendCmdSync<R: ChatAPIResult>(           // SimpleXAPI.swift L93
+func chatSendCmdSync<R: ChatAPIResult>(           // POPOPXAPI.swift L93
     _ cmd: ChatCommand,
     bgTask: Bool = true,
     bgDelay: Double? = nil,
@@ -506,7 +506,7 @@ func chatSendCmdSync<R: ChatAPIResult>(           // SimpleXAPI.swift L93
 ) throws -> R
 
 // Returns APIResult (caller handles error)
-func chatApiSendCmdSync<R: ChatAPIResult>(         // SimpleXAPI.swift L99
+func chatApiSendCmdSync<R: ChatAPIResult>(         // POPOPXAPI.swift L99
     _ cmd: ChatCommand,
     bgTask: Bool = true,
     bgDelay: Double? = nil,
@@ -520,7 +520,7 @@ func chatApiSendCmdSync<R: ChatAPIResult>(         // SimpleXAPI.swift L99
 
 ```swift
 // Throws on error, returns typed result
-func chatSendCmd<R: ChatAPIResult>(                // SimpleXAPI.swift L121
+func chatSendCmd<R: ChatAPIResult>(                // POPOPXAPI.swift L121
     _ cmd: ChatCommand,
     bgTask: Bool = true,
     bgDelay: Double? = nil,
@@ -529,13 +529,12 @@ func chatSendCmd<R: ChatAPIResult>(                // SimpleXAPI.swift L121
 ) async throws -> R
 
 // Returns APIResult with optional retry on network errors
-func chatApiSendCmdWithRetry<R: ChatAPIResult>(    // SimpleXAPI.swift L127
+func chatApiSendCmdWithRetry<R: ChatAPIResult>(    // POPOPXAPI.swift L127
     _ cmd: ChatCommand,
     bgTask: Bool = true,
     bgDelay: Double? = nil,
     inProgress: BoxedValue<Bool>? = nil,
-    retryNum: Int32 = 0,
-    log: Bool = true
+    retryNum: Int32 = 0
 ) async -> APIResult<R>?
 ```
 
@@ -543,7 +542,7 @@ func chatApiSendCmdWithRetry<R: ChatAPIResult>(    // SimpleXAPI.swift L127
 
 ```swift
 // Direct C FFI call -- serializes cmd.cmdString, calls chat_send_cmd_retry, decodes response
-public func sendSimpleXCmd<R: ChatAPIResult>(      // API.swift L115
+public func sendPopopxCmd<R: ChatAPIResult>(      // API.swift L115
     _ cmd: ChatCmdProtocol,
     _ ctrl: chat_ctrl?,
     retryNum: Int32 = 0
@@ -554,12 +553,12 @@ public func sendSimpleXCmd<R: ChatAPIResult>(      // API.swift L115
 
 ```swift
 // Polls for async events from the Haskell core
-func chatRecvMsg(                                  // SimpleXAPI.swift L237
+func chatRecvMsg(                                  // POPOPXAPI.swift L237
     _ ctrl: chat_ctrl? = nil
 ) async -> APIResult<ChatEvent>?
 
 // Processes a received event and updates app state
-func processReceivedMsg(                           // SimpleXAPI.swift L2282
+func processReceivedMsg(                           // POPOPXAPI.swift L2282
     _ res: ChatEvent
 ) async
 ```
@@ -568,7 +567,7 @@ func processReceivedMsg(                           // SimpleXAPI.swift L2282
 
 ## 7. Result Type
 
-Defined in [`SimpleXChat/APITypes.swift` L27](../SimpleXChat/APITypes.swift#L27):
+Defined in [`POPOPXSwitch/APITypes.swift` L27](../POPOPXSwitch/APITypes.swift#L27):
 
 ```swift
 public enum APIResult<R>: Decodable where R: Decodable, R: ChatAPIResult {
@@ -587,7 +586,7 @@ public protocol ChatAPIResult: Decodable {         // APITypes.swift L65
 }
 ```
 
-The `decodeAPIResult<R>` function ([`APITypes.swift` L86](../SimpleXChat/APITypes.swift#L86)) handles JSON decoding with fallback logic:
+The `decodeAPIResult<R>` function ([`APITypes.swift` L86](../POPOPXSwitch/APITypes.swift#L86)) handles JSON decoding with fallback logic:
 1. Try standard `JSONDecoder.decode(APIResult<R>.self, from: data)`
 2. If that fails, try manual JSON parsing via `JSONSerialization`
 3. Check for `"error"` key -- return `.error`
@@ -603,9 +602,9 @@ The `decodeAPIResult<R>` function ([`APITypes.swift` L86](../SimpleXChat/APIType
 | ChatCommand enum | [`Shared/Model/AppAPITypes.swift` L15](../Shared/Model/AppAPITypes.swift#L15) |
 | ChatResponse0/1/2 enums | [`Shared/Model/AppAPITypes.swift` L657, L779, L919](../Shared/Model/AppAPITypes.swift#L657) |
 | ChatEvent enum | [`Shared/Model/AppAPITypes.swift` L1069](../Shared/Model/AppAPITypes.swift#L1069) |
-| APIResult, ChatError | [`SimpleXChat/APITypes.swift` L27, L699](../SimpleXChat/APITypes.swift#L27) |
-| FFI bridge functions | [`Shared/Model/SimpleXAPI.swift`](../Shared/Model/SimpleXAPI.swift) |
-| Low-level FFI | [`SimpleXChat/API.swift`](../SimpleXChat/API.swift) |
-| Data types | `SimpleXChat/ChatTypes.swift` |
-| C header | `SimpleXChat/SimpleX.h` |
+| APIResult, ChatError | [`POPOPXSwitch/APITypes.swift` L27, L699](../POPOPXSwitch/APITypes.swift#L27) |
+| FFI bridge functions | [`Shared/Model/POPOPXAPI.swift`](../Shared/Model/POPOPXAPI.swift) |
+| Low-level FFI | [`POPOPXSwitch/API.swift`](../POPOPXSwitch/API.swift) |
+| Data types | `POPOPXSwitch/ChatTypes.swift` |
+| C header | `POPOPXSwitch/Popopx.h` |
 | Haskell controller | `../../src/Simplex/Chat/Controller.hs` |

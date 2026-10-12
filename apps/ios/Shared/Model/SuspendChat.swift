@@ -1,17 +1,19 @@
 //
 //  SuspendChat.swift
-//  SimpleX (iOS)
+//  POPOPX (iOS)
 //
 //  Created by Evgeny on 26/06/2022.
-//  Copyright © 2022 SimpleX Chat. All rights reserved.
+//  Copyright © 2025 POPOPX. All rights reserved.
 //
 
+// Original work Copyright (C) 2020-2025 simplex.chat
+// Modified by POPOPX Team in 2026 — see NOTICE for details
 import Foundation
 import UIKit
-import SimpleXChat
+import POPOPXSwitch
 import SwiftUI
 
-private let suspendLockQueue = DispatchQueue(label: "chat.simplex.app.suspend.lock")
+private let suspendLock = NSRecursiveLock()
 
 let bgSuspendTimeout: Int = 5 // seconds
 
@@ -21,16 +23,23 @@ let activationDelay: TimeInterval = 1.5
 
 let nseSuspendTimeout: TimeInterval = 5
 
+@MainActor
 private func _suspendChat(timeout: Int) {
-    // this is a redundant check to prevent logical errors, like the one fixed in this PR
     let state = AppChatState.shared.value
+    if state == .suspending || state == .suspended {
+        logger.debug("_suspendChat: already \(state.rawValue), skipping")
+        return
+    }
     if !state.canSuspend {
         logger.error("_suspendChat called, current state: \(state.rawValue)")
     } else if ChatModel.ok {
         AppChatState.shared.set(.suspending)
         apiSuspendChat(timeoutMicroseconds: timeout * 1000000)
-        let endTask = beginBGTask(chatSuspended)
-        DispatchQueue.global().asyncAfter(deadline: .now() + Double(timeout) + 1, execute: endTask)
+        let endTask: @Sendable () -> Void = { Task { @MainActor in chatSuspended() } }
+        Task.detached {
+            try? await Task.sleep(for: .seconds(Double(timeout) + 1))
+            endTask()
+        }
     } else {
         AppChatState.shared.set(.suspended)
     }
@@ -39,123 +48,162 @@ private func _suspendChat(timeout: Int) {
 let seSubscriber = seMessageSubscriber {
     switch $0 {
     case let .state(state):
-        switch state {
-        case .inactive:
-            if AppChatState.shared.value.inactive { activateChat() }
-        case .sendingMessage:
-            if AppChatState.shared.value.canSuspend { suspendChat() }
+        Task { @MainActor in
+            switch state {
+            case .inactive:
+                if AppChatState.shared.value.inactive { activateChat() }
+            case .sendingMessage:
+                if AppChatState.shared.value.canSuspend { suspendChat() }
+            }
         }
     }
 }
 
+@MainActor
 func suspendChat() {
-    suspendLockQueue.sync {
-        _suspendChat(timeout: appSuspendTimeout)
-    }
+    suspendLock.lock(); defer { suspendLock.unlock() }
+    _suspendChat(timeout: appSuspendTimeout)
 }
 
+@MainActor
 func suspendBgRefresh() {
-    suspendLockQueue.sync {
-        if case .bgRefresh = AppChatState.shared.value  {
-            _suspendChat(timeout: bgSuspendTimeout)
-        }
+    suspendLock.lock(); defer { suspendLock.unlock() }
+    if case .bgRefresh = AppChatState.shared.value  {
+        _suspendChat(timeout: bgSuspendTimeout)
     }
 }
 
-func terminateChat() {
+@MainActor
+private func _terminateChatAction(chatOk: Bool) -> Bool {
+    suspendLock.lock(); defer { suspendLock.unlock() }
+    switch AppChatState.shared.value {
+    case .suspending:
+        _chatSuspended()
+        if chatOk { apiSuspendChat(timeoutMicroseconds: 0) }
+        return true
+    case .suspended, .stopped:
+        return true
+    case .active, .activating, .bgRefresh:
+        _suspendChat(timeout: terminationTimeout)
+        return false
+    @unknown default:
+        _suspendChat(timeout: terminationTimeout)
+        return false
+    }
+}
+
+@MainActor
+func terminateChat() async {
     logger.debug("terminateChat")
-    suspendLockQueue.sync {
-        switch AppChatState.shared.value {
-        case .suspending:
-            // suspend instantly if already suspending
-            _chatSuspended()
-            // when apiSuspendChat is called with timeout 0, it won't send any events on suspension
-            if ChatModel.ok { apiSuspendChat(timeoutMicroseconds: 0) }
-            chatCloseStore()
-        case .suspended:
-            chatCloseStore()
-        case .stopped:
-            chatCloseStore()
-        default:
-            // the store will be closed in _chatSuspended when event is received
-            _suspendChat(timeout: terminationTimeout)
+    let shouldCloseStore = _terminateChatAction(chatOk: ChatModel.ok)
+
+    if shouldCloseStore {
+        await withCheckedContinuation { cont in
+            ffiQueue.async {
+                chatCloseStore()
+                cont.resume()
+            }
         }
     }
 }
 
+@MainActor
 func chatSuspended() {
-    suspendLockQueue.sync {
-        if case .suspending = AppChatState.shared.value {
-            _chatSuspended()
-        }
+    suspendLock.lock(); defer { suspendLock.unlock() }
+    if case .suspending = AppChatState.shared.value {
+        _chatSuspended()
     }
 }
 
+@MainActor
 private func _chatSuspended() {
     logger.debug("_chatSuspended")
     AppChatState.shared.set(.suspended)
     if ChatModel.shared.chatRunning == true {
         ChatReceiver.shared.stop()
     }
-    chatCloseStore()
 }
 
+@MainActor
 func setAppState(_ appState: AppState) {
-    suspendLockQueue.sync {
-        AppChatState.shared.set(appState)
-    }
+    suspendLock.lock(); defer { suspendLock.unlock() }
+    AppChatState.shared.set(appState)
 }
 
+@MainActor
 func activateChat(appState: AppState = .active) {
-    logger.debug("DEBUGGING: activateChat")
-    suspendLockQueue.sync {
-        AppChatState.shared.set(appState)
-        if ChatModel.ok { apiActivateChat() }
-        logger.debug("DEBUGGING: activateChat: after apiActivateChat")
+    suspendLock.lock(); defer { suspendLock.unlock() }
+    let currentState = AppChatState.shared.value
+    guard currentState != .active && currentState != .activating else {
+        logger.error("activateChat: invalid transition from \(currentState.rawValue)")
+        return
     }
+    AppChatState.shared.set(appState)
+    if ChatModel.ok { apiActivateChat() }
 }
 
-func initChatAndMigrate(refreshInvitations: Bool = true) {
-    let m = ChatModel.shared
-    if (!m.chatInitialized) {
-        m.v3DBMigration = v3DBMigrationDefault.get()
-        if AppChatState.shared.value == .stopped && storeDBPassphraseGroupDefault.get() && kcDatabasePassword.get() != nil {
-            initialize(start: true, confirmStart: true)
-        } else {
-            initialize(start: true)
+nonisolated(unsafe) var _initChatInProgressBacking = false
+var _initChatInProgress: Bool {
+    get { suspendLock.lock(); defer { suspendLock.unlock() }; return _initChatInProgressBacking }
+    set { suspendLock.lock(); defer { suspendLock.unlock() }; _initChatInProgressBacking = newValue }
+}
+
+@MainActor
+func initChatAndMigrate(refreshInvitations: Bool = true) async {
+    await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
+        Task.detached {
+            // Wait for Haskell runtime readiness without blocking a global queue thread
+            // Use a sync closure to avoid Swift 6 concurrency warning about Semaphore.wait()
+            {
+                POPOPXApp._haskellReady.wait()
+            }()
+            await MainActor.run { cont.resume() }
         }
     }
+    let m = ChatModel.shared
+    logger.info("initChatAndMigrate: STARTING - chatInitialized=\(m.chatInitialized), _initChatInProgress=\(_initChatInProgress)")
+    if m.chatInitialized || _initChatInProgress {
+        logger.info("initChatAndMigrate: Early return - already initialized or in progress")
+        return
+    }
+    _initChatInProgress = true
+    logger.info("initChatAndMigrate: Starting initialization process...")
+    m.v3DBMigration = v3DBMigrationDefault.get()
+    defer { _initChatInProgress = false }
+    if AppChatState.shared.value == .stopped && storeDBPassphraseGroupDefault.get() && kcDatabasePassword.get() != nil {
+        await initialize(start: true, confirmStart: true)
+    } else {
+        await initialize(start: true)
+    }
 
-    func initialize(start: Bool, confirmStart: Bool = false) {
+    func initialize(start: Bool, confirmStart: Bool = false) async {
         do {
-            try initializeChat(start: m.v3DBMigration.startChat && start, confirmStart: m.v3DBMigration.startChat && confirmStart, refreshInvitations: refreshInvitations)
+            try await initializeChat(start: m.v3DBMigration.startChat && start, confirmStart: m.v3DBMigration.startChat && confirmStart, refreshInvitations: refreshInvitations)
         } catch let error {
             AlertManager.shared.showAlertMsg(
-                title: start ? "Error starting chat" : "Error opening chat",
-                message: "Please contact developers.\nError: \(responseError(error))"
+                title: start
+                    ? LocalizedStringKey(NSLocalizedString("model_error_starting_chat_title", comment: "alert title"))
+                    : LocalizedStringKey(NSLocalizedString("model_error_opening_chat_title", comment: "alert title")),
+                message: LocalizedStringKey(String(format: NSLocalizedString("model_contact_developers_error_message", comment: "alert message"), responseError(error)))
             )
         }
     }
 }
 
+@MainActor
 func startChatForCall() {
-    logger.debug("DEBUGGING: startChatForCall")
     if ChatModel.shared.chatRunning == true {
         ChatReceiver.shared.start()
-        logger.debug("DEBUGGING: startChatForCall: after ChatReceiver.shared.start")
     }
     if .active != AppChatState.shared.value {
-        logger.debug("DEBUGGING: startChatForCall: before activateChat")
         activateChat()
-        logger.debug("DEBUGGING: startChatForCall: after activateChat")
     }
 }
 
+@MainActor
 func startChatAndActivate(_ completion: @escaping () -> Void) {
-    logger.debug("DEBUGGING: startChatAndActivate")
     if ChatModel.shared.chatRunning == true {
         ChatReceiver.shared.start()
-        logger.debug("DEBUGGING: startChatAndActivate: after ChatReceiver.shared.start")
     }
     if case .active = AppChatState.shared.value {
         completion()
@@ -179,14 +227,17 @@ func startChatAndActivate(_ completion: @escaping () -> Void) {
     }
 
     func activate() {
-        logger.debug("DEBUGGING: startChatAndActivate: before activateChat")
-        activateChat()
+        if ChatModel.shared.chatInitialized {
+            activateChat()
+        } else {
+            logger.warning("SuspendChat.activate: chat not initialized, skipping activateChat")
+        }
         completion()
-        logger.debug("DEBUGGING: startChatAndActivate: after activateChat")
     }
 }
 
 // appStateGroupDefault must not be used in the app directly, only via this singleton
+@MainActor
 class AppChatState {
     static let shared = AppChatState()
     private var value_ = appStateGroupDefault.get()

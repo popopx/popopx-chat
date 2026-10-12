@@ -1,0 +1,57 @@
+{
+  "originHash" : "79da61b39fbd2856294084e66043f248b1dff6266c266a16b1ae8109a128abc4",
+  "pins" : [
+    {
+      "identity" : "codescanner",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/twostraws/CodeScanner",
+      "state" : {
+        "revision" : "34da57fb63b47add20de8a85da58191523ccce57",
+        "version" : "2.5.0"
+      }
+    },
+    {
+      "identity" : "elegant-emoji-picker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Finalet/Elegant-Emoji-Picker",
+      "state" : {
+        "revision" : "ceff7ebc438b32faef65db16dab7d8ac3c7e7c2e"
+      }
+    },
+    {
+      "identity" : "ink",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnsundell/ink",
+      "state" : {
+        "revision" : "bcc9f219900a62c4210e6db726035d7f03ae757b",
+        "version" : "0.6.0"
+      }
+    },
+    {
+      "identity" : "lzstring-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Ibrahimhass/lzstring-swift",
+      "state" : {
+        "revision" : "7f62f21de5b18582a950e1753b775cc614722407"
+      }
+    },
+    {
+      "identity" : "swiftygif",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kirualex/SwiftyGif",
+      "state" : {
+        "revision" : "c44e2b19f80baa9df496d6415c81d12bac852d46"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams",
+      "state" : {
+        "revision" : "9234124cff5e22e178988c18d8b95a8ae8007f76",
+        "version" : "5.1.2"
+      }
+    }
+  ],
+  "version" : 3
+}

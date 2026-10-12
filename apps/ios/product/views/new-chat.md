@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Create new contacts, groups, or connect with others via one-time invitation links or by scanning/pasting SimpleX links. This is the primary onramp for establishing new E2E encrypted connections.
+Create new contacts, groups, or connect with others via one-time invitation links or by scanning/pasting POPOPX links. This is the primary onramp for establishing new E2E encrypted connections.
 
 ## Route / Navigation
 
@@ -32,7 +32,7 @@ Displayed when `selection == .invite`:
 
 | Element | Description |
 |---|---|
-| QR code display | Generated QR code for the invitation link (`SimpleXLinkQRCode`) |
+| QR code display | Generated QR code for the invitation link (`POPOPXLinkQRCode`) |
 | Short/full link toggle | Switch between short and full link display |
 | Share button | System share sheet for the invitation link |
 | Copy button | Copy link to clipboard |
@@ -48,15 +48,15 @@ Displayed when `selection == .connect`:
 
 | Element | Description |
 |---|---|
-| QR code scanner | Camera-based `CodeScanner` view for scanning SimpleX QR codes |
-| Paste link field | Text input for pasting a SimpleX link manually |
+| QR code scanner | Camera-based `CodeScanner` view for scanning POPOPX QR codes |
+| Paste link field | Text input for pasting a POPOPX link manually |
 | Connect button | Initiates connection via the pasted/scanned link |
 
 Handled by `ConnectView` sub-view with `showQRCodeScanner` state.
 
 ### Info Sheet
 
-Toolbar trailing button opens `AddContactLearnMore` info sheet explaining how SimpleX connections work.
+Toolbar trailing button opens `AddContactLearnMore` info sheet explaining how POPOPX connections work.
 
 ### Add Group
 
@@ -111,25 +111,17 @@ Calls `apiNewPublicGroup(incognito:relayIds:groupProfile:)` which returns `publi
 
 ### Relay Link Blocking
 
-When `planAndConnect` encounters a `.simplexLink(_, .relay, _, _)`, it shows a "Relay address" alert: "This is a chat relay address, it cannot be used to connect." Connection is blocked.
+When `planAndConnect` encounters a `.popopxLink(_, .relay, _, _)`, it shows a "Relay address" alert: "This is a chat relay address, it cannot be used to connect." Connection is blocked.
 
 ### Channel Prepare/Join Alerts
 
 | Context | Channel behavior | Group behavior |
 |---|---|---|
 | Prepare alert icon | `antenna.radiowaves.left.and.right.circle.fill` | `person.2.circle.fill` |
-| Prepare alert title | "Open channel" | "Open group" |
+| Prepare alert title | "Open new channel" | "Open new group" |
 | Error text | "Error opening channel" | "Error opening group" |
 | Own-link confirm | "This is your link for channel" with only "Open channel" + "Cancel" (no incognito/profile options) | Full incognito/profile selection |
-| Known group alert | "Open channel", with the membership role line | "Open group", with the membership role line |
-
-The known group alert shows an information line with the user's role, in the
-secondary color (matching the subscriber count): "You are a subscriber" /
-"You are a contributor" for channels, "You are an observer" / "You are a
-member" for groups, and "You are a moderator" / "You are an admin" /
-"You are an owner" for both. The line is omitted for prepared chats
-(`nextConnectPrepared`) and business chats, so the prepare and known alerts
-differ only by this line.
+| Known group alert | "Open channel" / "Open new channel" | "Open group" / "Open new group" |
 
 ### Pre-Join Relay Info
 

@@ -1,0 +1,1 @@
+{"main_library":{"compatibility_versions":[{"version":"0"}],"current_versions":[{"version":"0"}],"flags":[{"attributes":["not_app_extension_safe"]}],"install_names":[{"name":"@rpath/CactusEngine_27D7E3568FD615C5_PackageProduct.framework/CactusEngine_27D7E3568FD615C5_PackageProduct"}],"target_info":[{"min_deployment":"16","target":"arm64-ios"}]},"tapi_tbd_version":5}

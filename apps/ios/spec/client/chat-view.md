@@ -1,4 +1,4 @@
-# SimpleX Chat iOS -- Chat View Module
+# POPOPX Chat iOS -- Chat View Module
 
 > Technical specification for the message rendering, chat item types, and context menu actions in the conversation view.
 >
@@ -160,7 +160,7 @@ Key differences from `.groupRcv`:
 - [`shouldShowAvatar()`](../../Shared/Views/Chat/ChatView.swift#L1670) treats consecutive `.channelRcv` items as same sender
 - [`getItemSeparation()`](../../Shared/Views/Chat/ChatView.swift#L1649) treats consecutive `.channelRcv` items as `sameMemberAndDirection`
 - [`showMemberImage()`](../../Shared/Views/Chat/ChatView.swift#L2116) returns `true` when previous item is `.channelRcv` (different sender type)
-- [`memberToModerate()`](../../SimpleXChat/ChatTypes.swift#L3297) returns `nil` for `.channelRcv` (no per-member moderation)
+- [`memberToModerate()`](../../POPOPXSwitch/ChatTypes.swift#L3297) returns `nil` for `.channelRcv` (no per-member moderation)
 
 ---
 
@@ -189,7 +189,7 @@ Renders emoji-only messages (messages containing only emoji characters) in a lar
 
 **File**: [`Shared/Views/Chat/ChatItem/MsgContentView.swift`](../../Shared/Views/Chat/ChatItem/MsgContentView.swift)
 
-Renders message text with SimpleX markdown formatting (bold, italic, code, links, mentions).
+Renders message text with POPOPX markdown formatting (bold, italic, code, links, mentions).
 
 ### DeletedItemView / MarkedDeletedItemView
 
@@ -279,7 +279,6 @@ Detailed message information sheet (accessed via long-press menu "Info"):
 - Edit history (all previous versions of edited messages)
 - Forward chain info
 - Message timestamps (created, updated, deleted)
-- When the file expires, and below it, for a user without a badge, a button opening the badges sheet
 
 ---
 
@@ -344,14 +343,14 @@ Member rows show profile image, display name (with verified shield), connection 
 
 ### Channel Link
 
-Owner sees [`channelLinkButton()`](../../Shared/Views/Chat/Group/GroupChatInfoView.swift#L605) (navigates to `GroupLinkView` for full link management), guarded by `groupInfo.isOwner && groupLink != nil` — channel links can only be created during channel creation, not from the info view. A TODO marks the need for protocol changes to allow other owners to manage the same channel link. Non-owner sees read-only QR code displaying `groupProfile.publicGroup?.groupLink` via `SimpleXLinkQRCode`. `apiGetGroupLink` is skipped in `onAppear` for non-owner channels.
+Owner sees [`channelLinkButton()`](../../Shared/Views/Chat/Group/GroupChatInfoView.swift#L605) (navigates to `GroupLinkView` for full link management), guarded by `groupInfo.isOwner && groupLink != nil` — channel links can only be created during channel creation, not from the info view. A TODO marks the need for protocol changes to allow other owners to manage the same channel link. Non-owner sees read-only QR code displaying `groupProfile.publicGroup?.groupLink` via `POPOPXLinkQRCode`. `apiGetGroupLink` is skipped in `onAppear` for non-owner channels.
 
 Groups use separate [`groupLinkButton()`](../../Shared/Views/Chat/Group/GroupChatInfoView.swift#L593) which supports both "Create group link" and "Group link" labels.
 
 ### [`channelRelaysButton()`](../../Shared/Views/Chat/Group/GroupChatInfoView.swift#L639) → [`ChannelRelaysView`](../../Shared/Views/Chat/Group/ChannelRelaysView.swift)
 
 Navigates to relay list view with role-based branches:
-- **Owner**: loads `[GroupRelay]` via [`apiGetGroupRelays`](../../Shared/Model/SimpleXAPI.swift#L1839) (owner-only API, guarded by `assertUserGroupRole GROwner` on backend). Joins with `chatModel.groupMembers` by `groupMemberId` for display names. Shows status indicators (colored circle + `RelayStatus.text`). When `relayStatus == .rsRejected` the indicator dot is red and the text reads "rejected", matching the `connFailed`/`removed` rendering.
+- **Owner**: loads `[GroupRelay]` via [`apiGetGroupRelays`](../../Shared/Model/POPOPXAPI.swift#L1839) (owner-only API, guarded by `assertUserGroupRole GROwner` on backend). Joins with `chatModel.groupMembers` by `groupMemberId` for display names. Shows status indicators (colored circle + `RelayStatus.text`). When `relayStatus == .rsRejected` the indicator dot is red and the text reads "rejected", matching the `connFailed`/`removed` rendering.
 - **Member**: filters `chatModel.groupMembers` by `.memberRole == .relay`. Shows relay member display names only (no status data).
 - **Add relay sheet**: `existingRelayIds` excludes every `chatRelayId` present in `groupRelays` regardless of `relayStatus`, so an already-listed relay (including `.rsInactive` and `.rsRejected`) cannot be re-added from the sheet. This mirrors the backend gate at `APIAddGroupRelays` (`existingRelayIds`), which rejects duplicate `chatRelayId`s; operator must remove the relay first via the swipe action.
 
