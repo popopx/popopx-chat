@@ -109,14 +109,46 @@
         echo "file binary-dist \"$(echo $out/*.zip)\"" \
             > $out/nix-support/hydra-build-products
       ''; in
+      let iosSimulatorPostInstall = bundleName: ''
+        ${pkgs.tree}/bin/tree $out
+        mkdir tmp
+        find ./dist -name "libHS*-ghc*.a" -exec cp {} tmp \;
+        (cd tmp; ${pkgs.tree}/bin/tree .; ar x libHS*.a; for o in *.o; do if /usr/bin/otool -xv $o|grep ldadd ; then echo $o; fi; done; cd ..; rm -fR tmp)
+        mkdir -p $out/_pkg
+        find ./dist -name "libHS*.a" -exec cp {} $out/_pkg \;
+        find ${pkgs.libffi.overrideAttrs (old: { dontDisableStatic = true; })}/lib -name "*.a" -exec cp {} $out/_pkg \;
+        find ${pkgs.gmp6.override { withStatic = true; }}/lib -name "*.a" -exec cp {} $out/_pkg \;
+        ${pkgs.tree}/bin/tree $out/_pkg
+        for pkg in $out/_pkg/*.a; do
+          chmod +w $pkg
+          ${mac2ios.packages.${system}.mac2ios}/bin/mac2ios -s $pkg
+          [[ "$pkg" == *popopx-chat* ]] && ${pkgs.stdenv.cc.targetPrefix}strip -x $pkg
+          chmod -w $pkg
+        done
+
+        mkdir tmp
+        find $out/_pkg -name "libHS*-ghc*.a" -exec cp {} tmp \;
+        (cd tmp; ${pkgs.tree}/bin/tree .; ar x libHS*.a; for o in *.o; do if /usr/bin/otool -xv $o|grep ldadd ; then echo $o; fi; done; cd ..; rm -fR tmp)
+
+        sha256sum $out/_pkg/*.a
+
+        (cd $out/_pkg; ${pkgs.zip}/bin/zip -r -9 $out/${bundleName}.zip *)
+        rm -fR $out/_pkg
+        mkdir -p $out/nix-support
+        echo "file binary-dist \"$(echo $out/*.zip)\"" \
+            > $out/nix-support/hydra-build-products
+      ''; in
       let iosOverrides = bundleName: {
         smallAddressSpace = true;
         enableShared = false;
-        # we need threaded here, otherwise all the queing logic doesn't work properly.
-        # for iOS we also use -staticlib, to get one rolled up library.
-        # still needs mac2ios patching of the archives.
         ghcOptions = [ "-staticlib" "-threaded" "-DIOS" ];
         postInstall = iosPostInstall bundleName;
+      }; in
+      let iosSimulatorOverrides = bundleName: {
+        smallAddressSpace = true;
+        enableShared = false;
+        ghcOptions = [ "-staticlib" "-threaded" "-DIOS" ];
+        postInstall = iosSimulatorPostInstall bundleName;
       }; in
       rec {
         packages = {
@@ -610,6 +642,24 @@
                 }];
               }).popopx-chat.components.library.override (
                 iosOverrides "pkg-ios-aarch64-swift-json"
+              );
+              # aarch64-darwin iOS simulator build (to be patched with mac2ios -s)
+              "aarch64-darwin-ios-simulator:lib:popopx-chat" = (drv' {
+                pkgs' = pkgs;
+                extra-modules = [{
+                  packages.popopx-chat.flags.swift = true;
+                  packages.popopxmq.flags.swift = true;
+                  packages.direct-sqlcipher.flags.commoncrypto = true;
+                  packages.popopxmq.flags.commoncrypto = true;
+                  packages.entropy.flags.DoNotGetEntropy = true;
+                  packages.popopx-chat.flags.client_library = true;
+                  packages.popopxmq.flags.client_library = true;
+                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                    ((pkgs.openssl.override { static = true; }).overrideDerivation (old: { CFLAGS = "-mcpu=apple-a7 -march=armv8-a+norcpc" ;}))
+                  ];
+                }];
+              }).popopx-chat.components.library.override (
+                iosSimulatorOverrides "pkg-ios-aarch64-simulator-swift-json"
               );
 	            # aarch64-darwin build with tagged JSON format (for Mac & Flutter)
               "aarch64-darwin:lib:popopx-chat" = (drv' {
