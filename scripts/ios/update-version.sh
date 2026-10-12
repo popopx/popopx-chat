@@ -26,7 +26,7 @@ if ! echo "$NEW_MARKETING" | grep -qE '^[0-9]+(\.[0-9]+)+$'; then
     exit 1
 fi
 
-PBXPROJ=./apps/ios/SimpleX.xcodeproj/project.pbxproj
+PBXPROJ=./apps/ios/POPOPX.xcodeproj/project.pbxproj
 if [ ! -f "$PBXPROJ" ]; then
     echo "Error: $PBXPROJ not found. Run from repo root." >&2
     exit 1

@@ -6,7 +6,7 @@
 
 set -e
 
-PBXPROJ=./apps/ios/SimpleX.xcodeproj/project.pbxproj
+PBXPROJ=./apps/ios/POPOPX.xcodeproj/project.pbxproj
 LIB_DIR=./apps/ios/Libraries/ios
 
 if [ ! -f "$PBXPROJ" ]; then
