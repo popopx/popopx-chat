@@ -23,12 +23,14 @@ import Data.List (isPrefixOf, isSuffixOf)
 import Data.Maybe (fromMaybe)
 import Data.String
 import qualified Data.Text as T
+import Popopx.Chat.Badges (BadgeProof (..), BadgeStatus, LocalBadge (..), ProofPresHeader (..))
 import Popopx.Chat.Controller (ChatConfig (..), ChatController (..), storeCxt)
 import Popopx.Chat.Library.Commands (maxProfileImageSize)
 import Popopx.Chat.Markdown (viewName)
 import Popopx.Chat.Messages.CIContent (e2eInfoNoPQText, e2eInfoPQText)
 import Popopx.Chat.Protocol
-import Popopx.Chat.Store.Direct (getContact)
+import Popopx.Chat.Store.Direct (getContact, getContactIdByName, getContactRequest, getContactRequestIdByName)
+import Popopx.Chat.Store.Groups (getGroupIdByName, getGroupMember, getGroupMemberIdByName)
 import Popopx.Chat.Store.NoteFolders (createNoteFolder)
 import Popopx.Chat.Store.Profiles (getUserContactProfiles)
 import Popopx.Chat.Types
@@ -39,6 +41,7 @@ import Popopx.Messaging.Agent.Client (agentClientStore)
 import Popopx.Messaging.Agent.Store.AgentStore (maybeFirstRow, withTransaction)
 import qualified Popopx.Messaging.Agent.Store.DB as DB
 import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.BBS (BBSPresHeader (..))
 import Popopx.Messaging.Crypto.Ratchet (PQEncryption (..), PQSupport, pattern PQEncOff, pattern PQEncOn, pattern PQSupportOff)
 import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Version
@@ -726,6 +729,50 @@ getTestCCContact cc contactId = do
     withCCUser cc $ \user ->
       runExceptT (getContact db (storeCxt chatController) user contactId) >>= either (fail . show) pure
 
+contactBadgeHeader :: TestCC -> ContactName -> IO (Maybe (String, BadgeStatus))
+contactBadgeHeader cc cName =
+  withCCTransaction cc $ \db ->
+    withCCUser cc $ \user ->
+      runExceptT (getContact db (storeCxt $ chatController cc) user =<< getContactIdByName db user cName)
+        >>= either (fail . show) (pure . storedBadgeHeader . profile')
+
+requestBadgeHeader :: TestCC -> ContactName -> IO (Maybe (String, BadgeStatus))
+requestBadgeHeader cc cName =
+  withCCTransaction cc $ \db ->
+    withCCUser cc $ \user@User {userId} ->
+      runExceptT (getContactRequest db user =<< getContactRequestIdByName db userId cName)
+        >>= either (fail . show) (\UserContactRequest {profile} -> pure $ storedBadgeHeader profile)
+
+memberBadgeHeader :: TestCC -> GroupName -> ContactName -> IO (Maybe (String, BadgeStatus))
+memberBadgeHeader cc gName mName = (\GroupMember {memberProfile} -> storedBadgeHeader memberProfile) <$> getTestMember cc gName mName
+
+memberProofHeader :: TestCC -> GroupName -> ContactName -> IO (Maybe String)
+memberProofHeader cc gName mName = (\GroupMember {memberBadgeProof} -> proofHeaderTag <$> unNoJSON memberBadgeProof) <$> getTestMember cc gName mName
+
+getTestMember :: TestCC -> GroupName -> ContactName -> IO GroupMember
+getTestMember cc gName mName =
+  withCCTransaction cc $ \db ->
+    withCCUser cc $ \user ->
+      runExceptT
+        ( do
+            gId <- getGroupIdByName db user gName
+            getGroupMember db (storeCxt $ chatController cc) user gId =<< getGroupMemberIdByName db user gId mName
+        )
+        >>= either (fail . show) pure
+
+storedBadgeHeader :: LocalProfile -> Maybe (String, BadgeStatus)
+storedBadgeHeader LocalProfile {localBadge} = case localBadge of
+  Just (PeerBadge b st) -> Just (proofHeaderTag b, st)
+  _ -> Nothing
+
+proofHeaderTag :: BadgeProof -> String
+proofHeaderTag (BadgeProof _ (BBSPresHeader ph) _ _) = case strDecode ph of
+  Right (PHChat b) -> 'C' : take 1 (B.unpack b)
+  Right (PHRequest _) -> "R"
+  Right (PHLink _) -> "L"
+  Right (PHTest _) -> "T"
+  _ -> "?"
+
 lastItemId :: HasCallStack => TestCC -> IO String
 lastItemId cc = do
   cc ##> "/last_item_id"
@@ -897,11 +944,11 @@ vRangeStr (VersionRange minVer maxVer) = "(" <> show minVer <> ", " <> show maxV
 
 linkAnotherSchema :: String -> String
 linkAnotherSchema link
-  | "https://simplex.chat/" `isPrefixOf` link =
-      T.unpack $ T.replace "https://simplex.chat/" "popopx:/" $ T.pack link
+  | "https://popopx.chat/" `isPrefixOf` link =
+      T.unpack $ T.replace "https://popopx.chat/" "popopx:/" $ T.pack link
   | "popopx:/" `isPrefixOf` link =
-      T.unpack $ T.replace "popopx:/" "https://simplex.chat/" $ T.pack link
-  | otherwise = error "link starts with neither https://simplex.chat/ nor simplex:/"
+      T.unpack $ T.replace "popopx:/" "https://popopx.chat/" $ T.pack link
+  | otherwise = error "link starts with neither https://popopx.chat/ nor popopx:/"
 
 xftpCLI :: [String] -> IO [String]
 xftpCLI = \case

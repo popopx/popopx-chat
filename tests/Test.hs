@@ -17,7 +17,6 @@ import Bots.DirectoryTests
 import ChatClient
 import ChatTests
 import ChatTests.DBUtils
-import ChatTests.Names (chatNamesTests)
 import ChatTests.Utils (xdescribe'')
 import Control.Logger.Simple
 import Data.Time.Clock.System
@@ -44,6 +43,7 @@ import Popopx.Chat.Store.Postgres.Migrations (migrations)
 import Popopx.Messaging.Agent.Store.Postgres.Util (createDBAndUserIfNotExists, dropDatabaseAndUser)
 #else
 import APIDocs
+import ChatTests.Names (chatNamesTests)
 import qualified Popopx.Messaging.TMap as TM
 import MobileTests
 import SchemaDump
@@ -75,7 +75,7 @@ main = do
       around tmpBracket $ describe "WebRTC encryption" webRTCTests
 #endif
       describe "Supporter badges" badgeTests
-      describe "SimpleX badge service" $ do
+      describe "PopopX badge service" $ do
         badgeConfigTests
         badgeWebTests
         badgeCatalogTests
@@ -83,18 +83,18 @@ main = do
         badgeWaitersTests
         badgeBTCPayTests
         badgeStripeTests
-      describe "SimpleX chat markdown" markdownTests
+      describe "PopopX chat markdown" markdownTests
       describe "JSON Tests" jsonTests
       describe "Member relations" memberRelationsTests
-      describe "SimpleX chat view" viewTests
-      describe "SimpleX chat protocol" protocolTests
+      describe "PopopX chat view" viewTests
+      describe "PopopX chat protocol" protocolTests
       describe "Valid names" validNameTests
       describe "Message batching" batchingTests
       describe "Operators" operatorTests
       describe "Random servers" randomServersTests
 #if !defined(dbPostgres)
       around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "names tests" chatNamesTests
-      around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "SimpleX Directory names" directoryNameTests
+      around (tmpTestBracket chatQueryStats agentQueryStats portBases) $ describe "PopopX Directory names" directoryNameTests
 #endif
 #if defined(dbPostgres)
       around (testBracket portBases)
@@ -105,10 +105,10 @@ main = do
 #if !defined(dbPostgres)
           describe "Mobile API Tests" mobileTests
 #endif
-          describe "SimpleX chat client" chatTests
-          xdescribe'' "SimpleX Broadcast bot" broadcastBotTests
-          describe "SimpleX Directory service bot" directoryServiceTests
-          describe "SimpleX badge service e2e" $ do
+          describe "PopopX chat client" chatTests
+          xdescribe'' "PopopX Broadcast bot" broadcastBotTests
+          describe "PopopX Directory service bot" directoryServiceTests
+          describe "PopopX badge service e2e" $ do
             badgeServiceTests
             describe "managed group" badgeGroupIntegrationTests
           describe "Remote session" remoteTests
