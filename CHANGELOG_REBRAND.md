@@ -7,9 +7,15 @@ Comprehensive rebranding of all user-visible strings, code identifiers, build co
 ### Statistics
 
 - **Before**: 32,594 lines containing "simplex" references
-- **After**: 4,776 lines remaining (all protected or historical)
-- **Files changed**: 1,075
-- **Insertions**: 22,683 / **Deletions**: 61,671
+- **After**: ~4,774 lines remaining (all protected or historical)
+- **Files changed**: 1,077 (across 2 commits)
+- **Insertions**: 22,755 / **Deletions**: 61,671
+- **Commits**: `4901f663a` (main rebrand) + `15814bf9b` (2 follow-up fixes)
+- **Pushed to**: `origin` (github.com/popopx/popopx-chat.git)
+
+### Dependency Updates
+
+- **2026-10-16**: `popopxmq` updated to tag `cb189f9111a9998e64eef8660edc3dc41e4114ee` (commit `6a0061e53`)
 
 ### What was changed
 
