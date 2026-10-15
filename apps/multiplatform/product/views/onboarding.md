@@ -4,7 +4,7 @@
 
 ## Purpose
 
-First-time setup flow for new users. Guides through app introduction, profile creation, database passphrase setup (Desktop), server operator conditions acceptance, SimpleX address creation, and notification configuration (Android). Also provides an entry point for device migration.
+First-time setup flow for new users. Guides through app introduction, profile creation, database passphrase setup (Desktop), server operator conditions acceptance, POPOPX address creation, and notification configuration (Android). Also provides an entry point for device migration.
 
 ## Route / Navigation
 
@@ -19,24 +19,24 @@ The `OnboardingStage` enum defines the flow:
 
 | Stage | Description |
 |---|---|
-| `Step1_SimpleXInfo` | Welcome screen with app introduction |
+| `Step1_POPOPXInfo` | Welcome screen with app introduction |
 | `Step2_CreateProfile` | Create first user profile |
 | `LinkAMobile` | Desktop-only: link a mobile device |
 | `Step2_5_SetupDatabasePassphrase` | Desktop-only: set database encryption passphrase |
 | `Step3_ChooseServerOperators` | Accept server operator conditions |
-| `Step3_CreateSimpleXAddress` | Create a SimpleX contact address |
+| `Step3_CreatePOPOPXAddress` | Create a POPOPX contact address |
 | `Step4_SetNotificationsMode` | Android-only: configure notification mode |
 | `OnboardingComplete` | Onboarding finished |
 
 ## Page Sections
 
-### Step 1: Welcome / SimpleX Info (`SimpleXInfo`)
+### Step 1: Welcome / POPOPX Info (`POPOPXInfo`)
 
-**Stage**: `Step1_SimpleXInfo`
+**Stage**: `Step1_POPOPXInfo`
 
 | Element | Description |
 |---|---|
-| Logo | `SimpleXLogo` -- SimpleX Chat logo (light/dark variant based on `isInDarkTheme()`) |
+| Logo | `POPOPXLogo` -- POPOPX Chat logo (light/dark variant based on `isInDarkTheme()`) |
 | Info button | `OnboardingInformationButton` -- "The next generation of private messaging"; taps open `HowItWorks` fullscreen modal |
 | Privacy redefined | `InfoRow` with privacy icon: "No user identifiers" |
 | Immune to spam | `InfoRow` with shield icon: "You decide who can connect" |
@@ -90,13 +90,13 @@ Profile is stored locally and only shared with contacts.
 
 Managed by `ChooseServerOperators.kt`.
 
-### Step 3b: Create SimpleX Address
+### Step 3b: Create POPOPX Address
 
-**Stage**: `Step3_CreateSimpleXAddress`
+**Stage**: `Step3_CreatePOPOPXAddress`
 
 | Element | Description |
 |---|---|
-| Address creation | Auto-creates a SimpleX contact address |
+| Address creation | Auto-creates a POPOPX contact address |
 | QR code | Displays the created address as QR code |
 | Share button | Share address link |
 | Skip button | Skip address creation |
@@ -130,7 +130,7 @@ Triggered in `ChatListView` via `shouldShowWhatsNew()` with a 1-second delay.
 | File | Path |
 |---|---|
 | `OnboardingView.kt` | `views/onboarding/OnboardingView.kt` |
-| `SimpleXInfo.kt` | `views/onboarding/SimpleXInfo.kt` |
+| `POPOPXInfo.kt` | `views/onboarding/POPOPXInfo.kt` |
 | `HowItWorks.kt` | `views/onboarding/HowItWorks.kt` |
 | `SetupDatabasePassphrase.kt` | `views/onboarding/SetupDatabasePassphrase.kt` |
 | `SetNotificationsMode.kt` | `views/onboarding/SetNotificationsMode.kt` |

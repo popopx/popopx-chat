@@ -1,6 +1,6 @@
 # Chat View Specification
 
-Source: `common/src/commonMain/kotlin/chat/simplex/common/views/chat/ChatView.kt`
+Source: `common/src/commonMain/kotlin/chat/popopx/common/views/chat/ChatView.kt`
 
 ---
 
@@ -20,7 +20,7 @@ Source: `common/src/commonMain/kotlin/chat/simplex/common/views/chat/ChatView.kt
 
 ## Executive Summary
 
-The Chat View is the primary message display and interaction surface in SimpleX Chat. It is built around the `ChatView` composable (line ~96 in `ChatView.kt`), which orchestrates a `ChatLayout` containing a reverse-scrolling `LazyColumn` of `ChatItemView` items and a `ComposeView` for message input. The view supports direct chats, group chats, local notes, and contact connections, with per-chat theming, search/filter, multi-select, and side-panel info modals. Message rendering is delegated to type-specific composables in the `views/chat/item/` package.
+The Chat View is the primary message display and interaction surface in POPOPX Chat. It is built around the `ChatView` composable (line ~96 in `ChatView.kt`), which orchestrates a `ChatLayout` containing a reverse-scrolling `LazyColumn` of `ChatItemView` items and a `ComposeView` for message input. The view supports direct chats, group chats, local notes, and contact connections, with per-chat theming, search/filter, multi-select, and side-panel info modals. Message rendering is delegated to type-specific composables in the `views/chat/item/` package.
 
 ---
 
@@ -56,7 +56,7 @@ ChatView
 
 ## 2. ChatView Composable
 
-**Location:** [`ChatView.kt#L97`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/ChatView.kt#L97)
+**Location:** [`ChatView.kt#L97`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/ChatView.kt#L97)
 
 ```kotlin
 fun ChatView(
@@ -107,7 +107,7 @@ The outer `when (chatInfo)` (line ~229) branches:
 
 ## 3. Message List
 
-**Location:** [`ChatView.kt#L1592`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/ChatView.kt#L1592) (`ChatItemsList` composable)
+**Location:** [`ChatView.kt#L1592`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/ChatView.kt#L1592) (`ChatItemsList` composable)
 
 The message list is a `LazyColumnWithScrollBar` with `reverseLayout = true`, meaning index 0 is the newest message at the bottom of the screen.
 
@@ -134,7 +134,7 @@ The message list is a `LazyColumnWithScrollBar` with `reverseLayout = true`, mea
 
 ## 4. ChatItemView
 
-**Location:** [`item/ChatItemView.kt#L66`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/item/ChatItemView.kt#L66)
+**Location:** [`item/ChatItemView.kt#L66`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/item/ChatItemView.kt#L66)
 
 ```kotlin
 fun ChatItemView(
@@ -241,7 +241,7 @@ Context menu actions are built dynamically in `ChatItemView` based on message ty
 
 ## 7. ChatInfoView
 
-**Location:** [`ChatInfoView.kt`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/ChatInfoView.kt)
+**Location:** [`ChatInfoView.kt`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/ChatInfoView.kt)
 
 Opened via the `info` callback when the user taps the toolbar title in a direct chat. Displayed in `ModalManager.end`.
 
@@ -253,13 +253,13 @@ Key sections: contact profile, local alias, connection stats, shared media, disa
 
 ## 8. GroupChatInfoView
 
-**Location:** [`group/GroupChatInfoView.kt`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/group/GroupChatInfoView.kt)
+**Location:** [`group/GroupChatInfoView.kt`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/group/GroupChatInfoView.kt)
 
 Opened via the `info` callback for group chats. Displayed in `ModalManager.end`.
 
 Preloads group members (`setGroupMembers`) and group link (`apiGetGroupLink`).
 
-Key sections: group profile, group link, member list with roles, group preferences (disappearing messages, direct messages, full deletion, voice, files, SimpleX links, history), member admission, welcome message, reports view, and group deletion/leave.
+Key sections: group profile, group link, member list with roles, group preferences (disappearing messages, direct messages, full deletion, voice, files, POPOPX links, history), member admission, welcome message, reports view, and group deletion/leave.
 
 ---
 

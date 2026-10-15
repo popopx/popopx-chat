@@ -4,7 +4,7 @@
 
 ## Overview
 
-SimpleX Chat supports audio and video calls using WebRTC, with signaling delivered over the existing SMP messaging channels. Calls are end-to-end encrypted with an additional shared key layer on top of WebRTC's SRTP encryption.
+POPOPX Chat supports audio and video calls using WebRTC, with signaling delivered over the existing SMP messaging channels. Calls are end-to-end encrypted with an additional shared key layer on top of WebRTC's SRTP encryption.
 
 The architecture differs by platform:
 - **Android**: Calls run in a dedicated `CallActivity` (separate from `MainActivity`) with a `WebView` hosting the WebRTC JavaScript. A foreground `CallService` keeps the process alive and shows a persistent notification.
@@ -161,7 +161,7 @@ Incoming: InvitationAccepted -> OfferReceived -> Negotiated -> Connected -> Ende
 
 1. When a call starts, `startServer(onResponse)` creates a `NanoWSD` server on `localhost:50395`.
 2. The server serves static WebRTC HTML/JS from bundled resources at `/assets/www/desktop/call.html`.
-3. The system browser is opened to `http://localhost:50395/simplex/call/`.
+3. The system browser is opened to `http://localhost:50395/popopx/call/`.
 
 ### 6.2 WebSocket Communication
 

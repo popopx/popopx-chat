@@ -7,9 +7,9 @@ ARG CABAL=3.10.2.0
 ARG NODE=24
 
 # --------------------------------------------------------------------------- #
-# libsimplex
+# libpopopx
 # --------------------------------------------------------------------------- #
-FROM ubuntu:${UBUNTU_LIBS} AS libsimplex
+FROM ubuntu:${UBUNTU_LIBS} AS libpopopx
 
 ARG GHC
 ARG CABAL
@@ -30,29 +30,29 @@ ENV PATH="/root/.ghcup/bin:/root/.cabal/bin:$PATH"
 ENV CABAL_DIR=/root/.cabal
 
 WORKDIR /src
-COPY cabal.project simplex-chat.cabal README.md PRIVACY.md ./
+COPY cabal.project popopx-chat.cabal README.md PRIVACY.md ./
 COPY scripts/cabal.project.local.linux ./cabal.project.local
 # The build script checks the export lists in these.
-COPY libsimplex.dll.def flake.nix ./
+COPY libpopopx.dll.def flake.nix ./
 COPY scripts/desktop ./scripts/desktop
 COPY src ./src
 
 # VLC is only for the desktop app.
 RUN sed -i '/prepare-vlc-linux.sh/d' scripts/desktop/build-lib-linux.sh
 
-# Other versions' build trees are removed: the script's simplex-chat-* glob
+# Other versions' build trees are removed: the script's popopx-chat-* glob
 # fails with "cd: too many arguments" when the cache holds more than one.
 RUN --mount=type=cache,target=/root/.cabal \
     --mount=type=cache,target=/src/dist-newstyle \
     set -eu; \
-    ver=$(sed -n 's/^version: *//p' simplex-chat.cabal | tr -d '[:space:]'); \
-    build_dir=dist-newstyle/build/$(uname -m)-linux/ghc-${GHC}/simplex-chat-$ver/build; \
-    find dist-newstyle/build -maxdepth 3 -type d -name 'simplex-chat-*' \
-      ! -path "*/simplex-chat-$ver" -exec rm -rf {} + 2>/dev/null || true; \
+    ver=$(sed -n 's/^version: *//p' popopx-chat.cabal | tr -d '[:space:]'); \
+    build_dir=dist-newstyle/build/$(uname -m)-linux/ghc-${GHC}/popopx-chat-$ver/build; \
+    find dist-newstyle/build -maxdepth 3 -type d -name 'popopx-chat-*' \
+      ! -path "*/popopx-chat-$ver" -exec rm -rf {} + 2>/dev/null || true; \
     cabal update; \
     scripts/desktop/build-lib-linux.sh sqlite; \
     mkdir -p /libs; \
-    cp "$build_dir"/libsimplex.so "$build_dir"/deps/* /libs/
+    cp "$build_dir"/libpopopx.so "$build_dir"/deps/* /libs/
 
 # --------------------------------------------------------------------------- #
 # build
@@ -65,33 +65,33 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential python3 && \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=libsimplex /libs /opt/simplex/libs
+COPY --from=libpopopx /libs /opt/popopx/libs
 # Without it, npm re-running the library's preinstall downloads the released libs.
-ENV SIMPLEX_LIBS_DIR=/opt/simplex/libs
+ENV POPOPX_LIBS_DIR=/opt/popopx/libs
 
 WORKDIR /src
-COPY packages/simplex-chat-client/types/typescript packages/simplex-chat-client/types/typescript
-RUN cd packages/simplex-chat-client/types/typescript && \
+COPY packages/popopx-chat-client/types/typescript packages/popopx-chat-client/types/typescript
+RUN cd packages/popopx-chat-client/types/typescript && \
     npm install --no-audit --no-fund && \
     npx tsc
 
-COPY packages/simplex-chat-nodejs packages/simplex-chat-nodejs
-RUN cd packages/simplex-chat-nodejs && \
+COPY packages/popopx-chat-nodejs packages/popopx-chat-nodejs
+RUN cd packages/popopx-chat-nodejs && \
     npm install --no-audit --no-fund && \
-    npm install --no-save --no-audit --no-fund ../simplex-chat-client/types/typescript && \
+    npm install --no-save --no-audit --no-fund ../popopx-chat-client/types/typescript && \
     npx tsc && \
-    cp src/simplex.* dist/
+    cp src/popopx.* dist/
 
-WORKDIR /src/apps/simplex-calculator-bot
+WORKDIR /src/apps/popopx-calculator-bot
 # No package-lock.json, so no npm ci.
-COPY apps/simplex-calculator-bot/package.json ./
+COPY apps/popopx-calculator-bot/package.json ./
 RUN npm install --no-audit --no-fund
 RUN npm install --no-save --no-audit --no-fund \
-      /src/packages/simplex-chat-nodejs \
-      /src/packages/simplex-chat-client/types/typescript
+      /src/packages/popopx-chat-nodejs \
+      /src/packages/popopx-chat-client/types/typescript
 
 # calculatorBot.test.ts needs network and tests/fixtures/tls.
-COPY apps/simplex-calculator-bot ./
+COPY apps/popopx-calculator-bot ./
 RUN npm run build && npx vitest run calculator.test.ts
 
 # --------------------------------------------------------------------------- #
@@ -108,12 +108,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=build --chown=node:node /src /src
 
 # A named volume takes this ownership; a bind mount must be owned by uid 1000.
-RUN mkdir -p /src/apps/simplex-calculator-bot/data && \
-    chown node:node /src/apps/simplex-calculator-bot/data && \
-    chmod 0700 /src/apps/simplex-calculator-bot/data
+RUN mkdir -p /src/apps/popopx-calculator-bot/data && \
+    chown node:node /src/apps/popopx-calculator-bot/data && \
+    chmod 0700 /src/apps/popopx-calculator-bot/data
 
 USER node
-WORKDIR /src/apps/simplex-calculator-bot
+WORKDIR /src/apps/popopx-calculator-bot
 
 ENV NODE_ENV=production
 

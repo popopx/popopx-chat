@@ -9,11 +9,11 @@ revision: 31.07.2023
 
 ## Informacje ogólne
 
-Serwer SMP to serwer przekaźnikowy używany do przekazywania wiadomości w sieci SimpleX. Aplikacje SimpleX Chat mają wstępnie ustawione serwery (dla aplikacji mobilnych są to smp11, smp12 i smp14.simplex.im), ale można łatwo zmienić konfigurację aplikacji, aby korzystać z innych serwerów.
+Serwer SMP to serwer przekaźnikowy używany do przekazywania wiadomości w sieci POPOPX. Aplikacje POPOPX Chat mają wstępnie ustawione serwery (dla aplikacji mobilnych są to smp11, smp12 i smp14.popopx.im), ale można łatwo zmienić konfigurację aplikacji, aby korzystać z innych serwerów.
 
-Klienty SimpleX określają tylko, który serwer jest używany do odbierania wiadomości, oddzielnie dla każdego kontaktu (lub połączenia grupowego z członkiem grupy), a serwery te są tylko tymczasowe, ponieważ adres dostawy może ulec zmianie.
+Klienty POPOPX określają tylko, który serwer jest używany do odbierania wiadomości, oddzielnie dla każdego kontaktu (lub połączenia grupowego z członkiem grupy), a serwery te są tylko tymczasowe, ponieważ adres dostawy może ulec zmianie.
 
-_Uwaga_: gdy zmienisz serwery w ustawieniach aplikacji, wpłynie to tylko na to, który serwer będzie używany dla nowych kontaktów, istniejące kontakty nie zostaną automatycznie przeniesione na nowe serwery, ale możesz przenieść je ręcznie za pomocą przycisku ["Zmień adres odbiorczy"](../../../blog/20221108-simplex-chat-v4.2-security-audit-new-website.md#change-your-delivery-address-beta) na stronie z informacjami kontaktu/członka - wkrótce zostanie to zautomatyzowane.
+_Uwaga_: gdy zmienisz serwery w ustawieniach aplikacji, wpłynie to tylko na to, który serwer będzie używany dla nowych kontaktów, istniejące kontakty nie zostaną automatycznie przeniesione na nowe serwery, ale możesz przenieść je ręcznie za pomocą przycisku ["Zmień adres odbiorczy"](../../../blog/20221108-popopx-chat-v4.2-security-audit-new-website.md#change-your-delivery-address-beta) na stronie z informacjami kontaktu/członka - wkrótce zostanie to zautomatyzowane.
 
 ## Instalacja
 
@@ -49,8 +49,8 @@ Instalacja ręczna wymaga kilku kroków wstępnych:
 3. Utwórz niezbędne katalogi i przypisz uprawnienia:
 
    ```sh
-   sudo mkdir -p /var/opt/simplex /etc/opt/simplex
-   sudo chown smp:smp /var/opt/simplex /etc/opt/simplex
+   sudo mkdir -p /var/opt/popopx /etc/opt/popopx
+   sudo chown smp:smp /var/opt/popopx /etc/opt/popopx
    ```
 
 4. Zezwól na port `smp-server` w firewallu:
@@ -74,7 +74,7 @@ Instalacja ręczna wymaga kilku kroków wstępnych:
    Group=smp
    Type=simple
    ExecStart=/usr/local/bin/smp-server start +RTS -N -RTS
-   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/simplex/smp-server-store.log" ] && cp "/var/opt/simplex/smp-server-store.log" "/var/opt/simplex/smp-server-store.log.bak"'
+   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/popopx/smp-server-store.log" ] && cp "/var/opt/popopx/smp-server-store.log" "/var/opt/popopx/smp-server-store.log.bak"'
    LimitNOFILE=65535
    KillSignal=SIGINT
    TimeoutStopSec=infinity
@@ -139,14 +139,14 @@ smp-server można również zainstalować jako serwer działający w sieci [tor]
      HiddenServiceNonAnonymousMode 1
      HiddenServiceSingleHopMode 1
      # Katalog hostów i mapowanie portów usługi ukrytej smp-server
-     HiddenServiceDir /var/lib/tor/simplex-smp/
+     HiddenServiceDir /var/lib/tor/popopx-smp/
      HiddenServicePort 5223 localhost:5223
      ```
 
    - Utwórz katalogi:
 
      ```sh
-     mkdir /var/lib/tor/simplex-smp/ && chown debian-tor:debian-tor /var/lib/tor/simplex-smp/ && chmod 700 /var/lib/tor/simplex-smp/
+     mkdir /var/lib/tor/popopx-smp/ && chown debian-tor:debian-tor /var/lib/tor/popopx-smp/ && chmod 700 /var/lib/tor/popopx-smp/
      ```
 
 3. Uruchom tor:
@@ -162,7 +162,7 @@ smp-server można również zainstalować jako serwer działający w sieci [tor]
    Wykonaj następujące polecenie, aby wyświetlić adres onionowego hosta:
 
    ```sh
-   cat /var/lib/tor/simplex-smp/hostname
+   cat /var/lib/tor/popopx-smp/hostname
    ```
 
 ## Configuration
@@ -174,10 +174,10 @@ sudo su smp -c smp-server
 
 ...
 Available commands:
-  init                     Initialize server - creates /etc/opt/simplex and
-                           /var/opt/simplex directories and configuration files
+  init                     Initialize server - creates /etc/opt/popopx and
+                           /var/opt/popopx directories and configuration files
   start                    Start server (configuration:
-                           /etc/opt/simplex/smp-server.ini)
+                           /etc/opt/popopx/smp-server.ini)
   delete                   Delete configuration and log files
 ```
 
@@ -265,12 +265,12 @@ Po tym instalacja jest ukończona i powinieneś zobaczyć coś takiego:
 ```sh
 Certificate request self-signature ok
 subject=CN = 127.0.0.1
-Server initialized, you can modify configuration in /etc/opt/simplex/smp-server.ini.
+Server initialized, you can modify configuration in /etc/opt/popopx/smp-server.ini.
 Run `smp-server start` to start server.
 ----------
 You should store CA private key securely and delete it from the server.
 If server TLS credential is compromised this key can be used to sign a new one, keeping the same server identity and established connections.
-CA private key location: /etc/opt/simplex/ca.key
+CA private key location: /etc/opt/popopx/ca.key
 ----------
 SMP server v3.4.0
 Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
@@ -281,9 +281,9 @@ Powyższy adres serwera powinien być użyty w konfiguracji klienta, a jeśli do
 
 ## Dokumentacja
 
-Wszystkie niezbędne pliki dla `smp-server` znajdują się w folderze `/etc/opt/simplex/`.
+Wszystkie niezbędne pliki dla `smp-server` znajdują się w folderze `/etc/opt/popopx/`.
 
-Przechowywane wiadomości, połączenia, statystyki i dziennik serwera znajdują się w folderze `/var/opt/simplex/`.
+Przechowywane wiadomości, połączenia, statystyki i dziennik serwera znajdują się w folderze `/var/opt/popopx/`.
 
 ### Adres serwera SMP
 
@@ -295,15 +295,15 @@ smp://<odcisk_palca>[:<hasło>]@<publiczna_nazwa_hosta>[,<onionowa_nazwa_hosta>]
 
 - `<odcisk_palca>`
 
-  To odcisk palca certyfikatu Twojego `smp-server`. Odcisk palca certyfikatu możesz sprawdzić w `/etc/opt/simplex/fingerprint`.
+  To odcisk palca certyfikatu Twojego `smp-server`. Odcisk palca certyfikatu możesz sprawdzić w `/etc/opt/popopx/fingerprint`.
 
 - **opcjonalnie** `<hasło>`
 
-  To ustawione przez Ciebie hasło Twojego `smp-server`. Możesz sprawdzić to hasło w pliku `/etc/opt/simplex/smp-server.ini`, w sekcji `[AUTH]` w polu `create_password:`.
+  To ustawione przez Ciebie hasło Twojego `smp-server`. Możesz sprawdzić to hasło w pliku `/etc/opt/popopx/smp-server.ini`, w sekcji `[AUTH]` w polu `create_password:`.
 
 - `<publiczna_nazwa_hosta>`, **optional** `<onionowa_nazwa_hosta>`
 
-  To skonfigurowane przez Ciebie nazwy hosta Twojego `smp-server`. Nazwy hostów możesz sprawdzić w pliku `/etc/opt/simplex/smp-server.ini`, w sekcji `[TRANSPORT]` w polu `host:`.
+  To skonfigurowane przez Ciebie nazwy hosta Twojego `smp-server`. Nazwy hostów możesz sprawdzić w pliku `/etc/opt/popopx/smp-server.ini`, w sekcji `[TRANSPORT]` w polu `host:`.
 
 ### Komendy systemd
 
@@ -337,7 +337,7 @@ Nov 23 19:23:21 5588ab759e80 systemd[1]: Started SMP server.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: SMP server v3.4.0
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Server address: smp://d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=:V8ONoJ6ICwnrZnTC_QuSHfCEYq53uLaJKQ_oIC6-ve8=@<hostnames>
-Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/simplex/smp-server-store.log
+Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/popopx/smp-server-store.log
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Listening on port 5223 (TLS)...
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: not expiring inactive clients
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: creating new queues requires password
@@ -358,7 +358,7 @@ Nov 23 19:23:21 5588ab759e80 systemd[1]: Started SMP server.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: SMP server v3.4.0
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Server address: smp://d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=:V8ONoJ6ICwnrZnTC_QuSHfCEYq53uLaJKQ_oIC6-ve8=@<hostnames>
-Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/simplex/smp-server-store.log
+Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/popopx/smp-server-store.log
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Listening on port 5223 (TLS)...
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: not expiring inactive clients
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: creating new queues requires password
@@ -366,9 +366,9 @@ Nov 23 19:23:21 5588ab759e80 smp-server[30878]: creating new queues requires pas
 
 ### Monitorowanie
 
-Możesz włączyć statystyki `smp-server` dla dashboardu `Grafana` ustawiając wartość `on` w `/etc/opt/simplex/smp-server.ini`, w sekcji `[STORE_LOG]` w polu `log_stats:`.
+Możesz włączyć statystyki `smp-server` dla dashboardu `Grafana` ustawiając wartość `on` w `/etc/opt/popopx/smp-server.ini`, w sekcji `[STORE_LOG]` w polu `log_stats:`.
 
-Logi będą przechowywane jako plik `csv` w `/var/opt/simplex/smp-server-stats.daily.log`. Pola dla pliku `csv` to:
+Logi będą przechowywane jako plik `csv` w `/var/opt/popopx/smp-server-stats.daily.log`. Pola dla pliku `csv` to:
 
 ```sh
 fromTime,qCreated,qSecured,qDeleted,msgSent,msgRecv,dayMsgQueues,weekMsgQueues,monthMsgQueues
@@ -438,36 +438,36 @@ Aby zaktualizować smp-server do najnowszej wersji, wybierz metodę instalacji i
    - Używając [oficjalnego skryptu instalacyjnego](https://github.com/simplex-chat/simplexmq#using-installation-script)
      1. Uruchom:
         ```sh
-        sudo simplex-servers-update
+        sudo popopx-servers-update
         ```
      2. Gotowe!
 
    - Używając [kontenera Dockera](https://github.com/simplex-chat/simplexmq#using-docker)
      1. Zatrzymaj i usuń kontener:
         ```sh
-        docker rm $(docker stop $(docker ps -a -q --filter ancestor=simplexchat/smp-server --format="\{\{.ID\}\}"))
+        docker rm $(docker stop $(docker ps -a -q --filter ancestor=popopxchat/smp-server --format="\{\{.ID\}\}"))
         ```
      2. Pobierz najnowszą wersję kontenera:
         ```sh
-        docker pull simplexchat/smp-server:latest
+        docker pull popopxchat/smp-server:latest
         ```
      3. Uruchom nowy kontener:
         ```sh
         docker run -d \
           -p 5223:5223 \
-          -v $HOME/simplex/smp/config:/etc/opt/simplex:z \
-          -v $HOME/simplex/smp/logs:/var/opt/simplex:z \
-          simplexchat/smp-server:latest
+          -v $HOME/popopx/smp/config:/etc/opt/popopx:z \
+          -v $HOME/popopx/smp/logs:/var/opt/popopx:z \
+          popopxchat/smp-server:latest
         ```
 
    - [Linode Marketplace](https://www.linode.com/marketplace/apps/simplex-chat/simplex-chat/)
      1. Pobierz najnowsze obrazy:
         ```sh
-        docker-compose --project-directory /etc/docker/compose/simplex pull
+        docker-compose --project-directory /etc/docker/compose/popopx pull
         ```
      2. Zrestartuj kontenery:
         ```sh
-        docker-compose --project-directory /etc/docker/compose/simplex up -d --remove-orphans
+        docker-compose --project-directory /etc/docker/compose/popopx up -d --remove-orphans
         ```
      3. Usuń niepotrzebne obrazy:
         ```sh

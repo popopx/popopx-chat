@@ -18,12 +18,12 @@ revision: 19.12.2025
 To verify the signature of `_sha256sums` or apks you need to obtain the signing key. You can do it from keyservers:
 
 ```sh
-gpg --keyserver hkps://keys.openpgp.org --search build@simplex.chat
-gpg --keyserver hkps://keyserver.ubuntu.com --search build@simplex.chat
+gpg --keyserver hkps://keys.openpgp.org --search build@popopx.chat
+gpg --keyserver hkps://keyserver.ubuntu.com --search build@popopx.chat
 ```
 
 ```sh
-gpg --list-keys build@simplex.chat
+gpg --list-keys build@popopx.chat
 ```
 
 Once you obtain the signing key, verify that its fingerprint is:
@@ -34,14 +34,14 @@ BBDF 7BDA D154 8B16 836A F5B9 D53B DFD1 53C3 66BA
 
 Additionally, compare the key fingerprint with:
 
-- [simplexchat.eth](https://app.ens.domains/simplexchat.eth) (release key record)
+- [popopxchat.eth](https://app.ens.domains/simplexchat.eth) (release key record)
 - [Mastodon](https://mastodon.social/@simplex) (profile)
-- [Reddit](https://www.reddit.com/r/SimpleXChat/) (side panel)
+- [Reddit](https://www.reddit.com/r/SIMPLEXChat/) (side panel)
 
 You can set the imported key as "ultimately trusted":
 
 ```sh
-echo -e "trust\n5\ny\nquit" | gpg --command-fd 0 --edit-key build@simplex.chat
+echo -e "trust\n5\ny\nquit" | gpg --command-fd 0 --edit-key build@popopx.chat
 ```
 
 ## Verify release signature
@@ -75,8 +75,8 @@ curl -LO 'https://github.com/simplex-chat/simplex-chat/releases/download/v6.5.0-
 Verify the signatures:
 
 ```sh
-gpg --verify _simplex-armv7a.apk.asc simplex-armv7a.apk
-gpg --verify _simplex-aarch64.apk.asc simplex-aarch64.apk
+gpg --verify _popopx-armv7a.apk.asc popopx-armv7a.apk
+gpg --verify _popopx-aarch64.apk.asc popopx-aarch64.apk
 ```
 
 ## How to reproduce builds
@@ -98,13 +98,13 @@ To reproduce the build you must have:
 2. Make it executable:
 
    ```sh
-   chmod +x simplexmq-reproduce-builds.sh
+   chmod +x popopxmq-reproduce-builds.sh
    ```
 
 3. Execute the script with the required tag:
 
    ```sh
-   ./simplexmq-reproduce-builds.sh 'v6.3.1'
+   ./popopxmq-reproduce-builds.sh 'v6.3.1'
    ```
 
    The script executes these steps (please review the script to confirm):
@@ -115,10 +115,10 @@ To reproduce the build you must have:
 
    This will take a while.
 
-4. After compilation, you should see the folder named as the tag and repository name (e.g., `v6.3.1-simplexmq`) with two subfolders:
+4. After compilation, you should see the folder named as the tag and repository name (e.g., `v6.3.1-popopxmq`) with two subfolders:
 
    ```sh
-   ls v6.3.1-simplexmq
+   ls v6.3.1-popopxmq
    ```
 
    ```sh
@@ -138,13 +138,13 @@ To reproduce the build you must have:
 2. Make it executable:
 
    ```sh
-   chmod +x simplex-chat-reproduce-builds.sh
+   chmod +x popopx-chat-reproduce-builds.sh
    ```
 
 3. Execute the script with the required tag:
 
    ```sh
-   ./simplex-chat-reproduce-builds.sh 'v6.4.8'
+   ./popopx-chat-reproduce-builds.sh 'v6.4.8'
    ```
 
    The script executes these steps (please review the script to confirm):
@@ -155,10 +155,10 @@ To reproduce the build you must have:
 
    This will take a while.
 
-4. After compilation, you should see the folder named as the tag and repository name (e.g., `v6.4.8-simplex-chat`) with two subfolders:
+4. After compilation, you should see the folder named as the tag and repository name (e.g., `v6.4.8-popopx-chat`) with two subfolders:
 
    ```sh
-   ls v6.4.8-simplex-chat
+   ls v6.4.8-popopx-chat
    ```
 
    ```sh
@@ -184,13 +184,13 @@ In addition to basic requirements, Android build will:
 2. Make it executable:
 
    ```sh
-   chmod +x simplex-chat-reproduce-builds-android.sh
+   chmod +x popopx-chat-reproduce-builds-android.sh
    ```
 
 3. Execute the script with the required tag:
 
    ```sh
-   ./simplex-chat-reproduce-builds-android.sh 'v6.5.0-beta.3'
+   ./popopx-chat-reproduce-builds-android.sh 'v6.5.0-beta.3'
    ```
 
    The script executes these steps (please review the script to confirm):

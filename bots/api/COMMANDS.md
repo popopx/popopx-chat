@@ -249,26 +249,26 @@ ChatCmdError: Command error (only used in WebSockets API).
 
 ### APISetUserDomain
 
-Set or remove SimpleX name of bot address. The name must be registered with the address short link.
+Set or remove POPOPX name of bot address. The name must be registered with the address short link.
 
 *Network usage*: interactive.
 
 **Parameters**:
 - userId: int64
-- simplexDomain: string?
+- popopxDomain: string?
 
 **Syntax**:
 
 ```
-/_set domain <userId>[ <simplexDomain>]
+/_set domain <userId>[ <popopxDomain>]
 ```
 
 ```javascript
-'/_set domain ' + userId + (simplexDomain ? ' ' + simplexDomain : '') // JavaScript
+'/_set domain ' + userId + (popopxDomain ? ' ' + popopxDomain : '') // JavaScript
 ```
 
 ```python
-'/_set domain ' + str(userId) + ((' ' + simplexDomain) if simplexDomain is not None else '') # Python
+'/_set domain ' + str(userId) + ((' ' + popopxDomain) if popopxDomain is not None else '') # Python
 ```
 
 **Responses**:
@@ -289,7 +289,7 @@ ChatCmdError: Command error (only used in WebSockets API).
 - chatError: [ChatError](./TYPES.md#chaterror)
 
 **Errors**:
-- SimplexDomainNotReady: The name does not resolve to the address short link.
+- PopopxDomainNotReady: The name does not resolve to the address short link.
 
 ---
 
@@ -1530,7 +1530,7 @@ ChatCmdError: Command error (only used in WebSockets API).
 
 ### APIConnectPlan
 
-Determine SimpleX link type and if the bot is already connected via this link or name.
+Determine POPOPX link type and if the bot is already connected via this link or name.
 
 *Network usage*: interactive.
 
@@ -1560,8 +1560,8 @@ ConnectionPlan: Connection link information.
 - type: "connectionPlan"
 - user: [User](./TYPES.md#user)
 - connLink: [CreatedConnLink](./TYPES.md#createdconnlink)
-- planSimplexName: [SimplexNameInfo](./TYPES.md#simplexnameinfo)?
-- otherSimplexName: [SimplexNameInfo](./TYPES.md#simplexnameinfo)?
+- planPopopxName: [PopopxNameInfo](./TYPES.md#popopxnameinfo)?
+- otherPopopxName: [PopopxNameInfo](./TYPES.md#popopxnameinfo)?
 - connectionPlan: [ConnectionPlan](./TYPES.md#connectionplan)
 
 ChatCmdError: Command error (only used in WebSockets API).
@@ -1573,7 +1573,7 @@ ChatCmdError: Command error (only used in WebSockets API).
 
 ### APIConnect
 
-Connect via prepared SimpleX link. The link can be 1-time invitation link, contact address or group link.
+Connect via prepared POPOPX link. The link can be 1-time invitation link, contact address or group link.
 
 *Network usage*: interactive.
 
@@ -1624,7 +1624,7 @@ ChatCmdError: Command error (only used in WebSockets API).
 
 ### Connect
 
-Connect via SimpleX link or name as string in the active user profile.
+Connect via POPOPX link or name as string in the active user profile.
 
 *Network usage*: interactive.
 
@@ -1669,11 +1669,11 @@ ConnectionPlan: Connection link information.
 - type: "connectionPlan"
 - user: [User](./TYPES.md#user)
 - connLink: [CreatedConnLink](./TYPES.md#createdconnlink)
-- planSimplexName: [SimplexNameInfo](./TYPES.md#simplexnameinfo)?
-- otherSimplexName: [SimplexNameInfo](./TYPES.md#simplexnameinfo)?
+- planPopopxName: [PopopxNameInfo](./TYPES.md#popopxnameinfo)?
+- otherPopopxName: [PopopxNameInfo](./TYPES.md#popopxnameinfo)?
 - connectionPlan: [ConnectionPlan](./TYPES.md#connectionplan)
 
-SentInvitationToContact: Invitation sent to contact (when connecting via SimpleX name to a known contact address)..
+SentInvitationToContact: Invitation sent to contact (when connecting via POPOPX name to a known contact address)..
 - type: "sentInvitationToContact"
 - user: [User](./TYPES.md#user)
 - contact: [Contact](./TYPES.md#contact)
@@ -2457,7 +2457,7 @@ ChatStopped: Chat stopped.
 
 ## Remote control commands
 
-Allows a bot to accept an incoming remote control session from a SimpleX Desktop client, giving the desktop live access to the bot's SimpleX instance.
+Allows a bot to accept an incoming remote control session from a POPOPX Desktop client, giving the desktop live access to the bot's POPOPX instance.
 
 
 ### ConnectRemoteCtrl

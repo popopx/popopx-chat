@@ -16,15 +16,15 @@ contract NFTNumberedTest {
 
     function beforeAll () public {
         s = new NFTNumbered(
-            "SimpleX NFT: SMPX testnet access",
-            "SIMPLEXNFT",
+            "POPOPX NFT: SMPX testnet access",
+            "POPOPXNFT",
             "https://ipfs.io/ipfs/abcd"
         );
     }
 
     function testCreateToken () public {
-        Assert.equal(s.name(), "SimpleX NFT: SMPX testnet access", "bad name");
-        Assert.equal(s.symbol(), "SIMPLEXNFT", "bad symbol");
+        Assert.equal(s.name(), "POPOPX NFT: SMPX testnet access", "bad name");
+        Assert.equal(s.symbol(), "POPOPXNFT", "bad symbol");
         Assert.equal(s.nextTokenId(), 1, "bad next token ID");
         Assert.equal(s.minter(), s.owner(), "minter different from owner");
         Assert.equal(s.mintingLocked(), false, "minting locked");

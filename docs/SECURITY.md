@@ -6,19 +6,19 @@ revision: 25.05.2026
 
 # Security Policy
 
-While great care is taken to ensure the highest level of security and privacy in SimpleX network servers and clients, all software can have flaws, and we believe it is a critical part of an organization's social responsibility to minimize the impact of these flaws through continual vulnerability discovery efforts, defense in depth design, and prompt remediation and notification.
+While great care is taken to ensure the highest level of security and privacy in POPOPX network servers and clients, all software can have flaws, and we believe it is a critical part of an organization's social responsibility to minimize the impact of these flaws through continual vulnerability discovery efforts, defense in depth design, and prompt remediation and notification.
 
-The implementation security assessment of SimpleX cryptography and networking was done by Trail of Bits in [November 2022](../blog/20221108-simplex-chat-v4.2-security-audit-new-website.md).
+The implementation security assessment of POPOPX cryptography and networking was done by Trail of Bits in [November 2022](../blog/20221108-popopx-chat-v4.2-security-audit-new-website.md).
 
-The cryptographic review of SimpleX protocols design was done by Trail of Bits in [July 2024](../blog/20241014-simplex-network-v6-1-security-review-better-calls-user-experience.md).
+The cryptographic review of POPOPX protocols design was done by Trail of Bits in [July 2024](../blog/20241014-popopx-network-v6-1-security-review-better-calls-user-experience.md).
 
 We have scheduled implementation security assessment for June 2026.
 
 ## Reporting security issues
 
-To report a security issue, please contact us directly via email [chat@simplex.chat](mailto:chat@simplex.chat). Please do NOT report security issues via GitHub issues or via any public channels.
+To report a security issue, please contact us directly via email [chat@popopx.chat](mailto:chat@popopx.chat). Please do NOT report security issues via GitHub issues or via any public channels.
 
-Please encrypt the email message using the key for this address from [keys.openpgp.org](https://keys.openpgp.org/search?q=chat%40simplex.chat) (its fingerprint is `FB44 AF81 A45B DE32 7319 797C 8510 7E35 7D4A 17FC`) and make your key available for a secure reply.
+Please encrypt the email message using the key for this address from [keys.openpgp.org](https://keys.openpgp.org/search?q=chat%40popopx.chat) (its fingerprint is `FB44 AF81 A45B DE32 7319 797C 8510 7E35 7D4A 17FC`) and make your key available for a secure reply.
 
 While we encourage you to encrypt the message, if this poses a barrier to reporting, an unencrypted submission is better than no submission.
 
@@ -28,9 +28,9 @@ Our team will investigate and prioritize the reported issue. We may work in priv
 
 ## Threat Model
 
-Please review threat model for SimpleX: https://github.com/simplex-chat/simplexmq/blob/stable/protocol/overview-tjr.md#threat-model
+Please review threat model for POPOPX: https://github.com/simplex-chat/simplexmq/blob/stable/protocol/overview-tjr.md#threat-model
 
-Certain threats are considered out of the scope of SimpleX security model. For example, we do not consider SimpleX secure against the following classes of attacks:
+Certain threats are considered out of the scope of POPOPX security model. For example, we do not consider POPOPX secure against the following classes of attacks:
 
 - CPU/hardware flaws.
 - physical observation side channels (e.g. power consumption, EM emissions, etc).
@@ -40,7 +40,7 @@ Further, any user data stored on the device can be accessed with user's or root 
 - encrypted database.
 - database encryption key in case it is stored on the device.
 
-Mitigations for security issues outside of our threat model may still be implemented, however they will be weighed against competing priorities, and we do not classify them as SimpleX vulnerabilities.
+Mitigations for security issues outside of our threat model may still be implemented, however they will be weighed against competing priorities, and we do not classify them as POPOPX vulnerabilities.
 
 ## Issue severity
 
@@ -57,7 +57,7 @@ We will determine the risk of each issue, taking into account our experience dea
 - **CRITICAL severity**. Such issues should affect common configurations and be exploitable with low or medium difficulty. For example: significant disclosure of the encrypted users' messages or files either via relays or via communication channels, vulnerabilities which can be easily exploited remotely to compromise clients or servers private keys. These issues will be kept private and will trigger a new release of all supported versions.
 - **HIGH severity**. This includes issues that are of a lower risk than critical, possibly due to affecting less common configurations, or have high difficulty to be exploited. These issues will be kept private and will trigger a new release of all supported versions.
 - **MEDIUM severity**. This includes issues like crashes in client applications caused by the received messages or files, flaws in protocols that are less commonly used, and local flaws. These will in general be kept private until the next release, and that release will be scheduled so that it can roll up several such flaws at one time.
-- **LOW severity**. This includes issues such as those that only affect the SimpleX CLI app, or unlikely configurations, or issues that would be classified as medium but are very difficult to exploit. These will in general be fixed immediately in latest development versions, and may be back-ported to older versions that are still getting updates. These issues may be kept private or be included in commit messages.
+- **LOW severity**. This includes issues such as those that only affect the POPOPX CLI app, or unlikely configurations, or issues that would be classified as medium but are very difficult to exploit. These will in general be fixed immediately in latest development versions, and may be back-ported to older versions that are still getting updates. These issues may be kept private or be included in commit messages.
 
 ## Notification policy
 

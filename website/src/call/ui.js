@@ -6,14 +6,14 @@
   const DATA_FOR_PEER = "data-for-peer"
   // const COPY_DATA_FOR_PEER_BTN = "copy-data-for-peer"
   const PASS_DATA_TO_PEER_TEXT = "pass-data-to-peer"
-  const SIMPLEX_CHAT_COMMAND = "simplex-chat-command"
-  const COPY_SIMPLEX_CHAT_COMMAND_BTN = "copy-simplex-chat-command"
+  const POPOPX_CHAT_COMMAND = "popopx-chat-command"
+  const COPY_POPOPX_CHAT_COMMAND_BTN = "copy-popopx-chat-command"
   const COMMAND_TO_PROCESS = "command-to-process"
   const PROCESS_COMMAND_BTN = "process-command"
   const urlForPeer = document.getElementById(URL_FOR_PEER)
   const dataForPeer = document.getElementById(DATA_FOR_PEER)
   const passDataToPeerText = document.getElementById(PASS_DATA_TO_PEER_TEXT)
-  const simplexChatCommand = document.getElementById(SIMPLEX_CHAT_COMMAND)
+  const popopxChatCommand = document.getElementById(POPOPX_CHAT_COMMAND)
   const commandToProcess = document.getElementById(COMMAND_TO_PROCESS)
   const processCommandButton = document.getElementById(PROCESS_COMMAND_BTN)
   // const startE2EECallButton = document.getElementById(START_E2EE_CALL_BTN)
@@ -37,10 +37,10 @@
   //   commandToProcess.style.display = ""
   //   processCommandButton.style.display = ""
   // }
-  const copySimplexChatCommandButton = document.getElementById(COPY_SIMPLEX_CHAT_COMMAND_BTN)
-  copySimplexChatCommandButton.onclick = () => {
-    navigator.clipboard.writeText(simplexChatCommand.innerText)
-    if (simplexChatCommand.innerText.startsWith("/_call offer")) {
+  const copyPOPOPXChatCommandButton = document.getElementById(COPY_POPOPX_CHAT_COMMAND_BTN)
+  copyPOPOPXChatCommandButton.onclick = () => {
+    navigator.clipboard.writeText(popopxChatCommand.innerText)
+    if (popopxChatCommand.innerText.startsWith("/_call offer")) {
       commandToProcess.style.display = ""
       processCommandButton.style.display = ""
     }
@@ -90,11 +90,11 @@
 
           const webRTCCallOffer = {callType: {media, capabilities}, rtcSession: {rtcSession: offer, rtcIceCandidates: iceCandidates}}
           const peerChatCommand = `/_call offer @${parsed.get("contact_id")} ${JSON.stringify(webRTCCallOffer)}`
-          simplexChatCommand.innerText = peerChatCommand
+          popopxChatCommand.innerText = peerChatCommand
 
           // copyUrlButton.style.display = ""
           // copyDataButton.style.display = ""
-          copySimplexChatCommandButton.style.display = ""
+          copyPOPOPXChatCommandButton.style.display = ""
           return
         }
         case "answer": {
@@ -106,8 +106,8 @@
           const peerChatCommand = `/_call answer @${parsed.get("contact_id")} ${JSON.stringify(webRTCSession)}`
           // copyUrlButton.style.display = "none"
           // copyDataButton.style.display = ""
-          copySimplexChatCommandButton.style.display = ""
-          simplexChatCommand.innerText = peerChatCommand
+          copyPOPOPXChatCommandButton.style.display = ""
+          popopxChatCommand.innerText = peerChatCommand
           return
         }
         case "ok":

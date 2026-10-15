@@ -96,24 +96,24 @@
 
 | Source File | Product Concepts Affected | Risk Level | Notes |
 |-------------|--------------------------|------------|-------|
-| src/Simplex/Chat/Controller.hs | PC1 through PC31 | High | Command processor — all API commands |
-| src/Simplex/Chat/Types.hs | PC1 through PC31 | High | Core data types shared across all features |
-| src/Simplex/Chat/Core.hs | PC1 through PC31 | High | Chat engine lifecycle |
-| src/Simplex/Chat/Protocol.hs | PC2, PC3, PC4, PC5, PC6, PC7 | High | Chat-level message protocol (x-events) |
-| src/Simplex/Chat/Messages.hs | PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9 | High | Message types and content |
-| src/Simplex/Chat/Messages/CIContent.hs | PC4, PC5, PC6, PC7, PC8, PC9, PC11 | Medium | Chat item content variants |
-| src/Simplex/Chat/Call.hs | PC17 | Medium | Call signaling types |
-| src/Simplex/Chat/Files.hs | PC10 | Medium | File transfer orchestration |
-| src/Simplex/Chat/Store/Messages.hs | PC4, PC5, PC6, PC7, PC8 | High | Message persistence |
-| src/Simplex/Chat/Store/Groups.hs | PC3, PC14, PC15, PC16, PC30 | High | Group persistence |
-| src/Simplex/Chat/Store/Direct.hs | PC2, PC12, PC13 | High | Contact persistence |
-| src/Simplex/Chat/Store/Files.hs | PC10 | Medium | File transfer persistence |
-| src/Simplex/Chat/Store/Profiles.hs | PC19, PC21 | Medium | User profile persistence |
-| src/Simplex/Chat/Store/Connections.hs | PC2, PC12 | High | Connection persistence and entity resolution |
-| src/Simplex/Chat/Archive.hs | PC26 | Medium | Database export/import for migration |
-| src/Simplex/Chat/ProfileGenerator.hs | PC20 | Low | Random profile generation for incognito |
-| src/Simplex/Chat/Remote.hs | PC27 | Medium | Remote desktop protocol handler |
-| src/Simplex/Chat/Remote/Types.hs | PC27 | Low | Remote desktop data types |
-| src/Simplex/Chat/Types/UITheme.hs | PC24 | Low | Theme data types for UI customization |
-| src/Simplex/Chat/Types/Preferences.hs | PC2, PC3, PC8 | Medium | Chat feature preferences (timed messages, etc.) |
-| src/Simplex/Chat/Types/Shared.hs | PC3, PC16 | Medium | Shared types including GroupMemberRole |
+| src/POPOPX/Chat/Controller.hs | PC1 through PC31 | High | Command processor — all API commands |
+| src/POPOPX/Chat/Types.hs | PC1 through PC31 | High | Core data types shared across all features |
+| src/POPOPX/Chat/Core.hs | PC1 through PC31 | High | Chat engine lifecycle |
+| src/POPOPX/Chat/Protocol.hs | PC2, PC3, PC4, PC5, PC6, PC7 | High | Chat-level message protocol (x-events) |
+| src/POPOPX/Chat/Messages.hs | PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9 | High | Message types and content |
+| src/POPOPX/Chat/Messages/CIContent.hs | PC4, PC5, PC6, PC7, PC8, PC9, PC11 | Medium | Chat item content variants |
+| src/POPOPX/Chat/Call.hs | PC17 | Medium | Call signaling types |
+| src/POPOPX/Chat/Files.hs | PC10 | Medium | File transfer orchestration |
+| src/POPOPX/Chat/Store/Messages.hs | PC4, PC5, PC6, PC7, PC8 | High | Message persistence |
+| src/POPOPX/Chat/Store/Groups.hs | PC3, PC14, PC15, PC16, PC30 | High | Group persistence |
+| src/POPOPX/Chat/Store/Direct.hs | PC2, PC12, PC13 | High | Contact persistence |
+| src/POPOPX/Chat/Store/Files.hs | PC10 | Medium | File transfer persistence |
+| src/POPOPX/Chat/Store/Profiles.hs | PC19, PC21 | Medium | User profile persistence |
+| src/POPOPX/Chat/Store/Connections.hs | PC2, PC12 | High | Connection persistence and entity resolution |
+| src/POPOPX/Chat/Archive.hs | PC26 | Medium | Database export/import for migration |
+| src/POPOPX/Chat/ProfileGenerator.hs | PC20 | Low | Random profile generation for incognito |
+| src/POPOPX/Chat/Remote.hs | PC27 | Medium | Remote desktop protocol handler |
+| src/POPOPX/Chat/Remote/Types.hs | PC27 | Low | Remote desktop data types |
+| src/POPOPX/Chat/Types/UITheme.hs | PC24 | Low | Theme data types for UI customization |
+| src/POPOPX/Chat/Types/Preferences.hs | PC2, PC3, PC8 | Medium | Chat feature preferences (timed messages, etc.) |
+| src/POPOPX/Chat/Types/Shared.hs | PC3, PC16 | Medium | Shared types including GroupMemberRole |

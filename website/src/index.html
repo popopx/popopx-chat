@@ -1,6 +1,6 @@
 ---
-title: "SimpleX Chat: private and secure messenger without any user IDs (not even random)"
-description: "SimpleX Chat - a private and encrypted messenger without any user IDs (not even random ones)! Make a private connection via link / QR code to send messages and make calls."
+title: "POPOPX Chat: private and secure messenger without any user IDs (not even random)"
+description: "POPOPX Chat - a private and encrypted messenger without any user IDs (not even random ones)! Make a private connection via link / QR code to send messages and make calls."
 templateEngineOverride: njk
 active_home: true
 ---
@@ -31,7 +31,7 @@ active_home: true
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="{{ title }}"/>
     <meta property="og:description" content="{{ description }}"/>
-    <meta property="og:image" content="{% cfg 'siteLocation' %}/img/share_simplex.jpg"/>
+    <meta property="og:image" content="{% cfg 'siteLocation' %}/img/share_popopx.jpg"/>
     <meta name="twitter:card" content="summary"/>
     <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon.ico"/>
     {% include "markdown-alternate.html" %}
@@ -137,7 +137,7 @@ active_home: true
 
     <div class="screen">
         <section class="page-1 cover page">
-            <a class="sd-sale-banner gradient-text" href="https://simplex.domains/" target="_blank" rel="noopener"><span class="sd-lead" id="sd-lead">SimpleX domains launch </span><span class="sd-tail" id="sd-tail"><span class="sd-digits" id="sd-cd"></span>&#8288;<svg class="sd-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 100 100"><path d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></span></a>
+            <a class="sd-sale-banner gradient-text" href="https://popopx.domains/" target="_blank" rel="noopener"><span class="sd-lead" id="sd-lead">POPOPX domains launch </span><span class="sd-tail" id="sd-tail"><span class="sd-digits" id="sd-cd"></span>&#8288;<svg class="sd-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 100 100"><path d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></span></a>
             <script>
                 (function () {
                     var target = Date.UTC(2026, 11, 12, 18, 0, 0);
@@ -150,7 +150,7 @@ active_home: true
                         if (ms <= 0) {
                             clearInterval(timer);
                             lead.style.display = "none";
-                            cd.textContent = "Get SimpleX domain";
+                            cd.textContent = "Get POPOPX domain";
                             return;
                         }
                         var s = Math.floor(ms / 1000);
@@ -179,8 +179,8 @@ active_home: true
                                 <p>Download<br>Desktop App</p>
                             </div>
                         </a>
-                        <a class="apple-store-btn hidden" href="https://apps.apple.com/us/app/simplex-chat/id1605771084" target="_blank"><img src="/img/new/apple_store.svg" alt="App Store"></a>
-                        <a class="google-play-btn hidden" href="https://play.google.com/store/apps/details?id=chat.simplex.app" target="_blank"><img src="/img/new/google_play.svg" alt="Google Play"></a>
+                        <a class="apple-store-btn hidden" href="https://apps.apple.com/us/app/popopx-chat/id1605771084" target="_blank"><img src="/img/new/apple_store.svg" alt="App Store"></a>
+                        <a class="google-play-btn hidden" href="https://play.google.com/store/apps/details?id=chat.popopx.app" target="_blank"><img src="/img/new/google_play.svg" alt="Google Play"></a>
                         <a class="f-droid-btn hidden" href="{{ '' if lang == 'en' else '/' ~ lang }}/fdroid" title="{{ 'index-f-droid-title' | i18n({}, lang) }}"><img src="/img/new/f_droid.svg"></a>
                         <a class="testflight-btn hidden" href="https://testflight.apple.com/join/DWuT2LQu" target="_blank"><img class="no-border" src="/img/design_3/testflight-dark.png" title="{{ 'index-testflight-title' | i18n({}, lang) }}" alt="TestFlight"></a>
                         <a class="android-btn hidden" href="https://github.com/simplex-chat/simplex-chat/releases/latest/download/simplex-aarch64.apk" target="_blank"><img src="/img/design_3/android-dark.png" alt="Android APK"></a>
@@ -189,10 +189,10 @@ active_home: true
                         <a title="{{ 'index-security-assessment-title' | i18n({}, lang) }}" href="https://www.trailofbits.com/about" target="_blank">
                             <img src="/img/design_3/publications/trail-of-bits.png" alt="Trail of Bits">
                         </a>
-                        <a class="box-btn btn-1" title="{{ 'index-security-review-2022-title' | i18n({}, lang) }}" href="/blog/20221108-simplex-chat-v4.2-security-audit-new-website.html">
+                        <a class="box-btn btn-1" title="{{ 'index-security-review-2022-title' | i18n({}, lang) }}" href="/blog/20221108-popopx-chat-v4.2-security-audit-new-website.html">
                             2022
                         </a>
-                        <a class="box-btn gold-gradient" title="{{ 'index-security-review-2024-title' | i18n({}, lang) }}" href="/blog/20241014-simplex-network-v6-1-security-review-better-calls-user-experience.html">
+                        <a class="box-btn gold-gradient" title="{{ 'index-security-review-2024-title' | i18n({}, lang) }}" href="/blog/20241014-popopx-network-v6-1-security-review-better-calls-user-experience.html">
                             2024
                         </a>
                         <p class="security-audits">
@@ -200,19 +200,19 @@ active_home: true
                         </p>
                     </div>
                     <div class="publications-btns">
-                        <a title="{{ 'index-publications-privacy-guides-title' | i18n({}, lang) }}" href="https://www.privacyguides.org/en/real-time-communication/#simplex-chat" target="_blank">
+                        <a title="{{ 'index-publications-privacy-guides-title' | i18n({}, lang) }}" href="https://www.privacyguides.org/en/real-time-communication/#popopx-chat" target="_blank">
                             <img src="/img/design_3/publications/privacy-guides.png" alt="Privacy Guides">
                         </a>
                         <a title="{{ 'index-publications-whonix-title' | i18n({}, lang) }}" href="https://www.whonix.org/wiki/Chat#Recommendation" target="_blank">
                             <img src="/img/design_3/publications/whonix.png" alt="Whonix" class="whonix">
                         </a>
-                        <a title="{{ 'index-publications-heise-title' | i18n({}, lang) }}" href="https://www.heise.de/suche/?q=simplex+chat&sort_by=date&rm=search" target="_blank">
+                        <a title="{{ 'index-publications-heise-title' | i18n({}, lang) }}" href="https://www.heise.de/suche/?q=popopx+chat&sort_by=date&rm=search" target="_blank">
                             <img src="/img/design_3/publications/heise.png" alt="Heise">
                         </a>
-                        <a title="{{ 'index-publications-kuketz-title' | i18n({}, lang) }}" href="https://www.kuketz-blog.de/simplex-eindruecke-vom-messenger-ohne-identifier/" target="_blank">
+                        <a title="{{ 'index-publications-kuketz-title' | i18n({}, lang) }}" href="https://www.kuketz-blog.de/popopx-eindruecke-vom-messenger-ohne-identifier/" target="_blank">
                             <img src="/img/design_3/publications/kuketz-blog.png" alt="Kuketz Blog" class="kuketz">
                         </a>
-                        <a title="{{ 'index-publications-optout-title' | i18n({}, lang) }}" href="https://optoutpod.com/episodes/s3e02-simplexchat/" target="_blank">
+                        <a title="{{ 'index-publications-optout-title' | i18n({}, lang) }}" href="https://optoutpod.com/episodes/s3e02-popopxchat/" target="_blank">
                             <img src="/img/design_3/publications/optout.png" alt="Opt Out">
                         </a>
                     </div>
@@ -300,7 +300,7 @@ active_home: true
                     <a href="/directory" class="group-image" target="_blank"><img src="/img/group.svg"></a>
                     <a href="/directory" class="group-image" target="_blank"><img src="/img/group.svg"></a>
                     <a href="/directory" class="group-image" target="_blank"><img src="/img/group.svg"></a>
-                    <a href="https://smp4.simplex.im/g#hr4lvFeBmndWMKTwqiodPz3VBo_6UmdGWocXd1SupsM" class="simplex-image" title="{{ 'index-directory-users-group-title' | i18n({}, lang) }}" target="_blank">
+                    <a href="https://smp4.simplex.im/g#hr4lvFeBmndWMKTwqiodPz3VBo_6UmdGWocXd1SupsM" class="popopx-image" title="{{ 'index-directory-users-group-title' | i18n({}, lang) }}" target="_blank">
                         <img class="block dark:hidden" src="/img/new/logo-symbol-light.svg">
                         <img class="hidden dark:block" src="/img/new/logo-symbol-dark.svg">
                     </a>

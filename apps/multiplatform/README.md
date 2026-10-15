@@ -1,10 +1,10 @@
 # Android App Development
 
-This is a guide to contributing to the develop of the SimpleX android and desktop apps.
+This is a guide to contributing to the develop of the POPOPX android and desktop apps.
 
 ## Project Overview
 
-This is the **Kotlin Multiplatform (KMP)** mobile and desktop client for SimpleX Chat, sharing code between Android and Desktop (JVM) platforms using Compose Multiplatform for UI.
+This is the **Kotlin Multiplatform (KMP)** mobile and desktop client for POPOPX Chat, sharing code between Android and Desktop (JVM) platforms using Compose Multiplatform for UI.
 
 ## Setup
 
@@ -59,10 +59,10 @@ git submodule update --init --recursive
 - **`android/`** - Android app container
 - **`desktop/`** - Desktop JVM app container
 
-### Key Components (`common/src/commonMain/kotlin/chat/simplex/common/`)
+### Key Components (`common/src/commonMain/kotlin/chat/popopx/common/`)
 
 - **`model/ChatModel.kt`** - Main state container with reactive properties (MutableState, MutableStateFlow)
-- **`model/SimpleXAPI.kt`** - API bindings to Haskell core library via FFI
+- **`model/POPOPXAPI.kt`** - API bindings to Haskell core library via FFI
 - **`platform/Core.kt`** - FFI interface to native `libapp` library
 - **`platform/`** - Platform abstraction layer (expect/actual pattern for Android/Desktop specifics)
 - **`views/`** - Compose UI screens organized by feature (chat, chatlist, call, usersettings, etc.)
@@ -83,7 +83,7 @@ The app calls into a Haskell core library via JNI/FFI:
 compression.level=0          # APK compression (0-9)
 enable_debuggable=true       # Debug mode
 application_id.suffix=.debug # Multiple app instances on same device
-app.name=SimpleX Debug       # App name for debug builds
+app.name=POPOPX Debug       # App name for debug builds
 ```
 
 ### `gradle.properties`
@@ -129,11 +129,11 @@ The accepted fingerprints are in the `sha256_cert_fingerprints` list.
 To find your SHA certificate fingerprint perform the following steps.
 
 1. Build and install your development version of the app as usual
-2. From the terminal in Android studio run `adb shell pm get-app-links chat.simplex.app`
+2. From the terminal in Android studio run `adb shell pm get-app-links chat.popopx.app`
 3. Copy the signature listed in `signatures` in the result
 4. Add your signature to [assetlinks.json](https://github.com/simplex-chat/website/blob/master/.well-known/assetlinks.json) in the [website repo](https://github.com/simplex-chat/website) and make a PR. On approval, wait a few minutes for the changes to propagate to the public website and then you should be able to verify SimpleX.
 
-More information is available [here](https://developer.android.com/training/app-links/verify-site-associations#manual-verification). If there is no response when running the `pm get-app-links` command, the intents in `AndroidManifest.xml` are likely misspecified. A verification attempt can be triggered using `adb shell pm verify-app-links --re-verify chat.simplex.app`. 
+More information is available [here](https://developer.android.com/training/app-links/verify-site-associations#manual-verification). If there is no response when running the `pm get-app-links` command, the intents in `AndroidManifest.xml` are likely misspecified. A verification attempt can be triggered using `adb shell pm verify-app-links --re-verify chat.popopx.app`. 
 
 Note that this is not an issue for the app store build of the app as this is signed with our app store credentials and thus there is a stable signature over users. Developers do not have general access to these credentials for development and testing.
 

@@ -18,7 +18,7 @@
   "devDependencies": {
     "@11ty/eleventy": "^1.0.1",
     "@11ty/eleventy-plugin-rss": "^1.2.0",
-    "@simplex-chat/webrtc": "^0.1.1",
+    "@popopx-chat/webrtc": "^0.1.1",
     "common-tags": "^1.8.2",
     "ethers": "^6.15.0",
     "fast-uri": "^2.1.0",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@plausible-analytics/tracker": "0.4.6",
-    "@simplex-chat/xftp-web": "^0.3.0",
+    "@popopx-chat/xftp-web": "^0.3.0",
     "fs": "^0.0.1-security",
     "gray-matter": "^4.0.3",
     "jsdom": "^22.1.0",

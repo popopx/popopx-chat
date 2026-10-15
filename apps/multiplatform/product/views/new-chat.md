@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Create new contacts, groups, or connect with others via one-time invitation links or by scanning/pasting SimpleX links. This is the primary entry point for establishing new E2E encrypted connections.
+Create new contacts, groups, or connect with others via one-time invitation links or by scanning/pasting POPOPX links. This is the primary entry point for establishing new E2E encrypted connections.
 
 ## Route / Navigation
 
@@ -33,7 +33,7 @@ Displayed when `selection == INVITE`:
 
 | Element | Description |
 |---|---|
-| QR code display | Generated QR code for the invitation link (`SimpleXLinkQRCode`) |
+| QR code display | Generated QR code for the invitation link (`POPOPXLinkQRCode`) |
 | Short/full link toggle | Switch between short and full link display |
 | Share button | System share for the invitation link |
 | Copy button | Copy link to clipboard |
@@ -50,10 +50,10 @@ Displayed when `selection == CONNECT`:
 | Element | Description |
 |---|---|
 | QR code scanner | Camera-based QR code scanner (`showQRCodeScanner` state) |
-| Paste link field | Text field for pasting a SimpleX link (`pastedLink`) |
+| Paste link field | Text field for pasting a POPOPX link (`pastedLink`) |
 | Connect button | Initiates connection via `planAndConnect()` |
 
-When a valid SimpleX link is detected:
+When a valid POPOPX link is detected:
 1. `planAndConnect()` is called with the link URI
 2. If the link matches a known contact, filters to that chat
 3. If the link matches a known group, filters to that group
@@ -79,7 +79,7 @@ Group creation flow:
 
 | Component | Description |
 |---|---|
-| `SimpleXLinkQRCode` | Renders a QR code for a SimpleX connection link |
+| `POPOPXLinkQRCode` | Renders a QR code for a POPOPX connection link |
 | QR scanner | Platform camera scanner for reading QR codes |
 | Short link display | Compact link text with copy/share actions |
 

@@ -183,14 +183,14 @@ This file is generated automatically.
 - [SMPAgentError](#smpagenterror)
 - [SecurityCode](#securitycode)
 - [SimplePreference](#simplepreference)
-- [SimplexDomain](#simplexdomain)
-- [SimplexDomainClaim](#simplexdomainclaim)
-- [SimplexDomainError](#simplexdomainerror)
-- [SimplexDomainProof](#simplexdomainproof)
-- [SimplexLinkType](#simplexlinktype)
-- [SimplexNameInfo](#simplexnameinfo)
-- [SimplexNameType](#simplexnametype)
-- [SimplexTLD](#simplextld)
+- [PopopxDomain](#popopxdomain)
+- [PopopxDomainClaim](#popopxdomainclaim)
+- [PopopxDomainError](#popopxdomainerror)
+- [PopopxDomainProof](#popopxdomainproof)
+- [PopopxLinkType](#popopxlinktype)
+- [PopopxNameInfo](#popopxnameinfo)
+- [PopopxNameType](#popopxnametype)
+- [PopopxTLD](#popopxtld)
 - [SndCIStatusProgress](#sndcistatusprogress)
 - [SndConnEvent](#sndconnevent)
 - [SndError](#snderror)
@@ -566,7 +566,7 @@ TIMEOUT:
 - chatType: [BusinessChatType](#businesschattype)
 - businessId: string
 - customerId: string
-- businessDomain: [SimplexDomainClaim](#simplexdomainclaim)?
+- businessDomain: [PopopxDomainClaim](#popopxdomainclaim)?
 
 
 ---
@@ -1226,10 +1226,10 @@ ChatStoreChanged:
 InvalidConnReq:
 - type: "invalidConnReq"
 
-SimplexDomainNotReady:
-- type: "simplexDomainNotReady"
-- simplexDomain: [SimplexDomain](#simplexdomain)
-- simplexDomainError: [SimplexDomainError](#simplexdomainerror)
+PopopxDomainNotReady:
+- type: "popopxDomainNotReady"
+- popopxDomain: [PopopxDomain](#popopxdomain)
+- popopxDomainError: [PopopxDomainError](#popopxdomainerror)
 
 NotResolvedLocally:
 - type: "notResolvedLocally"
@@ -1838,8 +1838,8 @@ NOT_FOUND:
 DUPLICATE:
 - type: "DUPLICATE"
 
-SIMPLEX:
-- type: "SIMPLEX"
+POPOPX:
+- type: "POPOPX"
 
 NOT_ACCEPTED:
 - type: "NOT_ACCEPTED"
@@ -2309,16 +2309,16 @@ HyperLink:
 - showText: string?
 - linkUri: string
 
-SimplexLink:
-- type: "simplexLink"
+PopopxLink:
+- type: "popopxLink"
 - showText: string?
-- linkType: [SimplexLinkType](#simplexlinktype)
-- simplexUri: string
+- linkType: [PopopxLinkType](#popopxlinktype)
+- popopxUri: string
 - smpHosts: [string]
 
-SimplexName:
-- type: "simplexName"
-- nameInfo: [SimplexNameInfo](#simplexnameinfo)
+PopopxName:
+- type: "popopxName"
+- nameInfo: [PopopxNameInfo](#popopxnameinfo)
 
 Command:
 - type: "command"
@@ -2355,7 +2355,7 @@ Phone:
 - reactions: [GroupPreference](#grouppreference)
 - voice: [RoleGroupPreference](#rolegrouppreference)
 - files: [RoleGroupPreference](#rolegrouppreference)
-- simplexLinks: [RoleGroupPreference](#rolegrouppreference)
+- popopxLinks: [RoleGroupPreference](#rolegrouppreference)
 - reports: [GroupPreference](#grouppreference)
 - history: [GroupPreference](#grouppreference)
 - support: [SupportGroupPreference](#supportgrouppreference)
@@ -2448,7 +2448,7 @@ MemberSupport:
 - "reactions"
 - "voice"
 - "files"
-- "simplexLinks"
+- "popopxLinks"
 - "reports"
 - "history"
 - "support"
@@ -2680,7 +2680,7 @@ UpdateRequired:
 - reactions: [GroupPreference](#grouppreference)?
 - voice: [RoleGroupPreference](#rolegrouppreference)?
 - files: [RoleGroupPreference](#rolegrouppreference)?
-- simplexLinks: [RoleGroupPreference](#rolegrouppreference)?
+- popopxLinks: [RoleGroupPreference](#rolegrouppreference)?
 - reports: [GroupPreference](#grouppreference)?
 - history: [GroupPreference](#grouppreference)?
 - support: [SupportGroupPreference](#supportgrouppreference)?
@@ -2896,7 +2896,7 @@ Unknown:
 - peerType: [ChatPeerType](#chatpeertype)?
 - localBadge: [LocalBadge](#localbadge)?
 - localAlias: string
-- contactDomain: [SimplexDomainClaim](#simplexdomainclaim)?
+- contactDomain: [PopopxDomainClaim](#popopxdomainclaim)?
 - contactDomainVerified: bool?
 
 
@@ -3285,7 +3285,7 @@ count=<count>
 - preferences: [Preferences](#preferences)?
 - peerType: [ChatPeerType](#chatpeertype)?
 - badge: [BadgeProof](#badgeproof)?
-- contactDomain: [SimplexDomainClaim](#simplexdomainclaim)?
+- contactDomain: [PopopxDomainClaim](#popopxdomainclaim)?
 
 
 ---
@@ -3334,7 +3334,7 @@ NO_SESSION:
 
 **Record type**:
 - groupWebPage: string?
-- groupDomainClaim: [SimplexDomainClaim](#simplexdomainclaim)?
+- groupDomainClaim: [PopopxDomainClaim](#popopxdomainclaim)?
 - domainWebPage: bool
 - allowEmbedding: bool
 
@@ -3791,26 +3791,26 @@ A_SERVICE:
 
 ---
 
-## SimplexDomain
+## PopopxDomain
 
 **Record type**:
-- nameTLD: [SimplexTLD](#simplextld)
+- nameTLD: [PopopxTLD](#popopxtld)
 - domain: string
 - subDomain: [string]
 
 
 ---
 
-## SimplexDomainClaim
+## PopopxDomainClaim
 
 **Record type**:
 - domain: string
-- proof: [SimplexDomainProof](#simplexdomainproof)?
+- proof: [PopopxDomainProof](#popopxdomainproof)?
 
 
 ---
 
-## SimplexDomainError
+## PopopxDomainError
 
 **Discriminated union type**:
 
@@ -3823,7 +3823,7 @@ UnknownDomain:
 
 ---
 
-## SimplexDomainProof
+## PopopxDomainProof
 
 **Record type**:
 - linkOwnerId: string?
@@ -3833,7 +3833,7 @@ UnknownDomain:
 
 ---
 
-## SimplexLinkType
+## PopopxLinkType
 
 **Enum type**:
 - "contact"
@@ -3845,16 +3845,16 @@ UnknownDomain:
 
 ---
 
-## SimplexNameInfo
+## PopopxNameInfo
 
 **Record type**:
-- nameType: [SimplexNameType](#simplexnametype)
-- nameDomain: [SimplexDomain](#simplexdomain)
+- nameType: [PopopxNameType](#popopxnametype)
+- nameDomain: [PopopxDomain](#popopxdomain)
 
 
 ---
 
-## SimplexNameType
+## PopopxNameType
 
 **Enum type**:
 - "publicGroup"
@@ -3863,10 +3863,10 @@ UnknownDomain:
 
 ---
 
-## SimplexTLD
+## PopopxTLD
 
 **Enum type**:
-- "simplex"
+- "popopx"
 - "testing"
 - "web"
 

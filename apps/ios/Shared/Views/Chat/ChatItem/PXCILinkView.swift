@@ -153,7 +153,7 @@ func pxOpenBrowserWithAlert(uri: String) {
         pxShowInvalidLinkAlert(uri, error: pxErr)
         return
     }
-    let pxUriStr = pxUrl.uri.absoluteString
+    let pxUriStr = displayedUri(pxUrl.uri.absoluteString)
     let pxDisplayMsg = pxUriStr.count > PXCILinkConfig.pxAlertMaxChars
         ? "\(pxUriStr.prefix(PXCILinkConfig.pxAlertMaxChars))…"
         : pxUriStr
@@ -216,9 +216,9 @@ func pxShowInvalidLinkAlert(_ pxUri: String, error: String? = nil) {
 // MARK: - POPOPX: Message builder for invalid link alerts
 private func pxBuildInvalidLinkMessage(uri: String, error: String?) -> String {
     if let pxError = error, !pxError.isEmpty {
-        return "\(pxError)\n\(uri)"
+        return "\(pxError)\n\(displayedUri(uri))"
     }
-    return uri
+    return displayedUri(uri)
 }
 
 /// Parses and sanitizes a URI string, returning the original URL and an optional cleaned variant.
@@ -234,6 +234,25 @@ private func pxBuildSanitizeResult(parsedUri: ParsedUri?, input: String) -> (url
         return (url: (uri: pxUri, sanitizedUri: pxSanitizedUrl), error: nil)
     }
     return (url: nil, error: parsedUri?.parseError)
+}
+
+func unicodeMarker(_ s: Unicode.Scalar) -> String {
+    String(format: "[U+%04X]", s.value)
+}
+
+func displayedUri(_ uri: String) -> String {
+    let authorityStart = uri.range(of: "://")?.upperBound ?? uri.startIndex
+    let authority = authorityStart ..< (uri[authorityStart...].firstIndex(where: { "/?#".contains($0) }) ?? uri.endIndex)
+    var shown = ""
+    for i in uri.unicodeScalars.indices {
+        let s = uri.unicodeScalars[i]
+        if s.properties.generalCategory == .format || (!s.isASCII && authority.contains(i)) {
+            shown += unicodeMarker(s)
+        } else {
+            shown.unicodeScalars.append(s)
+        }
+    }
+    return shown
 }
 
 struct LargeLinkPreview_Previews: PreviewProvider {

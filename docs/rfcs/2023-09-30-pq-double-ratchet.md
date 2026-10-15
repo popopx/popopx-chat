@@ -12,13 +12,13 @@
   - [Encrypting messages](#encrypting-messages)
   - [Decrypting messages](#decrypting-messages)
 - [Alternative approach: CTIDH](#alternative-approach-ctidh)
-- [Implementation considerations for SimpleX Chat](#implementation-considerations-for-simplex-chat)
+- [Implementation considerations for POPOPX Chat](#implementation-considerations-for-popopx-chat)
 - [Summary](#summary)
 - [Notes](#notes)
 
 ## 1. Overview
 
-Currently SimpleX Chat uses [double-ratchet with header encryption](https://signal.org/docs/specifications/doubleratchet/#double-ratchet-with-header-encryption) to provide end-to-end encryption to messages and files. This document proposes a way to augment this algorithm with post-quantum key encapsulation mechanism (KEM) to make it resistant to quantum computers.
+Currently POPOPX Chat uses [double-ratchet with header encryption](https://signal.org/docs/specifications/doubleratchet/#double-ratchet-with-header-encryption) to provide end-to-end encryption to messages and files. This document proposes a way to augment this algorithm with post-quantum key encapsulation mechanism (KEM) to make it resistant to quantum computers.
 
 This document is purposefully written in an informal style to make it understandable for general audience with some technical, but without mathematical background. It does not compromise on the technical accuracy though.
 
@@ -209,13 +209,13 @@ Instead of using KEM, we can consider using [CTIDH](https://ctidh.isogeny.org). 
 
 The main downside is the absense of performance-efficient implementation for aarch64 architecture.
 
-## Implementation considerations for SimpleX Chat
+## Implementation considerations for POPOPX Chat
 
-As SimpleX Chat pads messages to a fixed size, using 16kb transport blocks, the size increase introduced by this scheme will not cause additional traffic in most cases. For large texts it may require additional messages to be sent. Similarly, for media previews it may require either reducing the preview size (and quality), or sending additional messages, or compressing the current JSON encoding, e.g. with zstd algorithm.
+As POPOPX Chat pads messages to a fixed size, using 16kb transport blocks, the size increase introduced by this scheme will not cause additional traffic in most cases. For large texts it may require additional messages to be sent. Similarly, for media previews it may require either reducing the preview size (and quality), or sending additional messages, or compressing the current JSON encoding, e.g. with zstd algorithm.
 
 That might be the primary reason why this scheme was not adopted by Signal, as it would have resulted in substantial traffic growth – to the best of our knowledge, Signal messages are not padded to a fixed size.
 
-Sharing the initial keys in case of SimpleX Chat it is equivalent to sharing the invitation link. As encapsulation key is large, it may be inconvenient to share it in the link in some contexts.
+Sharing the initial keys in case of POPOPX Chat it is equivalent to sharing the invitation link. As encapsulation key is large, it may be inconvenient to share it in the link in some contexts.
 
 It is possible to postpone sharing the encapsulation key until the first message from Alice (confirmation message in SMP protocol), the party sending connection request. The upside here is that the invitation link size would not increase. The downside is that the user profile shared in this confirmation will not be encrypted with PQ-resistant algorithm. To mitigate it, the hadnshake protocol can be modified to postpone sending the user profile until the second message from Alice (HELLO message in SMP protocol).
 

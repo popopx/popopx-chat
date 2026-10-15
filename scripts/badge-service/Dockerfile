@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # Built from the repository root, not this directory, because the COPY paths are repo-relative.
-# The Haskell stage compiles simplexmq and simplex-chat from source, which takes hours on a cold
+# The Haskell stage compiles popopxmq and popopx-chat from source, which takes hours on a cold
 # cache and needs about 15 GB.
 
 ARG UBUNTU=24.04
@@ -12,9 +12,9 @@ ARG NODE=24
 FROM node:${NODE}-bookworm-slim AS web
 
 WORKDIR /web
-COPY apps/simplex-badge-service/web/package.json apps/simplex-badge-service/web/package-lock.json ./
+COPY apps/popopx-badge-service/web/package.json apps/popopx-badge-service/web/package-lock.json ./
 RUN npm ci
-COPY apps/simplex-badge-service/web ./
+COPY apps/popopx-badge-service/web ./
 RUN npm run build
 
 FROM ubuntu:${UBUNTU} AS build
@@ -39,12 +39,12 @@ ENV PATH="/root/.ghcup/bin:/root/.cabal/bin:$PATH"
 ENV CABAL_DIR=/root/.cabal
 
 WORKDIR /src
-COPY cabal.project simplex-chat.cabal README.md PRIVACY.md ./
+COPY cabal.project popopx-chat.cabal README.md PRIVACY.md ./
 COPY scripts/cabal.project.local.linux ./cabal.project.local
 COPY src ./src
 # Excluding web/ keeps a webapp edit from invalidating this layer and re-running the cabal build,
 # and the binary does not depend on it.
-COPY --exclude=web apps/simplex-badge-service ./apps/simplex-badge-service
+COPY --exclude=web apps/popopx-badge-service ./apps/popopx-badge-service
 
 # The store and build tree are cache mounts rather than layers, so the binary is copied out inside
 # the same RUN because dist-newstyle does not exist in the resulting layer.
@@ -52,10 +52,10 @@ RUN --mount=type=cache,target=/root/.cabal \
     --mount=type=cache,target=/src/dist-newstyle \
     set -eu; \
     cabal update; \
-    cabal build --flags="+client_postgres" exe:simplex-badge-service; \
+    cabal build --flags="+client_postgres" exe:popopx-badge-service; \
     mkdir -p /out; \
-    cp "$(cabal list-bin --flags="+client_postgres" exe:simplex-badge-service)" /out/simplex-badge-service; \
-    strip /out/simplex-badge-service
+    cp "$(cabal list-bin --flags="+client_postgres" exe:popopx-badge-service)" /out/popopx-badge-service; \
+    strip /out/popopx-badge-service
 
 FROM ubuntu:${UBUNTU} AS runtime
 
@@ -80,7 +80,7 @@ RUN if existing_user=$(getent passwd ${USER_UID} | cut -d: -f1) && [ -n "${exist
     groupadd -g ${USER_GID} badge && \
     useradd -u ${USER_UID} -g ${USER_GID} -m -d /home/badge badge
 
-COPY --from=build /out/simplex-badge-service /usr/local/bin/simplex-badge-service
+COPY --from=build /out/popopx-badge-service /usr/local/bin/popopx-badge-service
 COPY --from=web /web/dist /srv/web
 
 USER badge
@@ -93,7 +93,7 @@ EXPOSE 8080
 
 # The flags live in CMD so `docker compose run` can replace them while dumb-init still forwards
 # signals.
-ENTRYPOINT ["dumb-init", "--", "simplex-badge-service"]
+ENTRYPOINT ["dumb-init", "--", "popopx-badge-service"]
 # Without --yes-migrate the service blocks on stdin at every schema change, and a container has no
 # console to answer.
-CMD ["-d", "postgresql://simplex@127.0.0.1:5432/badge_service", "--create-schema", "--yes-migrate", "--service-config", "/etc/simplex-badge-service/badge_service.ini"]
+CMD ["-d", "postgresql://popopx@127.0.0.1:5432/badge_service", "--create-schema", "--yes-migrate", "--service-config", "/etc/popopx-badge-service/badge_service.ini"]

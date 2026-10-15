@@ -35,8 +35,8 @@
         <target>#tajný#</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%1$@ supported SimpleX Chat. The badge expired on %2$@." xml:space="preserve">
-        <source>%1$@ supported SimpleX Chat. The badge expired on %2$@.</source>
+      <trans-unit id="%1$@ supported POPOPX Chat. The badge expired on %2$@." xml:space="preserve">
+        <source>%1$@ supported POPOPX Chat. The badge expired on %2$@.</source>
         <note>badge alert</note>
       </trans-unit>
       <trans-unit id="%@" xml:space="preserve">
@@ -89,8 +89,8 @@
         <target>%@ staženo</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%@ invested in SimpleX Chat crowdfunding." xml:space="preserve">
-        <source>%@ invested in SimpleX Chat crowdfunding.</source>
+      <trans-unit id="%@ invested in POPOPX Chat crowdfunding." xml:space="preserve">
+        <source>%@ invested in POPOPX Chat crowdfunding.</source>
         <note>badge alert</note>
       </trans-unit>
       <trans-unit id="%@ is connected!" xml:space="preserve">
@@ -118,8 +118,8 @@
         <target>%@ servery</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%@ supports SimpleX Chat." xml:space="preserve">
-        <source>%@ supports SimpleX Chat.</source>
+      <trans-unit id="%@ supports POPOPX Chat." xml:space="preserve">
+        <source>%@ supports POPOPX Chat.</source>
         <note>badge alert</note>
       </trans-unit>
       <trans-unit id="%@ uploaded" xml:space="preserve">
@@ -426,12 +426,12 @@ channel relay bar</note>
       </trans-unit>
       <trans-unit id="**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." xml:space="preserve">
         <source>**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata.</source>
-        <target>**Soukromější**: kontrolovat nové zprávy každých 20 minut. Token zařízení je sdílen se serverem SimpleX Chat, ale ne kolik máte kontaktů nebo zpráv.</target>
+        <target>**Soukromější**: kontrolovat nové zprávy každých 20 minut. Token zařízení je sdílen se serverem POPOPX Chat, ale ne kolik máte kontaktů nebo zpráv.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." xml:space="preserve">
-        <source>**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app.</source>
-        <target>**Nejsoukromější**: nepoužívejte server oznámení SimpleX Chat, pravidelně kontrolujte zprávy na pozadí (závisí na tom, jak často aplikaci používáte).</target>
+      <trans-unit id="**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." xml:space="preserve">
+        <source>**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app.</source>
+        <target>**Nejsoukromější**: nepoužívejte server oznámení POPOPX Chat, pravidelně kontrolujte zprávy na pozadí (závisí na tom, jak často aplikaci používáte).</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="**Please note**: using the same database on two devices will break the decryption of messages from your connections, as a security protection." xml:space="preserve">
@@ -443,9 +443,9 @@ channel relay bar</note>
         <target>**Upozornění**: Pokud heslo ztratíte, NEBUDETE jej moci obnovit ani změnit.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." xml:space="preserve">
-        <source>**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from.</source>
-        <target>**Doporučeno**: Token zařízení a oznámení se odesílají na oznamovací server SimpleX Chat, ale nikoli obsah, velikost nebo od koho jsou zprávy.</target>
+      <trans-unit id="**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." xml:space="preserve">
+        <source>**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from.</source>
+        <target>**Doporučeno**: Token zařízení a oznámení se odesílají na oznamovací server POPOPX Chat, ale nikoli obsah, velikost nebo od koho jsou zprávy.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="**Scan / Paste link**: to connect via a link you received." xml:space="preserve">
@@ -482,11 +482,11 @@ channel relay bar</note>
         <target>\*tučně*</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="- connect to [directory service](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!&#10;- delivery receipts (up to 20 members).&#10;- faster and more stable." xml:space="preserve">
-        <source>- connect to [directory service](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!
+      <trans-unit id="- connect to [directory service](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!&#10;- delivery receipts (up to 20 members).&#10;- faster and more stable." xml:space="preserve">
+        <source>- connect to [directory service](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!
 - delivery receipts (up to 20 members).
 - faster and more stable.</source>
-        <target>- připojit k [adresářová služba](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!
+        <target>- připojit k [adresářová služba](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!
 - doručenky (až 20 členů).
 - Rychlejší a stabilnější.</target>
         <note>No comment provided by engineer.</note>
@@ -591,11 +591,11 @@ time interval</note>
         <target>30 vteřin</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="&lt;p&gt;Hi!&lt;/p&gt;&#10;&lt;p&gt;&lt;a href=&quot;%@&quot;&gt;Connect to me via SimpleX Chat&lt;/a&gt;&lt;/p&gt;" xml:space="preserve">
+      <trans-unit id="&lt;p&gt;Hi!&lt;/p&gt;&#10;&lt;p&gt;&lt;a href=&quot;%@&quot;&gt;Connect to me via POPOPX Chat&lt;/a&gt;&lt;/p&gt;" xml:space="preserve">
         <source>&lt;p&gt;Hi!&lt;/p&gt;
-&lt;p&gt;&lt;a href="%@"&gt;Connect to me via SimpleX Chat&lt;/a&gt;&lt;/p&gt;</source>
+&lt;p&gt;&lt;a href="%@"&gt;Connect to me via POPOPX Chat&lt;/a&gt;&lt;/p&gt;</source>
         <target>&lt;p&gt;Ahoj!&lt;/p&gt;
-&lt;p&gt;&lt;a href="%@"&gt; Připojte se ke mne přes SimpleX Chat&lt;/a&gt;&lt;/p&gt;</target>
+&lt;p&gt;&lt;a href="%@"&gt; Připojte se ke mne přes POPOPX Chat&lt;/a&gt;&lt;/p&gt;</target>
         <note>email text</note>
       </trans-unit>
       <trans-unit id="A few more things" xml:space="preserve">
@@ -644,9 +644,9 @@ time interval</note>
         <target>Přerušit změnu adresy?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="About SimpleX Chat" xml:space="preserve">
-        <source>About SimpleX Chat</source>
-        <target>O SimpleX chat</target>
+      <trans-unit id="About POPOPX Chat" xml:space="preserve">
+        <source>About POPOPX Chat</source>
+        <target>O POPOPX chat</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="About operators" xml:space="preserve">
@@ -734,8 +734,8 @@ swipe action</note>
         <source>Add</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Add address to your profile, so that your SimpleX contacts can share it with other people. Profile update will be sent to your SimpleX contacts." xml:space="preserve">
-        <source>Add address to your profile, so that your SimpleX contacts can share it with other people. Profile update will be sent to your SimpleX contacts.</source>
+      <trans-unit id="Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts." xml:space="preserve">
+        <source>Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add contributors." xml:space="preserve">
@@ -1059,9 +1059,9 @@ swipe action</note>
         <target>Povolit nahlášení zpráv moderátorům.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Allow to send SimpleX links." xml:space="preserve">
-        <source>Allow to send SimpleX links.</source>
-        <target>Povolit odesílání SimpleX odkazů.</target>
+      <trans-unit id="Allow to send POPOPX links." xml:space="preserve">
+        <source>Allow to send POPOPX links.</source>
+        <target>Povolit odesílání POPOPX odkazů.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Allow to send files and media." xml:space="preserve">
@@ -1526,9 +1526,9 @@ in your network</source>
         <source>Broadcast</source>
         <note>compose placeholder for channel owner</note>
       </trans-unit>
-      <trans-unit id="Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" xml:space="preserve">
-        <source>Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</source>
-        <target>Bulharský, finský, thajský a ukrajinský - díky uživatelům a [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</target>
+      <trans-unit id="Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" xml:space="preserve">
+        <source>Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</source>
+        <target>Bulharský, finský, thajský a ukrajinský - díky uživatelům a [Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Business address" xml:space="preserve">
@@ -1548,9 +1548,9 @@ in your network</source>
         <source>Businesses</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." xml:space="preserve">
-        <source>By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).</source>
-        <target>Podle profilu chatu (výchozí) nebo [podle připojení](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).</target>
+      <trans-unit id="By chat profile (default) or [by connection](https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." xml:space="preserve">
+        <source>By chat profile (default) or [by connection](https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).</source>
+        <target>Podle profilu chatu (výchozí) nebo [podle připojení](https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Call already ended!" xml:space="preserve">
@@ -1707,8 +1707,8 @@ set passcode view</note>
         <source>Channel</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Channel SimpleX name" xml:space="preserve">
-        <source>Channel SimpleX name</source>
+      <trans-unit id="Channel POPOPX name" xml:space="preserve">
+        <source>Channel POPOPX name</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Channel display name" xml:space="preserve">
@@ -2141,9 +2141,9 @@ server test step</note>
         <source>Connect to your friends faster.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Connect to yourself?&#10;This is your own SimpleX address!" xml:space="preserve">
+      <trans-unit id="Connect to yourself?&#10;This is your own POPOPX address!" xml:space="preserve">
         <source>Connect to yourself?
-This is your own SimpleX address!</source>
+This is your own POPOPX address!</source>
         <note>new chat sheet title</note>
       </trans-unit>
       <trans-unit id="Connect to yourself?&#10;This is your own one-time link!" xml:space="preserve">
@@ -2399,9 +2399,9 @@ Toto je váš vlastní jednorázový odkaz!</target>
         <source>Create 1-time link</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Create SimpleX address" xml:space="preserve">
-        <source>Create SimpleX address</source>
-        <target>Vytvořit SimpleX adresu</target>
+      <trans-unit id="Create POPOPX address" xml:space="preserve">
+        <source>Create POPOPX address</source>
+        <target>Vytvořit POPOPX adresu</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create a group using a random profile." xml:space="preserve">
@@ -2435,9 +2435,9 @@ Toto je váš vlastní jednorázový odkaz!</target>
         <source>Create list</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" xml:space="preserve">
-        <source>Create new profile in [desktop app](https://simplex.chat/downloads/). 💻</source>
-        <target>Vytvořit nový profil v [desktop app](https://simplex.chat/downloads/). 💻</target>
+      <trans-unit id="Create new profile in [desktop app](https://popopxchat/downloads/). 💻" xml:space="preserve">
+        <source>Create new profile in [desktop app](https://popopxchat/downloads/). 💻</source>
+        <target>Vytvořit nový profil v [desktop app](https://popopxchat/downloads/). 💻</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create profile" xml:space="preserve">
@@ -2983,14 +2983,14 @@ alert button</note>
         <target>Zařízení</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Device authentication is disabled. Turning off SimpleX Lock." xml:space="preserve">
-        <source>Device authentication is disabled. Turning off SimpleX Lock.</source>
-        <target>Ověřování zařízení je zakázáno. Vypnutí zámku SimpleX Lock.</target>
+      <trans-unit id="Device authentication is disabled. Turning off POPOPX Lock." xml:space="preserve">
+        <source>Device authentication is disabled. Turning off POPOPX Lock.</source>
+        <target>Ověřování zařízení je zakázáno. Vypnutí zámku POPOPX Lock.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." xml:space="preserve">
-        <source>Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication.</source>
-        <target>Ověřování zařízení není povoleno. Jakmile povolíte ověřování zařízení, můžete zámek SimpleX Lock zapnout prostřednictvím Nastavení.</target>
+      <trans-unit id="Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." xml:space="preserve">
+        <source>Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication.</source>
+        <target>Ověřování zařízení není povoleno. Jakmile povolíte ověřování zařízení, můžete zámek POPOPX Lock zapnout prostřednictvím Nastavení.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Different names, avatars and transport isolation." xml:space="preserve">
@@ -3025,9 +3025,9 @@ alert button</note>
         <target>Vypnout (zachovat přepsání)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Disable SimpleX Lock" xml:space="preserve">
-        <source>Disable SimpleX Lock</source>
-        <target>Vypnutí zámku SimpleX</target>
+      <trans-unit id="Disable POPOPX Lock" xml:space="preserve">
+        <source>Disable POPOPX Lock</source>
+        <target>Vypnutí zámku POPOPX</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Disable automatic message deletion?" xml:space="preserve">
@@ -3099,9 +3099,9 @@ alert button</note>
         <source>Do NOT send messages directly, even if your or destination server does not support private routing.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Do NOT use SimpleX for emergency calls." xml:space="preserve">
-        <source>Do NOT use SimpleX for emergency calls.</source>
-        <target>NEpoužívejte SimpleX pro tísňová volání.</target>
+      <trans-unit id="Do NOT use POPOPX for emergency calls." xml:space="preserve">
+        <source>Do NOT use POPOPX for emergency calls.</source>
+        <target>NEpoužívejte POPOPX pro tísňová volání.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Do NOT use private routing." xml:space="preserve">
@@ -3261,9 +3261,9 @@ chat item action</note>
         <source>Enable Flux in Network &amp; servers settings for better metadata privacy.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Enable SimpleX Lock" xml:space="preserve">
-        <source>Enable SimpleX Lock</source>
-        <target>Zapnutí zámku SimpleX</target>
+      <trans-unit id="Enable POPOPX Lock" xml:space="preserve">
+        <source>Enable POPOPX Lock</source>
+        <target>Zapnutí zámku POPOPX</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Enable TCP keep-alive" xml:space="preserve">
@@ -4173,8 +4173,8 @@ servers warning</note>
         <target>Pro konzoli</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server." xml:space="preserve">
-        <source>For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server.</source>
+      <trans-unit id="For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server." xml:space="preserve">
+        <source>For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="For me" xml:space="preserve">
@@ -4285,8 +4285,8 @@ Error: %2$@</source>
         <target>GIFy a nálepky</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Get SimpleX name (BETA)" xml:space="preserve">
-        <source>Get SimpleX name (BETA)</source>
+      <trans-unit id="Get POPOPX name (BETA)" xml:space="preserve">
+        <source>Get POPOPX name (BETA)</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Get link" xml:space="preserve">
@@ -4475,9 +4475,9 @@ Error: %2$@</source>
         <source>History is not sent to new subscribers.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="How SimpleX works" xml:space="preserve">
-        <source>How SimpleX works</source>
-        <target>Jak SimpleX funguje</target>
+      <trans-unit id="How POPOPX works" xml:space="preserve">
+        <source>How POPOPX works</source>
+        <target>Jak POPOPX funguje</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="How it affects privacy" xml:space="preserve">
@@ -4702,9 +4702,9 @@ More improvements are coming soon!</source>
         <target>Počáteční role</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Install SimpleX Chat for terminal" xml:space="preserve">
-        <source>Install SimpleX Chat for terminal</source>
-        <target>Nainstalujte SimpleX Chat pro terminál</target>
+      <trans-unit id="Install POPOPX Chat for terminal" xml:space="preserve">
+        <source>Install POPOPX Chat for terminal</source>
+        <target>Nainstalujte POPOPX Chat pro terminál</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Instant" xml:space="preserve">
@@ -5013,8 +5013,8 @@ This is your link for group %@!</source>
         <source>Less traffic on mobile networks.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Let people connect to you via name registered with your SimpleX address." xml:space="preserve">
-        <source>Let people connect to you via name registered with your SimpleX address.</source>
+      <trans-unit id="Let people connect to you via name registered with your POPOPX address." xml:space="preserve">
+        <source>Let people connect to you via name registered with your POPOPX address.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Let people join via name registered with this channel link." xml:space="preserve">
@@ -5025,9 +5025,9 @@ This is your link for group %@!</source>
         <source>Let someone connect to you</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Let's talk in SimpleX Chat" xml:space="preserve">
-        <source>Let's talk in SimpleX Chat</source>
-        <target>Promluvme si v SimpleX Chatu</target>
+      <trans-unit id="Let's talk in POPOPX Chat" xml:space="preserve">
+        <source>Let's talk in POPOPX Chat</source>
+        <target>Promluvme si v POPOPX Chatu</target>
         <note>email subject</note>
       </trans-unit>
       <trans-unit id="Light" xml:space="preserve">
@@ -5218,8 +5218,8 @@ This is your link for group %@!</source>
         <source>Members can report messsages to moderators.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Members can send SimpleX links." xml:space="preserve">
-        <source>Members can send SimpleX links.</source>
+      <trans-unit id="Members can send POPOPX links." xml:space="preserve">
+        <source>Members can send POPOPX links.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Members can send direct messages." xml:space="preserve">
@@ -5433,9 +5433,9 @@ This is your link for group %@!</source>
         <target>Chyba přenášení:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." xml:space="preserve">
-        <source>Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat).</source>
-        <target>Migrace se nezdařila. Klepnutím na **Přeskočit** níže pokračujte v používání aktuální databáze. Nahlaste prosím problém vývojářům aplikace prostřednictvím chatu nebo e-mailu [chat@simplex.chat](mailto:chat@simplex.chat).</target>
+      <trans-unit id="Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat](mailto:chat@popopxchat)." xml:space="preserve">
+        <source>Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat](mailto:chat@popopxchat).</source>
+        <target>Migrace se nezdařila. Klepnutím na **Přeskočit** níže pokračujte v používání aktuální databáze. Nahlaste prosím problém vývojářům aplikace prostřednictvím chatu nebo e-mailu [chat@popopxchat](mailto:chat@popopxchat).</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Migration is completed" xml:space="preserve">
@@ -5836,8 +5836,8 @@ The most secure encryption.</source>
         <source>Non-profit governance</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="None of your servers are set to resolve SimpleX names. Configure servers, or use a connection link." xml:space="preserve">
-        <source>None of your servers are set to resolve SimpleX names. Configure servers, or use a connection link.</source>
+      <trans-unit id="None of your servers are set to resolve POPOPX names. Configure servers, or use a connection link." xml:space="preserve">
+        <source>None of your servers are set to resolve POPOPX names. Configure servers, or use a connection link.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not a better lock on someone else's door. Not a nicer landlord that respects your privacy, but still keeps the record of all visitors. You are not a guest. You are home. No king can enter it - you are sovereign." xml:space="preserve">
@@ -6505,8 +6505,8 @@ Error: %@</source>
         <source>Profile theme</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Profile update will be sent to your SimpleX contacts." xml:space="preserve">
-        <source>Profile update will be sent to your SimpleX contacts.</source>
+      <trans-unit id="Profile update will be sent to your POPOPX contacts." xml:space="preserve">
+        <source>Profile update will be sent to your POPOPX contacts.</source>
         <note>alert message
 alert title</note>
       </trans-unit>
@@ -6538,8 +6538,8 @@ alert title</note>
         <source>Prohibit reporting messages to moderators.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Prohibit sending SimpleX links." xml:space="preserve">
-        <source>Prohibit sending SimpleX links.</source>
+      <trans-unit id="Prohibit sending POPOPX links." xml:space="preserve">
+        <source>Prohibit sending POPOPX links.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Prohibit sending direct messages to members." xml:space="preserve">
@@ -6717,8 +6717,8 @@ Enable in *Network &amp; servers* settings.</source>
         <target>Příjem přes</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Recent history and improved [directory bot](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." xml:space="preserve">
-        <source>Recent history and improved [directory bot](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).</source>
+      <trans-unit id="Recent history and improved [directory bot](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." xml:space="preserve">
+        <source>Recent history and improved [directory bot](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recipient(s) can't see who this message is from." xml:space="preserve">
@@ -7172,8 +7172,8 @@ chat item action</note>
         <source>Save (and notify subscribers)</source>
         <note>alert button</note>
       </trans-unit>
-      <trans-unit id="Save SimpleX name?" xml:space="preserve">
-        <source>Save SimpleX name?</source>
+      <trans-unit id="Save POPOPX name?" xml:space="preserve">
+        <source>Save POPOPX name?</source>
         <note>alert title</note>
       </trans-unit>
       <trans-unit id="Save admission settings?" xml:space="preserve">
@@ -7345,8 +7345,8 @@ chat item action</note>
         <source>Search links</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Search or paste SimpleX link" xml:space="preserve">
-        <source>Search or paste SimpleX link</source>
+      <trans-unit id="Search or paste POPOPX link" xml:space="preserve">
+        <source>Search or paste POPOPX link</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Search videos" xml:space="preserve">
@@ -7503,8 +7503,8 @@ chat item action</note>
         <source>Send request without message</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Send the link via any messenger - it's secure. Ask to paste into SimpleX." xml:space="preserve">
-        <source>Send the link via any messenger - it's secure. Ask to paste into SimpleX.</source>
+      <trans-unit id="Send the link via any messenger - it's secure. Ask to paste into POPOPX." xml:space="preserve">
+        <source>Send the link via any messenger - it's secure. Ask to paste into POPOPX.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Send them from gallery or custom keyboards." xml:space="preserve">
@@ -7797,8 +7797,8 @@ chat item action</note>
         <source>Share 1-time link with a friend</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Share SimpleX address on social media." xml:space="preserve">
-        <source>Share SimpleX address on social media.</source>
+      <trans-unit id="Share POPOPX address on social media." xml:space="preserve">
+        <source>Share POPOPX address on social media.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share address" xml:space="preserve">
@@ -7810,8 +7810,8 @@ chat item action</note>
         <source>Share address publicly</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Share address with SimpleX contacts?" xml:space="preserve">
-        <source>Share address with SimpleX contacts?</source>
+      <trans-unit id="Share address with POPOPX contacts?" xml:space="preserve">
+        <source>Share address with POPOPX contacts?</source>
         <note>alert title</note>
       </trans-unit>
       <trans-unit id="Share channel" xml:space="preserve">
@@ -7847,24 +7847,24 @@ chat item action</note>
         <source>Share this 1-time invite link</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Share to SimpleX" xml:space="preserve">
-        <source>Share to SimpleX</source>
+      <trans-unit id="Share to POPOPX" xml:space="preserve">
+        <source>Share to POPOPX</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share via chat" xml:space="preserve">
         <source>Share via chat</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Share with SimpleX contacts" xml:space="preserve">
-        <source>Share with SimpleX contacts</source>
+      <trans-unit id="Share with POPOPX contacts" xml:space="preserve">
+        <source>Share with POPOPX contacts</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share your address" xml:space="preserve">
         <source>Share your address</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Short SimpleX address" xml:space="preserve">
-        <source>Short SimpleX address</source>
+      <trans-unit id="Short POPOPX address" xml:space="preserve">
+        <source>Short POPOPX address</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Short description" xml:space="preserve">
@@ -7945,121 +7945,121 @@ copied message info</note>
         <source>Signing proves you authored this message and can't be denied later.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX" xml:space="preserve">
-        <source>SimpleX</source>
+      <trans-unit id="POPOPX" xml:space="preserve">
+        <source>POPOPX</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Address" xml:space="preserve">
-        <source>SimpleX Address</source>
-        <target>SimpleX Adresa</target>
+      <trans-unit id="POPOPX Address" xml:space="preserve">
+        <source>POPOPX Address</source>
+        <target>POPOPX Adresa</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app." xml:space="preserve">
-        <source>SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app.</source>
+      <trans-unit id="POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app." xml:space="preserve">
+        <source>POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Chat security was audited by Trail of Bits." xml:space="preserve">
-        <source>SimpleX Chat security was audited by Trail of Bits.</source>
-        <target>Zabezpečení SimpleX chatu bylo auditováno společností Trail of Bits.</target>
+      <trans-unit id="POPOPX Chat security was audited by Trail of Bits." xml:space="preserve">
+        <source>POPOPX Chat security was audited by Trail of Bits.</source>
+        <target>Zabezpečení POPOPX chatu bylo auditováno společností Trail of Bits.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock" xml:space="preserve">
-        <source>SimpleX Lock</source>
-        <target>Zámek SimpleX</target>
+      <trans-unit id="POPOPX Lock" xml:space="preserve">
+        <source>POPOPX Lock</source>
+        <target>Zámek POPOPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock mode" xml:space="preserve">
-        <source>SimpleX Lock mode</source>
-        <target>SimpleX zámek</target>
+      <trans-unit id="POPOPX Lock mode" xml:space="preserve">
+        <source>POPOPX Lock mode</source>
+        <target>POPOPX zámek</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock not enabled!" xml:space="preserve">
-        <source>SimpleX Lock not enabled!</source>
-        <target>Zámek SimpleX není povolen!</target>
+      <trans-unit id="POPOPX Lock not enabled!" xml:space="preserve">
+        <source>POPOPX Lock not enabled!</source>
+        <target>Zámek POPOPX není povolen!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock turned on" xml:space="preserve">
-        <source>SimpleX Lock turned on</source>
-        <target>Zapnutý zámek SimpleX Lock</target>
+      <trans-unit id="POPOPX Lock turned on" xml:space="preserve">
+        <source>POPOPX Lock turned on</source>
+        <target>Zapnutý zámek POPOPX Lock</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address" xml:space="preserve">
-        <source>SimpleX address</source>
-        <target>Adresa SimpleX</target>
+      <trans-unit id="POPOPX address" xml:space="preserve">
+        <source>POPOPX address</source>
+        <target>Adresa POPOPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address and 1-time links are safe to share via any messenger." xml:space="preserve">
-        <source>SimpleX address and 1-time links are safe to share via any messenger.</source>
+      <trans-unit id="POPOPX address and 1-time links are safe to share via any messenger." xml:space="preserve">
+        <source>POPOPX address and 1-time links are safe to share via any messenger.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address or 1-time link?" xml:space="preserve">
-        <source>SimpleX address or 1-time link?</source>
+      <trans-unit id="POPOPX address or 1-time link?" xml:space="preserve">
+        <source>POPOPX address or 1-time link?</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address settings" xml:space="preserve">
-        <source>SimpleX address settings</source>
+      <trans-unit id="POPOPX address settings" xml:space="preserve">
+        <source>POPOPX address settings</source>
         <note>alert title</note>
       </trans-unit>
-      <trans-unit id="SimpleX channel link" xml:space="preserve">
-        <source>SimpleX channel link</source>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX channel link" xml:space="preserve">
+        <source>POPOPX channel link</source>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX contact address" xml:space="preserve">
-        <source>SimpleX contact address</source>
-        <target>SimpleX kontaktní adresa</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX contact address" xml:space="preserve">
+        <source>POPOPX contact address</source>
+        <target>POPOPX kontaktní adresa</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX encrypted message or connection event" xml:space="preserve">
-        <source>SimpleX encrypted message or connection event</source>
-        <target>SimpleX šifrovaná zpráva nebo událost připojení</target>
+      <trans-unit id="POPOPX encrypted message or connection event" xml:space="preserve">
+        <source>POPOPX encrypted message or connection event</source>
+        <target>POPOPX šifrovaná zpráva nebo událost připojení</target>
         <note>notification</note>
       </trans-unit>
-      <trans-unit id="SimpleX group link" xml:space="preserve">
-        <source>SimpleX group link</source>
-        <target>Skupinový odkaz SimpleX</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX group link" xml:space="preserve">
+        <source>POPOPX group link</source>
+        <target>Skupinový odkaz POPOPX</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX links" xml:space="preserve">
-        <source>SimpleX links</source>
-        <target>Odkazy na SimpleX</target>
+      <trans-unit id="POPOPX links" xml:space="preserve">
+        <source>POPOPX links</source>
+        <target>Odkazy na POPOPX</target>
         <note>chat feature</note>
       </trans-unit>
-      <trans-unit id="SimpleX links are prohibited." xml:space="preserve">
-        <source>SimpleX links are prohibited.</source>
+      <trans-unit id="POPOPX links are prohibited." xml:space="preserve">
+        <source>POPOPX links are prohibited.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX links not allowed" xml:space="preserve">
-        <source>SimpleX links not allowed</source>
+      <trans-unit id="POPOPX links not allowed" xml:space="preserve">
+        <source>POPOPX links not allowed</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX name" xml:space="preserve">
-        <source>SimpleX name</source>
+      <trans-unit id="POPOPX name" xml:space="preserve">
+        <source>POPOPX name</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX name error" xml:space="preserve">
-        <source>SimpleX name error</source>
+      <trans-unit id="POPOPX name error" xml:space="preserve">
+        <source>POPOPX name error</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX name not verified" xml:space="preserve">
-        <source>SimpleX name not verified</source>
+      <trans-unit id="POPOPX name not verified" xml:space="preserve">
+        <source>POPOPX name not verified</source>
         <note>alert title</note>
       </trans-unit>
-      <trans-unit id="SimpleX one-time invitation" xml:space="preserve">
-        <source>SimpleX one-time invitation</source>
-        <target>Jednorázová pozvánka SimpleX</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX one-time invitation" xml:space="preserve">
+        <source>POPOPX one-time invitation</source>
+        <target>Jednorázová pozvánka POPOPX</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX protocols reviewed by Trail of Bits." xml:space="preserve">
-        <source>SimpleX protocols reviewed by Trail of Bits.</source>
+      <trans-unit id="POPOPX protocols reviewed by Trail of Bits." xml:space="preserve">
+        <source>POPOPX protocols reviewed by Trail of Bits.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX public names (BETA)" xml:space="preserve">
-        <source>SimpleX public names (BETA)</source>
+      <trans-unit id="POPOPX public names (BETA)" xml:space="preserve">
+        <source>POPOPX public names (BETA)</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX relay address" xml:space="preserve">
-        <source>SimpleX relay address</source>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX relay address" xml:space="preserve">
+        <source>POPOPX relay address</source>
+        <note>popopx link type</note>
       </trans-unit>
       <trans-unit id="Simplified incognito mode" xml:space="preserve">
         <source>Simplified incognito mode</source>
@@ -8161,9 +8161,9 @@ report reason</note>
         <target>Zastavit</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Stop SimpleX" xml:space="preserve">
-        <source>Stop SimpleX</source>
-        <target>Zastavit SimpleX</target>
+      <trans-unit id="Stop POPOPX" xml:space="preserve">
+        <source>Stop POPOPX</source>
+        <target>Zastavit POPOPX</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Stop chat" xml:space="preserve">
@@ -8258,8 +8258,8 @@ report reason</note>
         <source>Subscribers can report messsages to moderators.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Subscribers can send SimpleX links." xml:space="preserve">
-        <source>Subscribers can send SimpleX links.</source>
+      <trans-unit id="Subscribers can send POPOPX links." xml:space="preserve">
+        <source>Subscribers can send POPOPX links.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Subscribers can send direct messages." xml:space="preserve">
@@ -8447,14 +8447,14 @@ server test failure</note>
         <target>Testy selhaly!</target>
         <note>alert title</note>
       </trans-unit>
-      <trans-unit id="Thank you for installing SimpleX Chat!" xml:space="preserve">
-        <source>Thank you for installing SimpleX Chat!</source>
-        <target>Děkujeme, že jste si nainstalovali SimpleX Chat!</target>
+      <trans-unit id="Thank you for installing POPOPX Chat!" xml:space="preserve">
+        <source>Thank you for installing POPOPX Chat!</source>
+        <target>Děkujeme, že jste si nainstalovali POPOPX Chat!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" xml:space="preserve">
-        <source>Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</source>
-        <target>Díky uživatelům - [přispějte přes Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</target>
+      <trans-unit id="Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" xml:space="preserve">
+        <source>Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</source>
+        <target>Díky uživatelům - [přispějte přes Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Thanks to the users – contribute via Weblate!" xml:space="preserve">
@@ -8469,20 +8469,20 @@ It can happen because of some bug or when the connection is compromised.</source
 Může se to stát kvůli nějaké chybě, nebo pokud je spojení kompromitováno.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The SimpleX name #%@ is registered without channel link. Add channel link to the name via the registration page." xml:space="preserve">
-        <source>The SimpleX name #%@ is registered without channel link. Add channel link to the name via the registration page.</source>
+      <trans-unit id="The POPOPX name #%@ is registered without channel link. Add channel link to the name via the registration page." xml:space="preserve">
+        <source>The POPOPX name #%@ is registered without channel link. Add channel link to the name via the registration page.</source>
         <note>alert message</note>
       </trans-unit>
-      <trans-unit id="The SimpleX name %@ is registered, but it has no valid link." xml:space="preserve">
-        <source>The SimpleX name %@ is registered, but it has no valid link.</source>
+      <trans-unit id="The POPOPX name %@ is registered, but it has no valid link." xml:space="preserve">
+        <source>The POPOPX name %@ is registered, but it has no valid link.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The SimpleX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner." xml:space="preserve">
-        <source>The SimpleX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.</source>
+      <trans-unit id="The POPOPX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner." xml:space="preserve">
+        <source>The POPOPX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The SimpleX name @%@ is registered without SimpleX address. Add your SimpleX address to the name via the registration page." xml:space="preserve">
-        <source>The SimpleX name @%@ is registered without SimpleX address. Add your SimpleX address to the name via the registration page.</source>
+      <trans-unit id="The POPOPX name @%@ is registered without POPOPX address. Add your POPOPX address to the name via the registration page." xml:space="preserve">
+        <source>The POPOPX name @%@ is registered without POPOPX address. Add your POPOPX address to the name via the registration page.</source>
         <note>alert message</note>
       </trans-unit>
       <trans-unit id="The address will be short, and your profile will be shared via the address." xml:space="preserve">
@@ -8519,8 +8519,8 @@ Může se to stát kvůli nějaké chybě, nebo pokud je spojení kompromitován
         <source>The channel required this message to be signed, but the signature is missing.</source>
         <note>alert message</note>
       </trans-unit>
-      <trans-unit id="The code you scanned is not a SimpleX link QR code." xml:space="preserve">
-        <source>The code you scanned is not a SimpleX link QR code.</source>
+      <trans-unit id="The code you scanned is not a POPOPX link QR code." xml:space="preserve">
+        <source>The code you scanned is not a POPOPX link QR code.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The connection reached the limit of undelivered messages" xml:space="preserve">
@@ -8625,8 +8625,8 @@ your contacts and groups.</source>
         <source>The servers for new files of your current chat profile **%@**.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The text you pasted is not a SimpleX link." xml:space="preserve">
-        <source>The text you pasted is not a SimpleX link.</source>
+      <trans-unit id="The text you pasted is not a POPOPX link." xml:space="preserve">
+        <source>The text you pasted is not a POPOPX link.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The uploaded database archive will be permanently removed from the servers." xml:space="preserve">
@@ -8661,8 +8661,8 @@ your contacts and groups.</source>
         <target>Mohou být přepsány v nastavení kontaktů.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="This SimpleX name is not registered. Please check the name." xml:space="preserve">
-        <source>This SimpleX name is not registered. Please check the name.</source>
+      <trans-unit id="This POPOPX name is not registered. Please check the name." xml:space="preserve">
+        <source>This POPOPX name is not registered. Please check the name.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action cannot be undone - all received and sent files and media will be deleted. Low resolution pictures will remain." xml:space="preserve">
@@ -8774,8 +8774,8 @@ alert subtitle</note>
         <source>To hide unwanted messages.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="To make SimpleX Network last." xml:space="preserve">
-        <source>To make SimpleX Network last.</source>
+      <trans-unit id="To make POPOPX Network last." xml:space="preserve">
+        <source>To make POPOPX Network last.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To make a new connection" xml:space="preserve">
@@ -8796,16 +8796,16 @@ alert subtitle</note>
         <source>To protect your IP address, private routing uses your SMP servers to deliver messages.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="To protect your information, turn on SimpleX Lock.&#10;You will be prompted to complete authentication before this feature is enabled." xml:space="preserve">
-        <source>To protect your information, turn on SimpleX Lock.
+      <trans-unit id="To protect your information, turn on POPOPX Lock.&#10;You will be prompted to complete authentication before this feature is enabled." xml:space="preserve">
+        <source>To protect your information, turn on POPOPX Lock.
 You will be prompted to complete authentication before this feature is enabled.</source>
-        <target>Chcete-li chránit své informace, zapněte zámek SimpleX Lock.
+        <target>Chcete-li chránit své informace, zapněte zámek POPOPX Lock.
 Před zapnutím této funkce budete vyzváni k dokončení ověření.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="To protect your privacy, SimpleX uses separate IDs for each of your contacts." xml:space="preserve">
-        <source>To protect your privacy, SimpleX uses separate IDs for each of your contacts.</source>
-        <target>Pro ochranu soukromí namísto ID uživatelů používaných všemi ostatními platformami má SimpleX identifikátory pro fronty zpráv, oddělené pro každý z vašich kontaktů.</target>
+      <trans-unit id="To protect your privacy, POPOPX uses separate IDs for each of your contacts." xml:space="preserve">
+        <source>To protect your privacy, POPOPX uses separate IDs for each of your contacts.</source>
+        <target>Pro ochranu soukromí namísto ID uživatelů používaných všemi ostatními platformami má POPOPX identifikátory pro fronty zpráv, oddělené pro každý z vašich kontaktů.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To receive" xml:space="preserve">
@@ -9143,9 +9143,9 @@ alert title</note>
         <source>Use SOCKS proxy</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Use SimpleX Chat servers?" xml:space="preserve">
-        <source>Use SimpleX Chat servers?</source>
-        <target>Používat servery SimpleX Chat?</target>
+      <trans-unit id="Use POPOPX Chat servers?" xml:space="preserve">
+        <source>Use POPOPX Chat servers?</source>
+        <target>Používat servery POPOPX Chat?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Use TCP port %@ when no port is specified." xml:space="preserve">
@@ -9249,17 +9249,17 @@ alert title</note>
         <source>Username</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Using SimpleX Chat servers." xml:space="preserve">
-        <source>Using SimpleX Chat servers.</source>
-        <target>Používat servery SimpleX Chat.</target>
+      <trans-unit id="Using POPOPX Chat servers." xml:space="preserve">
+        <source>Using POPOPX Chat servers.</source>
+        <target>Používat servery POPOPX Chat.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Verify" xml:space="preserve">
         <source>Verify</source>
         <note>relay test step</note>
       </trans-unit>
-      <trans-unit id="Verify SimpleX names" xml:space="preserve">
-        <source>Verify SimpleX names</source>
+      <trans-unit id="Verify POPOPX names" xml:space="preserve">
+        <source>Verify POPOPX names</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Verify code with desktop" xml:space="preserve">
@@ -9481,8 +9481,8 @@ alert title</note>
         <target>Pokud s někým sdílíte inkognito profil, bude tento profil použit pro skupiny, do kterých vás pozve.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Why SimpleX is built." xml:space="preserve">
-        <source>Why SimpleX is built.</source>
+      <trans-unit id="Why POPOPX is built." xml:space="preserve">
+        <source>Why POPOPX is built.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="WiFi" xml:space="preserve">
@@ -9646,8 +9646,8 @@ Repeat join request?</source>
         <target>Profil uživatele můžete skrýt nebo ztlumit - přejeďte prstem doprava.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="You can make it visible to your SimpleX contacts via Settings." xml:space="preserve">
-        <source>You can make it visible to your SimpleX contacts via Settings.</source>
+      <trans-unit id="You can make it visible to your POPOPX contacts via Settings." xml:space="preserve">
+        <source>You can make it visible to your POPOPX contacts via Settings.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can now chat with %@" xml:space="preserve">
@@ -9691,13 +9691,13 @@ Repeat join request?</source>
         <source>You can still view conversation with %@ in the list of chats.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="You can support SimpleX starting from v7 of the app." xml:space="preserve">
-        <source>You can support SimpleX starting from v7 of the app.</source>
+      <trans-unit id="You can support POPOPX starting from v7 of the app." xml:space="preserve">
+        <source>You can support POPOPX starting from v7 of the app.</source>
         <note>badge alert</note>
       </trans-unit>
-      <trans-unit id="You can turn on SimpleX Lock via Settings." xml:space="preserve">
-        <source>You can turn on SimpleX Lock via Settings.</source>
-        <target>Zámek SimpleX můžete zapnout v Nastavení.</target>
+      <trans-unit id="You can turn on POPOPX Lock via Settings." xml:space="preserve">
+        <source>You can turn on POPOPX Lock via Settings.</source>
+        <target>Zámek POPOPX můžete zapnout v Nastavení.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can use markdown to format messages:" xml:space="preserve">
@@ -9865,13 +9865,13 @@ Repeat connection request?</source>
         <target>Vaše servery ICE</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your SimpleX address" xml:space="preserve">
-        <source>Your SimpleX address</source>
-        <target>Vaše SimpleX adresa</target>
+      <trans-unit id="Your POPOPX address" xml:space="preserve">
+        <source>Your POPOPX address</source>
+        <target>Vaše POPOPX adresa</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your SimpleX name" xml:space="preserve">
-        <source>Your SimpleX name</source>
+      <trans-unit id="Your POPOPX name" xml:space="preserve">
+        <source>Your POPOPX name</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your business contact" xml:space="preserve">
@@ -9996,9 +9996,9 @@ Relays can access channel messages.</source>
         <target>Profil je sdílen pouze s vašimi kontakty.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." xml:space="preserve">
-        <source>Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile.</source>
-        <target>Váš profil je uložen ve vašem zařízení a sdílen pouze s vašimi kontakty. Servery SimpleX nevidí váš profil.</target>
+      <trans-unit id="Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." xml:space="preserve">
+        <source>Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile.</source>
+        <target>Váš profil je uložen ve vašem zařízení a sdílen pouze s vašimi kontakty. Servery POPOPX nevidí váš profil.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your profile was changed. If you save it, the updated profile will be sent to all your contacts." xml:space="preserve">
@@ -10036,9 +10036,9 @@ Relays can access channel messages.</source>
         <target>Vaše nastavení</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="[Send us email](mailto:chat@simplex.chat)" xml:space="preserve">
-        <source>[Send us email](mailto:chat@simplex.chat)</source>
-        <target>[Pošlete nám e-mail](mailto:chat@simplex.chat)</target>
+      <trans-unit id="[Send us email](mailto:chat@popopxchat)" xml:space="preserve">
+        <source>[Send us email](mailto:chat@popopxchat)</source>
+        <target>[Pošlete nám e-mail](mailto:chat@popopxchat)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="_italic_" xml:space="preserve">
@@ -10241,9 +10241,9 @@ marked deleted chat item preview text</note>
         <target>kompletní</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="connect to SimpleX Chat developers." xml:space="preserve">
-        <source>connect to SimpleX Chat developers.</source>
-        <target>připojit se k vývojářům SimpleX Chat.</target>
+      <trans-unit id="connect to POPOPX Chat developers." xml:space="preserve">
+        <source>connect to POPOPX Chat developers.</source>
+        <target>připojit se k vývojářům POPOPX Chat.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="connected" xml:space="preserve">
@@ -11122,80 +11122,80 @@ last received msg: %2$@</source>
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/SimpleX--iOS--InfoPlist.strings" source-language="en" target-language="cs" datatype="plaintext">
+  <file original="en.lproj/POPOPX--iOS--InfoPlist.strings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
     <body>
       <trans-unit id="CFBundleName" xml:space="preserve">
-        <source>SimpleX</source>
-        <target>SimpleX</target>
+        <source>POPOPX</source>
+        <target>POPOPX</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
-        <source>SimpleX needs camera access to scan QR codes to connect to other users and for video calls.</source>
-        <target>SimpleX potřebuje přístup k fotoaparátu, aby mohl skenovat QR kódy pro připojení k ostatním uživatelům a pro videohovory.</target>
+        <source>POPOPX needs camera access to scan QR codes to connect to other users and for video calls.</source>
+        <target>POPOPX potřebuje přístup k fotoaparátu, aby mohl skenovat QR kódy pro připojení k ostatním uživatelům a pro videohovory.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSFaceIDUsageDescription" xml:space="preserve">
-        <source>SimpleX uses Face ID for local authentication</source>
-        <target>SimpleX používá Face ID pro místní ověřování</target>
+        <source>POPOPX uses Face ID for local authentication</source>
+        <target>POPOPX používá Face ID pro místní ověřování</target>
         <note>Privacy - Face ID Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocalNetworkUsageDescription" xml:space="preserve">
-        <source>SimpleX uses local network access to allow using user chat profile via desktop app on the same network.</source>
+        <source>POPOPX uses local network access to allow using user chat profile via desktop app on the same network.</source>
         <note>Privacy - Local Network Usage Description</note>
       </trans-unit>
       <trans-unit id="NSMicrophoneUsageDescription" xml:space="preserve">
-        <source>SimpleX needs microphone access for audio and video calls, and to record voice messages.</source>
-        <target>SimpleX potřebuje přístup k mikrofonu pro audio a video hovory a pro nahrávání hlasových zpráv.</target>
+        <source>POPOPX needs microphone access for audio and video calls, and to record voice messages.</source>
+        <target>POPOPX potřebuje přístup k mikrofonu pro audio a video hovory a pro nahrávání hlasových zpráv.</target>
         <note>Privacy - Microphone Usage Description</note>
       </trans-unit>
       <trans-unit id="NSPhotoLibraryAddUsageDescription" xml:space="preserve">
-        <source>SimpleX needs access to Photo Library for saving captured and received media</source>
-        <target>SimpleX potřebuje přístup do knihovny fotografií pro ukládání zachycených a přijatých médií</target>
+        <source>POPOPX needs access to Photo Library for saving captured and received media</source>
+        <target>POPOPX potřebuje přístup do knihovny fotografií pro ukládání zachycených a přijatých médií</target>
         <note>Privacy - Photo Library Additions Usage Description</note>
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/SimpleXChat-InfoPlist.strings" datatype="plaintext" source-language="en" target-language="cs">
+  <file original="en.lproj/POPOPXChat-InfoPlist.strings" datatype="plaintext" source-language="en" target-language="cs">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
     <body>
       <trans-unit id="CFBundleName" translate="no" xml:space="preserve">
-        <source>SimpleXChat</source>
+        <source>POPOPXChat</source>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" translate="no" xml:space="preserve">
-        <source>Copyright © 2022 SimpleX Chat. All rights reserved.</source>
+        <source>Copyright © 2022 POPOPX Chat. All rights reserved.</source>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX NSE/en.lproj/InfoPlist.strings" source-language="en" target-language="cs" datatype="plaintext">
+  <file original="POPOPX NSE/en.lproj/InfoPlist.strings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
-        <source>SimpleX NSE</source>
-        <target>SimpleX NSE</target>
+        <source>POPOPX NSE</source>
+        <target>POPOPX NSE</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
-        <source>SimpleX NSE</source>
-        <target>SimpleX NSE</target>
+        <source>POPOPX NSE</source>
+        <target>POPOPX NSE</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source>Copyright © 2022 SimpleX Chat. All rights reserved.</source>
-        <target>Autorská práva © 2022 SimpleX Chat. Všechna práva vyhrazena.</target>
+        <source>Copyright © 2022 POPOPX Chat. All rights reserved.</source>
+        <target>Autorská práva © 2022 POPOPX Chat. Všechna práva vyhrazena.</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX NSE/en.lproj/Localizable.strings" source-language="en" target-language="cs" datatype="plaintext">
+  <file original="POPOPX NSE/en.lproj/Localizable.strings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
@@ -11222,26 +11222,26 @@ last received msg: %2$@</source>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX SE/en.lproj/InfoPlist.strings" source-language="en" target-language="cs" datatype="plaintext">
+  <file original="POPOPX SE/en.lproj/InfoPlist.strings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
-        <source>SimpleX SE</source>
+        <source>POPOPX SE</source>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
-        <source>SimpleX SE</source>
+        <source>POPOPX SE</source>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source>Copyright © 2024 SimpleX Chat. All rights reserved.</source>
+        <source>Copyright © 2024 POPOPX Chat. All rights reserved.</source>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX SE/en.lproj/Localizable.strings" source-language="en" target-language="cs" datatype="plaintext">
+  <file original="POPOPX SE/en.lproj/Localizable.strings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
@@ -11350,8 +11350,8 @@ last received msg: %2$@</source>
         <source>Passphrase</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Please create a profile in the SimpleX app" xml:space="preserve">
-        <source>Please create a profile in the SimpleX app</source>
+      <trans-unit id="Please create a profile in the POPOPX app" xml:space="preserve">
+        <source>Please create a profile in the POPOPX app</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected chat preferences prohibit this message." xml:space="preserve">
@@ -11390,8 +11390,8 @@ last received msg: %2$@</source>
         <source>Wrong database passphrase</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="You can allow sharing in Your privacy / SimpleX Lock settings." xml:space="preserve">
-        <source>You can allow sharing in Your privacy / SimpleX Lock settings.</source>
+      <trans-unit id="You can allow sharing in Your privacy / POPOPX Lock settings." xml:space="preserve">
+        <source>You can allow sharing in Your privacy / POPOPX Lock settings.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>

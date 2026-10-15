@@ -7,14 +7,14 @@ revision: 07.02.2023
 
 # Dostęp do plików w aplikacji Androidowej
 
-SimpleX wykorzystuje bazy danych i przechowuje ustawienia w prywatnym katalogu w systemie Android. Katalog ten zawiera:
+POPOPX wykorzystuje bazy danych i przechowuje ustawienia w prywatnym katalogu w systemie Android. Katalog ten zawiera:
 
 - bazy danych
 - wysłane i odebrane pliki
 - pliki tymczasowe, które zostaną usunięte, gdy nie są już potrzebne
 - ustawienia użytkownika.
 
-Jeśli chcesz zobaczyć, co jest przechowywane w katalogu SimpleX, musisz mieć:
+Jeśli chcesz zobaczyć, co jest przechowywane w katalogu POPOPX, musisz mieć:
 
 - System operacyjny oparty na systemie Unix (lub [MinGW](https://www.mingw-w64.org/downloads/) na Windowsie)
 - narzędzie ADB (Android Debug Bridge) zainstalowane na komputerze ([pobierz je tutaj](https://developer.android.com/studio/releases/platform-tools) i zainstaluj)
@@ -22,7 +22,7 @@ Jeśli chcesz zobaczyć, co jest przechowywane w katalogu SimpleX, musisz mieć:
 
 ## Proces:
 
-- otwórz SimpleX, przejdź do `Hasło do bazy danych i eksport`, włącz `Kopia zapasowa danych aplikacji`. To sprawi, że następne kroki będą działać.
+- otwórz POPOPX, przejdź do `Hasło do bazy danych i eksport`, włącz `Kopia zapasowa danych aplikacji`. To sprawi, że następne kroki będą działać.
 - _opcjonalnie_: jeśli chcesz wyświetlić zawartość bazy danych, zmień hasło bazy danych z losowego na swoje. Aby to zrobić, zatrzymaj czat na ekranie `Hasło do bazy danych i eksport`, otwórz `Hasło do bazy danych`, wprowadź nowe hasło i potwierdź je, a następnie zatwierdź. Nie zapomnij go, w przeciwnym razie utracisz wszystkie dane w przypadku, gdy zostaniesz ponownie poproszony o hasło.
 - otwórz emulator terminala (Windows CMD/Powershell nie zadziała) i zmień katalog na ten, którego chcesz użyć do przechowywania kopii zapasowej:
 
@@ -31,7 +31,7 @@ cd /tmp  # to tylko przykład
 ```
 Następne uruchom:
 ```bash
-adb -d backup -f chat.ab -noapk chat.simplex.app && 
+adb -d backup -f chat.ab -noapk chat.popopx.app && 
 tail -n +5 chat.ab > chat.dat && 
 printf "\x1f\x8b\x08\x00\x00\x00\x00\x00" | cat - chat.dat > chat.gz && 
 tar -xvzf chat.gz
@@ -41,9 +41,9 @@ Teraz odblokuj urządzenie i potwierdź operację tworzenia kopii zapasowej bez 
 
 Po tym kopia zapasowa powinna zostać zrobiona. Jeśli pojawi się błąd `tar: Error is not recoverable: exiting now`, ale wcześniej pojawiło się kilka nazw plików, nie martw się, wszystko jest w porządku.
 
-Teraz zapisane pliki będą w `./apps/chat.simplex.app/`.
+Teraz zapisane pliki będą w `./apps/chat.popopx.app/`.
 
-Pamiętaj, że jeśli korzystasz z nowej wersji SimpleX, bazy danych będą zaszyfrowane i nie będziesz w stanie przeglądać ich zawartości bez użycia aplikacji `sqlcipher` oraz gdy nie znasz hasła deszyfrującego (musisz najpierw zmienić je na swoje z losowo wygenerowanego w aplikacji).
+Pamiętaj, że jeśli korzystasz z nowej wersji POPOPX, bazy danych będą zaszyfrowane i nie będziesz w stanie przeglądać ich zawartości bez użycia aplikacji `sqlcipher` oraz gdy nie znasz hasła deszyfrującego (musisz najpierw zmienić je na swoje z losowo wygenerowanego w aplikacji).
 
 ## Odszyfrowywanie baz danych
 

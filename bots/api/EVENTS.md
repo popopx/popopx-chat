@@ -90,7 +90,7 @@ Bots must use these events to process connecting users.
 
 Most bots enable auto-accept and don't need to accept connections via commands.
 
-You may create bot SimpleX address manually via CLI or desktop app or from bot code with these commands:
+You may create bot POPOPX address manually via CLI or desktop app or from bot code with these commands:
 - [APIShowMyAddress](./COMMANDS.md#apishowmyaddress) to check if address exists,
 - [APICreateMyAddress](./COMMANDS.md#apicreatemyaddress) to create address,
 - [APISetAddressSettings](./COMMANDS.md#apisetaddresssettings) to enable auto-access.
@@ -98,7 +98,7 @@ You may create bot SimpleX address manually via CLI or desktop app or from bot c
 
 ### ContactConnected
 
-This event is sent after a user connects via bot SimpleX address (not a business address).
+This event is sent after a user connects via bot POPOPX address (not a business address).
 
 **Record type**:
 - type: "contactConnected"
@@ -642,7 +642,7 @@ Bots may use these events to track progress of connections for monitoring or deb
 
 ### AcceptingContactRequest
 
-Automatically accepting contact request via bot's SimpleX address with auto-accept enabled.
+Automatically accepting contact request via bot's POPOPX address with auto-accept enabled.
 
 **Record type**:
 - type: "acceptingContactRequest"
@@ -668,7 +668,7 @@ Automatically accepting contact request via bot's business address.
 
 Contact confirmed connection.
 
-Sent when contact started connecting via bot's 1-time invitation link or when bot connects to another SimpleX address.
+Sent when contact started connecting via bot's 1-time invitation link or when bot connects to another POPOPX address.
 
 **Record type**:
 - type: "contactConnecting"

@@ -36,7 +36,7 @@ Here you can import the chat database from a file.
 
 ### Delete database
 
-Here you can delete your chat database. WARNING: Results in a loss of all your SimpleX Chat data! Unless you have just exported the chat database.
+Here you can delete your chat database. WARNING: Results in a loss of all your POPOPX Chat data! Unless you have just exported the chat database.
 
 ## Delete files and media
 

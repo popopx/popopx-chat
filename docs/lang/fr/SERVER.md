@@ -8,11 +8,11 @@ revision: 05.06.2023
 
 ## Présentation générale
 
-Un serveur SMP est un serveur relais utilisé pour transmettre les messages sur le réseau SimpleX. Les apps SimpleX Chat ont des serveurs prédéfinis (pour les apps mobiles, smp11, smp12 et smp14.simplex.im), mais vous pouvez facilement modifier la configuration de l'app pour utiliser d'autres serveurs.
+Un serveur SMP est un serveur relais utilisé pour transmettre les messages sur le réseau POPOPX. Les apps POPOPX Chat ont des serveurs prédéfinis (pour les apps mobiles, smp11, smp12 et smp14.popopx.im), mais vous pouvez facilement modifier la configuration de l'app pour utiliser d'autres serveurs.
 
-Seuls les utilisateurs de SimpleX déterminent quel serveur est utilisé pour recevoir les messages, séparément pour chaque contact (ou pour chaque connexion à un membre d'un groupe), et ces serveurs ne sont que temporaires, car l'adresse de réception peut changer.
+Seuls les utilisateurs de POPOPX déterminent quel serveur est utilisé pour recevoir les messages, séparément pour chaque contact (ou pour chaque connexion à un membre d'un groupe), et ces serveurs ne sont que temporaires, car l'adresse de réception peut changer.
 
-_Veuillez noter_ : lorsque vous modifiez les serveurs dans la configuration de l'app, cela n'affecte que les serveurs qui seront utilisés pour les nouveaux contacts. Les contacts existants ne seront pas automatiquement déplacés vers les nouveaux serveurs, mais vous pouvez les déplacer manuellement à l'aide du bouton ["Changer d'adresse de réception"](/blog/20221108-simplex-chat-v4.2-security-audit-new-website.md#change-your-delivery-address-beta) sur les fiches d'information de contact/membre – ce sera bientôt automatisé.
+_Veuillez noter_ : lorsque vous modifiez les serveurs dans la configuration de l'app, cela n'affecte que les serveurs qui seront utilisés pour les nouveaux contacts. Les contacts existants ne seront pas automatiquement déplacés vers les nouveaux serveurs, mais vous pouvez les déplacer manuellement à l'aide du bouton ["Changer d'adresse de réception"](/blog/20221108-popopx-chat-v4.2-security-audit-new-website.md#change-your-delivery-address-beta) sur les fiches d'information de contact/membre – ce sera bientôt automatisé.
 
 ## Installation
 
@@ -38,8 +38,8 @@ L'installation manuelle nécessite quelques actions préalables :
 2. Créer les répertoires nécessaires et y attribuer les permissions :
 
    ```sh
-   sudo mkdir -p /var/opt/simplex /etc/opt/simplex
-   sudo chown smp:smp /var/opt/simplex /etc/opt/simplex
+   sudo mkdir -p /var/opt/popopx /etc/opt/popopx
+   sudo chown smp:smp /var/opt/popopx /etc/opt/popopx
    ```
 
 3. Autoriser le port du `smp-server` dans le pare-feu:
@@ -62,7 +62,7 @@ L'installation manuelle nécessite quelques actions préalables :
    Group=smp
    Type=simple
    ExecStart=smp-server start
-   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/simplex/smp-server-store.log" ] && cp "/var/opt/simplex/smp-server-store.log" "/var/opt/simplex/smp-server-store.log.bak"'
+   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/popopx/smp-server-store.log" ] && cp "/var/opt/popopx/smp-server-store.log" "/var/opt/popopx/smp-server-store.log.bak"'
    KillSignal=SIGINT
    TimeoutStopSec=infinity
    Restart=always
@@ -83,10 +83,10 @@ sudo su smp -c smp-server
 
 ...
 Available commands:
-  init                     Initialize server - creates /etc/opt/simplex and
-                           /var/opt/simplex directories and configuration files
+  init                     Initialize server - creates /etc/opt/popopx and
+                           /var/opt/popopx directories and configuration files
   start                    Start server (configuration:
-                           /etc/opt/simplex/smp-server.ini)
+                           /etc/opt/popopx/smp-server.ini)
   delete                   Delete configuration and log files
 ```
 
@@ -174,12 +174,12 @@ Après cela, votre installation est terminée et vous devriez voir dans votre te
 ```sh
 Certificate request self-signature ok
 subject=CN = 127.0.0.1
-Server initialized, you can modify configuration in /etc/opt/simplex/smp-server.ini.
+Server initialized, you can modify configuration in /etc/opt/popopx/smp-server.ini.
 Run `smp-server start` to start server.
 ----------
 You should store CA private key securely and delete it from the server.
 If server TLS credential is compromised this key can be used to sign a new one, keeping the same server identity and established connections.
-CA private key location: /etc/opt/simplex/ca.key
+CA private key location: /etc/opt/popopx/ca.key
 ----------
 SMP server v3.4.0
 Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
@@ -190,9 +190,9 @@ L'adresse du serveur ci-dessus doit être utilisée dans la configuration de vot
 
 ## Documentation
 
-Tous les fichiers requis pour `smp-server` sont situés dans le dossier `/etc/opt/simplex/`.
+Tous les fichiers requis pour `smp-server` sont situés dans le dossier `/etc/opt/popopx/`.
 
-Les messages stockés, les connexions, les statistiques et les logs du serveur sont situés dans le dossier `/var/opt/simplex/`.
+Les messages stockés, les connexions, les statistiques et les logs du serveur sont situés dans le dossier `/var/opt/popopx/`.
 
 ### Adresse de serveur SMP
 
@@ -204,15 +204,15 @@ smp://<fingerprint>[:<password>]@<public_hostname>[,<onion_hostname>]
 
 - `<fingerprint>`
 
-  Empreinte du certificat de votre `smp-server`. Vous pouvez vérifier l'empreinte de votre certificat dans `/etc/opt/simplex/fingerprint`.
+  Empreinte du certificat de votre `smp-server`. Vous pouvez vérifier l'empreinte de votre certificat dans `/etc/opt/popopx/fingerprint`.
 
 - **optionnel** `<password>`
 
-  Votre mot de passe configuré pour `smp-server`. Vous pouvez vérifier votre mot de passe configuré dans `/etc/opt/simplex/smp-server.ini`, sous la section `[AUTH]` dans le champ `create_password:`.
+  Votre mot de passe configuré pour `smp-server`. Vous pouvez vérifier votre mot de passe configuré dans `/etc/opt/popopx/smp-server.ini`, sous la section `[AUTH]` dans le champ `create_password:`.
 
 - `<public_hostname>`, **optionnel** `<onion_hostname>`
 
-  Votre(vos) nom(s) d'hôte configuré(s) de `smp-server`. Vous pouvez vérifier vos hôtes configurés dans `/etc/opt/simplex/smp-server.ini`, dans la section `[AUTH]` dans le champ `host:`.
+  Votre(vos) nom(s) d'hôte configuré(s) de `smp-server`. Vous pouvez vérifier vos hôtes configurés dans `/etc/opt/popopx/smp-server.ini`, dans la section `[AUTH]` dans le champ `host:`.
 
 ### Systemd commandes
 
@@ -246,7 +246,7 @@ Nov 23 19:23:21 5588ab759e80 systemd[1]: Started SMP server.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: SMP server v3.4.0
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Server address: smp://d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=:V8ONoJ6ICwnrZnTC_QuSHfCEYq53uLaJKQ_oIC6-ve8=@<hostnames>
-Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/simplex/smp-server-store.log
+Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/popopx/smp-server-store.log
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Listening on port 5223 (TLS)...
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: not expiring inactive clients
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: creating new queues requires password
@@ -267,7 +267,7 @@ Nov 23 19:23:21 5588ab759e80 systemd[1]: Started SMP server.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: SMP server v3.4.0
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Server address: smp://d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=:V8ONoJ6ICwnrZnTC_QuSHfCEYq53uLaJKQ_oIC6-ve8=@<hostnames>
-Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/simplex/smp-server-store.log
+Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/popopx/smp-server-store.log
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Listening on port 5223 (TLS)...
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: not expiring inactive clients
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: creating new queues requires password
@@ -275,9 +275,9 @@ Nov 23 19:23:21 5588ab759e80 smp-server[30878]: creating new queues requires pas
 
 ### Suivi de l'activité
 
-Vous pouvez activer les statistiques de `smp-server` sur le tableau de bord `Grafana` en mettant la valeur `on` dans `/etc/opt/simplex/smp-server.ini`, sous la section `[STORE_LOG]` dans le champ `log_stats:`.
+Vous pouvez activer les statistiques de `smp-server` sur le tableau de bord `Grafana` en mettant la valeur `on` dans `/etc/opt/popopx/smp-server.ini`, sous la section `[STORE_LOG]` dans le champ `log_stats:`.
 
-Les journaux seront stockés dans un fichier `csv` dans `/var/opt/simplex/smp-server-stats.daily.log`. Les champs pour le fichier `csv` sont :
+Les journaux seront stockés dans un fichier `csv` dans `/var/opt/popopx/smp-server-stats.daily.log`. Les champs pour le fichier `csv` sont :
 
 ```sh
 fromTime,qCreated,qSecured,qDeleted,msgSent,msgRecv,dayMsgQueues,weekMsgQueues,monthMsgQueues

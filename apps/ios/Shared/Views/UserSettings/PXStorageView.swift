@@ -37,15 +37,17 @@ private enum PXStorageStyling {
 }
 
 struct StorageView: View {
+    @EnvironmentObject var m: ChatModel
+    @EnvironmentObject var theme: AppTheme
     @State var appGroupFiles: [String: Int64] = [:]
     @State var documentsFiles: [String: Int64] = [:]
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: PXStorageLayout.entrySpacing) {
-                pxDirectorySection(title: "App group:", contents: appGroupFiles)
+                pxDirectorySection(title: "App group:", dir: getGroupContainerDirectory(), contents: appGroupFiles)
                 if !documentsFiles.isEmpty {
-                    pxDirectorySection(title: "Documents:", contents: documentsFiles)
+                    pxDirectorySection(title: "Documents:", dir: getDocumentsDirectory(), contents: documentsFiles)
                 }
             }
         }
@@ -65,13 +67,43 @@ struct StorageView: View {
 
     // POPOPX: render a single directory section with header and file entries
     @ViewBuilder
-    private func pxDirectorySection(title pxName: LocalizedStringKey, contents pxContents: [String: Int64]) -> some View {
+    private func pxDirectorySection(title pxName: LocalizedStringKey, dir pxDir: URL, contents pxContents: [String: Int64]) -> some View {
         Text(pxName)
             .font(PXStorageStyling.sectionHeaderFont())
             .foregroundColor(PXStorageStyling.sectionHeaderColor())
         ForEach(Array(pxContents), id: \.key) { (pxKey, pxValue) in
-            Text(pxKey).bold() + Text(verbatim: "   ") + Text(ByteCountFormatter.string(fromByteCount: pxValue, countStyle: .binary))
+            let pxSizeText = Text(pxKey).bold() + Text(verbatim: "   ") + Text(ByteCountFormatter.string(fromByteCount: pxValue, countStyle: .binary))
+            if pxDir.appendingPathComponent(pxKey).path == getTempFilesDirectory().path {
+                let pxStopped = m.chatRunning == false
+                HStack {
+                    pxSizeText
+                    Button(NSLocalizedString("Delete temp data", comment: "storage view button"), role: .destructive, action: pxConfirmDeleteTempFiles)
+                        .disabled(!pxStopped)
+                }
+                if !pxStopped {
+                    Text(NSLocalizedString("Stop chat in Settings → Chat data → Database passphrase & export to delete temp data.", comment: "storage view hint"))
+                        .font(.footnote)
+                        .foregroundColor(theme.colors.secondary)
+                }
+            } else {
+                pxSizeText
+            }
         }
+    }
+
+    // POPOPX: confirmation alert before deleting temporary files
+    private func pxConfirmDeleteTempFiles() {
+        showAlert(
+            NSLocalizedString("Delete temp data?", comment: "alert title"),
+            message: NSLocalizedString("Files being sent or received will never complete. Videos in unsent drafts will be sent without the file.", comment: "alert message"),
+            actions: {[
+                UIAlertAction(title: NSLocalizedString("Delete", comment: "alert action"), style: .destructive) { _ in
+                    deleteTempFiles()
+                    pxLoadDirectoryContents()
+                },
+                cancelAlertAction
+            ]}
+        )
     }
 
     // POPOPX: traverse a directory tree and aggregate file sizes by root folder

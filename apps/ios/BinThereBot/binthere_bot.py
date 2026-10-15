@@ -4,7 +4,7 @@ A zero-knowledge paste gateway: stores AES-256-GCM ciphertext blobs and
 serves them with a lock→confirm→burn protocol. The bot never sees plaintext
 or decryption keys.
 
-Commands (via SimpleX chat):
+Commands (via POPOPX chat):
   /store <base64_ciphertext>  — store encrypted paste, reply STORED:<id>
   /get <paste_id>             — lock and return ciphertext, reply LOCKED:<id>:<data>
   /burned <paste_id>          — confirm reader got it, permanently delete
@@ -31,7 +31,7 @@ import sqlite3
 import threading
 import time
 
-from simplex_chat import (
+from popopx_chat import (
     Bot,
     BotCommand,
     BotProfile,

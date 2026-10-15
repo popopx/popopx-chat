@@ -1,12 +1,12 @@
 ---
-title: Contribuer aux traductions de SimpleX Chat
+title: Contribuer aux traductions de POPOPX Chat
 revision: 19.03.2023
 ---
 | 19.03.2023 | FR, [EN](/docs/TRANSLATIONS.md), [CZ](/docs/lang/cs/TRANSLATIONS.md), [PL](/docs/lang/pl/TRANSLATIONS.md) |
 
-# Contribuer aux traductions de SimpleX Chat
+# Contribuer aux traductions de POPOPX Chat
 
-Un grand merci pour votre intérêt pour la traduction de SimpleX Chat - cela nous aide beaucoup à rendre l'application accessible à un plus grand nombre d'utilisateurs, et nous vous remercions de votre aide.
+Un grand merci pour votre intérêt pour la traduction de POPOPX Chat - cela nous aide beaucoup à rendre l'application accessible à un plus grand nombre d'utilisateurs, et nous vous remercions de votre aide.
 
 Cela demande un investissement en temps considérable - la plupart des gens le sous-estiment au départ - et une maintenance continue au fur et à mesure que nous développons l'application.
 
@@ -58,6 +58,6 @@ Nous allons ensuite :
 3. De plus, si vous souhaitez être modérateur/administrateur du groupe d'utilisateurs dans votre langue, une fois l'application traduite, nous pourrons héberger un tel groupe. Nous sommes en train de préparer des règles de conduite pour la communauté et d'ajouter des outils de modération à l'application qui sortira dans la v5 en mars.
 
 
-Encore une fois un grand merci de nous aider à développer SimpleX Chat !
+Encore une fois un grand merci de nous aider à développer POPOPX Chat !
 
-Evgeny, fondateur de SimpleX Chat.
+Evgeny, fondateur de POPOPX Chat.

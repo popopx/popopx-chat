@@ -1,6 +1,6 @@
 # .well-known
 
-This website files allow opening SimpleX Chat links (1-time invitations, contact addresses and groups) directly in the app.
+This website files allow opening POPOPX Chat links (1-time invitations, contact addresses and groups) directly in the app.
 
 ## Android
 

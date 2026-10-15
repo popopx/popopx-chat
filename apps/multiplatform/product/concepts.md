@@ -1,6 +1,6 @@
-# SimpleX Chat Android & Desktop -- Concept Index
+# POPOPX Chat Android & Desktop -- Concept Index
 
-> SimpleX Chat multiplatform concept index. Maps every product concept to its documentation and source code with bidirectional links.
+> POPOPX Chat multiplatform concept index. Maps every product concept to its documentation and source code with bidirectional links.
 >
 > **Related spec:** [spec/README.md](../spec/README.md) | [spec/architecture.md](../spec/architecture.md)
 
@@ -11,7 +11,7 @@
 
 ## Executive Summary
 
-This document provides a structured mapping between product-level concepts, their documentation, and their implementation in both the Kotlin multiplatform layer and the Haskell core library. All Kotlin source paths are relative to `apps/multiplatform/`. Haskell paths use `../../src/` prefix (relative to `apps/multiplatform/`). The common source root abbreviation used below is `common/src/commonMain/kotlin/chat/simplex/common/`.
+This document provides a structured mapping between product-level concepts, their documentation, and their implementation in both the Kotlin multiplatform layer and the Haskell core library. All Kotlin source paths are relative to `apps/multiplatform/`. Haskell paths use `../../src/` prefix (relative to `apps/multiplatform/`). The common source root abbreviation used below is `common/src/commonMain/kotlin/chat/popopx/common/`.
 
 ---
 
@@ -36,7 +36,7 @@ This document provides a structured mapping between product-level concepts, thei
 | PC15 | Group Links | [README.md](README.md) (Groups) | [spec/api.md](../spec/api.md) | `common/.../views/chat/group/GroupLinkView.kt` | `Controller.hs` (`APICreateGroupLink`) |
 | PC16 | Member Roles | [README.md](README.md) (Groups) | [spec/api.md](../spec/api.md) | `common/.../model/ChatModel.kt`, `group/GroupMemberInfoView.kt` | `Types/Shared.hs` (`GroupMemberRole`) |
 | PC17 | Audio/Video Calls | [README.md](README.md) (Calling) | [spec/services/calls.md](../spec/services/calls.md) | `common/.../views/call/CallView.kt`, `CallManager.kt`, `WebRTC.kt`, `android/.../CallService.kt`, `android/.../views/call/CallActivity.kt` | `Call.hs` (`RcvCallInvitation`, `CallType`) |
-| PC18 | Notifications | [README.md](README.md) (Background Messaging) | [spec/services/notifications.md](../spec/services/notifications.md) | `common/.../platform/NtfManager.kt`, `Notifications.kt`, `android/.../SimplexService.kt`, `android/.../MessagesFetcherWorker.kt`, `common/.../views/usersettings/NotificationsSettingsView.kt` | `Controller.hs` |
+| PC18 | Notifications | [README.md](README.md) (Background Messaging) | [spec/services/notifications.md](../spec/services/notifications.md) | `common/.../platform/NtfManager.kt`, `Notifications.kt`, `android/.../PopopxService.kt`, `android/.../MessagesFetcherWorker.kt`, `common/.../views/usersettings/NotificationsSettingsView.kt` | `Controller.hs` |
 | PC19 | User Profiles | [README.md](README.md) (User Management) | [spec/state.md](../spec/state.md) | `common/.../views/usersettings/UserProfilesView.kt`, `UserProfileView.kt`, `views/chatlist/UserPicker.kt` | `Types.hs` (`User`), `Store/Profiles.hs` |
 | PC20 | Incognito Mode | [README.md](README.md) (Contacts) | [spec/api.md](../spec/api.md) | `common/.../views/usersettings/IncognitoView.kt` | `ProfileGenerator.hs`, `Types.hs` |
 | PC21 | Hidden Profiles | [README.md](README.md) (Privacy & Security) | [spec/api.md](../spec/api.md) | `common/.../views/usersettings/HiddenProfileView.kt` | `Controller.hs` (`APIHideUser`, `APIUnhideUser`) |
@@ -52,9 +52,9 @@ This document provides a structured mapping between product-level concepts, thei
 | PC31 | Channels (Relays) | [views/group-info.md](views/group-info.md) | [spec/client/chat-view.md](../spec/client/chat-view.md), [spec/state.md](../spec/state.md) | `common/.../model/ChatModel.kt` (`RelayStatus` incl. `RsRejected`, `GroupRelay`, `GroupMemberRole.Relay`, `GroupMemberStatus.MemRejected`), `common/.../views/chat/group/ChannelRelaysView.kt`, `GroupMemberInfoView.kt` (rejected-status row), `common/.../views/newchat/AddChannelView.kt` (`RelayStatusIndicator` rejected branch), `common/.../views/chat/group/AddGroupRelayView.kt` | `Controller.hs` (`APIAddGroupRelays`, `APIAllowRelayGroup`, `XGrpRelayReject` CONF handler) |
 
 **Legend for abbreviated paths:**
-- `common/.../` expands to `common/src/commonMain/kotlin/chat/simplex/common/`
-- `android/.../` expands to `android/src/main/java/chat/simplex/app/`
-- Haskell files are in `../../src/Simplex/Chat/` (relative to `apps/multiplatform/`)
+- `common/.../` expands to `common/src/commonMain/kotlin/chat/popopx/common/`
+- `android/.../` expands to `android/src/main/java/chat/popopx/app/`
+- Haskell files are in `../../src/Popopx/Chat/` (relative to `apps/multiplatform/`)
 
 ---
 
@@ -85,37 +85,37 @@ Key files that exist only on one platform, grouped by concern.
 
 | File | Purpose |
 |------|---------|
-| `android/src/main/java/chat/simplex/app/SimplexApp.kt` | Application subclass, PlatformInterface setup, Haskell init |
-| `android/src/main/java/chat/simplex/app/MainActivity.kt` | Main Activity, deep link handling, lifecycle |
-| `android/src/main/java/chat/simplex/app/SimplexService.kt` | Foreground service for persistent messaging |
-| `android/src/main/java/chat/simplex/app/MessagesFetcherWorker.kt` | WorkManager periodic message fetch |
-| `android/src/main/java/chat/simplex/app/CallService.kt` | Foreground service for active calls |
-| `android/src/main/java/chat/simplex/app/views/call/CallActivity.kt` | Dedicated Activity for call UI |
-| `android/src/main/java/chat/simplex/app/model/NtfManager.android.kt` | Android notification channels and manager |
-| `common/src/androidMain/kotlin/chat/simplex/common/platform/*.android.kt` | All `actual` implementations for Android |
+| `android/src/main/java/chat/popopx/app/PopopxApp.kt` | Application subclass, PlatformInterface setup, Haskell init |
+| `android/src/main/java/chat/popopx/app/MainActivity.kt` | Main Activity, deep link handling, lifecycle |
+| `android/src/main/java/chat/popopx/app/PopopxService.kt` | Foreground service for persistent messaging |
+| `android/src/main/java/chat/popopx/app/MessagesFetcherWorker.kt` | WorkManager periodic message fetch |
+| `android/src/main/java/chat/popopx/app/CallService.kt` | Foreground service for active calls |
+| `android/src/main/java/chat/popopx/app/views/call/CallActivity.kt` | Dedicated Activity for call UI |
+| `android/src/main/java/chat/popopx/app/model/NtfManager.android.kt` | Android notification channels and manager |
+| `common/src/androidMain/kotlin/chat/popopx/common/platform/*.android.kt` | All `actual` implementations for Android |
 
 ### Desktop-Only
 
 | File | Purpose |
 |------|---------|
-| `desktop/src/jvmMain/kotlin/chat/simplex/desktop/Main.kt` | JVM entry point, Haskell/VLC init, PlatformInterface setup |
-| `common/src/desktopMain/kotlin/chat/simplex/common/DesktopApp.kt` | Compose Desktop window creation and lifecycle |
-| `common/src/desktopMain/kotlin/chat/simplex/common/StoreWindowState.kt` | Window position/size persistence |
-| `common/src/desktopMain/kotlin/chat/simplex/common/views/helpers/AppUpdater.kt` | In-app update checker |
-| `common/src/desktopMain/kotlin/chat/simplex/common/platform/Videos.desktop.kt` | VLC-based video detection |
-| `common/src/desktopMain/kotlin/chat/simplex/common/platform/VideoPlayer.desktop.kt` | VLC video player implementation |
-| `common/src/desktopMain/kotlin/chat/simplex/common/platform/Platform.desktop.kt` | Desktop platform detection (Linux/macOS/Windows) |
-| `common/src/desktopMain/kotlin/chat/simplex/common/platform/*.desktop.kt` | All `actual` implementations for Desktop |
+| `desktop/src/jvmMain/kotlin/chat/popopx/desktop/Main.kt` | JVM entry point, Haskell/VLC init, PlatformInterface setup |
+| `common/src/desktopMain/kotlin/chat/popopx/common/DesktopApp.kt` | Compose Desktop window creation and lifecycle |
+| `common/src/desktopMain/kotlin/chat/popopx/common/StoreWindowState.kt` | Window position/size persistence |
+| `common/src/desktopMain/kotlin/chat/popopx/common/views/helpers/AppUpdater.kt` | In-app update checker |
+| `common/src/desktopMain/kotlin/chat/popopx/common/platform/Videos.desktop.kt` | VLC-based video detection |
+| `common/src/desktopMain/kotlin/chat/popopx/common/platform/VideoPlayer.desktop.kt` | VLC video player implementation |
+| `common/src/desktopMain/kotlin/chat/popopx/common/platform/Platform.desktop.kt` | Desktop platform detection (Linux/macOS/Windows) |
+| `common/src/desktopMain/kotlin/chat/popopx/common/platform/*.desktop.kt` | All `actual` implementations for Desktop |
 
 ---
 
 ## Cross-References
 
 - Product overview: [README.md](README.md)
-- Haskell core controller: `../../src/Simplex/Chat/Controller.hs`
-- Haskell core types: `../../src/Simplex/Chat/Types.hs`
-- Haskell store layer: `../../src/Simplex/Chat/Store/` (`Direct.hs`, `Groups.hs`, `Messages.hs`, `Files.hs`, `Profiles.hs`, `Connections.hs`)
-- Kotlin model: `common/src/commonMain/kotlin/chat/simplex/common/model/ChatModel.kt`
-- Kotlin API bridge: `common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt`
-- Kotlin FFI layer: `common/src/commonMain/kotlin/chat/simplex/common/platform/Core.kt`
-- Platform abstraction: `common/src/commonMain/kotlin/chat/simplex/common/platform/Platform.kt` (`PlatformInterface`)
+- Haskell core controller: `../../src/Popopx/Chat/Controller.hs`
+- Haskell core types: `../../src/Popopx/Chat/Types.hs`
+- Haskell store layer: `../../src/Popopx/Chat/Store/` (`Direct.hs`, `Groups.hs`, `Messages.hs`, `Files.hs`, `Profiles.hs`, `Connections.hs`)
+- Kotlin model: `common/src/commonMain/kotlin/chat/popopx/common/model/ChatModel.kt`
+- Kotlin API bridge: `common/src/commonMain/kotlin/chat/popopx/common/model/POPOPXAPI.kt`
+- Kotlin FFI layer: `common/src/commonMain/kotlin/chat/popopx/common/platform/Core.kt`
+- Platform abstraction: `common/src/commonMain/kotlin/chat/popopx/common/platform/Platform.kt` (`PlatformInterface`)

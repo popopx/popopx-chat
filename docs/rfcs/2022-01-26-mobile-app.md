@@ -1,10 +1,10 @@
-# Porting SimpleX Chat to mobile
+# Porting POPOPX Chat to mobile
 
 ## Background and motivation
 
 We have code that "works", the aim is to keep platform differences in the core minimal and get the apps to market faster.
 
-### SimpleX platform design
+### POPOPX platform design
 
 See [overview](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md) for overall platform design and objectives, it is worth reading the introduction. The diagram copied from this doc:
 
@@ -12,33 +12,33 @@ See [overview](https://github.com/simplex-chat/simplexmq/blob/master/protocol/ov
   User's Computer                 Internet                    Third-Party Server
 ------------------     |   ----------------------     |   -------------------------
                        |                              |
-   SimpleX Chat        |                              |
+   POPOPX Chat        |                              |
                        |                              |
 +----------------+     |                              |
 |    Chat App    |     |                              |
 +----------------+     |                              |
-|  SimpleX Agent |     |                              |
+|  POPOPX Agent |     |                              |
 +----------------+    -------------- TLS ----------------    +----------------+
-| SimpleX Client | ------ SimpleX Messaging Protocol ------> | SimpleX Server |
+| POPOPX Client | ------ POPOPX Messaging Protocol ------> | POPOPX Server |
 +----------------+    -----------------------------------    +----------------+
                        |                              |
 ```
 
-- SimpleX Servers only pass messages, we don't need to touch that for the app
-- SimpleX clients talk to the servers, we won't use them directly
-- SimpleX agent is used from chat, we won't use it directly from the app
+- POPOPX Servers only pass messages, we don't need to touch that for the app
+- POPOPX clients talk to the servers, we won't use them directly
+- POPOPX agent is used from chat, we won't use it directly from the app
 - Chat app will expose API to the app to communicate with everything, including DB and network.
 
 ### Important application modules
 
-Modules of simplexmq package used from simplex-chat: 
+Modules of popopxmq package used from popopx-chat: 
   - a [functional API in Agent.hs]([Agent.hs](https://github.com/simplex-chat/simplexmq/blob/master/src/Simplex/Messaging/Agent.hs#L38)) to send messages and commands
   - TBQueue to receive messages and notifications (specifically, [subQ field of AgentClient record in Agent/Client.hs](https://github.com/simplex-chat/simplexmq/blob/master/src/Simplex/Messaging/Agent/Client.hs#L72))
   - [types from Agent/Protocol.hs](https://github.com/simplex-chat/simplexmq/blob/master/src/Simplex/Messaging/Agent/Protocol.hs)).
   
 This package has its [own sqlite database file](https://github.com/simplex-chat/simplexmq/tree/master/migrations) - as v1 was not backwards compatible migrations are restarted - where it stores all encryption and signing keys, shared secrets, servers and queue addresses - effectively it completely abstracts the network away from chat application, providing an API to manage logical duplex connections.
 
-Simplex-chat library is what we will use from the app:
+Popopx-chat library is what we will use from the app:
   - command type [ChatCommand in Chat.hs](https://github.com/simplex-chat/simplex-chat/blob/master/src/Simplex/Chat.hs#L72) that UI can send to it
   - UI sends these commands via TBQueue that `inputSubscriber` reads in forever loop and sends to `processChatCommand`. There is a hack that `inputSubscriber` not only reads commands but also shows them in the view, depending on the commands.
   - collection of [view functions in Chat/View.hs](https://github.com/simplex-chat/simplex-chat/blob/master/src/Simplex/Chat/View.hs) to reflect all events in view.

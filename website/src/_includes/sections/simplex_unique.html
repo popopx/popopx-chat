@@ -1,12 +1,12 @@
-<section id="why-simplex" class="bg-primary-bg-light dark:bg-primary-bg-dark py-[90px] overflow-hidden px-0 sm:px-1 xl:h-[888px]">
+<section id="why-popopx" class="bg-primary-bg-light dark:bg-primary-bg-dark py-[90px] overflow-hidden px-0 sm:px-1 xl:h-[888px]">
     <div class="container scale-100">
-        <h2 class="text-grey-black dark:text-white text-[35px] leading-[45px] md:leading-[55px] lg:text-[45px] text-center font-bold mb-14 px-5 sm:px-4">{{ "why-simplex-is-unique" | i18n({}, lang ) | safe }}</h2>
+        <h2 class="text-grey-black dark:text-white text-[35px] leading-[45px] md:leading-[55px] lg:text-[45px] text-center font-bold mb-14 px-5 sm:px-4">{{ "why-popopx-is-unique" | i18n({}, lang ) | safe }}</h2>
 
         <div class="swiper unique-swiper px-5 sm:px-4 py-2">
             <div class="swiper-wrapper mb-16">
 
-                {% for section in why_simplex_is_unique.sections %}
-                    <div class="swiper-slide overflow-hidden flex items-center md:items-start flex-col xl:flex-row-reverse xl:items-center min-h-[620px] md:min-h-fit xl:min-h-[565px] px-4 md:px-10 lg:px-[50px] py-8 lg:py-[50px] rounded-[12px] shadow-[0px_3px_12px_rgba(0,0,0,0.2)] dark:shadow-none border-gradient relative simplex-unique-card">
+                {% for section in why_popopx_is_unique.sections %}
+                    <div class="swiper-slide overflow-hidden flex items-center md:items-start flex-col xl:flex-row-reverse xl:items-center min-h-[620px] md:min-h-fit xl:min-h-[565px] px-4 md:px-10 lg:px-[50px] py-8 lg:py-[50px] rounded-[12px] shadow-[0px_3px_12px_rgba(0,0,0,0.2)] dark:shadow-none border-gradient relative popopx-unique-card">
                         
                         <div class="md:flex-1 flex items-center justify-center h-[55%] md:h-fit w-full card-image">
                             <img class="w-full max-w-[400px] dark:hidden" src="{{ section.imgLight }}" alt="">
@@ -66,12 +66,12 @@
             <img class="fixed left-[-3px] top-[52%] swiper-button-next unique-swiper-button-next hidden md:dark:inline-block ltr:!hidden" src="/img/new/arrow-left-dark.svg" alt="">
             <img class="fixed right-[-6px] top-[52%] swiper-button-prev unique-swiper-button-prev hidden md:dark:inline-block ltr:!hidden" src="/img/new/arrow-right-dark.svg" alt="">
 
-            <div class="swiper-pagination simplex-unique-swiper-pagination mt-100"></div>
+            <div class="swiper-pagination popopx-unique-swiper-pagination mt-100"></div>
         </div>
     </div>
 </section>
 
-{% for section in why_simplex_is_unique.sections %}
+{% for section in why_popopx_is_unique.sections %}
     {% if section.overlayContent %}
         {{ overlay(section,lang) }}
     {% endif %}
@@ -81,7 +81,7 @@
     window.addEventListener('load', function() {
         window.addEventListener('click',e=>{
             if(e.target.closest('.open-card-btn') || e.target.closest('.close-card-btn')){
-                e.target.closest('.simplex-unique-card').classList.toggle('active-card');
+                e.target.closest('.popopx-unique-card').classList.toggle('active-card');
                 e.target.closest('.hide-show-btn').querySelector('.open-card-btn').classList.toggle('hidden');
                 e.target.closest('.hide-show-btn').querySelector('.open-card-btn').classList.toggle('flex');
                 e.target.closest('.hide-show-btn').querySelector('.close-card-btn').classList.toggle('hidden');

@@ -1,11 +1,11 @@
-const simplexDirectoryDataURL = 'https://directory.simplex.chat/data/';
+const popopxDirectoryDataURL = 'https://directory.popopx.chat/data/';
 
-// const simplexDirectoryDataURL = 'http://localhost:8080/directory-data/';
+// const popopxDirectoryDataURL = 'http://localhost:8080/directory-data/';
 
-const simplexUsersGroup = 'SimpleX users group';
+const popopxUsersGroup = 'POPOPX users group';
 
 (function() {
-#include "simplex-lib.jsc"
+#include "popopx-lib.jsc"
 if (!document.location.pathname.startsWith('/directory')) return;
 
 let allEntries = [];
@@ -19,7 +19,7 @@ let currentSearch = '';
 let currentPage = 1;
 
 async function initDirectory() {
-  const listing = await fetchJSON(simplexDirectoryDataURL + 'listing.json')
+  const listing = await fetchJSON(popopxDirectoryDataURL + 'listing.json')
   const liveBtn = document.querySelector('#top-pagination .live');
   const newBtn = document.querySelector('#top-pagination .new');
   const topBtn = document.querySelector('#top-pagination .top');
@@ -107,21 +107,21 @@ function filterEntries(mode, s) {
       || (entry.displayName || '').toLowerCase().includes(query)
       || includesQuery(entry.shortDescr, query)
       || includesQuery(entry.welcomeMessage, query)
-      || simplexNameIncludesQuery(entry.simplexName, query)
+      || popopxNameIncludesQuery(entry.popopxName, query)
     )
   );
 }
 
-function simplexNameIncludesQuery(name, query) {
+function popopxNameIncludesQuery(name, query) {
   if (!name) return false;
-  const q = normalizeSimplexName(query);
-  return q !== '' && normalizeSimplexName(name).includes(q);
+  const q = normalizePOPOPXName(query);
+  return q !== '' && normalizePOPOPXName(name).includes(q);
 }
 
-function normalizeSimplexName(s) {
+function normalizePOPOPXName(s) {
   s = s.toLowerCase();
   if (s.startsWith('#') || s.startsWith('@')) s = s.slice(1);
-  if (s.endsWith('.simplex')) s = s.slice(0, -'.simplex'.length);
+  if (s.endsWith('.popopx')) s = s.slice(0, -'.popopx'.length);
   return s;
 }
 
@@ -132,7 +132,7 @@ function includesQuery(field, query) {
         switch (ft.format?.type) {
           case 'uri': return uriIncludesQuery(ft.text, query);
           case 'hyperLink': return textIncludesQuery(ft.format.showText, query) || uriIncludesQuery(ft.format.linkUri, query);
-          case 'simplexLink': return textIncludesQuery(ft.format.showText, query);
+          case 'popopxLink': return textIncludesQuery(ft.format.showText, query);
           default: return textIncludesQuery(ft.text, query);
         }
       });
@@ -145,7 +145,7 @@ function textIncludesQuery(text, query) {
 function uriIncludesQuery(uri, query) {
   if (!uri) return false;
   uri = uri.toLowerCase();
-  return !uri.includes('simplex') && uri.includes(query);
+  return !uri.includes('popopx') && uri.includes(query);
 }
 
 async function fetchJSON(url) {
@@ -181,7 +181,7 @@ function roundedTs(s) {
 }
 
 function entrySortPriority(entry) {
-  return entry.displayName === simplexUsersGroup
+  return entry.displayName === popopxUsersGroup
     ? Number.MAX_VALUE
     : entryMemberCount(entry)
 }
@@ -229,7 +229,7 @@ function displayEntries(entries) {
 
   for (let entry of entries) {
     try {
-      const { entryType, displayName, simplexName, groupLink, shortDescr, welcomeMessage, imageFile } = entry;
+      const { entryType, displayName, popopxName, groupLink, shortDescr, welcomeMessage, imageFile } = entry;
       const entryDiv = document.createElement('div');
       entryDiv.className = 'entry w-full flex flex-col items-start md:flex-row rounded-[4px] overflow-hidden shadow-[0px_20px_30px_rgba(0,0,0,0.12)] dark:shadow-none bg-white dark:bg-[#0B2A59] mb-8';
 
@@ -241,11 +241,11 @@ function displayEntries(entries) {
       nameElement.className = 'text-grey-black dark:text-white !text-lg md:!text-xl font-bold';
       textContainer.appendChild(nameElement);
 
-      if (simplexName) {
-        const simplexNameElement = document.createElement('p');
-        simplexNameElement.textContent = simplexName;
-        simplexNameElement.className = 'text-sm font-medium';
-        textContainer.appendChild(simplexNameElement);
+      if (popopxName) {
+        const popopxNameElement = document.createElement('p');
+        popopxNameElement.textContent = popopxName;
+        popopxNameElement.className = 'text-sm font-medium';
+        textContainer.appendChild(popopxNameElement);
       }
 
       const welcomeMessageHTML = welcomeMessage ? renderMarkdown(welcomeMessage) : undefined;
@@ -295,7 +295,7 @@ function displayEntries(entries) {
 
       if (entryType?.groupType) {
         const noteElement = document.createElement('p');
-        noteElement.innerHTML = 'You need <a href="https://simplex.chat/downloads/">SimpleX Chat app v6.5</a> to join.';
+        noteElement.innerHTML = 'You need <a href="https://popopx.chat/downloads/">POPOPX Chat app v6.5</a> to join.';
         noteElement.className = 'text-sm';
         textContainer.appendChild(noteElement);
       }
@@ -332,7 +332,7 @@ function displayEntries(entries) {
       imgLinkElement.className = 'img-link';
       const groupLinkUri = groupLink.connShortLink ?? groupLink.connFullLink
       try {
-        imgLinkElement.href = platformSimplexUri(groupLinkUri);
+        imgLinkElement.href = platformPOPOPXUri(groupLinkUri);
       } catch(e) {
         console.log(e);
         imgLinkElement.href = groupLinkUri;
@@ -341,7 +341,7 @@ function displayEntries(entries) {
       imgLinkElement.title = `Join ${displayName}`;
 
       const imgElement = document.createElement('img');
-      imgElement.src = imageFile ? simplexDirectoryDataURL + imageFile : '/img/group.svg';
+      imgElement.src = imageFile ? popopxDirectoryDataURL + imageFile : '/img/group.svg';
       imgElement.alt = displayName;
       imgElement.addEventListener('error', () => imgElement.src = '/img/group.svg');
       imgLinkElement.appendChild(imgElement);

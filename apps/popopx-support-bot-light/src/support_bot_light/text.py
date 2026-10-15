@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unicodedata
 
-# mkValidName in src/Simplex/Chat/Library/Commands.hs caps a locally entered
+# mkValidName in src/Popopx/Chat/Library/Commands.hs caps a locally entered
 # name at 50 characters. It is not applied to inbound profiles.
 MAX_NAME = 50
 

@@ -15,7 +15,7 @@ const uniqueSwiper = new Swiper('.unique-swiper', {
     },
     direction: 'horizontal',
     pagination: {
-        el: '.simplex-unique-swiper-pagination',
+        el: '.popopx-unique-swiper-pagination',
         clickable: true,
     },
     navigation: {
@@ -81,7 +81,7 @@ const privateSwiper = new Swiper('.private-swiper', {
     }
 });
 
-const simplexExplainedSwiper = new Swiper(".simplex-explained-swiper", {
+const popopxExplainedSwiper = new Swiper(".popopx-explained-swiper", {
     slidesPerView: 1,
     spaceBetween: 80,
     allowTouchMove: true,
@@ -98,12 +98,12 @@ const simplexExplainedSwiper = new Swiper(".simplex-explained-swiper", {
     },
     direction: "horizontal",
     pagination: {
-        el: ".simplex-explained-swiper-pagination",
+        el: ".popopx-explained-swiper-pagination",
         clickable: true
     },
     on: {
         slideChange: function () {
-            const explainedSwiperGlossaryTerms = document.querySelectorAll('.simplex-explained-swiper .glossary-term');
+            const explainedSwiperGlossaryTerms = document.querySelectorAll('.popopx-explained-swiper .glossary-term');
             explainedSwiperGlossaryTerms.forEach(function (glossaryTerm) {
                 var tooltipId = glossaryTerm.getAttribute('data-glossary');
                 var tooltip = document.getElementById(tooltipId);

@@ -99,9 +99,9 @@ func startChat(refreshInvitations: Bool = true, onboarding: Bool = false) throws
 
 **Location:**
 - App group container (shared with NSE): determined by `dbContainerGroupDefault`
-- Path prefix: `simplex_v1` (`DB_FILE_PREFIX`)
-- Chat database: `simplex_v1_chat.db` (messages, contacts, groups, settings)
-- Agent database: `simplex_v1_agent.db` (SMP connections, encryption keys, queues)
+- Path prefix: `popopx_v1` (`DB_FILE_PREFIX`)
+- Chat database: `popopx_v1_chat.db` (messages, contacts, groups, settings)
+- Agent database: `popopx_v1_agent.db` (SMP connections, encryption keys, queues)
 
 **Initialization:**
 - `chatMigrateInit(useKey:confirmMigrations:backgroundMode:)` in `POPOPXSwitch/API.swift`.

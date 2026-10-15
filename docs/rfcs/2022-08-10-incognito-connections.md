@@ -10,7 +10,7 @@ Add incognito mode determining whether newly created connections are incognito, 
 
 Add API to turn incognito mode on/off - it is saved as part of ChatController state to allow terminal users to set it. We can save preference on mobile and set it on chat start. We can also persist it to database to carry across terminal sessions, but it seems unnecessary.
 
-Parameterize `AddContact`, `Connect` and `ConnectSimplex` API - create connection as incognito based on incognito mode and parameter, parameter is given preference.
+Parameterize `AddContact`, `Connect` and `ConnectPopopx` API - create connection as incognito based on incognito mode and parameter, parameter is given preference.
 
 ### Option 1 - random profile
 

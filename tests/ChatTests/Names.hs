@@ -282,7 +282,7 @@ testChannelDomainVerify ps = withSmpServerAndNames ps $ \reg ->
         bob ##> "/_verify domain #1"
         bob <## "PopopX name #team verified"
         -- the name is re-pointed to a different link: verification fails
-        registerName reg teamName (channelNameRecord "team.popopx" "https://simplex.chat/other")
+        registerName reg teamName (channelNameRecord "team.popopx" "https://popopx.chat/other")
         bob ##> "/_verify domain #1"
         bob <## "PopopX name #team not verified: the name does not resolve to the link in the group profile"
         -- a link-data refresh keeps the failed status, not overwritten with verified

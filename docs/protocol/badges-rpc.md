@@ -1,6 +1,6 @@
 # Badge service RPC protocol
 
-Schema: `badges-rpc.schema.json`, definitions `request` and `response`. Types: `Simplex.Chat.Badges.Service`. Model: `plans/2026-07-30-supporter-badges-v3-ux.md` §3 — cited below as "model".
+Schema: `badges-rpc.schema.json`, definitions `request` and `response`. Types: `Popopx.Chat.Badges.Service`. Model: `plans/2026-07-30-supporter-badges-v3-ux.md` §3 — cited below as "model".
 
 ## Transport
 
@@ -27,7 +27,7 @@ A timeout hides the outcome, so the client repeats the identical signed request 
 
 ## Commands
 
-`purchaseBadge` and `upgradeBadgeSubscription` carry `badgeRequest`, the signer's input (`BadgeRequest`, `Simplex.Chat.Badges`): the service signs exactly this content or rejects the command. The proposed `badgeExpiry` is capped by the funded coverage (`sundayAfter`, model §3) and is required — a credential always expires, and a badge that does not is expressed as a long finite term; `badgeExtra` is reserved and must be empty. `issueBadge` carries no `badgeRequest`: the tier, the master key and the expiry are all the service's own, so there is nothing for the client to state.
+`purchaseBadge` and `upgradeBadgeSubscription` carry `badgeRequest`, the signer's input (`BadgeRequest`, `Popopx.Chat.Badges`): the service signs exactly this content or rejects the command. The proposed `badgeExpiry` is capped by the funded coverage (`sundayAfter`, model §3) and is required — a credential always expires, and a badge that does not is expressed as a long finite term; `badgeExtra` is reserved and must be empty. `issueBadge` carries no `badgeRequest`: the tier, the master key and the expiry are all the service's own, so there is nothing for the client to state.
 
 - `getBadgeCatalog` → `badgeCatalog` — the prices and offers; signed, also the purchase's `badgeStatement`. Store builds never send it: prices come from the store and SKUs from app config.
 - `getBadgeInvoice` → `badgeInvoice` — prices the purchase for `badgeInfo` and `paymentVia` (`card` — Stripe; `crypto` — btc, xmr). The response holds the generic `invoice` — `invoiceId`, `price`, `discount`, the upgrade `credit`, `amount` = price − discount − credit, `currency`, `expiresAt`, and `paymentTo` (`url` for card; `address` and `cryptoAmount` for crypto) — beside the badge part, `badgeType` and `months`. `priceId` pins the price the client displayed; `offerId` selects a discounted duration, and its absence buys one month at that price. Price and offer status is checked here only: `deprecated` is still accepted, `disabled` is rejected; a badge type with no active price yields `product_unavailable`.

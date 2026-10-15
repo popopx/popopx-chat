@@ -1,4 +1,4 @@
-# SimpleX Chat Android & Desktop -- Impact Graph
+# POPOPX Chat Android & Desktop -- Impact Graph
 
 > Source file to product concept mapping. Use this to identify which product documents must be updated when a source file changes.
 >
@@ -46,7 +46,7 @@
 
 ## 1. Common Sources (commonMain)
 
-Path prefix: `common/src/commonMain/kotlin/chat/simplex/common/`
+Path prefix: `common/src/commonMain/kotlin/chat/popopx/common/`
 
 ### 1.1 Core Model & Platform
 
@@ -55,14 +55,14 @@ Path prefix: `common/src/commonMain/kotlin/chat/simplex/common/`
 | `App.kt` | PC1 through PC31 | High | Root composable — navigation scaffold for all features |
 | `AppLock.kt` | PC22 | Medium | App lock state and authorization lifecycle |
 | `model/ChatModel.kt` | PC1 through PC31 | High | Central state object — every feature reads or writes here |
-| `model/SimpleXAPI.kt` | PC1 through PC31 | High | FFI bridge to Haskell core — all commands and responses |
+| `model/POPOPXAPI.kt` | PC1 through PC31 | High | FFI bridge to Haskell core — all commands and responses |
 | `model/CryptoFile.kt` | PC10, PC23 | Medium | Encrypted file read/write helpers |
 | `platform/Core.kt` | PC1 through PC31 | High | Native FFI declarations (`chatMigrateInit`, `chatSendCmd`, etc.) — all API traffic |
 | `platform/AppCommon.kt` | PC1 through PC31 | Medium | Shared app initialization logic |
 | `platform/Files.kt` | PC10, PC23, PC26 | Medium | File path resolution, temp dirs, encryption utilities |
 | `platform/NtfManager.kt` | PC18 | High | Notification manager expect declarations |
 | `platform/Notifications.kt` | PC18 | Medium | Notification channel and permission abstractions |
-| `platform/SimplexService.kt` | PC18 | Medium | Background service expect declarations |
+| `platform/PopopxService.kt` | PC18 | Medium | Background service expect declarations |
 | `platform/RecAndPlay.kt` | PC9 | Medium | Audio recording and playback abstractions |
 | `platform/VideoPlayer.kt` | PC10, PC17 | Low | Video playback abstractions |
 | `platform/Cryptor.kt` | PC23 | Medium | Keystore encryption expect declarations |
@@ -82,7 +82,7 @@ Path prefix: `common/src/commonMain/kotlin/chat/simplex/common/`
 | Source File | Product Concepts Affected | Risk Level | Notes |
 |-------------|--------------------------|------------|-------|
 | `ui/theme/ThemeManager.kt` | PC24 | Medium | Theme resolution engine — all color and wallpaper logic |
-| `ui/theme/Theme.kt` | PC24 | Medium | Theme composables and `SimpleXTheme` |
+| `ui/theme/Theme.kt` | PC24 | Medium | Theme composables and `POPOPXTheme` |
 | `ui/theme/Color.kt` | PC24 | Low | Color palette definitions |
 | `ui/theme/Shape.kt` | PC24 | Low | Shape token definitions |
 | `ui/theme/Type.kt` | PC24 | Low | Typography definitions |
@@ -212,7 +212,7 @@ Path prefix: `common/src/commonMain/kotlin/chat/simplex/common/`
 | `views/usersettings/UserProfilesView.kt` | PC19, PC21 | Medium | Multi-profile management |
 | `views/usersettings/HiddenProfileView.kt` | PC21 | Medium | Hidden profile access |
 | `views/usersettings/IncognitoView.kt` | PC20 | Low | Incognito mode explanation |
-| `views/usersettings/UserAddressView.kt` | PC29 | Medium | User SimpleX address management |
+| `views/usersettings/UserAddressView.kt` | PC29 | Medium | User POPOPX address management |
 | `views/usersettings/UserAddressLearnMore.kt` | PC29 | Low | Address educational content |
 | `views/usersettings/NotificationsSettingsView.kt` | PC18 | Medium | Notification mode configuration |
 | `views/usersettings/CallSettings.kt` | PC17 | Low | Call-related settings |
@@ -250,7 +250,7 @@ Path prefix: `common/src/commonMain/kotlin/chat/simplex/common/`
 | `views/localauth/PasscodeView.kt` | PC22 | Medium | Passcode entry UI |
 | `views/localauth/PasswordEntry.kt` | PC22 | Low | Password input field |
 | `views/onboarding/OnboardingView.kt` | PC1 | Medium | Onboarding flow navigation |
-| `views/onboarding/SimpleXInfo.kt` | PC1 | Low | Welcome screen |
+| `views/onboarding/POPOPXInfo.kt` | PC1 | Low | Welcome screen |
 | `views/onboarding/SetNotificationsMode.kt` | PC18 | Medium | Notification permission and mode setup |
 | `views/onboarding/SetupDatabasePassphrase.kt` | PC23 | Medium | Initial database passphrase setup |
 | `views/onboarding/ChooseServerOperators.kt` | PC25 | Medium | Initial server operator selection |
@@ -320,13 +320,13 @@ Path prefix: `common/src/commonMain/kotlin/chat/simplex/common/`
 
 ### 2.1 Android App Module
 
-Path prefix: `android/src/main/java/chat/simplex/app/`
+Path prefix: `android/src/main/java/chat/popopx/app/`
 
 | Source File | Product Concepts Affected | Risk Level | Notes |
 |-------------|--------------------------|------------|-------|
-| `SimplexApp.kt` | PC1 through PC31 | High | Application class — initializes core, preferences, and notification channels |
+| `PopopxApp.kt` | PC1 through PC31 | High | Application class — initializes core, preferences, and notification channels |
 | `MainActivity.kt` | PC1 through PC31 | High | Single-activity host — intent handling, lifecycle, deep links |
-| `SimplexService.kt` | PC18 | High | Foreground service — keeps message receiver alive |
+| `PopopxService.kt` | PC18 | High | Foreground service — keeps message receiver alive |
 | `CallService.kt` | PC17 | Medium | Foreground service for active calls |
 | `MessagesFetcherWorker.kt` | PC18 | Medium | WorkManager periodic message fetch |
 | `model/NtfManager.android.kt` | PC18 | High | Android notification channels, display, and actions |
@@ -335,12 +335,12 @@ Path prefix: `android/src/main/java/chat/simplex/app/`
 
 ### 2.2 Android Platform Implementations (androidMain)
 
-Path prefix: `common/src/androidMain/kotlin/chat/simplex/common/`
+Path prefix: `common/src/androidMain/kotlin/chat/popopx/common/`
 
 | Source File | Product Concepts Affected | Risk Level | Notes |
 |-------------|--------------------------|------------|-------|
 | `platform/AppCommon.android.kt` | PC1 through PC31 | Medium | Android app initialization actual declarations |
-| `platform/SimplexService.android.kt` | PC18 | Medium | Android foreground service actual implementation |
+| `platform/PopopxService.android.kt` | PC18 | Medium | Android foreground service actual implementation |
 | `platform/Files.android.kt` | PC10, PC23, PC26 | Medium | Android file paths and content-URI resolution |
 | `platform/Cryptor.android.kt` | PC23 | Medium | Android Keystore encryption actual implementation |
 | `platform/RecAndPlay.android.kt` | PC9 | Medium | Android MediaRecorder/MediaPlayer actual implementation |
@@ -385,7 +385,7 @@ Path prefix: `common/src/androidMain/kotlin/chat/simplex/common/`
 | `views/helpers/WorkaroundFocusSearchLayout.kt` | — | Low | Android focus workaround |
 | `views/newchat/QRCode.android.kt` | PC12 | Low | Android QR code rendering |
 | `views/newchat/QRCodeScanner.android.kt` | PC12 | Low | Android camera QR scanner |
-| `views/onboarding/SimpleXInfo.android.kt` | PC1 | Low | Android onboarding extensions |
+| `views/onboarding/POPOPXInfo.android.kt` | PC1 | Low | Android onboarding extensions |
 | `views/onboarding/SetNotificationsMode.android.kt` | PC18 | Low | Android notification mode extensions |
 | `views/usersettings/Appearance.android.kt` | PC24 | Low | Android appearance extensions |
 | `views/usersettings/PrivacySettings.android.kt` | PC20, PC22 | Low | Android privacy settings extensions |
@@ -401,7 +401,7 @@ Path prefix: `common/src/androidMain/kotlin/chat/simplex/common/`
 
 ### 3.1 Desktop App Module
 
-Path prefix: `desktop/src/jvmMain/kotlin/chat/simplex/desktop/`
+Path prefix: `desktop/src/jvmMain/kotlin/chat/popopx/desktop/`
 
 | Source File | Product Concepts Affected | Risk Level | Notes |
 |-------------|--------------------------|------------|-------|
@@ -409,7 +409,7 @@ Path prefix: `desktop/src/jvmMain/kotlin/chat/simplex/desktop/`
 
 ### 3.2 Desktop Platform Implementations (desktopMain)
 
-Path prefix: `common/src/desktopMain/kotlin/chat/simplex/common/`
+Path prefix: `common/src/desktopMain/kotlin/chat/popopx/common/`
 
 | Source File | Product Concepts Affected | Risk Level | Notes |
 |-------------|--------------------------|------------|-------|
@@ -417,7 +417,7 @@ Path prefix: `common/src/desktopMain/kotlin/chat/simplex/common/`
 | `StoreWindowState.kt` | — | Low | Window position/size persistence |
 | `model/NtfManager.desktop.kt` | PC18 | Medium | Desktop system tray notification display |
 | `platform/AppCommon.desktop.kt` | PC1 through PC31 | Medium | Desktop app initialization actual declarations |
-| `platform/SimplexService.desktop.kt` | PC18 | Low | Desktop background receiver (no foreground service) |
+| `platform/PopopxService.desktop.kt` | PC18 | Low | Desktop background receiver (no foreground service) |
 | `platform/Files.desktop.kt` | PC10, PC23, PC26 | Medium | Desktop file path resolution |
 | `platform/Cryptor.desktop.kt` | PC23 | Medium | Desktop keystore encryption actual implementation |
 | `platform/RecAndPlay.desktop.kt` | PC9 | Medium | Desktop audio recording/playback actual implementation |
@@ -460,7 +460,7 @@ Path prefix: `common/src/desktopMain/kotlin/chat/simplex/common/`
 | `views/helpers/DefaultDialog.desktop.kt` | — | Low | Desktop dialog extensions |
 | `views/newchat/QRCode.desktop.kt` | PC12 | Low | Desktop QR code rendering |
 | `views/newchat/QRCodeScanner.desktop.kt` | PC12 | Low | Desktop QR code scanner (screen/clipboard) |
-| `views/onboarding/SimpleXInfo.desktop.kt` | PC1 | Low | Desktop onboarding extensions |
+| `views/onboarding/POPOPXInfo.desktop.kt` | PC1 | Low | Desktop onboarding extensions |
 | `views/onboarding/SetNotificationsMode.desktop.kt` | PC18 | Low | Desktop notification mode extensions |
 | `views/usersettings/Appearance.desktop.kt` | PC24 | Low | Desktop appearance extensions |
 | `views/usersettings/PrivacySettings.desktop.kt` | PC20, PC22 | Low | Desktop privacy settings extensions |
@@ -475,64 +475,64 @@ Path prefix: `common/src/desktopMain/kotlin/chat/simplex/common/`
 
 ## 4. Haskell Core Impact
 
-The Haskell core is compiled as a shared native library (`libsimplex.so` / `libsimplex.dylib`) and linked via JNI through `Core.kt`. Changes here affect both Android and Desktop identically.
+The Haskell core is compiled as a shared native library (`libpopopx.so` / `libpopopx.dylib`) and linked via JNI through `Core.kt`. Changes here affect both Android and Desktop identically.
 
 | Source File | Product Concepts Affected | Risk Level | Notes |
 |-------------|--------------------------|------------|-------|
-| `src/Simplex/Chat.hs` | PC1 through PC31 | High | Main chat module — top-level orchestration |
-| `src/Simplex/Chat/Controller.hs` | PC1 through PC31 | High | Command processor — all API commands dispatched here |
-| `src/Simplex/Chat/Types.hs` | PC1 through PC31 | High | Core data types shared across all features |
-| `src/Simplex/Chat/Core.hs` | PC1 through PC31 | High | Chat engine lifecycle (start, stop, subscribe) |
-| `src/Simplex/Chat/Library/Commands.hs` | PC1 through PC31 | High | API command handler implementations |
-| `src/Simplex/Chat/Library/Internal.hs` | PC1 through PC31 | High | Internal helpers for command processing |
-| `src/Simplex/Chat/Library/Subscriber.hs` | PC1 through PC31 | High | Event subscriber — incoming message routing |
-| `src/Simplex/Chat/Protocol.hs` | PC2, PC3, PC4, PC5, PC6, PC7 | High | Chat-level message protocol (x-events) |
-| `src/Simplex/Chat/Messages.hs` | PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9 | High | Message types and content |
-| `src/Simplex/Chat/Messages/CIContent.hs` | PC4, PC5, PC6, PC7, PC8, PC9, PC11 | Medium | Chat item content variants |
-| `src/Simplex/Chat/Messages/CIContent/Events.hs` | PC3, PC14, PC16 | Medium | Group event content types |
-| `src/Simplex/Chat/Messages/Batch.hs` | PC2, PC3, PC4 | Medium | Message batching for efficient delivery |
-| `src/Simplex/Chat/Call.hs` | PC17 | Medium | Call signaling types |
-| `src/Simplex/Chat/Files.hs` | PC10 | Medium | File transfer orchestration |
-| `src/Simplex/Chat/Delivery.hs` | PC2, PC3 | Medium | Message delivery engine |
-| `src/Simplex/Chat/Markdown.hs` | PC4 | Low | Markdown parsing for message formatting |
-| `src/Simplex/Chat/Store.hs` | PC1 through PC31 | High | Database store interface |
-| `src/Simplex/Chat/Store/Shared.hs` | PC1 through PC31 | Medium | Shared store utilities |
-| `src/Simplex/Chat/Store/Messages.hs` | PC4, PC5, PC6, PC7, PC8 | High | Message persistence |
-| `src/Simplex/Chat/Store/Groups.hs` | PC3, PC14, PC15, PC16, PC30 | High | Group persistence |
-| `src/Simplex/Chat/Store/Direct.hs` | PC2, PC12, PC13 | High | Contact persistence |
-| `src/Simplex/Chat/Store/Files.hs` | PC10 | Medium | File transfer persistence |
-| `src/Simplex/Chat/Store/Profiles.hs` | PC19, PC21 | Medium | User profile persistence |
-| `src/Simplex/Chat/Store/Connections.hs` | PC2, PC12 | High | Connection persistence and entity resolution |
-| `src/Simplex/Chat/Store/ContactRequest.hs` | PC12 | Medium | Contact request persistence |
-| `src/Simplex/Chat/Store/NoteFolders.hs` | PC1 | Low | Note folder (self-chat) persistence |
-| `src/Simplex/Chat/Store/Delivery.hs` | PC2, PC3 | Medium | Delivery task persistence |
-| `src/Simplex/Chat/Store/AppSettings.hs` | PC25 | Low | App settings persistence |
-| `src/Simplex/Chat/Store/Remote.hs` | PC27 | Low | Remote desktop session persistence |
-| `src/Simplex/Chat/Archive.hs` | PC26 | Medium | Database export/import for migration |
-| `src/Simplex/Chat/Options.hs` | PC23, PC25 | Low | Startup options (DB path, key, etc.) |
-| `src/Simplex/Chat/Remote.hs` | PC27 | Medium | Remote desktop protocol handler |
-| `src/Simplex/Chat/Remote/Types.hs` | PC27 | Low | Remote desktop data types |
-| `src/Simplex/Chat/Remote/Protocol.hs` | PC27 | Medium | Remote desktop wire protocol |
-| `src/Simplex/Chat/Remote/Transport.hs` | PC27 | Low | Remote desktop transport layer |
-| `src/Simplex/Chat/Remote/RevHTTP.hs` | PC27 | Low | Reverse HTTP for remote desktop |
-| `src/Simplex/Chat/Remote/AppVersion.hs` | PC27 | Low | Remote version negotiation |
-| `src/Simplex/Chat/ProfileGenerator.hs` | PC20 | Low | Random profile generation for incognito |
-| `src/Simplex/Chat/Types/UITheme.hs` | PC24 | Low | Theme data types for UI customization |
-| `src/Simplex/Chat/Types/Preferences.hs` | PC2, PC3, PC8 | Medium | Chat feature preferences (timed messages, etc.) |
-| `src/Simplex/Chat/Types/Shared.hs` | PC3, PC16 | Medium | Shared types including GroupMemberRole |
-| `src/Simplex/Chat/Types/MemberRelations.hs` | PC3, PC16, PC30 | Medium | Member relationship state machine |
-| `src/Simplex/Chat/Operators.hs` | PC25 | Medium | Server operator management |
-| `src/Simplex/Chat/Operators/Presets.hs` | PC25 | Low | Preset server operators |
-| `src/Simplex/Chat/Operators/Conditions.hs` | PC25 | Low | Operator usage conditions |
-| `src/Simplex/Chat/AppSettings.hs` | PC25 | Low | App settings sync types |
-| `src/Simplex/Chat/Mobile.hs` | PC1 through PC31 | High | C FFI exports — JNI bridge target |
-| `src/Simplex/Chat/Mobile/File.hs` | PC10 | Medium | Mobile file read/write FFI |
-| `src/Simplex/Chat/Mobile/Shared.hs` | PC1 through PC31 | Medium | Shared FFI helpers |
-| `src/Simplex/Chat/Mobile/WebRTC.hs` | PC17 | Low | WebRTC FFI helpers |
-| `src/Simplex/Chat/View.hs` | PC1 through PC31 | Low | Terminal view rendering (not used by mobile/desktop UI) |
-| `src/Simplex/Chat/Stats.hs` | PC25 | Low | Server statistics tracking |
-| `src/Simplex/Chat/Util.hs` | — | Low | General Haskell utilities |
-| `src/Simplex/Chat/Styled.hs` | — | Low | Terminal styled text (not used by mobile/desktop UI) |
-| `src/Simplex/Chat/Help.hs` | — | Low | Terminal help text |
-| `src/Simplex/Chat/Bot.hs` | — | Low | Chat bot framework |
-| `src/Simplex/Chat/Bot/KnownContacts.hs` | — | Low | Bot known contacts |
+| `src/Popopx/Chat.hs` | PC1 through PC31 | High | Main chat module — top-level orchestration |
+| `src/Popopx/Chat/Controller.hs` | PC1 through PC31 | High | Command processor — all API commands dispatched here |
+| `src/Popopx/Chat/Types.hs` | PC1 through PC31 | High | Core data types shared across all features |
+| `src/Popopx/Chat/Core.hs` | PC1 through PC31 | High | Chat engine lifecycle (start, stop, subscribe) |
+| `src/Popopx/Chat/Library/Commands.hs` | PC1 through PC31 | High | API command handler implementations |
+| `src/Popopx/Chat/Library/Internal.hs` | PC1 through PC31 | High | Internal helpers for command processing |
+| `src/Popopx/Chat/Library/Subscriber.hs` | PC1 through PC31 | High | Event subscriber — incoming message routing |
+| `src/Popopx/Chat/Protocol.hs` | PC2, PC3, PC4, PC5, PC6, PC7 | High | Chat-level message protocol (x-events) |
+| `src/Popopx/Chat/Messages.hs` | PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9 | High | Message types and content |
+| `src/Popopx/Chat/Messages/CIContent.hs` | PC4, PC5, PC6, PC7, PC8, PC9, PC11 | Medium | Chat item content variants |
+| `src/Popopx/Chat/Messages/CIContent/Events.hs` | PC3, PC14, PC16 | Medium | Group event content types |
+| `src/Popopx/Chat/Messages/Batch.hs` | PC2, PC3, PC4 | Medium | Message batching for efficient delivery |
+| `src/Popopx/Chat/Call.hs` | PC17 | Medium | Call signaling types |
+| `src/Popopx/Chat/Files.hs` | PC10 | Medium | File transfer orchestration |
+| `src/Popopx/Chat/Delivery.hs` | PC2, PC3 | Medium | Message delivery engine |
+| `src/Popopx/Chat/Markdown.hs` | PC4 | Low | Markdown parsing for message formatting |
+| `src/Popopx/Chat/Store.hs` | PC1 through PC31 | High | Database store interface |
+| `src/Popopx/Chat/Store/Shared.hs` | PC1 through PC31 | Medium | Shared store utilities |
+| `src/Popopx/Chat/Store/Messages.hs` | PC4, PC5, PC6, PC7, PC8 | High | Message persistence |
+| `src/Popopx/Chat/Store/Groups.hs` | PC3, PC14, PC15, PC16, PC30 | High | Group persistence |
+| `src/Popopx/Chat/Store/Direct.hs` | PC2, PC12, PC13 | High | Contact persistence |
+| `src/Popopx/Chat/Store/Files.hs` | PC10 | Medium | File transfer persistence |
+| `src/Popopx/Chat/Store/Profiles.hs` | PC19, PC21 | Medium | User profile persistence |
+| `src/Popopx/Chat/Store/Connections.hs` | PC2, PC12 | High | Connection persistence and entity resolution |
+| `src/Popopx/Chat/Store/ContactRequest.hs` | PC12 | Medium | Contact request persistence |
+| `src/Popopx/Chat/Store/NoteFolders.hs` | PC1 | Low | Note folder (self-chat) persistence |
+| `src/Popopx/Chat/Store/Delivery.hs` | PC2, PC3 | Medium | Delivery task persistence |
+| `src/Popopx/Chat/Store/AppSettings.hs` | PC25 | Low | App settings persistence |
+| `src/Popopx/Chat/Store/Remote.hs` | PC27 | Low | Remote desktop session persistence |
+| `src/Popopx/Chat/Archive.hs` | PC26 | Medium | Database export/import for migration |
+| `src/Popopx/Chat/Options.hs` | PC23, PC25 | Low | Startup options (DB path, key, etc.) |
+| `src/Popopx/Chat/Remote.hs` | PC27 | Medium | Remote desktop protocol handler |
+| `src/Popopx/Chat/Remote/Types.hs` | PC27 | Low | Remote desktop data types |
+| `src/Popopx/Chat/Remote/Protocol.hs` | PC27 | Medium | Remote desktop wire protocol |
+| `src/Popopx/Chat/Remote/Transport.hs` | PC27 | Low | Remote desktop transport layer |
+| `src/Popopx/Chat/Remote/RevHTTP.hs` | PC27 | Low | Reverse HTTP for remote desktop |
+| `src/Popopx/Chat/Remote/AppVersion.hs` | PC27 | Low | Remote version negotiation |
+| `src/Popopx/Chat/ProfileGenerator.hs` | PC20 | Low | Random profile generation for incognito |
+| `src/Popopx/Chat/Types/UITheme.hs` | PC24 | Low | Theme data types for UI customization |
+| `src/Popopx/Chat/Types/Preferences.hs` | PC2, PC3, PC8 | Medium | Chat feature preferences (timed messages, etc.) |
+| `src/Popopx/Chat/Types/Shared.hs` | PC3, PC16 | Medium | Shared types including GroupMemberRole |
+| `src/Popopx/Chat/Types/MemberRelations.hs` | PC3, PC16, PC30 | Medium | Member relationship state machine |
+| `src/Popopx/Chat/Operators.hs` | PC25 | Medium | Server operator management |
+| `src/Popopx/Chat/Operators/Presets.hs` | PC25 | Low | Preset server operators |
+| `src/Popopx/Chat/Operators/Conditions.hs` | PC25 | Low | Operator usage conditions |
+| `src/Popopx/Chat/AppSettings.hs` | PC25 | Low | App settings sync types |
+| `src/Popopx/Chat/Mobile.hs` | PC1 through PC31 | High | C FFI exports — JNI bridge target |
+| `src/Popopx/Chat/Mobile/File.hs` | PC10 | Medium | Mobile file read/write FFI |
+| `src/Popopx/Chat/Mobile/Shared.hs` | PC1 through PC31 | Medium | Shared FFI helpers |
+| `src/Popopx/Chat/Mobile/WebRTC.hs` | PC17 | Low | WebRTC FFI helpers |
+| `src/Popopx/Chat/View.hs` | PC1 through PC31 | Low | Terminal view rendering (not used by mobile/desktop UI) |
+| `src/Popopx/Chat/Stats.hs` | PC25 | Low | Server statistics tracking |
+| `src/Popopx/Chat/Util.hs` | — | Low | General Haskell utilities |
+| `src/Popopx/Chat/Styled.hs` | — | Low | Terminal styled text (not used by mobile/desktop UI) |
+| `src/Popopx/Chat/Help.hs` | — | Low | Terminal help text |
+| `src/Popopx/Chat/Bot.hs` | — | Low | Chat bot framework |
+| `src/Popopx/Chat/Bot/KnownContacts.hs` | — | Low | Bot known contacts |

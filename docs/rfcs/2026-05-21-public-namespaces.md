@@ -1,8 +1,8 @@
-# Public Namespaces for SimpleX Network
+# Public Namespaces for POPOPX Network
 
 ## Motivation
 
-SimpleX has no user identifiers - users exchange invitation links out-of-band to connect. Short links help but are unmemorable. Public namespaces map human-readable names to SimpleX addresses.
+POPOPX has no user identifiers - users exchange invitation links out-of-band to connect. Short links help but are unmemorable. Public namespaces map human-readable names to POPOPX addresses.
 
 Names also solve censorship at two levels. A short link is controlled by one SMP router - that router can delete it. An on-chain name can't be deleted by any router. If the link is removed, the owner points the name to a new link on a different router. At the network level, links can be URL-filtered, but names resolve through SMP proxy chains - censoring a name requires controlling all resolvers the user can reach.
 
@@ -12,26 +12,26 @@ DNS-based naming is vulnerable to domain seizure and requires WHOIS entries. Blo
 
 ### MVP
 
-- **Names**: TLD `.simplex` (e.g., `privacy.simplex`, `my-channel.simplex`). Subdomains: `support.acme.simplex`. In markdown, `.simplex` can be omitted: `#privacy` = `privacy.simplex`.
+- **Names**: TLD `.popopx` (e.g., `privacy.popopx`, `my-channel.popopx`). Subdomains: `support.acme.popopx`. In markdown, `.popopx` can be omitted: `#privacy` = `privacy.popopx`.
 - **Name rules**: see [Name rules](#name-rules).
 - **Two address types**: each name stores channel links (set) and contact links (set). Client uses the first; set provides forward-compatible redundancy. Either can be empty.
-- **Optional metadata**: admin SimpleX address, admin email.
+- **Optional metadata**: admin POPOPX address, admin email.
 - **Registration**: commit-reveal to prevent frontrunning. Length-based ETH pricing. Annual renewal. Dutch auction on expiry.
-- **Launch gating**: requires SimpleX test NFT. Up to 5 paid + 5 test names per holder. Test names free, auto-removed after 3 months, use `testing` namespace.
-- **Reserved names**: common verticals (books, games, music, movies, news, etc.) reserved for community-operated channels managed by SimpleX Network Consortium.
+- **Launch gating**: requires POPOPX test NFT. Up to 5 paid + 5 test names per holder. Test names free, auto-removed after 3 months, use `testing` namespace.
+- **Reserved names**: common verticals (books, games, music, movies, news, etc.) reserved for community-operated channels managed by POPOPX Network Consortium.
 - Only 7+ character names can be registered during "launch phase".
 - **Resolution**: client queries two independent name servers (Ethereum light clients) via two SMP proxies. Agreement = trusted. Disagreement = warning.
 - **Double resolution**: name -> short link (on-chain), short link -> connection data (existing protocol).
 - **Verification**: if on-chain link matches profile address, name is verified. Manual "verify" button + optional auto-verify on profile open.
-- **Markdown**: `#name` (`.simplex` implied), `#name.simplex` (explicit), `#name.testing` for test namespace. In CLI, `#` is local in group commands, global in `/c` and message bodies.
-- **Search**: `#name.simplex` auto-resolves. Disable in "More privacy" settings.
+- **Markdown**: `#name` (`.popopx` implied), `#name.popopx` (explicit), `#name.testing` for test namespace. In CLI, `#` is local in group commands, global in `/c` and message bodies.
+- **Search**: `#name.popopx` auto-resolves. Disable in "More privacy" settings.
 - **Router role**: `names` added to `ServerRoles`. Not all routers support it.
 - **Contract**: ENS fork on Ethereum mainnet. ETH payment. Upgradeable.
 
 ### Post-MVP
 
 - **Multiple links**: redundant entries per name. Forward-compatible schema in MVP where practical.
-- **Contact syntax**: `:name.simplex`, `:my-name.simplex`. Same namespace, different link type. MVP parser supports this syntax; resolution works; UI support is post-MVP.
+- **Contact syntax**: `:name.popopx`, `:my-name.popopx`. Same namespace, different link type. MVP parser supports this syntax; resolution works; UI support is post-MVP.
 - **Community Credits**: replace ETH for private registration.
 - **Unicode expansion**: add scripts as user base grows.
 
@@ -49,7 +49,7 @@ ENS source:
 ### Contract state
 
 ```
-Name record (ENS structure + SimpleX resolver fields):
+Name record (ENS structure + POPOPX resolver fields):
   owner          : address
   channelLinks   : string[]
   contactLinks   : string[]
@@ -116,11 +116,11 @@ List for community channels (e.g., `books`, `games`, `music`, `news`):
 
 ### Retained ENS features
 
-- **Resolver pattern**: registry maps name -> (owner, resolver). A SimpleX Resolver contract stores channel links, contact links, admin fields. Allows future extensibility without registry changes.
+- **Resolver pattern**: registry maps name -> (owner, resolver). A POPOPX Resolver contract stores channel links, contact links, admin fields. Allows future extensibility without registry changes.
 - **Multicoin address records**: BTC/ETH/XMR donation addresses per name. Subscribers see donation options from name resolution.
 - **Text records**: generic key-value store for future metadata without contract upgrades.
 - **Reverse resolution**: name lookup by address. Enables verification and discovery.
-- **Subdomain registrar**: owner of `acme.simplex` can create `support.acme.simplex`, `sales.acme.simplex` without additional on-chain registration.
+- **Subdomain registrar**: owner of `acme.popopx` can create `support.acme.popopx`, `sales.acme.popopx` without additional on-chain registration.
 
 ### Removed ENS features
 
@@ -130,7 +130,7 @@ List for community channels (e.g., `books`, `games`, `music`, `news`):
 
 ### Governance
 
-SimpleX Chat during testing and launch phases, migration to SimpleX Network Consortium.
+POPOPX Chat during testing and launch phases, migration to POPOPX Network Consortium.
 
 ## Part 2: SMP protocol extension
 
@@ -208,15 +208,15 @@ Default router list updated to include name-capable routers.
 
 ### Markdown
 
-- `#name` or `#name.simplex` - native names (no dot = `.simplex` implied)
-- `#my-name` or `#my-name.simplex` - hyphenated names
-- `#sub.name.simplex` - subdomains (explicit TLD)
+- `#name` or `#name.popopx` - native names (no dot = `.popopx` implied)
+- `#my-name` or `#my-name.popopx` - hyphenated names
+- `#sub.name.popopx` - subdomains (explicit TLD)
 - `#name.testing` - test namespace
 - Rendered as clickable resolve-and-connect links
 
 CLI: `#` = local in group commands, global in `/c` and messages.
 
-`:name.simplex`, `:my-name.simplex` - contact addresses (same namespace, different link type). MVP parser supports this syntax; resolution works; UI support is post-MVP.
+`:name.popopx`, `:my-name.popopx` - contact addresses (same namespace, different link type). MVP parser supports this syntax; resolution works; UI support is post-MVP.
 
 ### Resolution flow
 
@@ -228,7 +228,7 @@ CLI: `#` = local in group commands, global in `/c` and messages.
 
 ### Search
 
-`#...simplex` triggers resolution. Disable in "More privacy" settings.
+`#...popopx` triggers resolution. Disable in "More privacy" settings.
 
 ### Verification
 

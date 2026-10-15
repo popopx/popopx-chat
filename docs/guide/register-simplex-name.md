@@ -1,22 +1,22 @@
 ---
-title: Registering a SimpleX name
+title: Registering a POPOPX name
 ---
 
-# Registering a SimpleX name
+# Registering a POPOPX name
 
-A SimpleX name lets people reach you by typing a short `@name` instead of pasting
-a long link. You register the name on a website and add your SimpleX link to it,
-then claim the name in the app, to connect it with your SimpleX address or
+A POPOPX name lets people reach you by typing a short `@name` instead of pasting
+a long link. You register the name on a website and add your POPOPX link to it,
+then claim the name in the app, to connect it with your POPOPX address or
 channel name.
 
 > Names currently run on a testing network. The registration page is
-> [testing-names.simplex.chat](https://testing-names.simplex.chat) and names end
+> [testing-names.popopx.chat](https://testing-names.popopx.chat) and names end
 > in `.testing`. The steps stay the same when the main names launch.
 
 ## What you need
 
 - A crypto wallet such as MetaMask.
-- The SimpleX app.
+- The POPOPX app.
 - A link for the name to open: your **contact address** (for one-to-one chats),
   your **channel link** (to join a channel), or both.
 
@@ -26,7 +26,7 @@ Setting up a name takes two parts. On the website you register the name and add
 your link, so people can find your link by name. In the app you set the same name
 on your profile - to prevent any other names from opening your profile or channel.
 
-![Steps to register a SimpleX name](./diagrams/simplex-name-steps.svg)
+![Steps to register a POPOPX name](./diagrams/popopx-name-steps.svg)
 
 ## Step 1. Create a wallet
 
@@ -45,13 +45,13 @@ some names are reserved.
 
 ![Register your name and choose the registration period](./images/register-name.png)
 
-On **Create your profile**, paste your SimpleX link into the matching field:
+On **Create your profile**, paste your POPOPX link into the matching field:
 
 ![Create your profile](./images/create-your-profile.png)
 
-- **SimpleX contact** for one-to-one chats. Copy your address from the app
-  (**Create SimpleX address**) and paste it here. People reach it with `@name`.
-- **SimpleX channel** for a channel. Copy your **Channel link** and paste it here.
+- **POPOPX contact** for one-to-one chats. Copy your address from the app
+  (**Create POPOPX address**) and paste it here. People reach it with `@name`.
+- **POPOPX channel** for a channel. Copy your **Channel link** and paste it here.
   People join it with `#name`.
 - **Advanced usage:** fill both to use one name for your chat (`@name`) and your
   channel (`#name`).
@@ -80,7 +80,7 @@ Copy your `#name.testing` (or `@name.testing`). Paste the name into the search b
 
 The app reports that the name is registered but not yet added to your profile:
 
-> Unconfirmed name. The SimpleX name is registered, but not added to profile.
+> Unconfirmed name. The POPOPX name is registered, but not added to profile.
 > Please add it to your address or channel profile, if you are the owner.
 
 This is expected, and confirms the name points at your link. The next step
@@ -90,9 +90,9 @@ finishes the setup.
 
 Set the name on the same profile the record points at.
 
-- For your **contact address**, open your SimpleX address, tap **Get SimpleX
+- For your **contact address**, open your POPOPX address, tap **Get POPOPX
   name**, enter the name, and save.
-- For your **channel**, open the channel information, tap **Get SimpleX name** (under
+- For your **channel**, open the channel information, tap **Get POPOPX name** (under
   **Channel link**), enter the name, and save.
 
 This proves to people who connect to you that `#name.testing` (or `@name.testing`) is your name.
@@ -114,7 +114,7 @@ Anyone can now reach you by name, and their app confirms it is really you.
 | Name not found | No name is registered. | Check the spelling, or register it (step 2). |
 | No valid link | The name has no contact or channel link. | Add a link to the name on the website, on its **Records** tab. |
 | Error saving name | You tried to claim a name that has no matching link on the website. | Add your contact address or channel link to the name, then set the name again. |
-| None of your servers are set to resolve SimpleX names | No server in the app is set to resolve names. | In server settings, turn on **To resolve names** for a server. |
+| None of your servers are set to resolve POPOPX names | No server in the app is set to resolve names. | In server settings, turn on **To resolve names** for a server. |
 
 ## See also
 

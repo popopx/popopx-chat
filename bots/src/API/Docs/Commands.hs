@@ -83,7 +83,7 @@ chatCommandsDocsData =
         ("APISetProfileAddress", [], "Add address to bot profile.", ["CRUserProfileUpdated", "CRUserProfileNoChange", "CRChatCmdError"], [], Just UNInteractive, "/_profile_address " <> Param "userId" <> " " <> OnOff "enable"),
         ( "APISetUserDomain",
           [],
-          "Set or remove SimpleX name of bot address. The name must be registered with the address short link.",
+          "Set or remove POPOPX name of bot address. The name must be registered with the address short link.",
           ["CRUserProfileUpdated", "CRUserProfileNoChange", "CRChatCmdError"],
           [TD "CEPopopxDomainNotReady" "The name does not resolve to the address short link"],
           Just UNInteractive,
@@ -147,9 +147,9 @@ chatCommandsDocsData =
       "These commands may be used to create connections. Most bots do not need to use them - bot users will connect via bot address with auto-accept enabled.",
       [ ("APIAddContact", [], "Create 1-time invitation link.", ["CRInvitation", "CRChatCmdError"], [], Just UNInteractive, "/_connect " <> Param "userId" <> OnOffParam "incognito" "incognito" (Just False)),
         -- `Maybe` in `connectTarget :: Maybe ConnectTarget` is used to signal parse failure to the runtime (the handler returns CEInvalidConnReq on Nothing); it is NOT API-level optionality. The parameter is required from callers.
-        ("APIConnectPlan", [], "Determine SimpleX link type and if the bot is already connected via this link or name.", ["CRConnectionPlan", "CRChatCmdError"], [], Just UNInteractive, "/_connect plan " <> Param "userId" <> " " <> Param "connectTarget"),
-        ("APIConnect", [], "Connect via prepared SimpleX link. The link can be 1-time invitation link, contact address or group link.", ["CRSentConfirmation", "CRContactAlreadyExists", "CRSentInvitation", "CRChatCmdError"], [], Just UNInteractive, "/_connect " <> Param "userId" <> OnOffParam "incognito" "incognito" (Just False) <> Optional "" (" " <> Param "$0") "preparedLink_"),
-        ("Connect", [], "Connect via SimpleX link or name as string in the active user profile.", ["CRSentConfirmation", "CRContactAlreadyExists", "CRSentInvitation", "CRConnectionPlan", "CRSentInvitationToContact", "CRStartedConnectionToContact", "CRStartedConnectionToGroup", "CRChatCmdError"], [], Just UNInteractive, "/connect" <> Optional "" (" " <> Param "$0") "connTarget_"),
+        ("APIConnectPlan", [], "Determine POPOPX link type and if the bot is already connected via this link or name.", ["CRConnectionPlan", "CRChatCmdError"], [], Just UNInteractive, "/_connect plan " <> Param "userId" <> " " <> Param "connectTarget"),
+        ("APIConnect", [], "Connect via prepared POPOPX link. The link can be 1-time invitation link, contact address or group link.", ["CRSentConfirmation", "CRContactAlreadyExists", "CRSentInvitation", "CRChatCmdError"], [], Just UNInteractive, "/_connect " <> Param "userId" <> OnOffParam "incognito" "incognito" (Just False) <> Optional "" (" " <> Param "$0") "preparedLink_"),
+        ("Connect", [], "Connect via POPOPX link or name as string in the active user profile.", ["CRSentConfirmation", "CRContactAlreadyExists", "CRSentInvitation", "CRConnectionPlan", "CRSentInvitationToContact", "CRStartedConnectionToContact", "CRStartedConnectionToGroup", "CRChatCmdError"], [], Just UNInteractive, "/connect" <> Optional "" (" " <> Param "$0") "connTarget_"),
         ("APIAcceptContact", ["incognito"], "Accept contact request.", ["CRAcceptingContactRequest", "CRChatCmdError"], [], Just UNInteractive, "/_accept " <> Param "contactReqId"),
         ("APIRejectContact", [], "Reject contact request. The user who sent the request is **not notified**.", ["CRContactRequestRejected", "CRChatCmdError"], [], Nothing, "/_reject " <> Param "contactReqId")
       ]
@@ -212,7 +212,7 @@ chatCommandsDocsData =
       ]
     ),
     ( "Remote control commands",
-      "Allows a bot to accept an incoming remote control session from a SimpleX Desktop client, giving the desktop live access to the bot's SimpleX instance.",
+      "Allows a bot to accept an incoming remote control session from a POPOPX Desktop client, giving the desktop live access to the bot's POPOPX instance.",
       [ ("ConnectRemoteCtrl", [], "Connect to a remote controller using an OOB invitation link.", ["CRRemoteCtrlConnecting", "CRChatCmdError"], [], Just UNInteractive, "/crc " <> Param "remoteInvitation"),
         ("VerifyRemoteCtrlSession", [], "Verify the remote controller session code to complete the connection.", ["CRRemoteCtrlConnected", "CRChatCmdError"], [], Nothing, "/verify remote ctrl " <> Param "sessionCode")
       ]

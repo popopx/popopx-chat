@@ -3,7 +3,7 @@
 *
 
 !cabal.project
-!simplex-chat.cabal
+!popopx-chat.cabal
 !README.md
 !PRIVACY.md
 !src
@@ -14,7 +14,7 @@ scripts/*
 
 !apps
 apps/*
-!apps/simplex-badge-service
+!apps/popopx-badge-service
 
 # Build output, caches, local state, and anything holding a secret. The ini is
 # mounted at run time and must never be baked into an image: it holds the issuer
@@ -25,6 +25,6 @@ badge_service.ini
 **/node_modules
 **/*.db
 **/*.db-*
-apps/simplex-badge-service/test-fixtures
-apps/simplex-badge-service/web-traversal-test
-apps/simplex-badge-service/web/build
+apps/popopx-badge-service/test-fixtures
+apps/popopx-badge-service/web-traversal-test
+apps/popopx-badge-service/web/build

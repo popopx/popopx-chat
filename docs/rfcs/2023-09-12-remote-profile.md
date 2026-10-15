@@ -3,7 +3,7 @@
 ## Problem
 
 Users want their desktop client to be in sync with profiles at their main device (presumably a mobile phone).
-Due to distributed nature of SimpleX chat and comprehensive encryption it is difficult to maintain up to date multi-way synchronized presentation between devices.
+Due to distributed nature of POPOPX chat and comprehensive encryption it is difficult to maintain up to date multi-way synchronized presentation between devices.
 
 ## Solution
 

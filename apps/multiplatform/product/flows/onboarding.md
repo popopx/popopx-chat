@@ -11,16 +11,16 @@ The initialization path differs slightly between Android and Desktop, but both c
 ## Prerequisites
 
 - Fresh install or database reset.
-- On Android: `SimplexApp.onCreate()` has been called.
+- On Android: `PopopxApp.onCreate()` has been called.
 - On Desktop: `main()` has been called.
 
 ---
 
 ## 1. Platform Initialization
 
-### 1.1 Android: SimplexApp.onCreate()
+### 1.1 Android: PopopxApp.onCreate()
 
-1. `SimplexApp.onCreate()` is called by the Android framework.
+1. `PopopxApp.onCreate()` is called by the Android framework.
 2. `AppContextProvider.initialize(this)` sets the application context.
 3. Phoenix process detection: if this is a restart process, return early.
 4. A global error handler is registered.
@@ -32,14 +32,14 @@ The initialization path differs slightly between Android and Desktop, but both c
 7. `reconfigureBroadcastReceivers()` ensures notification-related receivers match saved preferences.
 8. `runMigrations()` performs any pending app-level data migrations.
 9. Temp directory is cleaned and recreated.
-10. If a migration state exists (`chatModel.migrationState.value != null`), onboarding is forced to `Step1_SimpleXInfo`.
+10. If a migration state exists (`chatModel.migrationState.value != null`), onboarding is forced to `Step1_POPOPXInfo`.
 11. Otherwise, if authentication keys are available, `initChatControllerOnStart()` is called.
 
 ### 1.2 Desktop: Main.kt main()
 
 1. `initHaskell()` loads native libraries:
    - On Linux/macOS: `libapp-lib.so` / `libapp-lib.dylib`.
-   - On Windows: `libcrypto-3-x64.dll`, `libsimplex.dll`, `libapp-lib.dll` plus VLC libraries.
+   - On Windows: `libcrypto-3-x64.dll`, `libpopopx.dll`, `libapp-lib.dll` plus VLC libraries.
 2. `initHS()` initializes the Haskell runtime.
 3. `platform` interface is set with Desktop-specific callbacks (app update notice).
 4. `runMigrations()` performs pending app-level data migrations.
@@ -72,7 +72,7 @@ The initialization path differs slightly between Android and Desktop, but both c
    - App file paths are configured via `apiSetAppFilePaths`.
    - `apiGetActiveUser` checks for an existing user.
 7. If an active user exists, `startChat(user)` is called.
-8. If no user exists, `startChatWithoutUser()` is called and onboarding begins at `Step1_SimpleXInfo`.
+8. If no user exists, `startChatWithoutUser()` is called and onboarding begins at `Step1_POPOPXInfo`.
 
 ### 2.2 Error Handling
 
@@ -90,21 +90,21 @@ The onboarding flow is controlled by `OnboardingStage`, persisted in `AppPrefere
 
 ```kotlin
 enum class OnboardingStage {
-  Step1_SimpleXInfo,
+  Step1_POPOPXInfo,
   Step2_CreateProfile,
   LinkAMobile,
   Step2_5_SetupDatabasePassphrase,
   Step3_ChooseServerOperators,
-  Step3_CreateSimpleXAddress,
+  Step3_CreatePOPOPXAddress,
   Step4_SetNotificationsMode,
   OnboardingComplete
 }
 ```
 
-### 3.1 Step1_SimpleXInfo
+### 3.1 Step1_POPOPXInfo
 
-1. The `SimpleXInfo` screen is shown.
-2. Explains what SimpleX Chat is: privacy, no user identifiers, decentralized.
+1. The `POPOPXInfo` screen is shown.
+2. Explains what POPOPX Chat is: privacy, no user identifiers, decentralized.
 3. User taps "Create your profile" to proceed.
 4. On Desktop, a "Link a Mobile" option is also available.
 
@@ -144,9 +144,9 @@ enum class OnboardingStage {
 3. Server operator conditions may need to be accepted.
 4. The selection is saved via the server configuration APIs.
 
-### 3.6 Step3_CreateSimpleXAddress
+### 3.6 Step3_CreatePOPOPXAddress
 
-1. User is prompted to create a SimpleX address for receiving contact requests.
+1. User is prompted to create a POPOPX address for receiving contact requests.
 2. This calls the address creation API.
 3. Can be skipped.
 
@@ -164,8 +164,8 @@ enum class OnboardingStage {
 
 1. `appPrefs.onboardingStage` is set to `OnboardingComplete`.
 2. The chat list view (`ChatListView`) is shown.
-3. On Android, `SimplexService.showBackgroundServiceNoticeIfNeeded()` may show additional setup prompts.
-4. On Android with `NotificationsMode.SERVICE`, `SimplexService.start()` is called.
+3. On Android, `PopopxService.showBackgroundServiceNoticeIfNeeded()` may show additional setup prompts.
+4. On Android with `NotificationsMode.SERVICE`, `PopopxService.start()` is called.
 
 ---
 
@@ -195,11 +195,11 @@ After the user is created and onboarding progresses, `ChatController.startChat(u
 | Type | Location | Purpose |
 |------|----------|---------|
 | `OnboardingStage` | `views/onboarding/OnboardingView.kt` | Enum tracking onboarding progress |
-| `SimplexApp` | `android/.../SimplexApp.kt` | Android Application class, entry point |
+| `PopopxApp` | `android/.../PopopxApp.kt` | Android Application class, entry point |
 | `Main.kt` | `desktop/.../Main.kt` | Desktop entry point |
-| `ChatController` | `model/SimpleXAPI.kt` | Core API controller, manages chat lifecycle |
+| `ChatController` | `model/POPOPXAPI.kt` | Core API controller, manages chat lifecycle |
 | `ChatModel` | `model/ChatModel.kt` | Global observable state |
 | `DBMigrationResult` | `views/helpers/DatabaseUtils.kt` | Database migration outcome |
 | `chatMigrateInit` | `platform/Core.kt` | JNI function: initialize DB and run migrations |
 | `initChatController` | `platform/Core.kt` | High-level initialization orchestrator |
-| `AppPreferences` | `model/SimpleXAPI.kt` | Persistent user preferences |
+| `AppPreferences` | `model/POPOPXAPI.kt` | Persistent user preferences |

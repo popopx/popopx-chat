@@ -1,3 +1,3 @@
-# WebView for WebRTC calls in SimpleX Chat
+# WebView for WebRTC calls in POPOPX Chat
 
-Do NOT edit call.js here, it is compiled abd copied here from call.ts in packages/simplex-chat-webrtc
+Do NOT edit call.js here, it is compiled abd copied here from call.ts in packages/popopx-chat-webrtc

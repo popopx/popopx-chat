@@ -15,7 +15,7 @@
 
 ### RULE-02: End-to-end encryption on all messages
 **Rule:** All message content MUST be encrypted end-to-end using double-ratchet (with optional post-quantum KEM). The SMP server MUST NOT have access to plaintext.
-**Enforced by:** popopxmq library (`Simplex.Messaging.Crypto.Ratchet`); encryption happens before `chat_send_cmd_retry` FFI call.
+**Enforced by:** popopxmq library (`POPOPX.Messaging.Crypto.Ratchet`); encryption happens before `chat_send_cmd_retry` FFI call.
 **Spec:** [spec/architecture.md](../spec/architecture.md)
 
 ### RULE-03: Database encryption at rest

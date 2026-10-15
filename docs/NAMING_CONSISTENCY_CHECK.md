@@ -1,7 +1,7 @@
 # 命名一致性检查报告
 
 **检查日期**: 2026-10-10  
-**检查范围**: simplex → popopx 重命名完整性
+**检查范围**: popopx → popopx 重命名完整性
 
 ---
 
@@ -12,18 +12,18 @@
 #### 1. Haskell 源代码 (src/)
 - **状态**: ✅ 完全重命名
 - **检查项**:
-  - ✅ 模块导入: `Simplex.*` → `Popopx.*`
-  - ✅ 类型名称: `SimplexDomain` → `PopopxDomain`, `SimplexLink` → `PopopxLink`, `SimplexName` → `PopopxName`
-  - ✅ 构造函数: `TLDSimplex` → `TLDPopopx`, `SSSimplex` → `SSPopopx`, `SLSSimplex` → `SLSPopopx`
-  - ✅ 变量/函数: `simplexChat` → `popopxChat`, `operatorSimpleXChat` → `operatorPopopXChat`
-  - ✅ 字符串字面量: 无遗留的 "simplex" 引用
+  - ✅ 模块导入: `Popopx.*` → `Popopx.*`
+  - ✅ 类型名称: `PopopxDomain` → `PopopxDomain`, `PopopxLink` → `PopopxLink`, `PopopxName` → `PopopxName`
+  - ✅ 构造函数: `TLDPopopx` → `TLDPopopx`, `SSPopopx` → `SSPopopx`, `SLSPopopx` → `SLSPopopx`
+  - ✅ 变量/函数: `popopxChat` → `popopxChat`, `operatorPOPOPXChat` → `operatorPopopXChat`
+  - ✅ 字符串字面量: 无遗留的 "popopx" 引用
 
 #### 2. 测试代码 (tests/)
 - **状态**: ✅ 完全重命名
 - **检查项**:
   - ✅ 模块导入: 全部使用 `Popopx.*`
   - ✅ 类型引用: 全部使用 `Popopx*` 类型
-  - ✅ 测试数据: 保留 `simplex.im` 域名和 `simplex:` URI 用于向后兼容性测试
+  - ✅ 测试数据: 保留 `popopx.im` 域名和 `popopx:` URI 用于向后兼容性测试
 
 #### 3. 应用程序 (apps/)
 - **状态**: ✅ 完全重命名
@@ -48,22 +48,22 @@
 #### 5. TypeScript/JavaScript 应用
 - **状态**: ✅ 完全重命名
 - **检查项**:
-  - ✅ 依赖: `simplex-chat` → `popopx-chat`
-  - ✅ 导入: `simplex-chat` → `popopx-chat`
-  - ✅ 保留: `@simplex-chat/types` (外部 npm 包)
-  - ✅ 保留: simplex-chat GitHub releases 下载链接 (外部资源)
+  - ✅ 依赖: `popopx-chat` → `popopx-chat`
+  - ✅ 导入: `popopx-chat` → `popopx-chat`
+  - ✅ 保留: `@popopx-chat/types` (外部 npm 包)
+  - ✅ 保留: popopx-chat GitHub releases 下载链接 (外部资源)
 
 #### 6. Python 应用
 - **状态**: ✅ 完全重命名
 - **检查项**:
-  - ✅ 依赖: `simplex-chat` → `popopx-chat`
-  - ✅ 导入: `simplex_chat` → `popopx_chat`
-  - ✅ 环境变量: `SIMPLEX_LIBS_DIR` → `POPOPX_LIBS_DIR`
-  - ✅ URL: `simplex.chat` → `popopx.chat`
+  - ✅ 依赖: `popopx-chat` → `popopx-chat`
+  - ✅ 导入: `popopx_chat` → `popopx_chat`
+  - ✅ 环境变量: `POPOPX_LIBS_DIR` → `POPOPX_LIBS_DIR`
+  - ✅ URL: `popopx.chat` → `popopx.chat`
 
 ---
 
-## 保留的 SimpleX 引用（合理）
+## 保留的 POPOPX 引用（合理）
 
 ### 1. 版权和修改声明
 ```haskell
@@ -86,23 +86,23 @@ location: https://github.com/simplex-chat/popopxmq.git
 ### 3. 测试数据中的协议兼容性
 ```haskell
 -- tests/MarkdownTests.hs
-let inv = "/invitation#/?v=1&smp=smp%3A%2F%2F...@smp.simplex.im%3A5223..."
-("simplex:" <> inv) <==> popopxLink XLInvitation ...
+let inv = "/invitation#/?v=1&smp=smp%3A%2F%2F...@smp.popopx.im%3A5223..."
+("popopx:" <> inv) <==> popopxLink XLInvitation ...
 ```
-**原因**: 测试向后兼容性，确保能解析旧版 SimpleX 链接
+**原因**: 测试向后兼容性，确保能解析旧版 POPOPX 链接
 
 ### 4. 外部资源下载链接
 ```typescript
 // apps/popopx-calculator-bot/test/smpServer.ts
 const url = `https://github.com/simplex-chat/simplexmq/releases/download/...`
 ```
-**原因**: 二进制文件托管在 simplex-chat GitHub releases
+**原因**: 二进制文件托管在 popopx-chat GitHub releases
 
 ### 5. 外部 npm 包
 ```json
 {
   "dependencies": {
-    "@simplex-chat/types": "^0.12.0"
+    "@popopx-chat/types": "^0.12.0"
   }
 }
 ```
@@ -199,11 +199,11 @@ $ cabal build test:popopx-chat-test
    - 这些不影响功能，可逐步进行
 
 2. **iOS 本地化** (低优先级)
-   - 重命名 `apps/ios/SimpleX Localizations/` 目录
+   - 重命名 `apps/ios/POPOPX Localizations/` 目录
    - 更新本地化文件中的品牌引用
 
 3. **测试数据迁移** (不建议)
-   - 当前保留 `simplex.im` 测试数据用于向后兼容性
+   - 当前保留 `popopx.im` 测试数据用于向后兼容性
    - 如需更改，需确保协议兼容性不受影响
 
 ---

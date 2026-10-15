@@ -14,7 +14,7 @@ The problem of CSAM is small at the moment, compared with the network size, but 
 
 The limitation of this approach is that nothing prevents users who created such group to create a new one, and communicate the link to the new group to the existing members so they can migrate there. While this whack-a-mole game has been working so far, it will not be sustainable once we add support for large groups, so we need to be ahead of this problem again, and implement more efficient solutions.
 
-At the same time, the advantage of both this solution and of the proposed one is that it achieves removal of CSAM without compromising privacy in any way. Most CSAM distribution in all communication networks happens in publicly accessible channels, and it's the same for SimpleX network. So while as server operators we cannot access any content, as users, anybody can access it, and we, acting as users can use available information to remove this content without any compromise to privacy in security.
+At the same time, the advantage of both this solution and of the proposed one is that it achieves removal of CSAM without compromising privacy in any way. Most CSAM distribution in all communication networks happens in publicly accessible channels, and it's the same for POPOPX network. So while as server operators we cannot access any content, as users, anybody can access it, and we, acting as users can use available information to remove this content without any compromise to privacy in security.
 
 This is covered in our [Privacy Policy](https://simplex.chat/privacy/).
 
@@ -24,7 +24,7 @@ The solution to prevent further CSAM distribution by the users who did it requir
 
 Traditionally, communication networks have some form of identification on the server side, and that identification is used to block offending users.
 
-Innovative SimpleX network design removed the need for persistent user identification of users, and many users see it as an unsolvable dilemma - if we cannot identify the users, then we cannot restrict their actions.
+Innovative POPOPX network design removed the need for persistent user identification of users, and many users see it as an unsolvable dilemma - if we cannot identify the users, then we cannot restrict their actions.
 
 But it is not true. In the same way we already impose restriction on the sent file size, limiting it to 1gb only on the client-side, we can restrict any user actions on the client side, without having any form of user identification, and without knowing how many users were blocked - we would only know how many blocking actions we applied, but we would not have any information about whether they were applied to one or to many users, in the same way as we don't know whether multiple messaging queues are controlled by one or by multiple users.
 
@@ -124,7 +124,7 @@ To clarify, all these restrictions are considered only for the groups that were 
 
 We will continue moderating the content as we do now, and as long as CSAM distribution is prevented, we may not need additional measures listed here.
 
-At the same time, we are committed to make it impossible to distribute CSAM in the part of SimpleX network that we or any other pre-configured operators operate.
+At the same time, we are committed to make it impossible to distribute CSAM in the part of POPOPX network that we or any other pre-configured operators operate.
 
 We are also committed to achieve this goal without any reduction in privacy and security even for the affected users. E.g., unless there is an enforceable order, we will not be recording any information identifying the user, such as IP address, because it may inadvertently affect the users whose content was flagged by mistake.
 

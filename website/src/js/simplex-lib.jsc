@@ -23,21 +23,21 @@ function escapeAttr(text) {
     .replace(/>/g, "&gt;");
 }
 
-const SAFE_URI_SCHEME = /^(https?:|simplex:|mailto:|tel:)/i;
+const SAFE_URI_SCHEME = /^(https?:|popopx:|mailto:|tel:)/i;
 
 function safeHref(uri) {
   if (SAFE_URI_SCHEME.test(uri)) return escapeAttr(uri);
   return escapeAttr(`javascript:void(alert('Potentially malicious link blocked:\\n'+${JSON.stringify(uri)}))`);
 }
 
-function getSimplexLinkDescr(linkType) {
+function getPOPOPXLinkDescr(linkType) {
   switch (linkType) {
-    case 'contact': return 'SimpleX contact address';
-    case 'invitation': return 'SimpleX one-time invitation';
-    case 'group': return 'SimpleX group link';
-    case 'channel': return 'SimpleX channel link';
-    case 'relay': return 'SimpleX relay link';
-    default: return 'SimpleX link';
+    case 'contact': return 'POPOPX contact address';
+    case 'invitation': return 'POPOPX one-time invitation';
+    case 'group': return 'POPOPX group link';
+    case 'channel': return 'POPOPX channel link';
+    case 'relay': return 'POPOPX relay link';
+    default: return 'POPOPX link';
   }
 }
 
@@ -47,7 +47,7 @@ function viaHost(smpHosts) {
 }
 
 function isCurrentSite(uri) {
-  return uri.startsWith("https://simplex.chat") || uri.startsWith("https://www.simplex.chat")
+  return uri.startsWith("https://popopx.chat") || uri.startsWith("https://www.popopx.chat")
 }
 
 function targetBlank(uri) {
@@ -86,7 +86,7 @@ function renderMarkdown(fts) {
           html += `<span class="${(format.color || '').replace(/[^a-zA-Z0-9_-]/g, '')}">${escapeHtml(text)}</span>`;
           break;
         case 'uri': {
-          let href = text.startsWith('http://') || text.startsWith('https://') || text.startsWith('simplex:/') ? text : 'https://' + text;
+          let href = text.startsWith('http://') || text.startsWith('https://') || text.startsWith('popopx:/') ? text : 'https://' + text;
           html += `<a href="${safeHref(href)}"${targetBlank(href)}>${escapeHtml(text)}</a>`;
           break;
         }
@@ -95,10 +95,10 @@ function renderMarkdown(fts) {
           html += `<a href="${safeHref(linkUri)}"${targetBlank(linkUri)}>${escapeHtml(showText ?? linkUri)}</a>`;
           break;
         }
-        case 'simplexLink': {
-          const { showText, linkType, simplexUri, smpHosts } = format;
-          const linkText = showText ? escapeHtml(showText) : getSimplexLinkDescr(linkType);
-          html += `<a href="${safeHref(platformSimplexUri(simplexUri))}" target="_blank">${linkText} <em>(${escapeHtml(viaHost(smpHosts))})</em></a>`;
+        case 'popopxLink': {
+          const { showText, linkType, popopxUri, smpHosts } = format;
+          const linkText = showText ? escapeHtml(showText) : getPOPOPXLinkDescr(linkType);
+          html += `<a href="${safeHref(platformPOPOPXUri(popopxUri))}" target="_blank">${linkText} <em>(${escapeHtml(viaHost(smpHosts))})</em></a>`;
           break;
         }
         case 'command':
@@ -127,17 +127,17 @@ function renderMarkdown(fts) {
   return html;
 }
 
-const simplexAddressRegexp = /^simplex:\/([a-z]+)#(.+)/i;
+const popopxAddressRegexp = /^popopx:\/([a-z]+)#(.+)/i;
 
-const simplexShortLinkTypes = ["a", "c", "g", "i", "r"];
+const popopxShortLinkTypes = ["a", "c", "g", "i", "r"];
 
-function platformSimplexUri(uri) {
+function platformPOPOPXUri(uri) {
   if (isMobile.any()) return uri;
-  const res = uri.match(simplexAddressRegexp);
+  const res = uri.match(popopxAddressRegexp);
   if (!res || !Array.isArray(res) || res.length < 3) return uri;
   const linkType = res[1];
   const fragment = res[2];
-  if (simplexShortLinkTypes.includes(linkType)) {
+  if (popopxShortLinkTypes.includes(linkType)) {
     const queryIndex = fragment.indexOf('?');
     if (queryIndex === -1) return uri;
     const hashPart = fragment.substring(0, queryIndex);
@@ -151,6 +151,6 @@ function platformSimplexUri(uri) {
     if (remainingParams) newFragment += '?' + remainingParams;
     return `https://${host}:/${linkType}#${newFragment}`;
   } else {
-    return `https://simplex.chat/${linkType}#${fragment}`;
+    return `https://popopx.chat/${linkType}#${fragment}`;
   }
 }

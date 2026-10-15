@@ -1,0 +1,57 @@
+package chat.popopx.common.views.chat.item
+
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.*
+import chat.popopx.common.model.CryptoFile
+import chat.popopx.common.platform.*
+import chat.popopx.common.views.helpers.DefaultDropdownMenu
+import chat.popopx.res.*
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
+import java.net.URI
+
+@Composable
+actual fun SaveOrOpenFileMenu(
+  showMenu: MutableState<Boolean>,
+  encrypted: Boolean,
+  ext: String?,
+  encryptedUri: URI,
+  fileSource: CryptoFile,
+  saveFile: () -> Unit
+) {
+  val defaultApp = remember(encryptedUri.toString()) { if (ext != null) queryDefaultAppForExtension(ext, encryptedUri) else null }
+  DefaultDropdownMenu(showMenu) {
+    if (defaultApp != null) {
+      if (!defaultApp.isSystemChooser) {
+        ItemAction(
+          stringResource(MR.strings.open_with_app).format(defaultApp.name),
+          defaultApp.icon,
+          textColor = MaterialTheme.colors.primary,
+          onClick = {
+            openOrShareFile("", fileSource, justOpen = true, useChooser = false)
+            showMenu.value = false
+          }
+        )
+      } else {
+        ItemAction(
+          stringResource(MR.strings.open_with_app).format("…"),
+          painterResource(MR.images.ic_open_in_new),
+          color = MaterialTheme.colors.primary,
+          onClick = {
+            openOrShareFile("", fileSource, justOpen = true, useChooser = false)
+            showMenu.value = false
+          }
+        )
+      }
+    }
+    ItemAction(
+      stringResource(MR.strings.save_verb),
+      painterResource(MR.images.ic_download),
+      color = MaterialTheme.colors.primary,
+      onClick = {
+        saveFile()
+        showMenu.value = false
+      }
+    )
+  }
+}

@@ -19,5 +19,5 @@ desktop/build
 external/nanohttpd/build
 release
 
-# Generated SimpleX assets
-common/src/commonMain/resources/assets/simplex/
+# Generated POPOPX assets
+common/src/commonMain/resources/assets/popopx/

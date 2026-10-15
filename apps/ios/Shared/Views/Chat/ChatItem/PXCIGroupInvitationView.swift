@@ -86,6 +86,13 @@ struct CIGroupInvitationView: View {
 
                     GlassDivider().frame(width: frameWidth)
 
+                    if chat.chatInfo.groupInfo != nil {
+                        Text(chatItem.chatDir.sent ? String.localizedStringWithFormat(NSLocalizedString("For %@ only", comment: ""), groupInvitation.localDisplayName) : NSLocalizedString("For you only", comment: ""))
+                            .font(.caption)
+                            .foregroundColor(theme.colors.secondary)
+                            .overlay(DetermineWidth())
+                    }
+
                     if pxAction {
                         pxActionContent()
                     } else {

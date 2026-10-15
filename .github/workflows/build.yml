@@ -12,15 +12,15 @@ on:
   pull_request:
     paths:
       - "src/**"
-      - "apps/simplex-chat/**"
-      - "apps/simplex-bot/**"
-      - "apps/simplex-bot-advanced/**"
-      - "apps/simplex-badge-service/**"
-      - "apps/simplex-broadcast-bot/**"
-      - "apps/simplex-directory-service/**"
+      - "apps/popopx-chat/**"
+      - "apps/popopx-bot/**"
+      - "apps/popopx-bot-advanced/**"
+      - "apps/popopx-badge-service/**"
+      - "apps/popopx-broadcast-bot/**"
+      - "apps/popopx-directory-service/**"
       - "tests/**"
       - "bots/src/**"
-      - "simplex-chat.cabal"
+      - "popopx-chat.cabal"
       - "cabal.project"
       - "Dockerfile*"
       - "scripts/ci/**"
@@ -182,7 +182,7 @@ jobs:
           path: |
             ~/.cabal/store
             dist-newstyle
-          key: ubuntu-${{ matrix.os }}-${{ matrix.arch }}-ghc${{ matrix.ghc }}-${{ hashFiles('cabal.project', 'simplex-chat.cabal') }}
+          key: ubuntu-${{ matrix.os }}-${{ matrix.arch }}-ghc${{ matrix.ghc }}-${{ hashFiles('cabal.project', 'popopx-chat.cabal') }}
 
       - name: Set up Docker Buildx
         if: matrix.should_run == true
@@ -238,12 +238,12 @@ jobs:
           cabal update
           cabal build -j --enable-tests
           mkdir -p /out
-          for i in simplex-chat simplex-chat-test; do
+          for i in popopx-chat popopx-chat-test; do
             bin=$(find /project/dist-newstyle -name "$i" -type f -executable)
             chmod +x "$bin"
             mv "$bin" /out/
           done
-          strip /out/simplex-chat
+          strip /out/popopx-chat
 
       - name: Build CLI deb
         if: startsWith(github.ref, 'refs/tags/v') && matrix.should_run == true
@@ -259,19 +259,19 @@ jobs:
         if: matrix.should_run == true
         shell: bash
         run: |
-          docker cp builder:/out/simplex-chat-test .
+          docker cp builder:/out/popopx-chat-test .
 
       - name: Copy CLI from container and prepare it
         id: linux_cli_prepare
         if: startsWith(github.ref, 'refs/tags/v') && matrix.should_run == true
         shell: bash
         run: |
-          cli_name="simplex-chat-ubuntu-${{ matrix.os_underscore }}-${{ matrix.arch }}"
+          cli_name="popopx-chat-ubuntu-${{ matrix.os_underscore }}-${{ matrix.arch }}"
           cli_deb_name="${cli_name}.deb"
           cli_path="${{ github.workspace }}"
 
-          docker cp builder:/out/simplex-chat "./${cli_name}"
-          docker cp builder:/out/deb-build/simplex-chat.deb "./${cli_deb_name}"
+          docker cp builder:/out/popopx-chat "./${cli_name}"
+          docker cp builder:/out/deb-build/popopx-chat.deb "./${cli_deb_name}"
 
           echo "bin_name=${cli_name}" >> $GITHUB_OUTPUT
           echo "bin_path=${cli_path}/${cli_name}" >> $GITHUB_OUTPUT
@@ -313,16 +313,16 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v') && matrix.should_run == true
         shell: bash
         run: |
-          path=$(echo ${{ github.workspace }}/apps/multiplatform/release/main/deb/simplex_${{ matrix.arch }}.deb )
+          path=$(echo ${{ github.workspace }}/apps/multiplatform/release/main/deb/popopx_${{ matrix.arch }}.deb )
           echo "package_path=$path" >> $GITHUB_OUTPUT
-          echo "package_hash=$(echo SHA2-256\(simplex-desktop-ubuntu-${{ matrix.os_underscore }}-${{ matrix.arch }}.deb\)= $(openssl sha256 $path | cut -d' ' -f 2))" >> $GITHUB_OUTPUT
+          echo "package_hash=$(echo SHA2-256\(popopx-desktop-ubuntu-${{ matrix.os_underscore }}-${{ matrix.arch }}.deb\)= $(openssl sha256 $path | cut -d' ' -f 2))" >> $GITHUB_OUTPUT
 
       - name: Upload Desktop
         uses: ./.github/actions/prepare-release
         if: startsWith(github.ref, 'refs/tags/v') && matrix.should_run == true
         with:
           bin_path: ${{ steps.linux_desktop_build.outputs.package_path }}
-          bin_name: simplex-desktop-ubuntu-${{ matrix.os_underscore }}-${{ matrix.arch }}.deb
+          bin_name: popopx-desktop-ubuntu-${{ matrix.os_underscore }}-${{ matrix.arch }}.deb
           bin_hash: ${{ steps.linux_desktop_build.outputs.package_hash }}
           github_ref: ${{ github.ref }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -339,16 +339,16 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v') && matrix.os == '22.04' && matrix.should_run == true
         shell: bash
         run: |
-          path=$(echo ${{ github.workspace }}/apps/multiplatform/release/main/*imple*.AppImage)
+          path=$(echo ${{ github.workspace }}/apps/multiplatform/release/main/*opo*.AppImage)
           echo "appimage_path=$path" >> $GITHUB_OUTPUT
-          echo "appimage_hash=$(echo SHA2-256\(simplex-desktop-${{ matrix.arch }}.AppImage\)= $(openssl sha256 $path | cut -d' ' -f 2))" >> $GITHUB_OUTPUT
+          echo "appimage_hash=$(echo SHA2-256\(popopx-desktop-${{ matrix.arch }}.AppImage\)= $(openssl sha256 $path | cut -d' ' -f 2))" >> $GITHUB_OUTPUT
 
       - name: Upload AppImage
         if: startsWith(github.ref, 'refs/tags/v') && matrix.os == '22.04' && matrix.should_run == true
         uses: ./.github/actions/prepare-release
         with:
           bin_path: ${{ steps.linux_appimage_build.outputs.appimage_path }}
-          bin_name: "simplex-desktop-${{ matrix.arch }}.AppImage"
+          bin_name: "popopx-desktop-${{ matrix.arch }}.AppImage"
           bin_hash: ${{ steps.linux_appimage_build.outputs.appimage_hash }}
           github_ref: ${{ github.ref }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -377,7 +377,7 @@ jobs:
           attempts=1
           ${{ (github.ref == 'refs/heads/stable' || startsWith(github.ref, 'refs/tags/v')) }} && attempts=3
           while [ "$i" -le "$attempts" ]; do
-            if ./simplex-chat-test; then
+            if ./popopx-chat-test; then
               break
             else
               echo "Attempt $i failed, retrying..."
@@ -419,7 +419,7 @@ jobs:
           path: |
             ~/.cabal/store
             dist-newstyle
-          key: ubuntu-22.04-x86_64-postgres-ghc${{ needs.variables.outputs.GHC_VER }}-${{ hashFiles('cabal.project', 'simplex-chat.cabal') }}
+          key: ubuntu-22.04-x86_64-postgres-ghc${{ needs.variables.outputs.GHC_VER }}-${{ hashFiles('cabal.project', 'popopx-chat.cabal') }}
 
       - name: Set up Docker Buildx
         uses: simplex-chat/docker-setup-buildx-action@v3
@@ -467,15 +467,15 @@ jobs:
         run: |
           ARCH=x86_64
           GHC_VER=${{ needs.variables.outputs.GHC_VER }}
-          BUILD_DIR=$(echo dist-newstyle/build/${ARCH}-linux/ghc-${GHC_VER}/simplex-chat-*)
+          BUILD_DIR=$(echo dist-newstyle/build/${ARCH}-linux/ghc-${GHC_VER}/popopx-chat-*)
           mkdir -p postgres-libs
-          cp ${BUILD_DIR}/build/libsimplex.so postgres-libs/
+          cp ${BUILD_DIR}/build/libpopopx.so postgres-libs/
           cp ${BUILD_DIR}/build/deps/* postgres-libs/
 
       - name: Upload postgres libs artifact
         uses: actions/upload-artifact@v4
         with:
-          name: simplex-libs-linux-postgres-x86_64
+          name: popopx-libs-linux-postgres-x86_64
           path: postgres-libs/
 
       - name: Fix permissions for cache
@@ -498,13 +498,13 @@ jobs:
         include:
           - os: macos-latest
             ghc: ${{ needs.variables.outputs.GHC_VER }}
-            cli_asset_name: simplex-chat-macos-aarch64
-            desktop_asset_name: simplex-desktop-macos-aarch64.dmg
+            cli_asset_name: popopx-chat-macos-aarch64
+            desktop_asset_name: popopx-desktop-macos-aarch64.dmg
             openssl_dir: "/opt/homebrew/opt"
           - os: macos-15-intel
             ghc: ${{ needs.variables.outputs.GHC_VER }}
-            cli_asset_name: simplex-chat-macos-x86-64
-            desktop_asset_name: simplex-desktop-macos-x86_64.dmg
+            cli_asset_name: popopx-chat-macos-x86-64
+            desktop_asset_name: popopx-desktop-macos-x86_64.dmg
             openssl_dir: "/usr/local/opt"
     steps:
       - name: Checkout Code
@@ -527,7 +527,7 @@ jobs:
         shell: bash
         run: |
           echo "ignore-project: False"                                                    >> cabal.project.local
-          echo "package simplexmq"                                                        >> cabal.project.local
+          echo "package popopxmq"                                                        >> cabal.project.local
           echo "    extra-include-dirs: ${{ matrix.opnessl_dir }}/openssl@3.0/include"    >> cabal.project.local
           echo "    extra-lib-dirs: ${{ matrix.openssl_dir}}/openssl@3.0/lib"             >> cabal.project.local
           echo ""                                                                         >> cabal.project.local
@@ -541,7 +541,7 @@ jobs:
         shell: bash
         run: |
           cabal build -j --enable-tests
-          path=$(cabal list-bin simplex-chat)
+          path=$(cabal list-bin popopx-chat)
           echo "bin_path=$path" >> $GITHUB_OUTPUT
           echo "bin_hash=$(echo SHA2-256\(${{ matrix.cli_asset_name }}\)= $(openssl sha256 $path | cut -d' ' -f 2))" >> $GITHUB_OUTPUT
 
@@ -560,13 +560,14 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         shell: bash
         env:
-          APPLE_SIMPLEX_SIGNING_KEYCHAIN: ${{ secrets.APPLE_SIMPLEX_SIGNING_KEYCHAIN }}
+          APPLE_POPOPX_SIGNING_KEYCHAIN: ${{ secrets.APPLE_POPOPX_SIGNING_KEYCHAIN }}
+          # TODO: These secret names could be renamed from APPLE_SIMPLEX_* to APPLE_POPOPX_* later
           APPLE_SIMPLEX_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_SIMPLEX_NOTARIZATION_APPLE_ID }}
           APPLE_SIMPLEX_NOTARIZATION_PASSWORD: ${{ secrets.APPLE_SIMPLEX_NOTARIZATION_PASSWORD }}
         run: |
           export ASSETS_DIR='../../assets'
           scripts/ci/build-desktop-mac.sh
-          path=$(echo $PWD/apps/multiplatform/release/main/dmg/SimpleX-*.dmg)
+          path=$(echo $PWD/apps/multiplatform/release/main/dmg/POPOPX-*.dmg)
           echo "package_path=$path" >> $GITHUB_OUTPUT
           echo "package_hash=$(echo SHA2-256\(${{ matrix.desktop_asset_name }}\)= $(openssl sha256 $path | cut -d' ' -f 2))" >> $GITHUB_OUTPUT
 
@@ -615,8 +616,8 @@ jobs:
         include:
           - os: windows-latest
             ghc: ${{ needs.variables.outputs.GHC_VER }}
-            cli_asset_name: simplex-chat-windows-x86-64
-            desktop_asset_name: simplex-desktop-windows-x86_64.msi
+            cli_asset_name: popopx-chat-windows-x86-64
+            desktop_asset_name: popopx-desktop-windows-x86_64.msi
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -652,8 +653,8 @@ jobs:
             toolchain:p
             cmake:p
 
-      # rm -rf dist-newstyle/src/{direct-sq,simplexmq}* is here because of the bug in cabal's dependency which prevents second build from finishing
-      # (simplexmq is removed because cabal cannot delete its read-only git submodule pack files - blst, libbbs - on Windows)
+      # rm -rf dist-newstyle/src/{direct-sq,popopxmq}* is here because of the bug in cabal's dependency which prevents second build from finishing
+      # (popopxmq is removed because cabal cannot delete its read-only git submodule pack files - blst, libbbs - on Windows)
       - name: Build CLI
         id: windows_cli_build
         shell: msys2 {0}
@@ -668,11 +669,11 @@ jobs:
           echo "    extra-include-dirs: $openssl_windows_style_path\include" >> cabal.project.local
           echo "    extra-lib-dirs: $openssl_windows_style_path" >> cabal.project.local
 
-          rm -rf dist-newstyle/src/direct-sq* dist-newstyle/src/simplexmq*
-          sed -i "s/, unix /--, unix /" simplex-chat.cabal
+          rm -rf dist-newstyle/src/direct-sq* dist-newstyle/src/popopxmq*
+          sed -i "s/, unix /--, unix /" popopx-chat.cabal
           cabal build -j --enable-tests
-          rm -rf dist-newstyle/src/direct-sq* dist-newstyle/src/simplexmq*
-          path=$(cabal list-bin simplex-chat | tail -n 1)
+          rm -rf dist-newstyle/src/direct-sq* dist-newstyle/src/popopxmq*
+          path=$(cabal list-bin popopx-chat | tail -n 1)
           echo "bin_path=$path" >> $GITHUB_OUTPUT
           echo "bin_hash=$(echo SHA2-256\(${{ matrix.cli_asset_name }}\)= $(openssl sha256 $path | cut -d' ' -f 2))" >> $GITHUB_OUTPUT
 
@@ -694,9 +695,9 @@ jobs:
           export PATH=$PATH:/c/ghcup/bin:$(echo /c/tools/ghc-*/bin || echo)
           scripts/desktop/build-lib-windows.sh
           cd apps/multiplatform
-          ./gradlew -Psimplex.assets.dir=../../assets packageMsi
-          rm -rf dist-newstyle/src/direct-sq* dist-newstyle/src/simplexmq*
-          path=$(echo $PWD/release/main/msi/*imple*.msi | sed 's#/\([a-z]\)#\1:#' | sed 's#/#\\#g')
+          ./gradlew -Ppopopx.assets.dir=../../assets packageMsi
+          rm -rf dist-newstyle/src/direct-sq* dist-newstyle/src/popopxmq*
+          path=$(echo $PWD/release/main/msi/*opo*.msi | sed 's#/\([a-z]\)#\1:#' | sed 's#/#\\#g')
           echo "package_path=$path" >> $GITHUB_OUTPUT
           echo "package_hash=$(echo SHA2-256\(${{ matrix.desktop_asset_name }}\)= $(openssl sha256 $path | cut -d' ' -f 2))" >> $GITHUB_OUTPUT
 
@@ -720,7 +721,7 @@ jobs:
 # Secrets:
 # -------
 # NODEJS_REPO_TOKEN
-#  Only select repositories: simplex-chat-libs 
+#  Only select repositories: popopx-chat-libs 
 #  Permissions:
 #   * Contents (Read and Write)
 
@@ -739,7 +740,7 @@ jobs:
         if: needs.build-linux-postgres.result == 'success'
         uses: actions/download-artifact@v4
         with:
-          name: simplex-libs-linux-postgres-x86_64
+          name: popopx-libs-linux-postgres-x86_64
           path: ${{ runner.temp }}/postgres-libs
 
       - name: Build archives
@@ -756,15 +757,15 @@ jobs:
           mkdir "$INIT_DIR" "$RELEASE_DIR" && cd "$INIT_DIR"
 
           # Downlaod desktop release
-          curl --proto '=https' --tlsv1.2 -sSf -L "${URL}/${TAG}/simplex-desktop-ubuntu-22_04-x86_64.deb" -o linux.deb
-          curl --proto '=https' --tlsv1.2 -sSf -L "${URL}/${TAG}/simplex-desktop-macos-aarch64.dmg" -o macos-aarch64.dmg
-          curl --proto '=https' --tlsv1.2 -sSf -L "${URL}/${TAG}/simplex-desktop-macos-x86_64.dmg" -o macos-x86_64.dmg
-          curl --proto '=https' --tlsv1.2 -sSf -L "${URL}/${TAG}/simplex-desktop-windows-x86_64.msi" -o windows-x86_64.msi
+          curl --proto '=https' --tlsv1.2 -sSf -L "${URL}/${TAG}/popopx-desktop-ubuntu-22_04-x86_64.deb" -o linux.deb
+          curl --proto '=https' --tlsv1.2 -sSf -L "${URL}/${TAG}/popopx-desktop-macos-aarch64.dmg" -o macos-aarch64.dmg
+          curl --proto '=https' --tlsv1.2 -sSf -L "${URL}/${TAG}/popopx-desktop-macos-x86_64.dmg" -o macos-x86_64.dmg
+          curl --proto '=https' --tlsv1.2 -sSf -L "${URL}/${TAG}/popopx-desktop-windows-x86_64.msi" -o windows-x86_64.msi
 
           # Linux
           # -----
           # Extract libraries
-          dpkg-deb -R linux.deb linux-out/ && cd linux-out/opt/simplex/lib/app/resources
+          dpkg-deb -R linux.deb linux-out/ && cd linux-out/opt/popopx/lib/app/resources
           # Preprare directory
           mkdir libs && cp *.so libs/
           # Archive
@@ -774,25 +775,25 @@ jobs:
 
           # MacOS: aarch64
           # --------------
-          7z x macos-aarch64.dmg -omacos1-out/ && cd macos1-out/SimpleX/SimpleX.app/Contents/app/resources/
+          7z x macos-aarch64.dmg -omacos1-out/ && cd macos1-out/POPOPX/POPOPX.app/Contents/app/resources/
           mkdir libs && cp *.dylib libs/
           zip -r "${PREFIX}-macos-aarch64.zip" libs
           mv "${PREFIX}-macos-aarch64.zip" "$RELEASE_DIR" && cd "$INIT_DIR"
 
           # Macos: x86_64
           # -------------
-          7z x macos-x86_64.dmg -omacos2-out/ && cd macos2-out/SimpleX/SimpleX.app/Contents/app/resources/
+          7z x macos-x86_64.dmg -omacos2-out/ && cd macos2-out/POPOPX/POPOPX.app/Contents/app/resources/
           mkdir libs && cp *.dylib libs/
           zip -r "${PREFIX}-macos-x86_64.zip" libs
           mv "${PREFIX}-macos-x86_64.zip" "$RELEASE_DIR" && cd "$INIT_DIR"
 
           # Windows: x86_64
           # ---------------
-          msiextract windows-x86_64.msi -C windows-out && cd windows-out/SimpleX/app/resources
+          msiextract windows-x86_64.msi -C windows-out && cd windows-out/POPOPX/app/resources
 
           # We need to generate library that exports symbols from Windows dll
-          curl --proto '=https' --tlsv1.2 -sSf -LO "${FILE_URL}/libsimplex.dll.def"
-          x86_64-w64-mingw32-dlltool -d libsimplex.dll.def -l libsimplex.lib -D libsimplex.dll
+          curl --proto '=https' --tlsv1.2 -sSf -LO "${FILE_URL}/libpopopx.dll.def"
+          x86_64-w64-mingw32-dlltool -d libpopopx.dll.def -l libpopopx.lib -D libpopopx.dll
 
           mkdir libs && cp *.dll *.lib libs/
           zip -r "${PREFIX}-windows-x86_64.zip" libs

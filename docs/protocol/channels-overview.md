@@ -1,11 +1,11 @@
 Revision 1, 2026-04-28
 
-# SimpleX Channels: stateful information delivery and management
+# POPOPX Channels: stateful information delivery and management
 
 ## Table of contents
 
 - [Introduction](#introduction)
-  - [What are SimpleX Channels](#what-are-simplex-channels)
+  - [What are POPOPX Channels](#what-are-popopx-channels)
   - [Channels as transport layer](#channels-as-transport-layer)
   - [Content visibility and participant privacy](#content-visibility-and-participant-privacy)
   - [In comparison](#in-comparison)
@@ -35,31 +35,31 @@ Revision 1, 2026-04-28
 
 ## Introduction
 
-The SimpleX network provides private point-to-point communication without user or endpoint identifiers, but most speech that matters is public. Every existing platform that distributes content at scale identifies both publishers and their audiences to the operator - none protect participation privacy. SimpleX Chat supported peer-to-peer groups, but they cannot scale to large audiences. SimpleX Channels close this gap.
+The POPOPX network provides private point-to-point communication without user or endpoint identifiers, but most speech that matters is public. Every existing platform that distributes content at scale identifies both publishers and their audiences to the operator - none protect participation privacy. POPOPX Chat supported peer-to-peer groups, but they cannot scale to large audiences. POPOPX Channels close this gap.
 
-### What are SimpleX Channels
+### What are POPOPX Channels
 
-SimpleX Channels are a stateful information delivery and management layer built on the [SimpleX network](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md). SMP queues provide stateless, unidirectional packet delivery between two endpoints. Channels add persistence, state, and scalable distribution - enabling one-to-many publishing with cryptographic identity independent of infrastructure operators.
+POPOPX Channels are a stateful information delivery and management layer built on the [POPOPX network](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md). SMP queues provide stateless, unidirectional packet delivery between two endpoints. Channels add persistence, state, and scalable distribution - enabling one-to-many publishing with cryptographic identity independent of infrastructure operators.
 
-[SimpleX Chat](https://simplex.chat) is the first application, presenting channels as a broadcast publication model where owners publish and subscribers read, react, and comment. But channels are not limited to this use case - they are a general-purpose layer for distributing and managing stateful information (feeds, telemetry, automated pipelines, coordination services, social media). This document describes channels as a transport mechanism - the same mechanism will also be used for large groups, communities, wikis, forums, and other social media primitives.
+[POPOPX Chat](https://simplex.chat) is the first application, presenting channels as a broadcast publication model where owners publish and subscribers read, react, and comment. But channels are not limited to this use case - they are a general-purpose layer for distributing and managing stateful information (feeds, telemetry, automated pipelines, coordination services, social media). This document describes channels as a transport mechanism - the same mechanism will also be used for large groups, communities, wikis, forums, and other social media primitives.
 
-The critical difference from conventional publish-subscribe systems is that channel identity and governance are controlled cryptographically by the channel owners, not by the infrastructure operators. Relays - SimpleX network clients that forward and optionally cache channel content - can be added, removed, and replaced without changing the channel's identity, address, content, or cryptographic trust chain. A channel's relationship with its relays is transient; its identity is permanent. The authoritative record of content is hosted on channel owners' devices; relays perform transmission and caching similar to CDN infrastructure.
+The critical difference from conventional publish-subscribe systems is that channel identity and governance are controlled cryptographically by the channel owners, not by the infrastructure operators. Relays - POPOPX network clients that forward and optionally cache channel content - can be added, removed, and replaced without changing the channel's identity, address, content, or cryptographic trust chain. A channel's relationship with its relays is transient; its identity is permanent. The authoritative record of content is hosted on channel owners' devices; relays perform transmission and caching similar to CDN infrastructure.
 
 Channel owners hold full control of the channel - its identity, content, governance rules, and membership - through self-custody of cryptographic keys. No infrastructure operator, relay provider, or third party can control or alter a channel without the owner's keys. Blockchain systems achieve a related property for financial assets - no third party can control holdings - through network-wide consensus. Channels achieve it through local authority and cryptographic signatures, without global consensus or a public ledger. Unlike blockchain state, channel state is mutable by the owner and not publicly verifiable by third parties.
 
 ### Channels as transport layer
 
-The SimpleX network has three transport layers, each built on the one below:
+The POPOPX network has three transport layers, each built on the one below:
 
-1. **SMP** ([SimpleX Messaging Protocol](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/simplex-messaging.md)) - stateless, unidirectional packet delivery between two endpoints through SMP routers. Provides fixed-size blocks, 2-node onion routing, and transport metadata protection.
+1. **SMP** ([POPOPX Messaging Protocol](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/simplex-messaging.md)) - stateless, unidirectional packet delivery between two endpoints through SMP routers. Provides fixed-size blocks, 2-node onion routing, and transport metadata protection.
 
-2. **SimpleX agents** ([agent protocol](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/agent-protocol.md)) - bidirectional, redundant connections between endpoints, with end-to-end post-quantum double ratchet encryption. The [SimpleX Chat Protocol](./simplex-chat.md) runs on top of this layer, providing direct messaging, group communication, and metadata delivery for file transfers via [XFTP protocol](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/xftp.md).
+2. **POPOPX agents** ([agent protocol](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/agent-protocol.md)) - bidirectional, redundant connections between endpoints, with end-to-end post-quantum double ratchet encryption. The [POPOPX Chat Protocol](./popopx-chat.md) runs on top of this layer, providing direct messaging, group communication, and metadata delivery for file transfers via [XFTP protocol](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/xftp.md).
 
 3. **Channels** - stateful, one-to-many information delivery and management with cryptographic ownership and programmable governance. This layer runs on top of chat and agent layer 2, and it is described in this document.
 
 No network-wide user profile identifiers exist at any of these layers. Just as SMP enables private messaging by providing transport without user identifiers, channels enable public communication while preserving participation privacy at the distribution layer.
 
-Channel relays are themselves SimpleX clients in the SMP network, connecting to SMP routers using the same protocol, the same 2-node onion routing, and the same fixed-size transport blocks as any other endpoint. Even though the SMP network can distinguish a relay from a person's phone by its transport patterns, it prevents relays from learning anything about other network endpoints. In the case of SimpleX Chat, any CLI client can act as a chat relay without modifications.
+Channel relays are themselves POPOPX clients in the SMP network, connecting to SMP routers using the same protocol, the same 2-node onion routing, and the same fixed-size transport blocks as any other endpoint. Even though the SMP network can distinguish a relay from a person's phone by its transport patterns, it prevents relays from learning anything about other network endpoints. In the case of POPOPX Chat, any CLI client can act as a chat relay without modifications.
 
 Channels therefore inherit all of SMP's transport privacy properties:
 
@@ -77,7 +77,7 @@ Any channel joinable via a public link, whether encrypted or not, must be consid
 
 Content of public channels is therefore not end-to-end encrypted between owner and subscriber. Relays can read the messages they forward. Relay operators cannot undetectably alter channel content when multiple relays serve the channel, and cannot alter signed content at all - the authoritative state is held by owners. That each channel can use multiple chat relays provides both technical reliability and censorship resistance against any relay-specific content policies.
 
-The achievable privacy property for public communication is participation privacy - protecting who reads and writes content. The SMP transport carries no user identifiers, and relays are ordinary SMP clients, so subscribers connect without revealing their identity, network address, or any information that persists across channels. If an adversary joins a SimpleX channel, they see everything that is sent, but cannot determine who sent it or link any participant to anything outside the channel.
+The achievable privacy property for public communication is participation privacy - protecting who reads and writes content. The SMP transport carries no user identifiers, and relays are ordinary SMP clients, so subscribers connect without revealing their identity, network address, or any information that persists across channels. If an adversary joins a POPOPX channel, they see everything that is sent, but cannot determine who sent it or link any participant to anything outside the channel.
 
 Other systems make the opposite choice: content encryption in exchange for participant identification. For groups and channels joinable via public links this is the opposite of what is needed - the content encryption is meaningless (anyone can join and read), while the participant identification is the security threat.
 
@@ -93,7 +93,7 @@ Other systems make the opposite choice: content encryption in exchange for parti
 
 **Mastodon / ActivityPub** - publisher identity is bound to a server domain - if the server disappears, the identity is lost. Server operators see all content and all follower relationships. No encryption or privacy of any kind.
 
-| Property | Telegram | Nostr | Signal | Matrix | Mastodon | **SimpleX** |
+| Property | Telegram | Nostr | Signal | Matrix | Mastodon | **POPOPX** |
 |---|---|---|---|---|---|---|
 | Content visible to operator | Yes | Yes | No | Configurable | Yes | **Yes** |
 | Participant identity visible to operator | Yes | Yes | Yes | Yes | Yes | **No** |
@@ -136,7 +136,7 @@ The authoritative record of a channel - content, member roster, profile, cryptog
        S1    S2    S3          S7    S8    S9   <- received copies
 ```
 
-Content originates on the owner's device and flows through relays to subscribers. Each relay independently forwards to all of its subscribers. Subscribers do not connect to owners or to each other - this provides better scalability than peer-to-peer SimpleX groups, where adding a member requires N new connections. When multiple relays serve the same channel, subscribers deduplicate at the client level.
+Content originates on the owner's device and flows through relays to subscribers. Each relay independently forwards to all of its subscribers. Subscribers do not connect to owners or to each other - this provides better scalability than peer-to-peer POPOPX groups, where adding a member requires N new connections. When multiple relays serve the same channel, subscribers deduplicate at the client level.
 
 **Failure modes:**
 
@@ -178,13 +178,13 @@ The low-level protocol supports multiple owners from the initial release. The ap
 
 - **Owners** create the channel, hold the authoritative state and private keys on their devices, publish content, and manage the member roster. Owners sign administrative messages and optionally content messages. A channel must have at least one owner.
 
-- **Relays** receive content from owners and members with posting rights, optionally cache it, and forward it to subscribers. They accept new subscriber connections and introduce them to the channel owners. Relays cannot author messages. A channel must have at least one active relay. Relays are ordinary SimpleX clients - a relay can be operated by anyone (a channel operator, a third-party service provider, or a self-hosted instance) and each creates its own contact address link, bound to the channel's identity. The relay's relationship with the channel is transient - owners can add and remove relays without changing the channel's identity.
+- **Relays** receive content from owners and members with posting rights, optionally cache it, and forward it to subscribers. They accept new subscriber connections and introduce them to the channel owners. Relays cannot author messages. A channel must have at least one active relay. Relays are ordinary POPOPX clients - a relay can be operated by anyone (a channel operator, a third-party service provider, or a self-hosted instance) and each creates its own contact address link, bound to the channel's identity. The relay's relationship with the channel is transient - owners can add and remove relays without changing the channel's identity.
 
 - **Subscribers** connect to relays and receive content. They cannot send messages by default, but can be given posting rights.
 
 Additional roles (moderator, admin, member, author) exist in the hierarchy and are inherited from the group protocol. The owner-signed roster tracks the promoted set - members, moderators, and admins; subscribers are observers until an owner promotes them.
 
-For protocol-level detail - wire formats, message types, signing and verification mechanics, delivery pipeline - see [SimpleX Channels Protocol](./channels-protocol.md).
+For protocol-level detail - wire formats, message types, signing and verification mechanics, delivery pipeline - see [POPOPX Channels Protocol](./channels-protocol.md).
 
 
 ## Cryptographic primitives
@@ -193,7 +193,7 @@ For protocol-level detail - wire formats, message types, signing and verificatio
 
 - **SHA-256** - derives the channel's entity ID from the genesis root public key. Immutable, serves as the channel's permanent identity.
 
-- **Double ratchet with post-quantum KEM** (inherited from [SimpleX agent layer](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/agent-protocol.md)) - end-to-end encryption for all SMP transport. Not channel-specific - channels inherit it by being built on the agent layer. Future E2E side conversations (support scope, member DMs, private channels) will use the same mechanism.
+- **Double ratchet with post-quantum KEM** (inherited from [POPOPX agent layer](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/agent-protocol.md)) - end-to-end encryption for all SMP transport. Not channel-specific - channels inherit it by being built on the agent layer. Future E2E side conversations (support scope, member DMs, private channels) will use the same mechanism.
 
 Content messages are not signed by default to preserve cryptographic deniability - see [Signing scope](#signing-scope-roster-only-content-optional). Owners may opt into signing all content in a future release.
 
@@ -226,7 +226,7 @@ Owners will be able to opt into signing content on a per-channel or per-message 
 
 ### Threat model
 
-This threat model assumes the [SimpleX network threat model](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/security.md) and addresses threats specific to the channel layer.
+This threat model assumes the [POPOPX network threat model](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/security.md) and addresses threats specific to the channel layer.
 
 **A single compromised relay**
 
@@ -287,7 +287,7 @@ The channel can have no new content, no administrative updates, no new owners. R
 
 *cannot:*
 
-- Determine which channel a subscriber uses, correlate channel activity with other SimpleX activity, or identify a relay as distinct from an ordinary user, other than by traffic volume. Inherited from SMP transport.
+- Determine which channel a subscriber uses, correlate channel activity with other POPOPX activity, or identify a relay as distinct from an ordinary user, other than by traffic volume. Inherited from SMP transport.
 
 ### Current gaps
 
@@ -304,14 +304,14 @@ Currently, relays send recent cached history on join but do not support navigati
 
 ### Transcript integrity
 
-- **Opt-in content signing.** Per-channel or per-message choice to sign content, making it non-repudiable. This will be released in SimpleX Chat v7.
+- **Opt-in content signing.** Per-channel or per-message choice to sign content, making it non-repudiable. This will be released in POPOPX Chat v7.
 - **Subscriber transcript acknowledgment.** Subscribers periodically sign a digest of received history ("I've seen it" rather than "I've authored it"), enabling detection of relay manipulation through diverging digests.
 - **Merkle tree signing.** Owner periodically publishes a signed Merkle root. Subscribers verify their copies against the owner's authoritative record.
 
 ### End-to-end encrypted side conversations
 
 - **E2E encrypted support scope** between subscriber and moderator/owner.
-- **E2E encrypted DMs between members** where channel settings permit, using standard SimpleX connection establishment.
+- **E2E encrypted DMs between members** where channel settings permit, using standard POPOPX connection establishment.
 - **Private channels** where the entire content stream is encrypted to authorized subscribers. The relay becomes a conduit that sees neither content nor identity.
 
 ### Relay addition and removal
@@ -339,4 +339,4 @@ The relay loads link previews on behalf of the sender - it already sees message 
 
 ## Conclusion
 
-SimpleX Channels enable a publisher to reach an unlimited audience without any infrastructure operator knowing who that audience is. No third party can seize the channel because owners hold the keys and the authoritative state on their own devices - relays only cache and forward. Owner signatures protect content integrity and the trust chain extends to all administrative roles. These properties require a network without participant identifiers - they cannot be added to a system that has them.
+POPOPX Channels enable a publisher to reach an unlimited audience without any infrastructure operator knowing who that audience is. No third party can seize the channel because owners hold the keys and the authoritative state on their own devices - relays only cache and forward. Owner signatures protect content integrity and the trust chain extends to all administrative roles. These properties require a network without participant identifiers - they cannot be added to a system that has them.

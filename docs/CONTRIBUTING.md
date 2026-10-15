@@ -17,9 +17,9 @@ Please discuss the problem you want to solve and your detailed implementation pl
 
 ## Follow project structure, coding style and approaches
 
-./contributing/PROJECT.md has information about the structure of this `simplex-chat` repository.
+./contributing/PROJECT.md has information about the structure of this `popopx-chat` repository.
 
-./contributing/CODE.md has details about general requirements common for `simplexmq` and `simplex-chat` repositories.
+./contributing/CODE.md has details about general requirements common for `popopxmq` and `popopx-chat` repositories.
 
 These files can be used with LLM prompts, e.g. if you use Claude Code you can create CLAUDE.md file in project root importing content from these files:
 
@@ -44,7 +44,7 @@ cp scripts/cabal.project.local.mac cabal.project.local
 
 ## OpenSSL on MacOS
 
-MacOS comes with LibreSSL as default, OpenSSL must be installed to compile SimpleX from source.
+MacOS comes with LibreSSL as default, OpenSSL must be installed to compile POPOPX from source.
 
 OpenSSL can be installed with `brew install openssl@3.0`
 
@@ -53,7 +53,7 @@ You will have to add `/opt/homebrew/opt/openssl@3.0/bin` to your PATH in order t
 
 ## Project branches
 
-**In simplex-chat repo**
+**In popopx-chat repo**
 
 - `stable` - stable release of the apps, can be used for updates to the previous stable release (GHC 9.6.3).
 
@@ -63,13 +63,13 @@ You will have to add `/opt/homebrew/opt/openssl@3.0/bin` to your PATH in order t
 
 - `master-android` - used to build beta Android core library with Nix (GHC 8.10.7) - only for Android armv7a.
 
-**In simplexmq repo**
+**In popopxmq repo**
 
 - `master` - compatible with both GHC 9.6.3 and 8.10.7.
 
 ## Development & release process
 
-1. Make PRs to `master` branch _only_ for both simplex-chat and simplexmq repos.
+1. Make PRs to `master` branch _only_ for both popopx-chat and popopxmq repos.
 
 2. To build core libraries for Android, iOS and Windows:
 - merge `master` branch to `master-android` branch.
@@ -84,13 +84,13 @@ You will have to add `/opt/homebrew/opt/openssl@3.0/bin` to your PATH in order t
 - `master` to `master-android` (and compile/update code)
 - `master-android` to `stable-android`
 
-6. Independently, `master` branch of simplexmq repo should be merged to `stable` branch on stable releases.
+6. Independently, `master` branch of popopxmq repo should be merged to `stable` branch on stable releases.
 
 ## Branches and PRs
 
 Use change scope (or comma separated scopes) as the first word in the PR names, followed by the colon. Commit name itself should be lowercase, in present tense.
 
-The PR names in simplex-chat repo are used in release notes, they should describe the solved problem and not the change. Possible PR scopes:
+The PR names in popopx-chat repo are used in release notes, they should describe the solved problem and not the change. Possible PR scopes:
 - ios
 - android
 - desktop

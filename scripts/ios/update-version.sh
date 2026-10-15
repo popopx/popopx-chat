@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Bumps CURRENT_PROJECT_VERSION (build number) and MARKETING_VERSION in
-# apps/ios/SimpleX.xcodeproj/project.pbxproj. Each appears in 10 places.
+# apps/ios/POPOPX.xcodeproj/project.pbxproj. Each appears in 10 places.
 #
 # Usage: ./scripts/ios/update-version.sh <build_number> <marketing_version>
 # Example: ./scripts/ios/update-version.sh 333 6.5.3

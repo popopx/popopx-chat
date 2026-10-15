@@ -56,11 +56,11 @@ chatEventsDocsData =
   [ ( "Contact connection events", -- which event should be processed by a bot that has business address. Maybe needs a separate category.
       "Bots must use these events to process connecting users.\n\n\
       \Most bots enable auto-accept and don't need to accept connections via commands.\n\n\
-      \You may create bot SimpleX address manually via CLI or desktop app or from bot code with these commands:\n\
+      \You may create bot POPOPX address manually via CLI or desktop app or from bot code with these commands:\n\
       \- [APIShowMyAddress](./COMMANDS.md#apishowmyaddress) to check if address exists,\n\
       \- [APICreateMyAddress](./COMMANDS.md#apicreatemyaddress) to create address,\n\
       \- [APISetAddressSettings](./COMMANDS.md#apisetaddresssettings) to enable auto-access.",
-      [ ( "CEvtContactConnected", "This event is sent after a user connects via bot SimpleX address (not a business address).")
+      [ ( "CEvtContactConnected", "This event is sent after a user connects via bot POPOPX address (not a business address).")
       ],
       [
         ("CEvtContactUpdated", "Contact profile of another user is updated."),
@@ -128,9 +128,9 @@ chatEventsDocsData =
     ),
     ( "Connection progress events",
       "Bots may use these events to track progress of connections for monitoring or debugging.",
-      [ ("CEvtAcceptingContactRequest", "Automatically accepting contact request via bot's SimpleX address with auto-accept enabled."),
+      [ ("CEvtAcceptingContactRequest", "Automatically accepting contact request via bot's POPOPX address with auto-accept enabled."),
         ("CEvtAcceptingBusinessRequest", "Automatically accepting contact request via bot's business address."),
-        ("CEvtContactConnecting", "Contact confirmed connection.\n\nSent when contact started connecting via bot's 1-time invitation link or when bot connects to another SimpleX address."), -- CONF
+        ("CEvtContactConnecting", "Contact confirmed connection.\n\nSent when contact started connecting via bot's 1-time invitation link or when bot connects to another POPOPX address."), -- CONF
         ("CEvtBusinessLinkConnecting", "Contact confirmed connection.\n\nSent when bot connects to another business address."), -- CONF
         ("CEvtJoinedGroupMemberConnecting", "Group member is announced to the group and will be connecting to bot."), -- MSG
         ("CEvtGroupLinkConnecting", "Sent when bot joins group via another user link.") -- CONF

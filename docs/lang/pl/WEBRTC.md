@@ -1,11 +1,11 @@
 ---
-title: Korzystanie z niestandardowych serwerów WebRTC ICE w SimpleX Chat
+title: Korzystanie z niestandardowych serwerów WebRTC ICE w POPOPX Chat
 revision: 31.01.2023
 ---
 
 | Updated 31.01.2023 | Języki: PL, [EN](/docs/WEBRTC.md), [FR](/docs/lang/fr/WEBRTC.md), [CZ](/docs/lang/cs/WEBRTC.md) |
 
-# Korzystanie z niestandardowych serwerów WebRTC ICE w SimpleX Chat
+# Korzystanie z niestandardowych serwerów WebRTC ICE w POPOPX Chat
 
 ## Instalacja serwera STUN/TURN
 

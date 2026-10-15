@@ -1,7 +1,7 @@
 ---
 title: Quick start
 ---
-# SimpleX Chat User Guide
+# POPOPX Chat User Guide
 
 The first messaging platform that has no user identifiers of any kind — 100% private by design.
 
@@ -12,7 +12,7 @@ The first messaging platform that has no user identifiers of any kind — 100% p
 - [Secret groups](./secret-groups.md)
 - [Channel webpage](./channel-webpage.md)
 - [Chat profiles](./chat-profiles.md)
-- [Registering a SimpleX name](./register-simplex-name.md)
+- [Registering a POPOPX name](./register-popopx-name.md)
 - [Managing data](./managing-data.md)
 - [Audio & video calls](./audio-video-calls.md)
 - [Privacy & security](./privacy-security.md)
@@ -22,7 +22,7 @@ The first messaging platform that has no user identifiers of any kind — 100% p
 
 ### Create your first chat profile
 
-After downloading SimpleX Chat via the links at https://simplex.chat:
+After downloading POPOPX Chat via the links at https://simplex.chat:
 
 - Open the app.
 - Create a new profile by inputting your display name and full name (optional).
@@ -38,7 +38,7 @@ After you have created the chat profile the app will ask you to choose notificat
 
 Please read their description, as on iOS it is trade-off between convenience and privacy, with instant notifications sharing more meta-data with the servers, and on Android it is a trade-off between notification delays and battery life.
 
-You can read more about [the differences between notifications work on Android and iOS](../../blog/20220404-simplex-chat-instant-notifications.md).
+You can read more about [the differences between notifications work on Android and iOS](../../blog/20220404-popopx-chat-instant-notifications.md).
 
 ### Connect to developers
 
@@ -57,13 +57,13 @@ You can also find some other user-managed groups via online search.
 
 To join a group via a link:
 
-- Get a link to a SimpleX user group, which you can get from your existing SimpleX conversations or by finding it online.
+- Get a link to a POPOPX user group, which you can get from your existing POPOPX conversations or by finding it online.
 - Tap on a button in the lower right-hand of the screen.
 - Tap on "Connect via link / QR code" button.
 
 ### Connect to friends
 
-- Tell your friends to download SimpleX Chat app via one of the links here: https://simplex.chat
+- Tell your friends to download POPOPX Chat app via one of the links here: https://simplex.chat
 - Create a one-time link for each of you friends by tapping new chat button (Android: a floating pencil button in the bottom right corner, iOS: a pencil button in the top right corner)
 - Tap _Create one-time invitation link_.
 - Share each link with a different friend, or alternatively let them scan a QR code.
@@ -73,7 +73,7 @@ To join a group via a link:
 
 Watch the video on [the website](https://simplex.chat) that shows how it works.
 
-You can also create a [long-term contact address](./app-settings.md#your-simplex-contact-address).
+You can also create a [long-term contact address](./app-settings.md#your-popopx-contact-address).
 
 ### Explore the app
 

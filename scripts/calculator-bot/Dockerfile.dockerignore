@@ -1,17 +1,17 @@
 *
 
 !cabal.project
-!simplex-chat.cabal
+!popopx-chat.cabal
 !README.md
 !PRIVACY.md
-!libsimplex.dll.def
+!libpopopx.dll.def
 !flake.nix
 !src
 !scripts/cabal.project.local.linux
 !scripts/desktop
-!packages/simplex-chat-client
-!packages/simplex-chat-nodejs
-!apps/simplex-calculator-bot
+!packages/popopx-chat-client
+!packages/popopx-chat-nodejs
+!apps/popopx-calculator-bot
 
 **/node_modules
 **/dist

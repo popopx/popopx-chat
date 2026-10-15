@@ -226,4 +226,4 @@ def applyMsgEvent(me: MsgEvent) =
 
 # Admin blockchain
 
-Suppose admin DAG is replaced with blockchain, with a conflict resolution protocol to provide consistency of membership changes. Take Simplex (not to confuse with SimpleX chat) protocol (https://simplex.blog/). To reach BFT consensus and make progress, 2n/3 votes on block proposals are required, and it's assumed `f < n/3` where f is number of malicious actors. In a highly asynchronous setting of decentralized groups operated by mobile devices, progress seems unlikely or very slow. Should "admin participation" be hosted?
+Suppose admin DAG is replaced with blockchain, with a conflict resolution protocol to provide consistency of membership changes. Take Popopx (not to confuse with POPOPX chat) protocol (https://popopx.blog/). To reach BFT consensus and make progress, 2n/3 votes on block proposals are required, and it's assumed `f < n/3` where f is number of malicious actors. In a highly asynchronous setting of decentralized groups operated by mobile devices, progress seems unlikely or very slow. Should "admin participation" be hosted?

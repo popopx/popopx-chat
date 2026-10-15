@@ -5,7 +5,7 @@ This is an unabridged version of FAQ previously published at https://simplex.cha
 - [Why Community Vouchers?](#why-community-vouchers)
 - [Free Tier?](#free-tier)
 - [How Will Vouchers Work?](#how-will-vouchers-work)
-- [Will self-hosted servers still be supported by SimpleX network?](#will-self-hosted-servers-still-be-supported-by-simplex-network)
+- [Will self-hosted servers still be supported by POPOPX network?](#will-self-hosted-servers-still-be-supported-by-popopx-network)
 - [What problems Community Vouchers solve that other payment methods can't?](#what-problems-community-vouchers-solve-that-other-payment-methods-cant)
 - [How is it possible to provide privacy on public blockchain?](#how-is-it-possible-to-provide-privacy-on-public-blockchain)
 - [Will Community Vouchers be pre-sold via private or public sale?](#will-community-vouchers-be-pre-sold-via-private-or-public-sale)
@@ -54,7 +54,7 @@ Buy via app (like phone top-ups), with unused capacity shown in the app. An impo
 
 Testnet is likely to use hashed IDs for privacy and on-chain payments, to validate the pricing and economic model. Zero-knowledge proofs and in-app payments will be added by the time production network is launched.
 
-### Will self-hosted servers still be supported by SimpleX network?
+### Will self-hosted servers still be supported by POPOPX network?
 
 Yes, absolutely. Not only will the apps continue to support self-hosted servers, but we will improve it. We see network decentralization and server portability as very important, and while we need to develop a robust commercial model for the servers, we still need community-hosted servers to function, with all people using a single network:
 - users who use self-hosted servers will be able to join groups that use pre-configured servers or Community Vouchers.
@@ -70,12 +70,12 @@ Community Vouchers implemented via smart contracts on blockchain solve these pro
 
 ### How is it possible to provide privacy on public blockchain?
 
-In the same way it is possible to provide private communications on the public Internet, as SimpleX network does.
+In the same way it is possible to provide private communications on the public Internet, as POPOPX network does.
 
 Our commitment to users' privacy and security remains as strong as ever, and we plan to bring the practical expertise of building private communication protocols over the last 5 years to how we develop the technology for the blockchain.
 
 While specific designs are in early stages, here are some of the principles that we will follow to ensure privacy:
-- each voucher purchase will be associated with a new blockchain address. There will be no per-user addresses, as wallets use. So the cornerstone of SimpleX network design - no user profile IDs - will be followed for blockchain development as well.
+- each voucher purchase will be associated with a new blockchain address. There will be no per-user addresses, as wallets use. So the cornerstone of POPOPX network design - no user profile IDs - will be followed for blockchain development as well.
 - all operations on blockchain will be supported by network servers that will run full blockchain nodes. For important requests, such as name resolution, the clients will use 2 or 3 independent servers, to ensure protection from MITM attacks.
 - blockchain operations will be proxied, in the same way as it happens with private message routing.
 
@@ -91,11 +91,11 @@ This is not what we are doing. Community Vouchers are restricted utility tokens,
 
 ### Who will sell vouchers?
 
-Initially, Community Vouchers will be sold via a smart contract in exchange for some other tradeable tokens, most likely stablecoins. We don't plan any token emission, or any public or private pre-sales. And we won't have access to the funds from voucher sales &mdash; they will be locked in a smart contract, and only released once servers have provided capacity to the users, with the funds shared between server operators and the SimpleX network, with operators receiving up to 60%, depending on trust evaluation. The SimpleX network funds will be managed by smart contracts, and will be used for governance and development as defined by the contracts. Their price will be fixed based on server costs, with the exact economic model developed during the testing phase.
+Initially, Community Vouchers will be sold via a smart contract in exchange for some other tradeable tokens, most likely stablecoins. We don't plan any token emission, or any public or private pre-sales. And we won't have access to the funds from voucher sales &mdash; they will be locked in a smart contract, and only released once servers have provided capacity to the users, with the funds shared between server operators and the POPOPX network, with operators receiving up to 60%, depending on trust evaluation. The POPOPX network funds will be managed by smart contracts, and will be used for governance and development as defined by the contracts. Their price will be fixed based on server costs, with the exact economic model developed during the testing phase.
 
 ### How the server operator revenue share is determined?
 
-It will be based on the goal that servers must provide both reliability and security to the users. Security in any multi-node network depends on users' ability to choose independent servers that are provided by different entities, and the apps are already programmed not just to use different servers for the message delivery path, but to use servers of different operators. Even though currently there are only 2 preset operators &mdash; SimpleX Chat and Flux &mdash; and all servers added to the app by the user are considered a third operator, it substantially improves privacy and security.
+It will be based on the goal that servers must provide both reliability and security to the users. Security in any multi-node network depends on users' ability to choose independent servers that are provided by different entities, and the apps are already programmed not just to use different servers for the message delivery path, but to use servers of different operators. Even though currently there are only 2 preset operators &mdash; POPOPX Chat and Flux &mdash; and all servers added to the app by the user are considered a third operator, it substantially improves privacy and security.
 
 In the future, the operators that confirmed their identity to the network will receive a much higher revenue share than anonymous ones. We believe that for users to be private and secure, operators must be known, and must accept legally binding terms of operation, same as preset operators do today.
 
@@ -105,9 +105,9 @@ We don't have an exact model for revenue sharing yet; it will be determined duri
 
 ### Who will control and upgrade smart contracts?
 
-Community Vouchers will require several smart contracts for their functioning. During testing and development, SimpleX Chat will maintain and update all contracts. Once the network is ready for production, some critical contracts (e.g., those that control the funds) will be immutable, requiring a lot of testing and a security audit, and some less critical contracts will still be upgradeable based on a consensus model (e.g., multisig or voting).
+Community Vouchers will require several smart contracts for their functioning. During testing and development, POPOPX Chat will maintain and update all contracts. Once the network is ready for production, some critical contracts (e.g., those that control the funds) will be immutable, requiring a lot of testing and a security audit, and some less critical contracts will still be upgradeable based on a consensus model (e.g., multisig or voting).
 
-It is always a journey from knowing that something is possible to knowing how exactly it will be done, and we are at the early stage of knowing it is possible. Specific designs would evolve, based on the input from legal and blockchain experts, and from the community &mdash; as everything else we develop for SimpleX network.
+It is always a journey from knowing that something is possible to knowing how exactly it will be done, and we are at the early stage of knowing it is possible. Specific designs would evolve, based on the input from legal and blockchain experts, and from the community &mdash; as everything else we develop for POPOPX network.
 
 ### Will I be able to sell or transfer Community Vouchers to other people?
 

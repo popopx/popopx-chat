@@ -2,7 +2,7 @@
 
 ## Overview
 
-Single page at `/links` showing 300+ external publications, reviews, bots, services, and community content about SimpleX Chat. All items rendered as HTML in the DOM for SEO. Client-side JS handles pagination via `display:none` and hash-based navigation.
+Single page at `/links` showing 300+ external publications, reviews, bots, services, and community content about POPOPX Chat. All items rendered as HTML in the DOM for SEO. Client-side JS handles pagination via `display:none` and hash-based navigation.
 
 Content source: `docs/LINKS.md` (parsed at build time).
 Images: `docs/links/images/` (copied at build time, missing images handled gracefully).
@@ -46,8 +46,8 @@ Returns array sorted reverse-chronologically by `dateSort`.
 Frontmatter:
 ```yaml
 layout: layouts/main.html
-title: "SimpleX Chat Links"
-description: "Reviews, articles, videos, podcasts, and community content about SimpleX Chat"
+title: "POPOPX Chat Links"
+description: "Reviews, articles, videos, podcasts, and community content about POPOPX Chat"
 permalink: /links/
 templateEngineOverride: njk
 active_links: true
@@ -58,7 +58,7 @@ Structure:
 - Filter bar: language dropdown, category chips, media type chips
 - Items list: reuses blog card layout pattern (same Tailwind classes from blog.html - `shadow-[0px_20px_30px_rgba(0,0,0,0.12)]`, `dark:bg-[#0B2A59]`, etc.)
 - Each item is an `<article>` with data attributes: `data-lang`, `data-category`, `data-media`, `data-date`, `data-featured`, and `id` attribute (semantic slug)
-- Image with `loading="lazy"`, fallback to SimpleX logo if no image
+- Image with `loading="lazy"`, fallback to POPOPX logo if no image
 - Title as link to external URL (opens in new tab)
 - Anchor icon (link/chain icon) appears on hover, links to `#link=item-id` for sharing
 - Publisher, category, language badge, date shown as metadata

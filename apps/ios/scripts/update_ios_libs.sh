@@ -9,7 +9,7 @@ LIBS_SIM="$PROJECT_ROOT/Libraries/sim"
 
 echo "=== Building iOS libraries with Nix ==="
 cd "$PROJECT_ROOT/.."
-nix build .#aarch64-darwin-ios:lib:simplex-chat
+nix build .#aarch64-darwin-ios:lib:popopx-chat
 
 echo ""
 echo "=== Extracting libraries ==="

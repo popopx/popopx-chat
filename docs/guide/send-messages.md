@@ -3,7 +3,7 @@ title: Sending messages
 ---
 # Sending, editing and deleting messages
 
-Sending text messages on SimpleX Chat is pretty straightforward, tap on your contact and then tap on text area, type in your message and tap on "Send" button.
+Sending text messages on POPOPX Chat is pretty straightforward, tap on your contact and then tap on text area, type in your message and tap on "Send" button.
 
 You need to open a conversation to send messages.
 
@@ -30,7 +30,7 @@ On iOS you can also paste images from the clipboard.
 <img src="../../blog/images/20221206-voice.png" width="288">
 
 - Tap 🎤 (microphone) button on the right of the message entry box.
-- Allow SimpleX Chat to record the voice if prompted. You will have to tap on the microphone button once again if this happens.
+- Allow POPOPX Chat to record the voice if prompted. You will have to tap on the microphone button once again if this happens.
 - Speak, once you've finished the recording, tap on the square stop icon on the right.
 - You may listen to the recording before sending it, and re-record if necessary.
 - Tap on "Send" button to send the recorded voice message.
@@ -78,7 +78,7 @@ Messages are kept in the chat until they are sent, even if you leave the chat.
 
 For privacy and simplicity, we decided to allow only one message draft and keep it only until the app is stopped.
 
-Read more in [this post](../../blog/20230204-simplex-chat-v4-5-user-chat-profiles.md#message-draft).
+Read more in [this post](../../blog/20230204-popopx-chat-v4-5-user-chat-profiles.md#message-draft).
 
 ## Deleting messages
 
@@ -91,7 +91,7 @@ If you sent this message yourself within the last 24 hours, you will be offered 
 - `delete for everyone` - this will either mark the message as deleted for you and the recipient(s) (this is the default) or fully delete the message on your and recipients' devices (if you have enabled "Delete for everyone" in the conversation preferences)
 - `delete for me` - this will delete the message only locally.
 
-Please read about [reasons for not allowing full deletion by default](../../blog/20221206-simplex-chat-v4.3-voice-messages.md#irreversible-message-deletion). TL;DR: data sovereignty.
+Please read about [reasons for not allowing full deletion by default](../../blog/20221206-popopx-chat-v4.3-voice-messages.md#irreversible-message-deletion). TL;DR: data sovereignty.
 
 ## Moderating messages in the groups
 
@@ -99,4 +99,4 @@ Group admins can delete member messages that are inappropriate for the groups.
 
 To remove a message of another member, tap and hold the message and choose "Moderate".
 
-Please read about [group moderation](../../blog/20230328-simplex-chat-v4-6-hidden-profiles.md#community-moderation).
+Please read about [group moderation](../../blog/20230328-popopx-chat-v4-6-hidden-profiles.md#community-moderation).

@@ -2213,6 +2213,7 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
     // group events
     case groupChatItemsDeleted(user: UserRef, groupInfo: GroupInfo, chatItemIDs: Set<Int64>, byUser: Bool, member_: GroupMember?)
     case receivedGroupInvitation(user: UserRef, groupInfo: GroupInfo, contact: Contact, fromMemberRole: GroupMemberRole, memberRole: GroupMemberRole)
+    case receivedGroupInvitationViaGroup(user: UserRef, groupInfo: GroupInfo, viaGroupInfo: GroupInfo, viaMember: GroupMember, memberRole: GroupMemberRole)
     case userAcceptedGroupSent(user: UserRef, groupInfo: GroupInfo, hostContact: Contact?)
     case groupLinkConnecting(user: UserRef, groupInfo: GroupInfo, hostMember: GroupMember)
     case businessLinkConnecting(user: UserRef, groupInfo: GroupInfo, hostMember: GroupMember, fromContact: Contact)
@@ -2330,6 +2331,7 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
         case .chatItemsDeleted: "chatItemsDeleted"
         case .groupChatItemsDeleted: "groupChatItemsDeleted"
         case .receivedGroupInvitation: "receivedGroupInvitation"
+        case .receivedGroupInvitationViaGroup: "receivedGroupInvitationViaGroup"
         case .userAcceptedGroupSent: "userAcceptedGroupSent"
         case .groupLinkConnecting: "groupLinkConnecting"
         case .businessLinkConnecting: "businessLinkConnecting"
@@ -2446,6 +2448,7 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
         case let .groupChatItemsDeleted(u, gInfo, chatItemIDs, byUser, member_):
             return withUser(u, "chatItemIDs: \(String(describing: chatItemIDs))\ngroupInfo: \(String(describing: gInfo))\nbyUser: \(byUser)\nmember_: \(String(describing: member_))")
         case let .receivedGroupInvitation(u, groupInfo, contact, fromMemberRole, memberRole): return withUser(u, "groupInfo: \(groupInfo)\ncontact: \(contact)\nfromMemberRole: \(fromMemberRole)\nmemberRole: \(memberRole)")
+        case let .receivedGroupInvitationViaGroup(u, groupInfo, viaGroupInfo, viaMember, memberRole): return withUser(u, "groupInfo: \(groupInfo)\nviaGroupInfo: \(viaGroupInfo)\nviaMember: \(viaMember)\nmemberRole: \(memberRole)")
         case let .userAcceptedGroupSent(u, groupInfo, hostContact): return withUser(u, "groupInfo: \(groupInfo)\nhostContact: \(String(describing: hostContact))")
         case let .groupLinkConnecting(u, groupInfo, hostMember): return withUser(u, "groupInfo: \(groupInfo)\nhostMember: \(String(describing: hostMember))")
         case let .businessLinkConnecting(u, groupInfo, hostMember, fromContact): return withUser(u, "groupInfo: \(groupInfo)\nhostMember: \(String(describing: hostMember))\nfromContact: \(String(describing: fromContact))")
@@ -2711,6 +2714,18 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
                   let mrObj = data["memberRole"],
                   let memberRole: GroupMemberRole = try? decodeObject(mrObj) else { return nil }
             return .receivedGroupInvitation(user: user, groupInfo: groupInfo, contact: contact, fromMemberRole: fromMemberRole, memberRole: memberRole)
+        case "receivedGroupInvitationViaGroup":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let giObj = data["groupInfo"],
+                  let groupInfo: GroupInfo = try? decodeObject(giObj),
+                  let vgiObj = data["viaGroupInfo"],
+                  let viaGroupInfo: GroupInfo = try? decodeObject(vgiObj),
+                  let vmObj = data["viaMember"],
+                  let viaMember: GroupMember = try? decodeObject(vmObj),
+                  let mrObj = data["memberRole"],
+                  let memberRole: GroupMemberRole = try? decodeObject(mrObj) else { return nil }
+            return .receivedGroupInvitationViaGroup(user: user, groupInfo: groupInfo, viaGroupInfo: viaGroupInfo, viaMember: viaMember, memberRole: memberRole)
         case "userAcceptedGroupSent":
             guard let userObj = data["user"],
                   let user: UserRef = try? decodeObject(userObj),

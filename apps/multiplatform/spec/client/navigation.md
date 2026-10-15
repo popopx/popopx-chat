@@ -1,6 +1,6 @@
 # Navigation Specification
 
-Source: `common/src/commonMain/kotlin/chat/simplex/common/App.kt` (470 lines)
+Source: `common/src/commonMain/kotlin/chat/popopx/common/App.kt` (470 lines)
 
 ---
 
@@ -20,7 +20,7 @@ Source: `common/src/commonMain/kotlin/chat/simplex/common/App.kt` (470 lines)
 
 ## Executive Summary
 
-SimpleX Chat navigation is a platform-adaptive system implemented in `App.kt`. The root `AppScreen` composable applies theming and safe-area insets, delegating to `MainScreen` which acts as a state machine routing between onboarding, authentication, database error, and the main chat interface. Android uses a 2-column sliding layout (`AndroidScreen`), while desktop uses a fixed 3-column layout (`DesktopScreen`). Modal presentation is managed by `ModalManager`, which provides named zones (start, center, end, fullscreen) for layered content. Authentication is gated by `AppLock`, and onboarding follows a linear `OnboardingStage` enum.
+POPOPX Chat navigation is a platform-adaptive system implemented in `App.kt`. The root `AppScreen` composable applies theming and safe-area insets, delegating to `MainScreen` which acts as a state machine routing between onboarding, authentication, database error, and the main chat interface. Android uses a 2-column sliding layout (`AndroidScreen`), while desktop uses a fixed 3-column layout (`DesktopScreen`). Modal presentation is managed by `ModalManager`, which provides named zones (start, center, end, fullscreen) for layered content. Authentication is gated by `AppLock`, and onboarding follows a linear `OnboardingStage` enum.
 
 ---
 
@@ -28,7 +28,7 @@ SimpleX Chat navigation is a platform-adaptive system implemented in `App.kt`. T
 
 ```
 AppScreen (line 46)
-+-- SimpleXTheme
++-- POPOPXTheme
     +-- Surface
         +-- MainScreen (line 82)
             |-- [Migration in progress]     -> DefaultProgressView
@@ -59,7 +59,7 @@ AppScreen (line 46)
 
 ## 2. AppScreen Composable
 
-**Location:** [`App.kt#L47`](../../common/src/commonMain/kotlin/chat/simplex/common/App.kt#L47)
+**Location:** [`App.kt#L47`](../../common/src/commonMain/kotlin/chat/popopx/common/App.kt#L47)
 
 ```kotlin
 @Composable
@@ -68,7 +68,7 @@ fun AppScreen()
 
 ### Responsibilities
 
-1. **Theme application:** Wraps content in `SimpleXTheme` with `Surface` using `MaterialTheme.colors.background`.
+1. **Theme application:** Wraps content in `POPOPXTheme` with `Surface` using `MaterialTheme.colors.background`.
 2. **Window insets:** Computes safe padding for landscape mode, accounting for display cutouts on both sides. Uses `WindowInsets.safeDrawing` and `WindowInsets.displayCutout` to calculate symmetric padding.
 3. **Fullscreen gallery overlay:** When `chatModel.fullscreenGalleryVisible` is true, draws a black rectangle behind content extending into the cutout areas to provide an immersive gallery background.
 4. **Delegates to `MainScreen()`.**
@@ -79,7 +79,7 @@ fun AppScreen()
 
 ## 3. MainScreen
 
-**Location:** [`App.kt#L84`](../../common/src/commonMain/kotlin/chat/simplex/common/App.kt#L84)
+**Location:** [`App.kt#L84`](../../common/src/commonMain/kotlin/chat/popopx/common/App.kt#L84)
 
 ```kotlin
 @Composable
@@ -92,7 +92,7 @@ fun MainScreen()
 
 | Priority | Condition | View |
 |---|---|---|
-| 1 | `onboarding == Step1_SimpleXInfo && migrationState != null` | `SimpleXInfo` (migration in progress) |
+| 1 | `onboarding == Step1_POPOPXInfo && migrationState != null` | `POPOPXInfo` (migration in progress) |
 | 2 | `dbMigrationInProgress` | `DefaultProgressView("Database migration...")` |
 | 3 | `chatDbStatus == null && showInitializationView` | `DefaultProgressView("Opening database...")` |
 | 4 | `showChatDatabaseError` | `DatabaseErrorView` |
@@ -126,7 +126,7 @@ When onboarding is complete:
 
 ## 4. Android Layout
 
-**Location:** [`App.kt#L296`](../../common/src/commonMain/kotlin/chat/simplex/common/App.kt#L296)
+**Location:** [`App.kt#L296`](../../common/src/commonMain/kotlin/chat/popopx/common/App.kt#L296)
 
 ```kotlin
 @Composable
@@ -165,7 +165,7 @@ If the device has a display cutout on horizontal sides (detected via `WindowInse
 
 ## 5. Desktop Layout
 
-**Location:** [`App.kt#L410`](../../common/src/commonMain/kotlin/chat/simplex/common/App.kt#L410)
+**Location:** [`App.kt#L410`](../../common/src/commonMain/kotlin/chat/popopx/common/App.kt#L410)
 
 ```kotlin
 @Composable
@@ -192,7 +192,7 @@ When the UserPicker is visible or a start modal is open (but no center modal), a
 
 ### CenterPartOfScreen
 
-**Location:** [`App.kt#L373`](../../common/src/commonMain/kotlin/chat/simplex/common/App.kt#L373)
+**Location:** [`App.kt#L373`](../../common/src/commonMain/kotlin/chat/popopx/common/App.kt#L373)
 
 - When `chatId` is null and no center modals: shows "No selected chat" placeholder.
 - When `chatId` is null and center modals open: shows `ModalManager.center`.
@@ -201,7 +201,7 @@ When the UserPicker is visible or a start modal is open (but no center modal), a
 
 ### StartPartOfScreen
 
-**Location:** [`App.kt#L352`](../../common/src/commonMain/kotlin/chat/simplex/common/App.kt#L352)
+**Location:** [`App.kt#L352`](../../common/src/commonMain/kotlin/chat/popopx/common/App.kt#L352)
 
 Routes between:
 - `SetDeliveryReceiptsView` (if `chatModel.setDeliveryReceipts` is true)
@@ -212,7 +212,7 @@ Routes between:
 
 ## 6. ModalManager
 
-**Location:** `common/src/commonMain/kotlin/chat/simplex/common/views/helpers/ModalView.kt` (line 92)
+**Location:** `common/src/commonMain/kotlin/chat/popopx/common/views/helpers/ModalView.kt` (line 92)
 
 ```kotlin
 class ModalManager(private val placement: ModalPlacement?)
@@ -273,7 +273,7 @@ Each `ModalManager` maintains a stack of `ModalViewHolder` objects with:
 
 ## 7. Authentication Gate
 
-**Location:** [`AppLock.kt#L17`](../../common/src/commonMain/kotlin/chat/simplex/common/AppLock.kt#L17)
+**Location:** [`AppLock.kt#L17`](../../common/src/commonMain/kotlin/chat/popopx/common/AppLock.kt#L17)
 
 ```kotlin
 object AppLock {
@@ -311,22 +311,22 @@ The `laLockDelay` preference controls how long after backgrounding the app requi
 
 ### First-Time Lock Notice
 
-`showLANotice` (line ~33 in `AppLock.kt`) prompts users to enable SimpleX Lock when they have more than 3 chats, have not yet been shown the notice, and have not enabled lock. On Android, it offers a choice between system auth and passcode.
+`showLANotice` (line ~33 in `AppLock.kt`) prompts users to enable POPOPX Lock when they have more than 3 chats, have not yet been shown the notice, and have not enabled lock. On Android, it offers a choice between system auth and passcode.
 
 ---
 
 ## 8. Onboarding Flow
 
-**Location:** `common/src/commonMain/kotlin/chat/simplex/common/views/onboarding/OnboardingView.kt` (line 3)
+**Location:** `common/src/commonMain/kotlin/chat/popopx/common/views/onboarding/OnboardingView.kt` (line 3)
 
 ```kotlin
 enum class OnboardingStage {
-  Step1_SimpleXInfo,
+  Step1_POPOPXInfo,
   Step2_CreateProfile,
   LinkAMobile,
   Step2_5_SetupDatabasePassphrase,
   Step3_ChooseServerOperators,
-  Step3_CreateSimpleXAddress,
+  Step3_CreatePOPOPXAddress,
   Step4_SetNotificationsMode,
   OnboardingComplete
 }
@@ -336,12 +336,12 @@ enum class OnboardingStage {
 
 | Stage | View | Next Stage |
 |---|---|---|
-| `Step1_SimpleXInfo` | `SimpleXInfo` -- app introduction, privacy features | `Step2_CreateProfile` or `LinkAMobile` (desktop) |
+| `Step1_POPOPXInfo` | `POPOPXInfo` -- app introduction, privacy features | `Step2_CreateProfile` or `LinkAMobile` (desktop) |
 | `Step2_CreateProfile` | `CreateFirstProfile` -- display name, optional image | `Step2_5_SetupDatabasePassphrase` or `Step3_ChooseServerOperators` |
 | `LinkAMobile` | `LinkAMobile` -- desktop linking to mobile device | `Step2_CreateProfile` |
 | `Step2_5_SetupDatabasePassphrase` | `SetupDatabasePassphrase` -- optional DB encryption | `Step3_ChooseServerOperators` |
-| `Step3_ChooseServerOperators` | `OnboardingConditionsView` -- server operator selection, T&C | `Step3_CreateSimpleXAddress` or `Step4_SetNotificationsMode` |
-| `Step3_CreateSimpleXAddress` | `SetNotificationsMode` (legacy backcompat) | `Step4_SetNotificationsMode` |
+| `Step3_ChooseServerOperators` | `OnboardingConditionsView` -- server operator selection, T&C | `Step3_CreatePOPOPXAddress` or `Step4_SetNotificationsMode` |
+| `Step3_CreatePOPOPXAddress` | `SetNotificationsMode` (legacy backcompat) | `Step4_SetNotificationsMode` |
 | `Step4_SetNotificationsMode` | `SetNotificationsMode` -- notification permission setup | `OnboardingComplete` |
 | `OnboardingComplete` | Main app screen | -- |
 
@@ -363,7 +363,7 @@ The stage value is stored in `appPrefs.onboardingStage` and persisted across app
 | `AppLock.kt` | AppLock object, authentication state, lock notice, LA mode selection |
 | `views/helpers/ModalView.kt` | ModalManager class, ModalPlacement enum, modal stack management |
 | `views/onboarding/OnboardingView.kt` | OnboardingStage enum |
-| `views/onboarding/SimpleXInfo.kt` | Step 1: App introduction |
+| `views/onboarding/POPOPXInfo.kt` | Step 1: App introduction |
 | `views/WelcomeView.kt` | Step 2: Profile creation (CreateFirstProfile) |
 | `views/onboarding/LinkAMobileView.kt` | Desktop: Link a mobile device |
 | `views/onboarding/SetupDatabasePassphrase.kt` | Step 2.5: Database passphrase |

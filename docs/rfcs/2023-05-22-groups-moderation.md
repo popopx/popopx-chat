@@ -25,4 +25,4 @@ Both solutions rely on group state being consistent, so some of the improvements
 
 The actual scoring mechanics require formalization. The initial point can be made the same as on some combination of Reddit and Habr.com ideas, and then tweaked to take into account that the reputation scores are community-wide and group-wide.
 
-Once SimpleX adds [identity layer](./2021-12-11-identity.md), the discovery server can start supporting the reputation scoring for the identity across multiple communities for people who opt in into it.
+Once POPOPX adds [identity layer](./2021-12-11-identity.md), the discovery server can start supporting the reputation scoring for the identity across multiple communities for people who opt in into it.

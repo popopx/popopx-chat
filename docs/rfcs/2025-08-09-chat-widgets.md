@@ -134,7 +134,7 @@ Inline buttons widget:
       ( ("Site" (link "https://example.com))
         ("Call" (link "+447777777777"))
         ("Email" (link "info@example.com"))
-        ("Connect" (link "https://smp5.simplex.im/a#abcd))
+        ("Connect" (link "https://smp5.popopx.im/a#abcd))
         ("Copy" (copy "text to copy))
       ) # a row of 5 buttons
     )
@@ -185,7 +185,7 @@ and the button grid as:
     ( ("Site" (link "https://example.com))
       ("Call" (link "+447777777777"))
       ("Email" (link "info@example.com"))
-      ("Connect" (link "https://smp5.simplex.im/a#abcd))
+      ("Connect" (link "https://smp5.popopx.im/a#abcd))
       ("Copy" (copy "text to copy))
     )
   )

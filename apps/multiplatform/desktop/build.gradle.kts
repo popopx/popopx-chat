@@ -8,7 +8,7 @@ plugins {
   id("io.github.tomtzook.gradle-cmake") version "1.2.2"
 }
 
-group = "chat.simplex"
+group = "chat.popopx"
 version = extra["desktop.version_name"] as String
 
 
@@ -38,7 +38,7 @@ compose {
           "-Dcom.sun.management.jmxremote.authenticate=false"
         )
       }
-      mainClass = "chat.simplex.desktop.MainKt"
+      mainClass = "chat.popopx.desktop.MainKt"
       nativeDistributions {
         copyright = "(c) 2020-2026 SimpleX Chat"
         // For debugging via VisualVM
@@ -64,12 +64,12 @@ compose {
           //, TargetFormat.AppImage // Gradle doesn't sync on Mac with it
         )
         linux {
-          iconFile.set(project.file("src/jvmMain/resources/distribute/simplex.png"))
+          iconFile.set(project.file("src/jvmMain/resources/distribute/popopx.png"))
           appCategory = "Messenger"
         }
         windows {
-          packageName = "SimpleX"
-          iconFile.set(project.file("src/jvmMain/resources/distribute/simplex.ico"))
+          packageName = "POPOPX"
+          iconFile.set(project.file("src/jvmMain/resources/distribute/popopx.ico"))
           console = false
           perUserInstall = false
           dirChooser = true
@@ -77,14 +77,14 @@ compose {
           upgradeUuid = "CC9EFBC8-AFFF-40D8-BB69-FCD7CE99EFB9"
         }
         macOS {
-          packageName = "SimpleX"
-          iconFile.set(project.file("src/jvmMain/resources/distribute/simplex.icns"))
+          packageName = "POPOPX"
+          iconFile.set(project.file("src/jvmMain/resources/distribute/popopx.icns"))
           appCategory = "public.app-category.social-networking"
-          bundleID = "chat.simplex.app"
+          bundleID = "chat.popopx.app"
           infoPlist {
             extraKeysRawXml = """
               <key>NSMicrophoneUsageDescription</key>
-              <string>SimpleX needs microphone access to record voice messages</string>
+              <string>POPOPX needs microphone access to record voice messages</string>
             """
           }
           val identity = rootProject.extra["desktop.mac.signing.identity"] as String?
@@ -106,9 +106,9 @@ compose {
           }
         }
         if (os.contains("mac") || os.contains("win")) {
-          packageName = "SimpleX"
+          packageName = "POPOPX"
         } else {
-          packageName = "simplex"
+          packageName = "popopx"
         }
         // Packaging requires to have version like MAJOR.MINOR.PATCH
         var adjustedVersion = rootProject.extra["desktop.version_name"] as String

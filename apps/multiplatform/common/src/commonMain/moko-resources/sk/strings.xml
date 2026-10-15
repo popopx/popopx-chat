@@ -15,7 +15,7 @@
     <string name="connect_plan_open_group">Otvoriť skupinu</string>
     <string name="connect_plan_open_new_group">Otvoriť novú skupinu</string>
     <string name="error_parsing_uri_title">Neplatný odkaz</string>
-    <string name="error_parsing_uri_desc">Prosím skontrolujte, že SimpleX odkaz je správny.</string>
+    <string name="error_parsing_uri_desc">Prosím skontrolujte, že POPOPX odkaz je správny.</string>
     <string name="opening_database">Otváranie databázy…</string>
     <string name="database_migration_in_progress">Prebieha migrácia databázy.\nMôže to trvať niekoľko minút.</string>
     <string name="non_content_uri_alert_title">Neplatná cesta súboru</string>
@@ -51,7 +51,7 @@
     <string name="channel_subscriber_count_plural">%1$d odberateľov</string>
     <string name="group_info_section_title_num_members">%1$s členov</string>
     <string name="forward_files_messages_deleted_after_selection_title">%1$s správ nepreposlaných</string>
-    <string name="badge_supported_simplex">%1$s podporilo SimpleX Chat. Odznak vypršal %2$s.</string>
+    <string name="badge_supported_popopx">%1$s podporilo POPOPX Chat. Odznak vypršal %2$s.</string>
     <string name="contact_wants_to_connect_via_call">%1$s sa s vami chce spojiť prostredníctvom</string>
     <string name="group_new_support_chat_one">1 chat s členom</string>
     <string name="chat_item_ttl_day">1 deň</string>
@@ -71,9 +71,9 @@
     <string name="abort_switch_receiving_address">Prerušiť zmenu adresy</string>
     <string name="abort_switch_receiving_address_question">Prerušiť zmenu adresy?</string>
     <string name="onboarding_network_about_operators">O operátoroch</string>
-    <string name="about_simplex">O SimpleX</string>
-    <string name="learn_more_about_address">O adrese SimpleX</string>
-    <string name="about_simplex_chat">O SimpleX Chat</string>
+    <string name="about_popopx">O POPOPX</string>
+    <string name="learn_more_about_address">O adrese POPOPX</string>
+    <string name="about_popopx_chat">O POPOPX Chat</string>
     <string name="above_then_preposition_continuation">vyššie, potom:</string>
     <string name="color_primary">Sfarbenie</string>
     <string name="network_enable_socks_info">Pristupovať k serverom cez SOCKS proxy na porte %d? Pred povolením tejto možnosti musí byť spustená proxy.</string>
@@ -141,7 +141,7 @@
     <string name="enable_sending_member_reports">Povoliť nahlasovanie správ moderátorom.</string>
     <string name="allow_to_send_disappearing">Povoliť posielanie miznúcich správ.</string>
     <string name="allow_to_send_files">Povoliť posielanie súborov a médií.</string>
-    <string name="allow_to_send_simplex_links">Povoliť posielanie SimpleX odkazov.</string>
+    <string name="allow_to_send_popopx_links">Povoliť posielanie POPOPX odkazov.</string>
     <string name="allow_to_send_voice">Povoliť posielanie hlasových správ.</string>
     <string name="allow_voice_messages_question">Povoliť hlasové správy?</string>
     <string name="allow_your_contacts_adding_message_reactions">Povoliť kontaktom pridávať reakcie na správy.</string>
@@ -228,7 +228,7 @@
     <string name="create_another_profile_button">Vytvoriť profil</string>
     <string name="create_group">Vytvoriť tajnú skupinu</string>
     <string name="create_secret_group_title">Vytvorenie tajnej skupiny</string>
-    <string name="create_simplex_address">Vytvoriť SimpleX adresu</string>
+    <string name="create_popopx_address">Vytvoriť POPOPX adresu</string>
     <string name="create_your_profile">Vytvorte si svoj profil</string>
     <string name="create_your_public_address">Vytvorte si verejnú adresu</string>
     <string name="creating_channel">Vytváram kanál</string>
@@ -308,7 +308,7 @@
     <string name="channel_full_name_field">Celý názov kanálu:</string>
     <string name="rcv_group_event_member_accepted">prijal %1$s</string>
     <string name="acknowledgement_errors">Chyby potvrdenia</string>
-    <string name="add_address_to_your_profile">Pridajte adresu na váš profil, aby ju vaše SimpleX kontakty mohli zdieľať s ostatnými ľudmi. Aktualizácia profilu bude odoslaná vašim kontaktom.</string>
+    <string name="add_address_to_your_profile">Pridajte adresu na váš profil, aby ju vaše POPOPX kontakty mohli zdieľať s ostatnými ľudmi. Aktualizácia profilu bude odoslaná vašim kontaktom.</string>
     <string name="embed_any_webpage_can_show">Každá webová stránka môže zobraziť náhľad.</string>
     <string name="full_backup">Zálohovať dáta aplikácie</string>
     <string name="v5_6_app_data_migration">Migrácia dát aplikácie</string>
@@ -420,7 +420,7 @@
     <string name="switch_receiving_address">Zmeniť prijímaciu adresu</string>
     <string name="switch_receiving_address_question">Zmeniť prijímaciu adresu?</string>
     <string name="change_self_destruct_mode">Zmeniť režim sebazničenia</string>
-    <string name="channel_simplex_name">SimpleX meno kanálu</string>
+    <string name="channel_popopx_name">POPOPX meno kanálu</string>
     <string name="delete_channel_for_all_subscribers_cannot_undo_warning">Kanál bude vymazaný u všetkých odberateľov – toto je nezvratné!</string>
     <string name="delete_channel_for_self_cannot_undo_warning">Kanál bude odstránený u vás – toto je nezvratné!</string>
     <string name="channel_will_start_with_relays">Kanál začne pracovať s %1$d z %2$d relé. Pokračovať?</string>
@@ -780,7 +780,7 @@
     <string name="smp_servers_delete_server">Vymazať server</string>
     <string name="v6_0_delete_many_messages_descr">Vymazať až 20 správ naraz.</string>
     <string name="deletion_errors">Chyby mazania</string>
-    <string name="simplex_link_mode_description">Opis</string>
+    <string name="popopx_link_mode_description">Opis</string>
     <string name="profile_description__field">Opis</string>
     <string name="group_descr_too_large">Opis je príliš dlhý</string>
     <string name="desktop_device">Počítač</string>
@@ -954,7 +954,7 @@
     <string name="v4_5_reduced_battery_usage">Zníženie spotreby batérie</string>
     <string name="v4_4_disappearing_messages_desc">Odoslané správy budú po uplynutí nastavenej doby vymazané.</string>
     <string name="v4_6_group_welcome_message_descr">Nastavte správu zobrazenú novým členom!</string>
-    <string name="v4_2_security_assessment_desc">Bezpečnosť SimpleX Chat bola preverená spoločnosťou Trail of Bits.</string>
+    <string name="v4_2_security_assessment_desc">Bezpečnosť POPOPX Chat bola preverená spoločnosťou Trail of Bits.</string>
     <string name="v4_6_audio_video_calls_descr">Podpora bluetooth a ďalšie vylepšenia.</string>
     <string name="v4_5_private_filenames_descr">Na ochranu časového pásma, obrazové/hlasové súbory používajú UTC.</string>
     <string name="v4_5_transport_isolation">Izolácia prenosu</string>
@@ -1035,8 +1035,8 @@
     <string name="v6_4_1_short_address_share">Zdieľajte vašu adresu</string>
     <string name="v7_0_channels_wider_messages">Ľahšie čitateľné.</string>
     <string name="v7_0_channels_relays">Spravujte si svoje relé.</string>
-    <string name="v7_0_simplex_names_descr">Verejné mená pre vaše kanály alebo firmy.</string>
-    <string name="v7_0_simplex_names">SimpleX verejné mená (BETA)</string>
+    <string name="v7_0_popopx_names_descr">Verejné mená pre vaše kanály alebo firmy.</string>
+    <string name="v7_0_popopx_names">POPOPX verejné mená (BETA)</string>
     <string name="edit_verb">Upraviť</string>
     <string name="edit_chat_list_menu_action">Upraviť</string>
     <string name="button_edit_channel_profile">Upraviť profil kanálu</string>
@@ -1132,7 +1132,7 @@
     <string name="chat_link_from_owner">(od majiteľa)</string>
     <string name="full_name__field">Celé meno:</string>
     <string name="group_is_decentralized">Plne decentralizovaná – viditeľná iba pre členov.</string>
-    <string name="simplex_link_mode_full">Celý odkaz</string>
+    <string name="popopx_link_mode_full">Celý odkaz</string>
     <string name="full_link_button_text">Celý odkaz</string>
     <string name="get_started">Začať</string>
     <string name="wallpaper_preview_hello_bob">Dobré ráno!</string>
@@ -1152,7 +1152,7 @@
     <string name="icon_descr_help">pomoc</string>
     <string name="settings_section_title_help">Pomoc</string>
     <string name="help_and_support">Pomoc a podpora</string>
-    <string name="email_invite_body">Ahoj!\nSpoj sa so mnou cez SimpleX Chat: %s</string>
+    <string name="email_invite_body">Ahoj!\nSpoj sa so mnou cez POPOPX Chat: %s</string>
     <string name="notification_preview_mode_hidden">Skryté</string>
     <string name="hide_notification">Skryť</string>
     <string name="hide_verb">Skryť</string>
@@ -1311,7 +1311,7 @@
     <string name="error_saving_file">Chyba pri ukladaní súboru</string>
     <string name="error_saving_group_profile">Chyba pri ukladaní profilu skupiny</string>
     <string name="error_saving_ICE_servers">Chyba pri ukladaní ICE serverov</string>
-    <string name="error_saving_simplex_name">Chyba pri ukladaní mena</string>
+    <string name="error_saving_popopx_name">Chyba pri ukladaní mena</string>
     <string name="network_proxy_incorrect_config_title">Chyba pri ukladaní proxy</string>
     <string name="failed_to_save_servers">Chyba pri ukladaní serverov</string>
     <string name="prefs_error_saving_settings">Chyba pri ukladaní nastavení</string>
@@ -1376,14 +1376,14 @@
     <string name="open_external_link_title">Otvoriť externý odkaz?</string>
     <string name="privacy_chat_list_open_full_web_link">Otvoriť celý odkaz</string>
     <string name="permissions_open_settings">Otvoriť nastavenia</string>
-    <string name="open_simplex_chat_to_accept_call">Otvorte SimpleX Chat na prijatie hovoru</string>
+    <string name="open_popopx_chat_to_accept_call">Otvorte POPOPX Chat na prijatie hovoru</string>
     <string name="privacy_chat_list_open_web_link_question">Otvoriť webový odkaz?</string>
     <string name="open_with_app">Otvoriť pomocou %s</string>
     <string name="or_scan_qr_code">Alebo naskenovať QR kód</string>
     <string name="or_paste_archive_link">Alebo vložiť odkaz archívu</string>
     <string name="file_error">Chyba súboru</string>
     <string name="if_you_cant_meet_in_person">Ak sa nemôžte stretnúť osobne, ukážte QR kód vo video hovore, alebo zdieľajte odkaz.</string>
-    <string name="if_you_received_simplex_invitation_link_you_can_open_in_browser">Ak ste dostali SimpleX Chat pozvánku, môžete ju otvoriť v prehliadači:</string>
+    <string name="if_you_received_popopx_invitation_link_you_can_open_in_browser">Ak ste dostali POPOPX Chat pozvánku, môžete ju otvoriť v prehliadači:</string>
     <string name="incorrect_code">Nesprávny bezpečnostný kód</string>
     <string name="theme_colors_section_title">Farby rozhrania</string>
     <string name="custom_time_unit_months">mesiacov</string>
@@ -1407,7 +1407,7 @@
     <string name="group_members_can_send_dms">Členovia môžu posielať priame správy.</string>
     <string name="group_members_can_send_disappearing">Členovia môžu posielať miznúce správy.</string>
     <string name="group_members_can_send_files">Členovia môžu posielať súbory a médiá.</string>
-    <string name="group_members_can_send_simplex_links">Členovia môžu posielať SimpleX odkazy.</string>
+    <string name="group_members_can_send_popopx_links">Členovia môžu posielať POPOPX odkazy.</string>
     <string name="group_members_can_send_voice">Členovia môžu posielať hlasové správy.</string>
     <string name="note_folder_local_display_name">Súkromné poznámky</string>
     <string name="image_descr_qr_code">QR kód</string>
@@ -1421,8 +1421,8 @@
     <string name="smp_servers_save">Uložiť servery</string>
     <string name="smp_save_servers_question">Uložiť servery?</string>
     <string name="save_settings_question">Uložiť nastavenia?</string>
-    <string name="save_auto_accept_settings">Uložiť nastavenia SimpleX adresy</string>
-    <string name="save_simplex_name_question">Uložiť SimpleX meno?</string>
+    <string name="save_auto_accept_settings">Uložiť nastavenia POPOPX adresy</string>
+    <string name="save_popopx_name_question">Uložiť POPOPX meno?</string>
     <string name="save_welcome_message_question">Uložiť uvítaciu správu?</string>
     <string name="your_ICE_servers">Vaše ICE servery</string>
     <string name="enter_one_ICE_server_per_line">ICE servery (jeden na riadok)</string>

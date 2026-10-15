@@ -69,7 +69,7 @@
     <string name="notification_preview_somebody">Kontakti piilotettu:</string>
     <string name="notification_contact_connected">Yhdistetty</string>
     <string name="delete_member_message__question">Poista jäsenviesti\?</string>
-    <string name="auth_device_authentication_is_not_enabled_you_can_turn_on_in_settings_once_enabled">Laitteen todennus ei ole käytössä. Voit ottaa SimpleX Lockin käyttöön asetuksista, kun olet ottanut laitteen todennuksen käyttöön.</string>
+    <string name="auth_device_authentication_is_not_enabled_you_can_turn_on_in_settings_once_enabled">Laitteen todennus ei ole käytössä. Voit ottaa POPOPX Lockin käyttöön asetuksista, kun olet ottanut laitteen todennuksen käyttöön.</string>
     <string name="chat_with_developers">Keskustele kehittäjien kanssa</string>
     <string name="maximum_supported_file_size">Nykyinen tuettu enimmäistiedostokoko on %1$s.</string>
     <string name="delete_contact_question">Poista kontakti\?</string>
@@ -96,14 +96,14 @@
     <string name="connect_via_group_link">Liitytäänkö ryhmään?</string>
     <string name="connect_via_invitation_link">Yhdistetäänkö kutsulinkin kautta\?</string>
     <string name="server_connecting">yhdistää</string>
-    <string name="simplex_link_mode_description">Kuvaus</string>
+    <string name="popopx_link_mode_description">Kuvaus</string>
     <string name="smp_server_test_connect">Yhdistä</string>
     <string name="turning_off_service_and_periodic">Akun optimointi on päällä ja se poistaa taustapalvelun käytöstä sekä säännölliset päivitykset uusista viesteistä. Voit ottaa ne uudelleen käyttöön asetuksista.</string>
-    <string name="auth_disable_simplex_lock">Poista SimpleX Lock käytöstä</string>
+    <string name="auth_disable_popopx_lock">Poista POPOPX Lock käytöstä</string>
     <string name="copy_verb">Kopioi</string>
     <string name="image_decoding_exception_title">Dekoodauksen virhe</string>
     <string name="icon_descr_cancel_link_preview">peruuta linkin esikatselu</string>
-    <string name="about_simplex">Tietoja SimpleX:stä</string>
+    <string name="about_popopx">Tietoja POPOPX:stä</string>
     <string name="icon_descr_audio_off">Ääni pois päältä</string>
     <string name="change_role">Vaihda rooli</string>
     <string name="full_deletion">Poista kaikilta</string>
@@ -132,7 +132,7 @@
     <string name="it_can_disabled_via_settings_notifications_still_shown"><![CDATA[<b>Se voidaan poistaa käytöstä asetuksista</b> – ilmoitukset näkyvät edelleen, kun sovellus on käynnissä.]]></string>
     <string name="notifications_mode_periodic_desc">Tarkistaa uudet viestit 10 minuutin välein enintään 1 minuutin ajan</string>
     <string name="auth_confirm_credential">Vahvista kirjautumistietosi</string>
-    <string name="auth_device_authentication_is_disabled_turning_off">Laitteen todennus on poistettu käytöstä. SimpleX Lock kytketään pois päältä.</string>
+    <string name="auth_device_authentication_is_disabled_turning_off">Laitteen todennus on poistettu käytöstä. POPOPX Lock kytketään pois päältä.</string>
     <string name="delete_verb">Poista</string>
     <string name="delete_message__question">Poista viesti\?</string>
     <string name="group_connection_pending">yhdistää…</string>
@@ -184,7 +184,7 @@
     <string name="configure_ICE_servers">Määritä ICE-palvelimet</string>
     <string name="add_address_to_your_profile">Lisää osoite profiiliisi, jotta kontaktisi voivat jakaa sen muiden kanssa. Profiilipäivitys lähetetään kontakteillesi.</string>
     <string name="all_your_contacts_will_remain_connected_update_sent">Kaikki kontaktisi pysyvät yhteydessä. Profiilipäivitys lähetetään kontakteillesi.</string>
-    <string name="create_simplex_address">Luo SimpleX-osoite</string>
+    <string name="create_popopx_address">Luo POPOPX-osoite</string>
     <string name="accept_call_on_lock_screen">Hyväksy</string>
     <string name="settings_audio_video_calls">Ääni- ja videopuhelut</string>
     <string name="call_on_lock_screen">Puhelut lukitusnäytöllä:</string>
@@ -196,7 +196,7 @@
     <string name="connection_local_display_name">yhteys %1$d</string>
     <string name="smp_server_test_compare_file">Vertaa tiedostoa</string>
     <string name="alert_title_contact_connection_pending">Kontaktia ei ole vielä yhdistetty!</string>
-    <string name="learn_more_about_address">Tietoja SimpleX osoitteesta</string>
+    <string name="learn_more_about_address">Tietoja POPOPX osoitteesta</string>
     <string name="chat_console">Keskustelukonsoli</string>
     <string name="contribute">Osallistu</string>
     <string name="appearance_settings">Ulkonäkö</string>
@@ -261,7 +261,7 @@
     <string name="delete_pending_connection__question">Poistetaanko odottava yhteys\?</string>
     <string name="connection_request_sent">Yhteyspyyntö lähetetty!</string>
     <string name="connect_via_link">Yhdistä linkin kautta</string>
-    <string name="about_simplex_chat">Tietoja SimpleX Chatistä</string>
+    <string name="about_popopx_chat">Tietoja POPOPX Chatistä</string>
     <string name="database_passphrase_and_export">Tietokannan tunnuslause ja vienti</string>
     <string name="create_profile">Luo profiili</string>
     <string name="no_call_on_lock_screen">Poista käytöstä</string>
@@ -364,10 +364,10 @@
     <string name="import_theme">Tuo teema</string>
     <string name="thousand_abbreviation">t</string>
     <string name="server_error">virhe</string>
-    <string name="simplex_link_mode_full">Koko linkki</string>
+    <string name="popopx_link_mode_full">Koko linkki</string>
     <string name="error_setting_network_config">Virhe verkkoasetuksia päivitettäessä</string>
     <string name="failed_to_parse_chat_title">Keskustelun lataaminen epäonnistui</string>
-    <string name="auth_enable_simplex_lock">Ota SimpleX Lock käyttöön</string>
+    <string name="auth_enable_popopx_lock">Ota POPOPX Lock käyttöön</string>
     <string name="edit_verb">Muokkaa</string>
     <string name="group_preview_join_as">liity nimellä %s</string>
     <string name="icon_descr_server_status_error">Virhe</string>
@@ -472,14 +472,14 @@
     <string name="error_deleting_contact">Virhe kontaktin poistamisessa</string>
     <string name="smp_server_test_download_file">Lataa tiedosto</string>
     <string name="error_setting_address">Virhe osoitteen asettamisessa</string>
-    <string name="if_you_received_simplex_invitation_link_you_can_open_in_browser">Jos sait SimpleX Chat -kutsulinkin, voit avata sen selaimessasi:</string>
+    <string name="if_you_received_popopx_invitation_link_you_can_open_in_browser">Jos sait POPOPX Chat -kutsulinkin, voit avata sen selaimessasi:</string>
     <string name="smp_servers_enter_manually">Syötä palvelin manuaalisesti</string>
     <string name="how_to_use_your_servers">Miten käytät palvelimiasi</string>
-    <string name="install_simplex_chat_for_terminal">Asenna SimpleX Chat terminaaliin</string>
+    <string name="install_popopx_chat_for_terminal">Asenna POPOPX Chat terminaaliin</string>
     <string name="enter_welcome_message_optional">Kirjoita tervetuloviesti... (valinnainen)</string>
     <string name="invite_friends">Kutsu ystäviä</string>
     <string name="email_invite_body">Hei!
-\nOta minuun yhteyttä SimpleX Chatin kautta: %s</string>
+\nOta minuun yhteyttä POPOPX Chatin kautta: %s</string>
     <string name="edit_image">Muokkaa kuvaa</string>
     <string name="exit_without_saving">Poistu tallentamatta</string>
     <string name="error_saving_user_password">Virhe käyttäjän salasanan tallentamisessa</string>
@@ -498,7 +498,7 @@
     <string name="ttl_s">%ds</string>
     <string name="v4_3_irreversible_message_deletion">Peruuttamaton viestin poisto</string>
     <string name="for_everybody">Kaikille</string>
-    <string name="how_to_use_simplex_chat">Kuinka sitä käytetään</string>
+    <string name="how_to_use_popopx_chat">Kuinka sitä käytetään</string>
     <string name="enter_one_ICE_server_per_line">ICE-palvelimet (yksi per rivi)</string>
     <string name="error_saving_ICE_servers">Virhe ICE-palvelimien tallentamisessa</string>
     <string name="network_disable_socks_info">Jos vahvistat, viestipalvelimet näkevät IP-osoitteesi ja palveluntarjoajasi - mihin palvelimiin olet yhteydessä.</string>
@@ -524,7 +524,7 @@
     <string name="icon_descr_help">apua</string>
     <string name="incorrect_code">Väärä turvakoodi!</string>
     <string name="error_sending_message">Virhe viestin lähettämisessä</string>
-    <string name="turn_off_battery_optimization"><![CDATA[Käyttääksesi sitä, <b> salli SimpleX:n toimia taustalla </b> seuraavassa ikkunassa. Muutoin ilmoitukset poistetaan käytöstä.]]></string>
+    <string name="turn_off_battery_optimization"><![CDATA[Käyttääksesi sitä, <b> salli POPOPX:n toimia taustalla </b> seuraavassa ikkunassa. Muutoin ilmoitukset poistetaan käytöstä.]]></string>
     <string name="notification_preview_mode_hidden">Piilotettu</string>
     <string name="la_immediately">Heti</string>
     <string name="la_enter_app_passcode">Syötä pääsykoodi</string>
@@ -588,8 +588,8 @@
     <string name="notification_preview_mode_message">Viestin teksti</string>
     <string name="notification_preview_mode_contact_desc">Näytä vain kontakti</string>
     <string name="notification_preview_new_message">uusi viesti</string>
-    <string name="la_notice_title_simplex_lock">SimpleX Lock</string>
-    <string name="auth_simplex_lock_turned_on">SimpleX Lock päällä</string>
+    <string name="la_notice_title_popopx_lock">POPOPX Lock</string>
+    <string name="auth_popopx_lock_turned_on">POPOPX Lock päällä</string>
     <string name="auth_open_chat_console">Avaa keskustelukonsoli</string>
     <string name="message_delivery_error_title">Viestin toimitusvirhe</string>
     <string name="auth_stop_chat">Lopeta keskustelu</string>
@@ -609,11 +609,11 @@
     <string name="image_descr_profile_image">profiilikuva</string>
     <string name="reject">Hylkää</string>
     <string name="set_passcode">Aseta pääsykoodi</string>
-    <string name="simplex_link_mode">SimpleX-linkit</string>
-    <string name="simplex_link_mode_browser_warning">Linkin avaaminen selaimessa voi heikentää yhteyden yksityisyyttä ja turvallisuutta. Epäluotetut SimpleX-linkit näkyvät punaisina.</string>
+    <string name="popopx_link_mode">POPOPX-linkit</string>
+    <string name="popopx_link_mode_browser_warning">Linkin avaaminen selaimessa voi heikentää yhteyden yksityisyyttä ja turvallisuutta. Epäluotetut POPOPX-linkit näkyvät punaisina.</string>
     <string name="sender_cancelled_file_transfer">Lähettäjä peruutti tiedoston siirron.</string>
     <string name="periodic_notifications">Säännölliset ilmoitukset</string>
-    <string name="simplex_service_notification_text">Viestejä vastaanotetaan…</string>
+    <string name="popopx_service_notification_text">Viestejä vastaanotetaan…</string>
     <string name="settings_notification_preview_title">Ilmoitusten esikatselu</string>
     <string name="notifications_mode_off">Suoritetaan, kun sovellus on auki</string>
     <string name="settings_notification_preview_mode_title">Näytä esikatselu</string>
@@ -686,7 +686,7 @@
     <string name="icon_descr_profile_image_placeholder">profiilikuvan paikka</string>
     <string name="saved_ICE_servers_will_be_removed">Tallennetut WebRTC ICE -palvelimet poistetaan.</string>
     <string name="smp_save_servers_question">Tallenna palvelimet\?</string>
-    <string name="core_simplexmq_version">simplexmq: v%s (%2s)</string>
+    <string name="core_popopxmq_version">popopxmq: v%s (%2s)</string>
     <string name="network_socks_proxy_settings">SOCKS-välityspalvelimen asetukset</string>
     <string name="callstatus_missed">vastaamaton puhelu</string>
     <string name="secret_text">salainen</string>
@@ -708,7 +708,7 @@
     <string name="v4_3_voice_messages_desc">Enintään 40 sekuntia, vastaanotetaan välittömästi.</string>
     <string name="la_no_app_password">Ei sovelluksen pääsykoodia</string>
     <string name="la_lock_mode_passcode">Pääsykoodin syöttö</string>
-    <string name="la_lock_mode">SimpleX Lock -tila</string>
+    <string name="la_lock_mode">POPOPX Lock -tila</string>
     <string name="la_lock_mode_system">Järjestelmän todennus</string>
     <string name="smp_servers_preset_address">Esiasetettu palvelimen osoite</string>
     <string name="rcv_group_event_changed_member_role">%s:n rooli muutettu: %s:</string>
@@ -770,9 +770,9 @@
     <string name="sending_files_not_yet_supported">tiedostojen lähettämistä ei vielä tueta</string>
     <string name="live">LIVE</string>
     <string name="moderated_description">moderoitu</string>
-    <string name="simplex_link_contact">SimpleX-yhteystiedot</string>
-    <string name="simplex_link_group">SimpleX-ryhmän linkki</string>
-    <string name="simplex_link_invitation">SimpleX-kertakutsu</string>
+    <string name="popopx_link_contact">POPOPX-yhteystiedot</string>
+    <string name="popopx_link_group">POPOPX-ryhmän linkki</string>
+    <string name="popopx_link_invitation">POPOPX-kertakutsu</string>
     <string name="contact_developers">Päivitä sovellus ja ota yhteyttä kehittäjiin.</string>
     <string name="network_error_desc">Tarkista verkkoyhteytesi %1$s ja yritä uudelleen.</string>
     <string name="error_smp_test_server_auth">Palvelin vaatii valtuutuksen jonojen luomiseen, tarkista salasana</string>
@@ -785,9 +785,9 @@
     <string name="connection_you_accepted_will_be_cancelled">Hyväksymäsi yhteys peruuntuu!</string>
     <string name="read_more_in_user_guide_with_link"><![CDATA[Lue lisää <font color="#0088ff">Käyttöoppaasta</font>.]]></string>
     <string name="mark_code_verified">Merkitse vahvistetuksi</string>
-    <string name="simplex_address">SimpleX-osoite</string>
+    <string name="popopx_address">POPOPX-osoite</string>
     <string name="chat_with_the_founder">Lähetä kysymyksiä ja ideoita</string>
-    <string name="chat_lock">Simplex Lock</string>
+    <string name="chat_lock">Popopx Lock</string>
     <string name="is_not_verified">%s ei ole vahvistettu</string>
     <string name="smp_servers_test_server">Testipalvelin</string>
     <string name="smp_servers_test_servers">Testipalvelimet</string>
@@ -802,14 +802,14 @@
     <string name="stop_sharing_address">Lopeta osoitteen jakaminen\?</string>
     <string name="save_auto_accept_settings">Tallenna automaattisen hyväksynnän asetukset</string>
     <string name="save_settings_question">Tallenna asetukset\?</string>
-    <string name="email_invite_subject">Jutellaan SimpleX Chatissa</string>
+    <string name="email_invite_subject">Jutellaan POPOPX Chatissa</string>
     <string name="callstate_received_confirmation">vahvistus saatu…</string>
     <string name="onboarding_notifications_mode_periodic">Säännölliset</string>
     <string name="paste_the_link_you_received">Liitä vastaanotettu linkki</string>
     <string name="relay_server_protects_ip">Välityspalvelin suojaa IP-osoitteesi, mutta se voi tarkkailla puhelun kestoa.</string>
-    <string name="open_simplex_chat_to_accept_call">Avaa SimpleX Chat hyväksyäksesi puhelun</string>
+    <string name="open_popopx_chat_to_accept_call">Avaa POPOPX Chat hyväksyäksesi puhelun</string>
     <string name="status_no_e2e_encryption">ei e2e-salausta</string>
-    <string name="settings_section_title_support">TUE SIMPLEX CHATia</string>
+    <string name="settings_section_title_support">TUE POPOPX CHATia</string>
     <string name="settings_section_title_messages">Viestit ja tiedostot</string>
     <string name="share_address">Jaa osoite</string>
     <string name="users_delete_data_only">Vain paikalliset profiilitiedot</string>
@@ -851,7 +851,7 @@
     <string name="v4_5_italian_interface_descr">Kiitos käyttäjille – osallistu Weblaten kautta!</string>
     <string name="v5_0_app_passcode_descr">Aseta se järjestelmän todennuksen sijaan.</string>
     <string name="v4_6_audio_video_calls_descr">Tukee bluetoothia ja muita parannuksia.</string>
-    <string name="lock_not_enabled">SimpleX Lock ei ole käytössä!</string>
+    <string name="lock_not_enabled">POPOPX Lock ei ole käytössä!</string>
     <string name="icon_descr_sent_msg_status_send_failed">lähetys epäonnistui</string>
     <string name="icon_descr_sent_msg_status_sent">lähetetty</string>
     <string name="share_invitation_link">Jaa kertakäyttölinkki</string>
@@ -861,8 +861,8 @@
     <string name="alert_text_msg_bad_hash">Edellisen viestin tarkiste on erilainen.</string>
     <string name="v4_4_live_messages">Live-viestit</string>
     <string name="v4_6_hidden_chat_profiles_descr">Suojaa keskusteluprofiilisi salasanalla!</string>
-    <string name="ntf_channel_messages">SimpleX Chat -viestit</string>
-    <string name="ntf_channel_calls">SimpleX Chat -puhelut</string>
+    <string name="ntf_channel_messages">POPOPX Chat -viestit</string>
+    <string name="ntf_channel_calls">POPOPX Chat -puhelut</string>
     <string name="notification_preview_mode_message_desc">Näytä kontakti ja viesti</string>
     <string name="notification_new_contact_request">Uusi kontaktipyyntö</string>
     <string name="auth_log_in_using_credential">Kirjaudu sisään tunnuksillasi</string>
@@ -873,7 +873,7 @@
     <string name="observer_cant_send_message_desc">Ota yhteyttä ryhmän ylläpitäjään.</string>
     <string name="switch_receiving_address_question">Vaihda vastaanotto-osoite\?</string>
     <string name="ask_your_contact_to_enable_voice">Pyydä kontaktiasi sallimaan ääniviestien lähettäminen.</string>
-    <string name="thank_you_for_installing_simplex">Kiitos SimpleX Chatin asentamisesta!</string>
+    <string name="thank_you_for_installing_popopx">Kiitos POPOPX Chatin asentamisesta!</string>
     <string name="icon_descr_settings">Asetukset</string>
     <string name="icon_descr_more_button">Lisää</string>
     <string name="onboarding_notifications_mode_title">Yksityiset ilmoitukset</string>
@@ -946,7 +946,7 @@
     <string name="muted_when_inactive">Mykistetty ei-aktiivisena!</string>
     <string name="chat_preferences_off">pois</string>
     <string name="chat_preferences_on">päällä</string>
-    <string name="theme_simplex">SimpleX</string>
+    <string name="theme_popopx">POPOPX</string>
     <string name="language_system">Järjestelmä</string>
     <string name="tap_to_activate_profile">Aktivoi profiili napauttamalla.</string>
     <string name="feature_off">pois</string>
@@ -966,7 +966,7 @@
     <string name="feature_offered_item_with_param">tarjottu %s: %2s</string>
     <string name="v4_5_message_draft_descr">Säilytä viimeinen viestiluonnos liitteineen.</string>
     <string name="v5_1_self_destruct_passcode">Itsetuhoutuva pääsykoodi</string>
-    <string name="v4_2_security_assessment_desc">Trail of Bits on tarkastanut SimpleX Chatin tietoturvan.</string>
+    <string name="v4_2_security_assessment_desc">Trail of Bits on tarkastanut POPOPX Chatin tietoturvan.</string>
     <string name="custom_time_unit_minutes">minuuttia</string>
     <string name="custom_time_unit_months">kuukautta</string>
     <string name="custom_time_unit_seconds">sekuntia</string>
@@ -975,7 +975,7 @@
     <string name="connection_error_auth_desc">Ellei yhteyshenkilösi poistanut yhteyttä tai tämä linkki oli jo käytössä, se voi olla virhe - ilmoita siitä. \nJos haluat muodostaa yhteyden, pyydä kontaktiasi luomaan toinen yhteyslinkki ja tarkista, että verkkoyhteytesi on vakaa.</string>
     <string name="enter_passphrase_notification_desc">Jos haluat saada ilmoituksia, kirjoita tietokannan tunnuslause</string>
     <string name="la_notice_turn_on">Kytke päälle</string>
-    <string name="la_notice_to_protect_your_information_turn_on_simplex_lock_you_will_be_prompted_to_complete_authentication_before_this_feature_is_enabled">Suojaa tietosi ottamalla SimpleX Lock käyttöön.
+    <string name="la_notice_to_protect_your_information_turn_on_popopx_lock_you_will_be_prompted_to_complete_authentication_before_this_feature_is_enabled">Suojaa tietosi ottamalla POPOPX Lock käyttöön.
 \nSinua kehotetaan suorittamaan todennus loppuun, ennen kuin tämä ominaisuus otetaan käyttöön.</string>
     <string name="moderate_message_will_be_deleted_warning">Viesti poistetaan kaikilta jäseniltä.</string>
     <string name="personal_welcome">Tervetuloa %1$s!</string>
@@ -996,21 +996,21 @@
     <string name="group_info_member_you">sinä: %1$s</string>
     <string name="you_wont_lose_your_contacts_if_delete_address">Et menetä kontaktejasi, jos poistat osoitteesi myöhemmin.</string>
     <string name="onboarding_notifications_mode_off">Kun sovellus on käynnissä</string>
-    <string name="app_name">SimpleX</string>
+    <string name="app_name">POPOPX</string>
     <string name="profile_will_be_sent_to_contact_sending_link">Profiilisi lähetetään kontaktille, jolta sait tämän linkin.</string>
     <string name="you_will_join_group">Liityt ryhmään, johon tämä linkki viittaa, ja muodostat yhteyden sen ryhmän jäseniin.</string>
     <string name="connected_to_server_to_receive_messages_from_contact">Olet yhteydessä palvelimeen, jota käytetään vastaanottamaan viestejä tältä kontaktilta.</string>
     <string name="error_connecting_to_server_to_receive_messages">Yritetään muodostaa yhteys palvelimeen, jota käytetään viestien vastaanottamiseen tältä kontaktilta (virhe: %1$s).</string>
     <string name="sender_you_pronoun">sinä</string>
     <string name="description_via_one_time_link">kertalinkillä</string>
-    <string name="simplex_link_connection">%1$s:n kautta</string>
-    <string name="simplex_link_mode_browser">Selaimella</string>
-    <string name="simplex_service_notification_title">SimpleX Chat palvelu</string>
+    <string name="popopx_link_connection">%1$s:n kautta</string>
+    <string name="popopx_link_mode_browser">Selaimella</string>
+    <string name="popopx_service_notification_title">POPOPX Chat palvelu</string>
     <string name="icon_descr_sent_msg_status_unauthorized_send">luvaton lähetys</string>
     <string name="image_decoding_exception_desc">Kuvaa ei voida purkaa. Kokeile toista kuvaa tai ota yhteyttä kehittäjiin.</string>
     <string name="waiting_for_file">Odottaa tiedostoa</string>
     <string name="to_start_a_new_chat_help_header">Aloita uusi keskustelu</string>
-    <string name="using_simplex_chat_servers">Käyttää SimpleX Chat -palvelimia.</string>
+    <string name="using_popopx_chat_servers">Käyttää POPOPX Chat -palvelimia.</string>
     <string name="your_privacy">Yksityisyytesi</string>
     <string name="snd_group_event_member_deleted">poistit %1$s</string>
     <string name="chat_preferences_yes">kyllä</string>
@@ -1024,7 +1024,7 @@
     <string name="your_chats">Keskustelusi</string>
     <string name="network_enable_socks">Käytä SOCKS-välityspalvelinta\?</string>
     <string name="your_current_profile">Nykyinen profiilisi</string>
-    <string name="your_profile_is_stored_on_device_and_shared_only_with_contacts_simplex_cannot_see_it">Profiilisi tallennetaan laitteeseesi ja jaetaan vain kontaktiesi kanssa. SimpleX -palvelimet eivät näe profiiliasi.</string>
+    <string name="your_profile_is_stored_on_device_and_shared_only_with_contacts_popopx_cannot_see_it">Profiilisi tallennetaan laitteeseesi ja jaetaan vain kontaktiesi kanssa. POPOPX -palvelimet eivät näe profiiliasi.</string>
     <string name="settings_section_title_themes">Teemat</string>
     <string name="messages_section_description">Tämä asetus koskee nykyisen keskusteluprofiilisi viestejä</string>
     <string name="delete_files_and_media_desc">Tätä toimintoa ei voi kumota - kaikki vastaanotetut ja lähetetyt tiedostot ja media poistetaan. Matalan resoluution kuvat säilyvät.</string>
@@ -1074,7 +1074,7 @@
 \nVoit peruuttaa tämän yhteyden ja poistaa kontaktin (ja yrittää myöhemmin uudella linkillä).</string>
     <string name="scan_qr_to_connect_to_contact">Kontaktisi voi muodostaa yhteyden skannaamalla QR-koodin tai käyttämällä sovelluksessa olevaa linkkiä.</string>
     <string name="your_settings">Asetuksesi</string>
-    <string name="use_simplex_chat_servers__question">Käytä SimpleX Chat palvelimia\?</string>
+    <string name="use_popopx_chat_servers__question">Käytä POPOPX Chat palvelimia\?</string>
     <string name="theme_colors_section_title">Käyttöliittymän värit</string>
     <string name="to_reveal_profile_enter_password">Voit paljastaa piilotetun profiilisi kirjoittamalla koko salasanan Keskusteluprofiilit-sivun hakukenttään.</string>
     <string name="contact_wants_to_connect_via_call"> %1$s  haluaa olla yhteydessä sinuun kautta</string>
@@ -1110,13 +1110,13 @@
     <string name="v5_1_better_messages_descr">- ääniviestejä enintään 5 minuuttia.
 \n- muokattava kesto katoaville.
 \n- muokkaushistoria.</string>
-    <string name="you_can_turn_on_lock">Voit ottaa SimpleX Lockin käyttöön Asetusten kautta.</string>
+    <string name="you_can_turn_on_lock">Voit ottaa POPOPX Lockin käyttöön Asetusten kautta.</string>
     <string name="icon_descr_received_msg_status_unread">lukematon</string>
-    <string name="image_descr_simplex_logo">SimpleX Logo</string>
-    <string name="icon_descr_simplex_team">SimpleX Tiimi</string>
+    <string name="image_descr_popopx_logo">POPOPX Logo</string>
+    <string name="icon_descr_popopx_team">POPOPX Tiimi</string>
     <string name="your_chat_profiles">Keskusteluprofiilisi</string>
     <string name="smp_server_test_upload_file">Lataa tiedosto</string>
-    <string name="to_preserve_privacy_simplex_has_background_service_instead_of_push_notifications_it_uses_a_few_pc_battery"><![CDATA[Yksityisyytesi säilyttämiseksi sovelluksessa on push-ilmoitusten sijaan <b>SimpleX-taustapalvelu</b> – se kuluttaa muutaman prosentin akusta päivässä.]]></string>
+    <string name="to_preserve_privacy_popopx_has_background_service_instead_of_push_notifications_it_uses_a_few_pc_battery"><![CDATA[Yksityisyytesi säilyttämiseksi sovelluksessa on push-ilmoitusten sijaan <b>POPOPX-taustapalvelu</b> – se kuluttaa muutaman prosentin akusta päivässä.]]></string>
     <string name="auth_unlock">Avaa</string>
     <string name="you_are_observer">olet tarkkailija</string>
     <string name="connect_plan_you_are_observer">Olet tarkkailija</string>
@@ -1128,11 +1128,11 @@
     <string name="waiting_for_video">Odottaa videota</string>
     <string name="switch_receiving_address_desc">Vastaanotto-osoite vaihdetaan toiseen palvelimeen. Osoitteenmuutos tehdään sen jälkeen, kun lähettäjä tulee verkkoon.</string>
     <string name="you_need_to_allow_to_send_voice">Sinun on sallittava kontaktiesi lähettää ääniviestejä, jotta voit lähettää niitä.</string>
-    <string name="you_can_connect_to_simplex_chat_founder"><![CDATA[Voit <font color="#0088ff">olla yhteydessä SimpleX Chatin -kehittäjiin kysyäksesi kysymyksiä ja saadaksesi päivityksiä</font>.]]></string>
+    <string name="you_can_connect_to_popopx_chat_founder"><![CDATA[Voit <font color="#0088ff">olla yhteydessä POPOPX Chatin -kehittäjiin kysyäksesi kysymyksiä ja saadaksesi päivityksiä</font>.]]></string>
     <string name="you_will_be_connected_when_group_host_device_is_online">Sinut yhdistetään ryhmään, kun ryhmän isännän laite on online-tilassa, odota tai tarkista myöhemmin!</string>
     <string name="you_will_be_connected_when_your_connection_request_is_accepted">Sinut yhdistetään, kun yhteyspyyntösi on hyväksytty, odota tai tarkista myöhemmin!</string>
     <string name="you_will_be_connected_when_your_contacts_device_is_online">Sinut yhdistetään, kun kontaktisi laite on online-tilassa, odota tai tarkista myöhemmin!</string>
-    <string name="your_simplex_contact_address">SimpleX-osoitteesi</string>
+    <string name="your_popopx_contact_address">POPOPX-osoitteesi</string>
     <string name="smp_servers_use_server_for_new_conn">Käytä uusiin yhteyksiin</string>
     <string name="network_socks_toggle_use_socks_proxy">Käytä SOCKS-välityspalvelinta</string>
     <string name="network_session_mode_transport_isolation">Kuljetuksen eristäminen</string>
@@ -1153,7 +1153,7 @@
     <string name="you_invited_a_contact">Kutsuit kontaktisi</string>
     <string name="call_connection_via_relay">releellä</string>
     <string name="database_downgrade_warning">Varoitus: saatat menettää joitain tietoja!</string>
-    <string name="icon_descr_address">SimpleX Osoite</string>
+    <string name="icon_descr_address">POPOPX Osoite</string>
     <string name="callstate_waiting_for_answer">odottaa vastaamista…</string>
     <string name="callstate_waiting_for_confirmation">odottaa vahvistusta…</string>
     <string name="alert_text_decryption_error_too_many_skipped"> %1$d  viestit ohitettu.</string>
@@ -1197,7 +1197,7 @@
     <string name="turn_off_battery_optimization_button">Salli</string>
     <string name="disable_notifications_button">Poista ilmoitukset käytöstä</string>
     <string name="turn_off_system_restriction_button">Avaa asetukset</string>
-    <string name="system_restricted_background_desc">SimpleX ei toimi tausta-ajossa. Saat ilmoitukset ainostaan, kun sovellus on käynnissä.</string>
+    <string name="system_restricted_background_desc">POPOPX ei toimi tausta-ajossa. Saat ilmoitukset ainostaan, kun sovellus on käynnissä.</string>
     <string name="system_restricted_background_warn"><![CDATA[Ilmoitusten sallimiseksi valitse <b> Sovelluksen akun käyttö </b> / <b> rajoittamaton </b> sovellusasetuksista.]]></string>
     <string name="system_restricted_background_in_call_title">Ei taustapuheluita</string>
     <string name="system_restricted_background_in_call_desc">Sovellus voi sulkeutua 1 minuutin jälkeen tausta-ajossa.</string>
@@ -1320,10 +1320,10 @@
     <string name="session_code">Istuntokoodi</string>
     <string name="migrate_from_device_verify_database_passphrase">Vahvista tietokannan tunnuslause</string>
     <string name="connect_plan_this_is_your_link_for_group_vName"><![CDATA[Tämä on linkkisi ryhmään <b>%1$s</b>!]]></string>
-    <string name="connect_plan_this_is_your_own_simplex_address">Tämä on oma SimpleX-osoitteesi!</string>
+    <string name="connect_plan_this_is_your_own_popopx_address">Tämä on oma POPOPX-osoitteesi!</string>
     <string name="migrate_from_device_verify_passphrase">Vahvista tunnuslause</string>
     <string name="connect_plan_you_are_already_in_group_vName"><![CDATA[Olet jo ryhmässä <b>%1$s</b>.]]></string>
-    <string name="allow_to_send_simplex_links">Salli SimpleX-linkkien lähettäminen.</string>
+    <string name="allow_to_send_popopx_links">Salli POPOPX-linkkien lähettäminen.</string>
     <string name="add_contact_tab">Lisää kontakti</string>
     <string name="or_show_this_qr_code">Tai näytä tämä koodi</string>
     <string name="migrate_to_device_download_failed">Lataus epäonnistui</string>
@@ -1361,10 +1361,10 @@
     <string name="verify_connections">Vahvista yhteydet</string>
     <string name="theme_destination_app_theme">Sovelluksen teema</string>
     <string name="chat_theme_apply_to_all_modes">Kaikki väritilat</string>
-    <string name="group_members_can_send_simplex_links">Ryhmäjäsenet voivat lähettää SimpleX-linkkejä.</string>
+    <string name="group_members_can_send_popopx_links">Ryhmäjäsenet voivat lähettää POPOPX-linkkejä.</string>
     <string name="new_desktop"><![CDATA[<i>(uusi)</i>]]></string>
     <string name="cannot_share_message_alert_title">VIestiä ei voi lähettää</string>
-    <string name="simplex_links_not_allowed">SimpleX-linkit eivät ole sallittuja</string>
+    <string name="popopx_links_not_allowed">POPOPX-linkit eivät ole sallittuja</string>
     <string name="loading_remote_file_title">Ladataan tiedostoa</string>
     <string name="clear_note_folder_warning">Kaikki viestit poistetaan - tätä ei voi perua!</string>
     <string name="invalid_name">Virheellinen nimi!</string>
@@ -1415,7 +1415,7 @@
     <string name="settings_section_title_profile_images">Profiilikuvat</string>
     <string name="group_member_status_unknown_short">tuntematon</string>
     <string name="remove_member_button">Poista jäsen</string>
-    <string name="simplex_links">SimpleX-linkit</string>
+    <string name="popopx_links">POPOPX-linkit</string>
     <string name="v5_6_quantum_resistant_encryption">Kvanttiturvallinen salaus</string>
     <string name="v5_7_network">Verkon hallinta</string>
     <string name="enter_this_device_name">Kirjoita tämän laitteen nimi…</string>

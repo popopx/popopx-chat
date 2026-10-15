@@ -172,6 +172,7 @@
 		647B15EA2F4C8D5100EB431E /* PXChatRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647B15E92F4C8D5100EB431E /* PXChatRelayView.swift */; };
 		647F090E288EA27B00644C40 /* PXGroupMemberInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F090D288EA27B00644C40 /* PXGroupMemberInfoView.swift */; };
 		648010AB281ADD15009009B9 /* PXCIFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648010AA281ADD15009009B9 /* PXCIFileView.swift */; };
+		F0EED0F10001AAAA0002AAAA /* PXMarkdownFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EED0F10001AAAA0001AAAA /* PXMarkdownFileView.swift */; };
 		648679AB2BC96A74006456E7 /* PXChatItemForwardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648679AA2BC96A74006456E7 /* PXChatItemForwardingView.swift */; };
 		6495D7042F48CFC50060512B /* ChannelMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6495D7032F48CFC50060512B /* ChannelMembersView.swift */; };
 		6495D7062F48CFFD0060512B /* PXChannelRelaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6495D7052F48CFFD0060512B /* PXChannelRelaysView.swift */; };
@@ -779,6 +780,7 @@
 		647B15E92F4C8D5100EB431E /* PXChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXChatRelayView.swift; sourceTree = "<group>"; };
 		647F090D288EA27B00644C40 /* PXGroupMemberInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXGroupMemberInfoView.swift; sourceTree = "<group>"; };
 		648010AA281ADD15009009B9 /* PXCIFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCIFileView.swift; sourceTree = "<group>"; };
+		F0EED0F10001AAAA0001AAAA /* PXMarkdownFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMarkdownFileView.swift; sourceTree = "<group>"; };
 		648679AA2BC96A74006456E7 /* PXChatItemForwardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXChatItemForwardingView.swift; sourceTree = "<group>"; };
 		6493D667280ED77F007A76FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6495D7032F48CFC50060512B /* ChannelMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMembersView.swift; sourceTree = "<group>"; };
@@ -1634,6 +1636,7 @@
 				649BCDA12805D6EF00C3A862 /* PXCIImageView.swift */,
 				5C10D88928F187F300E58BF0 /* PXFullScreenMediaView.swift */,
 				648010AA281ADD15009009B9 /* PXCIFileView.swift */,
+				F0EED0F10001AAAA0001AAAA /* PXMarkdownFileView.swift */,
 				644EFFDF292CFD7F00525D5B /* PXCIVoiceView.swift */,
 				C1D2E3F405C60007A1B20001 /* PXVoiceMessagePlayer.swift */,
 				C1D2E3F405C60008A1B20001 /* PXVoiceItemState.swift */,
@@ -2558,6 +2561,7 @@
 				5CB634A829E437960066AD6B /* PXPasscodeEntry.swift in Sources */,
 				5CFA59C42860BC6200863A68 /* PXMigrateToAppGroupView.swift in Sources */,
 				648010AB281ADD15009009B9 /* PXCIFileView.swift in Sources */,
+				F0EED0F10001AAAA0002AAAA /* PXMarkdownFileView.swift in Sources */,
 				644EFFE2292D089800525D5B /* PXFramedCIVoiceView.swift in Sources */,
 				5C4B3B0A285FB130003915F2 /* PXDatabaseManager.swift in Sources */,
 				5CB2084F28DA4B4800D024EC /* PXRTCServers.swift in Sources */,

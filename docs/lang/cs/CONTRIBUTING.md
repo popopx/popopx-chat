@@ -18,7 +18,7 @@ cp scripts/cabal.project.local.mac cabal.project.local
 
 ## OpenSSL na MacOS
 
-Systém MacOS je standardně dodáván s LibreSSL, pro kompilaci SimpleX ze zdrojových kódů je nutné nainstalovat OpenSSL.
+Systém MacOS je standardně dodáván s LibreSSL, pro kompilaci POPOPX ze zdrojových kódů je nutné nainstalovat OpenSSL.
 
 OpenSSL lze nainstalovat pomocí `brew install openssl@3.0`.
 

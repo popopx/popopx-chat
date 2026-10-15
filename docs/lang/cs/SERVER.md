@@ -8,11 +8,11 @@ revision: 05.06.2023
 
 ## Přehled
 
-SMP server je relay server používaný k předávání zpráv v síti SimpleX. Aplikace SimpleX Chat mají přednastavené servery (pro mobilní aplikace jsou to smp11, smp12 a smp14.simplex.im), ale konfiguraci aplikace můžete snadno změnit a používat jiné servery.
+SMP server je relay server používaný k předávání zpráv v síti POPOPX. Aplikace POPOPX Chat mají přednastavené servery (pro mobilní aplikace jsou to smp11, smp12 a smp14.popopx.im), ale konfiguraci aplikace můžete snadno změnit a používat jiné servery.
 
-Klienti SimpleX pouze určují, který server bude použit pro příjem zpráv, a to pro každý kontakt (nebo spojení skupiny s členem skupiny) zvlášť, přičemž tyto servery jsou pouze dočasné, protože adresa pro doručování se může změnit.
+Klienti POPOPX pouze určují, který server bude použit pro příjem zpráv, a to pro každý kontakt (nebo spojení skupiny s členem skupiny) zvlášť, přičemž tyto servery jsou pouze dočasné, protože adresa pro doručování se může změnit.
 
-_Upozornění_: když změníte servery v konfiguraci aplikace, ovlivní to pouze to, který server bude použit pro nové kontakty, stávající kontakty se na nové servery automaticky nepřesunou, ale můžete je přesunout ručně pomocí tlačítka ["Změnit adresu příjmu"](../../../blog/20221108-simplex-chat-v4.2-security-audit-new-website.md#change-your-delivery-address-beta) na stránkách s informacemi o kontaktech/členech - brzy bude automatizováno.
+_Upozornění_: když změníte servery v konfiguraci aplikace, ovlivní to pouze to, který server bude použit pro nové kontakty, stávající kontakty se na nové servery automaticky nepřesunou, ale můžete je přesunout ručně pomocí tlačítka ["Změnit adresu příjmu"](../../../blog/20221108-popopx-chat-v4.2-security-audit-new-website.md#change-your-delivery-address-beta) na stránkách s informacemi o kontaktech/členech - brzy bude automatizováno.
 
 ## Instalace
 
@@ -38,8 +38,8 @@ Ruční instalace vyžaduje několik předběžných úkonů:
 2. Vytvořte potřebné adresáře a přiřaďte jim oprávnění:
 
    ```sh
-   sudo mkdir -p /var/opt/simplex /etc/opt/simplex
-   sudo chown smp:smp /var/opt/simplex /etc/opt/simplex /etc/opt/simplex
+   sudo mkdir -p /var/opt/popopx /etc/opt/popopx
+   sudo chown smp:smp /var/opt/popopx /etc/opt/popopx /etc/opt/popopx
    ```
 
 3. Povolte port `smp-server` ve firewallu:
@@ -62,7 +62,7 @@ Ruční instalace vyžaduje několik předběžných úkonů:
    Group=smp
    Type=simple
    ExecStart=smp-server start
-   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/simplex/smp-server-store.log" ] && cp "/var/opt/simplex/smp-server-store.log" "/var/opt/simplex/smp-server-store.log.bak"'
+   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/popopx/smp-server-store.log" ] && cp "/var/opt/popopx/smp-server-store.log" "/var/opt/popopx/smp-server-store.log.bak"'
    KillSignal=SIGINT
    TimeoutStopSec=infinity
    Restart=vždy
@@ -83,10 +83,10 @@ sudo su smp -c smp-server
 
 ...
 Dostupné příkazy:
-  init Inicializace serveru - vytvoří /etc/opt/simplex a
-                           /var/opt/simplex adresáře a konfigurační soubory.
+  init Inicializace serveru - vytvoří /etc/opt/popopx a
+                           /var/opt/popopx adresáře a konfigurační soubory.
   start Spustí server (konfigurace:
-                           /etc/opt/simplex/smp-server.ini).
+                           /etc/opt/popopx/smp-server.ini).
   delete Odstranění konfiguračních a protokolových souborů
 ```
 
@@ -174,12 +174,12 @@ Poté je instalace dokončena a ve výstupu teminálu byste měli vidět něco t
 ```sh
 Certificate request self-signature ok
 subject=CN = 127.0.0.1
-Server je inicializován, konfiguraci můžete upravit v souboru /etc/opt/simplex/smp-server.ini.
+Server je inicializován, konfiguraci můžete upravit v souboru /etc/opt/popopx/smp-server.ini.
 Spusťte `smp-server start` pro spuštění serveru.
 ----------
 Měli byste bezpečně uložit soukromý klíč CA a odstranit jej ze serveru.
 Pokud dojde ke kompromitaci pověření TLS serveru, lze tento klíč použít k podpisu nového, přičemž zůstane zachována stejná identita serveru a navázaná spojení.
-Umístění soukromého klíče CA: /etc/opt/simplex/ca.key.
+Umístění soukromého klíče CA: /etc/opt/popopx/ca.key.
 ----------
 SMP server v3.4.0
 Otisk prstu: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
@@ -190,9 +190,9 @@ Výše uvedená adresa serveru by měla být použita v konfiguraci klienta a po
 
 ## Dokumentace
 
-Všechny potřebné soubory pro `smp-server` jsou umístěny ve složce `/etc/opt/simplex/`.
+Všechny potřebné soubory pro `smp-server` jsou umístěny ve složce `/etc/opt/popopx/`.
 
-Uložené zprávy, spojení, statistiky a protokol serveru jsou umístěny ve složce `/var/opt/simplex/`.
+Uložené zprávy, spojení, statistiky a protokol serveru jsou umístěny ve složce `/var/opt/popopx/`.
 
 ### Adresa serveru SMP
 
@@ -204,15 +204,15 @@ smp://<otisk prstu>[:<heslo>]@<jméno_veřejného_hostitele>[,<jméno_hostitele>
 
 - `<otisk prstu>`
 
-  Váš otisk certifikátu `smp-server`. Otisk svého certifikátu můžete zkontrolovat v souboru `/etc/opt/simplex/fingerprint`.
+  Váš otisk certifikátu `smp-server`. Otisk svého certifikátu můžete zkontrolovat v souboru `/etc/opt/popopx/fingerprint`.
 
 - **nepovinné** `<heslo>`
 
-  Vaše nakonfigurované heslo `smp-serveru`. Nakonfigurované heslo můžete zkontrolovat v souboru `/etc/opt/simplex/smp-server.ini` v sekci `[AUTH]` v poli `create_password:`.
+  Vaše nakonfigurované heslo `smp-serveru`. Nakonfigurované heslo můžete zkontrolovat v souboru `/etc/opt/popopx/smp-server.ini` v sekci `[AUTH]` v poli `create_password:`.
 
 - `<public_hostname>`, **volitelně** `<onion_hostname>`.
 
-  Vaše nakonfigurované jméno (jména) hostitele `smp-serveru`. Nakonfigurované hostitele můžete zkontrolovat v souboru `/etc/opt/simplex/smp-server.ini`, v části `[TRANSPORT]` v poli `host:`.
+  Vaše nakonfigurované jméno (jména) hostitele `smp-serveru`. Nakonfigurované hostitele můžete zkontrolovat v souboru `/etc/opt/popopx/smp-server.ini`, v části `[TRANSPORT]` v poli `host:`.
 
 ### Příkazy Systemd
 
@@ -246,7 +246,7 @@ Nov 23 19:23:21 5588ab759e80 systemd[1]: Spuštěn SMP server.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: SMP server v3.4.0
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Adresa serveru: smp://d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=:V8ONoJ6ICwnrZnTC_QuSHfCEYq53uLaJKQ_oIC6-ve8=@<hostnames>
-Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Uložit protokol: /var/opt/simplex/smp-server-store.log
+Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Uložit protokol: /var/opt/popopx/smp-server-store.log
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Naslouchání na portu 5223 (TLS)...
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: neaktivní klienti nevypršeli.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: vytváření nových front vyžaduje heslo
@@ -267,7 +267,7 @@ Nov 23 19:23:21 5588ab759e80 systemd[1]: Spuštěn SMP server.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: SMP server v3.4.0
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Adresa serveru: smp://d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=:V8ONoJ6ICwnrZnTC_QuSHfCEYq53uLaJKQ_oIC6-ve8=@<hostnames>
-Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Uložit protokol: /var/opt/simplex/smp-server-store.log
+Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Uložit protokol: /var/opt/popopx/smp-server-store.log
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Naslouchání na portu 5223 (TLS)...
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: neaktivní klienti nevypršeli.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: vytváření nových front vyžaduje heslo
@@ -275,9 +275,9 @@ Nov 23 19:23:21 5588ab759e80 smp-server[30878]: vytváření nových front vyža
 
 ### Monitoring
 
-Statistiky `smp-serveru` pro `Grafana` dashboard můžete povolit nastavením hodnoty `on` v souboru `/etc/opt/simplex/smp-server.ini` v sekci `[STORE_LOG]` v poli `log_stats:`.
+Statistiky `smp-serveru` pro `Grafana` dashboard můžete povolit nastavením hodnoty `on` v souboru `/etc/opt/popopx/smp-server.ini` v sekci `[STORE_LOG]` v poli `log_stats:`.
 
-Protokoly budou uloženy jako soubor `csv` v souboru `/var/opt/simplex/smp-server-stats.daily.log`. Pole pro soubor `csv` jsou:
+Protokoly budou uloženy jako soubor `csv` v souboru `/var/opt/popopx/smp-server-stats.daily.log`. Pole pro soubor `csv` jsou:
 
 ```sh
 fromTime,qCreated,qSecured,qDeleted,msgSent,msgRecv,dayMsgQueues,weekMsgQueues,monthMsgQueues

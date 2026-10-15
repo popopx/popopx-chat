@@ -1,14 +1,14 @@
 ---
-title: Download SimpleX apps
+title: Download POPOPX apps
 permalink: /downloads/index.html
 revision: 09.09.2024
 ---
 
-# Download SimpleX apps
+# Download POPOPX apps
 
 You can get the latest beta releases from [GitHub](https://github.com/simplex-chat/simplex-chat/releases).
 
-If you cannot access GitHub, you can download SimpleX Chat apps from our mirror at [git.simplex.chat](https://git.simplex.chat/simplex-chat/simplex-chat/releases)
+If you cannot access GitHub, you can download POPOPX Chat apps from our mirror at [git.popopx.chat](https://git.popopx.chat/popopx-chat/popopx-chat/releases)
 
 - [desktop](#desktop-app)
 - [mobile](#mobile-apps)
@@ -16,7 +16,7 @@ If you cannot access GitHub, you can download SimpleX Chat apps from our mirror 
 
 ## Desktop app
 
-<img src="/docs/images/simplex-desktop-light.png" alt="desktop app" width=500>
+<img src="/docs/images/popopx-desktop-light.png" alt="desktop app" width=500>
 
 You can link your mobile device with desktop to use the same profile remotely, but this is only possible when both devices are connected to the same local network.
 

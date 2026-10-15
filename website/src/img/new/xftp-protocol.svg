@@ -16,7 +16,7 @@
   <line x1="200" y1="160" x2="200" y2="220" stroke="#606C71" stroke-width="1.5" marker-end="url(#arrowG)"/>
   <line x1="248" y1="160" x2="320" y2="220" stroke="#606C71" stroke-width="1.5" marker-end="url(#arrowG)"/>
 
-  <!-- Router 1 (SimpleX) -->
+  <!-- Router 1 (POPOPX) -->
   <rect x="20" y="220" width="120" height="56" rx="6" fill="#f0f4f8" stroke="#606C71" stroke-width="1.5"/>
   <g transform="translate(28, 227)">
     <rect width="14" height="4" rx="1" fill="#606C71"/>
@@ -26,7 +26,7 @@
     <circle cx="11" cy="8" r="1" fill="#53C1FF"/>
     <circle cx="11" cy="14" r="1" fill="#53C1FF"/>
   </g>
-  <text x="80" y="244" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#3F484B">SimpleX</text>
+  <text x="80" y="244" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#3F484B">POPOPX</text>
   <text x="80" y="258" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#606C71">XFTP router</text>
 
   <!-- Router 2 (Flux) -->
@@ -42,7 +42,7 @@
   <text x="200" y="244" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#3F484B">Flux</text>
   <text x="200" y="258" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#606C71">XFTP router</text>
 
-  <!-- Router 3 (SimpleX) -->
+  <!-- Router 3 (POPOPX) -->
   <rect x="260" y="220" width="120" height="56" rx="6" fill="#f0f4f8" stroke="#606C71" stroke-width="1.5"/>
   <g transform="translate(268, 227)">
     <rect width="14" height="4" rx="1" fill="#606C71"/>
@@ -52,7 +52,7 @@
     <circle cx="11" cy="8" r="1" fill="#53C1FF"/>
     <circle cx="11" cy="14" r="1" fill="#53C1FF"/>
   </g>
-  <text x="320" y="244" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#3F484B">SimpleX</text>
+  <text x="320" y="244" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#3F484B">POPOPX</text>
   <text x="320" y="258" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#606C71">XFTP router</text>
 
   <!-- Arrows from routers down -->

@@ -1,6 +1,6 @@
 # Chat List Specification
 
-Source: `common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/ChatListView.kt`
+Source: `common/src/commonMain/kotlin/chat/popopx/common/views/chatlist/ChatListView.kt`
 
 ---
 
@@ -21,7 +21,7 @@ Source: `common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/ChatLis
 
 ## Executive Summary
 
-The Chat List is the landing screen of SimpleX Chat, rendering all conversations for the active user. Built around `ChatListView` (line 179 in `ChatListView.kt`), it provides a searchable, filterable `LazyColumn` of chat previews with a toolbar, tag-based filtering, and a user-switching side panel. The view adapts between one-hand UI mode (toolbar at bottom, reversed list) and standard mode (toolbar at top). Search also accepts SimpleX links for direct connection.
+The Chat List is the landing screen of POPOPX Chat, rendering all conversations for the active user. Built around `ChatListView` (line 179 in `ChatListView.kt`), it provides a searchable, filterable `LazyColumn` of chat previews with a toolbar, tag-based filtering, and a user-switching side panel. The view adapts between one-hand UI mode (toolbar at bottom, reversed list) and standard mode (toolbar at top). Search also accepts POPOPX links for direct connection.
 
 ---
 
@@ -54,7 +54,7 @@ ChatListView
 
 ## 2. ChatListView Composable
 
-**Location:** [`ChatListView.kt#L179`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/ChatListView.kt#L179)
+**Location:** [`ChatListView.kt#L179`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chatlist/ChatListView.kt#L179)
 
 ```kotlin
 fun ChatListView(
@@ -139,7 +139,7 @@ sealed class ActiveFilter {
 
 The `filteredChats` function (line ~1474) applies filters in this order:
 
-1. **SimpleX link match:** If a pasted link resolved to a known contact/group, show only that chat.
+1. **POPOPX link match:** If a pasted link resolved to a known contact/group, show only that chat.
 2. **Text search:** Case-insensitive match against `chat.chatInfo.chatViewName`, `chat.chatInfo.fullName`, and `chat.chatInfo.localAlias`.
 3. **Active filter:**
    - `PresetTag`: Matches chat type and characteristics (e.g., `CONTACTS` filters `ChatInfo.Direct`, `GROUPS` filters `ChatInfo.Group`).
@@ -150,7 +150,7 @@ The `filteredChats` function (line ~1474) applies filters in this order:
 
 `ChatListSearchBar` (line ~765) provides:
 - Text input with search icon.
-- SimpleX link detection: When a pasted string contains a single SimpleX link, it triggers `planAndConnect` for connection, suppressing normal search.
+- POPOPX link detection: When a pasted string contains a single POPOPX link, it triggers `planAndConnect` for connection, suppressing normal search.
 - Unread filter toggle button (right side, when search is empty).
 
 ---
@@ -159,7 +159,7 @@ The `filteredChats` function (line ~1474) applies filters in this order:
 
 ## 5. Chat Preview
 
-**Location:** [`ChatPreviewView.kt#L41`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/ChatPreviewView.kt#L41)
+**Location:** [`ChatPreviewView.kt#L41`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chatlist/ChatPreviewView.kt#L41)
 
 ```kotlin
 fun ChatPreviewView(
@@ -169,7 +169,7 @@ fun ChatPreviewView(
   chatModelDraftChatId: ChatId?,
   currentUserProfileDisplayName: String?,
   disabled: Boolean,
-  linkMode: SimplexLinkMode,
+  linkMode: PopopxLinkMode,
   inProgress: Boolean,
   progressByTimeout: Boolean,
   defaultClickAction: () -> Unit
@@ -202,7 +202,7 @@ When `chatModelDraftChatId` matches the chat ID, the preview shows a draft indic
 
 ## 6. ChatListNavLinkView
 
-**Location:** [`ChatListNavLinkView.kt#L37`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/ChatListNavLinkView.kt#L37)
+**Location:** [`ChatListNavLinkView.kt#L37`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chatlist/ChatListNavLinkView.kt#L37)
 
 Routes each chat to the appropriate click action and context menu based on `chat.chatInfo`:
 
@@ -225,7 +225,7 @@ On desktop, the currently selected chat (`chatModel.chatId.value == chat.id`) re
 
 ### TagsView
 
-**Location:** [`ChatListView.kt#L1214`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/ChatListView.kt#L1214)
+**Location:** [`ChatListView.kt#L1214`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chatlist/ChatListView.kt#L1214)
 
 Renders a horizontally scrollable row of tag chips (via `TagsRow`, which is a platform-specific `expect` composable).
 
@@ -245,7 +245,7 @@ Layout logic:
 
 ### TagListView
 
-**Location:** [`TagListView.kt#L47`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/TagListView.kt#L47)
+**Location:** [`TagListView.kt#L47`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chatlist/TagListView.kt#L47)
 
 Full-screen tag management view opened from the "+" button or long-press menu.
 
@@ -264,7 +264,7 @@ fun TagListView(rhId: Long?, chat: Chat? = null, close: () -> Unit, reorderMode:
 
 ## 8. UserPicker
 
-**Location:** [`UserPicker.kt#L46`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/UserPicker.kt#L46)
+**Location:** [`UserPicker.kt#L46`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chatlist/UserPicker.kt#L46)
 
 ```kotlin
 fun UserPicker(
@@ -321,7 +321,7 @@ Uses `AnimatedViewState` (`GONE`, `VISIBLE`, `HIDING`) with a `MutableStateFlow`
 
 ## 10. Crowdfunding Banner
 
-**Location:** [`GetStakeBanner.kt#L31`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chatlist/GetStakeBanner.kt#L31)
+**Location:** [`GetStakeBanner.kt#L31`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chatlist/GetStakeBanner.kt#L31)
 
 ```kotlin
 fun GetStakeBanner(showDismiss: Boolean, onTap: () -> Unit, onDismiss: () -> Unit)
@@ -347,7 +347,7 @@ The list has a single banner slot, filled by an `if`/`else if` chain in priority
 | `getStakeBannerTapped` | `openGetStake()` | the dismiss X appears from then on, while there are chats |
 | `getStakeBannerDismissed` | the dismiss X | hides the banner in both placements |
 | `supporterBannerTapped` | tapping the supporter pitch | the pitch's dismiss X appears from then on |
-| `supporterBannerShown` | the pitch's dismiss X, through its "You can support SimpleX later in Settings." alert, and a successful code redemption | hides the pitch |
+| `supporterBannerShown` | the pitch's dismiss X, through its "You can support POPOPX later in Settings." alert, and a successful code redemption | hides the pitch |
 
 The two badge alert banners always offer the X; only the pitch waits to be tapped once, so a user who has not looked at it cannot dismiss it unseen.
 

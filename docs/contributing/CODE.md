@@ -24,7 +24,7 @@ The project uses **fourmolu** for Haskell code formatting. Configuration is in `
 
 ```bash
 # Format a single file
-fourmolu -i src/Simplex/Messaging/Protocol.hs
+fourmolu -i src/Popopx/Messaging/Protocol.hs
 ```
 
 Some files that use CPP language extension cannot be formatted as a whole, so individual code fragments need to be formatted.
@@ -80,7 +80,7 @@ cabal build
 cabal build --ghc-options -O0
 
 # Build specific executables
-cabal build exe:simplex-chat
+cabal build exe:popopx-chat
 
 # Build with PostgreSQL client support
 cabal build -fclient_postgres
@@ -89,7 +89,7 @@ cabal build -fclient_postgres
 cabal build -fclient_library
 
 # Find binary location
-cabal list-bin exe:simplex-chat
+cabal list-bin exe:popopx-chat
 ```
 
 ### Cabal Flags
@@ -102,6 +102,6 @@ cabal list-bin exe:simplex-chat
 ## External Dependencies
 
 Custom forks specified in `cabal.project`:
-- `aeson`, `hs-socks` (SimpleX forks)
+- `aeson`, `hs-socks` (POPOPX forks)
 - `direct-sqlcipher`, `sqlcipher-simple` (encrypted SQLite)
 - `warp`, `warp-tls` (HTTP server)

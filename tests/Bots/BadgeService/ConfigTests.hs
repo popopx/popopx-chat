@@ -56,7 +56,7 @@ fullIni =
       "static_dir = /srv/badges",
       -- [group] stays before [btcpay], since tests append btcpay keys to this fixture.
       "[group]",
-      "display_name = SimpleX Badges",
+      "display_name = POPOPX Badges",
       "description = badge ops desk",
       "[btcpay]",
       "host = https://btcpay.example.org",
@@ -374,8 +374,8 @@ groupIni body = parseIni (listenerIni <> "[group]\n" <> body)
 
 testGroupNameAndDescription :: IO ()
 testGroupNameAndDescription = do
-  r <- groupIni "display_name = SimpleX Badges\ndescription = Welcome\n"
-  fmap group r `shouldBe` Right (Just GroupConfig {gDisplayName = "SimpleX Badges", gDescription = Just "Welcome"})
+  r <- groupIni "display_name = POPOPX Badges\ndescription = Welcome\n"
+  fmap group r `shouldBe` Right (Just GroupConfig {gDisplayName = "POPOPX Badges", gDescription = Just "Welcome"})
 
 testGroupNoDescription :: IO ()
 testGroupNoDescription = do

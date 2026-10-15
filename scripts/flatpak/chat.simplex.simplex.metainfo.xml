@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>chat.simplex.simplex</id>
+  <id>chat.popopx.popopx</id>
   
-  <name>SimpleX Chat</name>
+  <name>POPOPX Chat</name>
   <summary>A private &amp; encrypted open-source messenger without any user IDs (not even random)!</summary>
 
-  <developer id="chat.simplex">
-    <name>SimpleX Chat</name>
+  <developer id="chat.popopx">
+    <name>POPOPX Chat</name>
   </developer>
   
   <metadata_license>MIT</metadata_license>
   <project_license>AGPL-3.0-or-later</project_license>
   
   <description>
-    <p>SimpleX - the first messaging platform that has no user identifiers, not even random numbers!</p>
+    <p>POPOPX - the first messaging platform that has no user identifiers, not even random numbers!</p>
     <p>Security assessment was done by Trail of Bits in November 2022.</p>
-    <p>SimpleX Chat features:</p>
+    <p>POPOPX Chat features:</p>
     <ol>
       <li>end-to-end encrypted messages, with editing, replies and deletion of messages.</li>
       <li>sending end-to-end encrypted images and files.</li>
@@ -25,16 +25,16 @@
       <li>private instant notifications.</li>
       <li>portable chat profile - you can transfer your chat contacts and history to another device (terminal or mobile).</li>
     </ol>
-    <p>SimpleX Chat advantages:</p>
+    <p>POPOPX Chat advantages:</p>
     <ol>
-      <li><em>Full privacy of your identity, profile, contacts and metadata:</em> unlike any other existing messaging platform, SimpleX uses no phone numbers or any other identifiers assigned to the users - not even random numbers. This protects the privacy of who you are communicating with, hiding it from SimpleX platform servers and from any observers.</li>
-      <li><em>Complete protection against spam and abuse:</em> as you have no identifier on SimpleX platform, you cannot be contacted unless you share a one-time invitation link or an optional temporary user address.</li>
-      <li><em>Full ownership, control and security of your data:</em> SimpleX stores all user data on client devices, the messages are only held temporarily on SimpleX relay servers until they are received.</li>
-      <li><em>Decentralized network:</em> you can use SimpleX with your own servers and still communicate with people using the servers that are pre-configured in the apps or any other SimpleX servers.</li>
+      <li><em>Full privacy of your identity, profile, contacts and metadata:</em> unlike any other existing messaging platform, POPOPX uses no phone numbers or any other identifiers assigned to the users - not even random numbers. This protects the privacy of who you are communicating with, hiding it from POPOPX platform servers and from any observers.</li>
+      <li><em>Complete protection against spam and abuse:</em> as you have no identifier on POPOPX platform, you cannot be contacted unless you share a one-time invitation link or an optional temporary user address.</li>
+      <li><em>Full ownership, control and security of your data:</em> POPOPX stores all user data on client devices, the messages are only held temporarily on POPOPX relay servers until they are received.</li>
+      <li><em>Decentralized network:</em> you can use POPOPX with your own servers and still communicate with people using the servers that are pre-configured in the apps or any other POPOPX servers.</li>
     </ol>
     <p>You can connect to anybody you know via link or scan QR code (in the video call or in person) and start sending messages instantly - no emails, phone numbers or passwords needed.</p>
     <p>Your profile and contacts are only stored in the app on your device - our servers do not have access to this information.</p>
-    <p>All messages are end-to-end encrypted using open-source double-ratchet protocol; the messages are routed via our servers using open-source SimpleX Messaging Protocol.</p>
+    <p>All messages are end-to-end encrypted using open-source double-ratchet protocol; the messages are routed via our servers using open-source POPOPX Messaging Protocol.</p>
   </description>
 
   <releases>
@@ -42,7 +42,7 @@
       <url type="details">https://simplex.chat/blog/20260722-simplex-public-names.html</url>
       <description>
         <p>New in v7.0-v7.0.3.</p>
-        <p>SimpleX public names for channels and businesses (BETA).</p>
+        <p>POPOPX public names for channels and businesses (BETA).</p>
         <p>Better channels:</p>
         <ul>
           <li>Promote subscribers to contributors.</li>
@@ -59,7 +59,7 @@
       <url type="details">https://simplex.chat/blog/20260722-simplex-public-names.html</url>
       <description>
         <p>New in v7.0-v7.0.2.</p>
-        <p>SimpleX public names for channels and businesses (BETA).</p>
+        <p>POPOPX public names for channels and businesses (BETA).</p>
         <p>Better channels:</p>
         <ul>
           <li>Promote subscribers to contributors.</li>
@@ -76,7 +76,7 @@
       <url type="details">https://simplex.chat/blog/20260722-simplex-public-names.html</url>
       <description>
         <p>New in v7.0.</p>
-        <p>SimpleX public names for channels and businesses (BETA).</p>
+        <p>POPOPX public names for channels and businesses (BETA).</p>
         <p>Better channels:</p>
         <ul>
           <li>Promote subscribers to contributors.</li>
@@ -108,7 +108,7 @@
           <li>prevent hyperlink phishing.</li>
           <li>remove link tracking.</li>
         </ul>
-        <p>Non-profit governance: to make SimpleX Network last.</p>
+        <p>Non-profit governance: to make POPOPX Network last.</p>
       </description>
     </release>
     <release version="6.5.5" date="2026-06-17">
@@ -130,7 +130,7 @@
           <li>prevent hyperlink phishing.</li>
           <li>remove link tracking.</li>
         </ul>
-        <p>Non-profit governance: to make SimpleX Network last.</p>
+        <p>Non-profit governance: to make POPOPX Network last.</p>
       </description>
     </release>
     <release version="6.5.4" date="2026-06-02">
@@ -152,7 +152,7 @@
           <li>prevent hyperlink phishing.</li>
           <li>remove link tracking.</li>
         </ul>
-        <p>Non-profit governance: to make SimpleX Network last.</p>
+        <p>Non-profit governance: to make POPOPX Network last.</p>
       </description>
     </release>
     <release version="6.5.2" date="2026-05-15">
@@ -178,7 +178,7 @@
           <li>prevent hyperlink phishing.</li>
           <li>remove link tracking.</li>
         </ul>
-        <p>Non-profit governance: to make SimpleX Network last.</p>
+        <p>Non-profit governance: to make POPOPX Network last.</p>
       </description>
     </release>
     <release version="6.5.1" date="2026-05-02">
@@ -205,7 +205,7 @@
           <li>prevent hyperlink phishing.</li>
           <li>remove link tracking.</li>
         </ul>
-        <p>Non-profit governance: to make SimpleX Network last.</p>
+        <p>Non-profit governance: to make POPOPX Network last.</p>
       </description>
     </release>
     <release version="6.5.0" date="2026-04-30">
@@ -227,7 +227,7 @@
           <li>prevent hyperlink phishing.</li>
           <li>remove link tracking.</li>
         </ul>
-        <p>Non-profit governance: to make SimpleX Network last.</p>
+        <p>Non-profit governance: to make POPOPX Network last.</p>
       </description>
     </release>
     <release version="6.4.11" date="2026-03-30">
@@ -319,7 +319,7 @@
       <description>
         <p>New in v6.4.6:</p>
         <ul>
-          <li>fixed opening SimpleX links from outside of the app.</li>
+          <li>fixed opening POPOPX links from outside of the app.</li>
         </ul>
         <p>New in v6.4-6.4.5:</p>
         <ul>
@@ -415,7 +415,7 @@
         <ul>
           <li>welcome your contacts: set profile bio and welcome message.</li>
           <li>enable disappearing messages by default for new contacts.</li>
-          <li>short SimpleX addresses and group links now include profile images and welcome messages.</li>
+          <li>short POPOPX addresses and group links now include profile images and welcome messages.</li>
         </ul>
       </description>
     </release>
@@ -639,7 +639,7 @@
         </ul>
         <p>New in v6.2:</p>
         <ul>
-          <li>SimpleX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
+          <li>POPOPX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
           <li>Business chats – your customers privacy.</li>
           <li>Improved user experience in chats: open on the first unread, jump to quoted messages, see who reacted.</li>
         </ul>
@@ -658,7 +658,7 @@
         </ul>
         <p>New in v6.2:</p>
         <ul>
-          <li>SimpleX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
+          <li>POPOPX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
           <li>Business chats – your customers privacy.</li>
           <li>Improved user experience in chats: open on the first unread, jump to quoted messages, see who reacted.</li>
         </ul>
@@ -677,7 +677,7 @@
         </ul>
         <p>New in v6.2:</p>
         <ul>
-          <li>SimpleX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
+          <li>POPOPX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
           <li>Business chats – your customers privacy.</li>
           <li>Improved user experience in chats: open on the first unread, jump to quoted messages, see who reacted.</li>
         </ul>
@@ -696,7 +696,7 @@
         </ul>
         <p>New in v6.2:</p>
         <ul>
-          <li>SimpleX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
+          <li>POPOPX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
           <li>Business chats – your customers privacy.</li>
           <li>Improved user experience in chats: open on the first unread, jump to quoted messages, see who reacted.</li>
         </ul>
@@ -715,7 +715,7 @@
         </ul>
         <p>New in v6.2:</p>
         <ul>
-          <li>SimpleX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
+          <li>POPOPX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
           <li>Business chats – your customers privacy.</li>
           <li>Improved user experience in chats: open on the first unread, jump to quoted messages, see who reacted.</li>
         </ul>
@@ -726,7 +726,7 @@
       <description>
         <p>New in v6.2:</p>
         <ul>
-          <li>SimpleX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
+          <li>POPOPX Chat and Flux made an agreement to include servers operated by Flux into the app – to improve metadata privacy.</li>
           <li>Business chats – your customers privacy.</li>
           <li>Improved user experience in chats: open on the first unread, jump to quoted messages, see who reacted.</li>
         </ul>
@@ -742,7 +742,7 @@
         <p>New in v6.1:</p>
         <p>Better security:</p>
         <ul>
-          <li>SimpleX protocols reviewed by Trail of Bits.</li>
+          <li>POPOPX protocols reviewed by Trail of Bits.</li>
           <li>security improvements (don't worry, there is nothing critical there).</li>
         </ul>
         <p>Better calls:</p>
@@ -766,7 +766,7 @@
         <p>New in v6.1:</p>
         <p>Better security:</p>
         <ul>
-          <li>SimpleX protocols reviewed by Trail of Bits.</li>
+          <li>POPOPX protocols reviewed by Trail of Bits.</li>
           <li>security improvements (don't worry, there is nothing critical there).</li>
         </ul>
         <p>Better calls:</p>
@@ -909,14 +909,14 @@
   
   <content_rating type="oars-1.1" />
   
-  <url type="homepage">https://simplex.chat/</url>
-  <url type="bugtracker">https://github.com/simplex-chat/simplex-chat/issues</url>
-  <url type="donation">https://opencollective.com/simplex-chat</url>
-  <url type="translate">https://simplex.chat/docs/translations</url>
-  <url type="faq">https://simplex.chat/faq</url>
+  <url type="homepage">https://popopx.chat/</url>
+  <url type="bugtracker">https://github.com/popopx-chat/popopx-chat/issues</url>
+  <url type="donation">https://opencollective.com/popopx-chat</url>
+  <url type="translate">https://popopx.chat/docs/translations</url>
+  <url type="faq">https://popopx.chat/faq</url>
   <url type="vcs-browser">https://github.com/simplex-chat/simplex-chat</url>
   
-  <launchable type="desktop-id">chat.simplex.simplex.desktop</launchable>
+  <launchable type="desktop-id">chat.popopx.popopx.desktop</launchable>
 
   <branding>
     <color type="primary" scheme_preference="light">#a5f0ff</color>

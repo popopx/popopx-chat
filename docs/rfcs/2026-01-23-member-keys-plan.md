@@ -1,8 +1,8 @@
-# Implementation Plan: Member Keys and Signatures for Simplex Chat
+# Implementation Plan: Member Keys and Signatures for Popopx Chat
 
 ## Overview
 
-Add cryptographic signatures to Simplex Chat messages to prevent relay impersonation and roster manipulation in public groups with chat relays.
+Add cryptographic signatures to Popopx Chat messages to prevent relay impersonation and roster manipulation in public groups with chat relays.
 
 ## Design Approach
 
@@ -14,24 +14,24 @@ Following **RFC Option 2: Multi-stage encoding** (recommended in docs/rfcs/2025-
 ## Key Files to Modify
 
 ### Core Types
-- `src/Simplex/Chat/Types.hs` - Add `MemberKey` type, add `memberKey` to `MemberInfo`
-- `src/Simplex/Chat/Protocol.hs` - Add member keys to `XMember`, `XGrpLinkMem`; signed message envelope, encoding/decoding
+- `src/Popopx/Chat/Types.hs` - Add `MemberKey` type, add `memberKey` to `MemberInfo`
+- `src/Popopx/Chat/Protocol.hs` - Add member keys to `XMember`, `XGrpLinkMem`; signed message envelope, encoding/decoding
 
 ### Protocol Handling
-- `src/Simplex/Chat/Library/Commands.hs` - Sign messages when sending
-- `src/Simplex/Chat/Library/Subscriber.hs` - Verify signatures when receiving
-- `src/Simplex/Chat/Library/Internal.hs` - Chat-level signature utilities (working with Member profiles, messages)
+- `src/Popopx/Chat/Library/Commands.hs` - Sign messages when sending
+- `src/Popopx/Chat/Library/Subscriber.hs` - Verify signatures when receiving
+- `src/Popopx/Chat/Library/Internal.hs` - Chat-level signature utilities (working with Member profiles, messages)
 
-### Agent API (simplexmq repo) - New Functions
-- `../simplexmq/src/Simplex/Messaging/Agent.hs`:
+### Agent API (popopxmq repo) - New Functions
+- `../popopxmq/src/Popopx/Messaging/Agent.hs`:
   - `prepareConnectionLink` - NEW: commits to server, generates link address + root key locally (no network)
   - `createConnectionWithPreparedLink` - NEW: accepts server + root key, creates queue (single network call)
-- `../simplexmq/src/Simplex/Messaging/Agent/Client.hs` - Implement new functions
+- `../popopxmq/src/Popopx/Messaging/Agent/Client.hs` - Implement new functions
 
 ### Database
-- New migration: `src/Simplex/Chat/Store/SQLite/Migrations/M20260124_member_keys.hs`
-- New migration: `src/Simplex/Chat/Store/Postgres/Migrations/M20260124_member_keys.hs`
-- `src/Simplex/Chat/Store/Profiles.hs` - Store/retrieve member keys
+- New migration: `src/Popopx/Chat/Store/SQLite/Migrations/M20260124_member_keys.hs`
+- New migration: `src/Popopx/Chat/Store/Postgres/Migrations/M20260124_member_keys.hs`
+- `src/Popopx/Chat/Store/Profiles.hs` - Store/retrieve member keys
 
 ## New Types
 
@@ -516,7 +516,7 @@ createPublicGroupWithRelays ... = do
 
 ## Current Public Group Creation (to be refactored)
 
-Review `src/Simplex/Chat/Library/Commands.hs` - current two-step process:
+Review `src/Popopx/Chat/Library/Commands.hs` - current two-step process:
 1. `APICreateGroup` / `createPreparedGroup` - creates group with connection
 2. Server roundtrip to create link
 3. Update profile with link
@@ -526,7 +526,7 @@ This needs refactoring to use new Agent API for single-roundtrip creation.
 
 ## Implementation Steps
 
-### Phase 0: Agent API Changes (simplexmq)
+### Phase 0: Agent API Changes (popopxmq)
 1. Add `prepareConnectionLink` function - commits to server, generates link + root key locally
 2. Add `createConnectionWithPreparedLink` function - accepts server + root key, single network call
 3. Update Agent store to handle new flow (connection record without queue record)
@@ -649,4 +649,4 @@ createPublicGroup ... = do
 
 2. **Signature failure handling**: Hard fail for all signed message types. Reject any message that should be signed but isn't or has invalid signature.
 
-3. **Key model**: Separate keys - root key is fixed in group link, owner is authorized via OwnerAuth chain. Supports ownership transfer without breaking group identity. Matches simplexmq pattern.
+3. **Key model**: Separate keys - root key is fixed in group link, owner is authorized via OwnerAuth chain. Supports ownership transfer without breaking group identity. Matches popopxmq pattern.

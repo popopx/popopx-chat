@@ -300,7 +300,7 @@ a{
 }
 
 /* Nav and Menu */
-#why-simplex::before,
+#why-popopx::before,
 #features::before,
 #privacy::before,
 #network::before {
@@ -400,7 +400,7 @@ a{
   left: 0 !important;
 }
 
-/* What makes simplex private */
+/* What makes popopx private */
 .card{
   cursor: pointer;
 }
@@ -451,25 +451,25 @@ a{
 }
 
 
-/* SimpleX Unique */
-.simplex-unique-card .card-content{
+/* POPOPX Unique */
+.popopx-unique-card .card-content{
   transition: all .5s ease-out;
 }
 @media (max-width: 767px) {
-  .simplex-unique-card .card-content .content-body{
+  .popopx-unique-card .card-content .content-body{
     height: 0;
     opacity: 0;
     visibility: hidden;
     transform: translateY(80px);
     transition: all .7s ease;
   }
-  .simplex-unique-card.active-card .card-content .content-body{
+  .popopx-unique-card.active-card .card-content .content-body{
     max-height: 540px;
     opacity: 1;
     visibility: visible;
     transform: translateY(0px);
   }
-  .simplex-unique-card.active-card .card-content{
+  .popopx-unique-card.active-card .card-content{
     height: 540px;
   }
   .open-card-btn svg,

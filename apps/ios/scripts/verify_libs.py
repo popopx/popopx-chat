@@ -155,7 +155,7 @@ def check_consistency(ghc_path, plain_path):
     return errors
 
 
-def find_simplex_libs(directory):
+def find_popopx_libs(directory):
     ghc = None
     plain = None
     for f in os.listdir(directory):
@@ -178,7 +178,7 @@ def verify_directory(dirname, info, ci_mode):
     print(f"{'='*60}")
 
     all_errors = []
-    ghc_path, plain_path = find_simplex_libs(dirpath)
+    ghc_path, plain_path = find_popopx_libs(dirpath)
 
     if not ghc_path or not plain_path:
         msg = f"  Missing libraries: ghc={ghc_path is not None} plain={plain_path is not None}"

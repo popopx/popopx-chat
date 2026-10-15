@@ -1,7 +1,7 @@
 # Test Suite Verification Report
 
 **Date**: 2026-10-10  
-**Purpose**: Verify code functionality after simplex→popopx rebranding  
+**Purpose**: Verify code functionality after popopx→popopx rebranding  
 **Status**: ✅ PASSED (with environmental issues)
 
 ---
@@ -76,29 +76,29 @@ $ cabal test
 
 ### Module Imports
 ✅ **All Haskell modules use Popopx.* imports**
-- No remaining Simplex.Chat.* imports
-- No remaining Simplex.Messaging.* imports
+- No remaining Popopx.Chat.* imports
+- No remaining Popopx.Messaging.* imports
 - All type references updated correctly
 
 ### Type Definitions
 ✅ **All types renamed correctly**
-- SimplexDomain → PopopxDomain
-- SimplexLink → PopopxLink
-- SimplexName → PopopxName
-- TLDSimplex → TLDPopopx
-- SSSimplex → SSPopopx
-- SLSSimplex → SLSPopopx
+- PopopxDomain → PopopxDomain
+- PopopxLink → PopopxLink
+- PopopxName → PopopxName
+- TLDPopopx → TLDPopopx
+- SSPopopx → SSPopopx
+- SLSPopopx → SLSPopopx
 
 ### Function Names
 ✅ **All functions renamed correctly**
-- simplexChat → popopxChat
-- operatorSimpleXChat → operatorPopopXChat
-- simplexChatSMPServers → popopxChatSMPServers
-- simplexChatRelays → popopxChatRelays
+- popopxChat → popopxChat
+- operatorPOPOPXChat → operatorPopopXChat
+- popopxChatSMPServers → popopxChatSMPServers
+- popopxChatRelays → popopxChatRelays
 
 ---
 
-## Remaining SimpleX References
+## Remaining POPOPX References
 
 ### ✅ Acceptable References
 
@@ -121,8 +121,8 @@ location: https://github.com/simplex-chat/popopxmq.git
 #### 3. Protocol Compatibility Test Data
 ```haskell
 -- Test vectors for backward compatibility
-"smp.simplex.im"
-"simplex:/invitation#..."
+"smp.popopx.im"
+"popopx:/invitation#..."
 ```
 **Status**: ✅ CORRECT - Required for protocol compatibility testing
 
@@ -137,7 +137,7 @@ docs/SERVER.md
 
 #### 5. External Package References
 ```json
-"@simplex-chat/types": "^0.12.0"
+"@popopx-chat/types": "^0.12.0"
 ```
 **Status**: ✅ CORRECT - External npm package name
 
@@ -146,7 +146,7 @@ docs/SERVER.md
 #### Calculator Bot Display Name
 **Before**:
 ```typescript
-displayName: "SimpleX Calculator"
+displayName: "POPOPX Calculator"
 ```
 **After**:
 ```typescript
@@ -238,7 +238,7 @@ cabal test --test-show-details=direct
 
 ### ✅ Rebranding Status: COMPLETE
 
-The simplex→popopx rebranding has been successfully completed:
+The popopx→popopx rebranding has been successfully completed:
 
 1. **Code Quality**: All code compiles without errors
 2. **Functionality**: All executables run correctly

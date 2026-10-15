@@ -58,7 +58,7 @@ website/src/js/ethers.*
 website/src/js/directory.js
 website/src/js/page.js
 website/src/js/channel-preview.js
-website/src/js/simplex-lib.js
+website/src/js/popopx-lib.js
 website/src/file-assets/
 website/src/link-images/
 website/src/privacy.md

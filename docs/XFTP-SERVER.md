@@ -23,7 +23,7 @@ revision: 31.07.2023
 
 ## Overview
 
-XFTP is a new file transfer protocol focussed on meta-data protection - it is based on the same principles as SimpleX Messaging Protocol used in SimpleX Chat messenger:
+XFTP is a new file transfer protocol focussed on meta-data protection - it is based on the same principles as POPOPX Messaging Protocol used in POPOPX Chat messenger:
 
    - asynchronous file delivery - the sender does not need to be online for file to be received, it is stored on XFTP relays for a limited time (currently, it is 48 hours) or until deleted by the sender.
    - padded e2e encryption of file content.
@@ -53,14 +53,14 @@ This installation script will automatically install binaries, systemd services a
 Run the following script on the server:
 
 ```sh
-curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/simplex-chat/simplexmq/stable/install.sh -o simplex-server-install.sh &&\
-if echo '53fcdb4ceab324316e2c4cda7e84dbbb344f32550a65975a7895425e5a1be757 simplex-server-install.sh' | sha256sum -c; then
-  chmod +x ./simplex-server-install.sh
-  ./simplex-server-install.sh
-  rm ./simplex-server-install.sh
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/simplex-chat/simplexmq/stable/install.sh -o popopx-server-install.sh &&\
+if echo '53fcdb4ceab324316e2c4cda7e84dbbb344f32550a65975a7895425e5a1be757 popopx-server-install.sh' | sha256sum -c; then
+  chmod +x ./popopx-server-install.sh
+  ./popopx-server-install.sh
+  rm ./popopx-server-install.sh
 else
   echo "SHA-256 checksum is incorrect!"
-  rm ./simplex-server-install.sh
+  rm ./popopx-server-install.sh
 fi
 ```
 
@@ -92,8 +92,8 @@ Manual installation is the most advanced deployment that provides the most flexi
 3. Create necessary directories and assign permissions:
 
    ```sh
-   sudo mkdir -p /var/opt/simplex-xftp /etc/opt/simplex-xftp /srv/xftp
-   sudo chown xftp:xftp /var/opt/simplex-xftp /etc/opt/simplex-xftp /srv/xftp
+   sudo mkdir -p /var/opt/popopx-xftp /etc/opt/popopx-xftp /srv/xftp
+   sudo chown xftp:xftp /var/opt/popopx-xftp /etc/opt/popopx-xftp /srv/xftp
    ```
 
 4. Allow xftp-server port in firewall:
@@ -117,7 +117,7 @@ Manual installation is the most advanced deployment that provides the most flexi
    Group=xftp
    Type=simple
    ExecStart=/usr/local/bin/xftp-server start +RTS -N -RTS
-   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/simplex-xftp/file-server-store.log" ] && cp "/var/opt/simplex-xftp/file-server-store.log" "/var/opt/simplex-xftp/file-server-store.log.$(date +'%%FT%%T')"'
+   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/popopx-xftp/file-server-store.log" ] && cp "/var/opt/popopx-xftp/file-server-store.log" "/var/opt/popopx-xftp/file-server-store.log.$(date +'%%FT%%T')"'
    LimitNOFILE=65535
    KillSignal=SIGINT
    TimeoutStopSec=infinity
@@ -148,18 +148,18 @@ This will download images from [Docker Hub](https://hub.docker.com/r/simplexchat
   You can also grab it from here - [docker-compose-xftp.yml](https://raw.githubusercontent.com/simplex-chat/simplexmq/refs/heads/stable/scripts/docker/docker-compose-xftp.yml). Don't forget to rename it to `docker-compose.yml`.
 
   ```yaml
-  name: SimpleX Chat - xftp-server
+  name: POPOPX Chat - xftp-server
 
   services:
     xftp-server:
-      image: ${SIMPLEX_XFTP_IMAGE:-simplexchat/xftp-server:latest}
+      image: ${POPOPX_XFTP_IMAGE:-popopxchat/xftp-server:latest}
       environment:
         ADDR: ${ADDR?"Please specify the domain."}
         QUOTA: ${QUOTA?"Please specify disk quota."}
         PASS: ${PASS:-}
       volumes:
-        - ./xftp_configs:/etc/opt/simplex-xftp
-        - ./xftp_state:/var/opt/simplex-xftp
+        - ./xftp_configs:/etc/opt/popopx-xftp
+        - ./xftp_state:/var/opt/popopx-xftp
         - ./xftp_files:/srv/xftp
       ports:
         - 443:443
@@ -245,14 +245,14 @@ xftp-server can also be deployed to serve from [tor](https://www.torproject.org)
      HiddenServiceNonAnonymousMode 1
      HiddenServiceSingleHopMode 1
      # xftp-server hidden service host directory and port mappings
-     HiddenServiceDir /var/lib/tor/simplex-xftp/
+     HiddenServiceDir /var/lib/tor/popopx-xftp/
      HiddenServicePort 443 localhost:443
      ```
 
    - Create directories:
 
      ```sh
-     mkdir /var/lib/tor/simplex-xftp/ && chown debian-tor:debian-tor /var/lib/tor/simplex-xftp/ && chmod 700 /var/lib/tor/simplex-xftp/
+     mkdir /var/lib/tor/popopx-xftp/ && chown debian-tor:debian-tor /var/lib/tor/popopx-xftp/ && chmod 700 /var/lib/tor/popopx-xftp/
      ```
 
 3. Start tor:
@@ -268,7 +268,7 @@ xftp-server can also be deployed to serve from [tor](https://www.torproject.org)
    Execute the following command to display your onion host address:
 
    ```sh
-   cat /var/lib/tor/simplex-xftp/hostname
+   cat /var/lib/tor/popopx-xftp/hostname
    ```
 
 ## Configuration
@@ -280,11 +280,11 @@ sudo su xftp -c xftp-server
 
 ...
 Available commands:
-  init                     Initialize server - creates /etc/opt/simplex-xftp and
-                           /var/opt/simplex-xftp directories and configuration
+  init                     Initialize server - creates /etc/opt/popopx-xftp and
+                           /var/opt/popopx-xftp directories and configuration
                            files
   start                    Start server (configuration:
-                           /etc/opt/simplex-xftp/file-server.ini)
+                           /etc/opt/popopx-xftp/file-server.ini)
   delete                   Delete configuration and log files
 
 ```
@@ -335,7 +335,7 @@ To password-protect your `xftp-server`, change it in the configuration:
    1. Open configuration with:
       
       ```sh
-      sudo su xftp -c "vim /etc/opt/simplex-xftp/file-server.ini"
+      sudo su xftp -c "vim /etc/opt/popopx-xftp/file-server.ini"
       ```
    2. Under `[AUTH]` section uncomment `create_password` and change it:
   
@@ -361,15 +361,15 @@ After that, your installation is complete and you should see in your terminal ou
 ```sh
 Certificate request self-signature ok
 subject=CN = 192.168.1.5
-Server initialized, you can modify configuration in /etc/opt/simplex-xftp/file-server.ini.
+Server initialized, you can modify configuration in /etc/opt/popopx-xftp/file-server.ini.
 Run `file-server start` to start server.
 ----------
 You should store CA private key securely and delete it from the server.
 If server TLS credential is compromised this key can be used to sign a new one, keeping the same server identity and established connections.
 CA private key location:
-/etc/opt/simplex-xftp/ca.key
+/etc/opt/popopx-xftp/ca.key
 ----------
-SimpleX XFTP server v0.1.0
+POPOPX XFTP server v0.1.0
 Fingerprint: ioyYeRyy4SqJkNvb_7nM04MuLasOM4c-acVyVnqw248=
 Server address: xftp://ioyYeRyy4SqJkNvb_7nM04MuLasOM4c-acVyVnqw248=@<hostnames>
 ```
@@ -378,9 +378,9 @@ The server address above should be used in your client configuration and if you 
 
 ## Documentation
 
-All necessary files for `xftp-server` are located in `/etc/opt/simplex-xftp/` folder.
+All necessary files for `xftp-server` are located in `/etc/opt/popopx-xftp/` folder.
 
-Stored messages, connections, statistics and server log are located in `/var/opt/simplex-xftp/` folder.
+Stored messages, connections, statistics and server log are located in `/var/opt/popopx-xftp/` folder.
 
 Location of uploaded files is configured by the user. In our guide we're using `/srv/xftp/`
 
@@ -394,15 +394,15 @@ xftp://<fingerprint>[:<password>]@<public_hostname>[,<onion_hostname>]
 
 - `<fingerprint>`
 
-  Your `xftp-server` fingerprint of certificate. You can check your certificate fingerprint in `/etc/opt/simplex-xftp/fingerprint`.
+  Your `xftp-server` fingerprint of certificate. You can check your certificate fingerprint in `/etc/opt/popopx-xftp/fingerprint`.
 
 - **optional** `<password>`
 
-  Your configured password of `xftp-server`. You can check your configured password in `/etc/opt/simplex-xftp/file-server.ini`, under `[AUTH]` section in `create_password:` field.
+  Your configured password of `xftp-server`. You can check your configured password in `/etc/opt/popopx-xftp/file-server.ini`, under `[AUTH]` section in `create_password:` field.
 
 - `<public_hostname>`, **optional** `<onion_hostname>`
 
-  Your configured hostname(s) of `xftp-server`. You can check your configured hosts in `/etc/opt/simplex-xftp/file-server.ini`, under `[TRANSPORT]` section in `host:` field.
+  Your configured hostname(s) of `xftp-server`. You can check your configured hosts in `/etc/opt/popopx-xftp/file-server.ini`, under `[TRANSPORT]` section in `host:` field.
 
 ### Systemd commands
 
@@ -435,13 +435,13 @@ sudo systemctl status xftp-server.service
              └─110770 /usr/local/bin/xftp-server start +RTS -N -RTS
 
 Feb 27 19:21:11 localhost systemd[1]: Started XFTP server systemd service.
-Feb 27 19:21:11 localhost xftp-server[2350]: SimpleX XFTP server v0.1.0
+Feb 27 19:21:11 localhost xftp-server[2350]: POPOPX XFTP server v0.1.0
 Feb 27 19:21:11 localhost xftp-server[2350]: Fingerprint: ioyYeRyy4SqJkNvb_7nM04MuLasOM4c-acVyVnqw248=
 Feb 27 19:21:11 localhost xftp-server[2350]: Server address: xftp://ioyYeRyy4SqJkNvb_7nM04MuLasOM4c-acVyVnqw248=@<hostnames>
-Feb 27 19:21:11 localhost xftp-server[2350]: Store log: /var/opt/simplex-xftp/file-server-store.log
+Feb 27 19:21:11 localhost xftp-server[2350]: Store log: /var/opt/popopx-xftp/file-server-store.log
 Feb 27 19:21:11 localhost xftp-server[2350]: Uploading new files allowed.
 Feb 27 19:21:11 localhost xftp-server[2350]: Listening on port 443...
-Feb 27 19:21:11 localhost xftp-server[2350]: [INFO 2023-02-27 19:21:11 +0000 src/Simplex/FileTransfer/Server/Env.hs:85] Total / available storage: 64424509440 / 64424509440
+Feb 27 19:21:11 localhost xftp-server[2350]: [INFO 2023-02-27 19:21:11 +0000 src/Popopx/FileTransfer/Server/Env.hs:85] Total / available storage: 64424509440 / 64424509440
 ```
 
 To stop `xftp-server`, run:
@@ -456,13 +456,13 @@ To check tail of `xftp-server` log, run:
 sudo journalctl -fu xftp-server.service
 
 Feb 27 19:21:11 localhost systemd[1]: Started XFTP server systemd service.
-Feb 27 19:21:11 localhost xftp-server[2350]: SimpleX XFTP server v0.1.0
+Feb 27 19:21:11 localhost xftp-server[2350]: POPOPX XFTP server v0.1.0
 Feb 27 19:21:11 localhost xftp-server[2350]: Fingerprint: ioyYeRyy4SqJkNvb_7nM04MuLasOM4c-acVyVnqw248=
 Feb 27 19:21:11 localhost xftp-server[2350]: Server address: xftp://ioyYeRyy4SqJkNvb_7nM04MuLasOM4c-acVyVnqw248=@<hostnames>
-Feb 27 19:21:11 localhost xftp-server[2350]: Store log: /var/opt/simplex-xftp/file-server-store.log
+Feb 27 19:21:11 localhost xftp-server[2350]: Store log: /var/opt/popopx-xftp/file-server-store.log
 Feb 27 19:21:11 localhost xftp-server[2350]: Uploading new files allowed.
 Feb 27 19:21:11 localhost xftp-server[2350]: Listening on port 443...
-Feb 27 19:21:11 localhost xftp-server[2350]: [INFO 2023-02-27 19:21:11 +0000 src/Simplex/FileTransfer/Server/Env.hs:85] Total / available storage: 64424509440 / 64424509440
+Feb 27 19:21:11 localhost xftp-server[2350]: [INFO 2023-02-27 19:21:11 +0000 src/Popopx/FileTransfer/Server/Env.hs:85] Total / available storage: 64424509440 / 64424509440
 ```
 
 ### Control port
@@ -478,7 +478,7 @@ Enabling control port in the configuration allows administrator to see informati
 2. Open the configuration file:
 
    ```sh
-   vim /etc/opt/simplex-xftp/file-server.ini
+   vim /etc/opt/popopx-xftp/file-server.ini
    ```
 
 2. Configure the control port and replace the passwords:
@@ -534,9 +534,9 @@ Here's the full list of commands, their descriptions and who can access them.
 
 ### Daily statistics
 
-You can enable `xftp-server` statistics for `Grafana` dashboard by setting value `on` in `/etc/opt/simplex-xftp/file-server.ini`, under `[STORE_LOG]` section in `log_stats:` field.
+You can enable `xftp-server` statistics for `Grafana` dashboard by setting value `on` in `/etc/opt/popopx-xftp/file-server.ini`, under `[STORE_LOG]` section in `log_stats:` field.
 
-Logs will be stored as `csv` file in `/var/opt/simplex-xftp/file-server-stats.daily.log`. Fields for the `csv` file are:
+Logs will be stored as `csv` file in `/var/opt/popopx-xftp/file-server-stats.daily.log`. Fields for the `csv` file are:
 
 ```sh
 fromTime,filesCreated,fileRecipients,filesUploaded,filesDeleted,dayCount,weekCount,monthCount,fileDownloads,fileDownloadAcks,filesCount,filesSize
@@ -612,37 +612,37 @@ To update your XFTP server to latest version, choose your installation method an
    - [Official installation script](https://github.com/simplex-chat/simplexmq#using-installation-script)
      1. Execute the following command:
         ```sh
-        sudo simplex-servers-update
+        sudo popopx-servers-update
         ```
      2. Done!
 
    - [Docker container](https://github.com/simplex-chat/simplexmq#using-docker)
      1. Stop and remove the container:
         ```sh
-        docker rm $(docker stop $(docker ps -a -q --filter ancestor=simplexchat/xftp-server --format="\{\{.ID\}\}"))
+        docker rm $(docker stop $(docker ps -a -q --filter ancestor=popopxchat/xftp-server --format="\{\{.ID\}\}"))
         ```
      2. Pull latest image:
         ```sh
-        docker pull simplexchat/xftp-server:latest
+        docker pull popopxchat/xftp-server:latest
         ```
      3. Start new container:
         ```sh
         docker run -d \
           -p 443:443 \
-          -v $HOME/simplex/xftp/config:/etc/opt/simplex-xftp:z \
-          -v $HOME/simplex/xftp/logs:/var/opt/simplex-xftp:z \
-          -v $HOME/simplex/xftp/files:/srv/xftp:z \
-          simplexchat/xftp-server:latest
+          -v $HOME/popopx/xftp/config:/etc/opt/popopx-xftp:z \
+          -v $HOME/popopx/xftp/logs:/var/opt/popopx-xftp:z \
+          -v $HOME/popopx/xftp/files:/srv/xftp:z \
+          popopxchat/xftp-server:latest
         ```
 
    - [Linode Marketplace](https://www.linode.com/marketplace/apps/simplex-chat/simplex-chat/)
      1. Pull latest images:
         ```sh
-        docker-compose --project-directory /etc/docker/compose/simplex pull
+        docker-compose --project-directory /etc/docker/compose/popopx pull
         ```
      2. Restart the containers:
         ```sh
-        docker-compose --project-directory /etc/docker/compose/simplex up -d --remove-orphans
+        docker-compose --project-directory /etc/docker/compose/popopx up -d --remove-orphans
         ```
      3. Remove obsolete images:
         ```sh

@@ -40,9 +40,9 @@ revision: 12.10.2024
 
 ## Overview
 
-SMP server is the relay server used to pass messages in SimpleX network. SimpleX Chat apps have preset servers (for mobile apps these are smp11, smp12 and smp14.simplex.im), but you can easily change app configuration to use other servers.
+SMP server is the relay server used to pass messages in POPOPX network. POPOPX Chat apps have preset servers (for mobile apps these are smp11, smp12 and smp14.popopx.im), but you can easily change app configuration to use other servers.
 
-SimpleX clients only determine which server is used to receive the messages, separately for each contact (or group connection with a group member), and these servers are only temporary, as the delivery address can change.
+POPOPX clients only determine which server is used to receive the messages, separately for each contact (or group connection with a group member), and these servers are only temporary, as the delivery address can change.
 
 To create SMP server, you'll need:
 
@@ -50,7 +50,7 @@ To create SMP server, you'll need:
 2. Your own domain, pointed at the server (`smp.example.com`)
 3. A basic Linux knowledge.
 
-_Please note_: when you change the servers in the app configuration, it only affects which servers will be used for the new contacts, the existing contacts will not automatically move to the new servers, but you can move them manually using ["Change receiving address"](../blog/20221108-simplex-chat-v4.2-security-audit-new-website.md#change-your-delivery-address-beta) button in contact/member information pages – it will be automated in the future.
+_Please note_: when you change the servers in the app configuration, it only affects which servers will be used for the new contacts, the existing contacts will not automatically move to the new servers, but you can move them manually using ["Change receiving address"](../blog/20221108-popopx-chat-v4.2-security-audit-new-website.md#change-your-delivery-address-beta) button in contact/member information pages – it will be automated in the future.
 
 ## Quick start
 
@@ -60,7 +60,7 @@ To create SMP server as a systemd service, you'll need:
 - Your server domain, with A and AAAA records specifying server IPv4 and IPv6 addresses (`smp1.example.com`)
 - A basic Linux knowledge.
 
-*Please note*: while you can run an SMP server without a domain name, in the near future client applications will start using server domain name in the invitation links (instead of `simplex.chat` domain they use now). In case a server does not have domain name and server pages (see below), the clients will be generating the links with `simplex:` scheme that cannot be opened in the browsers.
+*Please note*: while you can run an SMP server without a domain name, in the near future client applications will start using server domain name in the invitation links (instead of `popopx.chat` domain they use now). In case a server does not have domain name and server pages (see below), the clients will be generating the links with `popopx:` scheme that cannot be opened in the browsers.
 
 1. Install server with [Installation script](https://github.com/simplex-chat/simplexmq#using-installation-script).
 
@@ -101,9 +101,9 @@ To create SMP server as a systemd service, you'll need:
 
    ```sh
    tor-instance-create tor2 &&\
-   mkdir /var/lib/tor/simplex-smp/ &&\
-   chown debian-tor:debian-tor /var/lib/tor/simplex-smp/ &&\
-   chmod 700 /var/lib/tor/simplex-smp/
+   mkdir /var/lib/tor/popopx-smp/ &&\
+   chown debian-tor:debian-tor /var/lib/tor/popopx-smp/ &&\
+   chmod 700 /var/lib/tor/popopx-smp/
    ```
 
    ```sh
@@ -120,7 +120,7 @@ To create SMP server as a systemd service, you'll need:
    HiddenServiceNonAnonymousMode 1
    HiddenServiceSingleHopMode 1
    # smp-server hidden service host directory and port mappings
-   HiddenServiceDir /var/lib/tor/simplex-smp/
+   HiddenServiceDir /var/lib/tor/popopx-smp/
    HiddenServicePort 5223 localhost:5223
    HiddenServicePort 443 localhost:443
    ```
@@ -177,7 +177,7 @@ To create SMP server as a systemd service, you'll need:
    ```
 
    ```sh
-   vim /usr/local/bin/simplex-servers-certs
+   vim /usr/local/bin/popopx-servers-certs
    ```
 
    Replace `smp1.example.com` with your actual server domain. Paste the following:
@@ -191,7 +191,7 @@ To create SMP server as a systemd service, you'll need:
 
    domain='smp1.example.com'
    folder_in="/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/${domain}"
-   folder_out='/etc/opt/simplex'
+   folder_out='/etc/opt/popopx'
    key_name='web.key'
    cert_name='web.crt'
 
@@ -207,7 +207,7 @@ To create SMP server as a systemd service, you'll need:
    ```
 
    ```sh
-   chmod +x /usr/local/bin/simplex-servers-certs
+   chmod +x /usr/local/bin/popopx-servers-certs
    ```
 
    ```sh
@@ -218,7 +218,7 @@ To create SMP server as a systemd service, you'll need:
 
    ```sh
    # Every week on 00:20 sunday
-   20 0 * * 0 /usr/local/bin/simplex-servers-certs
+   20 0 * * 0 /usr/local/bin/popopx-servers-certs
    ```
 
 9. Enable and start Caddy service:
@@ -228,7 +228,7 @@ To create SMP server as a systemd service, you'll need:
    ```sh
    systemctl enable --now caddy &&\
    sleep 10 &&\
-   /usr/local/bin/simplex-servers-certs &&\
+   /usr/local/bin/popopx-servers-certs &&\
    echo 'good to go'
    ```
 
@@ -242,7 +242,7 @@ To create SMP server as a systemd service, you'll need:
 
     ```sh
     smp="$(journalctl --output cat -q _SYSTEMD_INVOCATION_ID="$(systemctl show -p InvocationID --value smp-server)" | grep -m1 'Server address:' | awk '{print $NF}' | sed 's/:443.*//')"
-    tor="$(cat /var/lib/tor/simplex-smp/hostname)"
+    tor="$(cat /var/lib/tor/popopx-smp/hostname)"
 
     echo "$smp,$tor"
     ```
@@ -268,14 +268,14 @@ This installation script will automatically install binaries, systemd services a
 Run the following script on the server:
 
 ```sh
-curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/simplex-chat/simplexmq/stable/install.sh -o simplex-server-install.sh &&\
-if echo '53fcdb4ceab324316e2c4cda7e84dbbb344f32550a65975a7895425e5a1be757 simplex-server-install.sh' | sha256sum -c; then
-  chmod +x ./simplex-server-install.sh
-  ./simplex-server-install.sh
-  rm ./simplex-server-install.sh
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/simplex-chat/simplexmq/stable/install.sh -o popopx-server-install.sh &&\
+if echo '53fcdb4ceab324316e2c4cda7e84dbbb344f32550a65975a7895425e5a1be757 popopx-server-install.sh' | sha256sum -c; then
+  chmod +x ./popopx-server-install.sh
+  ./popopx-server-install.sh
+  rm ./popopx-server-install.sh
 else
   echo "SHA-256 checksum is incorrect!"
-  rm ./simplex-server-install.sh
+  rm ./popopx-server-install.sh
 fi
 ```
 
@@ -306,8 +306,8 @@ Manual installation is the most advanced deployment that provides the most flexi
 3. Create necessary directories and assign permissions:
 
    ```sh
-   sudo mkdir -p /var/opt/simplex /etc/opt/simplex
-   sudo chown smp:smp /var/opt/simplex /etc/opt/simplex
+   sudo mkdir -p /var/opt/popopx /etc/opt/popopx
+   sudo chown smp:smp /var/opt/popopx /etc/opt/popopx
    ```
 
 4. Allow `smp-server` port in firewall:
@@ -333,7 +333,7 @@ Manual installation is the most advanced deployment that provides the most flexi
    Group=smp
    Type=simple
    ExecStart=/usr/local/bin/smp-server start +RTS -N -RTS
-   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/simplex/smp-server-store.log" ] && cp "/var/opt/simplex/smp-server-store.log" "/var/opt/simplex/smp-server-store.log.bak"'
+   ExecStopPost=/usr/bin/env sh -c '[ -e "/var/opt/popopx/smp-server-store.log" ] && cp "/var/opt/popopx/smp-server-store.log" "/var/opt/popopx/smp-server-store.log.bak"'
    LimitNOFILE=65535
    KillSignal=SIGINT
    TimeoutStopSec=infinity
@@ -370,7 +370,7 @@ This configuration provides quick and easy way to setup your SMP server: Caddy w
   You can also grab it from here - [docker-compose-smp-complete.yml](https://raw.githubusercontent.com/simplex-chat/simplexmq/refs/heads/stable/scripts/docker/docker-compose-smp-complete.yml). Don't forget to rename it to `docker-compose.yml`.
 
   ```yaml
-  name: SimpleX Chat - smp-server
+  name: POPOPX Chat - smp-server
 
   services:
     oneshot:
@@ -414,7 +414,7 @@ This configuration provides quick and easy way to setup your SMP server: Caddy w
         retries: 60
 
     smp-server:
-      image: ${SIMPLEX_IMAGE:-simplexchat/smp-server:latest}
+      image: ${POPOPX_IMAGE:-popopxchat/smp-server:latest}
       depends_on:
         caddy:
           condition: service_healthy
@@ -422,8 +422,8 @@ This configuration provides quick and easy way to setup your SMP server: Caddy w
         ADDR: ${ADDR?"Please specify the domain."}
         PASS: ${PASS:-}
       volumes:
-        - ./smp_configs:/etc/opt/simplex
-        - ./smp_state:/var/opt/simplex
+        - ./smp_configs:/etc/opt/popopx
+        - ./smp_state:/var/opt/popopx
         - type: volume
           source: caddy_data
           target: /certificates
@@ -476,18 +476,18 @@ This configuration allows you to retain the ability to manage 80 and 443 ports y
   You can also grab it from here - [docker-compose-smp-manual.yml](https://raw.githubusercontent.com/simplex-chat/simplexmq/refs/heads/stable/scripts/docker/docker-compose-smp-manual.yml). Don't forget to rename it to `docker-compose.yml`.
 
   ```yaml
-  name: SimpleX Chat - smp-server
+  name: POPOPX Chat - smp-server
 
   services:
     smp-server:
-      image: ${SIMPLEX_IMAGE:-simplexchat/smp-server:latest}
+      image: ${POPOPX_IMAGE:-popopxchat/smp-server:latest}
       environment:
         WEB_MANUAL: ${WEB_MANUAL:-1}
         ADDR: ${ADDR?"Please specify the domain."}
         PASS: ${PASS:-}
       volumes:
-        - ./smp_configs:/etc/opt/simplex
-        - ./smp_state:/var/opt/simplex
+        - ./smp_configs:/etc/opt/popopx
+        - ./smp_state:/var/opt/popopx
       ports:
         - 5223:5223
       restart: unless-stopped
@@ -528,13 +528,13 @@ To verify server binaries after you downloaded them:
 
 1. Download `_sha256sums` (hashes of all server binaries) and `_sha256sums.asc` (signature).
 
-2. Download our key FB44AF81A45BDE327319797C85107E357D4A17FC from [openpgp.org](https://keys.openpgp.org/search?q=chat%40simplex.chat)
+2. Download our key FB44AF81A45BDE327319797C85107E357D4A17FC from [openpgp.org](https://keys.openpgp.org/search?q=chat%40popopx.chat)
 
 3. Import the key with `gpg --import FB44AF81A45BDE327319797C85107E357D4A17FC`. Key filename should be the same as its fingerprint, but please change it if necessary.
 
 4. Run `gpg --verify _sha256sums.asc _sha256sums`. It should print:
 
-> Good signature from "SimpleX Chat <chat@simplex.chat>"
+> Good signature from "POPOPX Chat <chat@popopx.chat>"
 
 5. Compute the hashes of the binaries you plan to use with `sha256sum <file>` or with `openssl sha256 <file>` and compare them with the hashes in the file `_sha256sums` - they must be the same.
 
@@ -549,10 +549,10 @@ sudo su smp -c smp-server
 
 ...
 Available commands:
-  init                     Initialize server - creates /etc/opt/simplex and
-                           /var/opt/simplex directories and configuration files
+  init                     Initialize server - creates /etc/opt/popopx and
+                           /var/opt/popopx directories and configuration files
   start                    Start server (configuration:
-                           /etc/opt/simplex/smp-server.ini)
+                           /etc/opt/popopx/smp-server.ini)
   delete                   Delete configuration and log files
 ```
 
@@ -640,12 +640,12 @@ After that, your installation is complete and you should see in your terminal ou
 ```sh
 Certificate request self-signature ok
 subject=CN = 127.0.0.1
-Server initialized, you can modify configuration in /etc/opt/simplex/smp-server.ini.
+Server initialized, you can modify configuration in /etc/opt/popopx/smp-server.ini.
 Run `smp-server start` to start server.
 ----------
 You should store CA private key securely and delete it from the server.
 If server TLS credential is compromised this key can be used to sign a new one, keeping the same server identity and established connections.
-CA private key location: /etc/opt/simplex/ca.key
+CA private key location: /etc/opt/popopx/ca.key
 ----------
 SMP server v3.4.0
 Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
@@ -656,7 +656,7 @@ The server address above should be used in your client configuration, and if you
 
 ## Further configuration
 
-All generated configuration, along with a description for each parameter, is available inside configuration file in `/etc/opt/simplex/smp-server.ini` for further customization. Depending on the smp-server version, the configuration file looks something like this:
+All generated configuration, along with a description for each parameter, is available inside configuration file in `/etc/opt/popopx/smp-server.ini` for further customization. Depending on the smp-server version, the configuration file looks something like this:
 
 ```ini
 [INFORMATION]
@@ -682,13 +682,13 @@ source_code: https://github.com/simplex-chat/simplexmq
 # website:
 
 # Administrative contacts.
-# admin_simplex: SimpleX address
+# admin_popopx: POPOPX address
 # admin_email:
 # admin_pgp:
 # admin_pgp_fingerprint:
 
 # Contacts for complaints and feedback.
-# complaints_simplex: SimpleX address
+# complaints_popopx: POPOPX address
 # complaints_email:
 # complaints_pgp:
 # complaints_pgp_fingerprint:
@@ -769,7 +769,7 @@ disconnect: off
 
 [WEB]
 # Set path to generate static mini-site for server information and qr codes/links
-static_path: /var/opt/simplex/www
+static_path: /var/opt/popopx/www
 
 # Run an embedded server on this port
 # Onion sites can use any port and register it in the hidden service config.
@@ -779,8 +779,8 @@ static_path: /var/opt/simplex/www
 # You can run an embedded TLS web server too if you provide port and cert and key files.
 # Not required for running relay on onion address.
 https: 443
-cert: /etc/opt/simplex/web.crt
-key: /etc/opt/simplex/web.key
+cert: /etc/opt/popopx/web.crt
+key: /etc/opt/popopx/web.key
 ```
 
 ## Server security
@@ -795,14 +795,14 @@ Follow the steps to quickly initialize the server offline:
 
 2. Deploy [smp-server](https://github.com/simplex-chat/simplexmq#using-docker) locally.
 
-3. Destroy the container. All relevant configuration files and keys will be available at `$HOME/simplex/smp/config`.
+3. Destroy the container. All relevant configuration files and keys will be available at `$HOME/popopx/smp/config`.
 
 4. Move your `CA` private key (`ca.key`) to the safe place. For further explanation, see the next section: [Server security: Private keys](#private-keys).
 
 5. Copy all other configuration files **except** the CA key to the server:
 
    ```sh
-   rsync -hzasP $HOME/simplex/smp/config/ <server_user>@<server_address>:/etc/opt/simplex/
+   rsync -hzasP $HOME/popopx/smp/config/ <server_user>@<server_address>:/etc/opt/popopx/
    ```
 
 ### Private keys
@@ -821,13 +821,13 @@ Follow the steps to secure your CA keys:
 2. Copy the CA key to a safe place from this file:
 
    ```sh
-   /etc/opt/simplex/ca.key
+   /etc/opt/popopx/ca.key
    ```
 
 3. Delete the CA key from the server. **Please make sure you've saved your CA key somewhere safe. Otherwise, you would lose the ability to [rotate the online certificate](#online-certificate-rotation)**:
 
    ```sh
-   rm /etc/opt/simplex/ca.key
+   rm /etc/opt/popopx/ca.key
    ```
 
 ### Online certificate rotation
@@ -837,13 +837,13 @@ Operators of smp servers **ARE ADVISED** to rotate online certificate regularly 
 1. Create relevant folders:
 
    ```sh
-   mkdir -p $HOME/simplex/smp/config
+   mkdir -p $HOME/popopx/smp/config
    ```
 
 1. Copy the configuration files from the server to the local machine (if not yet):
 
    ```sh
-   rsync -hzasP <server_user>@<server_address>:/etc/opt/simplex/ $HOME/simplex/smp/config/
+   rsync -hzasP <server_user>@<server_address>:/etc/opt/popopx/ $HOME/popopx/smp/config/
    ```
 
 2. **Copy** your CA private key from a safe place to the local machine and name it `ca.key`.
@@ -863,7 +863,7 @@ Operators of smp servers **ARE ADVISED** to rotate online certificate regularly 
 5. Export a variable to configure your path to smp-server configuration:
 
    ```sh
-   export SMP_SERVER_CFG_PATH=$HOME/simplex/smp/config
+   export SMP_SERVER_CFG_PATH=$HOME/popopx/smp/config
    ```
 
 6. Execute the following command:
@@ -882,20 +882,20 @@ Operators of smp servers **ARE ADVISED** to rotate online certificate regularly 
    You should store CA private key securely and delete it from the server.
    If server TLS credential is compromised this key can be used to sign a new one, keeping the same server identity and established connections.
    CA private key location:
-   $HOME/simplex/smp/config/ca.key
+   $HOME/popopx/smp/config/ca.key
    ----------
    ```
 
 7. Remove the CA key from the config folder (make sure you have a backup!):
 
    ```sh
-   rm $HOME/simplex/smp/config/ca.key
+   rm $HOME/popopx/smp/config/ca.key
    ```
 
 8. Upload new certificates to the server:
 
    ```sh
-   rsync -hzasP $HOME/simplex/smp/config/ <server_user>@<server_address>:/etc/opt/simplex/
+   rsync -hzasP $HOME/popopx/smp/config/ <server_user>@<server_address>:/etc/opt/popopx/
    ```
 
 9. Connect to the server via SSH and restart the service:
@@ -962,7 +962,7 @@ SMP-server can also be deployed to be available via [Tor](https://www.torproject
      HiddenServiceNonAnonymousMode 1
      HiddenServiceSingleHopMode 1
      # smp-server hidden service host directory and port mappings
-     HiddenServiceDir /var/lib/tor/simplex-smp/
+     HiddenServiceDir /var/lib/tor/popopx-smp/
      HiddenServicePort 5223 localhost:5223
      HiddenServicePort 443 localhost:443
      ```
@@ -970,7 +970,7 @@ SMP-server can also be deployed to be available via [Tor](https://www.torproject
    - Create directories:
 
      ```sh
-     mkdir /var/lib/tor/simplex-smp/ && chown debian-tor:debian-tor /var/lib/tor/simplex-smp/ && chmod 700 /var/lib/tor/simplex-smp/
+     mkdir /var/lib/tor/popopx-smp/ && chown debian-tor:debian-tor /var/lib/tor/popopx-smp/ && chmod 700 /var/lib/tor/popopx-smp/
      ```
 
 3. Start tor:
@@ -986,7 +986,7 @@ SMP-server can also be deployed to be available via [Tor](https://www.torproject
    Execute the following command to display your onion host address:
 
    ```sh
-   cat /var/lib/tor/simplex-smp/hostname
+   cat /var/lib/tor/popopx-smp/hostname
    ```
 
 ### SOCKS port for SMP PROXY
@@ -1045,7 +1045,7 @@ _Please note:_ this configuration is supported since `v6.1.0-beta.2`.
 1. Add the following to your smp-server configuration (please modify fields in [INFORMATION] section to include relevant information):
 
    ```sh
-   vim /etc/opt/simplex/smp-server.ini
+   vim /etc/opt/popopx/smp-server.ini
    ```
 
    ```ini
@@ -1059,9 +1059,9 @@ _Please note:_ this configuration is supported since `v6.1.0-beta.2`.
 
    [WEB]
    https: 443
-   static_path: /var/opt/simplex/www
-   cert: /etc/opt/simplex/web.crt
-   key: /etc/opt/simplex/web.key
+   static_path: /var/opt/popopx/www
+   cert: /etc/opt/popopx/web.crt
+   key: /etc/opt/popopx/web.key
 
    [INFORMATION]
    # AGPLv3 license requires that you make any source code modifications
@@ -1086,13 +1086,13 @@ _Please note:_ this configuration is supported since `v6.1.0-beta.2`.
    website: <WEBSITE_IF_AVAILABLE>
   
    # Administrative contacts.
-   #admin_simplex: SimpleX address
+   #admin_popopx: POPOPX address
    admin_email: <EMAIL>
    # admin_pgp:
    # admin_pgp_fingerprint:
 
    # Contacts for complaints and feedback.
-   # complaints_simplex: SimpleX address
+   # complaints_popopx: POPOPX address
    complaints_email: <COMPLAINTS_EMAIL>
    # complaints_pgp:
    # complaints_pgp_fingerprint:
@@ -1161,7 +1161,7 @@ _Please note:_ this configuration is supported since `v6.1.0-beta.2`.
    Please replace `YOUR_DOMAIN` with your actual domain (smp.example.com).
 
    ```sh
-   vim /usr/local/bin/simplex-servers-certs
+   vim /usr/local/bin/popopx-servers-certs
    ```
 
    ```sh
@@ -1173,7 +1173,7 @@ _Please note:_ this configuration is supported since `v6.1.0-beta.2`.
 
    domain='HOST'
    folder_in="/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/${domain}"
-   folder_out='/etc/opt/simplex'
+   folder_out='/etc/opt/popopx'
    key_name='web.key'
    cert_name='web.crt'
 
@@ -1191,13 +1191,13 @@ _Please note:_ this configuration is supported since `v6.1.0-beta.2`.
 6. Make the script executable and execute it:
 
    ```sh
-   chmod +x /usr/local/bin/simplex-servers-certs && /usr/local/bin/simplex-servers-certs
+   chmod +x /usr/local/bin/popopx-servers-certs && /usr/local/bin/popopx-servers-certs
    ```
 
 7. Check if certificates were copied:
 
    ```sh
-   ls -haltr /etc/opt/simplex/web*
+   ls -haltr /etc/opt/popopx/web*
    ```
 
 8. Create cronjob to copy certificates to smp directory in timely manner:
@@ -1208,7 +1208,7 @@ _Please note:_ this configuration is supported since `v6.1.0-beta.2`.
 
    ```sh
    # Every week on 00:20 sunday
-   20 0 * * 0 /usr/local/bin/simplex-servers-certs
+   20 0 * * 0 /usr/local/bin/popopx-servers-certs
    ```
 
 9. Then:
@@ -1220,7 +1220,7 @@ _Please note:_ this configuration is supported since `v6.1.0-beta.2`.
 
 ## Name resolution
 
-SimpleX public names (like `alice.simplex`) resolve to contact and channel addresses. These records are stored in the SimpleX Namespace registry contracts on Ethereum, so resolving a name means reading from an Ethereum node. Read more about [SimpleX Public Names](./protocol/names-overview.md).
+POPOPX public names (like `alice.popopx`) resolve to contact and channel addresses. These records are stored in the POPOPX Namespace registry contracts on Ethereum, so resolving a name means reading from an Ethereum node. Read more about [POPOPX Public Names](./protocol/names-overview.md).
 
 With the `[NAMES]` section enabled, your smp-server resolves names for the clients connected to it: it forwards their lookups to a local REST resolver and returns the addresses. Resolution is off by default and requires running a resolver stack (an Ethereum node plus the resolver service), which needs:
 
@@ -1234,7 +1234,7 @@ The resolver stack (a reth + nimbus Ethereum node plus the resolver service) shi
 
 ```sh
 git clone https://github.com/simplex-chat/simplexmq
-cd simplexmq/scripts/resolver
+cd popopxmq/scripts/resolver
 docker compose up -d
 ```
 
@@ -1260,7 +1260,7 @@ The first should report `"ok": true`. The second should return the records for t
 
 ### 3. Point smp-server at the resolver
 
-In `/etc/opt/simplex/smp-server.ini`, set the `[NAMES]` section:
+In `/etc/opt/popopx/smp-server.ini`, set the `[NAMES]` section:
 
 ```ini
 [NAMES]
@@ -1294,9 +1294,9 @@ If the node is still syncing the server starts anyway, and name lookups fail unt
 
 ## Documentation
 
-All necessary files for `smp-server` are located in `/etc/opt/simplex/` folder.
+All necessary files for `smp-server` are located in `/etc/opt/popopx/` folder.
 
-Stored messages, connections, statistics and server log are located in `/var/opt/simplex/` folder.
+Stored messages, connections, statistics and server log are located in `/var/opt/popopx/` folder.
 
 ### SMP server address
 
@@ -1308,15 +1308,15 @@ smp://<fingerprint>[:<password>]@<public_hostname>[,<onion_hostname>]
 
 - `<fingerprint>`
 
-  Your `smp-server` fingerprint of certificate. You can check your certificate fingerprint in `/etc/opt/simplex/fingerprint`.
+  Your `smp-server` fingerprint of certificate. You can check your certificate fingerprint in `/etc/opt/popopx/fingerprint`.
 
 - **optional** `<password>`
 
-  Your configured password of `smp-server`. You can check your configured password in `/etc/opt/simplex/smp-server.ini`, under `[AUTH]` section in `create_password:` field.
+  Your configured password of `smp-server`. You can check your configured password in `/etc/opt/popopx/smp-server.ini`, under `[AUTH]` section in `create_password:` field.
 
 - `<public_hostname>`, **optional** `<onion_hostname>`
 
-  Your configured hostname(s) of `smp-server`. You can check your configured hosts in `/etc/opt/simplex/smp-server.ini`, under `[TRANSPORT]` section in `host:` field.
+  Your configured hostname(s) of `smp-server`. You can check your configured hosts in `/etc/opt/popopx/smp-server.ini`, under `[TRANSPORT]` section in `host:` field.
 
 ### Systemd commands
 
@@ -1350,7 +1350,7 @@ Nov 23 19:23:21 5588ab759e80 systemd[1]: Started SMP server.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: SMP server v3.4.0
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Server address: smp://d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=:V8ONoJ6ICwnrZnTC_QuSHfCEYq53uLaJKQ_oIC6-ve8=@<hostnames>
-Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/simplex/smp-server-store.log
+Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/popopx/smp-server-store.log
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Listening on port 5223 (TLS)...
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: not expiring inactive clients
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: creating new queues requires password
@@ -1371,7 +1371,7 @@ Nov 23 19:23:21 5588ab759e80 systemd[1]: Started SMP server.
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: SMP server v3.4.0
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Fingerprint: d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Server address: smp://d5fcsc7hhtPpexYUbI2XPxDbyU2d3WsVmROimcL90ss=:V8ONoJ6ICwnrZnTC_QuSHfCEYq53uLaJKQ_oIC6-ve8=@<hostnames>
-Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/simplex/smp-server-store.log
+Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Store log: /var/opt/popopx/smp-server-store.log
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: Listening on port 5223 (TLS)...
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: not expiring inactive clients
 Nov 23 19:23:21 5588ab759e80 smp-server[30878]: creating new queues requires password
@@ -1390,7 +1390,7 @@ Enabling control port in the configuration allows administrator to see informati
 2. Open the configuration file:
 
    ```sh
-   vim /etc/opt/simplex/smp-server.ini
+   vim /etc/opt/popopx/smp-server.ini
    ```
 
 2. Configure the control port and replace the passwords:
@@ -1453,9 +1453,9 @@ Here's the full list of commands, their descriptions and who can access them.
 
 ### Daily statistics
 
-You can enable `smp-server` statistics for `Grafana` dashboard by setting value `on` in `/etc/opt/simplex/smp-server.ini`, under `[STORE_LOG]` section in `log_stats:` field.
+You can enable `smp-server` statistics for `Grafana` dashboard by setting value `on` in `/etc/opt/popopx/smp-server.ini`, under `[STORE_LOG]` section in `log_stats:` field.
 
-Logs will be stored as `csv` file in `/var/opt/simplex/smp-server-stats.daily.log`. Fields for the `csv` file are:
+Logs will be stored as `csv` file in `/var/opt/popopx/smp-server-stats.daily.log`. Fields for the `csv` file are:
 
 ```sh
 fromTime,qCreated,qSecured,qDeleted,msgSent,msgRecv,dayMsgQueues,weekMsgQueues,monthMsgQueues,msgSentNtf,msgRecvNtf,dayCountNtf,weekCountNtf,monthCountNtf,qCount,msgCount,msgExpired,qDeletedNew,qDeletedSecured,pRelays_pRequests,pRelays_pSuccesses,pRelays_pErrorsConnect,pRelays_pErrorsCompat,pRelays_pErrorsOther,pRelaysOwn_pRequests,pRelaysOwn_pSuccesses,pRelaysOwn_pErrorsConnect,pRelaysOwn_pErrorsCompat,pRelaysOwn_pErrorsOther,pMsgFwds_pRequests,pMsgFwds_pSuccesses,pMsgFwds_pErrorsConnect,pMsgFwds_pErrorsCompat,pMsgFwds_pErrorsOther,pMsgFwdsOwn_pRequests,pMsgFwdsOwn_pSuccesses,pMsgFwdsOwn_pErrorsConnect,pMsgFwdsOwn_pErrorsCompat,pMsgFwdsOwn_pErrorsOther,pMsgFwdsRecv,qSub,qSubAuth,qSubDuplicate,qSubProhibited,msgSentAuth,msgSentQuota,msgSentLarge,msgNtfs,msgNtfNoSub,msgNtfLost,qSubNoMsg,msgRecvGet,msgGet,msgGetNoMsg,msgGetAuth,msgGetDuplicate,msgGetProhibited,psSubDaily,psSubWeekly,psSubMonthly,qCount2,ntfCreated,ntfDeleted,ntfSub,ntfSubAuth,ntfSubDuplicate,ntfCount,qDeletedAllB,qSubAllB,qSubEnd,qSubEndB,ntfDeletedB,ntfSubB,msgNtfsB,msgNtfExpired
@@ -1606,14 +1606,14 @@ To update your smp-server to latest version, choose your installation method and
      1. Execute the following command:
 
         ```sh
-        sudo simplex-servers-update
+        sudo popopx-servers-update
         ```
 
         To install specific version, run:
 
         ```sh
         export VER=<version_from_github_releases> &&\
-        sudo -E simplex-servers-update
+        sudo -E popopx-servers-update
         ```
 
      2. Done!
@@ -1623,13 +1623,13 @@ To update your smp-server to latest version, choose your installation method and
      1. Stop and remove the container:
 
         ```sh
-        docker rm $(docker stop $(docker ps -a -q --filter ancestor=simplexchat/smp-server --format="\{\{.ID\}\}"))
+        docker rm $(docker stop $(docker ps -a -q --filter ancestor=popopxchat/smp-server --format="\{\{.ID\}\}"))
         ```
 
      2. Pull latest image:
 
         ```sh
-        docker pull simplexchat/smp-server:latest
+        docker pull popopxchat/smp-server:latest
         ```
 
      3. Start new container:
@@ -1638,9 +1638,9 @@ To update your smp-server to latest version, choose your installation method and
         docker run -d \
           -p 5223:5223 \
           -p 443:443 \
-          -v $HOME/simplex/smp/config:/etc/opt/simplex:z \
-          -v $HOME/simplex/smp/logs:/var/opt/simplex:z \
-          simplexchat/smp-server:latest
+          -v $HOME/popopx/smp/config:/etc/opt/popopx:z \
+          -v $HOME/popopx/smp/logs:/var/opt/popopx:z \
+          popopxchat/smp-server:latest
         ```
 
    - [Linode Marketplace](https://www.linode.com/marketplace/apps/simplex-chat/simplex-chat/)
@@ -1648,13 +1648,13 @@ To update your smp-server to latest version, choose your installation method and
      1. Pull latest images:
 
         ```sh
-        docker-compose --project-directory /etc/docker/compose/simplex pull
+        docker-compose --project-directory /etc/docker/compose/popopx pull
         ```
 
      2. Restart the containers:
 
         ```sh
-        docker-compose --project-directory /etc/docker/compose/simplex up -d --remove-orphans
+        docker-compose --project-directory /etc/docker/compose/popopx up -d --remove-orphans
         ```
 
      3. Remove obsolete images:
@@ -1667,7 +1667,7 @@ To update your smp-server to latest version, choose your installation method and
 
 You can locally reproduce server binaries, following these instructions.
 
-If you are a security expert or researcher, you can help SimpleX network and users community by signing the release checksums – we will [publish your signature](https://github.com/simplex-chat/simplexmq/releases/tag/v6.3.1). Please reach out to us!
+If you are a security expert or researcher, you can help POPOPX network and users community by signing the release checksums – we will [publish your signature](https://github.com/simplex-chat/simplexmq/releases/tag/v6.3.1). Please reach out to us!
 
 To reproduce the build you must have:
 
@@ -1684,13 +1684,13 @@ To reproduce the build you must have:
 2. Make it executable:
 
    ```sh
-   chmod +x simplexmq-reproduce-builds.sh
+   chmod +x popopxmq-reproduce-builds.sh
    ```
 
 3. Execute the script with the required tag:
 
    ```sh
-   ./simplexmq-reproduce-builds.sh 'v6.3.1'
+   ./popopxmq-reproduce-builds.sh 'v6.3.1'
    ```
 
    The script executes these steps (please review the script to confirm):

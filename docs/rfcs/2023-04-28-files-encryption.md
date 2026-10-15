@@ -8,7 +8,7 @@ There are multiple operations in the app that access files:
 
 1. Sending files via SMP - chat core reads the files chunk by chunk and sends them. The file can be encrypted once sent and the "encrypted" flag added.
 
-2. Sending files via XFTP - simplexmq encrypts the file first and then sends it. Currently, we are deleting the file from chat, once its uploaded, there is no reason to keep unencrypted file (from XFTP point of view) once its encrypted.
+2. Sending files via XFTP - popopxmq encrypts the file first and then sends it. Currently, we are deleting the file from chat, once its uploaded, there is no reason to keep unencrypted file (from XFTP point of view) once its encrypted.
 
 3. Viewing images in the mobile apps.
 

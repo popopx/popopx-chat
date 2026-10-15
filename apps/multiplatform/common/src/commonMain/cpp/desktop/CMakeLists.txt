@@ -51,14 +51,14 @@ add_library( # Sets the name of the library.
     SHARED
 
     # Provides a relative path to your source file(s).
-    simplex-api.c)
+    popopx-api.c)
 
-add_library( simplex SHARED IMPORTED )
-FILE(GLOB SIMPLEXLIB ${CMAKE_SOURCE_DIR}/libs/${OS_LIB_PATH}-${OS_LIB_ARCH}/libsimplex.${OS_LIB_EXT})
+add_library( popopx SHARED IMPORTED )
+FILE(GLOB POPOPXLIB ${CMAKE_SOURCE_DIR}/libs/${OS_LIB_PATH}-${OS_LIB_ARCH}/libpopopx.${OS_LIB_EXT})
 if(WIN32)
-    set_target_properties( simplex PROPERTIES IMPORTED_IMPLIB ${SIMPLEXLIB})
+    set_target_properties( popopx PROPERTIES IMPORTED_IMPLIB ${POPOPXLIB})
 else()
-    set_target_properties( simplex PROPERTIES IMPORTED_LOCATION ${SIMPLEXLIB})
+    set_target_properties( popopx PROPERTIES IMPORTED_LOCATION ${POPOPXLIB})
 endif()
 
 
@@ -66,14 +66,14 @@ endif()
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 if(NOT APPLE)
-	target_link_libraries(app-lib simplex)
+	target_link_libraries(app-lib popopx)
 else()
 	# Without direct linking it can't find hs_init in linking step
 	add_library( rts SHARED IMPORTED )
 	FILE(GLOB RTSLIB ${CMAKE_SOURCE_DIR}/libs/${OS_LIB_PATH}-${OS_LIB_ARCH}/libHSrts*_thr-*.${OS_LIB_EXT})
 	set_target_properties( rts PROPERTIES IMPORTED_LOCATION ${RTSLIB})
 
-	target_link_libraries(app-lib rts simplex)
+	target_link_libraries(app-lib rts popopx)
 endif()
 
 if(APPLE)
@@ -91,7 +91,7 @@ endif()
 #        COMMAND ${CMAKE_COMMAND} -E copy ${src_files} ${dest_path})
 #ENDMACRO(POST_BUILD_COPY src_files dest_path)
 
-#file(COPY "${CMAKE_SOURCE_DIR}/libs/${OS_LIB_PATH}-${OS_LIB_ARCH}/libsimplex.${OS_LIB_EXT}" DESTINATION "../../resources/libs/${OS_LIB_PATH}-${OS_LIB_ARCH}/libsimplex.${OS_LIB_EXT}")
+#file(COPY "${CMAKE_SOURCE_DIR}/libs/${OS_LIB_PATH}-${OS_LIB_ARCH}/libpopopx.${OS_LIB_EXT}" DESTINATION "../../resources/libs/${OS_LIB_PATH}-${OS_LIB_ARCH}/libpopopx.${OS_LIB_EXT}")
 #POST_BUILD_COPY("${CMAKE_BINARY_DIR}/libapp-lib.${OS_LIB_EXT}" "../resources/libs/${OS_LIB_PATH}-${OS_LIB_ARCH}/")
 
 #add_custom_command(TARGET lalal POST_BUILD

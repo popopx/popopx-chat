@@ -1,6 +1,6 @@
 # Message Composition Specification
 
-Source: `common/src/commonMain/kotlin/chat/simplex/common/views/chat/ComposeView.kt`, `SendMsgView.kt`
+Source: `common/src/commonMain/kotlin/chat/popopx/common/views/chat/ComposeView.kt`, `SendMsgView.kt`
 
 ---
 
@@ -19,7 +19,7 @@ Source: `common/src/commonMain/kotlin/chat/simplex/common/views/chat/ComposeView
 
 ## Executive Summary
 
-Message composition in SimpleX Chat is managed by `ComposeView` (line ~345 in `ComposeView.kt`) backed by the serializable `ComposeState` data class. The compose area supports text input, link previews, media/file/voice attachments, reply/edit/forward contexts, live (streaming) messages, member @mentions, message reports, and timed (disappearing) messages. The `SendMsgView` composable (in `SendMsgView.kt`) provides the text field and action buttons. Draft state persists across chat switches when the privacy preference is enabled.
+Message composition in POPOPX Chat is managed by `ComposeView` (line ~345 in `ComposeView.kt`) backed by the serializable `ComposeState` data class. The compose area supports text input, link previews, media/file/voice attachments, reply/edit/forward contexts, live (streaming) messages, member @mentions, message reports, and timed (disappearing) messages. The `SendMsgView` composable (in `SendMsgView.kt`) provides the text field and action buttons. Draft state persists across chat switches when the privacy preference is enabled.
 
 ---
 
@@ -60,7 +60,7 @@ ComposeView
 
 ## 2. ComposeState Data Class
 
-**Location:** [`ComposeView.kt#L98`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/ComposeView.kt#L98)
+**Location:** [`ComposeView.kt#L98`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/ComposeView.kt#L98)
 
 ```kotlin
 @Serializable
@@ -142,7 +142,7 @@ Tracks a live (streaming) message: the associated `ChatItem`, the currently type
 
 ## 3. ComposePreview Sealed Class
 
-**Location:** [`ComposeView.kt#L52`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/ComposeView.kt#L52)
+**Location:** [`ComposeView.kt#L52`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/ComposeView.kt#L52)
 
 ```kotlin
 sealed class ComposePreview {
@@ -174,7 +174,7 @@ Used within `MediaPreview` to track the source type:
 
 ## 4. ComposeContextItem Sealed Class
 
-**Location:** [`ComposeView.kt#L61`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/ComposeView.kt#L61)
+**Location:** [`ComposeView.kt#L61`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/ComposeView.kt#L61)
 
 ```kotlin
 sealed class ComposeContextItem {
@@ -208,7 +208,7 @@ sealed class ComposeContextItem {
 
 ## 5. SendMsgView
 
-**Location:** [`SendMsgView.kt#L36`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/SendMsgView.kt#L36)
+**Location:** [`SendMsgView.kt#L36`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/SendMsgView.kt#L36)
 
 ```kotlin
 fun SendMsgView(
@@ -338,7 +338,7 @@ On send (line ~603, `sendMessageAsync`):
 
 When `privacyLinkPreviews` is enabled and the message contains a URL:
 
-1. `showLinkPreview` extracts first non-SimpleX, non-cancelled link from parsed markdown.
+1. `showLinkPreview` extracts first non-POPOPX, non-cancelled link from parsed markdown.
 2. Sets `ComposePreview.CLinkPreview(null)` (loading state).
 3. After 1.5s debounce, calls `getLinkPreview(url)`.
 4. On success, updates to `CLinkPreview(linkPreview)`.
@@ -348,7 +348,7 @@ When `privacyLinkPreviews` is enabled and the message contains a URL:
 
 ## 7. Draft Persistence
 
-**Location:** [`ComposeView.kt#L1230`](../../common/src/commonMain/kotlin/chat/simplex/common/views/chat/ComposeView.kt#L1230) (`KeyChangeEffect(chatModel.chatId.value)`)
+**Location:** [`ComposeView.kt#L1230`](../../common/src/commonMain/kotlin/chat/popopx/common/views/chat/ComposeView.kt#L1230) (`KeyChangeEffect(chatModel.chatId.value)`)
 
 Controlled by the `privacySaveLastDraft` preference.
 

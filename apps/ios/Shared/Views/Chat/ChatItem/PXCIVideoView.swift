@@ -582,11 +582,31 @@ struct PXVideoPlayer: View {
         if let prohibited = file.fileProhibited {
             showProhibitedFileAlert(file, prohibited)
         } else {
+            m.openWhenReceived(file, open: playReceived)
             Task {
                 if let user = m.currentUser {
                     await receiveFile(user, file.fileId, false, false)
                 }
             }
+        }
+    }
+
+    private func playReceived(_ file: CIFile) {
+        setupPlayer(file)
+        if urlDecrypted == nil {
+            decrypt(file: file, completed: playVideo)
+        } else {
+            playVideo()
+        }
+    }
+
+    private func playVideo() {
+        if smallView {
+            showFullScreenPlayer = urlDecrypted != nil
+        } else if let urlDecrypted {
+            m.stopPreviousRecPlay = urlDecrypted
+            videoPlaying = true
+            player?.play()
         }
     }
 

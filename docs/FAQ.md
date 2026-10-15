@@ -10,7 +10,7 @@ revision: 13.08.2025
 - [How do I connect to people?](#how-do-i-connect-to-people)
 - [I have nobody to chat with! Where can I find any groups?](#i-have-nobody-to-chat-with-where-can-i-find-any-groups)
 - [What is database? What can I do with it?](#what-is-database-what-can-i-do-with-it)
-- [Can I send files over SimpleX? ](#can-i-send-files-over-simplex)
+- [Can I send files over POPOPX? ](#can-i-send-files-over-popopx)
 - [What’s incognito profile?](#whats-incognito-profile)
 - [How do invitations work?](#how-do-invitations-work)
 - [How to configure and delete groups?](#how-to-configure-and-delete-groups)
@@ -35,12 +35,12 @@ revision: 13.08.2025
 - [My mobile app does not connect to desktop app](#my-mobile-app-does-not-connect-to-desktop-app)
 
 [Privacy and security](#privacy-and-security)
-- [Does SimpleX support post quantum cryptography?](#does-simplex-support-post-quantum-cryptography)
+- [Does POPOPX support post quantum cryptography?](#does-popopx-support-post-quantum-cryptography)
 - [Why can't I use the same profile on different devices?](#why-cant-i-use-the-same-profile-on-different-devices)
 - [What user data can be provided on request?](#what-user-data-can-be-provided-on-request)
-- [Does SimpleX protect my IP address?](#does-simplex-protect-my-ip-address)
+- [Does POPOPX protect my IP address?](#does-popopx-protect-my-ip-address)
 - [Doesn't private message routing reinvent Tor?](#doesnt-private-message-routing-reinvent-tor)
-- [Why don't you embed Tor in SimpleX Chat app?](#why-dont-you-embed-tor-in-simplex-chat-app)
+- [Why don't you embed Tor in POPOPX Chat app?](#why-dont-you-embed-tor-in-popopx-chat-app)
 - [Can I host my own relays?](#can-i-host-my-own-relays)
 
 [Funding and business model](#funding-and-business-model)
@@ -58,7 +58,7 @@ Alternatively, you can show the QR code when meeting in person or in a video cal
 
 It is safe to share this link over any communication channel, it contains only public keys and can only be used once.
 
-If you want to share your address publicly, so that many people can connect to you, use your SimpleX address instead of 1-time links. Tap your profile image/avatar, then Your SimpleX address. Once you create the address, you can share it in social media profiles, email signature, etc. See [the comparison of SimpleX address with 1-time links](./guide/making-connections.md#comparison-of-1-time-invitation-links-and-simplex-contact-addresses).
+If you want to share your address publicly, so that many people can connect to you, use your POPOPX address instead of 1-time links. Tap your profile image/avatar, then Your POPOPX address. Once you create the address, you can share it in social media profiles, email signature, etc. See [the comparison of POPOPX address with 1-time links](./guide/making-connections.md#comparison-of-1-time-invitation-links-and-popopx-contact-addresses).
 
 ### I have nobody to chat with! Where can I find any groups?
 
@@ -66,15 +66,15 @@ Please check our [Groups Directory](./DIRECTORY.md) in the first place. You migh
 
 ### What is database? What can I do with it?
 
-Database is essential for SimpleX Chat to function properly. In comparison to centralized messaging providers, it is _the user_ who is responsible for taking care of their data. On the other hand, user is sure that _nobody but them_ has access to it. Please read more about it: [Database](./guide/managing-data.md).
+Database is essential for POPOPX Chat to function properly. In comparison to centralized messaging providers, it is _the user_ who is responsible for taking care of their data. On the other hand, user is sure that _nobody but them_ has access to it. Please read more about it: [Database](./guide/managing-data.md).
 
-### Can I send files over SimpleX?
+### Can I send files over POPOPX?
 
-Of course! While doing so, you are using a _state-of-the-art_ protocol that greatly reduces metadata leaks. Please read more about it: [XFTP Protocol](../blog/20230301-simplex-file-transfer-protocol.md).
+Of course! While doing so, you are using a _state-of-the-art_ protocol that greatly reduces metadata leaks. Please read more about it: [XFTP Protocol](../blog/20230301-popopx-file-transfer-protocol.md).
 
 ### What’s incognito profile?
 
-This feature is unique to SimpleX Chat – it is independent from chat profiles.
+This feature is unique to POPOPX Chat – it is independent from chat profiles.
 
 When "Incognito Mode” is turned on, your currently chosen profile name and image are hidden from your new contacts. It allows anonymous connections with other people without any shared data – when you make new connections or join groups via a link a new random profile name will be generated for each connection.
 
@@ -116,11 +116,11 @@ We think that delivery receipts are important and equally benefit both sides as 
 
 ### Can I use the same profile on desktop? Do messages sync cross-platform?
 
-You can use your profile from mobile device on desktop. However, to do so you need to be on the same network, both on your mobile and desktop. More about it: [Release info](../blog/20231125-simplex-chat-v5-4-link-mobile-desktop-quantum-resistant-better-groups.md#link-mobile-and-desktop-apps-via-secure-quantum-resistant-protocol).
+You can use your profile from mobile device on desktop. However, to do so you need to be on the same network, both on your mobile and desktop. More about it: [Release info](../blog/20231125-popopx-chat-v5-4-link-mobile-desktop-quantum-resistant-better-groups.md#link-mobile-and-desktop-apps-via-secure-quantum-resistant-protocol).
 
 ### Why cannot I delete messages I sent from my contact's device?
 
-In SimpleX Chat, you and your contacts can delete the messages you send from recipients' devices if you both agree to that within 24 hours of sending it. To be able to do that you both have to enable "Delete for everyone" option in Contact preferences - tap on the contact's name above the conversation to get there.
+In POPOPX Chat, you and your contacts can delete the messages you send from recipients' devices if you both agree to that within 24 hours of sending it. To be able to do that you both have to enable "Delete for everyone" option in Contact preferences - tap on the contact's name above the conversation to get there.
 
 You can also revoke the files you send. If the recipients did not yet receive the file, they will not be able to receive it after the file is revoked.
 
@@ -170,18 +170,18 @@ Each role can do everything that the previous roles can, except moderators and h
 
 ### I don't want to share a web link or a QR code. How can I connect?
 
-You can replace the server part of the link (e.g., `https://smp18.simplex.im/`) with `simplex:/` and add `?h=smp18.simplex.im` (replace it with server of your link) to the end of the link. Then it will not be possible to use it in a web browser, but it will be recognized by SimpleX Chat app.
+You can replace the server part of the link (e.g., `https://smp18.popopx.im/`) with `popopx:/` and add `?h=smp18.popopx.im` (replace it with server of your link) to the end of the link. Then it will not be possible to use it in a web browser, but it will be recognized by POPOPX Chat app.
 
-For example, this link: `https://smp18.simplex.im/i#E74vSxMwDnEx6DAvRCZmzBeZwwAseJUD/yVTHjaaH_EzL19DG7fvd46Mjry3IBqYT0UMo5G7l4jQ`
+For example, this link: `https://smp18.popopx.im/i#E74vSxMwDnEx6DAvRCZmzBeZwwAseJUD/yVTHjaaH_EzL19DG7fvd46Mjry3IBqYT0UMo5G7l4jQ`
 
-becomes: `simplex:/i#E74vSxMwDnEx6DAvRCZmzBeZwwAseJUD/yVTHjaaH_EzL19DG7fvd46Mjry3IBqYT0UMo5G7l4jQ?h=smp18.simplex.im`
+becomes: `popopx:/i#E74vSxMwDnEx6DAvRCZmzBeZwwAseJUD/yVTHjaaH_EzL19DG7fvd46Mjry3IBqYT0UMo5G7l4jQ?h=smp18.popopx.im`
 
 ### How to change servers to my own?
 
 Add your server in Settings -> Network & servers -> Your servers. If you have multiple profiles, you need to add your server in every profile.
 After that, disable all preset servers. If you have multiple profiles, you must first add your server to all profiles for this option to be available.
 
-To resolve SimpleX public names, if your server does not support it, you may leave preset servers enabled only for resolving the public names.
+To resolve POPOPX public names, if your server does not support it, you may leave preset servers enabled only for resolving the public names.
 
 Please note: configured servers only determine which servers will be used for the new connections (members/contacts). Previously created connections don't switch automatically. You can manually switch all existing contacts and small/important groups (each member needs to be switched), and then leave and re-join all large groups.
 You can switch contacts/members manually to another server by going to their profile and clicking on "Change receiving address", note that the current server must be online for the address change to work.
@@ -220,7 +220,7 @@ Check the color of the bolt icon next to Notifications in app settings - it shou
 
 If it's not, please open notifications, disable them (choose Off / Local), and then enable again - you should do it when you have Internet connection.
 
-Check if your push server has been restarted at time of the issue (Notifications -> Push server) at https://status.simplex.chat if it has been restarted, you may not receive notifications from that time.
+Check if your push server has been restarted at time of the issue (Notifications -> Push server) at https://status.popopx.chat if it has been restarted, you may not receive notifications from that time.
 
 If device was offline, you may need to open the app to start receiving notifications.
 
@@ -230,7 +230,7 @@ In some cases notifications may still not work, iOS notifications are hard to do
 
 **Messaging server or notification server is under maintenance**
 
-Please check the current status of preset servers at [https://status.simplex.chat](https://status.simplex.chat). You can also connect to status bot via QR code on that page - it will send the updates when the server is offline for maintenance, and also when the new versions of the app are released.
+Please check the current status of preset servers at [https://status.popopx.chat](https://status.popopx.chat). You can also connect to status bot via QR code on that page - it will send the updates when the server is offline for maintenance, and also when the new versions of the app are released.
 
 ### I do not see the second tick on the messages I sent
 
@@ -257,7 +257,7 @@ Please report such issues if you use v5.7 or newer.
 
 ### Audio or video calls do not connect
 
-App uses WebRTC for calls. Please check that you can connect to the servers configured in the app: stun.simplex.im and turn.simplex.im - see [troubleshooting WebRTC](./WEBRTC.md#troubleshoot).
+App uses WebRTC for calls. Please check that you can connect to the servers configured in the app: stun.popopx.im and turn.popopx.im - see [troubleshooting WebRTC](./WEBRTC.md#troubleshoot).
 
 If you can connect to the server, please report this issue to us privately, including the following information:
 
@@ -296,21 +296,21 @@ Once the connection is established you don't need to be online at the same time 
 
 If you are prompted to enter database passphrase and you do not know it, this could have happened due to:
 - You may have forgotten the passphrase. (There is no other way to access your data).
-- Migration of app data from one device to another while using unsupported migration process, e.g. via iCloud backup. Use SimpleX Chat's own migration process in the app Settings.
+- Migration of app data from one device to another while using unsupported migration process, e.g. via iCloud backup. Use POPOPX Chat's own migration process in the app Settings.
 
-In the previous desktop app versions it could also happen in case of error during SimpleX Chat installation.
+In the previous desktop app versions it could also happen in case of error during POPOPX Chat installation.
 
 You can resolve it by deleting the app's database: (WARNING: this results in deletion of all profiles, contacts and messages)
 - on Android/iOS, uninstall the app and install it again.
-- on Windows, delete folder `C:\AppData\Roaming\SimpleX`, you can find it by pressing Windows key + R and entering `%appdata%`.
-- on Linux/Mac, delete directories `~/.local/share/simplex` and `~/.config/simplex`, where `~` represents your home directory (/home/user)
-- on Flatpak, delete directory `~/.var/app/chat.simplex.simplex`.
+- on Windows, delete folder `C:\AppData\Roaming\POPOPX`, you can find it by pressing Windows key + R and entering `%appdata%`.
+- on Linux/Mac, delete directories `~/.local/share/popopx` and `~/.config/popopx`, where `~` represents your home directory (/home/user)
+- on Flatpak, delete directory `~/.var/app/chat.popopx.popopx`.
 
 ### My mobile app does not connect to desktop app
 
 1. Check that both devices are connected to the same network (e.g., it won't work if mobile is connected to mobile Internet and desktop to WiFi).
 2. If you use VPN on mobile, allow connections to local network in your VPN settings, or disable VPN.
-3. Allow SimpleX Chat on desktop to accept network connections in system firewall settings. You may choose a specific port in desktop app to accept connections, by default it uses a random port every time.
+3. Allow POPOPX Chat on desktop to accept network connections in system firewall settings. You may choose a specific port in desktop app to accept connections, by default it uses a random port every time.
 4. Check that your WiFi router allows connections between devices (e.g., it may have an option for "device isolation", or similar).
 5. If you see an error "certificate expired", please check that your device clocks are synchronized within a few seconds.
 6. If iOS app fails to connect and shows an error containing "no route", check that local network connections are allowed for the app in system settings.
@@ -321,13 +321,13 @@ If none of the suggestions work for you, you can create a separate profile on ea
 
 ## Privacy and security
 
-### Does SimpleX support post quantum cryptography?
+### Does POPOPX support post quantum cryptography?
 
-Yes! Please read more about how quantum-resistant encryption is added to SimpleX Chat and about various properties of end-to-end encryption in [this post](../blog/20240314-simplex-chat-v5-6-quantum-resistance-signal-double-ratchet-algorithm.md).
+Yes! Please read more about how quantum-resistant encryption is added to POPOPX Chat and about various properties of end-to-end encryption in [this post](../blog/20240314-popopx-chat-v5-6-quantum-resistance-signal-double-ratchet-algorithm.md).
 
 ### Why can't I use the same profile on different devices?
 
-SimpleX Chat apps support [linking of mobile and desktop apps](https://simplex.chat/blog/20231125-simplex-chat-v5-4-link-mobile-desktop-quantum-resistant-better-groups.html#link-mobile-and-desktop-apps-via-secure-quantum-resistant-protocol) via secure quantum-resistant protocol. It allows using the profile on your mobile device from desktop clients.
+POPOPX Chat apps support [linking of mobile and desktop apps](https://simplex.chat/blog/20231125-simplex-chat-v5-4-link-mobile-desktop-quantum-resistant-better-groups.html#link-mobile-and-desktop-apps-via-secure-quantum-resistant-protocol) via secure quantum-resistant protocol. It allows using the profile on your mobile device from desktop clients.
 
 Seamlessly and securely using the same profile from two or more devices is a complex and unsolved problem. All apps that provide multi-device support do so at a cost of compromising security of end-to-end encryption. E.g., Session removed the Double Ratchet algorithm entirely to enable multi-device support, sacrificing forward secrecy. Signal provides multi-device support with Double Ratchet algorithm, but by [compromising its "break-in recovery" property](https://eprint.iacr.org/2021/626.pdf) (aka post-compromise security).
 
@@ -354,11 +354,11 @@ Our objective is to consistently ensure that no user data and absolute minimum o
 
 Please see our [Privacy Policy](../PRIVACY.md) and [Transparency Reports](./TRANSPARENCY.md).
 
-### Does SimpleX protect my IP address?
+### Does POPOPX protect my IP address?
 
 Yes!
 
-SimpleX Chat from version 6.0 uses *private message routing* whenever you send messages to unknown servers (all servers in app network settings, both enabled and not, are considered "known").
+POPOPX Chat from version 6.0 uses *private message routing* whenever you send messages to unknown servers (all servers in app network settings, both enabled and not, are considered "known").
 
 For private routing to work, the servers chosen by your contacts (and by the group members in your groups) must be upgraded to the recent versions. Messaging servers include support for private routing from v5.8, but we recommend using the latest versions.
 
@@ -372,7 +372,7 @@ Also, this connection is protected from man-in-the-middle attack by the forwardi
 
 You can optionally enable private message routing for all servers in Advanced network settings to complicate traffic correlation for known servers too. This will be default once the clients are improved to "know about" and to take into account network server operators.
 
-See [this post](../blog/20240604-simplex-chat-v5.8-private-message-routing-chat-themes.md#private-message-routing) for more details about how private message routing works.
+See [this post](../blog/20240604-popopx-chat-v5.8-private-message-routing-chat-themes.md#private-message-routing) for more details about how private message routing works.
 
 ### Doesn't private message routing reinvent Tor?
 
@@ -388,9 +388,9 @@ As each message uses its own random encryption key and random (non-sequential) i
 
 This design is similar to mixnets (e.g. [Nym network](https://nymtech.net)), and it is tailored to the needs of message routing, providing better transport anonymity than general-purpose networks, like Tor or VPN. You still can use Tor or VPN to connect to known servers, to protect your IP address from them.
 
-### Why don't you embed Tor in SimpleX Chat app?
+### Why don't you embed Tor in POPOPX Chat app?
 
-[Tor](https://www.torproject.org) is a fantastic transport overlay network - we believe it might be the best there is right now. If its [threat model](https://support.torproject.org/about/attacks-on-onion-routing/) works for you, you absolutely should use it - SimpleX Chat app supports Tor via SOCKS proxy [since v3.1](https://simplex.chat/blog/20220808-simplex-chat-v3.1-chat-groups.html#access-messaging-servers-via-tor), and SimpleX network servers can be available on both public and onion address at the same time [since v3.2](https://simplex.chat/blog/20220901-simplex-chat-v3.2-incognito-mode.html#using-onion-server-addresses-with-tor), improving anonymity of the users who use Tor.
+[Tor](https://www.torproject.org) is a fantastic transport overlay network - we believe it might be the best there is right now. If its [threat model](https://support.torproject.org/about/attacks-on-onion-routing/) works for you, you absolutely should use it - POPOPX Chat app supports Tor via SOCKS proxy [since v3.1](https://simplex.chat/blog/20220808-simplex-chat-v3.1-chat-groups.html#access-messaging-servers-via-tor), and POPOPX network servers can be available on both public and onion address at the same time [since v3.2](https://simplex.chat/blog/20220901-simplex-chat-v3.2-incognito-mode.html#using-onion-server-addresses-with-tor), improving anonymity of the users who use Tor.
 
 If you host your messaging server on the onion address only, the users who don't use Tor would still be able to message you via private message routing - all preset servers are configured to forward messages to onion-only servers.
 
@@ -414,19 +414,19 @@ Of course! Please check these tutorials: [SMP server](./SERVER.md) and [XFTP ser
 
 ### How are you funded?
 
-SimpleX Chat Ltd is funded by private investors and venture capital. As an open-source project, it is also being generously supported by donations as well. Read the posts [from 2023](../blog/20230422-simplex-chat-vision-funding-v5-videos-files-passcode.md#how-is-it-funded-and-what-is-the-business-model) and [from 2024](../blog/20240814-simplex-chat-vision-funding-v6-private-routing-new-user-experience.md) for more details.
+POPOPX Chat Ltd is funded by private investors and venture capital. As an open-source project, it is also being generously supported by donations as well. Read the posts [from 2023](../blog/20230422-popopx-chat-vision-funding-v5-videos-files-passcode.md#how-is-it-funded-and-what-is-the-business-model) and [from 2024](../blog/20240814-popopx-chat-vision-funding-v6-private-routing-new-user-experience.md) for more details.
 
 ### Why VCs?
 
 Here are some reflections on VC funding being a necessity for a project at this scale, as well as sustainability and profitability for longtime operations: https://www.poberezkin.com/posts/2023-10-31-why-privacy-impossible-without-venture-funding.html
 
-And another perspective from a team member on the delicate balance of venture-backed and nonprofit structures, and the plans for the SimpleX network protocols to evolve under the stewardship of nonprofit entities in various jurisdictions, so that its continued evolution aligns more closely with the vision of community-driven, independent and transparent governance:
-[https://simplex.chat/blog/20240404-why-i-joined-simplex-chat-esraa-al-shafei.html](../blog/20240404-why-i-joined-simplex-chat-esraa-al-shafei.md).
+And another perspective from a team member on the delicate balance of venture-backed and nonprofit structures, and the plans for the POPOPX network protocols to evolve under the stewardship of nonprofit entities in various jurisdictions, so that its continued evolution aligns more closely with the vision of community-driven, independent and transparent governance:
+[https://simplex.chat/blog/20240404-why-i-joined-simplex-chat-esraa-al-shafei.html](../blog/20240404-why-i-joined-popopx-chat-esraa-al-shafei.md).
 
 ### What will be the business model?
 
 We are focusing on product-market fit, and as such the business model is still a work in progress. However, the app will have a freemium model with extra features or capabilities for paid users (taking into consideration a potential formula like 5% paying $5/month is $3/user/year - ~90% gross profit margin).
 
-The other income stream would be via business services, for entities needing direct and customized support to integrate with the SimpleX protocol or related resources. There will also be a revenue-sharing model from customers to network operators, to provide an incentive for them to continue running nodes, which will increase decentralization and reliability of the network.
+The other income stream would be via business services, for entities needing direct and customized support to integrate with the POPOPX protocol or related resources. There will also be a revenue-sharing model from customers to network operators, to provide an incentive for them to continue running nodes, which will increase decentralization and reliability of the network.
 
 Non-exploitative commercial models with fully open source code are not easy to achieve, and we’re committed to finding the best possible fit for our context. Everything will be fully communicated as this plan progresses.

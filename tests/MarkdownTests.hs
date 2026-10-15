@@ -240,21 +240,21 @@ popopxLinkFormat linkType uriText smpHosts showText = case strDecode $ encodeUtf
 textWithUri :: Spec
 textWithUri = describe "text with Uri" do
   it "correct markdown" do
-    "https://simplex.chat" <==> uri "https://simplex.chat"
-    "https://simplex.chat." <==> uri "https://simplex.chat" <> "."
-    "https://simplex.chat, hello" <==> uri "https://simplex.chat" <> ", hello"
-    "http://simplex.chat" <==> uri "http://simplex.chat"
-    "this is https://simplex.chat" <==> "this is " <> uri "https://simplex.chat"
-    "https://simplex.chat site" <==> uri "https://simplex.chat" <> " site"
+    "https://popopx.chat" <==> uri "https://popopx.chat"
+    "https://popopx.chat." <==> uri "https://popopx.chat" <> "."
+    "https://popopx.chat, hello" <==> uri "https://popopx.chat" <> ", hello"
+    "http://popopx.chat" <==> uri "http://popopx.chat"
+    "this is https://popopx.chat" <==> "this is " <> uri "https://popopx.chat"
+    "https://popopx.chat site" <==> uri "https://popopx.chat" <> " site"
     "PopopX on GitHub: https://github.com/popopx-chat/" <==> "PopopX on GitHub: " <> uri "https://github.com/popopx-chat/"
     "PopopX on GitHub: https://github.com/popopx-chat." <==> "PopopX on GitHub: " <> uri "https://github.com/popopx-chat" <> "."
     "https://github.com/popopx-chat/ - PopopX on GitHub" <==> uri "https://github.com/popopx-chat/" <> " - PopopX on GitHub"
     -- "PopopX on GitHub (https://github.com/popopx-chat/)" <==> "PopopX on GitHub (" <> uri "https://github.com/popopx-chat/" <> ")"
     "https://en.m.wikipedia.org/wiki/Servo_(software)" <==> uri "https://en.m.wikipedia.org/wiki/Servo_(software)"
-    "https://simplex.chat/page_name_" <==> uri "https://simplex.chat/page_name_"
-    "https://simplex.chat/page_name_, hello" <==> uri "https://simplex.chat/page_name_" <> ", hello"
-    "https://simplex.chat/page!" <==> uri "https://simplex.chat/page!"
-    "https://simplex.chat/page!, hello" <==> uri "https://simplex.chat/page!" <> ", hello"
+    "https://popopx.chat/page_name_" <==> uri "https://popopx.chat/page_name_"
+    "https://popopx.chat/page_name_, hello" <==> uri "https://popopx.chat/page_name_" <> ", hello"
+    "https://popopx.chat/page!" <==> uri "https://popopx.chat/page!"
+    "https://popopx.chat/page!, hello" <==> uri "https://popopx.chat/page!" <> ", hello"
     "example.com" <==> uri "example.com"
     "example.com." <==> uri "example.com" <> "."
     "example.com..." <==> uri "example.com" <> "..."
@@ -263,8 +263,8 @@ textWithUri = describe "text with Uri" do
     "this is example.com" <==> "this is " <> uri "example.com"
     "x.com" <==> uri "x.com"
   it "ignored as markdown" do
-    "_https://simplex.chat" <==> "_https://simplex.chat"
-    "this is _https://simplex.chat" <==> "this is _https://simplex.chat"
+    "_https://popopx.chat" <==> "_https://popopx.chat"
+    "this is _https://popopx.chat" <==> "this is _https://popopx.chat"
     "this is https://" <==> "this is https://"
     "example.c" <==> "example.c"
     "www.www.example.com" <==> "www.www.example.com"
@@ -274,30 +274,30 @@ textWithUri = describe "text with Uri" do
     "example.academytoolong" <==> "example.academytoolong"
     "popopx:/example" <==> "popopx:/example"
   it "PopopX links" do
-    let inv = "/invitation#/?v=1&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.simplex.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D&e2e=v%3D2%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
-    ("https://simplex.chat" <> inv) <==> popopxLink XLInvitation ("simplex:" <> inv) ["smp.simplex.im"] ("https://simplex.chat" <> inv)
-    ("simplex:" <> inv) <==> popopxLink XLInvitation ("simplex:" <> inv) ["smp.simplex.im"] ("simplex:" <> inv)
-    ("https://example.com" <> inv) <==> popopxLink XLInvitation ("simplex:" <> inv) ["smp.simplex.im"] ("https://example.com" <> inv)
-    let ct = "/contact#/?v=2&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.simplex.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D"
-    ("https://simplex.chat" <> ct) <==> popopxLink XLContact ("simplex:" <> ct) ["smp.simplex.im"] ("https://simplex.chat" <> ct)
-    ("simplex:" <> ct) <==> popopxLink XLContact ("simplex:" <> ct) ["smp.simplex.im"] ("simplex:" <> ct)
-    let gr = "/contact#/?v=2&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FWHV0YU1sYlU7NqiEHkHDB6gxO1ofTync%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAWbebOqVYuBXaiqHcXYjEHCpYi6VzDlu6CVaijDTmsQU%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22mL-7Divb94GGmGmRBef5Dg%3D%3D%22%7D"
-    ("https://simplex.chat" <> gr) <==> popopxLink XLGroup ("simplex:" <> gr) ["smp4.simplex.im", "o5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion"] ("https://simplex.chat" <> gr)
-    ("simplex:" <> gr) <==> popopxLink XLGroup ("simplex:" <> gr) ["smp4.simplex.im", "o5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion"] ("simplex:" <> gr)
+    let inv = "/invitation#/?v=1&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.popopx.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D&e2e=v%3D2%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
+    ("https://popopx.chat" <> inv) <==> popopxLink XLInvitation ("popopx:" <> inv) ["smp.popopx.im"] ("https://popopx.chat" <> inv)
+    ("popopx:" <> inv) <==> popopxLink XLInvitation ("popopx:" <> inv) ["smp.popopx.im"] ("popopx:" <> inv)
+    ("https://example.com" <> inv) <==> popopxLink XLInvitation ("popopx:" <> inv) ["smp.popopx.im"] ("https://example.com" <> inv)
+    let ct = "/contact#/?v=2&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.popopx.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D"
+    ("https://popopx.chat" <> ct) <==> popopxLink XLContact ("popopx:" <> ct) ["smp.popopx.im"] ("https://popopx.chat" <> ct)
+    ("popopx:" <> ct) <==> popopxLink XLContact ("popopx:" <> ct) ["smp.popopx.im"] ("popopx:" <> ct)
+    let gr = "/contact#/?v=2&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopx.im%2FWHV0YU1sYlU7NqiEHkHDB6gxO1ofTync%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAWbebOqVYuBXaiqHcXYjEHCpYi6VzDlu6CVaijDTmsQU%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22mL-7Divb94GGmGmRBef5Dg%3D%3D%22%7D"
+    ("https://popopx.chat" <> gr) <==> popopxLink XLGroup ("popopx:" <> gr) ["smp4.popopx.im", "o5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion"] ("https://popopx.chat" <> gr)
+    ("popopx:" <> gr) <==> popopxLink XLGroup ("popopx:" <> gr) ["smp4.popopx.im", "o5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion"] ("popopx:" <> gr)
 
 web :: Text -> Text -> Text -> Markdown
 web t u = Markdown $ Just HyperLink {showText = Just t, linkUri = u}
 
 textWithHyperlink :: Spec
 textWithHyperlink = describe "text with HyperLink without link text" do
-  let addr = "https://smp6.simplex.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw"
-      addr' = "simplex:/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw?h=smp6.simplex.im"
+  let addr = "https://smp6.popopx.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw"
+      addr' = "popopx:/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw?h=smp6.popopx.im"
   it "correct markdown" do
     "[click here](https://example.com)" <==> web "click here" "https://example.com" "[click here](https://example.com)"
     "For details [click here](https://example.com)" <==> "For details " <> web "click here" "https://example.com" "[click here](https://example.com)"
     "[example.com](https://example.com)" <==> web "example.com" "https://example.com" "[example.com](https://example.com)"
     "[example.com/page](https://example.com/page)" <==> web "example.com/page" "https://example.com/page" "[example.com/page](https://example.com/page)"
-    ("[Connect to me](" <> addr <> ")") <==> Markdown (popopxLinkFormat XLContact addr' ["smp6.simplex.im"] (Just "Connect to me")) ("[Connect to me](" <> addr <> ")")
+    ("[Connect to me](" <> addr <> ")") <==> Markdown (popopxLinkFormat XLContact addr' ["smp6.popopx.im"] (Just "Connect to me")) ("[Connect to me](" <> addr <> ")")
   it "potentially spoofed link" do
     "[https://example.com](https://another.com)" <==> "[https://example.com](https://another.com)"
     "[example.com/page](https://another.com/page)" <==> "[example.com/page](https://another.com/page)"
@@ -308,18 +308,18 @@ textWithHyperlink = describe "text with HyperLink without link text" do
 
 obfuscatedPopopxLinks :: Spec
 obfuscatedPopopxLinks = describe "PopopX links obfuscated with whitespace" do
-  let addr = "https://smp6.simplex.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw"
-      inv = "/invitation#/?v=1&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.simplex.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D&e2e=v%3D2%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
+  let addr = "https://smp6.popopx.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw"
+      inv = "/invitation#/?v=1&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.popopx.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D&e2e=v%3D2%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
   let spaced s = T.replace "://" ":// " s -- insert a space right after the scheme
   it "detects links split with spaces or newlines" do
     hasObfuscatedPopopxLink addr `shouldBe` True
     hasObfuscatedPopopxLink (spaced addr) `shouldBe` True
     hasObfuscatedPopopxLink (T.intercalate "\n" $ T.chunksOf 8 addr) `shouldBe` True
     hasObfuscatedPopopxLink ("connect with me: " <> spaced addr) `shouldBe` True
-    hasObfuscatedPopopxLink (T.intercalate " " $ T.chunksOf 8 $ "https://simplex.chat" <> inv) `shouldBe` True
+    hasObfuscatedPopopxLink (T.intercalate " " $ T.chunksOf 8 $ "https://popopx.chat" <> inv) `shouldBe` True
   it "detects a split link followed by other text" do
     hasObfuscatedPopopxLink (spaced addr <> "\nplease connect") `shouldBe` True
-  it "ignores text without a SimpleX link" do
+  it "ignores text without a POPOPX link" do
     hasObfuscatedPopopxLink "" `shouldBe` False
     hasObfuscatedPopopxLink "hello there, this is a normal message" `shouldBe` False
     hasObfuscatedPopopxLink "see https://example.com/page?ref=123 for details" `shouldBe` False
@@ -330,20 +330,20 @@ email = Markdown $ Just Email
 textWithEmail :: Spec
 textWithEmail = describe "text with Email" do
   it "correct markdown" do
-    "chat@simplex.chat" <==> email "chat@simplex.chat"
-    "test chat@simplex.chat" <==> "test " <> email "chat@simplex.chat"
-    "test chat+123@simplex.chat" <==> "test " <> email "chat+123@simplex.chat"
-    "test chat.chat+123@simplex.chat" <==> "test " <> email "chat.chat+123@simplex.chat"
-    "chat@simplex.chat test" <==> email "chat@simplex.chat" <> " test"
-    "test1 chat@simplex.chat test2" <==> "test1 " <> email "chat@simplex.chat" <> " test2"
-    "test chat@simplex.chat." <==> "test " <> email "chat@simplex.chat" <> "."
-    "test chat@simplex.chat..." <==> "test " <> email "chat@simplex.chat" <> "..."
+    "chat@popopx.chat" <==> email "chat@popopx.chat"
+    "test chat@popopx.chat" <==> "test " <> email "chat@popopx.chat"
+    "test chat+123@popopx.chat" <==> "test " <> email "chat+123@popopx.chat"
+    "test chat.chat+123@popopx.chat" <==> "test " <> email "chat.chat+123@popopx.chat"
+    "chat@popopx.chat test" <==> email "chat@popopx.chat" <> " test"
+    "test1 chat@popopx.chat test2" <==> "test1 " <> email "chat@popopx.chat" <> " test2"
+    "test chat@popopx.chat." <==> "test " <> email "chat@popopx.chat" <> "."
+    "test chat@popopx.chat..." <==> "test " <> email "chat@popopx.chat" <> "..."
   it "ignored as email markdown" do
-    "chat @simplex.chat" <==> "chat " <> sname NTContact TLDWeb "simplex.chat" [] "simplex.chat"
-    "this is chat @simplex.chat" <==> "this is chat " <> sname NTContact TLDWeb "simplex.chat" [] "simplex.chat"
-    "this is chat@ simplex.chat" <==> "this is chat@ " <> uri "simplex.chat"
-    "this is chat @ simplex.chat" <==> "this is chat @ " <> uri "simplex.chat"
-    "*this* is chat @ simplex.chat" <==> bold "this" <> " is chat @ " <> uri "simplex.chat"
+    "chat @popopx.chat" <==> "chat " <> sname NTContact TLDWeb "popopx.chat" [] "popopx.chat"
+    "this is chat @popopx.chat" <==> "this is chat " <> sname NTContact TLDWeb "popopx.chat" [] "popopx.chat"
+    "this is chat@ popopx.chat" <==> "this is chat@ " <> uri "popopx.chat"
+    "this is chat @ popopx.chat" <==> "this is chat @ " <> uri "popopx.chat"
+    "*this* is chat @ popopx.chat" <==> bold "this" <> " is chat @ " <> uri "popopx.chat"
 
 phone :: Text -> Markdown
 phone = Markdown $ Just Phone
@@ -359,8 +359,8 @@ textWithPhone = describe "text with Phone" do
     "test +447777777777 test" <==> "test " <> phone "+447777777777" <> " test"
     "test +44 (0) 7777 777 777 test" <==> "test " <> phone "+44 (0) 7777 777 777" <> " test"
     "test +44-7777-777-777 test" <==> "test " <> phone "+44-7777-777-777" <> " test"
-    "test +44 (0) 7777.777.777 https://simplex.chat test"
-      <==> "test " <> phone "+44 (0) 7777.777.777" <> " " <> uri "https://simplex.chat" <> " test"
+    "test +44 (0) 7777.777.777 https://popopx.chat test"
+      <==> "test " <> phone "+44 (0) 7777.777.777" <> " " <> uri "https://popopx.chat" <> " test"
   it "ignored as markdown (too short)" $
     "test 077777 test" <==> "test 077777 test"
   it "ignored as markdown (double spaces)" $ do
@@ -463,16 +463,16 @@ textWithPopopxNames = describe "text with PopopX names" do
 multilineMarkdownList :: Spec
 multilineMarkdownList = describe "multiline markdown" do
   it "correct markdown" do
-    "http://simplex.chat\nhttp://app.simplex.chat" <<==>> [uri' "http://simplex.chat", "\n", uri' "http://app.simplex.chat"]
+    "http://popopx.chat\nhttp://app.popopx.chat" <<==>> [uri' "http://popopx.chat", "\n", uri' "http://app.popopx.chat"]
   it "combines the same formats" do
-    "http://simplex.chat\ntext 1\ntext 2\nhttp://app.simplex.chat" <<==>> [uri' "http://simplex.chat", "\ntext 1\ntext 2\n", uri' "http://app.simplex.chat"]
+    "http://popopx.chat\ntext 1\ntext 2\nhttp://app.popopx.chat" <<==>> [uri' "http://popopx.chat", "\ntext 1\ntext 2\n", uri' "http://app.popopx.chat"]
   it "no markdown" do
     parseMaybeMarkdownList "not a\nmarkdown" `shouldBe` Nothing
-  let inv = "/invitation#/?v=1&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.simplex.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D&e2e=v%3D2%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
+  let inv = "/invitation#/?v=1&smp=smp%3A%2F%2F1234-w%3D%3D%40smp.popopx.im%3A5223%2F3456-w%3D%3D%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAjiswwI3O_NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o%253D&e2e=v%3D2%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
   it "multiline with popopx link" do
-    ("https://simplex.chat" <> inv <> "\ntext")
+    ("https://popopx.chat" <> inv <> "\ntext")
       <<==>>
-        [ FormattedText (popopxLinkFormat XLInvitation ("simplex:" <> inv) ["smp.simplex.im"] Nothing) ("https://simplex.chat" <> inv),
+        [ FormattedText (popopxLinkFormat XLInvitation ("popopx:" <> inv) ["smp.popopx.im"] Nothing) ("https://popopx.chat" <> inv),
           "\ntext"
         ]
   it "command markdown" do

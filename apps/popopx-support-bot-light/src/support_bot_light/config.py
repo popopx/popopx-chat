@@ -14,7 +14,7 @@ from popopx_chat.types import T
 DEFAULT_MEMBER_ROLE: T.GroupMemberRole = "owner"
 MEMBER_ROLES: tuple[str, ...] = get_args(T.GroupMemberRole)
 
-# maxProfileImageSize in src/Simplex/Chat/Library/Commands.hs. Measured against
+# maxProfileImageSize in src/Popopx/Chat/Library/Commands.hs. Measured against
 # the whole data URI, not the raw file.
 MAX_PROFILE_IMAGE_SIZE = 12500
 

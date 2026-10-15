@@ -1,10 +1,10 @@
 ---
-title: Utilisation de serveurs WebRTC ICE personnalisés dans SimpleX Chat
+title: Utilisation de serveurs WebRTC ICE personnalisés dans POPOPX Chat
 revision: 31.01.2023
 ---
 | 31.01.2023 | FR, [EN](/docs/WEBRTC.md), [CZ](/docs/lang/cs/WEBRTC.md), [PL](/docs/lang/pl/WEBRTC.md) |
 
-# Utilisation de serveurs WebRTC ICE personnalisés dans SimpleX Chat
+# Utilisation de serveurs WebRTC ICE personnalisés dans POPOPX Chat
 
 ## Déployer un serveur STUN/TURN
 

@@ -6,7 +6,7 @@ All preconfigured servers operated by a single company create a risk that user c
 
 The solution is to have more than one operator servers pre-configured in the app.
 
-For operators to be protected from any violations of rights of other users or third parties by the users who use servers of these operators, the users have to explicitely accept conditions of use with the operator, in the same way they accept conditions of use with SimpleX Chat Ltd by downloading the app.
+For operators to be protected from any violations of rights of other users or third parties by the users who use servers of these operators, the users have to explicitely accept conditions of use with the operator, in the same way they accept conditions of use with POPOPX Chat Ltd by downloading the app.
 
 ## Solution
 

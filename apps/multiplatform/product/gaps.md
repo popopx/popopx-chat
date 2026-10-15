@@ -1,4 +1,4 @@
-# Known Gaps & Recommendations -- SimpleX Chat (Android & Desktop, Kotlin Multiplatform)
+# Known Gaps & Recommendations -- POPOPX Chat (Android & Desktop, Kotlin Multiplatform)
 
 This document catalogs known gaps in the multiplatform codebase (Android and Desktop) with severity, impact, and recommendations.
 
@@ -37,7 +37,7 @@ When the call fails, the caller receives `null` and either silently does nothing
 
 ### Affected Locations
 
-- `SimpleXAPI.kt` -- `getAgentSubsTotal()`, `getAgentServersSummary()`, and dozens of similar `api*` functions
+- `POPOPXAPI.kt` -- `getAgentSubsTotal()`, `getAgentServersSummary()`, and dozens of similar `api*` functions
 - Throughout the codebase wherever `sendCmd` results are pattern-matched
 
 ### Impact
@@ -99,9 +99,9 @@ On Android, the encrypted passphrase is stored via the Android Keystore, which p
 
 ### Affected Locations
 
-- `SimpleXAPI.kt` -- `AppPreferences.storeDBPassphrase`, `AppPreferences.initialRandomDBPassphrase`, `AppPreferences.encryptedDBPassphrase`
-- `common/src/commonMain/kotlin/chat/simplex/common/views/helpers/DatabaseUtils.kt`
-- `common/src/commonMain/kotlin/chat/simplex/common/views/onboarding/SetupDatabasePassphrase.kt`
+- `POPOPXAPI.kt` -- `AppPreferences.storeDBPassphrase`, `AppPreferences.initialRandomDBPassphrase`, `AppPreferences.encryptedDBPassphrase`
+- `common/src/commonMain/kotlin/chat/popopx/common/views/helpers/DatabaseUtils.kt`
+- `common/src/commonMain/kotlin/chat/popopx/common/views/onboarding/SetupDatabasePassphrase.kt`
 
 ### Impact
 
@@ -158,9 +158,9 @@ The Kotlin client communicates with the Haskell core via a text-based command pr
 
 ### Affected Locations
 
-- `SimpleXAPI.kt:6986` -- `ChatErrorStore(storeError: StoreError)`
-- `SimpleXAPI.kt` -- `StoreError` sealed class (deserialized from Haskell responses)
-- `SimpleXAPI.kt` -- `ChatErrorDatabase(databaseError: DatabaseError)` for migration errors
+- `POPOPXAPI.kt:6986` -- `ChatErrorStore(storeError: StoreError)`
+- `POPOPXAPI.kt` -- `StoreError` sealed class (deserialized from Haskell responses)
+- `POPOPXAPI.kt` -- `ChatErrorDatabase(databaseError: DatabaseError)` for migration errors
 
 ### Impact
 
@@ -187,7 +187,7 @@ The Kotlin client communicates with the Haskell core via a text-based command pr
 The `RecorderNative` class on Desktop is a placeholder. Both `start()` and `stop()` are stubbed with `/*LALAL*/` comments and return dummy values (empty string and 0, respectively). Users cannot record voice messages on Desktop.
 
 ```kotlin
-// common/src/desktopMain/kotlin/chat/simplex/common/platform/RecAndPlay.desktop.kt
+// common/src/desktopMain/kotlin/chat/popopx/common/platform/RecAndPlay.desktop.kt
 actual class RecorderNative: RecorderInterface {
   override fun start(onProgressUpdate: (position: Int?, finished: Boolean) -> Unit): String {
     /*LALAL*/
@@ -205,8 +205,8 @@ Audio playback IS implemented on Desktop (via VLC/`vlcj` library), so received v
 
 ### Affected Locations
 
-- `common/src/desktopMain/kotlin/chat/simplex/common/platform/RecAndPlay.desktop.kt:15-25`
-- `common/src/commonMain/kotlin/chat/simplex/common/platform/RecAndPlay.kt` -- `RecorderInterface`
+- `common/src/desktopMain/kotlin/chat/popopx/common/platform/RecAndPlay.desktop.kt:15-25`
+- `common/src/commonMain/kotlin/chat/popopx/common/platform/RecAndPlay.kt` -- `RecorderInterface`
 
 ### Impact
 
@@ -240,7 +240,7 @@ Desktop cannot decode WebP in chat: `decodeBoundedBufferedImage` (`Utils.desktop
 The `CryptorInterface` implementation on Desktop is a non-functional placeholder. All three methods are stubbed:
 
 ```kotlin
-// common/src/desktopMain/kotlin/chat/simplex/common/platform/Cryptor.desktop.kt
+// common/src/desktopMain/kotlin/chat/popopx/common/platform/Cryptor.desktop.kt
 actual val cryptor: CryptorInterface = object : CryptorInterface {
   override fun decryptData(data: ByteArray, iv: ByteArray, alias: String): String? {
     return String(data) // LALAL
@@ -262,9 +262,9 @@ actual val cryptor: CryptorInterface = object : CryptorInterface {
 
 ### Affected Locations
 
-- `common/src/desktopMain/kotlin/chat/simplex/common/platform/Cryptor.desktop.kt`
-- `common/src/commonMain/kotlin/chat/simplex/common/platform/Cryptor.kt` -- `CryptorInterface`
-- `common/src/commonMain/kotlin/chat/simplex/common/views/helpers/DatabaseUtils.kt` -- uses `cryptor` for passphrase encryption
+- `common/src/desktopMain/kotlin/chat/popopx/common/platform/Cryptor.desktop.kt`
+- `common/src/commonMain/kotlin/chat/popopx/common/platform/Cryptor.kt` -- `CryptorInterface`
+- `common/src/commonMain/kotlin/chat/popopx/common/views/helpers/DatabaseUtils.kt` -- uses `cryptor` for passphrase encryption
 
 ### Impact
 

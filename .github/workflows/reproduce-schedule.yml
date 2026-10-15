@@ -32,15 +32,16 @@ jobs:
         run: ./scripts/ci/linux_util_free_space.sh
       - name: Execute reproduce script
         run: |
-          ${GITHUB_WORKSPACE}/scripts/simplex-chat-reproduce-builds.sh "$TAG" || :
+          ${GITHUB_WORKSPACE}/scripts/popopx-chat-reproduce-builds.sh "$TAG" || :
 
       - name: Check if build has been reproduced
         env:
+          # TODO: These secret names could be renamed from STATUS_SIMPLEX_* to STATUS_POPOPX_* later
           url: ${{ secrets.STATUS_SIMPLEX_WEBHOOK_URL }}
           user: ${{ secrets.STATUS_SIMPLEX_WEBHOOK_USER }}
           pass: ${{ secrets.STATUS_SIMPLEX_WEBHOOK_PASS }}
         run: |
-          if [ -f "${GITHUB_WORKSPACE}/${TAG}-simplex-chat/_sha256sums" ]; then
+          if [ -f "${GITHUB_WORKSPACE}/${TAG}-popopx-chat/_sha256sums" ]; then
             exit 0
           else
             curl --proto '=https' --tlsv1.2 -sSf \

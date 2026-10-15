@@ -40,7 +40,7 @@ struct CIFileView: View {
         POPOPXMediaView {
         if smallViewSize != nil {
             fileIndicator()
-            .simultaneousGesture(TapGesture().onEnded(fileAction))
+            .simultaneousGesture(TapGesture().onEnded { fileAction(file) })
         } else {
             // reserve exact space for the overlaid meta (timestamp + all icons), rendered transparently - matches MsgContentView
             let encrypted: Bool? = if let fileSource = file?.fileSource { fileSource.cryptoArgs != nil } else { nil }
@@ -70,7 +70,7 @@ struct CIFileView: View {
             .padding(.bottom, pxFileHStackBottomPadding)
             .padding(.leading, pxFileHStackLeadingPadding)
             .padding(.trailing, pxFileHStackTrailingPadding)
-            .simultaneousGesture(TapGesture().onEnded(fileAction))
+            .simultaneousGesture(TapGesture().onEnded { fileAction(file) })
             .disabled(!itemInteractive)
         }
         }
@@ -103,24 +103,24 @@ struct CIFileView: View {
     }
 
     // POPOPX: file download/save action with protocol-aware status handling
-    private func fileAction() {
+    private func fileAction(_ file: CIFile?) {
         logger.debug("PX: [fileAction] called")
-        guard let pxFile = file else { return }
-        logger.debug("CIFileView fileAction")
-        switch (pxFile.fileStatus) {
+        if let file = file {
+        switch (file.fileStatus) {
         case .rcvInvitation, .rcvAborted:
-            if let prohibited = pxFile.fileProhibited {
-                showProhibitedFileAlert(pxFile, prohibited)
+            if let prohibited = file.fileProhibited {
+                showProhibitedFileAlert(file, prohibited)
             } else {
+                m.openWhenReceived(file) { fileAction($0) }
                 Task {
                     logger.debug("CIFileView fileAction - in .rcvInvitation, .rcvAborted, in Task")
                     if let user = m.currentUser {
-                        await receiveFile(user: user, fileId: pxFile.fileId)
+                        await receiveFile(user: user, fileId: file.fileId)
                     }
                 }
             }
         case .rcvAccepted:
-            switch pxFile.fileProtocol {
+            switch file.fileProtocol {
             case .xftp:
                 AlertManager.shared.showAlertMsg(
                     title: LocalizedStringKey(NSLocalizedString("waiting_for_file_title", comment: "Waiting for file alert title")),
@@ -135,24 +135,24 @@ struct CIFileView: View {
             }
         case .rcvComplete:
             logger.debug("CIFileView fileAction - in .rcvComplete")
-            if let pxFileSource = getLoadedFileSource(pxFile) {
-                saveCryptoFile(pxFileSource)
+            if let fileSource = getLoadedFileSource(file) {
+                openFile(file, fileSource)
             }
         case let .rcvError(rcvFileError):
             logger.debug("CIFileView fileAction - in .rcvError")
-            showFileErrorAlert(rcvFileError, pxFile)
+            showFileErrorAlert(rcvFileError, file)
         case let .rcvWarning(rcvFileError):
             logger.debug("CIFileView fileAction - in .rcvWarning")
             showFileErrorAlert(rcvFileError, temporary: true)
         case .sndStored:
             logger.debug("CIFileView fileAction - in .sndStored")
-            if pxFile.fileProtocol == .local, let pxFileSource = getLoadedFileSource(pxFile) {
-                saveCryptoFile(pxFileSource)
+            if file.fileProtocol == .local, let fileSource = getLoadedFileSource(file) {
+                openFile(file, fileSource)
             }
         case .sndComplete:
             logger.debug("CIFileView fileAction - in .sndComplete")
-            if let pxFileSource = getLoadedFileSource(pxFile) {
-                saveCryptoFile(pxFileSource)
+            if let fileSource = getLoadedFileSource(file) {
+                openFile(file, fileSource)
             }
         case let .sndError(sndFileError):
             logger.debug("CIFileView fileAction - in .sndError")
@@ -161,6 +161,15 @@ struct CIFileView: View {
             logger.debug("CIFileView fileAction - in .sndWarning")
             showFileErrorAlert(sndFileError, temporary: true)
         default: break
+        }
+        }
+    }
+
+    private func openFile(_ file: CIFile, _ fileSource: CryptoFile) {
+        if isMarkdownFile(file) {
+            showMarkdownFile(file)
+        } else {
+            saveCryptoFile(fileSource)
         }
     }
 

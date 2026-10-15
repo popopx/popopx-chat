@@ -1,14 +1,14 @@
 ---
 layout: layouts/token.html
-title: "SimpleX Community Credits"
+title: "POPOPX Community Credits"
 permalink: "/credits/index.html"
 ---
 
-# SimpleX Crowdfunding to Build Community Credits: Strategy & Vision
+# POPOPX Crowdfunding to Build Community Credits: Strategy & Vision
 
-<a href="javascript:void(0);" data-show-overlay="mint-simplex-nft" class="open-overlay-btn"><img src="/img/design_3/simplex_nft_smpx.jpg" width="200" class="float-to-right" style="border-radius: 10px;"></a>
+<a href="javascript:void(0);" data-show-overlay="mint-popopx-nft" class="open-overlay-btn"><img src="/img/design_3/popopx_nft_smpx.jpg" width="200" class="float-to-right" style="border-radius: 10px;"></a>
 
-SimpleX is a private and secure messaging network without user IDs where you own your identity, contacts, groups, and content — there are no ads, no tracking, and no central authority. It relies on open protocols and open-source code, enabling anyone to audit the code and to create alternative apps and servers. No single entity can control it.
+POPOPX is a private and secure messaging network without user IDs where you own your identity, contacts, groups, and content — there are no ads, no tracking, and no central authority. It relies on open protocols and open-source code, enabling anyone to audit the code and to create alternative apps and servers. No single entity can control it.
 
 To scale for large groups and channels, without relying on any single entity, network needs a sustainable way to fund servers.
 
@@ -18,7 +18,7 @@ These credits are not tradable tokens or speculative assets — there will be no
 
 ## Crowdfunding to Build Community Credits
 
-Building Community Credits requires more capital than we have. So we will raise capital in the same way we designed the network: decentralized, community-funded, with no single point of capture. If you use SimpleX, you can own part of what you already help build. The crowdfunding is now live &mdash; you can [invest in SimpleX Chat](https://simplex.chat/crowdfunding/), and join [SimpleX Crowdfunding News](https://simplex.chat/crowdfunding-news/) for updates.
+Building Community Credits requires more capital than we have. So we will raise capital in the same way we designed the network: decentralized, community-funded, with no single point of capture. If you use POPOPX, you can own part of what you already help build. The crowdfunding is now live &mdash; you can [invest in POPOPX Chat](https://popopx.chat/crowdfunding/), and join [POPOPX Crowdfunding News](https://popopx.chat/crowdfunding-news/) for updates.
 
 ## Why Community Credits?
 
@@ -41,7 +41,7 @@ In short:
 
 - Buy Community Credits. Initially you would pay with a stablecoin (USDT/USDC). The goal is to allow using other popular cryptocurrencies (BTC/ETH/XMR) and also in-app payments - to make direct usage of blockchain optional for the end users.
 
-- Funds are locked in an autonomous smart contract not controlled by SimpleX Chat company or by anybody else.
+- Funds are locked in an autonomous smart contract not controlled by POPOPX Chat company or by anybody else.
 
 - Assign Community Credits to a group or channel you want, using its public address. This assignment is private, and group owners or server operators won't be able to link it to the purchase, thanks to zero-knowledge proofs.
 
@@ -51,7 +51,7 @@ In short:
 
 ## Why Blockchain?
 
-It's the only way to make SimpleX network truly decentralized and secure:
+It's the only way to make POPOPX network truly decentralized and secure:
 
 - Group and user names resistant to man-in-the-middle attacks.
 
@@ -73,7 +73,7 @@ We welcome your feedback on this proposal and any in-progress design documents.
 **2026-27**:
 - launch support for large groups and channels.
 - test version of Community Credits.
-- SimpleX network namespace v1.
+- POPOPX network namespace v1.
 
 **Join in**:
 - Create a small group or channel using today's tech, and get it added to our experimental directory of groups.

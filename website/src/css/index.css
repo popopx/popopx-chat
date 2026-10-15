@@ -203,11 +203,11 @@ span.button:active {
     left: auto;
   }
 }
-#demo div.all-users .simplex_mobile {
+#demo div.all-users .popopx_mobile {
   right: 30px;
 }
 @media (max-width: 1050px) {
-  #demo div.all-users .simplex_mobile {
+  #demo div.all-users .popopx_mobile {
     right: 0;
   }
 }
@@ -860,10 +860,10 @@ figure.party.bob {
   font-weight: normal;
   height: 40px;
 }
-#comparison table th.simplex {
+#comparison table th.popopx {
   font-weight: bold;
 }
-#comparison table th.simplex img {
+#comparison table th.popopx img {
   width: 25px;
   height: 23px;
   vertical-align: -6px;
@@ -1037,19 +1037,19 @@ figure.party.bob {
 #chat figure.section .party {
   margin: 80px 9px;
 }
-#simplex {
+#popopx {
   background-color: #fff;
   padding: 5rem 0rem;
 }
-#simplex h3 {
+#popopx h3 {
   text-align: center;
 }
-#simplex > div {
+#popopx > div {
   display: flex;
   justify-content: space-between;
   gap: 8rem;
 }
-#simplex > div .half {
+#popopx > div .half {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1057,41 +1057,41 @@ figure.party.bob {
   justify-content: space-between;
 }
 @media (max-width: 1050px) {
-  #simplex > div {
+  #popopx > div {
     flex-direction: column;
   }
 }
-#simplex form.sign-up {
+#popopx form.sign-up {
   width: 100%;
 }
-#simplex form.sign-up div {
+#popopx form.sign-up div {
   display: flex;
   gap: 0.5rem;
 }
 @media (max-width: 576px) {
-  #simplex form.sign-up div {
+  #popopx form.sign-up div {
     flex-direction: column;
     align-items: center;
     width: inherit;
     gap: 1rem;
   }
-  #simplex form.sign-up div input {
+  #popopx form.sign-up div input {
     display: block;
     width: inherit;
   }
 }
-#simplex #use-simplex a {
+#popopx #use-popopx a {
   font-weight: 500;
 }
-#simplex #contacts {
+#popopx #contacts {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-#simplex #contacts span.button {
+#popopx #contacts span.button {
   width: 100px;
 }
-#simplex #contacts a {
+#popopx #contacts a {
   color: #062d56;
   font-size: 1.1rem;
   letter-spacing: 0.53px;

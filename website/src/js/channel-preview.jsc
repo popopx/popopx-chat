@@ -1,11 +1,11 @@
 (function() {
 
-#include "simplex-lib.jsc"
+#include "popopx-lib.jsc"
 
 #include "qrcode.js"
 
 const STYLE = `
-.simplex-preview-container {
+.popopx-preview-container {
   --sp-bg: var(--sp-light-bg, #fff);
   --sp-text: #000;
   --sp-text-secondary: #8b8786;
@@ -38,8 +38,8 @@ const STYLE = `
   justify-content: center;
 }
 
-.simplex-preview-container.simplex-scheme-dark,
-.dark .simplex-preview-container.simplex-scheme-site {
+.popopx-preview-container.popopx-scheme-dark,
+.dark .popopx-preview-container.popopx-scheme-site {
   --sp-bg: var(--sp-dark-bg, #000832);
   --sp-text: #FFFBFA;
   --sp-text-secondary: #B3AFAE;
@@ -60,7 +60,7 @@ const STYLE = `
   --sp-qr-bg: transparent;
 }
 
-.simplex-preview-header {
+.popopx-preview-header {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -72,7 +72,7 @@ const STYLE = `
   gap: 12px;
 }
 
-.simplex-preview-header-avatar {
+.popopx-preview-header-avatar {
   width: 36px;
   height: 36px;
   border-radius: 8px;
@@ -80,12 +80,12 @@ const STYLE = `
   flex-shrink: 0;
 }
 
-.simplex-preview-header-info {
+.popopx-preview-header-info {
   flex: 1;
   min-width: 0;
 }
 
-.simplex-preview-header-name {
+.popopx-preview-header-name {
   font-size: 17px;
   font-weight: 600;
   margin: 0;
@@ -94,7 +94,7 @@ const STYLE = `
   text-overflow: ellipsis;
 }
 
-.simplex-preview-container .simplex-preview-header-name {
+.popopx-preview-container .popopx-preview-header-name {
   background: none;
   -webkit-background-clip: border-box;
   background-clip: border-box;
@@ -103,7 +103,7 @@ const STYLE = `
   text-fill-color: var(--sp-text);
 }
 
-.simplex-preview-header-description {
+.popopx-preview-header-description {
   font-size: 13px;
   color: var(--sp-text-secondary);
   margin: 2px 0 0;
@@ -112,7 +112,7 @@ const STYLE = `
   text-overflow: ellipsis;
 }
 
-.simplex-preview-join-btn {
+.popopx-preview-join-btn {
   flex-shrink: 0;
   background: var(--sp-btn);
   color: var(--sp-btn-text, #fff);
@@ -129,36 +129,36 @@ const STYLE = `
   font-family: inherit;
 }
 
-.simplex-preview-join-btn svg {
+.popopx-preview-join-btn svg {
   width: 15.4px;
   height: 15.4px;
   flex-shrink: 0;
   margin-left: 2px;
 }
 
-.simplex-preview-container .simplex-logo-light-bg {
+.popopx-preview-container .popopx-logo-light-bg {
   display: none;
 }
 
-.simplex-preview-container.simplex-scheme-dark .simplex-logo-dark-bg,
-.dark .simplex-preview-container.simplex-scheme-site .simplex-logo-dark-bg {
+.popopx-preview-container.popopx-scheme-dark .popopx-logo-dark-bg,
+.dark .popopx-preview-container.popopx-scheme-site .popopx-logo-dark-bg {
   display: none;
 }
 
-.simplex-preview-container.simplex-scheme-dark .simplex-logo-light-bg,
-.dark .simplex-preview-container.simplex-scheme-site .simplex-logo-light-bg {
+.popopx-preview-container.popopx-scheme-dark .popopx-logo-light-bg,
+.dark .popopx-preview-container.popopx-scheme-site .popopx-logo-light-bg {
   display: inline;
 }
 
-.simplex-preview-join-btn:hover {
+.popopx-preview-join-btn:hover {
   background: var(--sp-btn-hover);
 }
 
-.simplex-preview-messages {
+.popopx-preview-messages {
   padding: 8px 16px 32px;
 }
 
-.simplex-preview-date-separator {
+.popopx-preview-date-separator {
   text-align: center;
   padding: 8px 0;
   font-size: 12px;
@@ -166,11 +166,11 @@ const STYLE = `
   font-weight: 500;
 }
 
-.simplex-preview-msg-group {
+.popopx-preview-msg-group {
   padding: 0 8px;
 }
 
-.simplex-preview-msg-name {
+.popopx-preview-msg-name {
   font-size: 13.5px;
   color: var(--sp-text-secondary);
   padding: 0 0 2px 0;
@@ -180,22 +180,22 @@ const STYLE = `
   text-overflow: ellipsis;
 }
 
-.simplex-preview-msg-name-role {
+.popopx-preview-msg-name-role {
   font-weight: 500;
   margin-left: 8px;
 }
 
-.simplex-preview-msg-row {
+.popopx-preview-msg-row {
   display: flex;
   align-items: flex-start;
   margin-bottom: 2px;
 }
 
-.simplex-preview-msg-row.has-gap {
+.popopx-preview-msg-row.has-gap {
   margin-bottom: 6px;
 }
 
-.simplex-preview-msg-avatar {
+.popopx-preview-msg-avatar {
   width: 30px;
   height: 30px;
   border-radius: 7px;
@@ -204,13 +204,13 @@ const STYLE = `
   margin-right: 9px;
 }
 
-.simplex-preview-msg-avatar-placeholder {
+.popopx-preview-msg-avatar-placeholder {
   width: 30px;
   flex-shrink: 0;
   margin-right: 9px;
 }
 
-.simplex-preview-bubble {
+.popopx-preview-bubble {
   position: relative;
   background: var(--sp-bubble);
   border-radius: 18px;
@@ -218,20 +218,20 @@ const STYLE = `
   overflow: visible;
 }
 
-.simplex-preview-bubble-inner {
+.popopx-preview-bubble-inner {
   border-radius: 18px;
   overflow: hidden;
 }
 
-.simplex-preview-bubble.has-tail {
+.popopx-preview-bubble.has-tail {
   border-bottom-left-radius: 0;
 }
 
-.simplex-preview-bubble.has-tail .simplex-preview-bubble-inner {
+.popopx-preview-bubble.has-tail .popopx-preview-bubble-inner {
   border-bottom-left-radius: 0;
 }
 
-.simplex-preview-bubble-tail {
+.popopx-preview-bubble-tail {
   position: absolute;
   bottom: 0;
   left: -9px;
@@ -240,11 +240,11 @@ const STYLE = `
   color: var(--sp-bubble);
 }
 
-.simplex-preview-bubble.media-only {
+.popopx-preview-bubble.media-only {
   background: transparent;
 }
 
-.simplex-preview-meta-overlay {
+.popopx-preview-meta-overlay {
   position: absolute;
   bottom: 6px;
   right: 12px;
@@ -254,11 +254,11 @@ const STYLE = `
   white-space: nowrap;
 }
 
-.simplex-preview-meta-overlay .simplex-preview-meta-edited {
+.popopx-preview-meta-overlay .popopx-preview-meta-edited {
   font-style: italic;
 }
 
-.simplex-preview-forwarded-header {
+.popopx-preview-forwarded-header {
   background: var(--sp-quote);
   padding: 6px 12px 6px 8px;
   font-size: 12px;
@@ -269,25 +269,25 @@ const STYLE = `
   gap: 4px;
 }
 
-.simplex-preview-quote {
+.popopx-preview-quote {
   background: var(--sp-quote);
   display: flex;
   width: 100%;
 }
 
-.simplex-preview-quote-content {
+.popopx-preview-quote-content {
   flex: 1;
   padding: 6px 12px;
   min-width: 0;
 }
 
-.simplex-preview-quote-sender {
+.popopx-preview-quote-sender {
   font-size: 13.5px;
   color: var(--sp-text-secondary);
   margin-bottom: 2px;
 }
 
-.simplex-preview-quote-text {
+.popopx-preview-quote-text {
   font-size: 15px;
   overflow: hidden;
   overflow-wrap: anywhere;
@@ -296,48 +296,48 @@ const STYLE = `
   -webkit-box-orient: vertical;
 }
 
-.simplex-preview-quote-thumb {
+.popopx-preview-quote-thumb {
   width: 68px;
   height: 68px;
   object-fit: cover;
   flex-shrink: 0;
 }
 
-.simplex-preview-quote-file-icon {
+.popopx-preview-quote-file-icon {
   padding: 6px 4px 0 0;
   flex-shrink: 0;
   color: var(--sp-text-secondary);
 }
 
-.simplex-preview-text {
+.popopx-preview-text {
   padding: 7px 12px;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-.simplex-preview-text a {
+.popopx-preview-text a {
   color: var(--sp-link);
   text-decoration: none;
 }
 
-.simplex-preview-text a:hover {
+.popopx-preview-text a:hover {
   text-decoration: underline;
 }
 
-.simplex-preview-image {
+.popopx-preview-image {
   display: block;
   max-width: 100%;
 }
 
-.simplex-preview-image.landscape {
+.popopx-preview-image.landscape {
   width: 400px;
 }
 
-.simplex-preview-image.portrait {
+.popopx-preview-image.portrait {
   width: 300px;
 }
 
-.simplex-preview-image-placeholder {
+.popopx-preview-image-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,26 +348,26 @@ const STYLE = `
   color: var(--sp-text-secondary);
 }
 
-.simplex-preview-image-placeholder svg {
+.popopx-preview-image-placeholder svg {
   width: 32px;
   height: 32px;
 }
 
-.simplex-preview-link-card {
+.popopx-preview-link-card {
   display: block;
   max-width: 400px;
 }
 
-.simplex-preview-link-card-image {
+.popopx-preview-link-card-image {
   display: block;
   width: 100%;
 }
 
-.simplex-preview-link-card-body {
+.popopx-preview-link-card-body {
   padding: 6px 12px;
 }
 
-.simplex-preview-link-card-title {
+.popopx-preview-link-card-title {
   font-size: 15px;
   line-height: 22px;
   margin-bottom: 4px;
@@ -377,7 +377,7 @@ const STYLE = `
   -webkit-box-orient: vertical;
 }
 
-.simplex-preview-link-card-description {
+.popopx-preview-link-card-description {
   font-size: 14px;
   line-height: 20px;
   color: var(--sp-text-muted);
@@ -387,7 +387,7 @@ const STYLE = `
   -webkit-box-orient: vertical;
 }
 
-.simplex-preview-link-card-uri {
+.popopx-preview-link-card-uri {
   font-size: 12px;
   color: var(--sp-text-secondary);
   white-space: nowrap;
@@ -395,7 +395,7 @@ const STYLE = `
   text-overflow: ellipsis;
 }
 
-.simplex-preview-file-indicator {
+.popopx-preview-file-indicator {
   padding: 7px 12px;
   display: flex;
   align-items: center;
@@ -403,23 +403,23 @@ const STYLE = `
   color: var(--sp-text-secondary);
 }
 
-.simplex-preview-file-icon {
+.popopx-preview-file-icon {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
 }
 
-.simplex-preview-file-name {
+.popopx-preview-file-name {
   font-size: 14px;
   color: var(--sp-text);
 }
 
-.simplex-preview-file-size {
+.popopx-preview-file-size {
   font-size: 12px;
   color: var(--sp-text-secondary);
 }
 
-.simplex-preview-voice {
+.popopx-preview-voice {
   padding: 7px 12px;
   display: flex;
   align-items: center;
@@ -428,7 +428,7 @@ const STYLE = `
   font-size: 14px;
 }
 
-.simplex-preview-meta {
+.popopx-preview-meta {
   float: right;
   font-size: 12px;
   color: var(--sp-text-secondary);
@@ -437,17 +437,17 @@ const STYLE = `
   white-space: nowrap;
 }
 
-.simplex-preview-meta-edited {
+.popopx-preview-meta-edited {
   font-style: italic;
 }
 
-.simplex-preview-reactions {
+.popopx-preview-reactions {
   display: flex;
   flex-wrap: wrap;
   padding: 2px 5px 2px;
 }
 
-.simplex-preview-reaction {
+.popopx-preview-reaction {
   font-size: 12px;
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   border-radius: 8px;
@@ -457,19 +457,19 @@ const STYLE = `
   gap: 4px;
 }
 
-.simplex-preview-reaction-count {
+.popopx-preview-reaction-count {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--sp-text-secondary);
   font-size: 11.5px;
 }
 
-.simplex-preview-empty {
+.popopx-preview-empty {
   text-align: center;
   padding: 48px 16px;
   color: var(--sp-text-secondary);
 }
 
-.simplex-preview-text .secret {
+.popopx-preview-text .secret {
   background: var(--sp-text-secondary);
   color: transparent;
   border-radius: 4px;
@@ -478,26 +478,26 @@ const STYLE = `
   transition: all 0.2s;
 }
 
-.simplex-preview-text .secret.visible {
+.popopx-preview-text .secret.visible {
   background: transparent;
   color: inherit;
 }
 
-.simplex-preview-text .small-text {
+.popopx-preview-text .small-text {
   font-size: 13px;
   color: var(--sp-text-small);
 }
 
-.simplex-preview-text .red { color: #DD0000; }
-.simplex-preview-text .green { color: #20BD3D; }
-.simplex-preview-text .blue { color: var(--sp-color-blue); }
-.simplex-preview-text .yellow { color: #DEBD00; }
-.simplex-preview-text .cyan { color: #0AC4D1; }
-.simplex-preview-text .magenta { color: magenta; }
-.simplex-preview-text .black { color: var(--sp-color-black); }
-.simplex-preview-text .white { color: var(--sp-color-white); }
+.popopx-preview-text .red { color: #DD0000; }
+.popopx-preview-text .green { color: #20BD3D; }
+.popopx-preview-text .blue { color: var(--sp-color-blue); }
+.popopx-preview-text .yellow { color: #DEBD00; }
+.popopx-preview-text .cyan { color: #0AC4D1; }
+.popopx-preview-text .magenta { color: magenta; }
+.popopx-preview-text .black { color: var(--sp-color-black); }
+.popopx-preview-text .white { color: var(--sp-color-white); }
 
-.simplex-preview-main {
+.popopx-preview-main {
   flex: 1;
   min-width: 0;
   max-width: 640px;
@@ -505,20 +505,20 @@ const STYLE = `
   position: relative;
 }
 
-.simplex-preview-info {
+.popopx-preview-info {
   overflow-y: auto;
   background: var(--sp-bg);
 }
 
-.simplex-preview-scroll-lock {
+.popopx-preview-scroll-lock {
   overflow: hidden;
 }
 
-.simplex-preview-info-close {
+.popopx-preview-info-close {
   display: none;
 }
 
-.simplex-preview-info-avatar {
+.popopx-preview-info-avatar {
   width: 192px;
   height: 192px;
   border-radius: 42px;
@@ -527,14 +527,14 @@ const STYLE = `
   margin: 12px auto;
 }
 
-.simplex-preview-info-name {
+.popopx-preview-info-name {
   font-size: 34px;
   font-weight: 700;
   text-align: center;
   margin: 0;
 }
 
-.simplex-preview-info-descr {
+.popopx-preview-info-descr {
   font-size: 14px;
   color: var(--sp-text-secondary);
   text-align: center;
@@ -543,78 +543,78 @@ const STYLE = `
   overflow-wrap: break-word;
 }
 
-.simplex-preview-info-descr a {
+.popopx-preview-info-descr a {
   color: var(--sp-link);
   text-decoration: none;
 }
 
-.simplex-preview-info-descr a:hover {
+.popopx-preview-info-descr a:hover {
   text-decoration: underline;
 }
 
-.simplex-preview-info-subscribers {
+.popopx-preview-info-subscribers {
   font-size: 14px;
   color: var(--sp-text-secondary);
   text-align: center;
   margin: 0 0 16px;
 }
 
-.simplex-preview-info .simplex-preview-join-btn {
+.popopx-preview-info .popopx-preview-join-btn {
   display: block;
   text-align: center;
   margin-top: 20px;
   width: 100%;
 }
 
-.simplex-preview-conversion {
+.popopx-preview-conversion {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 }
 
-.simplex-preview-divider {
+.popopx-preview-divider {
   width: 100%;
   height: 1px;
   background: var(--sp-border);
   margin: 40px 0;
 }
 
-.simplex-preview-conversion-title {
+.popopx-preview-conversion-title {
   font-size: 18px;
   font-weight: 600;
   text-align: center;
   margin: 0 0 16px;
 }
 
-.simplex-preview-qr-toggle {
+.popopx-preview-qr-toggle {
   font-size: 14px;
   color: var(--sp-link);
   cursor: pointer;
   text-decoration: none;
 }
 
-.simplex-preview-qr-toggle:hover {
+.popopx-preview-qr-toggle:hover {
   text-decoration: underline;
 }
 
-.simplex-preview-qr-popup {
+.popopx-preview-qr-popup {
   flex-direction: column;
   align-items: center;
   gap: 8px;
 }
 
-.simplex-preview-qr-popup canvas {
+.popopx-preview-qr-popup canvas {
   border-radius: 8px;
 }
 
-.simplex-preview-qr-caption {
+.popopx-preview-qr-caption {
   font-size: 14px;
   text-align: center;
   margin: 0;
 }
 
-.simplex-preview-badges {
+.popopx-preview-badges {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -623,38 +623,38 @@ const STYLE = `
   margin: 0 0 6px;
 }
 
-.simplex-preview-badges a {
+.popopx-preview-badges a {
   display: block;
 }
 
-.simplex-preview-badges a img {
+.popopx-preview-badges a img {
   height: 40px;
   width: auto;
   display: block;
 }
 
-.simplex-preview-copy-action {
+.popopx-preview-copy-action {
   font-size: 14px;
   margin: 0;
 }
 
-.simplex-preview-copy-action a {
+.popopx-preview-copy-action a {
   color: var(--sp-link);
   text-decoration: none;
   cursor: pointer;
 }
 
-.simplex-preview-copy-action a:hover {
+.popopx-preview-copy-action a:hover {
   text-decoration: underline;
 }
 
-.simplex-preview-step-title {
+.popopx-preview-step-title {
   font-size: 14px;
   text-align: center;
   margin: 0 0 -8px;
 }
 
-.simplex-preview-open-btn {
+.popopx-preview-open-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -674,7 +674,7 @@ const STYLE = `
   margin-top: 3px;
 }
 
-.simplex-preview-open-btn svg {
+.popopx-preview-open-btn svg {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
@@ -682,30 +682,30 @@ const STYLE = `
 }
 
 
-.simplex-preview-open-btn:hover {
+.popopx-preview-open-btn:hover {
   background: var(--sp-btn-hover);
 }
 
 @media (min-width: 1000px) {
-  .simplex-preview-info {
+  .popopx-preview-info {
     width: 320px;
     flex-shrink: 0;
     border-left: 1px solid var(--sp-border);
     padding: 24px;
   }
-  .simplex-preview-header .simplex-preview-join-btn {
+  .popopx-preview-header .popopx-preview-join-btn {
     display: none;
   }
 }
 
 @media (max-width: 999px) {
-  .simplex-preview-container {
+  .popopx-preview-container {
     font-size: 17px;
   }
-  .simplex-preview-main {
+  .popopx-preview-main {
     max-width: none;
   }
-  .simplex-preview-info {
+  .popopx-preview-info {
     display: none;
     position: fixed;
     top: var(--sp-top-offset, 0px);
@@ -716,10 +716,10 @@ const STYLE = `
     padding: 16px;
     overscroll-behavior: contain;
   }
-  .simplex-preview-info.open {
+  .popopx-preview-info.open {
     display: block;
   }
-  .simplex-preview-info-close {
+  .popopx-preview-info-close {
     display: block;
     position: absolute;
     top: 12px;
@@ -732,10 +732,10 @@ const STYLE = `
     padding: 4px 8px;
     line-height: 1;
   }
-  .simplex-preview-info-content {
+  .popopx-preview-info-content {
     padding-top: 32px;
   }
-  .simplex-preview-header {
+  .popopx-preview-header {
     cursor: pointer;
   }
 }
@@ -743,9 +743,9 @@ const STYLE = `
 
 const DEFAULT_AVATAR = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.8 25.46"><circle cx="12.9" cy="12.73" r="12.72" fill="#eee"/><path d="M25.44 12.73c0 7.01-5.71 12.73-12.73 12.73C5.71 25.46 0 19.75 0 12.73 0 5.73 5.71.02 12.71.02c7.01 0 12.73 5.71 12.73 12.72zM4.22 17.11c0 .58.31.87 1.05.87h4.88c-.14-.26-.19-.55-.19-.82 0-1.03.59-2.19 1.63-3.1-.79-.5-1.75-.79-2.74-.79-2.37 0-4.63 1.68-4.63 3.84zm6.6.05c0 .56.36.82 1.27.82h8.1c.93 0 1.26-.26 1.26-.82 0-1.62-2.02-3.87-5.28-3.87-3.29 0-5.34 2.25-5.34 3.87zM6.66 9.87c0 1.37 1.01 2.42 2.19 2.42 1.2 0 2.2-1.05 2.2-2.43 0-1.33-1.02-2.36-2.2-2.36-1.16 0-2.19 1.05-2.19 2.37zm6.98-.5c0 1.56 1.13 2.78 2.52 2.78 1.36 0 2.5-1.22 2.5-2.79 0-1.53-1.15-2.71-2.5-2.71-1.38 0-2.52 1.21-2.52 2.73z" fill="#ccc" fill-opacity=".85"/></svg>');
 
-const IMAGE_PLACEHOLDER_SVG = `<svg class="simplex-preview-file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`;
+const IMAGE_PLACEHOLDER_SVG = `<svg class="popopx-preview-file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`;
 
-// image/jpg is not a registered MIME type, but SimpleX apps and core use it for JPEG images.
+// image/jpg is not a registered MIME type, but POPOPX apps and core use it for JPEG images.
 const DATA_IMAGE_PREFIXES = [
   'data:image/jpg;base64,',
   'data:image/jpeg;base64,',
@@ -765,13 +765,13 @@ function tailSvg() {
 var _logoId = 0;
 var _svgParser = new DOMParser();
 
-function appendSimplexLogo(el) {
+function appendPOPOPXLogo(el) {
   var n = _logoId++;
-  var darkSvg = '<svg class="simplex-logo-dark-bg" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">'
+  var darkSvg = '<svg class="popopx-logo-dark-bg" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">'
     + '<path fill-rule="evenodd" clip-rule="evenodd" d="M3.03 8.61l5.592 5.592 5.748-5.747 2.797 2.796-5.749 5.747 5.593 5.593-2.874 2.874-5.593-5.593-5.748 5.748L0 22.823l5.748-5.748L.155 11.483l2.874-2.874z" fill="white"/>'
     + '<path fill-rule="evenodd" clip-rule="evenodd" d="M14.092 25.516l2.852-2.852-.001-.001 5.704-5.702-5.595-5.594h.001l-2.798-2.797L8.66 2.975l2.852-2.851 5.594 5.594L22.81.016l2.797 2.797-5.704 5.703 5.596 5.594 5.704-5.703 2.797 2.797-5.704 5.703 5.596 5.595-2.852 2.851-5.595-5.594-5.704 5.703 5.596 5.594-2.852 2.852-5.595-5.595-5.703 5.703-2.798-2.797 5.704-5.703z" fill="url(#sp-lg-d' + n + ')"/>'
     + '<defs><linearGradient id="sp-lg-d' + n + '" x1="12.838" y1="-0.678" x2="9.544" y2="31.449" gradientUnits="userSpaceOnUse"><stop stop-color="#01F1FF"/><stop offset="1" stop-color="#0197FF"/></linearGradient></defs></svg>';
-  var lightSvg = '<svg class="simplex-logo-light-bg" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">'
+  var lightSvg = '<svg class="popopx-logo-light-bg" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">'
     + '<path fill-rule="evenodd" clip-rule="evenodd" d="M3.03 8.594l5.592 5.592 5.748-5.748 2.797 2.797-5.749 5.747 5.593 5.593-2.874 2.874-5.593-5.593-5.748 5.748L0 22.807l5.748-5.748L.156 11.468l2.874-2.874z" fill="#023789"/>'
     + '<path fill-rule="evenodd" clip-rule="evenodd" d="M14.092 25.5l2.851-2.851-.001-.001 5.704-5.702-5.595-5.594h.001l-2.798-2.797L8.66 2.96l2.851-2.852 5.595 5.595L22.81 0l2.797 2.797-5.704 5.703 5.596 5.594 5.704-5.703 2.797 2.797-5.704 5.703 5.596 5.595-2.852 2.851-5.595-5.594-5.704 5.703 5.596 5.595-2.852 2.851-5.595-5.594L5.386 34l-2.797-2.797 5.703-5.703z" fill="url(#sp-lg-l' + n + ')"/>'
     + '<defs><linearGradient id="sp-lg-l' + n + '" x1="12.838" y1="-0.694" x2="9.543" y2="31.434" gradientUnits="userSpaceOnUse"><stop stop-color="#01F1FF"/><stop offset="1" stop-color="#0197FF"/></linearGradient></defs></svg>';
@@ -779,9 +779,9 @@ function appendSimplexLogo(el) {
   el.appendChild(document.importNode(_svgParser.parseFromString(lightSvg, 'image/svg+xml').documentElement, true));
 }
 
-const FILE_ICON_SVG = `<svg class="simplex-preview-file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>`;
+const FILE_ICON_SVG = `<svg class="popopx-preview-file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>`;
 
-const VOICE_ICON_SVG = `<svg class="simplex-preview-file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>`;
+const VOICE_ICON_SVG = `<svg class="popopx-preview-file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>`;
 
 const FORWARD_ICON_SVG = `<svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor"><path transform="scale(-1,1) translate(-960,0)" d="m236.5-495.5 142.5 143q8.5 8.5 8.25 20.25T378.5-312q-9 8.5-21 8.5t-20.5-9L145.5-504q-9-8.5-9-20t9-20.5L338-737q9-9 20.75-8.75T379.5-737q8.5 8.5 8.5 20.5t-8.5 20.5l-143 143h403q84 0 139.75 56T835-357.5V-234q0 12.5-8.25 20.75T806.5-205q-12.5 0-20.75-8.25T777.5-234v-123.5q0-60-39-99t-99-39h-403Z"/></svg>`;
 
@@ -796,12 +796,12 @@ function initChannelPreview(container) {
   const colorScheme = container.dataset.colorScheme || 'light';
 
   if (!relayDomains.length || !channelId) {
-    container.innerHTML = '<p class="simplex-preview-empty">Missing configuration: data-relay-domains and data-channel-id required.</p>';
+    container.innerHTML = '<p class="popopx-preview-empty">Missing configuration: data-relay-domains and data-channel-id required.</p>';
     return;
   }
 
   injectStyles();
-  container.classList.add('simplex-preview-container', 'simplex-scheme-' + colorScheme);
+  container.classList.add('popopx-preview-container', 'popopx-scheme-' + colorScheme);
   if (container.dataset.lightBackground) {
     container.style.setProperty('--sp-light-bg', container.dataset.lightBackground);
   }
@@ -815,15 +815,15 @@ function initChannelPreview(container) {
     container.style.height = 'calc(100vh - ' + topOffset + 'px)';
     container.style.height = 'calc(100dvh - ' + topOffset + 'px)';
   }
-  container.innerHTML = '<p class="simplex-preview-empty">Loading channel...</p>';
+  container.innerHTML = '<p class="popopx-preview-empty">Loading channel...</p>';
 
   fetchPreview(relayScheme, relayDomains, channelLink, channelId).then(data => {
     if (data === 'link_mismatch') {
-      container.innerHTML = '<p class="simplex-preview-empty">All relays returned a different channel link from specified in the page.</p>';
+      container.innerHTML = '<p class="popopx-preview-empty">All relays returned a different channel link from specified in the page.</p>';
       return;
     }
     if (!data) {
-      container.innerHTML = '<p class="simplex-preview-empty">Failed to load channel preview.</p>';
+      container.innerHTML = '<p class="popopx-preview-empty">Failed to load channel preview.</p>';
       return;
     }
     render(container, data, channelLink, showAppBadges);
@@ -870,13 +870,13 @@ function render(container, data, channelLink, showAppBadges) {
   container.innerHTML = '';
 
   const main = document.createElement('div');
-  main.className = 'simplex-preview-main';
+  main.className = 'popopx-preview-main';
 
   const header = renderHeader(channel, channelLink, data.subscribers);
   main.appendChild(header);
 
   const messagesDiv = document.createElement('div');
-  messagesDiv.className = 'simplex-preview-messages';
+  messagesDiv.className = 'popopx-preview-messages';
   const welcome = data.welcomeMessage || channel.description;
   var allMessages = messages;
   if (welcome) {
@@ -895,35 +895,35 @@ function render(container, data, channelLink, showAppBadges) {
   container.appendChild(main);
 
   const info = document.createElement('div');
-  info.className = 'simplex-preview-info';
+  info.className = 'popopx-preview-info';
 
   const closeBtn = document.createElement('button');
-  closeBtn.className = 'simplex-preview-info-close';
+  closeBtn.className = 'popopx-preview-info-close';
   closeBtn.innerHTML = '&#10005;';
   info.appendChild(closeBtn);
 
   const infoContent = document.createElement('div');
-  infoContent.className = 'simplex-preview-info-content';
+  infoContent.className = 'popopx-preview-info-content';
   renderInfoContent(infoContent, data, channelLink, data.subscribers, showAppBadges);
   info.appendChild(infoContent);
 
   container.appendChild(info);
 
   header.addEventListener('click', (e) => {
-    if (e.target.closest('.simplex-preview-join-btn')) return;
+    if (e.target.closest('.popopx-preview-join-btn')) return;
     if (window.innerWidth < 1000) {
       info.classList.add('open');
       main.style.overflow = 'hidden';
-      document.documentElement.classList.add('simplex-preview-scroll-lock');
-      document.body.classList.add('simplex-preview-scroll-lock');
+      document.documentElement.classList.add('popopx-preview-scroll-lock');
+      document.body.classList.add('popopx-preview-scroll-lock');
     }
   });
 
   closeBtn.addEventListener('click', () => {
     info.classList.remove('open');
     main.style.overflow = '';
-    document.documentElement.classList.remove('simplex-preview-scroll-lock');
-    document.body.classList.remove('simplex-preview-scroll-lock');
+    document.documentElement.classList.remove('popopx-preview-scroll-lock');
+    document.body.classList.remove('popopx-preview-scroll-lock');
   });
 
   setupSecretToggles(container);
@@ -932,25 +932,25 @@ function render(container, data, channelLink, showAppBadges) {
 
 function renderHeader(channel, channelLink, subscriberCount) {
   const header = document.createElement('div');
-  header.className = 'simplex-preview-header';
+  header.className = 'popopx-preview-header';
 
   const avatar = document.createElement('img');
-  avatar.className = 'simplex-preview-header-avatar';
+  avatar.className = 'popopx-preview-header-avatar';
   avatar.src = isDataImage(channel.image) ? channel.image : DEFAULT_AVATAR;
   avatar.alt = channel.displayName;
   header.appendChild(avatar);
 
   const info = document.createElement('div');
-  info.className = 'simplex-preview-header-info';
+  info.className = 'popopx-preview-header-info';
 
   const name = document.createElement('h1');
-  name.className = 'simplex-preview-header-name';
+  name.className = 'popopx-preview-header-name';
   name.textContent = channel.displayName;
   info.appendChild(name);
 
   if (subscriberCount > 0) {
     const desc = document.createElement('p');
-    desc.className = 'simplex-preview-header-description';
+    desc.className = 'popopx-preview-header-description';
     desc.textContent = subscriberCount + ' subscribers';
     info.appendChild(desc);
   }
@@ -959,9 +959,9 @@ function renderHeader(channel, channelLink, subscriberCount) {
 
   if (channelLink) {
     const btn = document.createElement('a');
-    btn.className = 'simplex-preview-join-btn';
+    btn.className = 'popopx-preview-join-btn';
     btn.textContent = 'Join';
-    appendSimplexLogo(btn);
+    appendPOPOPXLogo(btn);
     btn.href = channelLink;
     header.appendChild(btn);
   }
@@ -973,27 +973,27 @@ function renderInfoContent(container, data, channelLink, subscriberCount, showAp
   const { channel } = data;
 
   const avatar = document.createElement('img');
-  avatar.className = 'simplex-preview-info-avatar';
+  avatar.className = 'popopx-preview-info-avatar';
   avatar.src = isDataImage(channel.image) ? channel.image : DEFAULT_AVATAR;
   avatar.alt = channel.displayName;
   container.appendChild(avatar);
 
   const name = document.createElement('h2');
-  name.className = 'simplex-preview-info-name';
+  name.className = 'popopx-preview-info-name';
   name.textContent = channel.displayName;
   container.appendChild(name);
 
   const shortDescr = data.shortDescription || channel.shortDescr;
   if (shortDescr) {
     const descrDiv = document.createElement('div');
-    descrDiv.className = 'simplex-preview-info-descr';
+    descrDiv.className = 'popopx-preview-info-descr';
     descrDiv.innerHTML = Array.isArray(shortDescr) ? renderMarkdown(shortDescr) : escapeHtml(shortDescr);
     container.appendChild(descrDiv);
   }
 
   if (subscriberCount > 0) {
     const subs = document.createElement('p');
-    subs.className = 'simplex-preview-info-subscribers';
+    subs.className = 'popopx-preview-info-subscribers';
     subs.textContent = subscriberCount + ' subscribers';
     container.appendChild(subs);
   }
@@ -1001,12 +1001,12 @@ function renderInfoContent(container, data, channelLink, subscriberCount, showAp
   if (channelLink) {
     if (!isMobile.any()) {
       const openBtn = document.createElement('a');
-      openBtn.className = 'simplex-preview-open-btn';
+      openBtn.className = 'popopx-preview-open-btn';
       openBtn.style.display = 'flex';
       openBtn.style.width = 'fit-content';
       openBtn.style.margin = '32px auto 0';
-      openBtn.textContent = 'Join in SimpleX Chat';
-      appendSimplexLogo(openBtn);
+      openBtn.textContent = 'Join in POPOPX Chat';
+      appendPOPOPXLogo(openBtn);
       openBtn.href = channelLink;
       container.appendChild(openBtn);
     }
@@ -1014,17 +1014,17 @@ function renderInfoContent(container, data, channelLink, subscriberCount, showAp
     const showJoinSection = !isMobile.any() || showAppBadges;
     if (showJoinSection) {
       const divider = document.createElement('div');
-      divider.className = 'simplex-preview-divider';
+      divider.className = 'popopx-preview-divider';
       container.appendChild(divider);
 
       const joinTitle = document.createElement('p');
-      joinTitle.className = 'simplex-preview-conversion-title';
+      joinTitle.className = 'popopx-preview-conversion-title';
       joinTitle.textContent = 'To join this channel';
       container.appendChild(joinTitle);
     }
 
     const conversion = document.createElement('div');
-    conversion.className = 'simplex-preview-conversion';
+    conversion.className = 'popopx-preview-conversion';
     if (!showJoinSection) {
       conversion.style.marginTop = '28px';
     }
@@ -1037,20 +1037,20 @@ function renderInfoContent(container, data, channelLink, subscriberCount, showAp
   }
 }
 
-var BADGE_APPLE = '<a href="https://apps.apple.com/us/app/simplex-chat/id1605771084" target="_blank"><img src="https://simplex.chat/img/new/apple_store.svg" alt="App Store"></a>';
-var BADGE_GOOGLE = '<a href="https://play.google.com/store/apps/details?id=chat.simplex.app" target="_blank"><img src="https://simplex.chat/img/new/google_play.svg" alt="Google Play"></a>';
-var BADGE_FDROID = '<a href="https://simplex.chat/fdroid" target="_blank"><img src="https://simplex.chat/img/new/f_droid.svg" alt="F-Droid"></a>';
-var BADGE_APK = '<a href="https://github.com/simplex-chat/simplex-chat/releases/latest/download/simplex-aarch64.apk" target="_blank"><img src="https://simplex.chat/img/design_3/android-dark.png" alt="APK Download"></a>';
-var BADGE_TESTFLIGHT = '<a href="https://testflight.apple.com/join/DWuT2LQu" target="_blank"><img src="https://simplex.chat/img/design_3/testflight-dark.png" alt="TestFlight"></a>';
+var BADGE_APPLE = '<a href="https://apps.apple.com/us/app/popopx-chat/id1605771084" target="_blank"><img src="https://popopx.chat/img/new/apple_store.svg" alt="App Store"></a>';
+var BADGE_GOOGLE = '<a href="https://play.google.com/store/apps/details?id=chat.popopx.app" target="_blank"><img src="https://popopx.chat/img/new/google_play.svg" alt="Google Play"></a>';
+var BADGE_FDROID = '<a href="https://popopx.chat/fdroid" target="_blank"><img src="https://popopx.chat/img/new/f_droid.svg" alt="F-Droid"></a>';
+var BADGE_APK = '<a href="https://github.com/simplex-chat/simplex-chat/releases/latest/download/simplex-aarch64.apk" target="_blank"><img src="https://popopx.chat/img/design_3/android-dark.png" alt="APK Download"></a>';
+var BADGE_TESTFLIGHT = '<a href="https://testflight.apple.com/join/DWuT2LQu" target="_blank"><img src="https://popopx.chat/img/design_3/testflight-dark.png" alt="TestFlight"></a>';
 
 function renderAppBadges(container) {
   const title = document.createElement('p');
-  title.className = 'simplex-preview-step-title';
-  title.textContent = 'Install SimpleX Chat app';
+  title.className = 'popopx-preview-step-title';
+  title.textContent = 'Install POPOPX Chat app';
   container.appendChild(title);
 
   const badges = document.createElement('div');
-  badges.className = 'simplex-preview-badges';
+  badges.className = 'popopx-preview-badges';
   if (isMobile.Android()) {
     badges.innerHTML = BADGE_GOOGLE + BADGE_FDROID + BADGE_APK;
   } else if (isMobile.iOS()) {
@@ -1093,25 +1093,25 @@ function renderDesktopConversion(container, channelLink, showAppBadges) {
   }
 
   const qrToggle = document.createElement('a');
-  qrToggle.className = 'simplex-preview-qr-toggle';
+  qrToggle.className = 'popopx-preview-qr-toggle';
   qrToggle.textContent = 'Show QR code for mobile app';
   qrToggle.href = '#';
   container.appendChild(qrToggle);
 
   const qrPopup = document.createElement('div');
-  qrPopup.className = 'simplex-preview-qr-popup';
+  qrPopup.className = 'popopx-preview-qr-popup';
   qrPopup.style.display = 'none';
 
   const caption = document.createElement('p');
-  caption.className = 'simplex-preview-qr-caption';
-  caption.textContent = 'Scan from SimpleX Chat app';
+  caption.className = 'popopx-preview-qr-caption';
+  caption.textContent = 'Scan from POPOPX Chat app';
   qrPopup.appendChild(caption);
 
   const canvas = document.createElement('canvas');
   qrPopup.appendChild(canvas);
 
   const qrHide = document.createElement('a');
-  qrHide.className = 'simplex-preview-qr-toggle';
+  qrHide.className = 'popopx-preview-qr-toggle';
   qrHide.textContent = 'Hide QR code';
   qrHide.href = '#';
   qrPopup.appendChild(qrHide);
@@ -1157,7 +1157,7 @@ function renderDesktopConversion(container, channelLink, showAppBadges) {
   qrHide.addEventListener('click', toggleQr);
 
   const copyAction = document.createElement('p');
-  copyAction.className = 'simplex-preview-copy-action';
+  copyAction.className = 'popopx-preview-copy-action';
   const copyLink = document.createElement('a');
   copyLink.textContent = 'copy link';
   copyLink.addEventListener('click', function() {
@@ -1178,9 +1178,9 @@ function renderMobileConversion(container, channelLink, showAppBadges) {
   }
 
   const openBtn = document.createElement('a');
-  openBtn.className = 'simplex-preview-open-btn';
-  openBtn.textContent = 'Join in SimpleX Chat';
-  appendSimplexLogo(openBtn);
+  openBtn.className = 'popopx-preview-open-btn';
+  openBtn.textContent = 'Join in POPOPX Chat';
+  appendPOPOPXLogo(openBtn);
   openBtn.href = channelLink;
   container.appendChild(openBtn);
 }
@@ -1205,7 +1205,7 @@ function renderMessages(container, messages, membersMap, channel) {
     const msgDate = formatDateLabel(msg.ts);
     if (msgDate !== prevDate) {
       const dateSep = document.createElement('div');
-      dateSep.className = 'simplex-preview-date-separator';
+      dateSep.className = 'popopx-preview-date-separator';
       dateSep.textContent = msgDate;
       container.appendChild(dateSep);
       prevDate = msgDate;
@@ -1222,25 +1222,25 @@ function renderMessages(container, messages, membersMap, channel) {
     const senderImage = member ? member.image : channel.image;
 
     const row = document.createElement('div');
-    row.className = 'simplex-preview-msg-row' + (nextSeparation.largeGap ? ' has-gap' : '');
+    row.className = 'popopx-preview-msg-row' + (nextSeparation.largeGap ? ' has-gap' : '');
 
     if (hasAnySender) {
       if (showName) {
         const nameDiv = document.createElement('div');
-        nameDiv.className = 'simplex-preview-msg-name';
+        nameDiv.className = 'popopx-preview-msg-name';
         nameDiv.textContent = senderName;
         container.appendChild(nameDiv);
       }
 
       if (showAvatar) {
         const avatarImg = document.createElement('img');
-        avatarImg.className = 'simplex-preview-msg-avatar';
+        avatarImg.className = 'popopx-preview-msg-avatar';
         avatarImg.src = isDataImage(senderImage) ? senderImage : DEFAULT_AVATAR;
         avatarImg.alt = senderName;
         row.appendChild(avatarImg);
       } else {
         const spacer = document.createElement('div');
-        spacer.className = 'simplex-preview-msg-avatar-placeholder';
+        spacer.className = 'popopx-preview-msg-avatar-placeholder';
         row.appendChild(spacer);
       }
     }
@@ -1266,21 +1266,21 @@ function renderBubble(msg, member, showTail, membersMap, channel) {
   const hasTail = showTail && !noTailContent;
 
   const bubble = document.createElement('div');
-  bubble.className = 'simplex-preview-bubble' + (hasTail ? ' has-tail' : '') + (mediaOnly ? ' media-only' : '');
+  bubble.className = 'popopx-preview-bubble' + (hasTail ? ' has-tail' : '') + (mediaOnly ? ' media-only' : '');
 
   if (hasTail) {
     const tail = document.createElement('div');
-    tail.className = 'simplex-preview-bubble-tail';
+    tail.className = 'popopx-preview-bubble-tail';
     tail.innerHTML = tailSvg();
     bubble.appendChild(tail);
   }
 
   const inner = document.createElement('div');
-  inner.className = 'simplex-preview-bubble-inner';
+  inner.className = 'popopx-preview-bubble-inner';
 
   if (msg.forward) {
     const fwd = document.createElement('div');
-    fwd.className = 'simplex-preview-forwarded-header';
+    fwd.className = 'popopx-preview-forwarded-header';
     fwd.innerHTML = FORWARD_ICON_SVG + ' <span>Forwarded</span>';
     inner.appendChild(fwd);
   }
@@ -1314,8 +1314,8 @@ function renderBubble(msg, member, showTail, membersMap, channel) {
 
   if (mediaOnly) {
     const overlay = document.createElement('div');
-    overlay.className = 'simplex-preview-meta-overlay';
-    if (msg.edited) overlay.innerHTML = '<span class="simplex-preview-meta-edited">edited </span>';
+    overlay.className = 'popopx-preview-meta-overlay';
+    if (msg.edited) overlay.innerHTML = '<span class="popopx-preview-meta-edited">edited </span>';
     overlay.innerHTML += formatTime(msg.ts);
     bubble.appendChild(overlay);
   }
@@ -1325,10 +1325,10 @@ function renderBubble(msg, member, showTail, membersMap, channel) {
 
 function renderQuote(quote, membersMap, channel) {
   const quoteDiv = document.createElement('div');
-  quoteDiv.className = 'simplex-preview-quote';
+  quoteDiv.className = 'popopx-preview-quote';
 
   const contentDiv = document.createElement('div');
-  contentDiv.className = 'simplex-preview-quote-content';
+  contentDiv.className = 'popopx-preview-quote-content';
 
   const ref = quote.msgRef;
   let senderName = '';
@@ -1342,13 +1342,13 @@ function renderQuote(quote, membersMap, channel) {
   }
   if (senderName) {
     const sender = document.createElement('div');
-    sender.className = 'simplex-preview-quote-sender';
+    sender.className = 'popopx-preview-quote-sender';
     sender.textContent = senderName;
     contentDiv.appendChild(sender);
   }
 
   const textDiv = document.createElement('div');
-  textDiv.className = 'simplex-preview-quote-text';
+  textDiv.className = 'popopx-preview-quote-text';
   textDiv.textContent = quote.content ? (quote.content.text || '') : '';
   contentDiv.appendChild(textDiv);
 
@@ -1357,17 +1357,17 @@ function renderQuote(quote, membersMap, channel) {
   if (quote.content) {
     if ((quote.content.type === 'image' || quote.content.type === 'video') && isDataImage(quote.content.image)) {
       const thumb = document.createElement('img');
-      thumb.className = 'simplex-preview-quote-thumb';
+      thumb.className = 'popopx-preview-quote-thumb';
       thumb.src = quote.content.image;
       quoteDiv.appendChild(thumb);
     } else if (quote.content.type === 'file') {
       const icon = document.createElement('div');
-      icon.className = 'simplex-preview-quote-file-icon';
+      icon.className = 'popopx-preview-quote-file-icon';
       icon.innerHTML = FILE_ICON_SVG;
       quoteDiv.appendChild(icon);
     } else if (quote.content.type === 'voice') {
       const icon = document.createElement('div');
-      icon.className = 'simplex-preview-quote-file-icon';
+      icon.className = 'popopx-preview-quote-file-icon';
       icon.innerHTML = VOICE_ICON_SVG;
       quoteDiv.appendChild(icon);
     }
@@ -1382,21 +1382,21 @@ function classifyImage(img) {
   const portrait = w * 0.97 <= h;
   img.classList.add(portrait ? 'portrait' : 'landscape');
   // constrain the bubble to the image width so long text wraps instead of widening the bubble
-  const inner = img.closest('.simplex-preview-bubble-inner');
+  const inner = img.closest('.popopx-preview-bubble-inner');
   if (inner) inner.style.maxWidth = portrait ? '300px' : '400px';
 }
 
 function renderImageContent(inner, mc, msg, mediaOnly) {
   if (isDataImage(mc.image)) {
     const img = document.createElement('img');
-    img.className = 'simplex-preview-image';
+    img.className = 'popopx-preview-image';
     img.src = mc.image;
     img.alt = 'Image';
     img.addEventListener('load', () => classifyImage(img));
     inner.appendChild(img);
   } else {
     const ph = document.createElement('div');
-    ph.className = 'simplex-preview-image-placeholder';
+    ph.className = 'popopx-preview-image-placeholder';
     ph.innerHTML = IMAGE_PLACEHOLDER_SVG;
     inner.appendChild(ph);
   }
@@ -1412,7 +1412,7 @@ function renderVideoContent(inner, mc, msg, mediaOnly) {
     const wrapper = document.createElement('div');
     wrapper.style.position = 'relative';
     const img = document.createElement('img');
-    img.className = 'simplex-preview-image';
+    img.className = 'popopx-preview-image';
     img.src = mc.image;
     img.alt = 'Video';
     img.addEventListener('load', () => classifyImage(img));
@@ -1424,7 +1424,7 @@ function renderVideoContent(inner, mc, msg, mediaOnly) {
     inner.appendChild(wrapper);
   } else {
     const ph = document.createElement('div');
-    ph.className = 'simplex-preview-image-placeholder';
+    ph.className = 'popopx-preview-image-placeholder';
     ph.innerHTML = IMAGE_PLACEHOLDER_SVG;
     inner.appendChild(ph);
   }
@@ -1440,31 +1440,31 @@ function renderLinkContent(bubble, mc, msg) {
     // clamp the bubble to the link card width so long text wraps instead of widening the bubble
     bubble.style.maxWidth = '400px';
     const card = document.createElement('div');
-    card.className = 'simplex-preview-link-card';
+    card.className = 'popopx-preview-link-card';
     if (isDataImage(mc.preview.image)) {
       const img = document.createElement('img');
-      img.className = 'simplex-preview-link-card-image';
+      img.className = 'popopx-preview-link-card-image';
       img.src = mc.preview.image;
       img.alt = mc.preview.title || '';
       card.appendChild(img);
     }
     const body = document.createElement('div');
-    body.className = 'simplex-preview-link-card-body';
+    body.className = 'popopx-preview-link-card-body';
     if (mc.preview.title) {
       const title = document.createElement('div');
-      title.className = 'simplex-preview-link-card-title';
+      title.className = 'popopx-preview-link-card-title';
       title.textContent = mc.preview.title;
       body.appendChild(title);
     }
     if (mc.preview.description) {
       const desc = document.createElement('div');
-      desc.className = 'simplex-preview-link-card-description';
+      desc.className = 'popopx-preview-link-card-description';
       desc.textContent = mc.preview.description;
       body.appendChild(desc);
     }
     if (mc.preview.uri) {
       const uri = document.createElement('div');
-      uri.className = 'simplex-preview-link-card-uri';
+      uri.className = 'popopx-preview-link-card-uri';
       uri.textContent = mc.preview.uri;
       body.appendChild(uri);
     }
@@ -1476,7 +1476,7 @@ function renderLinkContent(bubble, mc, msg) {
 
 function renderVoiceContent(bubble, mc, msg) {
   const voiceDiv = document.createElement('div');
-  voiceDiv.className = 'simplex-preview-voice';
+  voiceDiv.className = 'popopx-preview-voice';
   voiceDiv.innerHTML = VOICE_ICON_SVG + ' <span>' + formatDuration(mc.duration || 0) + '</span>';
   bubble.appendChild(voiceDiv);
   if (mc.text) {
@@ -1488,16 +1488,16 @@ function renderVoiceContent(bubble, mc, msg) {
 
 function renderFileContent(bubble, mc, msg) {
   const fileDiv = document.createElement('div');
-  fileDiv.className = 'simplex-preview-file-indicator';
+  fileDiv.className = 'popopx-preview-file-indicator';
   fileDiv.innerHTML = FILE_ICON_SVG;
   const info = document.createElement('div');
   if (msg.file) {
     const nameSpan = document.createElement('div');
-    nameSpan.className = 'simplex-preview-file-name';
+    nameSpan.className = 'popopx-preview-file-name';
     nameSpan.textContent = msg.file.fileName;
     info.appendChild(nameSpan);
     const sizeSpan = document.createElement('div');
-    sizeSpan.className = 'simplex-preview-file-size';
+    sizeSpan.className = 'popopx-preview-file-size';
     sizeSpan.textContent = formatFileSize(msg.file.fileSize);
     info.appendChild(sizeSpan);
   }
@@ -1516,7 +1516,7 @@ function renderTextContent(bubble, msg) {
 
 function appendTextBlock(bubble, msg) {
   const textDiv = document.createElement('div');
-  textDiv.className = 'simplex-preview-text';
+  textDiv.className = 'popopx-preview-text';
   const meta = renderMetaHTML(msg);
   if (msg.formattedText && msg.formattedText.length > 0) {
     textDiv.innerHTML = renderMarkdown(msg.formattedText) + meta;
@@ -1534,8 +1534,8 @@ function appendMetaOnly(bubble, msg) {
 }
 
 function renderMetaHTML(msg) {
-  let html = '<span class="simplex-preview-meta">';
-  if (msg.edited) html += '<span class="simplex-preview-meta-edited">edited </span>';
+  let html = '<span class="popopx-preview-meta">';
+  if (msg.edited) html += '<span class="popopx-preview-meta-edited">edited </span>';
   html += formatTime(msg.ts);
   html += '</span>';
   return html;
@@ -1543,16 +1543,16 @@ function renderMetaHTML(msg) {
 
 function renderReactions(reactions) {
   const div = document.createElement('div');
-  div.className = 'simplex-preview-reactions';
+  div.className = 'popopx-preview-reactions';
   for (const r of reactions) {
     if (r.totalReacted < 1) continue;
     const badge = document.createElement('span');
-    badge.className = 'simplex-preview-reaction';
+    badge.className = 'popopx-preview-reaction';
     const emoji = r.reaction && r.reaction.emoji ? r.reaction.emoji : '?';
     badge.appendChild(document.createTextNode(emoji));
     if (r.totalReacted > 1) {
       const count = document.createElement('span');
-      count.className = 'simplex-preview-reaction-count';
+      count.className = 'popopx-preview-reaction-count';
       count.textContent = r.totalReacted;
       badge.appendChild(count);
     }
@@ -1610,6 +1610,6 @@ function formatFileSize(bytes) {
   return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
 }
 
-document.querySelectorAll('[data-simplex-channel-preview]').forEach(initChannelPreview);
+document.querySelectorAll('[data-popopx-channel-preview]').forEach(initChannelPreview);
 
 })();

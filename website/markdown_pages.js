@@ -3,7 +3,7 @@ const path = require("path")
 const matter = require("gray-matter")
 const parse5 = require("parse5")
 
-const siteLocation = "https://simplex.chat"
+const siteLocation = "https://popopx.chat"
 
 const htmlPages = new Set([
   "index",

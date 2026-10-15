@@ -35,9 +35,9 @@
         <target>#titok#</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%1$@ supported SimpleX Chat. The badge expired on %2$@." xml:space="preserve">
-        <source>%1$@ supported SimpleX Chat. The badge expired on %2$@.</source>
-        <target>%1$@ támogatta a SimpleX Chatet. A kitűző lejárt ekkor: %2$@.</target>
+      <trans-unit id="%1$@ supported POPOPX Chat. The badge expired on %2$@." xml:space="preserve">
+        <source>%1$@ supported POPOPX Chat. The badge expired on %2$@.</source>
+        <target>%1$@ támogatta a POPOPX Chatet. A kitűző lejárt ekkor: %2$@.</target>
         <note>badge alert</note>
       </trans-unit>
       <trans-unit id="%@" xml:space="preserve">
@@ -90,9 +90,9 @@
         <target>%@ letöltve</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%@ invested in SimpleX Chat crowdfunding." xml:space="preserve">
-        <source>%@ invested in SimpleX Chat crowdfunding.</source>
-        <target>%@ befektetett a SimpleX Chat közösségi finanszírozásába.</target>
+      <trans-unit id="%@ invested in POPOPX Chat crowdfunding." xml:space="preserve">
+        <source>%@ invested in POPOPX Chat crowdfunding.</source>
+        <target>%@ befektetett a POPOPX Chat közösségi finanszírozásába.</target>
         <note>badge alert</note>
       </trans-unit>
       <trans-unit id="%@ is connected!" xml:space="preserve">
@@ -120,9 +120,9 @@
         <target>%@ kiszolgáló</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%@ supports SimpleX Chat." xml:space="preserve">
-        <source>%@ supports SimpleX Chat.</source>
-        <target>%@ támogatja a SimpleX Chatet.</target>
+      <trans-unit id="%@ supports POPOPX Chat." xml:space="preserve">
+        <source>%@ supports POPOPX Chat.</source>
+        <target>%@ támogatja a POPOPX Chatet.</target>
         <note>badge alert</note>
       </trans-unit>
       <trans-unit id="%@ uploaded" xml:space="preserve">
@@ -447,12 +447,12 @@ channel relay bar</note>
       </trans-unit>
       <trans-unit id="**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." xml:space="preserve">
         <source>**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata.</source>
-        <target>**Privátabb**: 20 percenként ellenőrzi az új üzeneteket. Az eszköztoken meg lesz osztva a SimpleX Chat kiszolgálóval, de az nem, hogy hány partnere vagy üzenete van.</target>
+        <target>**Privátabb**: 20 percenként ellenőrzi az új üzeneteket. Az eszköztoken meg lesz osztva a POPOPX Chat kiszolgálóval, de az nem, hogy hány partnere vagy üzenete van.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." xml:space="preserve">
-        <source>**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app.</source>
-        <target>**A legprivátabb**: Az alkalmazás nem használja a SimpleX Chat push-kiszolgálóját. Az alkalmazás a háttérben ellenőrzi az üzeneteket, amikor a rendszer ezt lehetővé teszi, attól függően, hogy Ön milyen gyakran használja az alkalmazást.</target>
+      <trans-unit id="**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." xml:space="preserve">
+        <source>**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app.</source>
+        <target>**A legprivátabb**: Az alkalmazás nem használja a POPOPX Chat push-kiszolgálóját. Az alkalmazás a háttérben ellenőrzi az üzeneteket, amikor a rendszer ezt lehetővé teszi, attól függően, hogy Ön milyen gyakran használja az alkalmazást.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="**Please note**: using the same database on two devices will break the decryption of messages from your connections, as a security protection." xml:space="preserve">
@@ -465,9 +465,9 @@ channel relay bar</note>
         <target>**Megjegyzés**: NEM fogja tudni helyreállítani vagy módosítani a jelmondatot abban az esetben, ha elveszíti.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." xml:space="preserve">
-        <source>**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from.</source>
-        <target>**Megjegyzés**: az eszköztoken és az értesítések el lesznek küldve a SimpleX Chat értesítési kiszolgálóra, kivéve az üzenet tartalma, mérete vagy az, hogy kitől származik.</target>
+      <trans-unit id="**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." xml:space="preserve">
+        <source>**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from.</source>
+        <target>**Megjegyzés**: az eszköztoken és az értesítések el lesznek küldve a POPOPX Chat értesítési kiszolgálóra, kivéve az üzenet tartalma, mérete vagy az, hogy kitől származik.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="**Scan / Paste link**: to connect via a link you received." xml:space="preserve">
@@ -505,11 +505,11 @@ channel relay bar</note>
         <target>\*félkövér*</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="- connect to [directory service](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!&#10;- delivery receipts (up to 20 members).&#10;- faster and more stable." xml:space="preserve">
-        <source>- connect to [directory service](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!
+      <trans-unit id="- connect to [directory service](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!&#10;- delivery receipts (up to 20 members).&#10;- faster and more stable." xml:space="preserve">
+        <source>- connect to [directory service](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!
 - delivery receipts (up to 20 members).
 - faster and more stable.</source>
-        <target>- kapcsolódás a [könyvtárszolgáltatáshoz](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (béta)!
+        <target>- kapcsolódás a [könyvtárszolgáltatáshoz](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (béta)!
 - kézbesítési jelentések (legfeljebb 20 tagig).
 - gyorsabb és stabilabb.</target>
         <note>No comment provided by engineer.</note>
@@ -618,11 +618,11 @@ time interval</note>
         <target>30 másodperc</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="&lt;p&gt;Hi!&lt;/p&gt;&#10;&lt;p&gt;&lt;a href=&quot;%@&quot;&gt;Connect to me via SimpleX Chat&lt;/a&gt;&lt;/p&gt;" xml:space="preserve">
+      <trans-unit id="&lt;p&gt;Hi!&lt;/p&gt;&#10;&lt;p&gt;&lt;a href=&quot;%@&quot;&gt;Connect to me via POPOPX Chat&lt;/a&gt;&lt;/p&gt;" xml:space="preserve">
         <source>&lt;p&gt;Hi!&lt;/p&gt;
-&lt;p&gt;&lt;a href="%@"&gt;Connect to me via SimpleX Chat&lt;/a&gt;&lt;/p&gt;</source>
+&lt;p&gt;&lt;a href="%@"&gt;Connect to me via POPOPX Chat&lt;/a&gt;&lt;/p&gt;</source>
         <target>&lt;p&gt;Üdvözlöm!&lt;/p&gt;
-&lt;p&gt;&lt;a href="%@"&gt;Csatlakozzon hozzám a SimpleX Chaten keresztül&lt;/a&gt;&lt;/p&gt;</target>
+&lt;p&gt;&lt;a href="%@"&gt;Csatlakozzon hozzám a POPOPX Chaten keresztül&lt;/a&gt;&lt;/p&gt;</target>
         <note>email text</note>
       </trans-unit>
       <trans-unit id="A few more things" xml:space="preserve">
@@ -672,9 +672,9 @@ time interval</note>
         <target>Megszakítja a cím módosítását?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="About SimpleX Chat" xml:space="preserve">
-        <source>About SimpleX Chat</source>
-        <target>A SimpleX Chat névjegye</target>
+      <trans-unit id="About POPOPX Chat" xml:space="preserve">
+        <source>About POPOPX Chat</source>
+        <target>A POPOPX Chat névjegye</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="About operators" xml:space="preserve">
@@ -766,9 +766,9 @@ swipe action</note>
         <target>Hozzáadás</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Add address to your profile, so that your SimpleX contacts can share it with other people. Profile update will be sent to your SimpleX contacts." xml:space="preserve">
-        <source>Add address to your profile, so that your SimpleX contacts can share it with other people. Profile update will be sent to your SimpleX contacts.</source>
-        <target>Cím hozzáadása a profilhoz, hogy a SimpleX partnerei megoszthassák másokkal. A profilfrissítés el lesz küldve a SimpleX partnerei számára.</target>
+      <trans-unit id="Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts." xml:space="preserve">
+        <source>Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts.</source>
+        <target>Cím hozzáadása a profilhoz, hogy a POPOPX partnerei megoszthassák másokkal. A profilfrissítés el lesz küldve a POPOPX partnerei számára.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add contributors." xml:space="preserve">
@@ -1116,9 +1116,9 @@ swipe action</note>
         <target>Az üzenetek jelentése a moderátorok felé engedélyezve van.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Allow to send SimpleX links." xml:space="preserve">
-        <source>Allow to send SimpleX links.</source>
-        <target>A SimpleX-hivatkozások küldése engedélyezve van.</target>
+      <trans-unit id="Allow to send POPOPX links." xml:space="preserve">
+        <source>Allow to send POPOPX links.</source>
+        <target>A POPOPX-hivatkozások küldése engedélyezve van.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Allow to send files and media." xml:space="preserve">
@@ -1613,9 +1613,9 @@ a saját hálózatában</target>
         <target>Közvetítés…</target>
         <note>compose placeholder for channel owner</note>
       </trans-unit>
-      <trans-unit id="Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" xml:space="preserve">
-        <source>Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</source>
-        <target>Bolgár, finn, thai és ukrán – köszönet a felhasználóknak és a [Weblate-nek](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</target>
+      <trans-unit id="Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" xml:space="preserve">
+        <source>Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</source>
+        <target>Bolgár, finn, thai és ukrán – köszönet a felhasználóknak és a [Weblate-nek](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Business address" xml:space="preserve">
@@ -1638,9 +1638,9 @@ a saját hálózatában</target>
         <target>Üzleti</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." xml:space="preserve">
-        <source>By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).</source>
-        <target>A csevegési profillal (alapértelmezett), vagy a [kapcsolattal] (https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (béta).</target>
+      <trans-unit id="By chat profile (default) or [by connection](https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." xml:space="preserve">
+        <source>By chat profile (default) or [by connection](https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).</source>
+        <target>A csevegési profillal (alapértelmezett), vagy a [kapcsolattal] (https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (béta).</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Call already ended!" xml:space="preserve">
@@ -1801,9 +1801,9 @@ set passcode view</note>
         <target>Csatorna</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Channel SimpleX name" xml:space="preserve">
-        <source>Channel SimpleX name</source>
-        <target>Csatorna SimpleX-neve</target>
+      <trans-unit id="Channel POPOPX name" xml:space="preserve">
+        <source>Channel POPOPX name</source>
+        <target>Csatorna POPOPX-neve</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Channel display name" xml:space="preserve">
@@ -2304,11 +2304,11 @@ server test step</note>
         <target>Kapcsolódjon gyorsabban a partnereihez.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Connect to yourself?&#10;This is your own SimpleX address!" xml:space="preserve">
+      <trans-unit id="Connect to yourself?&#10;This is your own POPOPX address!" xml:space="preserve">
         <source>Connect to yourself?
-This is your own SimpleX address!</source>
+This is your own POPOPX address!</source>
         <target>Kapcsolódik saját magához?
-Ez a saját SimpleX-címe!</target>
+Ez a saját POPOPX-címe!</target>
         <note>new chat sheet title</note>
       </trans-unit>
       <trans-unit id="Connect to yourself?&#10;This is your own one-time link!" xml:space="preserve">
@@ -2600,9 +2600,9 @@ Ez a saját egyszer használható meghívója!</target>
         <target>Egyszer használható meghívó létrehozása</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Create SimpleX address" xml:space="preserve">
-        <source>Create SimpleX address</source>
-        <target>SimpleX-cím létrehozása</target>
+      <trans-unit id="Create POPOPX address" xml:space="preserve">
+        <source>Create POPOPX address</source>
+        <target>POPOPX-cím létrehozása</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create a group using a random profile." xml:space="preserve">
@@ -2640,9 +2640,9 @@ Ez a saját egyszer használható meghívója!</target>
         <target>Lista létrehozása</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" xml:space="preserve">
-        <source>Create new profile in [desktop app](https://simplex.chat/downloads/). 💻</source>
-        <target>Új profil létrehozása a [számítógépes alkalmazásban](https://simplex.chat/downloads/). 💻</target>
+      <trans-unit id="Create new profile in [desktop app](https://popopxchat/downloads/). 💻" xml:space="preserve">
+        <source>Create new profile in [desktop app](https://popopxchat/downloads/). 💻</source>
+        <target>Új profil létrehozása a [számítógépes alkalmazásban](https://popopxchat/downloads/). 💻</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create profile" xml:space="preserve">
@@ -3240,14 +3240,14 @@ alert button</note>
         <target>Eszköz</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Device authentication is disabled. Turning off SimpleX Lock." xml:space="preserve">
-        <source>Device authentication is disabled. Turning off SimpleX Lock.</source>
-        <target>Az eszközön nincs beállítva a képernyőzár. A SimpleX-zár ki van kapcsolva.</target>
+      <trans-unit id="Device authentication is disabled. Turning off POPOPX Lock." xml:space="preserve">
+        <source>Device authentication is disabled. Turning off POPOPX Lock.</source>
+        <target>Az eszközön nincs beállítva a képernyőzár. A POPOPX-zár ki van kapcsolva.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." xml:space="preserve">
-        <source>Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication.</source>
-        <target>Az eszközön nincs beállítva a képernyőzár. A SimpleX-zár az „Adatvédelem és biztonság” menüben kapcsolható be, miután beállította a képernyőzárat az eszközén.</target>
+      <trans-unit id="Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." xml:space="preserve">
+        <source>Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication.</source>
+        <target>Az eszközön nincs beállítva a képernyőzár. A POPOPX-zár az „Adatvédelem és biztonság” menüben kapcsolható be, miután beállította a képernyőzárat az eszközén.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Different names, avatars and transport isolation." xml:space="preserve">
@@ -3285,9 +3285,9 @@ alert button</note>
         <target>Letiltás (egyéni beállítások megtartása)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Disable SimpleX Lock" xml:space="preserve">
-        <source>Disable SimpleX Lock</source>
-        <target>SimpleX-zár kikapcsolása</target>
+      <trans-unit id="Disable POPOPX Lock" xml:space="preserve">
+        <source>Disable POPOPX Lock</source>
+        <target>POPOPX-zár kikapcsolása</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Disable automatic message deletion?" xml:space="preserve">
@@ -3365,9 +3365,9 @@ alert button</note>
         <target>NE küldjön üzeneteket közvetlenül, még akkor sem, ha a saját kiszolgálója vagy a célkiszolgáló nem támogatja a privát útválasztást.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Do NOT use SimpleX for emergency calls." xml:space="preserve">
-        <source>Do NOT use SimpleX for emergency calls.</source>
-        <target>NE használja a SimpleXet segélyhívásokhoz.</target>
+      <trans-unit id="Do NOT use POPOPX for emergency calls." xml:space="preserve">
+        <source>Do NOT use POPOPX for emergency calls.</source>
+        <target>NE használja a POPOPXet segélyhívásokhoz.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Do NOT use private routing." xml:space="preserve">
@@ -3551,9 +3551,9 @@ chat item action</note>
         <target>A Flux kiszolgálókat engedélyezheti a beállításokban, a „Hálózat és kiszolgálók” menüben, a metaadatok jobb védelme érdekében.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Enable SimpleX Lock" xml:space="preserve">
-        <source>Enable SimpleX Lock</source>
-        <target>SimpleX-zár bekapcsolása</target>
+      <trans-unit id="Enable POPOPX Lock" xml:space="preserve">
+        <source>Enable POPOPX Lock</source>
+        <target>POPOPX-zár bekapcsolása</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Enable TCP keep-alive" xml:space="preserve">
@@ -4561,9 +4561,9 @@ servers warning</note>
         <target>Konzolhoz</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server." xml:space="preserve">
-        <source>For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server.</source>
-        <target>Például, ha a partnere egy SimpleX Chat kiszolgálón keresztül fogadja az üzeneteket, akkor az Ön alkalmazása egy Flux kiszolgálón keresztül fogja azokat kézbesíteni.</target>
+      <trans-unit id="For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server." xml:space="preserve">
+        <source>For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server.</source>
+        <target>Például, ha a partnere egy POPOPX Chat kiszolgálón keresztül fogadja az üzeneteket, akkor az Ön alkalmazása egy Flux kiszolgálón keresztül fogja azokat kézbesíteni.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="For me" xml:space="preserve">
@@ -4695,9 +4695,9 @@ Hiba: %2$@</target>
         <target>GIF-ek és matricák</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Get SimpleX name (BETA)" xml:space="preserve">
-        <source>Get SimpleX name (BETA)</source>
-        <target>SimpleX-név beszerzése (béta)</target>
+      <trans-unit id="Get POPOPX name (BETA)" xml:space="preserve">
+        <source>Get POPOPX name (BETA)</source>
+        <target>POPOPX-név beszerzése (béta)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Get link" xml:space="preserve">
@@ -4900,9 +4900,9 @@ Hiba: %2$@</target>
         <target>Az előzmények nem lesznek elküldve az új feliratkozók számára.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="How SimpleX works" xml:space="preserve">
-        <source>How SimpleX works</source>
-        <target>Hogyan működik a SimpleX</target>
+      <trans-unit id="How POPOPX works" xml:space="preserve">
+        <source>How POPOPX works</source>
+        <target>Hogyan működik a POPOPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="How it affects privacy" xml:space="preserve">
@@ -5147,9 +5147,9 @@ További fejlesztések hamarosan!</target>
         <target>Kezdeti szerepkör</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Install SimpleX Chat for terminal" xml:space="preserve">
-        <source>Install SimpleX Chat for terminal</source>
-        <target>SimpleX Chat telepítése a terminálhoz</target>
+      <trans-unit id="Install POPOPX Chat for terminal" xml:space="preserve">
+        <source>Install POPOPX Chat for terminal</source>
+        <target>POPOPX Chat telepítése a terminálhoz</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Instant" xml:space="preserve">
@@ -5492,9 +5492,9 @@ Ez a saját hivatkozása a(z) %@ nevű csoporthoz!</target>
         <target>Kevesebb adatforgalom a mobilhálózatokon.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Let people connect to you via name registered with your SimpleX address." xml:space="preserve">
-        <source>Let people connect to you via name registered with your SimpleX address.</source>
-        <target>Tegye lehetővé mások számára a kapcsolódást a saját SimpleX-címével regisztrált néven keresztül.</target>
+      <trans-unit id="Let people connect to you via name registered with your POPOPX address." xml:space="preserve">
+        <source>Let people connect to you via name registered with your POPOPX address.</source>
+        <target>Tegye lehetővé mások számára a kapcsolódást a saját POPOPX-címével regisztrált néven keresztül.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Let people join via name registered with this channel link." xml:space="preserve">
@@ -5507,9 +5507,9 @@ Ez a saját hivatkozása a(z) %@ nevű csoporthoz!</target>
         <target>Legyen elérhető mások számára</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Let's talk in SimpleX Chat" xml:space="preserve">
-        <source>Let's talk in SimpleX Chat</source>
-        <target>Beszélgessünk a SimpleX Chatben</target>
+      <trans-unit id="Let's talk in POPOPX Chat" xml:space="preserve">
+        <source>Let's talk in POPOPX Chat</source>
+        <target>Beszélgessünk a POPOPX Chatben</target>
         <note>email subject</note>
       </trans-unit>
       <trans-unit id="Light" xml:space="preserve">
@@ -5722,9 +5722,9 @@ Ez a saját hivatkozása a(z) %@ nevű csoporthoz!</target>
         <target>A tagok jelenthetik az üzeneteket a moderátorok felé.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Members can send SimpleX links." xml:space="preserve">
-        <source>Members can send SimpleX links.</source>
-        <target>A tagok küldhetnek SimpleX-hivatkozásokat.</target>
+      <trans-unit id="Members can send POPOPX links." xml:space="preserve">
+        <source>Members can send POPOPX links.</source>
+        <target>A tagok küldhetnek POPOPX-hivatkozásokat.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Members can send direct messages." xml:space="preserve">
@@ -5972,9 +5972,9 @@ Ez a saját hivatkozása a(z) %@ nevű csoporthoz!</target>
         <target>Átköltöztetési hiba:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." xml:space="preserve">
-        <source>Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat).</source>
-        <target>Sikertelen átköltöztetés. Koppintson a **Kihagyás** beállításra a jelenlegi adatbázis használatának folytatásához. Jelentse a problémát az alkalmazás fejlesztőinek csevegésben vagy e-mailben [chat@simplex.chat](mailto:chat@simplex.chat).</target>
+      <trans-unit id="Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat](mailto:chat@popopxchat)." xml:space="preserve">
+        <source>Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat](mailto:chat@popopxchat).</source>
+        <target>Sikertelen átköltöztetés. Koppintson a **Kihagyás** beállításra a jelenlegi adatbázis használatának folytatásához. Jelentse a problémát az alkalmazás fejlesztőinek csevegésben vagy e-mailben [chat@popopxchat](mailto:chat@popopxchat).</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Migration is completed" xml:space="preserve">
@@ -6431,9 +6431,9 @@ A legbiztonságosabb titkosítás.</target>
         <target>Nonprofit irányítás</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="None of your servers are set to resolve SimpleX names. Configure servers, or use a connection link." xml:space="preserve">
-        <source>None of your servers are set to resolve SimpleX names. Configure servers, or use a connection link.</source>
-        <target>Egyik saját kiszolgálója sincs beállítva a SimpleX-nevek feloldásához. Állítsa be a kiszolgálókat, vagy használjon egy kapcsolattartási hivatkozást.</target>
+      <trans-unit id="None of your servers are set to resolve POPOPX names. Configure servers, or use a connection link." xml:space="preserve">
+        <source>None of your servers are set to resolve POPOPX names. Configure servers, or use a connection link.</source>
+        <target>Egyik saját kiszolgálója sincs beállítva a POPOPX-nevek feloldásához. Állítsa be a kiszolgálókat, vagy használjon egy kapcsolattartási hivatkozást.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not a better lock on someone else's door. Not a nicer landlord that respects your privacy, but still keeps the record of all visitors. You are not a guest. You are home. No king can enter it - you are sovereign." xml:space="preserve">
@@ -7194,9 +7194,9 @@ Hiba: %@</target>
         <target>Profiltéma</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Profile update will be sent to your SimpleX contacts." xml:space="preserve">
-        <source>Profile update will be sent to your SimpleX contacts.</source>
-        <target>A profilfrissítés el lesz küldve a SimpleX partnerei számára.</target>
+      <trans-unit id="Profile update will be sent to your POPOPX contacts." xml:space="preserve">
+        <source>Profile update will be sent to your POPOPX contacts.</source>
+        <target>A profilfrissítés el lesz küldve a POPOPX partnerei számára.</target>
         <note>alert message
 alert title</note>
       </trans-unit>
@@ -7230,9 +7230,9 @@ alert title</note>
         <target>Az üzenetek jelentése a moderátorok felé le van tiltva.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Prohibit sending SimpleX links." xml:space="preserve">
-        <source>Prohibit sending SimpleX links.</source>
-        <target>A SimpleX-hivatkozások küldése le van tiltva.</target>
+      <trans-unit id="Prohibit sending POPOPX links." xml:space="preserve">
+        <source>Prohibit sending POPOPX links.</source>
+        <target>A POPOPX-hivatkozások küldése le van tiltva.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Prohibit sending direct messages to members." xml:space="preserve">
@@ -7427,9 +7427,9 @@ Engedélyezze a *Hálózat és kiszolgálók* menüben.</target>
         <target>Fogadás a következőn keresztül:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Recent history and improved [directory bot](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." xml:space="preserve">
-        <source>Recent history and improved [directory bot](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).</source>
-        <target>Legutóbbi előzmények és továbbfejlesztett [könyvtárbot](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).</target>
+      <trans-unit id="Recent history and improved [directory bot](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." xml:space="preserve">
+        <source>Recent history and improved [directory bot](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).</source>
+        <target>Legutóbbi előzmények és továbbfejlesztett [könyvtárbot](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recipient(s) can't see who this message is from." xml:space="preserve">
@@ -7946,9 +7946,9 @@ chat item action</note>
         <target>Mentés (és a feliratkozók értesítése)</target>
         <note>alert button</note>
       </trans-unit>
-      <trans-unit id="Save SimpleX name?" xml:space="preserve">
-        <source>Save SimpleX name?</source>
-        <target>Menti a SimpleX-nevet?</target>
+      <trans-unit id="Save POPOPX name?" xml:space="preserve">
+        <source>Save POPOPX name?</source>
+        <target>Menti a POPOPX-nevet?</target>
         <note>alert title</note>
       </trans-unit>
       <trans-unit id="Save admission settings?" xml:space="preserve">
@@ -8141,9 +8141,9 @@ chat item action</note>
         <target>Hivatkozások keresése</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Search or paste SimpleX link" xml:space="preserve">
-        <source>Search or paste SimpleX link</source>
-        <target>Keressen vagy adjon meg egy SimpleX-hivatkozást</target>
+      <trans-unit id="Search or paste POPOPX link" xml:space="preserve">
+        <source>Search or paste POPOPX link</source>
+        <target>Keressen vagy adjon meg egy POPOPX-hivatkozást</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Search videos" xml:space="preserve">
@@ -8316,9 +8316,9 @@ chat item action</note>
         <target>Kérés küldése üzenet nélkül</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Send the link via any messenger - it's secure. Ask to paste into SimpleX." xml:space="preserve">
-        <source>Send the link via any messenger - it's secure. Ask to paste into SimpleX.</source>
-        <target>Küldje el a hivatkozást bármilyen üzenetváltó alkalmazáson keresztül – ez egy biztonságos módszer – és kérje meg a partnerét, hogy illessze be a SimpleX alkalmazásba.</target>
+      <trans-unit id="Send the link via any messenger - it's secure. Ask to paste into POPOPX." xml:space="preserve">
+        <source>Send the link via any messenger - it's secure. Ask to paste into POPOPX.</source>
+        <target>Küldje el a hivatkozást bármilyen üzenetváltó alkalmazáson keresztül – ez egy biztonságos módszer – és kérje meg a partnerét, hogy illessze be a POPOPX alkalmazásba.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Send them from gallery or custom keyboards." xml:space="preserve">
@@ -8647,9 +8647,9 @@ chat item action</note>
         <target>Egyszer használható meghívó megosztása egy baráttal</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Share SimpleX address on social media." xml:space="preserve">
-        <source>Share SimpleX address on social media.</source>
-        <target>SimpleX-cím megosztása a közösségi médiában.</target>
+      <trans-unit id="Share POPOPX address on social media." xml:space="preserve">
+        <source>Share POPOPX address on social media.</source>
+        <target>POPOPX-cím megosztása a közösségi médiában.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share address" xml:space="preserve">
@@ -8662,9 +8662,9 @@ chat item action</note>
         <target>Cím nyilvános megosztása</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Share address with SimpleX contacts?" xml:space="preserve">
-        <source>Share address with SimpleX contacts?</source>
-        <target>Megosztja a címet a SimpleX partnereivel?</target>
+      <trans-unit id="Share address with POPOPX contacts?" xml:space="preserve">
+        <source>Share address with POPOPX contacts?</source>
+        <target>Megosztja a címet a POPOPX partnereivel?</target>
         <note>alert title</note>
       </trans-unit>
       <trans-unit id="Share channel" xml:space="preserve">
@@ -8707,9 +8707,9 @@ chat item action</note>
         <target>Ennek az egyszer használható meghívónak a megosztása</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Share to SimpleX" xml:space="preserve">
-        <source>Share to SimpleX</source>
-        <target>Megosztás a SimpleXben</target>
+      <trans-unit id="Share to POPOPX" xml:space="preserve">
+        <source>Share to POPOPX</source>
+        <target>Megosztás a POPOPXben</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share via chat" xml:space="preserve">
@@ -8717,9 +8717,9 @@ chat item action</note>
         <target>Megosztás egy csevegésen keresztül</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Share with SimpleX contacts" xml:space="preserve">
-        <source>Share with SimpleX contacts</source>
-        <target>Megosztás a SimpleX partnerekkel</target>
+      <trans-unit id="Share with POPOPX contacts" xml:space="preserve">
+        <source>Share with POPOPX contacts</source>
+        <target>Megosztás a POPOPX partnerekkel</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share your address" xml:space="preserve">
@@ -8727,9 +8727,9 @@ chat item action</note>
         <target>Saját cím megosztása</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Short SimpleX address" xml:space="preserve">
-        <source>Short SimpleX address</source>
-        <target>Rövid SimpleX-cím</target>
+      <trans-unit id="Short POPOPX address" xml:space="preserve">
+        <source>Short POPOPX address</source>
+        <target>Rövid POPOPX-cím</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Short description" xml:space="preserve">
@@ -8823,135 +8823,135 @@ copied message info</note>
         <target>Az aláírás igazolja, hogy Ön írta ezt az üzenetet, és azt később már nem lehet letagadni.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX" xml:space="preserve">
-        <source>SimpleX</source>
-        <target>SimpleX</target>
+      <trans-unit id="POPOPX" xml:space="preserve">
+        <source>POPOPX</source>
+        <target>POPOPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Address" xml:space="preserve">
-        <source>SimpleX Address</source>
-        <target>SimpleX-cím</target>
+      <trans-unit id="POPOPX Address" xml:space="preserve">
+        <source>POPOPX Address</source>
+        <target>POPOPX-cím</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app." xml:space="preserve">
-        <source>SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app.</source>
-        <target>A SimpleX Chat és a Flux megállapodást kötött arról, hogy a Flux által üzemeltetett kiszolgálókat beépítik az alkalmazásba.</target>
+      <trans-unit id="POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app." xml:space="preserve">
+        <source>POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app.</source>
+        <target>A POPOPX Chat és a Flux megállapodást kötött arról, hogy a Flux által üzemeltetett kiszolgálókat beépítik az alkalmazásba.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Chat security was audited by Trail of Bits." xml:space="preserve">
-        <source>SimpleX Chat security was audited by Trail of Bits.</source>
-        <target>A SimpleX Chat biztonsága a Trail of Bits által lett auditálva.</target>
+      <trans-unit id="POPOPX Chat security was audited by Trail of Bits." xml:space="preserve">
+        <source>POPOPX Chat security was audited by Trail of Bits.</source>
+        <target>A POPOPX Chat biztonsága a Trail of Bits által lett auditálva.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock" xml:space="preserve">
-        <source>SimpleX Lock</source>
-        <target>SimpleX-zár</target>
+      <trans-unit id="POPOPX Lock" xml:space="preserve">
+        <source>POPOPX Lock</source>
+        <target>POPOPX-zár</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock mode" xml:space="preserve">
-        <source>SimpleX Lock mode</source>
+      <trans-unit id="POPOPX Lock mode" xml:space="preserve">
+        <source>POPOPX Lock mode</source>
         <target>Zárolási mód</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock not enabled!" xml:space="preserve">
-        <source>SimpleX Lock not enabled!</source>
-        <target>A SimpleX-zár nincs bekapcsolva!</target>
+      <trans-unit id="POPOPX Lock not enabled!" xml:space="preserve">
+        <source>POPOPX Lock not enabled!</source>
+        <target>A POPOPX-zár nincs bekapcsolva!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock turned on" xml:space="preserve">
-        <source>SimpleX Lock turned on</source>
-        <target>SimpleX-zár bekapcsolva</target>
+      <trans-unit id="POPOPX Lock turned on" xml:space="preserve">
+        <source>POPOPX Lock turned on</source>
+        <target>POPOPX-zár bekapcsolva</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address" xml:space="preserve">
-        <source>SimpleX address</source>
-        <target>SimpleX-cím</target>
+      <trans-unit id="POPOPX address" xml:space="preserve">
+        <source>POPOPX address</source>
+        <target>POPOPX-cím</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address and 1-time links are safe to share via any messenger." xml:space="preserve">
-        <source>SimpleX address and 1-time links are safe to share via any messenger.</source>
-        <target>A SimpleX-cím és az egyszer használható meghívó biztonságosan megosztható bármilyen üzenetváltó alkalmazáson keresztül.</target>
+      <trans-unit id="POPOPX address and 1-time links are safe to share via any messenger." xml:space="preserve">
+        <source>POPOPX address and 1-time links are safe to share via any messenger.</source>
+        <target>A POPOPX-cím és az egyszer használható meghívó biztonságosan megosztható bármilyen üzenetváltó alkalmazáson keresztül.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address or 1-time link?" xml:space="preserve">
-        <source>SimpleX address or 1-time link?</source>
-        <target>SimpleX-cím vagy egyszer használható meghívó?</target>
+      <trans-unit id="POPOPX address or 1-time link?" xml:space="preserve">
+        <source>POPOPX address or 1-time link?</source>
+        <target>POPOPX-cím vagy egyszer használható meghívó?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address settings" xml:space="preserve">
-        <source>SimpleX address settings</source>
-        <target>SimpleX-címbeállítások</target>
+      <trans-unit id="POPOPX address settings" xml:space="preserve">
+        <source>POPOPX address settings</source>
+        <target>POPOPX-címbeállítások</target>
         <note>alert title</note>
       </trans-unit>
-      <trans-unit id="SimpleX channel link" xml:space="preserve">
-        <source>SimpleX channel link</source>
-        <target>SimpleX-csatornahivatkozás</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX channel link" xml:space="preserve">
+        <source>POPOPX channel link</source>
+        <target>POPOPX-csatornahivatkozás</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX contact address" xml:space="preserve">
-        <source>SimpleX contact address</source>
-        <target>SimpleX kapcsolattartási cím</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX contact address" xml:space="preserve">
+        <source>POPOPX contact address</source>
+        <target>POPOPX kapcsolattartási cím</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX encrypted message or connection event" xml:space="preserve">
-        <source>SimpleX encrypted message or connection event</source>
-        <target>SimpleX titkosított üzenet vagy kapcsolati esemény</target>
+      <trans-unit id="POPOPX encrypted message or connection event" xml:space="preserve">
+        <source>POPOPX encrypted message or connection event</source>
+        <target>POPOPX titkosított üzenet vagy kapcsolati esemény</target>
         <note>notification</note>
       </trans-unit>
-      <trans-unit id="SimpleX group link" xml:space="preserve">
-        <source>SimpleX group link</source>
-        <target>SimpleX-csoporthivatkozás</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX group link" xml:space="preserve">
+        <source>POPOPX group link</source>
+        <target>POPOPX-csoporthivatkozás</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX links" xml:space="preserve">
-        <source>SimpleX links</source>
-        <target>SimpleX-hivatkozások</target>
+      <trans-unit id="POPOPX links" xml:space="preserve">
+        <source>POPOPX links</source>
+        <target>POPOPX-hivatkozások</target>
         <note>chat feature</note>
       </trans-unit>
-      <trans-unit id="SimpleX links are prohibited." xml:space="preserve">
-        <source>SimpleX links are prohibited.</source>
-        <target>A SimpleX-hivatkozások küldése le van tiltva.</target>
+      <trans-unit id="POPOPX links are prohibited." xml:space="preserve">
+        <source>POPOPX links are prohibited.</source>
+        <target>A POPOPX-hivatkozások küldése le van tiltva.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX links not allowed" xml:space="preserve">
-        <source>SimpleX links not allowed</source>
-        <target>A SimpleX-hivatkozások küldése le van tiltva</target>
+      <trans-unit id="POPOPX links not allowed" xml:space="preserve">
+        <source>POPOPX links not allowed</source>
+        <target>A POPOPX-hivatkozások küldése le van tiltva</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX name" xml:space="preserve">
-        <source>SimpleX name</source>
-        <target>SimpleX-név</target>
+      <trans-unit id="POPOPX name" xml:space="preserve">
+        <source>POPOPX name</source>
+        <target>POPOPX-név</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX name error" xml:space="preserve">
-        <source>SimpleX name error</source>
-        <target>Hibás SimpleX-név</target>
+      <trans-unit id="POPOPX name error" xml:space="preserve">
+        <source>POPOPX name error</source>
+        <target>Hibás POPOPX-név</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX name not verified" xml:space="preserve">
-        <source>SimpleX name not verified</source>
-        <target>Nincs ellenőrizve a SimpleX-név</target>
+      <trans-unit id="POPOPX name not verified" xml:space="preserve">
+        <source>POPOPX name not verified</source>
+        <target>Nincs ellenőrizve a POPOPX-név</target>
         <note>alert title</note>
       </trans-unit>
-      <trans-unit id="SimpleX one-time invitation" xml:space="preserve">
-        <source>SimpleX one-time invitation</source>
-        <target>Egyszer használható SimpleX meghívó</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX one-time invitation" xml:space="preserve">
+        <source>POPOPX one-time invitation</source>
+        <target>Egyszer használható POPOPX meghívó</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX protocols reviewed by Trail of Bits." xml:space="preserve">
-        <source>SimpleX protocols reviewed by Trail of Bits.</source>
-        <target>A SimpleX protokollokat a Trail of Bits auditálta.</target>
+      <trans-unit id="POPOPX protocols reviewed by Trail of Bits." xml:space="preserve">
+        <source>POPOPX protocols reviewed by Trail of Bits.</source>
+        <target>A POPOPX protokollokat a Trail of Bits auditálta.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX public names (BETA)" xml:space="preserve">
-        <source>SimpleX public names (BETA)</source>
-        <target>Nyilvános SimpleX-nevek (béta)</target>
+      <trans-unit id="POPOPX public names (BETA)" xml:space="preserve">
+        <source>POPOPX public names (BETA)</source>
+        <target>Nyilvános POPOPX-nevek (béta)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX relay address" xml:space="preserve">
-        <source>SimpleX relay address</source>
-        <target>SimpleX-átjátszó címe</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX relay address" xml:space="preserve">
+        <source>POPOPX relay address</source>
+        <target>POPOPX-átjátszó címe</target>
+        <note>popopx link type</note>
       </trans-unit>
       <trans-unit id="Simplified incognito mode" xml:space="preserve">
         <source>Simplified incognito mode</source>
@@ -9066,9 +9066,9 @@ report reason</note>
         <target>Megállítás</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Stop SimpleX" xml:space="preserve">
-        <source>Stop SimpleX</source>
-        <target>SimpleX megállítása</target>
+      <trans-unit id="Stop POPOPX" xml:space="preserve">
+        <source>Stop POPOPX</source>
+        <target>POPOPX megállítása</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Stop chat" xml:space="preserve">
@@ -9176,9 +9176,9 @@ report reason</note>
         <target>A feliratkozók jelenthetik az üzeneteket a moderátorok felé.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Subscribers can send SimpleX links." xml:space="preserve">
-        <source>Subscribers can send SimpleX links.</source>
-        <target>A feliratkozók küldhetnek SimpleX-hivatkozásokat.</target>
+      <trans-unit id="Subscribers can send POPOPX links." xml:space="preserve">
+        <source>Subscribers can send POPOPX links.</source>
+        <target>A feliratkozók küldhetnek POPOPX-hivatkozásokat.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Subscribers can send direct messages." xml:space="preserve">
@@ -9394,14 +9394,14 @@ server test failure</note>
         <target>Sikertelen tesztek!</target>
         <note>alert title</note>
       </trans-unit>
-      <trans-unit id="Thank you for installing SimpleX Chat!" xml:space="preserve">
-        <source>Thank you for installing SimpleX Chat!</source>
-        <target>Köszönjük, hogy telepítette a SimpleX Chatet!</target>
+      <trans-unit id="Thank you for installing POPOPX Chat!" xml:space="preserve">
+        <source>Thank you for installing POPOPX Chat!</source>
+        <target>Köszönjük, hogy telepítette a POPOPX Chatet!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" xml:space="preserve">
-        <source>Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</source>
-        <target>Köszönet a felhasználóknak [a Weblate-en való közreműködésért](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</target>
+      <trans-unit id="Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" xml:space="preserve">
+        <source>Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</source>
+        <target>Köszönet a felhasználóknak [a Weblate-en való közreműködésért](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Thanks to the users – contribute via Weblate!" xml:space="preserve">
@@ -9416,24 +9416,24 @@ It can happen because of some bug or when the connection is compromised.</source
 Ez valamilyen hiba vagy sérült kapcsolat esetén fordulhat elő.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The SimpleX name #%@ is registered without channel link. Add channel link to the name via the registration page." xml:space="preserve">
-        <source>The SimpleX name #%@ is registered without channel link. Add channel link to the name via the registration page.</source>
-        <target>A(z) #%@ SimpleX-név csatornahivatkozás nélkül lett regisztrálva. A regisztrációs oldalon adjon hozzá a névhez egy csatornahivatkozást.</target>
+      <trans-unit id="The POPOPX name #%@ is registered without channel link. Add channel link to the name via the registration page." xml:space="preserve">
+        <source>The POPOPX name #%@ is registered without channel link. Add channel link to the name via the registration page.</source>
+        <target>A(z) #%@ POPOPX-név csatornahivatkozás nélkül lett regisztrálva. A regisztrációs oldalon adjon hozzá a névhez egy csatornahivatkozást.</target>
         <note>alert message</note>
       </trans-unit>
-      <trans-unit id="The SimpleX name %@ is registered, but it has no valid link." xml:space="preserve">
-        <source>The SimpleX name %@ is registered, but it has no valid link.</source>
-        <target>A(z) %@ SimpleX-név regisztrálva van, de nem rendelkezik érvényes hivatkozással.</target>
+      <trans-unit id="The POPOPX name %@ is registered, but it has no valid link." xml:space="preserve">
+        <source>The POPOPX name %@ is registered, but it has no valid link.</source>
+        <target>A(z) %@ POPOPX-név regisztrálva van, de nem rendelkezik érvényes hivatkozással.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The SimpleX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner." xml:space="preserve">
-        <source>The SimpleX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.</source>
-        <target>A(z) %@ SimpleX-név regisztrálva van, de nincs hozzáadva a profilhoz. Adja hozzá a címéhez vagy a csatornaprofiljához, amennyiben Ön a tulajdonosa.</target>
+      <trans-unit id="The POPOPX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner." xml:space="preserve">
+        <source>The POPOPX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.</source>
+        <target>A(z) %@ POPOPX-név regisztrálva van, de nincs hozzáadva a profilhoz. Adja hozzá a címéhez vagy a csatornaprofiljához, amennyiben Ön a tulajdonosa.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The SimpleX name @%@ is registered without SimpleX address. Add your SimpleX address to the name via the registration page." xml:space="preserve">
-        <source>The SimpleX name @%@ is registered without SimpleX address. Add your SimpleX address to the name via the registration page.</source>
-        <target>A(z) @%@ SimpleX-név SimpleX-cím nélkül lett regisztrálva. A regisztrációs oldalon adja hozzá a névhez a saját SimpleX-címét.</target>
+      <trans-unit id="The POPOPX name @%@ is registered without POPOPX address. Add your POPOPX address to the name via the registration page." xml:space="preserve">
+        <source>The POPOPX name @%@ is registered without POPOPX address. Add your POPOPX address to the name via the registration page.</source>
+        <target>A(z) @%@ POPOPX-név POPOPX-cím nélkül lett regisztrálva. A regisztrációs oldalon adja hozzá a névhez a saját POPOPX-címét.</target>
         <note>alert message</note>
       </trans-unit>
       <trans-unit id="The address will be short, and your profile will be shared via the address." xml:space="preserve">
@@ -9476,9 +9476,9 @@ Ez valamilyen hiba vagy sérült kapcsolat esetén fordulhat elő.</target>
         <target>A csatorna megköveteli az üzenet aláírását, de az hiányzik.</target>
         <note>alert message</note>
       </trans-unit>
-      <trans-unit id="The code you scanned is not a SimpleX link QR code." xml:space="preserve">
-        <source>The code you scanned is not a SimpleX link QR code.</source>
-        <target>A beolvasott QR-kód nem egy SimpleX-hivatkozás.</target>
+      <trans-unit id="The code you scanned is not a POPOPX link QR code." xml:space="preserve">
+        <source>The code you scanned is not a POPOPX link QR code.</source>
+        <target>A beolvasott QR-kód nem egy POPOPX-hivatkozás.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The connection reached the limit of undelivered messages" xml:space="preserve">
@@ -9593,9 +9593,9 @@ a saját kapcsolatait és csoportjait.</target>
         <target>A jelenlegi **%@** nevű csevegési profiljához tartozó új fájlok kiszolgálói.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The text you pasted is not a SimpleX link." xml:space="preserve">
-        <source>The text you pasted is not a SimpleX link.</source>
-        <target>A beillesztett szöveg nem egy SimpleX-hivatkozás.</target>
+      <trans-unit id="The text you pasted is not a POPOPX link." xml:space="preserve">
+        <source>The text you pasted is not a POPOPX link.</source>
+        <target>A beillesztett szöveg nem egy POPOPX-hivatkozás.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The uploaded database archive will be permanently removed from the servers." xml:space="preserve">
@@ -9633,9 +9633,9 @@ a saját kapcsolatait és csoportjait.</target>
         <target>Ezek felülbírálhatók a partner- és csoportbeállításokban.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="This SimpleX name is not registered. Please check the name." xml:space="preserve">
-        <source>This SimpleX name is not registered. Please check the name.</source>
-        <target>Ez a SimpleX-név nincs regisztrálva. Ellenőrizze a nevet.</target>
+      <trans-unit id="This POPOPX name is not registered. Please check the name." xml:space="preserve">
+        <source>This POPOPX name is not registered. Please check the name.</source>
+        <target>Ez a POPOPX-név nincs regisztrálva. Ellenőrizze a nevet.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action cannot be undone - all received and sent files and media will be deleted. Low resolution pictures will remain." xml:space="preserve">
@@ -9764,9 +9764,9 @@ alert subtitle</note>
         <target>Kéretlen üzenetek elrejtése.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="To make SimpleX Network last." xml:space="preserve">
-        <source>To make SimpleX Network last.</source>
-        <target>A SimpleX hálózat hosszú távú működésének biztosítása érdekében.</target>
+      <trans-unit id="To make POPOPX Network last." xml:space="preserve">
+        <source>To make POPOPX Network last.</source>
+        <target>A POPOPX hálózat hosszú távú működésének biztosítása érdekében.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To make a new connection" xml:space="preserve">
@@ -9789,16 +9789,16 @@ alert subtitle</note>
         <target>Az IP-cím védelmének érdekében a privát útválasztás az SMP-kiszolgálókat használja az üzenetek kézbesítéséhez.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="To protect your information, turn on SimpleX Lock.&#10;You will be prompted to complete authentication before this feature is enabled." xml:space="preserve">
-        <source>To protect your information, turn on SimpleX Lock.
+      <trans-unit id="To protect your information, turn on POPOPX Lock.&#10;You will be prompted to complete authentication before this feature is enabled." xml:space="preserve">
+        <source>To protect your information, turn on POPOPX Lock.
 You will be prompted to complete authentication before this feature is enabled.</source>
-        <target>A biztonsága érdekében kapcsolja be a SimpleX-zár funkciót.
+        <target>A biztonsága érdekében kapcsolja be a POPOPX-zár funkciót.
 A funkció bekapcsolása előtt a rendszer felszólítja a képernyőzár beállítására az eszközén.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="To protect your privacy, SimpleX uses separate IDs for each of your contacts." xml:space="preserve">
-        <source>To protect your privacy, SimpleX uses separate IDs for each of your contacts.</source>
-        <target>Adatainak védelme érdekében a SimpleX külön azonosítókat használ minden egyes kapcsolatához.</target>
+      <trans-unit id="To protect your privacy, POPOPX uses separate IDs for each of your contacts." xml:space="preserve">
+        <source>To protect your privacy, POPOPX uses separate IDs for each of your contacts.</source>
+        <target>Adatainak védelme érdekében a POPOPX külön azonosítókat használ minden egyes kapcsolatához.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To receive" xml:space="preserve">
@@ -10182,9 +10182,9 @@ alert title</note>
         <target>SOCKS proxy használata</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Use SimpleX Chat servers?" xml:space="preserve">
-        <source>Use SimpleX Chat servers?</source>
-        <target>SimpleX Chat kiszolgálók használata?</target>
+      <trans-unit id="Use POPOPX Chat servers?" xml:space="preserve">
+        <source>Use POPOPX Chat servers?</source>
+        <target>POPOPX Chat kiszolgálók használata?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Use TCP port %@ when no port is specified." xml:space="preserve">
@@ -10307,9 +10307,9 @@ alert title</note>
         <target>Felhasználónév</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Using SimpleX Chat servers." xml:space="preserve">
-        <source>Using SimpleX Chat servers.</source>
-        <target>SimpleX Chat kiszolgálók használatban.</target>
+      <trans-unit id="Using POPOPX Chat servers." xml:space="preserve">
+        <source>Using POPOPX Chat servers.</source>
+        <target>POPOPX Chat kiszolgálók használatban.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Verify" xml:space="preserve">
@@ -10317,9 +10317,9 @@ alert title</note>
         <target>Ellenőrzés</target>
         <note>relay test step</note>
       </trans-unit>
-      <trans-unit id="Verify SimpleX names" xml:space="preserve">
-        <source>Verify SimpleX names</source>
-        <target>SimpleX-nevek ellenőrzése</target>
+      <trans-unit id="Verify POPOPX names" xml:space="preserve">
+        <source>Verify POPOPX names</source>
+        <target>POPOPX-nevek ellenőrzése</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Verify code with desktop" xml:space="preserve">
@@ -10567,9 +10567,9 @@ alert title</note>
         <target>Ha egy inkognitóprofilt oszt meg valamelyik partnerével, a rendszer ezt az inkognitóprofilt fogja használni azokban a csoportokban, ahová az adott partnere meghívja Önt.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Why SimpleX is built." xml:space="preserve">
-        <source>Why SimpleX is built.</source>
-        <target>Miért jött létre a SimpleX?</target>
+      <trans-unit id="Why POPOPX is built." xml:space="preserve">
+        <source>Why POPOPX is built.</source>
+        <target>Miért jött létre a POPOPX?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="WiFi" xml:space="preserve">
@@ -10759,9 +10759,9 @@ Megismétli a csatlakozási kérést?</target>
         <target>Elrejtheti vagy lenémíthatja a felhasználó -profiljait – csúsztassa jobbra a profilt.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="You can make it visible to your SimpleX contacts via Settings." xml:space="preserve">
-        <source>You can make it visible to your SimpleX contacts via Settings.</source>
-        <target>Láthatóvá teheti a SimpleXbeli partnerei számára a beállításokban.</target>
+      <trans-unit id="You can make it visible to your POPOPX contacts via Settings." xml:space="preserve">
+        <source>You can make it visible to your POPOPX contacts via Settings.</source>
+        <target>Láthatóvá teheti a POPOPXbeli partnerei számára a beállításokban.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can now chat with %@" xml:space="preserve">
@@ -10796,7 +10796,7 @@ Megismétli a csatlakozási kérést?</target>
       </trans-unit>
       <trans-unit id="You can share this address with your contacts to let them connect with **%@**." xml:space="preserve">
         <source>You can share this address with your contacts to let them connect with **%@**.</source>
-        <target>Megoszthatja ezt a SimpleX-címet a partnereivel, hogy kapcsolatba léphessenek vele: **%@**.</target>
+        <target>Megoszthatja ezt a POPOPX-címet a partnereivel, hogy kapcsolatba léphessenek vele: **%@**.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can start chat via app Settings / Database or by restarting the app" xml:space="preserve">
@@ -10809,14 +10809,14 @@ Megismétli a csatlakozási kérést?</target>
         <target>A(z) %@ nevű partnerével folytatott beszélgetéseit továbbra is megtekintheti a csevegések listájában.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="You can support SimpleX starting from v7 of the app." xml:space="preserve">
-        <source>You can support SimpleX starting from v7 of the app.</source>
-        <target>A SimpleXet az alkalmazás v7-es verziójától kezdve támogathatja.</target>
+      <trans-unit id="You can support POPOPX starting from v7 of the app." xml:space="preserve">
+        <source>You can support POPOPX starting from v7 of the app.</source>
+        <target>A POPOPXet az alkalmazás v7-es verziójától kezdve támogathatja.</target>
         <note>badge alert</note>
       </trans-unit>
-      <trans-unit id="You can turn on SimpleX Lock via Settings." xml:space="preserve">
-        <source>You can turn on SimpleX Lock via Settings.</source>
-        <target>A SimpleX-zár az „Adatvédelem és biztonság” menüben kapcsolható be.</target>
+      <trans-unit id="You can turn on POPOPX Lock via Settings." xml:space="preserve">
+        <source>You can turn on POPOPX Lock via Settings.</source>
+        <target>A POPOPX-zár az „Adatvédelem és biztonság” menüben kapcsolható be.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can use markdown to format messages:" xml:space="preserve">
@@ -11000,14 +11000,14 @@ Megismétli a kapcsolódási kérést?</target>
         <target>Saját ICE-kiszolgálók</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your SimpleX address" xml:space="preserve">
-        <source>Your SimpleX address</source>
-        <target>Profil SimpleX-címe</target>
+      <trans-unit id="Your POPOPX address" xml:space="preserve">
+        <source>Your POPOPX address</source>
+        <target>Profil POPOPX-címe</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your SimpleX name" xml:space="preserve">
-        <source>Your SimpleX name</source>
-        <target>Saját SimpleX-név</target>
+      <trans-unit id="Your POPOPX name" xml:space="preserve">
+        <source>Your POPOPX name</source>
+        <target>Saját POPOPX-név</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your business contact" xml:space="preserve">
@@ -11146,9 +11146,9 @@ Az átjátszók hozzáférhetnek a csatornaüzenetekhez.</target>
         <target>A profilja az eszközén van tárolva és csak a partnereivel van megosztva.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." xml:space="preserve">
-        <source>Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile.</source>
-        <target>A profilja az eszközén van tárolva és csak a partnereivel van megosztva. A SimpleX kiszolgálók nem láthatják a profilját.</target>
+      <trans-unit id="Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." xml:space="preserve">
+        <source>Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile.</source>
+        <target>A profilja az eszközén van tárolva és csak a partnereivel van megosztva. A POPOPX kiszolgálók nem láthatják a profilját.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your profile was changed. If you save it, the updated profile will be sent to all your contacts." xml:space="preserve">
@@ -11191,9 +11191,9 @@ Az átjátszók hozzáférhetnek a csatornaüzenetekhez.</target>
         <target>Beállítások</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="[Send us email](mailto:chat@simplex.chat)" xml:space="preserve">
-        <source>[Send us email](mailto:chat@simplex.chat)</source>
-        <target>[Küldjön nekünk e-mailt](mailto:chat@simplex.chat)</target>
+      <trans-unit id="[Send us email](mailto:chat@popopxchat)" xml:space="preserve">
+        <source>[Send us email](mailto:chat@popopxchat)</source>
+        <target>[Küldjön nekünk e-mailt](mailto:chat@popopxchat)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="_italic_" xml:space="preserve">
@@ -11417,9 +11417,9 @@ marked deleted chat item preview text</note>
         <target>kész</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="connect to SimpleX Chat developers." xml:space="preserve">
-        <source>connect to SimpleX Chat developers.</source>
-        <target>kapcsolódás a SimpleX Chat fejlesztőkhöz.</target>
+      <trans-unit id="connect to POPOPX Chat developers." xml:space="preserve">
+        <source>connect to POPOPX Chat developers.</source>
+        <target>kapcsolódás a POPOPX Chat fejlesztőkhöz.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="connected" xml:space="preserve">
@@ -12372,81 +12372,81 @@ utoljára fogadott üzenet: %2$@</target>
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/SimpleX--iOS--InfoPlist.strings" source-language="en" target-language="hu" datatype="plaintext">
+  <file original="en.lproj/POPOPX--iOS--InfoPlist.strings" source-language="en" target-language="hu" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
     <body>
       <trans-unit id="CFBundleName" xml:space="preserve">
-        <source>SimpleX</source>
-        <target>SimpleX</target>
+        <source>POPOPX</source>
+        <target>POPOPX</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
-        <source>SimpleX needs camera access to scan QR codes to connect to other users and for video calls.</source>
-        <target>A SimpleXnek hozzáférésre van szüksége a kamerához a QR-kódok beolvasásához, hogy kapcsolódhasson más felhasználókhoz és videohívásokhoz.</target>
+        <source>POPOPX needs camera access to scan QR codes to connect to other users and for video calls.</source>
+        <target>A POPOPXnek hozzáférésre van szüksége a kamerához a QR-kódok beolvasásához, hogy kapcsolódhasson más felhasználókhoz és videohívásokhoz.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSFaceIDUsageDescription" xml:space="preserve">
-        <source>SimpleX uses Face ID for local authentication</source>
-        <target>A SimpleX Face ID-t használ a helyi hitelesítéshez</target>
+        <source>POPOPX uses Face ID for local authentication</source>
+        <target>A POPOPX Face ID-t használ a helyi hitelesítéshez</target>
         <note>Privacy - Face ID Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocalNetworkUsageDescription" xml:space="preserve">
-        <source>SimpleX uses local network access to allow using user chat profile via desktop app on the same network.</source>
-        <target>A SimpleX helyi hálózati hozzáférést használ, hogy lehetővé tegye a felhasználói csevegési profil használatát számítógépen keresztül ugyanazon a hálózaton.</target>
+        <source>POPOPX uses local network access to allow using user chat profile via desktop app on the same network.</source>
+        <target>A POPOPX helyi hálózati hozzáférést használ, hogy lehetővé tegye a felhasználói csevegési profil használatát számítógépen keresztül ugyanazon a hálózaton.</target>
         <note>Privacy - Local Network Usage Description</note>
       </trans-unit>
       <trans-unit id="NSMicrophoneUsageDescription" xml:space="preserve">
-        <source>SimpleX needs microphone access for audio and video calls, and to record voice messages.</source>
-        <target>A SimpleXnek hozzáférésre van szüksége a mikrofonhoz a hang- és videohívásokhoz, valamint hangüzenetek rögzítéséhez.</target>
+        <source>POPOPX needs microphone access for audio and video calls, and to record voice messages.</source>
+        <target>A POPOPXnek hozzáférésre van szüksége a mikrofonhoz a hang- és videohívásokhoz, valamint hangüzenetek rögzítéséhez.</target>
         <note>Privacy - Microphone Usage Description</note>
       </trans-unit>
       <trans-unit id="NSPhotoLibraryAddUsageDescription" xml:space="preserve">
-        <source>SimpleX needs access to Photo Library for saving captured and received media</source>
-        <target>A SimpleXnek hozzáférésre van szüksége a galériához a rögzített és fogadott média mentéséhez</target>
+        <source>POPOPX needs access to Photo Library for saving captured and received media</source>
+        <target>A POPOPXnek hozzáférésre van szüksége a galériához a rögzített és fogadott média mentéséhez</target>
         <note>Privacy - Photo Library Additions Usage Description</note>
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/SimpleXChat-InfoPlist.strings" datatype="plaintext" source-language="en" target-language="hu">
+  <file original="en.lproj/POPOPXChat-InfoPlist.strings" datatype="plaintext" source-language="en" target-language="hu">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
     <body>
       <trans-unit id="CFBundleName" translate="no" xml:space="preserve">
-        <source>SimpleXChat</source>
+        <source>POPOPXChat</source>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" translate="no" xml:space="preserve">
-        <source>Copyright © 2022 SimpleX Chat. All rights reserved.</source>
+        <source>Copyright © 2022 POPOPX Chat. All rights reserved.</source>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX NSE/en.lproj/InfoPlist.strings" source-language="en" target-language="hu" datatype="plaintext">
+  <file original="POPOPX NSE/en.lproj/InfoPlist.strings" source-language="en" target-language="hu" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
-        <source>SimpleX NSE</source>
-        <target>SimpleX NSE</target>
+        <source>POPOPX NSE</source>
+        <target>POPOPX NSE</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
-        <source>SimpleX NSE</source>
-        <target>SimpleX NSE</target>
+        <source>POPOPX NSE</source>
+        <target>POPOPX NSE</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source>Copyright © 2022 SimpleX Chat. All rights reserved.</source>
-        <target>Copyright © 2022 SimpleX Chat. Minden jog fenntartva.</target>
+        <source>Copyright © 2022 POPOPX Chat. All rights reserved.</source>
+        <target>Copyright © 2022 POPOPX Chat. Minden jog fenntartva.</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX NSE/en.lproj/Localizable.strings" source-language="en" target-language="hu" datatype="plaintext">
+  <file original="POPOPX NSE/en.lproj/Localizable.strings" source-language="en" target-language="hu" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
@@ -12478,29 +12478,29 @@ utoljára fogadott üzenet: %2$@</target>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX SE/en.lproj/InfoPlist.strings" source-language="en" target-language="hu" datatype="plaintext">
+  <file original="POPOPX SE/en.lproj/InfoPlist.strings" source-language="en" target-language="hu" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
-        <source>SimpleX SE</source>
-        <target>SimpleX SE</target>
+        <source>POPOPX SE</source>
+        <target>POPOPX SE</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
-        <source>SimpleX SE</source>
-        <target>SimpleX SE</target>
+        <source>POPOPX SE</source>
+        <target>POPOPX SE</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source>Copyright © 2024 SimpleX Chat. All rights reserved.</source>
-        <target>Copyright © 2024 SimpleX Chat. Minden jog fenntartva.</target>
+        <source>Copyright © 2024 POPOPX Chat. All rights reserved.</source>
+        <target>Copyright © 2024 POPOPX Chat. Minden jog fenntartva.</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX SE/en.lproj/Localizable.strings" source-language="en" target-language="hu" datatype="plaintext">
+  <file original="POPOPX SE/en.lproj/Localizable.strings" source-language="en" target-language="hu" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.6" build-num="17F113"/>
     </header>
@@ -12635,9 +12635,9 @@ utoljára fogadott üzenet: %2$@</target>
         <target>Jelmondat</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Please create a profile in the SimpleX app" xml:space="preserve">
-        <source>Please create a profile in the SimpleX app</source>
-        <target>Hozzon létre egy profilt a SimpleX alkalmazásban</target>
+      <trans-unit id="Please create a profile in the POPOPX app" xml:space="preserve">
+        <source>Please create a profile in the POPOPX app</source>
+        <target>Hozzon létre egy profilt a POPOPX alkalmazásban</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected chat preferences prohibit this message." xml:space="preserve">
@@ -12685,9 +12685,9 @@ utoljára fogadott üzenet: %2$@</target>
         <target>Érvénytelen adatbázis-jelmondat</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="You can allow sharing in Your privacy / SimpleX Lock settings." xml:space="preserve">
-        <source>You can allow sharing in Your privacy / SimpleX Lock settings.</source>
-        <target>A megosztást az Adatvédelem / SimpleX-zár menüben engedélyezheti.</target>
+      <trans-unit id="You can allow sharing in Your privacy / POPOPX Lock settings." xml:space="preserve">
+        <source>You can allow sharing in Your privacy / POPOPX Lock settings.</source>
+        <target>A megosztást az Adatvédelem / POPOPX-zár menüben engedélyezheti.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>

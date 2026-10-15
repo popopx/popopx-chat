@@ -40,7 +40,7 @@ The app follows a strict layered model where each layer communicates only with i
 │  (Popopx.h, libpopopx.a)             │  Compiled Haskell via GHC cross-compiler
 ├─────────────────────────────────────────┤
 │  Haskell Core (chat_ctrl)               │  Chat logic, chat protocol (x-events),
-│  (Simplex.Chat.Controller)              │  database operations, file management
+│  (POPOPX.Chat.Controller)              │  database operations, file management
 ├─────────────────────────────────────────┤
 │  popopxmq library (external)           │  SMP/XFTP protocols, SMP Agent,
 │  (github.com/popopx-chat/popopxmq)    │  double-ratchet (PQDR), transport (TLS)
@@ -60,7 +60,7 @@ The app follows a strict layered model where each layer communicates only with i
 | API | [`Shared/Model/AppAPITypes.swift`](../Shared/Model/AppAPITypes.swift#L15) | `ChatCommand`, `ChatResponse`, `ChatEvent` enums | L15, L649, L1055 |
 | FFI | [`POPOPXSwitch/Popopx.h`](../POPOPXSwitch/Popopx.h#L1-L49) | C header declaring Haskell exports | |
 | FFI | [`POPOPXSwitch/APITypes.swift`](../POPOPXSwitch/APITypes.swift#L27) | `APIResult<R>`, `ChatError`, `ChatCmdProtocol` | L27, L699, L17 |
-| Core | `../../src/Simplex/Chat/Controller.hs` | Haskell command processor — see `processCommand` in `Controller.hs` | |
+| Core | `../../src/POPOPX/Chat/Controller.hs` | Haskell command processor — see `processCommand` in `Controller.hs` | |
 
 ---
 
@@ -169,10 +169,10 @@ Two SQLite databases in the app group container (shared with NSE):
 
 | Database | File | Contents |
 |----------|------|----------|
-| Chat DB | `simplex_v1_chat.db` | Messages, contacts, groups, profiles, files, tags, preferences |
-| Agent DB | `simplex_v1_agent.db` | SMP connections, keys, queues, server info |
+| Chat DB | `popopx_v1_chat.db` | Messages, contacts, groups, profiles, files, tags, preferences |
+| Agent DB | `popopx_v1_agent.db` | SMP connections, keys, queues, server info |
 
-Both databases use the `DB_FILE_PREFIX = "simplex_v1"` prefix. The database path is resolved via [`getAppDatabasePath()`](../POPOPXSwitch/FileUtils.swift#L70) in `POPOPXSwitch/FileUtils.swift`, which checks `dbContainerGroupDefault` to determine whether to use the app group container or legacy documents directory.
+Both databases use the `DB_FILE_PREFIX = "popopx_v1"` prefix. The database path is resolved via [`getAppDatabasePath()`](../POPOPXSwitch/FileUtils.swift#L70) in `POPOPXSwitch/FileUtils.swift`, which checks `dbContainerGroupDefault` to determine whether to use the app group container or legacy documents directory.
 
 See [Database & Storage specification](database.md) for full details.
 
@@ -262,7 +262,7 @@ Optional desktop pairing allows controlling the mobile app from a desktop client
 - **Commands**: [`connectRemoteCtrl`](../Shared/Model/POPOPXAPI.swift#L1613), [`findKnownRemoteCtrl`](../Shared/Model/POPOPXAPI.swift#L1620), [`confirmRemoteCtrl`](../Shared/Model/POPOPXAPI.swift#L1624), [`verifyRemoteCtrlSession`](../Shared/Model/POPOPXAPI.swift#L1630), [`listRemoteCtrls`](../Shared/Model/POPOPXAPI.swift#L1636), [`stopRemoteCtrl`](../Shared/Model/POPOPXAPI.swift#L1642), [`deleteRemoteCtrl`](../Shared/Model/POPOPXAPI.swift#L1646)
 - **State**: [`ChatModel.remoteCtrlSession`](../Shared/Model/ChatModel.swift#L395)`: RemoteCtrlSession?` tracks the active session
 - **Transport**: Encrypted reverse HTTP transport between mobile and desktop
-- **Source**: [`Shared/Views/RemoteAccess/ConnectDesktopView.swift`](../Shared/Views/RemoteAccess/ConnectDesktopView.swift#L1-L545), see `Remote.hs` in `../../src/Simplex/Chat/`
+- **Source**: [`Shared/Views/RemoteAccess/ConnectDesktopView.swift`](../Shared/Views/RemoteAccess/ConnectDesktopView.swift#L1-L545), see `Remote.hs` in `../../src/POPOPX/Chat/`
 
 ---
 
@@ -329,8 +329,8 @@ Chat relays are SMP servers that forward messages to channel subscribers. They a
 | Shared types | [`POPOPXSwitch/APITypes.swift`](../POPOPXSwitch/APITypes.swift#L27) | L27 |
 | C header | [`POPOPXSwitch/Popopx.h`](../POPOPXSwitch/Popopx.h#L1-L49) | |
 | NSE | [`POPOPX NSE/NotificationService.swift`](../POPOPX%20NSE/NotificationService.swift#L1-L1228) | |
-| Haskell core | `../../src/Simplex/Chat/Controller.hs` — see `processCommand` in `Controller.hs` | |
-| Chat protocol (x-events, message envelopes) | `../../src/Simplex/Chat/Protocol.hs` | |
+| Haskell core | `../../src/POPOPX/Chat/Controller.hs` — see `processCommand` in `Controller.hs` | |
+| Chat protocol (x-events, message envelopes) | `../../src/POPOPX/Chat/Protocol.hs` | |
 
 ### External: popopxmq Library
 
@@ -338,10 +338,10 @@ The lower-level protocol and encryption layers are in the separate [popopxmq](ht
 
 | Component | Spec | Implementation |
 |-----------|------|----------------|
-| SMP protocol | `popopxmq/protocol/simplex-messaging.md` | `popopxmq/src/Simplex/Messaging/Protocol.hs` |
-| XFTP protocol | `popopxmq/protocol/xftp.md` | `popopxmq/src/Simplex/FileTransfer/Protocol.hs` |
-| SMP Agent (duplex connections) | `popopxmq/protocol/agent-protocol.md` | `popopxmq/src/Simplex/Messaging/Agent.hs` |
-| Double ratchet (PQDR) | `popopxmq/protocol/pqdr.md` | `popopxmq/src/Simplex/Messaging/Crypto/Ratchet.hs` |
-| Post-quantum KEM (sntrup761) | `popopxmq/protocol/pqdr.md` | `popopxmq/src/Simplex/Messaging/Crypto/SNTRUP761.hs` |
-| TLS transport | — | `popopxmq/src/Simplex/Messaging/Transport.hs` |
-| File encryption | — | `popopxmq/src/Simplex/Messaging/Crypto/File.hs` |
+| SMP protocol | `popopxmq/protocol/popopx-messaging.md` | `popopxmq/src/POPOPX/Messaging/Protocol.hs` |
+| XFTP protocol | `popopxmq/protocol/xftp.md` | `popopxmq/src/POPOPX/FileTransfer/Protocol.hs` |
+| SMP Agent (duplex connections) | `popopxmq/protocol/agent-protocol.md` | `popopxmq/src/POPOPX/Messaging/Agent.hs` |
+| Double ratchet (PQDR) | `popopxmq/protocol/pqdr.md` | `popopxmq/src/POPOPX/Messaging/Crypto/Ratchet.hs` |
+| Post-quantum KEM (sntrup761) | `popopxmq/protocol/pqdr.md` | `popopxmq/src/POPOPX/Messaging/Crypto/SNTRUP761.hs` |
+| TLS transport | — | `popopxmq/src/POPOPX/Messaging/Transport.hs` |
+| File encryption | — | `popopxmq/src/POPOPX/Messaging/Crypto/File.hs` |

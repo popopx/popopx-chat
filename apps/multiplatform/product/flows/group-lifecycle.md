@@ -4,7 +4,7 @@
 
 ## Overview
 
-Groups in SimpleX Chat are decentralized: there is no central group server. The group owner's device coordinates membership, and messages are delivered via pairwise SMP connections between members. Groups support roles, invitation links, member admission review, blocking, and profile updates.
+Groups in POPOPX Chat are decentralized: there is no central group server. The group owner's device coordinates membership, and messages are delivered via pairwise SMP connections between members. Groups support roles, invitation links, member admission review, blocking, and profile updates.
 
 ## Prerequisites
 
@@ -278,6 +278,6 @@ Groups support scoped conversations for member support:
 | `GroupMemberRole` | `model/ChatModel.kt` | Enum: Observer, Author, Member, Moderator, Admin, Owner |
 | `GroupMemberAdmission` | `model/ChatModel.kt` | Admission settings: review criteria |
 | `MemberCriteria` | `model/ChatModel.kt` | Enum: All (require review for all) |
-| `GroupLink` | `model/SimpleXAPI.kt` | Group link: connLinkContact, acceptMemberRole, userContactLinkId, shortLinkDataSet, shortLinkLargeDataSet, groupLinkId |
+| `GroupLink` | `model/POPOPXAPI.kt` | Group link: connLinkContact, acceptMemberRole, userContactLinkId, shortLinkDataSet, shortLinkLargeDataSet, groupLinkId |
 | `GroupChatScope` | `model/ChatModel.kt` | Scoped conversation within a group |
-| `ConnectionPlan.GroupLink` | `model/SimpleXAPI.kt` | Plan result when connecting via a group link |
+| `ConnectionPlan.GroupLink` | `model/POPOPXAPI.kt` | Plan result when connecting via a group link |

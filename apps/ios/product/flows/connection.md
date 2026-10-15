@@ -103,7 +103,7 @@ Establishing contact between two POPOPX Chat users. POPOPX uses no user identifi
 
 ### 7a. Relay Link Rejection
 
-1. User scans, pastes, or opens a relay address link (URL path `/r` or `SimplexLinkType.relay`).
+1. User scans, pastes, or opens a relay address link (URL path `/r` or `POPOPXLinkType.relay`).
 2. In `ContentView.connectViaUrl_()`: early return with alert "Relay address" / "This is a chat relay address, it cannot be used to connect."
 3. In `NewChatView.planAndConnect()`: `.popopxLink(_, .relay, _, _)` pattern triggers the same alert.
 4. The link is NOT processed further. No connection is attempted.

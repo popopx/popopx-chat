@@ -370,8 +370,8 @@ struct GroupChatInfoView: View {
                     .lineLimit(4)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            // TODO [BLOCKED: requires apiSetPublicGroupAccess Haskell API for groupSimplexNameView]
-            // groupSimplexNameView(groupInfo) { groupInfo = $0 }
+            // TODO [BLOCKED: requires apiSetPublicGroupAccess Haskell API for groupPopopxNameView]
+            // groupPopopxNameView(groupInfo) { groupInfo = $0 }
             if let webPage = groupInfo.groupProfile.publicGroup?.publicGroupAccess?.groupWebPage,
                let url = URL(string: webPage) {
                 Link(destination: url) {
@@ -709,8 +709,8 @@ struct GroupChatInfoView: View {
     // private func channelPopopxNameButton() -> some View {
     //     NavigationLink {
     //         let domain = if let d = groupInfo.groupProfile.publicGroup?.publicGroupAccess?.groupDomainClaim?.shortName { "#\(d)" } else { "" }
-    //         SetSimplexDomainView(
-    //             title: "SimpleX name",
+    //         SetPopopxDomainView(
+    //             title: "POPOPX name",
     //             footer: "Let people join via name registered with this channel link.",
     //             prompt: "#channelname.testing",
     //             popopxName: domain,

@@ -194,12 +194,12 @@
       </trans-unit>
       <trans-unit id="**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." xml:space="preserve" approved="no">
         <source>**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata.</source>
-        <target state="translated">**更有私隱**：每20分鐘會檢查一次訊息。裝置權杖與 SimpleX Chat 伺服器分享中，但是不包括你的聯絡人和訊息資料。</target>
+        <target state="translated">**更有私隱**：每20分鐘會檢查一次訊息。裝置權杖與 POPOPX Chat 伺服器分享中，但是不包括你的聯絡人和訊息資料。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." xml:space="preserve" approved="no">
-        <source>**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app.</source>
-        <target state="translated">**最有私隱**：不使用 SimpleX Chat 通知服務器，在後台定期檢查訊息（取決於你使用應用程序的頻率）。</target>
+      <trans-unit id="**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." xml:space="preserve" approved="no">
+        <source>**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app.</source>
+        <target state="translated">**最有私隱**：不使用 POPOPX Chat 通知服務器，在後台定期檢查訊息（取決於你使用應用程序的頻率）。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="**Paste received link** or open it in the browser and tap **Open in mobile app**." xml:space="preserve" approved="no">
@@ -212,8 +212,8 @@
         <target state="translated">**請注意**：如果你忘記了密碼你將不能再次復原或更改密碼。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." xml:space="preserve" approved="no">
-        <source>**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from.</source>
+      <trans-unit id="**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." xml:space="preserve" approved="no">
+        <source>**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from.</source>
         <target state="translated">**建議**：裝置權杖和通知都會傳送去 SimpeleX Chat 的通知伺服器，但是不包括訊息內容、大小或傳送者資料。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
@@ -302,14 +302,14 @@
         <target state="translated">隨機的個人檔案將傳送給你的聯絡人</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="About SimpleX" xml:space="preserve" approved="no">
-        <source>About SimpleX</source>
-        <target state="translated">關於 SimpleX</target>
+      <trans-unit id="About POPOPX" xml:space="preserve" approved="no">
+        <source>About POPOPX</source>
+        <target state="translated">關於 POPOPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="About SimpleX Chat" xml:space="preserve" approved="no">
-        <source>About SimpleX Chat</source>
-        <target state="translated">關於 SimpleX Chat</target>
+      <trans-unit id="About POPOPX Chat" xml:space="preserve" approved="no">
+        <source>About POPOPX Chat</source>
+        <target state="translated">關於 POPOPX Chat</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Accent color" xml:space="preserve" approved="no">
@@ -1158,14 +1158,14 @@
         <target state="translated">裝置</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Device authentication is disabled. Turning off SimpleX Lock." xml:space="preserve" approved="no">
-        <source>Device authentication is disabled. Turning off SimpleX Lock.</source>
-        <target state="translated">裝置內的螢幕鎖定已關閉。正在關閉 SimpleX 鎖定。</target>
+      <trans-unit id="Device authentication is disabled. Turning off POPOPX Lock." xml:space="preserve" approved="no">
+        <source>Device authentication is disabled. Turning off POPOPX Lock.</source>
+        <target state="translated">裝置內的螢幕鎖定已關閉。正在關閉 POPOPX 鎖定。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." xml:space="preserve" approved="no">
-        <source>Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication.</source>
-        <target state="translated">你的裝置沒有啟動螢幕鎖定。你可以通過設定內啟動螢幕鎖定，當你啟動後就可以使用 SimpleX 鎖定。</target>
+      <trans-unit id="Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." xml:space="preserve" approved="no">
+        <source>Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication.</source>
+        <target state="translated">你的裝置沒有啟動螢幕鎖定。你可以通過設定內啟動螢幕鎖定，當你啟動後就可以使用 POPOPX 鎖定。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Direct messages" xml:space="preserve" approved="no">
@@ -1178,9 +1178,9 @@
         <target state="translated">私訊群組內的成員於這個群組內是禁用的。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Disable SimpleX Lock" xml:space="preserve" approved="no">
-        <source>Disable SimpleX Lock</source>
-        <target state="translated">關閉 SimpleX 鎖定</target>
+      <trans-unit id="Disable POPOPX Lock" xml:space="preserve" approved="no">
+        <source>Disable POPOPX Lock</source>
+        <target state="translated">關閉 POPOPX 鎖定</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Disappearing messages" xml:space="preserve" approved="no">
@@ -1213,9 +1213,9 @@
         <target state="translated">顯示名稱：</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Do NOT use SimpleX for emergency calls." xml:space="preserve" approved="no">
-        <source>Do NOT use SimpleX for emergency calls.</source>
-        <target state="translated">請不要使用SimpleX來進行緊急通話。</target>
+      <trans-unit id="Do NOT use POPOPX for emergency calls." xml:space="preserve" approved="no">
+        <source>Do NOT use POPOPX for emergency calls.</source>
+        <target state="translated">請不要使用POPOPX來進行緊急通話。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Do it later" xml:space="preserve" approved="no">
@@ -1238,9 +1238,9 @@
         <target state="translated">啟用</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Enable SimpleX Lock" xml:space="preserve" approved="no">
-        <source>Enable SimpleX Lock</source>
-        <target state="translated">啟用 SimpleX 鎖定</target>
+      <trans-unit id="Enable POPOPX Lock" xml:space="preserve" approved="no">
+        <source>Enable POPOPX Lock</source>
+        <target state="translated">啟用 POPOPX 鎖定</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Enable TCP keep-alive" xml:space="preserve" approved="no">
@@ -1683,9 +1683,9 @@
         <target state="translated">當你切換至最近應用程式版面時，無法預覽程式畫面。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="How SimpleX works" xml:space="preserve" approved="no">
-        <source>How SimpleX works</source>
-        <target state="translated">SimpleX 如何運作</target>
+      <trans-unit id="How POPOPX works" xml:space="preserve" approved="no">
+        <source>How POPOPX works</source>
+        <target state="translated">POPOPX 如何運作</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="How it works" xml:space="preserve" approved="no">
@@ -1812,9 +1812,9 @@
         <target state="translated">錯誤的安全碼！</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Install [SimpleX Chat for terminal](https://github.com/simplex-chat/simplex-chat)" xml:space="preserve" approved="no">
-        <source>Install [SimpleX Chat for terminal](https://github.com/simplex-chat/simplex-chat)</source>
-        <target state="translated">下載[SimpleX Chat 的終端機版](https://github.com/simplex-chat/simplex-chat)</target>
+      <trans-unit id="Install [POPOPX Chat for terminal](https://github.com/simplex-chat/popopx-chat)" xml:space="preserve" approved="no">
+        <source>Install [POPOPX Chat for terminal](https://github.com/simplex-chat/popopx-chat)</source>
+        <target state="translated">下載[POPOPX Chat 的終端機版](https://github.com/simplex-chat/popopx-chat)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Instant push notifications will be hidden!&#10;" xml:space="preserve" approved="no">
@@ -1977,9 +1977,9 @@ We will be adding server redundancy to prevent lost messages.</source>
         <target state="translated">請確保你的 WebRTC ICE 伺服器地址是正確的格式，每行也有分隔和沒有重複。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Many people asked: *if SimpleX has no user identifiers, how can it deliver messages?*" xml:space="preserve" approved="no">
-        <source>Many people asked: *if SimpleX has no user identifiers, how can it deliver messages?*</source>
-        <target state="translated">有很多人問：*如果 SimpleX 沒有任何的用戶標識符，它如何傳送訊息？*</target>
+      <trans-unit id="Many people asked: *if POPOPX has no user identifiers, how can it deliver messages?*" xml:space="preserve" approved="no">
+        <source>Many people asked: *if POPOPX has no user identifiers, how can it deliver messages?*</source>
+        <target state="translated">有很多人問：*如果 POPOPX 沒有任何的用戶標識符，它如何傳送訊息？*</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Mark deleted for everyone" xml:space="preserve" approved="no">
@@ -2052,9 +2052,9 @@ We will be adding server redundancy to prevent lost messages.</source>
         <target state="translated">遷移錯誤：</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." xml:space="preserve" approved="no">
-        <source>Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat).</source>
-        <target state="translated">遷移失敗。點擊 **跳過**以繼續使用目前的數據庫。請透過對話或電郵，向應用程式開發人員報告 [chat@simplex.chat](mailto:chat@simplex.chat)。</target>
+      <trans-unit id="Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat](mailto:chat@popopxchat)." xml:space="preserve" approved="no">
+        <source>Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat](mailto:chat@popopxchat).</source>
+        <target state="translated">遷移失敗。點擊 **跳過**以繼續使用目前的數據庫。請透過對話或電郵，向應用程式開發人員報告 [chat@popopxchat](mailto:chat@popopxchat)。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Migration is completed" xml:space="preserve" approved="no">
@@ -2277,9 +2277,9 @@ We will be adding server redundancy to prevent lost messages.</source>
         <target state="translated">開放源碼協議和程式碼 – 任何人也可以運行伺服器。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Opening the link in the browser may reduce connection privacy and security. Untrusted SimpleX links will be red." xml:space="preserve" approved="no">
-        <source>Opening the link in the browser may reduce connection privacy and security. Untrusted SimpleX links will be red.</source>
-        <target state="translated">在瀏覽器中開啟連結可能會有私隱疑慮和不確定性。不受 SimpleX 信任的連結會顯示紅色。</target>
+      <trans-unit id="Opening the link in the browser may reduce connection privacy and security. Untrusted POPOPX links will be red." xml:space="preserve" approved="no">
+        <source>Opening the link in the browser may reduce connection privacy and security. Untrusted POPOPX links will be red.</source>
+        <target state="translated">在瀏覽器中開啟連結可能會有私隱疑慮和不確定性。不受 POPOPX 信任的連結會顯示紅色。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="PING count" xml:space="preserve" approved="no">
@@ -2447,9 +2447,9 @@ We will be adding server redundancy to prevent lost messages.</source>
         <target state="translated">於 GitHub 儲存庫內查看更多。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Read more in our [GitHub repository](https://github.com/simplex-chat/simplex-chat#readme)." xml:space="preserve" approved="no">
-        <source>Read more in our [GitHub repository](https://github.com/simplex-chat/simplex-chat#readme).</source>
-        <target state="translated">可在我們的 [GitHub 儲存庫](https://github.com/simplex-chat/simplex-chat#readme)內查看更多。</target>
+      <trans-unit id="Read more in our [GitHub repository](https://github.com/simplex-chat/popopx-chat#readme)." xml:space="preserve" approved="no">
+        <source>Read more in our [GitHub repository](https://github.com/simplex-chat/popopx-chat#readme).</source>
+        <target state="translated">可在我們的 [GitHub 儲存庫](https://github.com/simplex-chat/popopx-chat#readme)內查看更多。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Received file event" xml:space="preserve" approved="no">
@@ -2831,45 +2831,45 @@ We will be adding server redundancy to prevent lost messages.</source>
         <target state="translated">顯示預覽</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Chat security was audited by Trail of Bits." xml:space="preserve">
-        <source>SimpleX Chat security was audited by Trail of Bits.</source>
-        <target state="translated">SimpleX Chat 的安全性由 Trail of Bits 審核。</target>
+      <trans-unit id="POPOPX Chat security was audited by Trail of Bits." xml:space="preserve">
+        <source>POPOPX Chat security was audited by Trail of Bits.</source>
+        <target state="translated">POPOPX Chat 的安全性由 Trail of Bits 審核。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock" xml:space="preserve" approved="no">
-        <source>SimpleX Lock</source>
-        <target state="translated">SimpleX 鎖定</target>
+      <trans-unit id="POPOPX Lock" xml:space="preserve" approved="no">
+        <source>POPOPX Lock</source>
+        <target state="translated">POPOPX 鎖定</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock turned on" xml:space="preserve" approved="no">
-        <source>SimpleX Lock turned on</source>
-        <target state="translated">已開啟SimpleX 鎖定</target>
+      <trans-unit id="POPOPX Lock turned on" xml:space="preserve" approved="no">
+        <source>POPOPX Lock turned on</source>
+        <target state="translated">已開啟POPOPX 鎖定</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX contact address" xml:space="preserve" approved="no">
-        <source>SimpleX contact address</source>
-        <target state="translated">SimpleX 聯絡人地址</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX contact address" xml:space="preserve" approved="no">
+        <source>POPOPX contact address</source>
+        <target state="translated">POPOPX 聯絡人地址</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX encrypted message or connection event" xml:space="preserve" approved="no">
-        <source>SimpleX encrypted message or connection event</source>
-        <target state="translated">SimpleX 加密訊息或連接事件</target>
+      <trans-unit id="POPOPX encrypted message or connection event" xml:space="preserve" approved="no">
+        <source>POPOPX encrypted message or connection event</source>
+        <target state="translated">POPOPX 加密訊息或連接事件</target>
         <note>notification</note>
       </trans-unit>
-      <trans-unit id="SimpleX group link" xml:space="preserve" approved="no">
-        <source>SimpleX group link</source>
-        <target state="translated">SimpleX 群組連結</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX group link" xml:space="preserve" approved="no">
+        <source>POPOPX group link</source>
+        <target state="translated">POPOPX 群組連結</target>
+        <note>popopx link type</note>
       </trans-unit>
-      <trans-unit id="SimpleX links" xml:space="preserve" approved="no">
-        <source>SimpleX links</source>
-        <target state="translated">SimpleX 連結</target>
+      <trans-unit id="POPOPX links" xml:space="preserve" approved="no">
+        <source>POPOPX links</source>
+        <target state="translated">POPOPX 連結</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX one-time invitation" xml:space="preserve" approved="no">
-        <source>SimpleX one-time invitation</source>
-        <target state="translated">SimpleX 一次性邀請連結</target>
-        <note>simplex link type</note>
+      <trans-unit id="POPOPX one-time invitation" xml:space="preserve" approved="no">
+        <source>POPOPX one-time invitation</source>
+        <target state="translated">POPOPX 一次性邀請連結</target>
+        <note>popopx link type</note>
       </trans-unit>
       <trans-unit id="Skip" xml:space="preserve" approved="no">
         <source>Skip</source>
@@ -2906,9 +2906,9 @@ We will be adding server redundancy to prevent lost messages.</source>
         <target state="translated">停止</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Stop SimpleX" xml:space="preserve" approved="no">
-        <source>Stop SimpleX</source>
-        <target state="translated">停止 SimpleX</target>
+      <trans-unit id="Stop POPOPX" xml:space="preserve" approved="no">
+        <source>Stop POPOPX</source>
+        <target state="translated">停止 POPOPX</target>
         <note>authentication reason</note>
       </trans-unit>
       <trans-unit id="Stop chat to enable database actions" xml:space="preserve" approved="no">
@@ -2926,9 +2926,9 @@ We will be adding server redundancy to prevent lost messages.</source>
         <target state="translated">停止對話？</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Support SimpleX Chat" xml:space="preserve" approved="no">
-        <source>Support SimpleX Chat</source>
-        <target state="translated">幫助 SimpleX Chat</target>
+      <trans-unit id="Support POPOPX Chat" xml:space="preserve" approved="no">
+        <source>Support POPOPX Chat</source>
+        <target state="translated">幫助 POPOPX Chat</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="System" xml:space="preserve" approved="no">
@@ -3001,9 +3001,9 @@ We will be adding server redundancy to prevent lost messages.</source>
         <target state="translated">測試失敗！</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Thank you for installing SimpleX Chat!" xml:space="preserve" approved="no">
-        <source>Thank you for installing SimpleX Chat!</source>
-        <target state="translated">感謝你安裝SimpleX Chat！</target>
+      <trans-unit id="Thank you for installing POPOPX Chat!" xml:space="preserve" approved="no">
+        <source>Thank you for installing POPOPX Chat!</source>
+        <target state="translated">感謝你安裝POPOPX Chat！</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No user identifiers." xml:space="preserve" approved="no">
@@ -3114,15 +3114,15 @@ We will be adding server redundancy to prevent lost messages.</source>
         <source>To prevent the call interruption, enable Do Not Disturb mode.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="To protect your privacy, SimpleX uses separate IDs for each of your contacts." xml:space="preserve" approved="no">
-        <source>To protect your privacy, SimpleX uses separate IDs for each of your contacts.</source>
-        <target state="translated">為了保護隱私，而不像是其他平台般需要提取和存儲用戶的 IDs 資料，SimpleX 平台有自家佇列的標識符，這對於你的每個聯絡人也是獨一無二的。</target>
+      <trans-unit id="To protect your privacy, POPOPX uses separate IDs for each of your contacts." xml:space="preserve" approved="no">
+        <source>To protect your privacy, POPOPX uses separate IDs for each of your contacts.</source>
+        <target state="translated">為了保護隱私，而不像是其他平台般需要提取和存儲用戶的 IDs 資料，POPOPX 平台有自家佇列的標識符，這對於你的每個聯絡人也是獨一無二的。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="To protect your information, turn on SimpleX Lock.&#10;You will be prompted to complete authentication before this feature is enabled." xml:space="preserve" approved="no">
-        <source>To protect your information, turn on SimpleX Lock.
+      <trans-unit id="To protect your information, turn on POPOPX Lock.&#10;You will be prompted to complete authentication before this feature is enabled." xml:space="preserve" approved="no">
+        <source>To protect your information, turn on POPOPX Lock.
 You will be prompted to complete authentication before this feature is enabled.</source>
-        <target state="translated">為了保護你的個人訊息，開啟 SimpleX 鎖定。
+        <target state="translated">為了保護你的個人訊息，開啟 POPOPX 鎖定。
 在啟用此功能之前，系統將提示你完成螢幕鎖定的功能。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
@@ -3252,9 +3252,9 @@ To connect, please ask your contact to create another connection link and check 
         <target state="translated">使用 .onion 主機</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Use SimpleX Chat servers?" xml:space="preserve" approved="no">
-        <source>Use SimpleX Chat servers?</source>
-        <target state="translated">使用 SimpleX Chat 伺服器？</target>
+      <trans-unit id="Use POPOPX Chat servers?" xml:space="preserve" approved="no">
+        <source>Use POPOPX Chat servers?</source>
+        <target state="translated">使用 POPOPX Chat 伺服器？</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Use chat" xml:space="preserve" approved="no">
@@ -3277,9 +3277,9 @@ To connect, please ask your contact to create another connection link and check 
         <target state="translated">使用 .onion 主機需要兼容 VPN 的提供者。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Using SimpleX Chat servers." xml:space="preserve" approved="no">
-        <source>Using SimpleX Chat servers.</source>
-        <target state="translated">使用 SimpleX Chat 伺服器。</target>
+      <trans-unit id="Using POPOPX Chat servers." xml:space="preserve" approved="no">
+        <source>Using POPOPX Chat servers.</source>
+        <target state="translated">使用 POPOPX Chat 伺服器。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Verify connection security" xml:space="preserve" approved="no">
@@ -3551,8 +3551,8 @@ To connect, please ask your contact to create another connection link and check 
         <target state="translated">你的 SMP 伺服器</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your SimpleX contact address" xml:space="preserve">
-        <source>Your SimpleX contact address</source>
+      <trans-unit id="Your POPOPX contact address" xml:space="preserve">
+        <source>Your POPOPX contact address</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your calls" xml:space="preserve" approved="no">
@@ -3629,11 +3629,11 @@ You can cancel this connection and remove the contact (and try later with a new 
         <target state="translated">你的私隱</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your profile is stored on your device and shared only with your contacts.&#10;SimpleX servers cannot see your profile." xml:space="preserve" approved="no">
+      <trans-unit id="Your profile is stored on your device and shared only with your contacts.&#10;POPOPX servers cannot see your profile." xml:space="preserve" approved="no">
         <source>Your profile is stored on your device and shared only with your contacts.
-SimpleX servers cannot see your profile.</source>
+POPOPX servers cannot see your profile.</source>
         <target state="translated">你的個人檔案只會儲存於你的裝置和只會分享給你的聯絡人。
-SimpleX 伺服器並不會看到你的個人檔案。</target>
+POPOPX 伺服器並不會看到你的個人檔案。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your profile will be sent to the contact that you received this link from" xml:space="preserve" approved="no">
@@ -3666,19 +3666,19 @@ SimpleX 伺服器並不會看到你的個人檔案。</target>
         <target state="translated">你的設定</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="[Contribute](https://github.com/simplex-chat/simplex-chat#contribute)" xml:space="preserve" approved="no">
-        <source>[Contribute](https://github.com/simplex-chat/simplex-chat#contribute)</source>
-        <target state="translated">[貢獻](https://github.com/simplex-chat/simplex-chat#contribute)</target>
+      <trans-unit id="[Contribute](https://github.com/simplex-chat/popopx-chat#contribute)" xml:space="preserve" approved="no">
+        <source>[Contribute](https://github.com/simplex-chat/popopx-chat#contribute)</source>
+        <target state="translated">[貢獻](https://github.com/simplex-chat/popopx-chat#contribute)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="[Send us email](mailto:chat@simplex.chat)" xml:space="preserve" approved="no">
-        <source>[Send us email](mailto:chat@simplex.chat)</source>
-        <target state="translated">[傳送電郵給開發者](mailto:chat@simplex.chat)</target>
+      <trans-unit id="[Send us email](mailto:chat@popopxchat)" xml:space="preserve" approved="no">
+        <source>[Send us email](mailto:chat@popopxchat)</source>
+        <target state="translated">[傳送電郵給開發者](mailto:chat@popopxchat)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="[Star on GitHub](https://github.com/simplex-chat/simplex-chat)" xml:space="preserve" approved="no">
-        <source>[Star on GitHub](https://github.com/simplex-chat/simplex-chat)</source>
-        <target state="translated">［於 Github 給個星星］（https://github.com/simplex-chat/simplex-chat）</target>
+      <trans-unit id="[Star on GitHub](https://github.com/simplex-chat/popopx-chat)" xml:space="preserve" approved="no">
+        <source>[Star on GitHub](https://github.com/simplex-chat/popopx-chat)</source>
+        <target state="translated">［於 Github 給個星星］（https://github.com/simplex-chat/popopx-chat）</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="_italic_" xml:space="preserve" approved="no">
@@ -3786,9 +3786,9 @@ SimpleX 伺服器並不會看到你的個人檔案。</target>
         <target state="translated">完成</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="connect to SimpleX Chat developers." xml:space="preserve" approved="no">
-        <source>connect to SimpleX Chat developers.</source>
-        <target state="translated">連接至 SimpleX Chat的開發人員。</target>
+      <trans-unit id="connect to POPOPX Chat developers." xml:space="preserve" approved="no">
+        <source>connect to POPOPX Chat developers.</source>
+        <target state="translated">連接至 POPOPX Chat的開發人員。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="connected" xml:space="preserve" approved="no">
@@ -4287,9 +4287,9 @@ SimpleX 伺服器並不會看到你的個人檔案。</target>
         <target state="translated">你所選用的新個人檔案顯示名稱和目前的其中一個個人檔案相同。請選擇其他名稱。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." xml:space="preserve" approved="no">
-        <source>By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).</source>
-        <target state="translated">使用個人檔案（預設值）或使用連接（測試版）（https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation）（BETA）。</target>
+      <trans-unit id="By chat profile (default) or [by connection](https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." xml:space="preserve" approved="no">
+        <source>By chat profile (default) or [by connection](https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).</source>
+        <target state="translated">使用個人檔案（預設值）或使用連接（測試版）（https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation）（BETA）。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Database upgrade" xml:space="preserve" approved="no">
@@ -4971,14 +4971,14 @@ Available in v5.1</source>
         <target state="translated">停止檔案</target>
         <note>cancel file action</note>
       </trans-unit>
-      <trans-unit id="SimpleX Address" xml:space="preserve" approved="no">
-        <source>SimpleX Address</source>
-        <target state="translated">SimpleX 聯絡地址</target>
+      <trans-unit id="POPOPX Address" xml:space="preserve" approved="no">
+        <source>POPOPX Address</source>
+        <target state="translated">POPOPX 聯絡地址</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX address" xml:space="preserve" approved="no">
-        <source>SimpleX address</source>
-        <target state="translated">SimpleX 聯絡地址</target>
+      <trans-unit id="POPOPX address" xml:space="preserve" approved="no">
+        <source>POPOPX address</source>
+        <target state="translated">POPOPX 聯絡地址</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Stop sharing" xml:space="preserve" approved="no">
@@ -5141,14 +5141,14 @@ Available in v5.1</source>
         <target state="translated">顯示開發者選項</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock mode" xml:space="preserve" approved="no">
-        <source>SimpleX Lock mode</source>
-        <target state="translated">SimpleX 鎖定模式</target>
+      <trans-unit id="POPOPX Lock mode" xml:space="preserve" approved="no">
+        <source>POPOPX Lock mode</source>
+        <target state="translated">POPOPX 鎖定模式</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="SimpleX Lock not enabled!" xml:space="preserve" approved="no">
-        <source>SimpleX Lock not enabled!</source>
-        <target state="translated">未啟用 SimpleX 鎖定！</target>
+      <trans-unit id="POPOPX Lock not enabled!" xml:space="preserve" approved="no">
+        <source>POPOPX Lock not enabled!</source>
+        <target state="translated">未啟用 POPOPX 鎖定！</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Tap to activate profile." xml:space="preserve" approved="no">
@@ -5191,16 +5191,16 @@ Available in v5.1</source>
         <target state="translated">你可以在上鎖畫面接受通話，不需裝置和應用程式認證。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="You can hide or mute a user profile - swipe it to the right.&#10;SimpleX Lock must be enabled." xml:space="preserve" approved="no">
+      <trans-unit id="You can hide or mute a user profile - swipe it to the right.&#10;POPOPX Lock must be enabled." xml:space="preserve" approved="no">
         <source>You can hide or mute a user profile - swipe it to the right.
-SimpleX Lock must be enabled.</source>
+POPOPX Lock must be enabled.</source>
         <target state="translated">你可以隱藏或靜音用戶檔案 - 將它向右滑動。
-必須已啟用SimpleX 鎖定。</target>
+必須已啟用POPOPX 鎖定。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="You can turn on SimpleX Lock via Settings." xml:space="preserve" approved="no">
-        <source>You can turn on SimpleX Lock via Settings.</source>
-        <target state="translated">你可以透過設定啟用 SimpleX 鎖定。</target>
+      <trans-unit id="You can turn on POPOPX Lock via Settings." xml:space="preserve" approved="no">
+        <source>You can turn on POPOPX Lock via Settings.</source>
+        <target state="translated">你可以透過設定啟用 POPOPX 鎖定。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your %@ servers" xml:space="preserve" approved="no">
@@ -5223,16 +5223,16 @@ SimpleX Lock must be enabled.</source>
         <target state="translated">使用密碼保護你的聊天資料！</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="&lt;p&gt;Hi!&lt;/p&gt;&#10;&lt;p&gt;&lt;a href=&quot;%@&quot;&gt;Connect to me via SimpleX Chat&lt;/a&gt;&lt;/p&gt;" xml:space="preserve" approved="no">
+      <trans-unit id="&lt;p&gt;Hi!&lt;/p&gt;&#10;&lt;p&gt;&lt;a href=&quot;%@&quot;&gt;Connect to me via POPOPX Chat&lt;/a&gt;&lt;/p&gt;" xml:space="preserve" approved="no">
         <source>&lt;p&gt;Hi!&lt;/p&gt;
-&lt;p&gt;&lt;a href="%@"&gt;Connect to me via SimpleX Chat&lt;/a&gt;&lt;/p&gt;</source>
+&lt;p&gt;&lt;a href="%@"&gt;Connect to me via POPOPX Chat&lt;/a&gt;&lt;/p&gt;</source>
         <target state="translated">&lt;p&gt;你好！&lt;/p&gt;
-&lt;p&gt;&lt;a href="%@"&gt;來連接我透過SimpleX Chat&lt;/a&gt;&lt;/p&gt;</target>
+&lt;p&gt;&lt;a href="%@"&gt;來連接我透過POPOPX Chat&lt;/a&gt;&lt;/p&gt;</target>
         <note>email text</note>
       </trans-unit>
-      <trans-unit id="About SimpleX address" xml:space="preserve" approved="no">
-        <source>About SimpleX address</source>
-        <target state="translated">關於 SimpleX 的聯絡地址</target>
+      <trans-unit id="About POPOPX address" xml:space="preserve" approved="no">
+        <source>About POPOPX address</source>
+        <target state="translated">關於 POPOPX 的聯絡地址</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All your contacts will remain connected." xml:space="preserve" approved="no">
@@ -5245,9 +5245,9 @@ SimpleX Lock must be enabled.</source>
         <target state="translated">你的所有聯絡人會保持連接。更新了的個人檔案將傳送給你的聯絡人。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Create SimpleX address" xml:space="preserve" approved="no">
-        <source>Create SimpleX address</source>
-        <target state="translated">建立 SimpleX 的聯絡地址</target>
+      <trans-unit id="Create POPOPX address" xml:space="preserve" approved="no">
+        <source>Create POPOPX address</source>
+        <target state="translated">建立 POPOPX 的聯絡地址</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create an address to let people connect with you." xml:space="preserve" approved="no">
@@ -5280,9 +5280,9 @@ SimpleX Lock must be enabled.</source>
         <target state="translated">如果你不能面對面接觸此聯絡人，可於視訊通話中出示你的二維碼，或者分享連結。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Let's talk in SimpleX Chat" xml:space="preserve" approved="no">
-        <source>Let's talk in SimpleX Chat</source>
-        <target state="translated">讓我們在 SimpleX Chat中聊天</target>
+      <trans-unit id="Let's talk in POPOPX Chat" xml:space="preserve" approved="no">
+        <source>Let's talk in POPOPX Chat</source>
+        <target state="translated">讓我們在 POPOPX Chat中聊天</target>
         <note>email subject</note>
       </trans-unit>
       <trans-unit id="Sending file will be stopped." xml:space="preserve" approved="no">
@@ -5310,14 +5310,14 @@ SimpleX Lock must be enabled.</source>
         <target state="translated">更新了的個人檔案將傳送給你的聯絡人。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Read more in [User Guide](https://simplex.chat/docs/guide/readme.html#connect-to-friends)." xml:space="preserve" approved="no">
-        <source>Read more in [User Guide](https://simplex.chat/docs/guide/readme.html#connect-to-friends).</source>
-        <target state="translated">可在 [用戶指南](https://simplex.chat/docs/guide/readme.html#connect-to-friends)內查看更多。</target>
+      <trans-unit id="Read more in [User Guide](https://popopxchat/docs/guide/readme.html#connect-to-friends)." xml:space="preserve" approved="no">
+        <source>Read more in [User Guide](https://popopxchat/docs/guide/readme.html#connect-to-friends).</source>
+        <target state="translated">可在 [用戶指南](https://popopxchat/docs/guide/readme.html#connect-to-friends)內查看更多。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Read more in [User Guide](https://simplex.chat/docs/guide/app-settings.html#your-simplex-contact-address)." xml:space="preserve" approved="no">
-        <source>Read more in [User Guide](https://simplex.chat/docs/guide/app-settings.html#your-simplex-contact-address).</source>
-        <target state="translated">可在 [用戶指南](https://simplex.chat/docs/guide/app-settings.html#your-simplex-contact-address)內查看更多。</target>
+      <trans-unit id="Read more in [User Guide](https://popopxchat/docs/guide/app-settings.html#your-popopx-contact-address)." xml:space="preserve" approved="no">
+        <source>Read more in [User Guide](https://popopxchat/docs/guide/app-settings.html#your-popopx-contact-address).</source>
+        <target state="translated">可在 [用戶指南](https://popopxchat/docs/guide/app-settings.html#your-popopx-contact-address)內查看更多。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Receiving file will be stopped." xml:space="preserve" approved="no">
@@ -5355,9 +5355,9 @@ SimpleX Lock must be enabled.</source>
         <target state="translated">停止分享聯絡地址？</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" xml:space="preserve" approved="no">
-        <source>Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</source>
-        <target state="translated">感謝用戶 – [透過 Weblate 貢獻]（https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat）！</target>
+      <trans-unit id="Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" xml:space="preserve" approved="no">
+        <source>Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</source>
+        <target state="translated">感謝用戶 – [透過 Weblate 貢獻]（https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat）！</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="There should be at least one user profile." xml:space="preserve" approved="no">
@@ -5410,13 +5410,13 @@ SimpleX Lock must be enabled.</source>
         <target state="translated">當你在稍後刪除你的聯絡地址時，你並不會遺失你的聯絡人。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your SimpleX address" xml:space="preserve" approved="no">
-        <source>Your SimpleX address</source>
-        <target state="translated">你的 SimpleX 聯絡地址</target>
+      <trans-unit id="Your POPOPX address" xml:space="preserve" approved="no">
+        <source>Your POPOPX address</source>
+        <target state="translated">你的 POPOPX 聯絡地址</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Your contacts in SimpleX will see it.&#10;You can change it in Settings." xml:space="preserve" approved="no">
-        <source>Your contacts in SimpleX will see it.
+      <trans-unit id="Your contacts in POPOPX will see it.&#10;You can change it in Settings." xml:space="preserve" approved="no">
+        <source>Your contacts in POPOPX will see it.
 You can change it in Settings.</source>
         <target state="translated">在 SimpeleX ，你的聯絡人會看到此。
 你可以在設定中修改。</target>
@@ -5989,9 +5989,9 @@ It can happen because of some bug or when the connection is compromised.</source
         <source>Block member</source>
         <target state="translated">封鎖成員</target>
       </trans-unit>
-      <trans-unit id="Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" xml:space="preserve" approved="no">
-        <source>Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!</source>
-        <target state="translated">保加利亞語、芬蘭語、泰語和烏克蘭語——感謝使用者們和[Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)！</target>
+      <trans-unit id="Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" xml:space="preserve" approved="no">
+        <source>Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!</source>
+        <target state="translated">保加利亞語、芬蘭語、泰語和烏克蘭語——感謝使用者們和[Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)！</target>
       </trans-unit>
       <trans-unit id="Can't call member" xml:space="preserve" approved="no">
         <source>Can't call member</source>
@@ -6105,25 +6105,25 @@ It can happen because of some bug or when the connection is compromised.</source
         <source>Abort changing address?</source>
         <target state="translated">中止更改地址？</target>
       </trans-unit>
-      <trans-unit id="Allow to send SimpleX links." xml:space="preserve" approved="no">
-        <source>Allow to send SimpleX links.</source>
-        <target state="translated">允許傳送 SimpleX 連結。</target>
+      <trans-unit id="Allow to send POPOPX links." xml:space="preserve" approved="no">
+        <source>Allow to send POPOPX links.</source>
+        <target state="translated">允許傳送 POPOPX 連結。</target>
       </trans-unit>
       <trans-unit id="Background" xml:space="preserve" approved="no">
         <source>Background</source>
         <target state="translated">後台</target>
       </trans-unit>
-      <trans-unit id="SimpleX links not allowed" xml:space="preserve" approved="no">
-        <source>SimpleX links not allowed</source>
-        <target state="translated">不允許 SimpleX 連結</target>
+      <trans-unit id="POPOPX links not allowed" xml:space="preserve" approved="no">
+        <source>POPOPX links not allowed</source>
+        <target state="translated">不允許 POPOPX 連結</target>
       </trans-unit>
       <trans-unit id="Voice messages not allowed" xml:space="preserve" approved="no">
         <source>Voice messages not allowed</source>
         <target state="translated">不允許語音訊息</target>
       </trans-unit>
-      <trans-unit id="The text you pasted is not a SimpleX link." xml:space="preserve" approved="no">
-        <source>The text you pasted is not a SimpleX link.</source>
-        <target state="translated">您貼在這裡的連結不是 SimpleX 連結。</target>
+      <trans-unit id="The text you pasted is not a POPOPX link." xml:space="preserve" approved="no">
+        <source>The text you pasted is not a POPOPX link.</source>
+        <target state="translated">您貼在這裡的連結不是 POPOPX 連結。</target>
       </trans-unit>
       <trans-unit id="%d file(s) were deleted." xml:space="preserve" approved="no">
         <source>%d file(s) were deleted.</source>
@@ -6189,9 +6189,9 @@ It can happen because of some bug or when the connection is compromised.</source
         <source>Set message expiration in chats.</source>
         <target state="translated">設定聊天中訊息期限。</target>
       </trans-unit>
-      <trans-unit id="Share SimpleX address on social media." xml:space="preserve" approved="no">
-        <source>Share SimpleX address on social media.</source>
-        <target state="translated">在社交媒體上分享 SimpleX 聯絡地址。</target>
+      <trans-unit id="Share POPOPX address on social media." xml:space="preserve" approved="no">
+        <source>Share POPOPX address on social media.</source>
+        <target state="translated">在社交媒體上分享 POPOPX 聯絡地址。</target>
       </trans-unit>
       <trans-unit id="Storage" xml:space="preserve" approved="no">
         <source>Storage</source>
@@ -6309,17 +6309,17 @@ It can happen because of some bug or when the connection is compromised.</source
         <source>Review conditions</source>
         <target state="translated">檢視使用條款</target>
       </trans-unit>
-      <trans-unit id="Search or paste SimpleX link" xml:space="preserve" approved="no">
-        <source>Search or paste SimpleX link</source>
-        <target state="translated">搜尋或貼上 SimpleX 連結</target>
+      <trans-unit id="Search or paste POPOPX link" xml:space="preserve" approved="no">
+        <source>Search or paste POPOPX link</source>
+        <target state="translated">搜尋或貼上 POPOPX 連結</target>
       </trans-unit>
       <trans-unit id="Sent directly" xml:space="preserve" approved="no">
         <source>Sent directly</source>
         <target state="translated">已直接發送</target>
       </trans-unit>
-      <trans-unit id="SimpleX links are prohibited." xml:space="preserve" approved="no">
-        <source>SimpleX links are prohibited.</source>
-        <target state="translated">這群組禁止 SimpleX 連結。</target>
+      <trans-unit id="POPOPX links are prohibited." xml:space="preserve" approved="no">
+        <source>POPOPX links are prohibited.</source>
+        <target state="translated">這群組禁止 POPOPX 連結。</target>
       </trans-unit>
       <trans-unit id="Uploaded files" xml:space="preserve" approved="no">
         <source>Uploaded files</source>
@@ -6413,9 +6413,9 @@ It can happen because of some bug or when the connection is compromised.</source
         <source>Scan / Paste link</source>
         <target state="translated">掃描／貼上連結</target>
       </trans-unit>
-      <trans-unit id="SimpleX" xml:space="preserve" approved="no">
-        <source>SimpleX</source>
-        <target state="translated">SimpleX</target>
+      <trans-unit id="POPOPX" xml:space="preserve" approved="no">
+        <source>POPOPX</source>
+        <target state="translated">POPOPX</target>
       </trans-unit>
       <trans-unit id="Use the app while in the call." xml:space="preserve" approved="no">
         <source>Use the app while in the call.</source>
@@ -6481,21 +6481,21 @@ It can happen because of some bug or when the connection is compromised.</source
         <source>Uploaded</source>
         <target state="translated">已上傳</target>
       </trans-unit>
-      <trans-unit id="%1$@ supported SimpleX Chat. The badge expired on %2$@." xml:space="preserve" approved="no">
-        <source>%1$@ supported SimpleX Chat. The badge expired on %2$@.</source>
-        <target state="translated">%1$@ 曾是 SimpleX Chat 支持者。徽章已於 %2$@ 過期。</target>
+      <trans-unit id="%1$@ supported POPOPX Chat. The badge expired on %2$@." xml:space="preserve" approved="no">
+        <source>%1$@ supported POPOPX Chat. The badge expired on %2$@.</source>
+        <target state="translated">%1$@ 曾是 POPOPX Chat 支持者。徽章已於 %2$@ 過期。</target>
       </trans-unit>
       <trans-unit id="%@ at %@:" xml:space="preserve" approved="no">
         <source>%1$@ at %2$@:</source>
         <target state="translated">%1$@ 於 %2$@：</target>
       </trans-unit>
-      <trans-unit id="%@ invested in SimpleX Chat crowdfunding." xml:space="preserve" approved="no">
-        <source>%@ invested in SimpleX Chat crowdfunding.</source>
-        <target state="translated">%@ 出資支持了 SimpleX Chat 的群眾募資。</target>
+      <trans-unit id="%@ invested in POPOPX Chat crowdfunding." xml:space="preserve" approved="no">
+        <source>%@ invested in POPOPX Chat crowdfunding.</source>
+        <target state="translated">%@ 出資支持了 POPOPX Chat 的群眾募資。</target>
       </trans-unit>
-      <trans-unit id="%@ supports SimpleX Chat." xml:space="preserve" approved="no">
-        <source>%@ supports SimpleX Chat.</source>
-        <target state="translated">%@ 是 SimpleX Chat 支持者。</target>
+      <trans-unit id="%@ supports POPOPX Chat." xml:space="preserve" approved="no">
+        <source>%@ supports POPOPX Chat.</source>
+        <target state="translated">%@ 是 POPOPX Chat 支持者。</target>
       </trans-unit>
       <trans-unit id="Some non-fatal errors occurred during import - you may see Chat console for more details." xml:space="preserve" approved="no">
         <source>Some non-fatal errors occurred during import - you may see Chat console for more details.</source>
@@ -6837,17 +6837,17 @@ It can happen because of some bug or when the connection is compromised.</source
         <source>disabled</source>
         <target state="translated">已停用</target>
       </trans-unit>
-      <trans-unit id="- connect to [directory service](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!&#10;- delivery receipts (up to 20 members).&#10;- faster and more stable." xml:space="preserve" approved="no">
-        <source>- connect to [directory service](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!
+      <trans-unit id="- connect to [directory service](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!&#10;- delivery receipts (up to 20 members).&#10;- faster and more stable." xml:space="preserve" approved="no">
+        <source>- connect to [directory service](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!
 - delivery receipts (up to 20 members).
 - faster and more stable.</source>
-        <target state="translated">- 連接到[目錄服務](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)！
+        <target state="translated">- 連接到[目錄服務](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)！
 - 送達回條（最多 20 位成員）。
 - 更快且更穩定。</target>
       </trans-unit>
-      <trans-unit id="Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" xml:space="preserve" approved="no">
-        <source>Create new profile in [desktop app](https://simplex.chat/downloads/). 💻</source>
-        <target state="translated">在[桌面應用程式](https://simplex.chat/downloads/)中建立新的個人檔案。💻</target>
+      <trans-unit id="Create new profile in [desktop app](https://popopxchat/downloads/). 💻" xml:space="preserve" approved="no">
+        <source>Create new profile in [desktop app](https://popopxchat/downloads/). 💻</source>
+        <target state="translated">在[桌面應用程式](https://popopxchat/downloads/)中建立新的個人檔案。💻</target>
       </trans-unit>
       <trans-unit id="Discover and join groups" xml:space="preserve" approved="no">
         <source>Discover and join groups</source>
@@ -6889,11 +6889,11 @@ It can happen because of some bug or when the connection is compromised.</source
         <source>All new messages from %@ will be hidden!</source>
         <target state="translated">來自 %@ 的所有新訊息都會隱藏！</target>
       </trans-unit>
-      <trans-unit id="Connect to yourself?&#10;This is your own SimpleX address!" xml:space="preserve" approved="no">
+      <trans-unit id="Connect to yourself?&#10;This is your own POPOPX address!" xml:space="preserve" approved="no">
         <source>Connect to yourself?
-This is your own SimpleX address!</source>
+This is your own POPOPX address!</source>
         <target state="translated">要連線到自己嗎？
-這是你自己的 SimpleX 地址！</target>
+這是你自己的 POPOPX 地址！</target>
       </trans-unit>
       <trans-unit id="Connect to yourself?&#10;This is your own one-time link!" xml:space="preserve" approved="no">
         <source>Connect to yourself?
@@ -7193,9 +7193,9 @@ Error: %@</source>
         <source>Use only local notifications?</source>
         <target state="translated">只使用本機通知嗎？</target>
       </trans-unit>
-      <trans-unit id="You can make it visible to your SimpleX contacts via Settings." xml:space="preserve" approved="no">
-        <source>You can make it visible to your SimpleX contacts via Settings.</source>
-        <target state="translated">你可以透過「設定」讓你的 SimpleX 聯絡人看到它。</target>
+      <trans-unit id="You can make it visible to your POPOPX contacts via Settings." xml:space="preserve" approved="no">
+        <source>You can make it visible to your POPOPX contacts via Settings.</source>
+        <target state="translated">你可以透過「設定」讓你的 POPOPX 聯絡人看到它。</target>
       </trans-unit>
       <trans-unit id="Creating link…" xml:space="preserve" approved="no">
         <source>Creating link…</source>
@@ -7257,9 +7257,9 @@ Error: %@</source>
         <source>Tap to scan</source>
         <target state="translated">點一下即可掃描</target>
       </trans-unit>
-      <trans-unit id="The code you scanned is not a SimpleX link QR code." xml:space="preserve" approved="no">
-        <source>The code you scanned is not a SimpleX link QR code.</source>
-        <target state="translated">你掃描的代碼不是 SimpleX 連結二維碼。</target>
+      <trans-unit id="The code you scanned is not a POPOPX link QR code." xml:space="preserve" approved="no">
+        <source>The code you scanned is not a POPOPX link QR code.</source>
+        <target state="translated">你掃描的代碼不是 POPOPX 連結二維碼。</target>
       </trans-unit>
       <trans-unit id="You can view invitation link again in connection details." xml:space="preserve" approved="no">
         <source>You can view invitation link again in connection details.</source>
@@ -7329,9 +7329,9 @@ Error: %@</source>
         <source>Private notes</source>
         <target state="translated">私密筆記</target>
       </trans-unit>
-      <trans-unit id="Recent history and improved [directory bot](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." xml:space="preserve" approved="no">
-        <source>Recent history and improved [directory bot](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).</source>
-        <target state="translated">最近歷史記錄和改進的[目錄機器人](simplex:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)。</target>
+      <trans-unit id="Recent history and improved [directory bot](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." xml:space="preserve" approved="no">
+        <source>Recent history and improved [directory bot](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).</source>
+        <target state="translated">最近歷史記錄和改進的[目錄機器人](popopx:/contact#/?v=1-4&amp;smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)。</target>
       </trans-unit>
       <trans-unit id="Search bar accepts invitation links." xml:space="preserve" approved="no">
         <source>Search bar accepts invitation links.</source>
@@ -7689,9 +7689,9 @@ Error: %@</source>
         <source>Other</source>
         <target state="translated">其他</target>
       </trans-unit>
-      <trans-unit id="Prohibit sending SimpleX links." xml:space="preserve" approved="no">
-        <source>Prohibit sending SimpleX links.</source>
-        <target state="translated">禁止傳送 SimpleX 連結。</target>
+      <trans-unit id="Prohibit sending POPOPX links." xml:space="preserve" approved="no">
+        <source>Prohibit sending POPOPX links.</source>
+        <target state="translated">禁止傳送 POPOPX 連結。</target>
       </trans-unit>
       <trans-unit id="Recipient(s) can't see who this message is from." xml:space="preserve" approved="no">
         <source>Recipient(s) can't see who this message is from.</source>
@@ -8437,9 +8437,9 @@ Please share any other issues with the developers.</source>
         <source>Selected %lld</source>
         <target state="translated">已選擇 %lld</target>
       </trans-unit>
-      <trans-unit id="Share to SimpleX" xml:space="preserve" approved="no">
-        <source>Share to SimpleX</source>
-        <target state="translated">分享到 SimpleX</target>
+      <trans-unit id="Share to POPOPX" xml:space="preserve" approved="no">
+        <source>Share to POPOPX</source>
+        <target state="translated">分享到 POPOPX</target>
       </trans-unit>
       <trans-unit id="The messages will be deleted for all members." xml:space="preserve" approved="no">
         <source>The messages will be deleted for all members.</source>
@@ -8701,9 +8701,9 @@ Requires compatible VPN.</source>
         <source>Your chat preferences</source>
         <target state="translated">你的聊天偏好設定</target>
       </trans-unit>
-      <trans-unit id="Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." xml:space="preserve" approved="no">
-        <source>Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile.</source>
-        <target state="translated">你的個人檔案儲存在你的裝置上，且只會與你的聯絡人分享。SimpleX 伺服器無法看到你的個人檔案。</target>
+      <trans-unit id="Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." xml:space="preserve" approved="no">
+        <source>Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile.</source>
+        <target state="translated">你的個人檔案儲存在你的裝置上，且只會與你的聯絡人分享。POPOPX 伺服器無法看到你的個人檔案。</target>
       </trans-unit>
       <trans-unit id="Your profile was changed. If you save it, the updated profile will be sent to all your contacts." xml:space="preserve" approved="no">
         <source>Your profile was changed. If you save it, the updated profile will be sent to all your contacts.</source>
@@ -8851,9 +8851,9 @@ More improvements are coming soon!</source>
         <target state="translated">改善送達，降低流量用量。
 更多改進即將推出！</target>
       </trans-unit>
-      <trans-unit id="SimpleX protocols reviewed by Trail of Bits." xml:space="preserve" approved="no">
-        <source>SimpleX protocols reviewed by Trail of Bits.</source>
-        <target state="translated">SimpleX 協議已由 Trail of Bits 審查。</target>
+      <trans-unit id="POPOPX protocols reviewed by Trail of Bits." xml:space="preserve" approved="no">
+        <source>POPOPX protocols reviewed by Trail of Bits.</source>
+        <target state="translated">POPOPX 協議已由 Trail of Bits 審查。</target>
       </trans-unit>
       <trans-unit id="Switch audio and video during the call." xml:space="preserve" approved="no">
         <source>Switch audio and video during the call.</source>
@@ -8975,9 +8975,9 @@ More improvements are coming soon!</source>
         <source>For chat profile %@:</source>
         <target state="translated">針對聊天個人檔案 %@：</target>
       </trans-unit>
-      <trans-unit id="For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server." xml:space="preserve" approved="no">
-        <source>For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server.</source>
-        <target state="translated">例如，如果你的聯絡人透過 SimpleX Chat 伺服器接收訊息，你的應用程式會透過 Flux 伺服器傳送訊息。</target>
+      <trans-unit id="For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server." xml:space="preserve" approved="no">
+        <source>For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server.</source>
+        <target state="translated">例如，如果你的聯絡人透過 POPOPX Chat 伺服器接收訊息，你的應用程式會透過 Flux 伺服器傳送訊息。</target>
       </trans-unit>
       <trans-unit id="For private routing" xml:space="preserve" approved="no">
         <source>For private routing</source>
@@ -9103,13 +9103,13 @@ More improvements are coming soon!</source>
         <source>Share address publicly</source>
         <target state="translated">公開分享地址</target>
       </trans-unit>
-      <trans-unit id="SimpleX address and 1-time links are safe to share via any messenger." xml:space="preserve" approved="no">
-        <source>SimpleX address and 1-time links are safe to share via any messenger.</source>
-        <target state="translated">SimpleX 地址和一次性連結可安全地透過任何通訊應用程式分享。</target>
+      <trans-unit id="POPOPX address and 1-time links are safe to share via any messenger." xml:space="preserve" approved="no">
+        <source>POPOPX address and 1-time links are safe to share via any messenger.</source>
+        <target state="translated">POPOPX 地址和一次性連結可安全地透過任何通訊應用程式分享。</target>
       </trans-unit>
-      <trans-unit id="SimpleX address or 1-time link?" xml:space="preserve" approved="no">
-        <source>SimpleX address or 1-time link?</source>
-        <target state="translated">SimpleX 地址或一次性連結？</target>
+      <trans-unit id="POPOPX address or 1-time link?" xml:space="preserve" approved="no">
+        <source>POPOPX address or 1-time link?</source>
+        <target state="translated">POPOPX 地址或一次性連結？</target>
       </trans-unit>
       <trans-unit id="Some servers failed the test:&#10;%@" xml:space="preserve" approved="no">
         <source>Some servers failed the test:
@@ -9261,9 +9261,9 @@ More improvements are coming soon!</source>
         <source>Members can irreversibly delete sent messages. (24 hours)</source>
         <target state="translated">成員可以刪除已傳送訊息，且無法復原。（24 小時）</target>
       </trans-unit>
-      <trans-unit id="Members can send SimpleX links." xml:space="preserve" approved="no">
-        <source>Members can send SimpleX links.</source>
-        <target state="translated">成員可以傳送 SimpleX 連結。</target>
+      <trans-unit id="Members can send POPOPX links." xml:space="preserve" approved="no">
+        <source>Members can send POPOPX links.</source>
+        <target state="translated">成員可以傳送 POPOPX 連結。</target>
       </trans-unit>
       <trans-unit id="Members can send files and media." xml:space="preserve" approved="no">
         <source>Members can send files and media.</source>
@@ -9305,9 +9305,9 @@ More improvements are coming soon!</source>
         <source>Conditions are already accepted for these operator(s): **%@**.</source>
         <target state="translated">已接受這些營運商的條件：**%@**。</target>
       </trans-unit>
-      <trans-unit id="SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app." xml:space="preserve" approved="no">
-        <source>SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app.</source>
-        <target state="translated">SimpleX Chat 與 Flux 達成協議，將 Flux 營運的伺服器納入應用程式。</target>
+      <trans-unit id="POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app." xml:space="preserve" approved="no">
+        <source>POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app.</source>
+        <target state="translated">POPOPX Chat 與 Flux 達成協議，將 Flux 營運的伺服器納入應用程式。</target>
       </trans-unit>
       <trans-unit id="All data is kept private on your device." xml:space="preserve" approved="no">
         <source>All data is kept private on your device.</source>
@@ -9789,9 +9789,9 @@ More improvements are coming soon!</source>
         <source>Short link</source>
         <target state="translated">短連結</target>
       </trans-unit>
-      <trans-unit id="SimpleX channel link" xml:space="preserve" approved="no">
-        <source>SimpleX channel link</source>
-        <target state="translated">SimpleX 頻道連結</target>
+      <trans-unit id="POPOPX channel link" xml:space="preserve" approved="no">
+        <source>POPOPX channel link</source>
+        <target state="translated">POPOPX 頻道連結</target>
       </trans-unit>
       <trans-unit id="This link requires a newer app version. Please upgrade the app or ask your contact to send a compatible link." xml:space="preserve" approved="no">
         <source>This link requires a newer app version. Please upgrade the app or ask your contact to send a compatible link.</source>
@@ -10025,9 +10025,9 @@ More improvements are coming soon!</source>
         <source>Send request without message</source>
         <target state="translated">傳送不含訊息的請求</target>
       </trans-unit>
-      <trans-unit id="SimpleX address settings" xml:space="preserve" approved="no">
-        <source>SimpleX address settings</source>
-        <target state="translated">SimpleX 地址設定</target>
+      <trans-unit id="POPOPX address settings" xml:space="preserve" approved="no">
+        <source>POPOPX address settings</source>
+        <target state="translated">POPOPX 地址設定</target>
       </trans-unit>
       <trans-unit id="You will be able to send messages **only after your request is accepted**." xml:space="preserve" approved="no">
         <source>You will be able to send messages **only after your request is accepted**.</source>
@@ -10177,9 +10177,9 @@ More improvements are coming soon!</source>
         <source>Share your address</source>
         <target state="translated">分享你的地址</target>
       </trans-unit>
-      <trans-unit id="Short SimpleX address" xml:space="preserve" approved="no">
-        <source>Short SimpleX address</source>
-        <target state="translated">SimpleX 短地址</target>
+      <trans-unit id="Short POPOPX address" xml:space="preserve" approved="no">
+        <source>Short POPOPX address</source>
+        <target state="translated">POPOPX 短地址</target>
       </trans-unit>
       <trans-unit id="Time to disappear is set only for new contacts." xml:space="preserve" approved="no">
         <source>Time to disappear is set only for new contacts.</source>
@@ -10709,9 +10709,9 @@ More improvements are coming soon!</source>
         <source>Share relay address</source>
         <target state="translated">分享中繼地址</target>
       </trans-unit>
-      <trans-unit id="SimpleX relay address" xml:space="preserve" approved="no">
-        <source>SimpleX relay address</source>
-        <target state="translated">SimpleX 中繼地址</target>
+      <trans-unit id="POPOPX relay address" xml:space="preserve" approved="no">
+        <source>POPOPX relay address</source>
+        <target state="translated">POPOPX 中繼地址</target>
       </trans-unit>
       <trans-unit id="Subscriber" xml:space="preserve" approved="no">
         <source>Subscriber</source>
@@ -10905,9 +10905,9 @@ Relays can access channel messages.</source>
         <source>A link for one person to connect</source>
         <target state="translated">供一人連線的連結</target>
       </trans-unit>
-      <trans-unit id="Add address to your profile, so that your SimpleX contacts can share it with other people. Profile update will be sent to your SimpleX contacts." xml:space="preserve" approved="no">
-        <source>Add address to your profile, so that your SimpleX contacts can share it with other people. Profile update will be sent to your SimpleX contacts.</source>
-        <target state="translated">將地址加入你的個人檔案，讓你的 SimpleX 聯絡人可以與其他人分享。個人檔案更新將傳送給你的 SimpleX 聯絡人。</target>
+      <trans-unit id="Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts." xml:space="preserve" approved="no">
+        <source>Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts.</source>
+        <target state="translated">將地址加入你的個人檔案，讓你的 POPOPX 聯絡人可以與其他人分享。個人檔案更新將傳送給你的 POPOPX 聯絡人。</target>
       </trans-unit>
       <trans-unit id="All relays failed" xml:space="preserve" approved="no">
         <source>All relays failed</source>
@@ -11031,9 +11031,9 @@ in your network</source>
         <source>History is not sent to new subscribers.</source>
         <target state="translated">歷史記錄不會傳送給新訂閱者。</target>
       </trans-unit>
-      <trans-unit id="Install SimpleX Chat for terminal" xml:space="preserve" approved="no">
-        <source>Install SimpleX Chat for terminal</source>
-        <target state="translated">安裝 SimpleX Chat 終端機版</target>
+      <trans-unit id="Install POPOPX Chat for terminal" xml:space="preserve" approved="no">
+        <source>Install POPOPX Chat for terminal</source>
+        <target state="translated">安裝 POPOPX Chat 終端機版</target>
       </trans-unit>
       <trans-unit id="Invite someone privately" xml:space="preserve" approved="no">
         <source>Invite someone privately</source>
@@ -11145,9 +11145,9 @@ The most secure encryption.</source>
         <source>Private and secure messaging.</source>
         <target state="translated">私密且安全的訊息傳遞。</target>
       </trans-unit>
-      <trans-unit id="Profile update will be sent to your SimpleX contacts." xml:space="preserve" approved="no">
-        <source>Profile update will be sent to your SimpleX contacts.</source>
-        <target state="translated">個人檔案更新將傳送給你的 SimpleX 聯絡人。</target>
+      <trans-unit id="Profile update will be sent to your POPOPX contacts." xml:space="preserve" approved="no">
+        <source>Profile update will be sent to your POPOPX contacts.</source>
+        <target state="translated">個人檔案更新將傳送給你的 POPOPX 聯絡人。</target>
       </trans-unit>
       <trans-unit id="Prohibit chats with admins." xml:space="preserve" approved="no">
         <source>Prohibit chats with admins.</source>
@@ -11185,9 +11185,9 @@ The most secure encryption.</source>
         <source>Security: owners hold channel keys.</source>
         <target state="translated">安全性：擁有者持有頻道金鑰。</target>
       </trans-unit>
-      <trans-unit id="Send the link via any messenger - it's secure. Ask to paste into SimpleX." xml:space="preserve" approved="no">
-        <source>Send the link via any messenger - it's secure. Ask to paste into SimpleX.</source>
-        <target state="translated">透過任何通訊應用程式傳送連結，這是安全的。請對方貼到 SimpleX 中。</target>
+      <trans-unit id="Send the link via any messenger - it's secure. Ask to paste into POPOPX." xml:space="preserve" approved="no">
+        <source>Send the link via any messenger - it's secure. Ask to paste into POPOPX.</source>
+        <target state="translated">透過任何通訊應用程式傳送連結，這是安全的。請對方貼到 POPOPX 中。</target>
       </trans-unit>
       <trans-unit id="Send up to 100 last messages to new subscribers." xml:space="preserve" approved="no">
         <source>Send up to 100 last messages to new subscribers.</source>
@@ -11205,9 +11205,9 @@ The most secure encryption.</source>
         <source>Setup routers</source>
         <target state="translated">設定路由器</target>
       </trans-unit>
-      <trans-unit id="Share address with SimpleX contacts?" xml:space="preserve" approved="no">
-        <source>Share address with SimpleX contacts?</source>
-        <target state="translated">要與 SimpleX 聯絡人分享地址嗎？</target>
+      <trans-unit id="Share address with POPOPX contacts?" xml:space="preserve" approved="no">
+        <source>Share address with POPOPX contacts?</source>
+        <target state="translated">要與 POPOPX 聯絡人分享地址嗎？</target>
       </trans-unit>
       <trans-unit id="Share channel" xml:space="preserve" approved="no">
         <source>Share channel</source>
@@ -11217,9 +11217,9 @@ The most secure encryption.</source>
         <source>Share via chat</source>
         <target state="translated">透過聊天分享</target>
       </trans-unit>
-      <trans-unit id="Share with SimpleX contacts" xml:space="preserve" approved="no">
-        <source>Share with SimpleX contacts</source>
-        <target state="translated">與 SimpleX 聯絡人分享</target>
+      <trans-unit id="Share with POPOPX contacts" xml:space="preserve" approved="no">
+        <source>Share with POPOPX contacts</source>
+        <target state="translated">與 POPOPX 聯絡人分享</target>
       </trans-unit>
       <trans-unit id="Star on GitHub" xml:space="preserve" approved="no">
         <source>Star on GitHub</source>
@@ -11245,9 +11245,9 @@ The most secure encryption.</source>
         <source>Subscribers can report messsages to moderators.</source>
         <target state="translated">訂閱者可以向審核員檢舉訊息。</target>
       </trans-unit>
-      <trans-unit id="Subscribers can send SimpleX links." xml:space="preserve" approved="no">
-        <source>Subscribers can send SimpleX links.</source>
-        <target state="translated">訂閱者可以傳送 SimpleX 連結。</target>
+      <trans-unit id="Subscribers can send POPOPX links." xml:space="preserve" approved="no">
+        <source>Subscribers can send POPOPX links.</source>
+        <target state="translated">訂閱者可以傳送 POPOPX 連結。</target>
       </trans-unit>
       <trans-unit id="Subscribers can send direct messages." xml:space="preserve" approved="no">
         <source>Subscribers can send direct messages.</source>
@@ -11295,9 +11295,9 @@ your contacts and groups.</source>
         <source>There is another way. A network with no phone numbers. No usernames. No accounts. No user identities of any kind. A network that connects people and carries encrypted messages without knowing who is connected.</source>
         <target state="translated">還有另一種方式。一個不需要電話號碼、使用者名稱、帳戶，也沒有任何形式使用者身分的網路。一個在不知道誰與誰連線的情況下，仍能連接人們並傳遞加密訊息的網路。</target>
       </trans-unit>
-      <trans-unit id="To make SimpleX Network last." xml:space="preserve" approved="no">
-        <source>To make SimpleX Network last.</source>
-        <target state="translated">讓 SimpleX Network 長久延續。</target>
+      <trans-unit id="To make POPOPX Network last." xml:space="preserve" approved="no">
+        <source>To make POPOPX Network last.</source>
+        <target state="translated">讓 POPOPX Network 長久延續。</target>
       </trans-unit>
       <trans-unit id="Up to 100 last messages are sent to new subscribers." xml:space="preserve" approved="no">
         <source>Up to 100 last messages are sent to new subscribers.</source>
@@ -11315,9 +11315,9 @@ your contacts and groups.</source>
         <source>We made connecting simpler for new users.</source>
         <target state="translated">我們讓新使用者更容易連線。</target>
       </trans-unit>
-      <trans-unit id="Why SimpleX is built." xml:space="preserve" approved="no">
-        <source>Why SimpleX is built.</source>
-        <target state="translated">SimpleX 為何而建。</target>
+      <trans-unit id="Why POPOPX is built." xml:space="preserve" approved="no">
+        <source>Why POPOPX is built.</source>
+        <target state="translated">POPOPX 為何而建。</target>
       </trans-unit>
       <trans-unit id="You commit to:&#10;- Only legal content in public groups&#10;- Respect other users - no spam" xml:space="preserve" approved="no">
         <source>You commit to:
@@ -11579,9 +11579,9 @@ your contacts and groups.</source>
         <source>You can enable them later via app Your privacy settings.</source>
         <target state="translated">你稍後可以透過應用程式的「你的私隱」設定啟用它們。</target>
       </trans-unit>
-      <trans-unit id="You can support SimpleX starting from v7 of the app." xml:space="preserve" approved="no">
-        <source>You can support SimpleX starting from v7 of the app.</source>
-        <target state="translated">自應用程式 v7 起，你可以支持 SimpleX。</target>
+      <trans-unit id="You can support POPOPX starting from v7 of the app." xml:space="preserve" approved="no">
+        <source>You can support POPOPX starting from v7 of the app.</source>
+        <target state="translated">自應用程式 v7 起，你可以支持 POPOPX。</target>
       </trans-unit>
       <trans-unit id="Your new channel %@ is connected to %d of %d relays.&#10;If you cancel, the channel will be deleted - you can create it again." xml:space="preserve" approved="no">
         <source>Your new channel %1$@ is connected to %2$d of %3$d relays.
@@ -11599,65 +11599,65 @@ If you cancel, the channel will be deleted - you can create it again.</source>
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/SimpleX--iOS--InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="en.lproj/POPOPX--iOS--InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.0" build-num="14A309"/>
     </header>
     <body>
       <trans-unit id="CFBundleName" xml:space="preserve" approved="no">
-        <source>SimpleX</source>
-        <target state="translated">SimpleX</target>
+        <source>POPOPX</source>
+        <target state="translated">POPOPX</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve" approved="no">
-        <source>SimpleX needs camera access to scan QR codes to connect to other users and for video calls.</source>
-        <target state="translated">SimpleX 需要相機取用權限，才能掃描二維碼與其他使用者連線，並用於視訊通話。</target>
+        <source>POPOPX needs camera access to scan QR codes to connect to other users and for video calls.</source>
+        <target state="translated">POPOPX 需要相機取用權限，才能掃描二維碼與其他使用者連線，並用於視訊通話。</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSFaceIDUsageDescription" xml:space="preserve" approved="no">
-        <source>SimpleX uses Face ID for local authentication</source>
-        <target state="translated">SimpleX 使用 Face ID 進行本機認證</target>
+        <source>POPOPX uses Face ID for local authentication</source>
+        <target state="translated">POPOPX 使用 Face ID 進行本機認證</target>
         <note>Privacy - Face ID Usage Description</note>
       </trans-unit>
       <trans-unit id="NSMicrophoneUsageDescription" xml:space="preserve" approved="no">
-        <source>SimpleX needs microphone access for audio and video calls, and to record voice messages.</source>
-        <target state="translated">SimpleX 需要麥克風取用權限，才能進行語音和視訊通話，並錄製語音訊息。</target>
+        <source>POPOPX needs microphone access for audio and video calls, and to record voice messages.</source>
+        <target state="translated">POPOPX 需要麥克風取用權限，才能進行語音和視訊通話，並錄製語音訊息。</target>
         <note>Privacy - Microphone Usage Description</note>
       </trans-unit>
       <trans-unit id="NSPhotoLibraryAddUsageDescription" xml:space="preserve" approved="no">
-        <source>SimpleX needs access to Photo Library for saving captured and received media</source>
-        <target state="translated">SimpleX 需要照片圖庫取用權限，才能儲存拍攝和接收的媒體</target>
+        <source>POPOPX needs access to Photo Library for saving captured and received media</source>
+        <target state="translated">POPOPX 需要照片圖庫取用權限，才能儲存拍攝和接收的媒體</target>
         <note>Privacy - Photo Library Additions Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocalNetworkUsageDescription" xml:space="preserve" approved="no">
-        <source>SimpleX uses local network access to allow using user chat profile via desktop app on the same network.</source>
-        <target state="translated">SimpleX 需要本機網路取用權限，讓同一網路上的桌面應用程式能使用你的聊天個人檔案。</target>
+        <source>POPOPX uses local network access to allow using user chat profile via desktop app on the same network.</source>
+        <target state="translated">POPOPX 需要本機網路取用權限，讓同一網路上的桌面應用程式能使用你的聊天個人檔案。</target>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX NSE/en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="POPOPX NSE/en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.0" build-num="14A309"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve" approved="no">
-        <source>SimpleX NSE</source>
-        <target state="translated">SimpleX NSE</target>
+        <source>POPOPX NSE</source>
+        <target state="translated">POPOPX NSE</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve" approved="no">
-        <source>SimpleX NSE</source>
-        <target state="translated">SimpleX NSE</target>
+        <source>POPOPX NSE</source>
+        <target state="translated">POPOPX NSE</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve" approved="no">
-        <source>Copyright © 2022 SimpleX Chat. All rights reserved.</source>
-        <target state="translated">版權所有© 2022 SimpleX Chat。保留所有權利。</target>
+        <source>Copyright © 2022 POPOPX Chat. All rights reserved.</source>
+        <target state="translated">版權所有© 2022 POPOPX Chat。保留所有權利。</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX NSE/en.lproj/Localizable.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="POPOPX NSE/en.lproj/Localizable.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
     <body>
       <trans-unit id="%d new events" xml:space="preserve" approved="no">
         <source>%d new events</source>
@@ -11681,23 +11681,23 @@ If you cancel, the channel will be deleted - you can create it again.</source>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX SE/en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="POPOPX SE/en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve" approved="no">
-        <source>SimpleX SE</source>
-        <target state="translated">SimpleX SE</target>
+        <source>POPOPX SE</source>
+        <target state="translated">POPOPX SE</target>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve" approved="no">
-        <source>Copyright © 2024 SimpleX Chat. All rights reserved.</source>
-        <target state="translated">版權所有© 2024 SimpleX Chat。保留所有權利。</target>
+        <source>Copyright © 2024 POPOPX Chat. All rights reserved.</source>
+        <target state="translated">版權所有© 2024 POPOPX Chat。保留所有權利。</target>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve" approved="no">
-        <source>SimpleX SE</source>
-        <target state="translated">SimpleX SE</target>
+        <source>POPOPX SE</source>
+        <target state="translated">POPOPX SE</target>
       </trans-unit>
     </body>
   </file>
-  <file original="SimpleX SE/en.lproj/Localizable.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="POPOPX SE/en.lproj/Localizable.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
     <body>
       <trans-unit id="App is locked!" xml:space="preserve" approved="no">
         <source>App is locked!</source>
@@ -11783,9 +11783,9 @@ If you cancel, the channel will be deleted - you can create it again.</source>
         <source>Passphrase</source>
         <target state="translated">密碼</target>
       </trans-unit>
-      <trans-unit id="Please create a profile in the SimpleX app" xml:space="preserve" approved="no">
-        <source>Please create a profile in the SimpleX app</source>
-        <target state="translated">請在 SimpleX 應用程式中建立個人檔案</target>
+      <trans-unit id="Please create a profile in the POPOPX app" xml:space="preserve" approved="no">
+        <source>Please create a profile in the POPOPX app</source>
+        <target state="translated">請在 POPOPX 應用程式中建立個人檔案</target>
       </trans-unit>
       <trans-unit id="Selected chat preferences prohibit this message." xml:space="preserve" approved="no">
         <source>Selected chat preferences prohibit this message.</source>
@@ -11823,9 +11823,9 @@ If you cancel, the channel will be deleted - you can create it again.</source>
         <source>Wrong database passphrase</source>
         <target state="translated">數據庫密碼錯誤</target>
       </trans-unit>
-      <trans-unit id="You can allow sharing in Your privacy / SimpleX Lock settings." xml:space="preserve" approved="no">
-        <source>You can allow sharing in Your privacy / SimpleX Lock settings.</source>
-        <target state="translated">你可以在「你的私隱」/「SimpleX 鎖定」設定中允許分享。</target>
+      <trans-unit id="You can allow sharing in Your privacy / POPOPX Lock settings." xml:space="preserve" approved="no">
+        <source>You can allow sharing in Your privacy / POPOPX Lock settings.</source>
+        <target state="translated">你可以在「你的私隱」/「POPOPX 鎖定」設定中允許分享。</target>
       </trans-unit>
       <trans-unit id="%@" xml:space="preserve" approved="no">
         <source>%@</source>

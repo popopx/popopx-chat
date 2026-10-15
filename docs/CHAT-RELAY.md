@@ -6,13 +6,13 @@ templateEngineOverride: md
 
 # Hosting your own Chat Relay
 
-Chat relays are used to deliver channel messages in SimpleX Network. Read more about channels in this [whitepaper](https://github.com/simplex-chat/simplex-chat/blob/master/docs/protocol/channels-overview.md) and this [blog post](https://simplex.chat/blog/20260430-simplex-channels-v6-5-consortium-crowdfunding-freedom-of-speech.html).
+Chat relays are used to deliver channel messages in POPOPX Network. Read more about channels in this [whitepaper](https://github.com/simplex-chat/simplex-chat/blob/master/docs/protocol/channels-overview.md) and this [blog post](https://simplex.chat/blog/20260430-simplex-channels-v6-5-consortium-crowdfunding-freedom-of-speech.html).
 
-A chat relay is the SimpleX Chat CLI (`simplex-chat`) running in relay mode (`--relay`). It has its own profile (a display name and a picture), its own address, and in addition to delivering messages, it can generate data for web previews of the channels it delivers.
+A chat relay is the POPOPX Chat CLI (`popopx-chat`) running in relay mode (`--relay`). It has its own profile (a display name and a picture), its own address, and in addition to delivering messages, it can generate data for web previews of the channels it delivers.
 
 This guide explains how to set up a chat relay on a Linux server, how to run it, and (optionally) how to configure [Caddy](https://caddyserver.com) to serve data for channel web previews.
 
-> **Please note**: This guide applies only to SimpleX Chat v7.0.0-beta.4 and later.
+> **Please note**: This guide applies only to POPOPX Chat v7.0.0-beta.4 and later.
 
 ## Table of Contents
 
@@ -30,7 +30,7 @@ This guide explains how to set up a chat relay on a Linux server, how to run it,
 
 ## Install the CLI
 
-The relay is the standard `simplex-chat` CLI binary. Install or update it with the install script:
+The relay is the standard `popopx-chat` CLI binary. Install or update it with the install script:
 
 ```sh
 curl -o- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/install.sh | bash
@@ -38,7 +38,7 @@ curl -o- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/inst
 
 Other options (manual binary download, building from source) are in the [CLI guide](./CLI.md#download-chat-client).
 
-Copy the installed `simplex-chat` binary to `/usr/local/bin/simplex-chat-relay`. The guide uses that name so the relay is separate from any interactive `simplex-chat` you also run on the server.
+Copy the installed `popopx-chat` binary to `/usr/local/bin/popopx-chat-relay`. The guide uses that name so the relay is separate from any interactive `popopx-chat` you also run on the server.
 
 Create a dedicated user for the relay (called `relay` below), so it does not run as root and keeps its database in one place:
 
@@ -56,7 +56,7 @@ Create a run script `/usr/local/bin/relay-run`:
 
 ```sh
 #!/bin/sh
-exec /usr/local/bin/simplex-chat-relay \
+exec /usr/local/bin/popopx-chat-relay \
   --relay \
   --headless \
   --user-display-name "My Relay" \
@@ -68,11 +68,11 @@ exec /usr/local/bin/simplex-chat-relay \
 chmod +x /usr/local/bin/relay-run
 ```
 
-Create `/etc/systemd/system/simplex-relay.service`:
+Create `/etc/systemd/system/popopx-relay.service`:
 
 ```ini
 [Unit]
-Description=SimpleX Chat relay
+Description=POPOPX Chat relay
 After=network.target
 
 [Service]
@@ -89,7 +89,7 @@ Enable and start it:
 
 ```sh
 systemctl daemon-reload
-systemctl enable --now simplex-relay
+systemctl enable --now popopx-relay
 ```
 
 The first start creates the relay profile (with the given name and picture) and its address; later starts reuse them. Both are written to the journal:
@@ -97,7 +97,7 @@ The first start creates the relay profile (with the given name and picture) and 
 ```
 Current user: My Relay
 Chat relay address is created:
-https://smp4.simplex.im/r#73iEnnvCqPTVGArCAWUcRaj5hxRb7TbPCSZ2JY2VjCQ
+https://smp4.popopx.im/r#73iEnnvCqPTVGArCAWUcRaj5hxRb7TbPCSZ2JY2VjCQ
 ```
 
 ### Relay options
@@ -115,7 +115,7 @@ https://smp4.simplex.im/r#73iEnnvCqPTVGArCAWUcRaj5hxRb7TbPCSZ2JY2VjCQ
 The address is created and logged on the first start. Read it from the journal at any time:
 
 ```sh
-journalctl -u simplex-relay | grep -A1 "address is created"
+journalctl -u popopx-relay | grep -A1 "address is created"
 ```
 
 ### Run relay commands
@@ -123,9 +123,9 @@ journalctl -u simplex-relay | grep -A1 "address is created"
 The service runs headless, so there is no attached terminal to type into. To run a one-off command, stop the service, run the command against the relay's database with `-e`, then start it again. For example, to change the picture (`--user-image-file` only sets it when the profile is first created):
 
 ```sh
-systemctl stop simplex-relay
-simplex-chat-relay -d /home/relay/relay -e "/set profile image file /home/relay/new-avatar.png"
-systemctl start simplex-relay
+systemctl stop popopx-relay
+popopx-chat-relay -d /home/relay/relay -e "/set profile image file /home/relay/new-avatar.png"
+systemctl start popopx-relay
 ```
 
 ## Run with Docker
@@ -136,7 +136,7 @@ The relay can also be built and run with Docker Compose, using PostgreSQL for st
 
    ```sh
    git clone https://github.com/simplex-chat/simplex-chat
-   cd simplex-chat/scripts/relay
+   cd popopx-chat/scripts/relay
    ```
 
 2. Copy the example environment file, then set `RELAY_NAME`, `RELAY_WEB_DOMAIN` and `POSTGRES_PASSWORD` in it:
@@ -184,7 +184,7 @@ To run a one-off command against the relay's database, override the entrypoint:
 
 ```sh
 docker compose run --rm --entrypoint sh relay -c \
-  'simplex-chat-relay -d "$DB_CONN" -e "/set profile image file /avatar.png"'
+  'popopx-chat-relay -d "$DB_CONN" -e "/set profile image file /avatar.png"'
 ```
 
 Relay metrics from the database are published by [sql_exporter](https://github.com/burningalchemist/sql_exporter) on `127.0.0.1:9399/metrics`, with the queries in `sql_exporter.yml`.
@@ -192,7 +192,7 @@ Relay metrics from the database are published by [sql_exporter](https://github.c
 Relay database live in PostgreSQL docker volume. To print the full path to PostgreSQL database, execute in the host:
 
 ```sh
-docker volume inspect simplex-chat-relay_pgdata --format '{{.Mountpoint}}'
+docker volume inspect popopx-chat-relay_pgdata --format '{{.Mountpoint}}'
 ```
 
 ## Channel web previews
@@ -229,7 +229,7 @@ chown -R relay:relay /var/www/relay-web-channels
 Restart the relay so the new flags take effect:
 
 ```sh
-systemctl restart simplex-relay
+systemctl restart popopx-relay
 ```
 
 ### Serve the previews with Caddy
@@ -252,7 +252,7 @@ relay.example.com {
   handle /channel/* {
     root * /var/www/relay-web-channels    # files resolve to .../channel/<id>.json
     file_server
-    import /etc/caddy/simplex-cors.conf
+    import /etc/caddy/popopx-cors.conf
   }
 }
 ```
@@ -260,7 +260,7 @@ relay.example.com {
 Keep `root` at the parent directory with a non-stripping `handle`. That is what makes `/channel/<id>.json` resolve to `.../channel/<id>.json`. Do not point `root` at the `channel` subdirectory: the relay's generated CORS matchers are `/channel/*.json`, which only match when the prefix is kept.
 
 ```sh
-touch /etc/caddy/simplex-cors.conf      # so the import doesn't fail before the first write
+touch /etc/caddy/popopx-cors.conf      # so the import doesn't fail before the first write
 usermod -aG relay caddy                 # let caddy read the relay user's files
 systemctl restart caddy                 # restart (not reload) to pick up the group
 ```
@@ -269,40 +269,40 @@ systemctl restart caddy                 # restart (not reload) to pick up the gr
 
 The relay updates its CORS file as channels change. Copy it into Caddy's config and reload Caddy whenever it changes.
 
-Create `/usr/local/bin/simplex-cors-sync.sh`:
+Create `/usr/local/bin/popopx-cors-sync.sh`:
 
 ```sh
 #!/bin/sh
 set -eu
 SRC=/var/www/relay-web-channels/cors.conf
-DST=/etc/caddy/simplex-cors.conf
+DST=/etc/caddy/popopx-cors.conf
 [ -f "$SRC" ] || exit 0
 cmp -s "$SRC" "$DST" 2>/dev/null && exit 0
 install -m 0644 "$SRC" "$DST"
 systemctl reload caddy
-logger -t simplex-cors "reloaded caddy"
+logger -t popopx-cors "reloaded caddy"
 ```
 
-Create `/etc/systemd/system/simplex-cors-sync.service`:
+Create `/etc/systemd/system/popopx-cors-sync.service`:
 
 ```ini
 [Unit]
-Description=Sync SimpleX relay CORS config to Caddy
+Description=Sync POPOPX relay CORS config to Caddy
 StartLimitIntervalSec=0
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/simplex-cors-sync.sh
+ExecStart=/usr/local/bin/popopx-cors-sync.sh
 ```
 
-Create `/etc/systemd/system/simplex-cors-sync.path` to run the service whenever the relay's CORS file changes:
+Create `/etc/systemd/system/popopx-cors-sync.path` to run the service whenever the relay's CORS file changes:
 
 ```ini
 [Unit]
-Description=Watch SimpleX relay CORS config
+Description=Watch POPOPX relay CORS config
 After=caddy.service
 [Path]
 PathChanged=/var/www/relay-web-channels/cors.conf
-Unit=simplex-cors-sync.service
+Unit=popopx-cors-sync.service
 TriggerLimitIntervalSec=0
 [Install]
 WantedBy=multi-user.target
@@ -311,15 +311,15 @@ WantedBy=multi-user.target
 Enable it:
 
 ```sh
-chmod +x /usr/local/bin/simplex-cors-sync.sh
+chmod +x /usr/local/bin/popopx-cors-sync.sh
 systemctl daemon-reload
-systemctl enable --now simplex-cors-sync.path
+systemctl enable --now popopx-cors-sync.path
 ```
 
 ### Verify
 
 ```sh
-systemctl status simplex-cors-sync.path              # active (waiting)
+systemctl status popopx-cors-sync.path              # active (waiting)
 ls /var/www/relay-web-channels/channel               # a JSON file appears once a public channel renders
 curl -sI https://relay.example.com/channel/<id>.json | grep -i access-control
 ```

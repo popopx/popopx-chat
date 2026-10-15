@@ -1,4 +1,4 @@
-# SimpleX Chat -- Kotlin Multiplatform Specification
+# POPOPX Chat -- Kotlin Multiplatform Specification
 
 ## Table of Contents
 
@@ -12,14 +12,14 @@
 
 ## Executive Summary
 
-SimpleX Chat is a Kotlin Multiplatform application targeting **Android** and **Desktop** (JVM) platforms. The UI layer is built entirely with Jetpack Compose. The application communicates with a Haskell-based cryptographic core (`simplex-chat`) through a **JNI bridge** -- native functions declared in Kotlin and linked at runtime to a shared library (`libapp-lib`). Platform-specific behavior (notifications, file system paths, services, audio/video) is abstracted using the `expect`/`actual` pattern and a runtime-assignable `PlatformInterface` callback object.
+POPOPX Chat is a Kotlin Multiplatform application targeting **Android** and **Desktop** (JVM) platforms. The UI layer is built entirely with Jetpack Compose. The application communicates with a Haskell-based cryptographic core (`popopx-chat`) through a **JNI bridge** -- native functions declared in Kotlin and linked at runtime to a shared library (`libapp-lib`). Platform-specific behavior (notifications, file system paths, services, audio/video) is abstracted using the `expect`/`actual` pattern and a runtime-assignable `PlatformInterface` callback object.
 
 The Gradle project is structured as three modules:
 
 | Module | Purpose |
 |---|---|
 | `:common` | Shared Compose UI, models, platform abstractions (`commonMain`, `androidMain`, `desktopMain`) |
-| `:android` | Android application entry point (`SimplexApp`, `MainActivity`) |
+| `:android` | Android application entry point (`PopopxApp`, `MainActivity`) |
 | `:desktop` | Desktop application entry point (`Main.kt`, `showApp()`) |
 
 All meaningful application logic resides in `:common/commonMain`. Platform source sets (`androidMain`, `desktopMain`) provide `actual` implementations for `expect` declarations and host platform-specific integration code.
@@ -30,13 +30,13 @@ All meaningful application logic resides in `:common/commonMain`. Platform sourc
 
 ```
 App Entry Points
-+-- Android: SimplexApp.onCreate -> initHaskell -> initMultiplatform -> initChatControllerOnStart
++-- Android: PopopxApp.onCreate -> initHaskell -> initMultiplatform -> initChatControllerOnStart
 |            MainActivity.onCreate -> setContent { AppScreen() }
 +-- Desktop: main() -> initHaskell -> runMigrations -> initApp -> showApp -> AppWindow -> AppScreen()
     |
     v
 Common Module (commonMain)
-+-- ChatModel (Compose state singleton) <-> ChatController/SimpleXAPI (JNI bridge) <-> Haskell Core (chat_ctrl)
++-- ChatModel (Compose state singleton) <-> ChatController/POPOPXAPI (JNI bridge) <-> Haskell Core (chat_ctrl)
 +-- Views (Compose)
 |   +-- App.kt: AppScreen -> MainScreen
 |   +-- ChatListView -> ChatView -> ComposeView -> SendMsgView
@@ -57,8 +57,8 @@ Common Module (commonMain)
 |   +-- AppPreferences   -- 150+ SharedPreferences keys
 +-- Services
 |   +-- NtfManager       -- abstract notification coordinator (Android/Desktop implementations)
-|   +-- SimplexService   -- Android foreground service for background messaging
-|   +-- ThemeManager     -- theme resolution (system/light/dark/simplex/black + per-user overrides)
+|   +-- PopopxService   -- Android foreground service for background messaging
+|   +-- ThemeManager     -- theme resolution (system/light/dark/popopx/black + per-user overrides)
 |   +-- CallManager      -- WebRTC call lifecycle
 +-- Platform (expect/actual)
     +-- Core.kt          -- JNI declarations (external fun), initChatController, chatInitTemporaryDatabase
@@ -73,7 +73,7 @@ Common Module (commonMain)
     +-- Platform.kt      -- PlatformInterface (runtime callback object)
     +-- Cryptor.kt       -- CryptorInterface (expect)
     +-- Images.kt        -- bitmap utilities (expect)
-    +-- SimplexService.kt-- getWakeLock (expect)
+    +-- PopopxService.kt-- getWakeLock (expect)
     +-- Log.kt, Modifier.kt, Back.kt, ScrollableColumn.kt, PlatformTextField.kt, Resources.kt
 ```
 
@@ -94,7 +94,7 @@ Common Module (commonMain)
 | Navigation | [spec/client/navigation.md](client/navigation.md) | App screen routing, onboarding, settings, new chat flows |
 | Calls | [spec/services/calls.md](services/calls.md) | WebRTC call lifecycle, signaling, platform-specific call views |
 | Files | [spec/services/files.md](services/files.md) | File transfer (SMP inline / XFTP), CryptoFile encryption, platform file paths |
-| Notifications | [spec/services/notifications.md](services/notifications.md) | NtfManager, SimplexService, notification channels, background delivery |
+| Notifications | [spec/services/notifications.md](services/notifications.md) | NtfManager, PopopxService, notification channels, background delivery |
 | Theme | [spec/services/theme.md](services/theme.md) | ThemeManager, color system, wallpapers, per-user overrides |
 
 ---
@@ -117,21 +117,21 @@ Common Module (commonMain)
 
 | Component | File | Key Symbol | Line |
 |---|---|---|---|
-| Android Application | [`SimplexApp.kt`](../android/src/main/java/chat/simplex/app/SimplexApp.kt#L41) | `class SimplexApp` | 41 |
-| Android Activity | [`MainActivity.kt`](../android/src/main/java/chat/simplex/app/MainActivity.kt#L27) | `class MainActivity` | 27 |
-| Desktop Entry | [`Main.kt`](../desktop/src/jvmMain/kotlin/chat/simplex/desktop/Main.kt#L21) | `fun main()` | 21 |
-| Desktop App Window | [`DesktopApp.kt`](../common/src/desktopMain/kotlin/chat/simplex/common/DesktopApp.kt#L33) | `fun showApp()` | 33 |
-| Desktop Init | [`AppCommon.desktop.kt`](../common/src/desktopMain/kotlin/chat/simplex/common/platform/AppCommon.desktop.kt#L21) | `fun initApp()` | 21 |
-| Common App Screen | [`App.kt`](../common/src/commonMain/kotlin/chat/simplex/common/App.kt#L47) | `fun AppScreen()` | 47 |
-| JNI Bridge | [`Core.kt`](../common/src/commonMain/kotlin/chat/simplex/common/platform/Core.kt#L18) | `external fun initHS()` | 18 |
-| Chat Controller | [`SimpleXAPI.kt`](../common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt#L525) | `object ChatController` | 525 |
-| Chat Model | [`ChatModel.kt`](../common/src/commonMain/kotlin/chat/simplex/common/model/ChatModel.kt#L86) | `object ChatModel` | 86 |
-| App Preferences | [`SimpleXAPI.kt`](../common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt#L102) | `class AppPreferences` | 102 |
-| Platform Interface | [`Platform.kt`](../common/src/commonMain/kotlin/chat/simplex/common/platform/Platform.kt#L15) | `interface PlatformInterface` | 15 |
-| Notification Manager | [`NtfManager.kt`](../common/src/commonMain/kotlin/chat/simplex/common/platform/NtfManager.kt#L20) | `abstract class NtfManager` | 20 |
-| Theme Manager | [`ThemeManager.kt`](../common/src/commonMain/kotlin/chat/simplex/common/ui/theme/ThemeManager.kt#L18) | `object ThemeManager` | 18 |
-| Android Haskell Init | [`AppCommon.android.kt`](../common/src/androidMain/kotlin/chat/simplex/common/platform/AppCommon.android.kt#L33) | `fun initHaskell(packageName: String)` | 33 |
-| Common Migrations | [`AppCommon.kt`](../common/src/commonMain/kotlin/chat/simplex/common/platform/AppCommon.kt#L41) | `fun runMigrations()` | 41 |
-| Android Service | [`SimplexService.kt`](../android/src/main/java/chat/simplex/app/SimplexService.kt#L41) | `class SimplexService` | 41 |
+| Android Application | [`PopopxApp.kt`](../android/src/main/java/chat/popopx/app/PopopxApp.kt#L41) | `class PopopxApp` | 41 |
+| Android Activity | [`MainActivity.kt`](../android/src/main/java/chat/popopx/app/MainActivity.kt#L27) | `class MainActivity` | 27 |
+| Desktop Entry | [`Main.kt`](../desktop/src/jvmMain/kotlin/chat/popopx/desktop/Main.kt#L21) | `fun main()` | 21 |
+| Desktop App Window | [`DesktopApp.kt`](../common/src/desktopMain/kotlin/chat/popopx/common/DesktopApp.kt#L33) | `fun showApp()` | 33 |
+| Desktop Init | [`AppCommon.desktop.kt`](../common/src/desktopMain/kotlin/chat/popopx/common/platform/AppCommon.desktop.kt#L21) | `fun initApp()` | 21 |
+| Common App Screen | [`App.kt`](../common/src/commonMain/kotlin/chat/popopx/common/App.kt#L47) | `fun AppScreen()` | 47 |
+| JNI Bridge | [`Core.kt`](../common/src/commonMain/kotlin/chat/popopx/common/platform/Core.kt#L18) | `external fun initHS()` | 18 |
+| Chat Controller | [`POPOPXAPI.kt`](../common/src/commonMain/kotlin/chat/popopx/common/model/POPOPXAPI.kt#L525) | `object ChatController` | 525 |
+| Chat Model | [`ChatModel.kt`](../common/src/commonMain/kotlin/chat/popopx/common/model/ChatModel.kt#L86) | `object ChatModel` | 86 |
+| App Preferences | [`POPOPXAPI.kt`](../common/src/commonMain/kotlin/chat/popopx/common/model/POPOPXAPI.kt#L102) | `class AppPreferences` | 102 |
+| Platform Interface | [`Platform.kt`](../common/src/commonMain/kotlin/chat/popopx/common/platform/Platform.kt#L15) | `interface PlatformInterface` | 15 |
+| Notification Manager | [`NtfManager.kt`](../common/src/commonMain/kotlin/chat/popopx/common/platform/NtfManager.kt#L20) | `abstract class NtfManager` | 20 |
+| Theme Manager | [`ThemeManager.kt`](../common/src/commonMain/kotlin/chat/popopx/common/ui/theme/ThemeManager.kt#L18) | `object ThemeManager` | 18 |
+| Android Haskell Init | [`AppCommon.android.kt`](../common/src/androidMain/kotlin/chat/popopx/common/platform/AppCommon.android.kt#L33) | `fun initHaskell(packageName: String)` | 33 |
+| Common Migrations | [`AppCommon.kt`](../common/src/commonMain/kotlin/chat/popopx/common/platform/AppCommon.kt#L41) | `fun runMigrations()` | 41 |
+| Android Service | [`PopopxService.kt`](../android/src/main/java/chat/popopx/app/PopopxService.kt#L41) | `class PopopxService` | 41 |
 | Gradle Root | [`settings.gradle.kts`](../settings.gradle.kts#L22) | `include(":android", ":desktop", ":common")` | 22 |
 | Common Build | [`build.gradle.kts`](../common/build.gradle.kts#L14) | `kotlin { androidTarget(); jvm("desktop") }` | 14 |

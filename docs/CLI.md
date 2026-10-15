@@ -5,7 +5,7 @@ revision: 31.01.2023
 
 | Updated 31.01.2023 | Languages: EN, [FR](/docs/lang/fr/CLI.md), [CZ](/docs/lang/cs/CLI.md), [PL](/docs/lang/pl/CLI.md) |
 
-# SimpleX Chat terminal (console) app for Linux/MacOS/Windows
+# POPOPX Chat terminal (console) app for Linux/MacOS/Windows
 
 ## Table of contents
 
@@ -20,7 +20,7 @@ revision: 31.01.2023
 - [Usage](#usage)
   - [Running the chat client](#running-the-chat-client)
   - [Access messaging servers via Tor](#access-messaging-servers-via-tor-beta)
-  - [How to use SimpleX chat](#how-to-use-simplex-chat)
+  - [How to use POPOPX chat](#how-to-use-popopx-chat)
   - [Groups](#groups)
   - [Sending files](#sending-files)
   - [User contact addresses](#user-contact-addresses)
@@ -36,7 +36,7 @@ revision: 31.01.2023
 - Auto-populated recipient name - just type your messages to reply to the sender once the connection is established.
 - Demo SMP servers available and pre-configured in the app - or you can [deploy your own server](https://github.com/simplex-chat/simplexmq#using-smp-server-and-smp-agent).
 - No global identity or any names visible to the server(s), ensuring full privacy of your contacts and conversations.
-- Two layers of E2E encryption (double-ratchet for duplex connections, using X3DH key agreement with ephemeral Curve448 keys, and NaCl crypto_box for SMP queues, using Curve25519 keys) and out-of-band passing of recipient keys (see [How to use SimpleX chat](#how-to-use-simplex-chat)).
+- Two layers of E2E encryption (double-ratchet for duplex connections, using X3DH key agreement with ephemeral Curve448 keys, and NaCl crypto_box for SMP queues, using Curve25519 keys) and out-of-band passing of recipient keys (see [How to use POPOPX chat](#how-to-use-popopx-chat)).
 - Message integrity validation (via including the digests of the previous messages).
 - Authentication of each command/message by SMP servers with automatically generated Ed448 keys.
 - TLS 1.3 transport encryption.
@@ -54,7 +54,7 @@ See [Encryption Primitives Used](https://github.com/simplex-chat/simplexmq/blob/
 
 #### Linux and MacOS
 
-To **install** or **update** `simplex-chat`, you should run the install script. To do that, use the following cURL or Wget command:
+To **install** or **update** `popopx-chat`, you should run the install script. To do that, use the following cURL or Wget command:
 
 ```sh
 curl -o- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/install.sh | bash
@@ -64,13 +64,13 @@ curl -o- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/inst
 wget -qO- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/install.sh | bash
 ```
 
-Once the chat client downloads, you can run it with `simplex-chat` command in your terminal.
+Once the chat client downloads, you can run it with `popopx-chat` command in your terminal.
 
 Alternatively, you can manually download the chat binary for your system from the [latest stable release](https://github.com/simplex-chat/simplex-chat/releases) and make it executable as shown below.
 
 ```sh
 chmod +x <binary>
-mv <binary> ~/.local/bin/simplex-chat
+mv <binary> ~/.local/bin/popopx-chat
 ```
 
 (or any other preferred location on `PATH`).
@@ -80,7 +80,7 @@ On MacOS you also need to [allow Gatekeeper to run it](https://support.apple.com
 #### Windows
 
 ```sh
-move <binary> %APPDATA%/local/bin/simplex-chat.exe
+move <binary> %APPDATA%/local/bin/popopx-chat.exe
 ```
 
 ### Build from source
@@ -92,8 +92,8 @@ move <binary> %APPDATA%/local/bin/simplex-chat.exe
 On Linux, you can build the chat executable using [docker build with custom output](https://docs.docker.com/engine/reference/commandline/build/#custom-build-outputs):
 
 ```shell
-git clone git@github.com:simplex-chat/simplex-chat.git
-cd simplex-chat
+git clone git@github.com:popopx-chat/popopx-chat.git
+cd popopx-chat
 git checkout stable
 DOCKER_BUILDKIT=1 docker build --output ~/.local/bin .
 ```
@@ -113,8 +113,8 @@ You can use `ghcup tui` to check or add GHC and cabal versions.
 2. Clone the source code:
 
 ```shell
-git clone git@github.com:simplex-chat/simplex-chat.git
-cd simplex-chat
+git clone git@github.com:popopx-chat/popopx-chat.git
+cd popopx-chat
 git checkout stable
 # or to build a specific version:
 # git checkout v5.3.0-beta.8
@@ -144,21 +144,21 @@ You may need to amend cabal.project.local to point to the actual openssl locatio
 
 ```shell
 cabal update
-cabal install simplex-chat
+cabal install popopx-chat
 ```
 
 ## Usage
 
 ### Running the chat client
 
-To start the chat client, run `simplex-chat` from the terminal.
+To start the chat client, run `popopx-chat` from the terminal.
 
-By default, app data directory is created in the home directory (`~/.simplex`, or `%APPDATA%/simplex` on Windows), and two SQLite database files `simplex_v1_chat.db` and `simplex_v1_agent.db` are initialized in it.
+By default, app data directory is created in the home directory (`~/.popopx`, or `%APPDATA%/popopx` on Windows), and two SQLite database files `popopx_v1_chat.db` and `popopx_v1_agent.db` are initialized in it.
 
 To specify a different file path prefix for the database files use `-d` command line option:
 
 ```shell
-$ simplex-chat -d alice
+$ popopx-chat -d alice
 ```
 
 Running above, for example, would create `alice_v1_chat.db` and `alice_v1_agent.db` database files in current directory.
@@ -168,14 +168,14 @@ Three default SMP servers are hosted on Linode - they are [pre-configured in the
 If you deployed your own SMP server(s) you can configure client via `-s` option:
 
 ```shell
-$ simplex-chat -s smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=@smp.example.com
+$ popopx-chat -s smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=@smp.example.com
 ```
 
 Base64url encoded string preceding the server address is the server's offline certificate fingerprint which is validated by client during TLS handshake.
 
 You can still talk to people using default or any other server - it only affects the location of the message queue when you initiate the connection (and the reply queue can be on another server, as set by the other party's client).
 
-Run `simplex-chat -h` to see all available options.
+Run `popopx-chat -h` to see all available options.
 
 ### Access messaging servers via Tor
 
@@ -189,19 +189,19 @@ brew services start tor
 Use `-x` option to access servers via Tor:
 
 ```
-simplex-chat -x
+popopx-chat -x
 ```
 
 You can also use option `--socks-proxy=ipv4:port` or `--socks-proxy=:port` to configure host and port of your SOCKS5 proxy, e.g. if you are running it on some other host or port.
 
-### How to use SimpleX chat
+### How to use POPOPX chat
 
 Once you have started the chat, you will be prompted to specify your "display name" and an optional "full name" to create a local chat profile. Your display name is an alias for your contacts to refer to you by - it is not unique and does not serve as a global identity. If some of your contacts chose the same display name, the chat client adds a numeric suffix to their local display name.
 
 The diagram below shows how to connect and message a contact:
 
 <div align="center">
-  <img align="center" src="../images/how-to-use-simplex.svg">
+  <img align="center" src="../images/how-to-use-popopx.svg">
 </div>
 
 Once you've set up your local profile, enter `/c` (for `/connect`) to create a new connection and generate an invitation. Send this invitation to your contact via any other channel.
@@ -220,7 +220,7 @@ Use `/help` in chat to see the list of available commands.
 
 To create a group use `/g <group>`, then add contacts to it with `/a <group> <name>`. You can then send messages to the group by entering `#<group> <message>`. Use `/help groups` for other commands.
 
-![simplex-chat](/images/groups.gif)
+![popopx-chat](/images/groups.gif)
 
 > **Please note**: the groups are not stored on any server, they are maintained as a list of members in the app database to whom the messages will be sent.
 
@@ -228,7 +228,7 @@ To create a group use `/g <group>`, then add contacts to it with `/a <group> <na
 
 You can send a file to your contact with `/f @<contact> <file_path>` - the recipient will have to accept it before it is sent. Use `/help files` for other commands.
 
-![simplex-chat](/images/files.gif)
+![popopx-chat](/images/files.gif)
 
 You can send files to a group with `/f #<group> <file_path>`.
 
@@ -242,4 +242,4 @@ User address is "long-term" in a sense that it is a multiple-use connection link
 
 Use `/help address` for other commands.
 
-![simplex-chat](/images/user-addresses.gif)
+![popopx-chat](/images/user-addresses.gif)

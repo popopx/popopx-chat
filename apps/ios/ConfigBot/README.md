@@ -215,7 +215,7 @@ python config_bot.py
 
 示例输出：
 ```
-Bot address: simplex:/v1-2@abc123def456...
+Bot address: popopx:/v1-2@abc123def456...
 ```
 
 > **重要：复制并保存这个地址！** 下一步需要写入 Haskell 代码。
@@ -228,13 +228,13 @@ Bot address: simplex:/v1-2@abc123def456...
 
 在本地开发机，更新 Bot 地址：
 
-**文件**: `src/Simplex/Chat/Operators/Presets.hs`
+**文件**: `src/Popopx/Chat/Operators/Presets.hs`
 
 ```haskell
 defaultConfigBot :: (Text, Text)
 defaultConfigBot =
   ( "config",
-    "simplex:/v1-2@abc123def456..."  -- ← 粘贴第四步获取的地址
+    "popopx:/v1-2@abc123def456..."  -- ← 粘贴第四步获取的地址
   )
 ```
 
@@ -491,5 +491,5 @@ services:
 | `apps/ios/ConfigBot/config.json` | 服务器配置数据 |
 | `apps/ios/ConfigBot/README.md` | 本文档 |
 | `packages/popopx-chat-python/` | POPOPX Chat Python 库 |
-| `src/Simplex/Chat/Operators/Presets.hs` | `defaultConfigBot` 地址常量 |
+| `src/Popopx/Chat/Operators/Presets.hs` | `defaultConfigBot` 地址常量 |
 | `apps/ios/Shared/Customization/ConfigBot/ConfigBotClient.swift` | iOS 客户端 |

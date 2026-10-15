@@ -22,8 +22,8 @@ Version: ${CLI_VERSION}
 Section: Messenger
 Priority: optional
 Architecture: ${arch}
-Maintainer: SimpleX Chat <chat@simplex.chat>
-Description: SimpleX - the first messaging platform that has no user identifiers of any kind - 100% private by design! (CLI)
+Maintainer: POPOPX Chat
+Description: POPOPX - the first messaging platform that has no user identifiers of any kind - 100% private by design! (CLI)
 Installed-Size: ${size}
 EOF
 

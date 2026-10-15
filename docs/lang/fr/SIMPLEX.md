@@ -1,10 +1,10 @@
 ---
-title: Plateforme SimpleX
+title: Plateforme POPOPX
 revision: 07.02.2023
 ---
-| 07.02.2023 | FR, [EN](/docs/SIMPLEX.md), [CZ](/docs/lang/cs/SIMPLEX.md), [PL](/docs/lang/pl/SIMPLEX.md) |
+| 07.02.2023 | FR, [EN](/docs/POPOPX.md), [CZ](/docs/lang/cs/POPOPX.md), [PL](/docs/lang/pl/POPOPX.md) |
 
-# Plateforme SimpleX - motivation et comparaison
+# Plateforme POPOPX - motivation et comparaison
 
 ## Problèmes
 
@@ -22,45 +22,45 @@ La concentration de la communication dans un petit nombre de plateformes central
 
 Les différents protocoles proposés résolvent ces problèmes en faisant en sorte que les messages comme les contacts soit stockés exclusivement sur l'appareil client, tout en réduisant le rôle des serveurs à de simples relais de message qui ne nécessite que l'autorisation des messages envoyés dans les files d'attentes, mais qui NE nécessite PAS une authentification utilisateur - les message ne sont pas les seuls à être protégé, les métadonnées le sont aussi car l'utilisateur n'est pas lié à un identifiant - contrairement aux autres platformes. 
 
-Voir [le livre blanc de SimpleX](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md) pour plus d'information sur les objectifs de la platforme et ses détails techniques.
+Voir [le livre blanc de POPOPX](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md) pour plus d'information sur les objectifs de la platforme et ses détails techniques.
 
-## Pourquoi utiliser SimpleX
+## Pourquoi utiliser POPOPX
 
-## SimpleX une approche unique en terme de confidentialité et de sécurité
+## POPOPX une approche unique en terme de confidentialité et de sécurité
 
 Tout le monde devrait se soucier de la confidentialité et de la sécurité de ses communications - même une conversation lambda peut vous mettre en danger.
 
 ### Protection complète de votre identité, profil, contacts et métadonnées
 
-**Contrairement aux autres platformes de messagerie, SimpleX ne lie pas d'identifiant à l'utilisateur** - il n'y a pas besoin de numéro de télèphone (comme Signal ou WhatsApp), d'adresses basés sur des noms de domaines (comme les e-mails, XMPP ou Matrix), de noms d'utilisateurs (comme Telegram), ou de clés publiques ou même de nombres aléatoires pour identifié les utilisateurs - on ne sait même pas combiens de personnes utilise SimpleX.
+**Contrairement aux autres platformes de messagerie, POPOPX ne lie pas d'identifiant à l'utilisateur** - il n'y a pas besoin de numéro de télèphone (comme Signal ou WhatsApp), d'adresses basés sur des noms de domaines (comme les e-mails, XMPP ou Matrix), de noms d'utilisateurs (comme Telegram), ou de clés publiques ou même de nombres aléatoires pour identifié les utilisateurs - on ne sait même pas combiens de personnes utilise POPOPX.
 
-Pour distribuer les messages au lieu d'utiliser des identifiants d'utilisateur que toute les autres platformes utilisent, SimpleX utilise des adresses unidirectionnelles (simplex) de files d'attentes de messages. Utiliser SimpleX c'est comme avoir une adresse e-mail différentes ou un numéro de télèphone différent par contact, sans les inconvenients qui viennent avec. Dans un futur proche les apps SimpleX changeront automatiquement les files d'attentes, déplacant les conversations d'un serveur à un autre, pour une meilleure confidentialité.
+Pour distribuer les messages au lieu d'utiliser des identifiants d'utilisateur que toute les autres platformes utilisent, POPOPX utilise des adresses unidirectionnelles (popopx) de files d'attentes de messages. Utiliser POPOPX c'est comme avoir une adresse e-mail différentes ou un numéro de télèphone différent par contact, sans les inconvenients qui viennent avec. Dans un futur proche les apps POPOPX changeront automatiquement les files d'attentes, déplacant les conversations d'un serveur à un autre, pour une meilleure confidentialité.
 
-Cette approche protège la vie privé de la personne avec qui vous communiquez, elle est masquée des serveurs SimpleX et de n'importe quel autre observateur. Vous pouvez encore améliorer votre protection en configurant votre réseau pour qu'il passe via des réseaux superposé comme, par exemple Tor.
+Cette approche protège la vie privé de la personne avec qui vous communiquez, elle est masquée des serveurs POPOPX et de n'importe quel autre observateur. Vous pouvez encore améliorer votre protection en configurant votre réseau pour qu'il passe via des réseaux superposé comme, par exemple Tor.
 
 ### La meilleure protection contre le spam et les abus
 
-Comme vous n'avez pas d'identifiant sur la plateforme SimpleX, vous ne pouvez pas être contacté, sauf si vous partagez un lien d'invitation unique ou une adresse d'utilisateur temporaire facultative. Même avec les adresses d'utilisateur facultatives, bien qu'elles puissent être utilisées pour envoyer des demandes de contact non sollicitées, vous pouvez les modifier ou les supprimer complètement sans perdre aucune de vos connexions.
+Comme vous n'avez pas d'identifiant sur la plateforme POPOPX, vous ne pouvez pas être contacté, sauf si vous partagez un lien d'invitation unique ou une adresse d'utilisateur temporaire facultative. Même avec les adresses d'utilisateur facultatives, bien qu'elles puissent être utilisées pour envoyer des demandes de contact non sollicitées, vous pouvez les modifier ou les supprimer complètement sans perdre aucune de vos connexions.
 
 ### Propriété, contrôle et sécurité totale de vos données
 
-SimpleX stocke toutes les données de l'utilisateur sur les appareils clients, les messages ne sont conservés que temporairement sur les serveurs relais SimpleX jusqu'à leur réception.
+POPOPX stocke toutes les données de l'utilisateur sur les appareils clients, les messages ne sont conservés que temporairement sur les serveurs relais POPOPX jusqu'à leur réception.
 
 Nous utilisons un format de base de données portable qui peut être utilisé sur tous les appareils pris en charge. Nous ajouterons bientôt la possibilité d'exporter la base de données de chat depuis l'application mobile afin qu'elle puisse être utilisée sur un autre appareil.
 
-Contrairement aux serveurs des réseaux fédérés (e-mail, XMPP ou Matrix), les serveurs SimpleX ne stockent pas les comptes des utilisateurs, ils se contentent de relayer les messages aux destinataires, protégeant ainsi la vie privée des deux parties. Il n'y a aucun identifiant ou message chiffré en commun entre le trafic envoyé et reçu du serveur, grâce à la couche de chiffrement supplémentaire pour les messages délivrés. Par conséquent, si quelqu'un observe le trafic du serveur, il ne peut pas facilement déterminer qui communique avec qui (Voir [le livre blanc de SimpleX](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md) pour les attaques connues de corrélation réseau).
+Contrairement aux serveurs des réseaux fédérés (e-mail, XMPP ou Matrix), les serveurs POPOPX ne stockent pas les comptes des utilisateurs, ils se contentent de relayer les messages aux destinataires, protégeant ainsi la vie privée des deux parties. Il n'y a aucun identifiant ou message chiffré en commun entre le trafic envoyé et reçu du serveur, grâce à la couche de chiffrement supplémentaire pour les messages délivrés. Par conséquent, si quelqu'un observe le trafic du serveur, il ne peut pas facilement déterminer qui communique avec qui (Voir [le livre blanc de POPOPX](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md) pour les attaques connues de corrélation réseau).
 
-### Les utilisateurs sont maîtres du réseau SimpleX
+### Les utilisateurs sont maîtres du réseau POPOPX
 
-Vous pouvez utiliser SimpleX avec vos propres serveurs et continuer à communiquer avec les personnes utilisant les serveurs préconfigurés dans les applications ou tout autre serveur SimpleX.
+Vous pouvez utiliser POPOPX avec vos propres serveurs et continuer à communiquer avec les personnes utilisant les serveurs préconfigurés dans les applications ou tout autre serveur POPOPX.
 
-La plateforme SimpleX utilise un protocole ouvert et fournit un SDK pour créer des chatbot, permettant la mise en œuvre de services avec lesquels les utilisateurs peuvent interagir via les applications SimpleX Chat - nous sommes vraiment impatients de voir quels services SimpleX peuvent être créés.
+La plateforme POPOPX utilise un protocole ouvert et fournit un SDK pour créer des chatbot, permettant la mise en œuvre de services avec lesquels les utilisateurs peuvent interagir via les applications POPOPX Chat - nous sommes vraiment impatients de voir quels services POPOPX peuvent être créés.
 
-Si vous envisagez de développer avec la plateforme SimpleX, que ce soit pour des services de chatbot pour les utilisateurs de l'application SimpleX ou pour intégrer la bibliothèque de chat SimpleX dans vos applications mobiles, n'hésitez pas à nous contacter pour tout conseil et assistance.
+Si vous envisagez de développer avec la plateforme POPOPX, que ce soit pour des services de chatbot pour les utilisateurs de l'application POPOPX ou pour intégrer la bibliothèque de chat POPOPX dans vos applications mobiles, n'hésitez pas à nous contacter pour tout conseil et assistance.
 
 ## Comparaison avec d'autres protocoles
 
-|                                                |    SimpleX chat    | Signal et autres...   |  XMPP, Matrix   | Protocoles P2P  |
+|                                                |    POPOPX chat    | Signal et autres...   |  XMPP, Matrix   | Protocoles P2P  |
 | :--------------------------------------------- | :----------------: | :-------------------: | :-------------: | :-------------: |
 | Identifiants d'utilisateur nécessaire          |    Non = privé     |    Oui<sup>1</sup>    | Oui<sup>2</sup> | Oui<sup>3</sup> |
 | Risque d'attaque MITM                          |    Non = securisé  |    Oui<sup>4</sup>    |       Oui       |       Oui       |
@@ -87,7 +87,7 @@ Il existe plusieurs protocoles et implémentations de chat/messagerie P2P qui vi
 
 4. Les implémentations P2P peuvent être bloquées par certains fournisseurs d'accès à Internet (comme [BitTorrent][11]). Le modèle proposée est indépendant des moyens de transport : il peut fonctionner avec des protocoles web standard et les serveurs peuvent être déployés sur les mêmes domaines que les sites web.
 
-5. Tous les réseaux P2P connus sont susceptibles d'être vulnérables à une [attaque Sybil][12], car chaque nœud peut être découvert et le réseau fonctionne comme un tout. Les mesures connues pour réduire la probabilité de l'attaque Sybil nécessitent soit un composant centralisé, soit des [preuves de travail][13] coûteuses. Le modèle proposée, au contraire, ne permet pas de découvrir les serveurs - les serveurs ne sont pas connectés, ni connus les uns des autres, ni de tous les clients. Le réseau SimpleX est fragmenté et fonctionne comme de multiples connexions isolées. Cela rend impossible les attaques à l'échelle du réseau SimpleX - même si certains serveurs sont compromis, d'autres parties du réseau peuvent fonctionner normalement, et les clients affectés peuvent passer à l'utilisation d'autres serveurs sans perdre de contacts ou de messages.
+5. Tous les réseaux P2P connus sont susceptibles d'être vulnérables à une [attaque Sybil][12], car chaque nœud peut être découvert et le réseau fonctionne comme un tout. Les mesures connues pour réduire la probabilité de l'attaque Sybil nécessitent soit un composant centralisé, soit des [preuves de travail][13] coûteuses. Le modèle proposée, au contraire, ne permet pas de découvrir les serveurs - les serveurs ne sont pas connectés, ni connus les uns des autres, ni de tous les clients. Le réseau POPOPX est fragmenté et fonctionne comme de multiples connexions isolées. Cela rend impossible les attaques à l'échelle du réseau POPOPX - même si certains serveurs sont compromis, d'autres parties du réseau peuvent fonctionner normalement, et les clients affectés peuvent passer à l'utilisation d'autres serveurs sans perdre de contacts ou de messages.
 
 6. Les réseaux P2P sont susceptibles d'être [vulnérables][14] aux [attaques DRDoS][15]. Dans la conception proposée, les clients ne relaient que le trafic provenant de connexions de confiance connues et ne peuvent pas être utilisés pour refléter et amplifier le trafic dans l'ensemble du réseau.
 

@@ -10,7 +10,7 @@ It works well for small groups where members trust each other, since it allows f
 
 - Groups where owner/host doesn't want group members to be able to communicate directly between each other, e.g. inter-business communication, or some other asymmetric scenario where sensitive messages should not be shared between members.
 
-  > It should be mentioned though that a group connection is no different from a direct connection on the protocol level, and it's entirely possible to use a group connection for direct communication with modified clients, so any change to the existing group protocol we make to SimpleX Chat clients does not fully solve this issue - group's owner/host can't know whether members' clients are unmodified. So probably we shouldn't be taking this scenario into consideration.
+  > It should be mentioned though that a group connection is no different from a direct connection on the protocol level, and it's entirely possible to use a group connection for direct communication with modified clients, so any change to the existing group protocol we make to POPOPX Chat clients does not fully solve this issue - group's owner/host can't know whether members' clients are unmodified. So probably we shouldn't be taking this scenario into consideration.
 
 - Using a modified client, a host can carry out MITM attack(s) when introducing a new group member to existing members, so group members can't know whether their direct connection is secure.
 

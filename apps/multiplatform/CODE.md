@@ -1,6 +1,6 @@
 # Coding and building
 
-You are an expert developer for SimpleX Chat, a privacy-first decentralized messaging platform. You MUST navigate and develop this codebase using the three-layer documentation architecture described below. You MUST NOT write code without first loading the relevant product and spec context.
+You are an expert developer for POPOPX Chat, a privacy-first decentralized messaging platform. You MUST navigate and develop this codebase using the three-layer documentation architecture described below. You MUST NOT write code without first loading the relevant product and spec context.
 
 ## Three-Layer Documentation Architecture
 
@@ -21,13 +21,13 @@ The `product/`, `spec/`, and source layers form a persistent, structured represe
 | `common/src/desktopMain/` | Desktop-specific Kotlin (platform implementations) | What does it execute on **Desktop**? |
 | `android/src/main/` | Android app module (Application, Activity, Services) | What is the **Android entry point**? |
 | `desktop/src/jvmMain/` | Desktop app module (main function) | What is the **Desktop entry point**? |
-| `../../src/Simplex/Chat/` | Haskell core (chat logic, protocol, database) | What does the **core** execute? |
+| `../../src/Popopx/Chat/` | Haskell core (chat logic, protocol, database) | What does the **core** execute? |
 
 Each layer links to the next:
 - `product/concepts.md` links every concept to its spec docs, source files, and tests in a single table — this is the primary navigation entry point
 - `product/views/*.md` and `product/flows/*.md` each have a **Related spec:** line linking to their most relevant spec documents
 - `product/glossary.md` uses *See: [spec/...]* references and `product/rules.md` uses **Spec:** [spec/...] references to link individual terms and rules down to spec
-- `spec/` documents contain **Source:** headers and inline function links pointing down to source. Line references MUST be clickable by embedding the `#Lxx-Lyy` fragment in the link URL: [`functionName()`](common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt#Lxx-Lyy). You MUST NOT duplicate line numbers in the display text — the URL fragment is sufficient. Why: redundant line numbers in display text create maintenance burden on every line shift.
+- `spec/` documents contain **Source:** headers and inline function links pointing down to source. Line references MUST be clickable by embedding the `#Lxx-Lyy` fragment in the link URL: [`functionName()`](common/src/commonMain/kotlin/chat/popopx/common/model/POPOPXAPI.kt#Lxx-Lyy). You MUST NOT duplicate line numbers in the display text — the URL fragment is sufficient. Why: redundant line numbers in display text create maintenance burden on every line shift.
 - Reverse direction: the Document Map (end of this file) maps source → spec → product
 
 ### Navigation workflow
@@ -183,19 +183,19 @@ When modifying platform abstractions, you MUST update both `actual` implementati
 
 ```
 common/src/
-├── commonMain/kotlin/chat/simplex/common/    -- Shared code (195 files)
-│   ├── model/          -- ChatModel, SimpleXAPI, CryptoFile
+├── commonMain/kotlin/chat/popopx/common/    -- Shared code (195 files)
+│   ├── model/          -- ChatModel, POPOPXAPI, CryptoFile
 │   ├── platform/       -- expect/actual platform abstractions
 │   ├── ui/theme/       -- Theme system (ThemeManager, colors, types)
 │   └── views/          -- Compose UI (chat, chatlist, call, settings, etc.)
-├── androidMain/kotlin/chat/simplex/common/   -- Android actuals (55 files)
+├── androidMain/kotlin/chat/popopx/common/   -- Android actuals (55 files)
 │   ├── platform/       -- actual implementations
 │   └── views/          -- Android-specific view variants
-├── desktopMain/kotlin/chat/simplex/common/   -- Desktop actuals (56 files)
+├── desktopMain/kotlin/chat/popopx/common/   -- Desktop actuals (56 files)
 │   ├── platform/       -- actual implementations
 │   └── views/          -- Desktop-specific view variants
-android/src/main/java/chat/simplex/app/       -- Android app (8 files)
-desktop/src/jvmMain/kotlin/chat/simplex/desktop/ -- Desktop app (1 file)
+android/src/main/java/chat/popopx/app/       -- Android app (8 files)
+desktop/src/jvmMain/kotlin/chat/popopx/desktop/ -- Desktop app (1 file)
 ```
 
 ### Platform Differences
@@ -203,14 +203,14 @@ desktop/src/jvmMain/kotlin/chat/simplex/desktop/ -- Desktop app (1 file)
 | Aspect | Android | Desktop |
 |--------|---------|---------|
 | Layout | 2-column (chat list → chat) | 3-column (sidebar → chat list → details) |
-| Background messaging | SimplexService (foreground service) + MessagesFetcherWorker (WorkManager) | Continuous (always-on process) |
+| Background messaging | PopopxService (foreground service) + MessagesFetcherWorker (WorkManager) | Continuous (always-on process) |
 | Notifications | Android NotificationManager with channels | Desktop system notifications |
 | Calls | CallActivity (separate Activity) + CallService | In-window call view |
 | Video playback | ExoPlayer | VLC (VLCJ) |
 | Authentication | Android BiometricPrompt | Passcode only |
 | Auto-update | Play Store / manual APK | Built-in AppUpdater |
 | Window management | Standard Activity lifecycle | StoreWindowState persistence |
-| Entry point | SimplexApp (Application) + MainActivity | Main.kt → initHaskell() → showApp() |
+| Entry point | PopopxApp (Application) + MainActivity | Main.kt → initHaskell() → showApp() |
 
 ---
 
@@ -223,14 +223,14 @@ desktop/src/jvmMain/kotlin/chat/simplex/desktop/ -- Desktop app (1 file)
 | common/.../common/App.kt | spec/architecture.md | product/views/chat-list.md |
 | common/.../common/AppLock.kt | spec/architecture.md | product/views/settings.md |
 | common/.../common/model/ChatModel.kt | spec/state.md | product/concepts.md |
-| common/.../common/model/SimpleXAPI.kt | spec/api.md, spec/architecture.md | product/concepts.md |
+| common/.../common/model/POPOPXAPI.kt | spec/api.md, spec/architecture.md | product/concepts.md |
 | common/.../common/model/CryptoFile.kt | spec/services/files.md | product/flows/file-transfer.md |
 | common/.../common/platform/Core.kt | spec/architecture.md | product/concepts.md |
 | common/.../common/platform/AppCommon.kt | spec/architecture.md | product/flows/onboarding.md |
 | common/.../common/platform/Notifications.kt | spec/services/notifications.md | product/flows/messaging.md |
 | common/.../common/platform/NtfManager.kt | spec/services/notifications.md | product/flows/messaging.md |
 | common/.../common/platform/Files.kt | spec/services/files.md | product/flows/file-transfer.md |
-| common/.../common/platform/SimplexService.kt | spec/services/notifications.md | product/flows/messaging.md |
+| common/.../common/platform/PopopxService.kt | spec/services/notifications.md | product/flows/messaging.md |
 | common/.../common/platform/Share.kt | spec/architecture.md | product/concepts.md |
 | common/.../common/platform/VideoPlayer.kt | spec/services/files.md | product/views/chat.md |
 | common/.../common/platform/RecAndPlay.kt | spec/services/files.md | product/views/chat.md |
@@ -273,9 +273,9 @@ desktop/src/jvmMain/kotlin/chat/simplex/desktop/ -- Desktop app (1 file)
 
 | Source Location | Spec Document | Product Document |
 |----------------|---------------|-----------------|
-| android/.../app/SimplexApp.kt | spec/architecture.md | product/flows/onboarding.md |
+| android/.../app/PopopxApp.kt | spec/architecture.md | product/flows/onboarding.md |
 | android/.../app/MainActivity.kt | spec/architecture.md | product/views/chat-list.md |
-| android/.../app/SimplexService.kt | spec/services/notifications.md | product/flows/messaging.md |
+| android/.../app/PopopxService.kt | spec/services/notifications.md | product/flows/messaging.md |
 | android/.../app/CallService.kt | spec/services/calls.md | product/flows/calling.md |
 | android/.../app/MessagesFetcherWorker.kt | spec/services/notifications.md | product/flows/messaging.md |
 | android/.../app/model/NtfManager.android.kt | spec/services/notifications.md | product/flows/messaging.md |
@@ -292,20 +292,20 @@ desktop/src/jvmMain/kotlin/chat/simplex/desktop/ -- Desktop app (1 file)
 | common/.../common/views/helpers/AppUpdater.kt (desktopMain) | spec/architecture.md | product/views/settings.md |
 | common/.../common/platform/AnimatedImage.desktop.kt (desktopMain) | spec/client/chat-view.md | product/views/chat.md |
 
-### Haskell Core Sources (at `../../src/Simplex/Chat/` relative to `apps/multiplatform/`)
+### Haskell Core Sources (at `../../src/Popopx/Chat/` relative to `apps/multiplatform/`)
 
 | Source Location | Spec Document | Product Document |
 |----------------|---------------|-----------------|
-| ../../src/Simplex/Chat/Controller.hs | spec/api.md | product/concepts.md |
-| ../../src/Simplex/Chat/Types.hs | spec/api.md | product/glossary.md |
-| ../../src/Simplex/Chat/Core.hs | spec/architecture.md | product/concepts.md |
-| ../../src/Simplex/Chat/Protocol.hs | spec/architecture.md | product/concepts.md |
-| ../../src/Simplex/Chat/Messages.hs | spec/api.md | product/flows/messaging.md |
-| ../../src/Simplex/Chat/Messages/CIContent.hs | spec/api.md | product/flows/messaging.md |
-| ../../src/Simplex/Chat/Call.hs | spec/services/calls.md | product/flows/calling.md |
-| ../../src/Simplex/Chat/Files.hs | spec/services/files.md | product/flows/file-transfer.md |
-| ../../src/Simplex/Chat/Store/Messages.hs | spec/database.md | product/flows/messaging.md |
-| ../../src/Simplex/Chat/Store/Groups.hs | spec/database.md | product/flows/group-lifecycle.md |
-| ../../src/Simplex/Chat/Store/Direct.hs | spec/database.md | product/flows/connection.md |
-| ../../src/Simplex/Chat/Store/Files.hs | spec/database.md | product/flows/file-transfer.md |
-| ../../src/Simplex/Chat/Store/Profiles.hs | spec/database.md | product/views/user-profiles.md |
+| ../../src/Popopx/Chat/Controller.hs | spec/api.md | product/concepts.md |
+| ../../src/Popopx/Chat/Types.hs | spec/api.md | product/glossary.md |
+| ../../src/Popopx/Chat/Core.hs | spec/architecture.md | product/concepts.md |
+| ../../src/Popopx/Chat/Protocol.hs | spec/architecture.md | product/concepts.md |
+| ../../src/Popopx/Chat/Messages.hs | spec/api.md | product/flows/messaging.md |
+| ../../src/Popopx/Chat/Messages/CIContent.hs | spec/api.md | product/flows/messaging.md |
+| ../../src/Popopx/Chat/Call.hs | spec/services/calls.md | product/flows/calling.md |
+| ../../src/Popopx/Chat/Files.hs | spec/services/files.md | product/flows/file-transfer.md |
+| ../../src/Popopx/Chat/Store/Messages.hs | spec/database.md | product/flows/messaging.md |
+| ../../src/Popopx/Chat/Store/Groups.hs | spec/database.md | product/flows/group-lifecycle.md |
+| ../../src/Popopx/Chat/Store/Direct.hs | spec/database.md | product/flows/connection.md |
+| ../../src/Popopx/Chat/Store/Files.hs | spec/database.md | product/flows/file-transfer.md |
+| ../../src/Popopx/Chat/Store/Profiles.hs | spec/database.md | product/views/user-profiles.md |

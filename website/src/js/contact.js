@@ -20,7 +20,7 @@
     parsedURI.pathname = "/" + action
     connURI = parsedURI.toString()
     console.log("connection URI: ", connURI)
-    mobileConnURIanchor.href = "simplex:" + parsedURI.pathname + parsedURI.hash
+    mobileConnURIanchor.href = "popopx:" + parsedURI.pathname + parsedURI.hash
     connURIel.innerText = "/c " + connURI
     for (const connQRCode of connQRCodes) {
       try {

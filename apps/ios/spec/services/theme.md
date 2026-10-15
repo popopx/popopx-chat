@@ -91,7 +91,7 @@ struct ActiveTheme: Equatable {
 1. Determine base theme from `currentThemeDefault`:
    - If `"system"`: use light or dark based on [`systemInDarkThemeCurrently`](../../Shared/Theme/Theme.swift#L95)
    - Dark mode maps to `systemDarkThemeDefault` (Dark, POPOPX, or Black)
-2. Get base color palette ([`LightColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L650), [`DarkColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L629), [`SimplexColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L671), [`BlackColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L692))
+2. Get base color palette ([`LightColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L650), [`DarkColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L629), [`POPOPXColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L671), [`BlackColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L692))
 3. Look up app settings theme override (`themeOverridesDefault`)
 4. Look up per-user theme override (`User.uiThemes`)
 5. Look up per-chat theme override (from ChatInfo)
@@ -109,7 +109,7 @@ Four built-in themes with pre-defined color palettes:
 |-------|------|---------------------|
 | **Light** | `DefaultTheme.LIGHT` | White background, standard colors |
 | **Dark** | `DefaultTheme.DARK` | Dark gray background, light text |
-| **POPOPX** | `DefaultTheme.SIMPLEX` | Brand purple accents, dark background |
+| **POPOPX** | `DefaultTheme.POPOPX` | Brand purple accents, dark background |
 | **Black** | `DefaultTheme.BLACK` | Pure black background (OLED), high contrast |
 
 ### [DefaultTheme](../../POPOPXSwitch/Theme/ThemeTypes.swift#L13) Enum
@@ -118,7 +118,7 @@ Four built-in themes with pre-defined color palettes:
 enum DefaultTheme {
     case LIGHT
     case DARK
-    case SIMPLEX
+    case POPOPX
     case BLACK
 
     static let SYSTEM_THEME_NAME = "SYSTEM"
@@ -137,7 +137,7 @@ Each base theme defines two palette types:
 Palette instances:
 - [`LightColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L650) / [`LightColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L662)
 - [`DarkColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L629) / [`DarkColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L641)
-- [`SimplexColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L671) / [`SimplexColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L683)
+- [`POPOPXColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L671) / [`POPOPXColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L683)
 - [`BlackColorPalette`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L692) / [`BlackColorPaletteApp`](../../POPOPXSwitch/Theme/ThemeTypes.swift#L704)
 
 ---
@@ -380,4 +380,4 @@ Key functions in [`AppearanceSettings.swift`](../../Shared/Views/UserSettings/Ap
 | App theme observable | [`Shared/Theme/Theme.swift`](../../Shared/Theme/Theme.swift) | `AppTheme` (L22), `CurrentColors` (L14), `systemInDarkThemeCurrently` (L95) |
 | Appearance settings UI | [`Shared/Views/UserSettings/AppearanceSettings.swift`](../../Shared/Views/UserSettings/AppearanceSettings.swift) | `AppearanceSettings` (L26), `ToolbarMaterial` (L319), `ImportExportThemeSection` (L603) |
 | Theme mode editor | `Shared/Views/Helpers/ThemeModeEditor.swift` | Theme mode selection UI |
-| Haskell theme types | `../../src/Simplex/Chat/Types/UITheme.hs` | Server-side theme persistence |
+| Haskell theme types | `../../src/POPOPX/Chat/Types/UITheme.hs` | Server-side theme persistence |

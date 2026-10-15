@@ -45,10 +45,10 @@ function initializePage() {
 
 async function showPromotedGroups() {
     welcome();
-    const listing = await fetchJSON(simplexDirectoryDataURL + 'promoted.json');
+    const listing = await fetchJSON(popopxDirectoryDataURL + 'promoted.json');
     let [entries, imgPath] =
             Array.isArray(listing?.entries) && listing.entries.length > 0
-            ? [listing.entries, simplexDirectoryDataURL]
+            ? [listing.entries, popopxDirectoryDataURL]
             : [fallbackEntries(), '/img/groups/'];
     // Uncomment to log fallback entries
     // entries.forEach(e => {
@@ -72,7 +72,7 @@ async function showPromotedGroups() {
         link.title = displayName;
         const groupLinkUri = groupLink.connShortLink ?? groupLink.connFullLink
         try {
-          link.href = platformSimplexUri(groupLinkUri);
+          link.href = platformPOPOPXUri(groupLinkUri);
         } catch(e) {
           console.log(e);
           link.href = groupLinkUri;
@@ -80,7 +80,7 @@ async function showPromotedGroups() {
     }
 
     function shuffleEntries(entries, count) {
-        let a = entries.filter(e => e.displayName != simplexUsersGroup)
+        let a = entries.filter(e => e.displayName != popopxUsersGroup)
         shuffle();
         let result = a;
         while (result.length < count) {
@@ -115,11 +115,11 @@ async function showPromotedGroups() {
 \\__ \\| || |\\/| |  _/ |__| _| / . \\| (__| __ |/ _ \\| |
 |___/___|_|  |_|_| |____|___/_/ \\_\\\\___|_||_/_/ \\_\\_|
 
-SimpleX directory: https://simplex.chat/directory
-Ask SimpleX team: https://smp6.simplex.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw
+POPOPX directory: https://popopx.chat/directory
+Ask POPOPX team: https://smp6.simplex.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw
 GitHub: https://github.com/simplex-chat/simplex-chat
-Reddit: https://www.reddit.com/r/SimpleXChat
-X/Twitter: https://x.com/SimpleXChat
+Reddit: https://www.reddit.com/r/POPOPXChat
+X/Twitter: https://x.com/POPOPXChat
 
 Docs
 ----
@@ -127,18 +127,18 @@ Whitepaper: https://github.com/simplex-chat/simplexmq/blob/stable/protocol/overv
 Bots API: https://github.com/simplex-chat/simplex-chat/tree/stable/bots
 TypeScript library: https://github.com/simplex-chat/simplex-chat/tree/stable/packages/simplex-chat-client/typescript
 Terminal CLI: https://github.com/simplex-chat/simplex-chat/blob/stable/docs/CLI.md
-Hosting SMP servers: https://simplex.chat/docs/server.html
+Hosting SMP servers: https://popopx.chat/docs/server.html
 
 Downloads
 ---------
-Apps: https://simplex.chat/downloads
+Apps: https://popopx.chat/downloads
 Servers: https://github.com/simplex-chat/simplexmq/releases
 
 Project
 -------
-About & Contact us: https://simplex.chat/about
-Privacy policy: https://simplex.chat/privacy
-Join team: https://simplex.chat/jobs
+About & Contact us: https://popopx.chat/about
+Privacy policy: https://popopx.chat/privacy
+Join team: https://popopx.chat/jobs
 Donations: https://github.com/simplex-chat/simplex-chat#please-support-us-with-your-donations
 `
         );
@@ -267,7 +267,7 @@ Donations: https://github.com/simplex-chat/simplex-chat#please-support-us-with-y
                 imageFile: "images/BD6FXuHO-eKOnYCAzkRfmA.jpg"
             },
             {
-                displayName: "SimpleX users group",
+                displayName: "POPOPX users group",
                 groupLink: {
                     connShortLink: "https://smp4.simplex.im/g#hr4lvFeBmndWMKTwqiodPz3VBo_6UmdGWocXd1SupsM"
                 },
@@ -288,7 +288,7 @@ Donations: https://github.com/simplex-chat/simplex-chat#please-support-us-with-y
                 imageFile: "images/B3xza7zUzYi3dHiRsg6Afg.jpg"
             },
             {
-                displayName: "RetoSwap – Official SimpleXChat Group",
+                displayName: "RetoSwap – Official POPOPXChat Group",
                 groupLink: {
                     connShortLink: "https://smp5.simplex.im/g#-_h6fBWisca6RKhteZtVuXol1a49vFH1Jo-n74fnRK0"
                 },

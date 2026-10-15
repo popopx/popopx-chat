@@ -4,9 +4,9 @@
 
 <img src="/img/design_3/secure_messaging_dark.jpg" width="33%" class="float-to-right hidden dark:block">
 
-**Ultimate security**: SimpleX network uses the most secure end-to-end encryption, with continuous post-quantum key exchange to protect all messages and metadata.
+**Ultimate security**: POPOPX network uses the most secure end-to-end encryption, with continuous post-quantum key exchange to protect all messages and metadata.
 
-**Unique privacy**: SimpleX network has no user profile IDs, not even random numbers or keys. It provides better privacy of your contacts, protecting who you talk with from network servers.
+**Unique privacy**: POPOPX network has no user profile IDs, not even random numbers or keys. It provides better privacy of your contacts, protecting who you talk with from network servers.
 
 **No spam**: nobody can contact you unless you share 1-time link or long-term address.
 

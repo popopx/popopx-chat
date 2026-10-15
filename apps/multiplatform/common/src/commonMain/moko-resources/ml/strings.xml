@@ -11,7 +11,7 @@
     <string name="invite_friends">സുഹൃത്തുക്കളെ ക്ഷണിക്കുക</string>
     <string name="delete_address">വിലാസം ഇല്ലാതാക്കുക</string>
     <string name="italic_text">ഇറ്റാലിക്</string>
-    <string name="about_simplex">SimpleX-നെ കുറിച്ച്</string>
+    <string name="about_popopx">POPOPX-നെ കുറിച്ച്</string>
     <string name="callstate_connected">ബന്ധിപ്പിച്ചിരിക്കുന്നു</string>
     <string name="callstate_connecting">ബന്ധിപ്പിക്കുന്നു…</string>
     <string name="onboarding_notifications_mode_periodic">ആനുകാലികം</string>
@@ -32,9 +32,9 @@
     <string name="send_disappearing_message_5_minutes">5 നിമിഷങ്ങൾ</string>
     <string name="send_disappearing_message_30_seconds">30 ഞൊടികൾ</string>
     <string name="feature_enabled_for_you">നിങ്ങൾക്കായി പ്രവർത്തനക്ഷമമാക്കി</string>
-    <string name="learn_more_about_address">SimpleX വിലാസത്തെക്കുറിച്ച്</string>
+    <string name="learn_more_about_address">POPOPX വിലാസത്തെക്കുറിച്ച്</string>
     <string name="feature_enabled">പ്രവർത്തനക്ഷമമാക്കി</string>
-    <string name="auth_enable_simplex_lock">SimpleX താഴ് പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="auth_enable_popopx_lock">POPOPX താഴ് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="feature_enabled_for_contact">ബന്ധപ്പെടാൻ പ്രവർത്തനക്ഷമമാക്കി</string>
     <string name="enable_self_destruct">സ്വയം നശിപ്പിക്കൽ പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="button_add_welcome_message">സ്വാഗത സന്ദേശം ചേർക്കുക</string>
@@ -80,7 +80,7 @@
     <string name="onboarding_notifications_mode_subtitle">ഇത് പിന്നീട് ക്രമീകരണങ്ങൾ വഴി മാറ്റാവുന്നതാണ്.</string>
     <string name="your_settings">നിങ്ങളുടെ ക്രമീകരണങ്ങൾ</string>
     <string name="your_privacy">നിങ്ങളുടെ സ്വകാര്യത</string>
-    <string name="your_simplex_contact_address">നിങ്ങളുടെ SimpleX വിലാസം</string>
+    <string name="your_popopx_contact_address">നിങ്ങളുടെ POPOPX വിലാസം</string>
     <string name="chat_item_ttl_day">1 ദിവസം</string>
     <string name="you_wont_lose_your_contacts_if_delete_address">പിന്നീട് നിങ്ങളുടെ വിലാസം ഇല്ലാതാക്കിയാൽ നിങ്ങളുടെ കോൺടാക്റ്റുകൾ നഷ്‌ടമാകില്ല.</string>
     <string name="stop_chat_confirmation">നിർത്തുക</string>
@@ -161,7 +161,7 @@
     <string name="v4_4_disappearing_messages_desc">അയച്ച സന്ദേശങ്ങൾ നിശ്ചിത സമയത്തിന് ശേഷം ഇല്ലാതാക്കപ്പെടും.</string>
     <string name="delete_group_for_all_members_cannot_undo_warning">എല്ലാ അംഗങ്ങൾക്കും സംഘം ഇല്ലാതാക്കപ്പെടും - ഇത് പഴയപടിയാക്കാനാകില്ല!</string>
     <string name="delete_messages_after">അതിനുശേഷം സന്ദേശങ്ങൾ ഇല്ലാതാക്കുക</string>
-    <string name="simplex_service_notification_text">സന്ദേശങ്ങൾ സ്വീകരിക്കുന്നു…</string>
+    <string name="popopx_service_notification_text">സന്ദേശങ്ങൾ സ്വീകരിക്കുന്നു…</string>
     <string name="allow_message_reactions">സന്ദേശ പ്രതികരണങ്ങൾ അനുവദിക്കുക.</string>
     <string name="receiving_via">വഴി സ്വീകരിക്കുന്നു</string>
     <string name="color_sent_message">സന്ദേശം അയച്ചു</string>
@@ -211,7 +211,7 @@
     <string name="network_session_mode_entity">ബന്ധം</string>
     <string name="stop_sharing_address">വിലാസം പങ്കിടുന്നത് നിർത്തണോ\?</string>
     <string name="continue_to_next_step">തുടരുക</string>
-    <string name="create_simplex_address">SimpleX വിലാസം സൃഷ്ടിക്കുക</string>
+    <string name="create_popopx_address">POPOPX വിലാസം സൃഷ്ടിക്കുക</string>
     <string name="colored_text">നിറമുള്ള</string>
     <string name="callstate_ended">അവസാനിച്ചു</string>
     <string name="your_calls">നിങ്ങളുടെ വിളികൾ</string>
@@ -262,7 +262,7 @@
     <string name="icon_descr_sent_msg_status_sent">അയച്ചു</string>
     <string name="smp_servers_your_server_address">നിങ്ങളുടെ സെർവർ വിലാസം</string>
     <string name="info_row_sent_at">എന്ന വിലാസത്തിൽ അയച്ചു</string>
-    <string name="about_simplex_chat">കുറിച്ച് SimpleX Chat</string>
+    <string name="about_popopx_chat">കുറിച്ച് POPOPX Chat</string>
     <string name="users_delete_all_chats_deleted">എല്ലാ സംഭാഷണങ്ങളും സന്ദേശങ്ങളും ഇല്ലാതാക്കപ്പെടും - ഇത് പഴയപടിയാക്കാനാകില്ല!</string>
     <string name="all_group_members_will_remain_connected">സംഘത്തിലെ എല്ലാ അംഗങ്ങളുടെ ബന്ധം നിലനിർത്തും.</string>
     <string name="la_could_not_be_verified">നിങ്ങളെ പരിശോധിക്കാൻ കഴിഞ്ഞില്ല; ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
@@ -328,7 +328,7 @@
     <string name="full_name__field">പൂർണ്ണമായ പേര്:</string>
     <string name="if_you_choose_to_reject_the_sender_will_not_be_notified">നിങ്ങൾ നിരസിക്കാൻ തിരഞ്ഞെടുക്കുകയാണെങ്കിൽ അയച്ചയാളെ അറിയിക്കില്ല.</string>
     <string name="icon_descr_image_snd_complete">ചിത്രം അയച്ചു</string>
-    <string name="how_to_use_simplex_chat">ഇതെങ്ങനെ ഉപയോഗിക്കണം</string>
+    <string name="how_to_use_popopx_chat">ഇതെങ്ങനെ ഉപയോഗിക്കണം</string>
     <string name="error_aborting_address_change">വിലാസ മാറ്റം നിർത്തുന്നതിൽ പിശക്</string>
     <string name="edit_verb">തിരുത്തുക</string>
     <string name="info_menu">വിവരം</string>
@@ -347,7 +347,7 @@
     <string name="ttl_day">%d ദിവസം</string>
     <string name="ttl_days">%d ദിവസങ്ങൾ</string>
     <string name="deleted_description">ഇല്ലാതാക്കി</string>
-    <string name="simplex_link_mode_description">വിവരണം</string>
+    <string name="popopx_link_mode_description">വിവരണം</string>
     <string name="error_sending_message">സന്ദേശം അയയ്ക്കുന്നതിൽ പിശക്</string>
     <string name="error_setting_address">വിലാസം ക്രമീകരിക്കുന്നതിൽ പിശക്</string>
     <string name="icon_descr_instant_notifications">തൽക്ഷണ അറിയിപ്പുകൾ</string>

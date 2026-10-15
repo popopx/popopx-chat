@@ -364,5 +364,5 @@ Cancels an in-progress upload or download. For XFTP transfers, also requests chu
 | Compose image preview | [`Shared/Views/Chat/ComposeMessage/ComposeImageView.swift`](../../Shared/Views/Chat/ComposeMessage/ComposeImageView.swift) | |
 | Compose voice preview | [`Shared/Views/Chat/ComposeMessage/ComposeVoiceView.swift`](../../Shared/Views/Chat/ComposeMessage/ComposeVoiceView.swift) | |
 | C FFI (file encryption) | [`POPOPXSwitch/Popopx.h`](../../POPOPXSwitch/Popopx.h) | `chat_write_file`, `chat_read_file`, `chat_encrypt_file`, `chat_decrypt_file` |
-| Haskell file logic | `../../src/Simplex/Chat/Files.hs` | -- |
-| Haskell file store | `../../src/Simplex/Chat/Store/Files.hs` | -- |
+| Haskell file logic | `../../src/POPOPX/Chat/Files.hs` | -- |
+| Haskell file store | `../../src/POPOPX/Chat/Store/Files.hs` | -- |

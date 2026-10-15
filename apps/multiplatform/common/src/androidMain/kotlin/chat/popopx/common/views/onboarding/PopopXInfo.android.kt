@@ -1,0 +1,17 @@
+package chat.popopx.common.views.onboarding
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import chat.popopx.common.model.SharedPreference
+import chat.popopx.common.model.User
+import chat.popopx.res.*
+
+@Composable
+actual fun OnboardingActionButton(user: User?, onboardingStage: SharedPreference<OnboardingStage>, onclick: (() -> Unit)?) {
+  if (user == null) {
+    OnboardingActionButton(Modifier.fillMaxWidth(), labelId = MR.strings.get_started, onboarding = OnboardingStage.Step2_CreateProfile, onclick = onclick)
+  } else {
+    OnboardingActionButton(Modifier.fillMaxWidth(), labelId = MR.strings.make_private_connection, onboarding = OnboardingStage.OnboardingComplete, onclick = onclick)
+  }
+}

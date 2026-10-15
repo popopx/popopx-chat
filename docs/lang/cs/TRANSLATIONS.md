@@ -1,12 +1,12 @@
 ---
-title: Přispívání překladů do SimpleX Chat
+title: Přispívání překladů do POPOPX Chat
 revision: 07.02.2023
 ---
 | Aktualizováno 07.02.2023 | Jazyky: CZ, [EN](/docs/TRANSLATIONS.md), [PL](/docs/lang/pl/TRANSLATIONS.md) |
 
-# Přispívání překladů do SimpleX Chat
+# Přispívání překladů do POPOPX Chat
 
-Obrovské díky za váš zájem o překlady SimpleX Chat - velmi nám to pomáhá zpřístupnit jej širšímu okruhu uživatelů a vaší pomoci si opravdu vážíme.
+Obrovské díky za váš zájem o překlady POPOPX Chat - velmi nám to pomáhá zpřístupnit jej širšímu okruhu uživatelů a vaší pomoci si opravdu vážíme.
 
 Vyžaduje to značnou časovou investici - většina lidí ji zpočátku podceňuje - a průběžnou údržbu v průběhu vývoje aplikace.
 
@@ -57,6 +57,6 @@ My pak:
 
 3. Také pokud chcete být moderátorem/adminem skupiny uživatelů ve vašem jazyce, jakmile bude aplikace přeložena, můžeme takovou skupinu hostit - připravujeme komunitní směrnice a přidáváme do aplikace některé moderátorské nástroje, které budou vydány v březnu ve verzi v5.
 
-Ještě jednou děkujeme, že nám pomáháte rozvíjet SimpleX Chat!
+Ještě jednou děkujeme, že nám pomáháte rozvíjet POPOPX Chat!
 
-Evgeny, zakladatel SimpleX Chat.
+Evgeny, zakladatel POPOPX Chat.

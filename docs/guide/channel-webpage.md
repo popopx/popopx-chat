@@ -28,8 +28,8 @@ With this on, the relay serves your channel preview to any page, so you can buil
 Under **Webpage code** you'll see a snippet like the one below. Tap **Copy code**.
 
 ```html
-<div data-simplex-channel-preview
-  data-channel-link="https://smp15.simplex.im/c#Q-uRqD9tDixMf4Cd6UByeNN5nyIKkrgs4WaLlTnbjXs"
+<div data-popopx-channel-preview
+  data-channel-link="https://smp15.popopx.im/c#Q-uRqD9tDixMf4Cd6UByeNN5nyIKkrgs4WaLlTnbjXs"
   data-channel-id="kFXapqMZpdFGZFKXDibQPpDHV4aeA4x9dUk-PNKl1LA="
   data-relay-domains="relay1.example.com"
   data-app-download-buttons="on"
@@ -54,12 +54,12 @@ Paste the snippet into the page you're going to publish. Here's a complete minim
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
-    [data-simplex-channel-preview] { height: 100%; }
+    [data-popopx-channel-preview] { height: 100%; }
   </style>
 </head>
 <body>
-  <div data-simplex-channel-preview
-    data-channel-link="https://smp15.simplex.im/c#Q-uRqD9tDixMf4Cd6UByeNN5nyIKkrgs4WaLlTnbjXs"
+  <div data-popopx-channel-preview
+    data-channel-link="https://smp15.popopx.im/c#Q-uRqD9tDixMf4Cd6UByeNN5nyIKkrgs4WaLlTnbjXs"
     data-channel-id="kFXapqMZpdFGZFKXDibQPpDHV4aeA4x9dUk-PNKl1LA="
     data-relay-domains="relay1.example.com"
     data-app-download-buttons="on"
@@ -99,8 +99,8 @@ You can add optional `data-*` attributes to the `<div>` to change how it looks. 
 For example, here's a dark theme with a custom background and the download buttons hidden:
 
 ```html
-<div data-simplex-channel-preview
-  data-channel-link="https://smp15.simplex.im/c#Q-uRqD9tDixMf4Cd6UByeNN5nyIKkrgs4WaLlTnbjXs"
+<div data-popopx-channel-preview
+  data-channel-link="https://smp15.popopx.im/c#Q-uRqD9tDixMf4Cd6UByeNN5nyIKkrgs4WaLlTnbjXs"
   data-channel-id="kFXapqMZpdFGZFKXDibQPpDHV4aeA4x9dUk-PNKl1LA="
   data-relay-domains="relay1.example.com,relay2.example.com"
   data-app-download-buttons="off"

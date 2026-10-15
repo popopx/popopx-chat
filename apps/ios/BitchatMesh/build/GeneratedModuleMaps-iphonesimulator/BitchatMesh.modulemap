@@ -1,4 +1,0 @@
-module BitchatMesh {
-header "BitchatMesh-Swift.h"
-export *
-}

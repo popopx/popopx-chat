@@ -24,7 +24,7 @@ module.exports = {
         'primary-bg-dark': '#000832',
 
 
-        // What makes SimpleX private
+        // What makes POPOPX private
         'card-bg-light': '#ffffff',
         'card-desc-bg-light': '#DBEEFF',
         'card-bg-dark': '#071C46',

@@ -18,7 +18,7 @@ Safe web links:
 - prevent hyperlink phishing.
 - remove link tracking.
 
-Non-profit governance: to make SimpleX Network last.
+Non-profit governance: to make POPOPX Network last.
 
 Read more on April 30 at 20:00 UTC: https://simplex.chat/blog/20260430-simplex-channels-v6-5-consortium-crowdfunding-freedom-of-speech.html
 
@@ -58,7 +58,7 @@ Read more on March 8: https://simplex.chat/blog/20250308-simplex-chat-v6-3-new-u
 
 7 December, 2024
 
-- SimpleX Chat and Flux (https://runonflux.com) made an agreement to include servers operated by Flux into the app – to improve metadata privacy.
+- POPOPX Chat and Flux (https://runonflux.com) made an agreement to include servers operated by Flux into the app – to improve metadata privacy.
 - Business chats – your customers' privacy.
 - Improved user experience of chats:
   - Open chat on the first unread message.
@@ -73,7 +73,7 @@ Read more on December 10: https://simplex.chat/blog/20241210-simplex-network-v6-
 12 October, 2024
 
 Better security:
-- SimpleX protocols reviewed by Trail of Bits.
+- POPOPX protocols reviewed by Trail of Bits.
 - security improvements (don't worry, there is nothing critical there).
 
 Better calls:
@@ -150,10 +150,10 @@ Read more: https://simplex.chat/blog/20240426-simplex-legally-binding-transparen
 1. **Quantum resistant end-to-end encryption** in direct chats (BETA).
    It can be enabled for the new contacts by *Post-quantum E2EE* toggle in dev tools, and for the existing contacts - both users need to tap *Allow PQ encryption* in contact information page (and the toggle in dev tools should be enable for this button to be available).
    Once quantum resistant shared secret is agreed, there will be a message indicating it - it takes about 2-3 messages from each side to be sent in turns before it gets enabled.
-   Read more about end-to-end encryption in SimpleX Chat here: https://simplex.chat/blog/20240314-simplex-chat-v5-6-quantum-resistance-signal-double-ratchet-algorithm.html
+   Read more about end-to-end encryption in POPOPX Chat here: https://simplex.chat/blog/20240314-simplex-chat-v5-6-quantum-resistance-signal-double-ratchet-algorithm.html
 
 2. **App data migration**.
-   As suggested by one of SimpleX Chat users in our [users group](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2FPQUV2eL0t7OStZOoAsPEV2QYWt4-xilbakvGUGOItUo%3D%40smp6.simplex.im%2Fos8FftfoV8zjb2T89fUEjJtF7y64p5av%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAQqMgh0fw2lPhjn3PDIEfAKA_E0-gf8Hr8zzhYnDivRs%253D%26srv%3Dbylepyau3ty4czmn77q4fglvperknl4bi2eb2fdy2bh4jxtf32kf73yd.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22lBPiveK2mjfUH43SN77R0w%3D%3D%22%7D), you can now migrate all data from one device to a new app installation by uploading it to the configured XFTP relays and then scanning QR code from the new device – choose *Migrate to another device* from the app settings and *Migrate from another device* on the first screen after installing the app.
+   As suggested by one of POPOPX Chat users in our [users group](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2FPQUV2eL0t7OStZOoAsPEV2QYWt4-xilbakvGUGOItUo%3D%40smp6.simplex.im%2Fos8FftfoV8zjb2T89fUEjJtF7y64p5av%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAQqMgh0fw2lPhjn3PDIEfAKA_E0-gf8Hr8zzhYnDivRs%253D%26srv%3Dbylepyau3ty4czmn77q4fglvperknl4bi2eb2fdy2bh4jxtf32kf73yd.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22lBPiveK2mjfUH43SN77R0w%3D%3D%22%7D), you can now migrate all data from one device to a new app installation by uploading it to the configured XFTP relays and then scanning QR code from the new device – choose *Migrate to another device* from the app settings and *Migrate from another device* on the first screen after installing the app.
 
 3. **Use the app during the audio and video calls**.
   Now you can continue using the app, with small video if it's a video call.
@@ -202,7 +202,7 @@ Also, we added Hungarian (Android only) and Turkish interface - thanks to the us
 - Other improvements:
   - profile names now allow spaces.
   - when you delete contacts, they are optionally notified.
-  - previously used and your own SimpleX links are recognised by the app.
+  - previously used and your own POPOPX links are recognised by the app.
   - many fixes and improvements.
 
 ## v5.3
@@ -297,7 +297,7 @@ Mobile apps:
 - reduced battery usage, particularly when sending messages to large groups.
 - Chinese and Spanish interface.
 
-Android app now supports Android 8+ (API 26+), and also supports 32 bit/ARMv7a devices via a separate APK. If you don't know which APK you need, try simplex.apk first. You can check your device CPU in z-cpu app.
+Android app now supports Android 8+ (API 26+), and also supports 32 bit/ARMv7a devices via a separate APK. If you don't know which APK you need, try popopx.apk first. You can check your device CPU in z-cpu app.
 
 Terminal / CLI app:
 
@@ -337,7 +337,7 @@ Mobile apps:
 - irreversible deletion of sent messages on recipients devices (depends on chat preferences)
 - an option to hide the app screen in the recent apps, and also prevent the screenshots on Android
 - add SMP servers by scanning QR code, support for server passwords (with the new version 4.0 of SMP server)
-- improved privacy and security of SimpleX invitation links in the app
+- improved privacy and security of POPOPX invitation links in the app
 
 ## v4.2
 
@@ -365,7 +365,7 @@ Changes:
 - change group member roles
 - send multiple images at once
 - connection aliases and information view
-- share text and files from other apps into SimpleX (Android)
+- share text and files from other apps into POPOPX (Android)
 - image gallery (Android)
 - scroll to quoted message (Android)
 - German translations
@@ -390,7 +390,7 @@ Terminal app:
 - disable messages and notifications per contact / group
 
 For developers:
-- [TypeScript SDK for integrating with SimpleX Chat](#typescript-sdk-for-integrating-with-simplex-chat) (e.g., chat bots or chat assistants).
+- [TypeScript SDK for integrating with POPOPX Chat](#typescript-sdk-for-integrating-with-popopx-chat) (e.g., chat bots or chat assistants).
 
 ## v3.2
 
@@ -408,7 +408,7 @@ Changes:
 
 Mobile apps:
 - secret chat groups!
-- support accessing SimpleX messaging servers via Orbot (both iOS and Android)
+- support accessing POPOPX messaging servers via Orbot (both iOS and Android)
 - new app icons
 - advanced network settings
 - improved battery usage and traffic
@@ -477,7 +477,7 @@ Changes:
 - The new protocol to exchange files, in preparation to support images, files and groups in mobile apps. It makes sending files to groups much more efficient, and allows attaching files to the text messages. This version is backwards and forwards compatible, so you can exchange the files with the previous version. It will not be possible to receive the files sent from the next version (1.7) in the previous version (1.5) - please upgrade.
 - **Up arrow** key in the terminal can be used to edit the last message you sent.
 - CLI option to execute a single command / send one message, e.g. to use in CI to notify about the build completion, or for any other scenario.
-- Library support + [chat bot examples](https://github.com/simplex-chat/simplex-chat/tree/stable/apps) to create SimpleX Chat chat bots.
+- Library support + [chat bot examples](https://github.com/simplex-chat/simplex-chat/tree/stable/apps) to create POPOPX Chat chat bots.
 
 ## v1.5
 
@@ -534,19 +534,19 @@ Changes:
 
 ### The most private and secure chat and application platform
 
-We are building a new platform for distributed Internet applications where privacy of the messages _and_ the network matter. [SimpleX Chat](https://github.com/simplex-chat/simplex-chat) is our first application, a messaging application built on the SimpleX platform.
+We are building a new platform for distributed Internet applications where privacy of the messages _and_ the network matter. [POPOPX Chat](https://github.com/simplex-chat/simplex-chat) is our first application, a messaging application built on the POPOPX platform.
 
-### What is SimpleX?
+### What is POPOPX?
 
-There is currently no messaging application other than SimpleX Chat that guarantees metadata privacy - who is communicating with whom and when. SimpleX is designed to not use any permanent users identities to protect meta-data privacy. See [SimpleX overview](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md) for more details.
+There is currently no messaging application other than POPOPX Chat that guarantees metadata privacy - who is communicating with whom and when. POPOPX is designed to not use any permanent users identities to protect meta-data privacy. See [POPOPX overview](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md) for more details.
 
-### SimpleX protocol changes
+### POPOPX protocol changes
 
-Best possible E2E encryption - the only messenger using two-layer E2E encryption, with one layer using double ratchet protocol that provides forward secrecy and break-in recovery, and additional encryption layer providing meta-data protection. See more details about encryption algorithms in [SimpleXMQ change log](https://github.com/simplex-chat/simplexmq/blob/master/CHANGELOG.md#100).
+Best possible E2E encryption - the only messenger using two-layer E2E encryption, with one layer using double ratchet protocol that provides forward secrecy and break-in recovery, and additional encryption layer providing meta-data protection. See more details about encryption algorithms in [POPOPXMQ change log](https://github.com/simplex-chat/simplexmq/blob/master/CHANGELOG.md#100).
 
 Performance and space efficiency improvements - protocol overhead is reduced from circa 15% to 3.7% thanks to binary encoding, and performance is substantially improved due to more efficient cryptographic algorithms.
 
-Shorter invitation and contact links due to switching from long RSA to much shorter Curve448/25519 keys - for example, you can connect to the team via [team's SimpleX Chat contact address](https://simplex.chat/contact#/?v=1&smp=smp%3A%2F%2FPQUV2eL0t7OStZOoAsPEV2QYWt4-xilbakvGUGOItUo%3D%40smp6.simplex.im%2FK1rslx-m5bpXVIdMZg9NLUZ_8JBm8xTt%23MCowBQYDK2VuAyEALDeVe-sG8mRY22LsXlPgiwTNs9dbiLrNuA7f3ZMAJ2w%3D) (you need to use it in terminal app) or just by using `/simplex` command in the chat.
+Shorter invitation and contact links due to switching from long RSA to much shorter Curve448/25519 keys - for example, you can connect to the team via [team's POPOPX Chat contact address](https://simplex.chat/contact#/?v=1&smp=smp%3A%2F%2FPQUV2eL0t7OStZOoAsPEV2QYWt4-xilbakvGUGOItUo%3D%40smp6.simplex.im%2FK1rslx-m5bpXVIdMZg9NLUZ_8JBm8xTt%23MCowBQYDK2VuAyEALDeVe-sG8mRY22LsXlPgiwTNs9dbiLrNuA7f3ZMAJ2w%3D) (you need to use it in terminal app) or just by using `/popopx` command in the chat.
 
 This [this post](https://github.com/simplex-chat/simplex-chat/blob/master/blog/20220112-simplex-chat-v1-released.md) for more information.
 

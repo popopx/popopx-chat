@@ -10,8 +10,8 @@ for lang in "${langs[@]}"; do
   echo "***"
   echo "*** Exporting $lang"
   xcodebuild -exportLocalizations \
-            -project ./apps/ios/SimpleX.xcodeproj \
-            -localizationPath ./apps/ios/SimpleX\ Localizations \
+            -project ./apps/ios/POPOPX.xcodeproj \
+            -localizationPath ./apps/ios/POPOPX\ Localizations \
             -exportLanguage $lang
   sleep 2
 done

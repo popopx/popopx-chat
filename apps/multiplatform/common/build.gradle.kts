@@ -8,31 +8,31 @@ plugins {
   id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 
-group = "chat.simplex"
+group = "chat.popopx"
 version = extra["android.version_name"] as String
 
-val simplexAssetsDir = rootProject.findProperty("simplex.assets.dir") as String?
-val simplexAssetsLocal = file("src/commonMain/resources/assets/simplex")
-val hasSimplexAssets = simplexAssetsDir != null
+val popopxAssetsDir = rootProject.findProperty("popopx.assets.dir") as String?
+val popopxAssetsLocal = file("src/commonMain/resources/assets/popopx")
+val hasPopopxAssets = popopxAssetsDir != null
 
-if (simplexAssetsDir != null) {
-  val resolvedAssetsDir = rootProject.rootDir.resolve(simplexAssetsDir)
+if (popopxAssetsDir != null) {
+  val resolvedAssetsDir = rootProject.rootDir.resolve(popopxAssetsDir)
   val srcImagesDir = resolvedAssetsDir.resolve("multiplatform/resources/MR/images")
-  val verifySimplexAssets = tasks.register("verifySimplexAssets") {
+  val verifyPopopxAssets = tasks.register("verifyPopopxAssets") {
     doLast {
       if (!srcImagesDir.isDirectory) {
         throw GradleException("Source assets not found: $srcImagesDir (run resize.sh first)")
       }
     }
   }
-  tasks.register<Sync>("copySimplexAssets") {
-    dependsOn(verifySimplexAssets)
+  tasks.register<Sync>("copyPopopxAssets") {
+    dependsOn(verifyPopopxAssets)
     from(srcImagesDir)
-    into(simplexAssetsLocal.resolve("MR/images"))
+    into(popopxAssetsLocal.resolve("MR/images"))
   }
 } else {
-  tasks.register<Delete>("cleanSimplexAssets") {
-    delete(simplexAssetsLocal)
+  tasks.register<Delete>("cleanPopopxAssets") {
+    delete(popopxAssetsLocal)
   }
 }
 
@@ -151,7 +151,7 @@ kotlin {
 }
 
 android {
-  namespace = "chat.simplex.common"
+  namespace = "chat.popopx.common"
   compileSdk = 36
   sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
   defaultConfig {
@@ -162,9 +162,9 @@ android {
 }
 
 multiplatformResources {
-  resourcesPackage.set("chat.simplex.res")
+  resourcesPackage.set("chat.popopx.res")
   resourcesSourceSets {
-    getByName("commonMain").srcDirs(if (hasSimplexAssets) simplexAssetsLocal.resolve("MR") else file("src/commonMain/resources/assets/default/MR"))
+    getByName("commonMain").srcDirs(if (hasPopopxAssets) popopxAssetsLocal.resolve("MR") else file("src/commonMain/resources/assets/default/MR"))
   }
 }
 
@@ -175,17 +175,17 @@ buildConfig {
     buildConfigField("String", "DESKTOP_VERSION_NAME", "\"${extra["desktop.version_name"]}\"")
     buildConfigField("int", "DESKTOP_VERSION_CODE", "${extra["desktop.version_code"]}")
     buildConfigField("String", "DATABASE_BACKEND", "\"${extra["database.backend"]}\"")
-    buildConfigField("Boolean", "SIMPLEX_ASSETS", "$hasSimplexAssets")
+    buildConfigField("Boolean", "POPOPX_ASSETS", "$hasPopopxAssets")
   }
 }
 
 afterEvaluate {
   tasks.named("generateMRcommonMain") {
     dependsOn("adjustFormatting")
-    if (hasSimplexAssets) {
-      dependsOn("copySimplexAssets")
+    if (hasPopopxAssets) {
+      dependsOn("copyPopopxAssets")
     } else {
-      dependsOn("cleanSimplexAssets")
+      dependsOn("cleanPopopxAssets")
     }
   }
   tasks.create("adjustFormatting") {

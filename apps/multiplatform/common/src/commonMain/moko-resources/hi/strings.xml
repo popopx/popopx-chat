@@ -26,8 +26,8 @@
     <string name="v4_2_group_links_desc">व्यवस्थापक समूहों में शामिल होने के लिए लिंक बना सकते हैं।</string>
     <string name="chat_item_ttl_day">1 दिन</string>
     <string name="chat_item_ttl_week">1 सप्ताह</string>
-    <string name="about_simplex">सिंपलएक्स के बारे में</string>
-    <string name="about_simplex_chat">बारे में सिंप्लेक्स चैट</string>
+    <string name="about_popopx">सिंपलएक्स के बारे में</string>
+    <string name="about_popopx_chat">बारे में सिंप्लेक्स चैट</string>
     <string name="accept_call_on_lock_screen">स्वीकार करना</string>
     <string name="accept">स्वीकार करना</string>
     <string name="accept_feature">स्वीकार करना</string>
@@ -147,7 +147,7 @@
     <string name="both_you_and_your_contact_can_send_disappearing">आप और आपका संपर्क दोनों गायब होने वाले संदेश भेज सकते हैं।</string>
     <string name="allow_to_send_disappearing">गायब होने वाले संदेश भेजने की अनुमति दें।</string>
     <string name="prohibit_sending_disappearing">गायब होने वाले संदेश भेजने पर रोक लगाएं।</string>
-    <string name="how_to_use_simplex_chat">इसका उपयोग कैसे करना है</string>
+    <string name="how_to_use_popopx_chat">इसका उपयोग कैसे करना है</string>
     <string name="group_member_status_group_deleted">समूह हटाया गया</string>
     <string name="delete_message_cannot_be_undone_warning">संदेश हटा दिया जाएगा - इसे पूर्ववत नहीं किया जा सकता!</string>
     <string name="message_delivery_error_title">संदेश वितरण त्रुटि</string>
@@ -205,7 +205,7 @@
     <string name="ttl_day">%d दिन</string>
     <string name="ttl_hours">%d घंटे</string>
     <string name="v4_6_chinese_spanish_interface">चीनी और स्पेनिश इंटरफ़ेस</string>
-    <string name="simplex_link_mode_description">विवरण</string>
+    <string name="popopx_link_mode_description">विवरण</string>
     <string name="notifications_mode_off_desc">ऐप केवल तभी सूचनाएं प्राप्त कर सकता है जब वह चल रहा हो, कोई पृष्ठभूमि सेवा प्रारंभ नहीं की जाएगी</string>
     <string name="edit_verb">संपादन करना</string>
     <string name="icon_descr_call_ended">कॉल समाप्त</string>
@@ -292,7 +292,7 @@
     <string name="connect_plan_open_chat">चैट खोलें</string>
     <string name="connect_plan_open_new_group">नया ग्रुप खोलें</string>
     <string name="error_parsing_uri_title">यह लिंक मान्य नहीं है</string>
-    <string name="error_parsing_uri_desc">कृपया जांच लें कि SimpleX लिंक सही है।</string>
+    <string name="error_parsing_uri_desc">कृपया जांच लें कि POPOPX लिंक सही है।</string>
     <string name="opening_database">डेटाबेस खुल रहा है…</string>
     <string name="database_migration_in_progress">डेटाबेस माइग्रेशन जारी है।\nइसमें कुछ मिनट लग सकते हैं।</string>
     <string name="non_content_uri_alert_title">अमान्य फ़ाइल पथ</string>

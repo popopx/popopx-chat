@@ -19,7 +19,7 @@ The directory bot sends voice captchas to joining members via the member support
 | isVoice mc && not (groupFeatureMemberAllowed SGFVoice m gInfo) = Just GFVoice
 ```
 
-Other content types (files, reports, simplex links) already have `isNothing scopeInfo` guards that exempt them in member support scope. Voice does not.
+Other content types (files, reports, popopx links) already have `isNothing scopeInfo` guards that exempt them in member support scope. Voice does not.
 
 This means voice captchas fail in the majority of real groups that prohibit voice messages. The check runs on both sender side (Commands.hs:3856) and recipient side (Subscriber.hs:1738), so both the bot and the joining member reject voice in these groups.
 
@@ -35,7 +35,7 @@ This means voice captchas fail in the majority of real groups that prohibit voic
 
 ### 4.1. Protocol.hs — add version 17
 
-**File:** `src/Simplex/Chat/Protocol.hs`
+**File:** `src/Popopx/Chat/Protocol.hs`
 
 Add to version history comment (after line 79):
 
@@ -59,7 +59,7 @@ memberSupportVoiceVersion = VersionChat 17
 
 ### 4.2. Internal.hs — exempt host voice during approval phase
 
-**File:** `src/Simplex/Chat/Library/Internal.hs`
+**File:** `src/Popopx/Chat/Library/Internal.hs`
 
 Change function header (line 337) to bind sender's role and full membership:
 
@@ -113,14 +113,14 @@ Note: `memberPending` returns True for both `GSMemPendingApproval` and `GSMemPen
 
 ### 4.3. Service.hs — version-aware voice captcha logic
 
-**File:** `apps/simplex-directory-service/src/Directory/Service.hs`
+**File:** `apps/popopx-directory-service/src/Directory/Service.hs`
 
 #### 4.3.1. Add import
 
 Add `memberSupportVoiceVersion` to the `Protocol` import:
 
 ```haskell
-import Simplex.Chat.Protocol (MsgContent (..), memberSupportVoiceVersion)
+import Popopx.Chat.Protocol (MsgContent (..), memberSupportVoiceVersion)
 ```
 
 #### 4.3.2. Add helper predicate
@@ -176,7 +176,7 @@ When a member sends `/audio`, check `canSendVoiceCaptcha` before switching mode.
 
 ```haskell
 voiceCaptchaUnavailable :: Text
-voiceCaptchaUnavailable = "Voice captcha is not available - please update SimpleX Chat to v6.5+ or use text captcha."
+voiceCaptchaUnavailable = "Voice captcha is not available - please update POPOPX Chat to v6.5+ or use text captcha."
 ```
 
 #### 4.3.6. Update `dePendingMemberMsg` no-captcha `/audio` path (lines 640-642)

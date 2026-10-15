@@ -72,12 +72,12 @@ badgeGroupTests = describe "badge group" $ do
     let hintCommand = fst . T.breakOn " in --run-cli" . snd . T.breakOnEnd " with "
         parsedHint hint = let cmd = hintCommand hint in (cmd, parseChatCommand (encodeUtf8 cmd))
     it "owner" $
-      case parsedHint (T.replace "<member>" "alice" $ noOwnerHint "SimpleX Badges_1") of
-        (_, Right (MemberRole g m GROwner)) -> (g, m) `shouldBe` ("SimpleX Badges_1", "alice")
+      case parsedHint (T.replace "<member>" "alice" $ noOwnerHint "POPOPX Badges_1") of
+        (_, Right (MemberRole g m GROwner)) -> (g, m) `shouldBe` ("POPOPX Badges_1", "alice")
         (cmd, r) -> expectationFailure $ "owner command " <> show cmd <> " parsed as " <> show r
     it "orphan group" $
-      case parsedHint (orphanHint "SimpleX Badges_1") of
-        (_, Right (DeleteGroup g)) -> g `shouldBe` "SimpleX Badges_1"
+      case parsedHint (orphanHint "POPOPX Badges_1") of
+        (_, Right (DeleteGroup g)) -> g `shouldBe` "POPOPX Badges_1"
         (cmd, r) -> expectationFailure $ "delete command " <> show cmd <> " parsed as " <> show r
   describe "classifying a group message" $ do
     it "answers an advertised command that does not parse" $ do
@@ -126,27 +126,27 @@ badgeGroupTests = describe "badge group" $ do
               memberAdmission = Nothing
             }
     it "says nothing when the config matches the group profile" $ do
-      inertGroupConfig (cfg "SimpleX Badges" (Just "badge ops desk")) (profile "SimpleX Badges" (Just "badge ops desk"))
+      inertGroupConfig (cfg "POPOPX Badges" (Just "badge ops desk")) (profile "POPOPX Badges" (Just "badge ops desk"))
         `shouldBe` Nothing
-      inertGroupConfig (cfg "SimpleX Badges" Nothing) (profile "SimpleX Badges" Nothing) `shouldBe` Nothing
+      inertGroupConfig (cfg "POPOPX Badges" Nothing) (profile "POPOPX Badges" Nothing) `shouldBe` Nothing
     it "says nothing when an omitted description meets an empty one" $
-      inertGroupConfig (cfg "SimpleX Badges" Nothing) (profile "SimpleX Badges" (Just "")) `shouldBe` Nothing
+      inertGroupConfig (cfg "POPOPX Badges" Nothing) (profile "POPOPX Badges" (Just "")) `shouldBe` Nothing
     it "reports a name the config would change" $
-      inertGroupConfig (cfg "SimpleX Badges 2026" (Just "badge ops desk")) (profile "SimpleX Badges" (Just "badge ops desk"))
-        `shouldBe` Just "badge group config is not applied to an existing group: display_name \"SimpleX Badges 2026\", group has \"SimpleX Badges\""
+      inertGroupConfig (cfg "POPOPX Badges 2026" (Just "badge ops desk")) (profile "POPOPX Badges" (Just "badge ops desk"))
+        `shouldBe` Just "badge group config is not applied to an existing group: display_name \"POPOPX Badges 2026\", group has \"POPOPX Badges\""
     it "shows a non-ASCII name as written" $
-      inertGroupConfig (cfg "Значки" Nothing) (profile "SimpleX Badges" Nothing)
-        `shouldBe` Just "badge group config is not applied to an existing group: display_name \"Значки\", group has \"SimpleX Badges\""
+      inertGroupConfig (cfg "Значки" Nothing) (profile "POPOPX Badges" Nothing)
+        `shouldBe` Just "badge group config is not applied to an existing group: display_name \"Значки\", group has \"POPOPX Badges\""
     it "reports a description the config would change or remove" $ do
-      inertGroupConfig (cfg "SimpleX Badges" (Just "new desk")) (profile "SimpleX Badges" (Just "badge ops desk"))
+      inertGroupConfig (cfg "POPOPX Badges" (Just "new desk")) (profile "POPOPX Badges" (Just "badge ops desk"))
         `shouldBe` Just "badge group config is not applied to an existing group: description \"new desk\", group has \"badge ops desk\""
-      inertGroupConfig (cfg "SimpleX Badges" Nothing) (profile "SimpleX Badges" (Just "badge ops desk"))
+      inertGroupConfig (cfg "POPOPX Badges" Nothing) (profile "POPOPX Badges" (Just "badge ops desk"))
         `shouldBe` Just "badge group config is not applied to an existing group: description \"\", group has \"badge ops desk\""
     it "reports both fields when both would change" $
-      inertGroupConfig (cfg "SimpleX Badges 2026" (Just "new desk")) (profile "SimpleX Badges" Nothing)
+      inertGroupConfig (cfg "POPOPX Badges 2026" (Just "new desk")) (profile "POPOPX Badges" Nothing)
         `shouldBe` Just
           "badge group config is not applied to an existing group: \
-          \display_name \"SimpleX Badges 2026\", group has \"SimpleX Badges\"; \
+          \display_name \"POPOPX Badges 2026\", group has \"POPOPX Badges\"; \
           \description \"new desk\", group has \"\""
   describe "tracker" $
     it "edits within 24h, reposts after" $ do

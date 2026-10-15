@@ -1,6 +1,6 @@
 Revision 1, 2026-07-14
 
-# SimpleX Public Names for Channels and Businesses
+# POPOPX Public Names for Channels and Businesses
 
 ## Table of contents
 
@@ -25,15 +25,15 @@ Revision 1, 2026-07-14
 
 ## Introduction
 
-The SimpleX network provides communication without user identifiers - people connect by exchanging links out of band. This protects private communication, but public entities - channels and businesses - need to be discoverable. Today this requires distributing a long link, which is impossible to remember and can be deleted by the router that hosts it. SimpleX public names provide memorability and ease of connection without adding user identifiers.
+The POPOPX network provides communication without user identifiers - people connect by exchanging links out of band. This protects private communication, but public entities - channels and businesses - need to be discoverable. Today this requires distributing a long link, which is impossible to remember and can be deleted by the router that hosts it. POPOPX public names provide memorability and ease of connection without adding user identifiers.
 
 ### Names
 
-A SimpleX name is a human-readable name, registered on a public blockchain, that resolves to SimpleX links: `#example.simplex` opens a channel (for the `.simplex` namespace, the short variant `#example` can also be used for channel names) and `@example.simplex` connects to a contact or business address. One name can include both links - a business can publish `@example.simplex` for customer conversations and `#example.simplex` for its announcement channel from a single registration. Names support subnames (`support.example.simplex`). A separate test namespace (`.testing`) is deployed for early adopters before the main namespace launches.
+A POPOPX name is a human-readable name, registered on a public blockchain, that resolves to POPOPX links: `#example.popopx` opens a channel (for the `.popopx` namespace, the short variant `#example` can also be used for channel names) and `@example.popopx` connects to a contact or business address. One name can include both links - a business can publish `@example.popopx` for customer conversations and `#example.popopx` for its announcement channel from a single registration. Names support subnames (`support.example.popopx`). A separate test namespace (`.testing`) is deployed for early adopters before the main namespace launches.
 
 A name is not an account and not an identity. It is a record that maps a human-readable string to the links a channel or business already has, controlled by a cryptographic key that only its owner holds. The network does not use or require names; they are a discovery layer on top of it, described in this document.
 
-This document covers the naming layer built for [SimpleX Channels](./channels-overview.md) and the [SimpleX network](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md). For the user-facing registration steps see [Registering a SimpleX name](../guide/register-simplex-name.md); for protocol-level details see the resolver commands in the [SMP protocol](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/simplex-messaging.md).
+This document covers the naming layer built for [POPOPX Channels](./channels-overview.md) and the [POPOPX network](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md). For the user-facing registration steps see [Registering a POPOPX name](../guide/register-popopx-name.md); for protocol-level details see the resolver commands in the [SMP protocol](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/simplex-messaging.md).
 
 ### Use cases
 
@@ -41,7 +41,7 @@ Names are intended for entities that are already public:
 
 - **Channels.** A channel reachable as `#example` can be easily shared in many ways - conversation, print, social media, and messages. If the channel's link is removed or blocked, the owner can point the name to a new link, and the channel remains reachable via the same name.
 
-- **Businesses and organizations.** A business address reachable as `@example.simplex` gives customers a way to start a conversation without scanning a QR code or trusting a link from a search result.
+- **Businesses and organizations.** A business address reachable as `@example.popopx` gives customers a way to start a conversation without scanning a QR code or trusting a link from a search result.
 
 - **Creators and public figures.** Anyone publishing to an audience can be reachable by name while their audience remains private.
 
@@ -78,11 +78,11 @@ Names do not:
 
 ### Names and records
 
-Names are lowercase labels of ASCII letters, digits, and single hyphens, forming domains under the `.simplex` top-level name (`example.simplex`, `my-channel.simplex`), with `.simplex` implied when omitted for channels: `#example` is interpreted as `#example.simplex`. The restricted alphabet prevents homograph attacks: visually identical names from mixed scripts cannot exist as distinct records.
+Names are lowercase labels of ASCII letters, digits, and single hyphens, forming domains under the `.popopx` top-level name (`example.popopx`, `my-channel.popopx`), with `.popopx` implied when omitted for channels: `#example` is interpreted as `#example.popopx`. The restricted alphabet prevents homograph attacks: visually identical names from mixed scripts cannot exist as distinct records.
 
 A name's on-chain record stores:
 
-- **Channel links and contact links** - each an ordered list, primary first. Multiple links give redundancy across SMP routers: clients try them in order, so the name remains usable if one router becomes unavailable. Client support for this redundancy is planned for the `.simplex` namespace launch.
+- **Channel links and contact links** - each an ordered list, primary first. Multiple links give redundancy across SMP routers: clients try them in order, so the name remains usable if one router becomes unavailable. Client support for this redundancy is planned for the `.popopx` namespace launch.
 - **Optional profile fields** - a display name, website, location.
 - **Optional donation addresses** (Monero, Bitcoin, Ethereum, etc.) that apps can show to channel subscribers.
 
@@ -92,9 +92,9 @@ Registration is a two-transaction commit-reveal process from the owner's wallet:
 
 Connecting by name is two independent resolutions:
 
-1. **Name to link.** The client queries the on-chain record through the SimpleX network (next section) and obtains the channel or contact link.
+1. **Name to link.** The client queries the on-chain record through the POPOPX network (next section) and obtains the channel or contact link.
 
-2. **Link to connection.** The link resolves through the existing SimpleX short-link protocol: the client retrieves the link's immutable data - cryptographically bound to the link's owner keys - and the entity's profile, and connects.
+2. **Link to connection.** The link resolves through the existing POPOPX short-link protocol: the client retrieves the link's immutable data - cryptographically bound to the link's owner keys - and the entity's profile, and connects.
 
 The second step is unchanged from connecting by link. A name adds discoverability on top of the link protocol; it does not weaken the link's own verification, and everything a client checks when joining by link is still checked when joining by name.
 
@@ -102,7 +102,7 @@ The second step is unchanged from connecting by link. A name adds discoverabilit
 
 Reading blockchain state normally requires querying an RPC service, and in practice almost all applications - including wallets and name services - use a handful of centralized API providers. Those providers see every query, the account it concerns, and the querier's IP address, and can censor or falsify responses. Resolving names through such a provider would reveal every lookup and the client's IP address to a third party.
 
-SimpleX resolves names through the network itself. Operators can enable a *names role* on their SMP routers: a names router runs its own resolver process and its own Ethereum node, holding a full copy of the relevant chain state - operators must not share this backend with other operators. The lookup is a protocol command sent as ordinary SimpleX traffic:
+POPOPX resolves names through the network itself. Operators can enable a *names role* on their SMP routers: a names router runs its own resolver process and its own Ethereum node, holding a full copy of the relevant chain state - operators must not share this backend with other operators. The lookup is a protocol command sent as ordinary POPOPX traffic:
 
 1. The client selects a names router among its configured servers and sends the lookup *through an SMP proxy operated by a different operator*, encrypted so the proxy cannot read it.
 2. The proxy forwards the lookup without access to its content; the names router responds from its local chain state.
@@ -135,27 +135,27 @@ A name is trustworthy when:
 1. **The on-chain record points to the link.** Only the name owner's wallet key can set this.
 2. **The link's profile claims the name.** Only the link owner's keys can publish this, and the claim is signed by the link's owner key, binding it to that specific link.
 
-For name resolution to succeed, SimpleX clients require both to be true. This mutual binding prevents abuse, such as:
+For name resolution to succeed, POPOPX clients require both to be true. This mutual binding prevents abuse, such as:
 
 - Registering a name that points to someone else's address. The profile does not claim the name, so clients refuse to connect to it.
 - Claiming a name in a profile without owning it. The on-chain record does not point to that profile's address, so the claim fails verification.
 
 Apps display the outcome next to the name - verified (the record and the claim match), failed, or not yet verified - and can re-verify on demand or automatically. Verification is a fresh resolution through the private RPC layer, so it reflects the current on-chain state.
 
-Names are used only to establish connections, not to deliver messages. Once connected, a contact or channel subscription is an ordinary SimpleX connection, independent of the name. A name expiring or being transferred affects future connections only; existing conversations and subscriptions are not affected.
+Names are used only to establish connections, not to deliver messages. Once connected, a contact or channel subscription is an ordinary POPOPX connection, independent of the name. A name expiring or being transferred affects future connections only; existing conversations and subscriptions are not affected.
 
 
 ## Differences from ENS
 
-The on-chain layer is the SimpleX Name Service (SNS), a fork of the [Ethereum Name Service](https://ens.domains) (ENS). ENS is the most widely used decentralized naming system, and SNS retains its core design: the registry and resolver contracts, commit-reveal registration, and expiry-based ownership.
+The on-chain layer is the POPOPX Name Service (SNS), a fork of the [Ethereum Name Service](https://ens.domains) (ENS). ENS is the most widely used decentralized naming system, and SNS retains its core design: the registry and resolver contracts, commit-reveal registration, and expiry-based ownership.
 
-Each top-level name (`.testing`, `.simplex`) is an independent deployment of the same contracts:
+Each top-level name (`.testing`, `.popopx`) is an independent deployment of the same contracts:
 
 ```mermaid
 flowchart TD
     CT["Controller<br/>commit-reveal registration"]
     RG["Registrar<br/>name tokens, on-chain name index"]
-    PR["Resolver<br/>simplex.contact / simplex.channel records"]
+    PR["Resolver<br/>popopx.contact / popopx.channel records"]
     R["Registry<br/>owner and resolver of every name"]
     MR["Metadata renderer<br/>token metadata as on-chain JSON + SVG"]
     SR["Subname registrar<br/>creates and indexes subnames"]
@@ -169,7 +169,7 @@ flowchart TD
 
 ENS, however, is not fully decentralized in use. Its applications depend on two off-chain services: an indexer (the subgraph) for queries such as listing the names held by an address (without it the ENS app is unusable), and a hosted metadata service to render name tokens in wallets. SNS removes both dependencies, and simplifies the ownership model:
 
-1. **No indexer.** The SNS contracts index names on-chain: reverse lookup from an address to the names it holds, from a token to its plaintext label, and from a name to its subnames are all direct contract reads. Every view in the SNS web app (currently, the app for test names is https://testing-names.simplex.chat) - the list of owned names, their subnames, and each name's records - is served by plain `eth_call`s against an Ethereum RPC.
+1. **No indexer.** The SNS contracts index names on-chain: reverse lookup from an address to the names it holds, from a token to its plaintext label, and from a name to its subnames are all direct contract reads. Every view in the SNS web app (currently, the app for test names is https://testing-names.popopx.chat) - the list of owned names, their subnames, and each name's records - is served by plain `eth_call`s against an Ethereum RPC.
 
 2. **Fully on-chain tokens.** A name's token metadata and image are generated by the contract as inline JSON and SVG. There is no metadata server; wallets render the name from chain data alone.
 
@@ -177,9 +177,9 @@ ENS, however, is not fully decentralized in use. Its applications depend on two 
 
 Resolution also differs. ENS names are resolved by applications through their RPC providers, so lookups are as centralized and observable as the provider. SNS records are read through the private RPC layer described above: many independent operators hold the chain state, and no single party sees who resolves which name.
 
-The result is a naming system with no off-chain services: registration, ownership, enumeration, rendering, and resolution are all either on-chain or served by the SimpleX network itself.
+The result is a naming system with no off-chain services: registration, ownership, enumeration, rendering, and resolution are all either on-chain or served by the POPOPX network itself.
 
-The current implementation uses a web app for registration, which accesses the chain via a centralized RPC provider. We plan to add name purchases to the SimpleX apps, using the same decentralized blockchain access that is already used for name resolution.
+The current implementation uses a web app for registration, which accesses the chain via a centralized RPC provider. We plan to add name purchases to the POPOPX apps, using the same decentralized blockchain access that is already used for name resolution.
 
 
 ## Security
@@ -194,7 +194,7 @@ The current implementation uses a web app for registration, which accesses the c
 
 ### Threat model
 
-This threat model assumes the [SimpleX network threat model](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/security.md) and the [channels threat model](./channels-overview.md#threat-model), and addresses the naming layer.
+This threat model assumes the [POPOPX network threat model](https://github.com/simplex-chat/simplexmq/blob/stable/protocol/security.md) and the [channels threat model](./channels-overview.md#threat-model), and addresses the naming layer.
 
 **A compromised names router (or its chain backend)**
 
@@ -240,7 +240,7 @@ An attacker holding the registration key can repoint or transfer the name. New l
 
 *can:*
 
-- See SimpleX traffic between clients and routers.
+- See POPOPX traffic between clients and routers.
 
 *cannot:*
 
@@ -259,7 +259,7 @@ An attacker holding the registration key can repoint or transfer the name. New l
 
 - **State proofs.** Responses including Merkle proofs of Ethereum state, verified by the client - removing the need to trust the resolver, with or without agreement.
 
-- **Main namespace launch.** The `.testing` namespace is deployed for early adopters; the `.simplex` namespace launches after the testing period.
+- **Main namespace launch.** The `.testing` namespace is deployed for early adopters; the `.popopx` namespace launches after the testing period.
 
 - **Registration via an app.** Registration currently requires an on-chain transaction from a wallet.
 
@@ -268,4 +268,4 @@ An attacker holding the registration key can repoint or transfer the name. New l
 
 ## Conclusion
 
-SimpleX names give channels and businesses memorable addresses that do not depend on any single server and cannot be revoked by a platform or registrar. Resolution runs through the SimpleX network, so no party observes who looks up which name. The naming system is fully decentralized on-chain, with no indexer or metadata service, and access to it is private, with no RPC provider observing requests. Names are optional and used only by public entities; private communication in SimpleX remains identifier-free.
+POPOPX names give channels and businesses memorable addresses that do not depend on any single server and cannot be revoked by a platform or registrar. Resolution runs through the POPOPX network, so no party observes who looks up which name. The naming system is fully decentralized on-chain, with no indexer or metadata service, and access to it is private, with no RPC provider observing requests. Names are optional and used only by public entities; private communication in POPOPX remains identifier-free.

@@ -107,7 +107,7 @@ enum OnboardingStage: String, Identifiable {
     /// Migrates legacy raw values persisted in UserDefaults from upstream naming.
     static func migratePersistedValue(_ raw: String) -> String {
         switch raw {
-        case "step1_SimpleXInfo": return "step1_WelcomeIdentity"
+        case "step1_PopopXInfo": return "step1_WelcomeIdentity"
         case "step1_AppInfoView": return "step1_WelcomeIdentity"
         case "step2_CreateProfile": return "step1_WelcomeIdentity"
         case "step3_LegacyAddressCreation": return "step2_NetworkAndCommitments"

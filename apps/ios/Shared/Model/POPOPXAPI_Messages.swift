@@ -450,7 +450,8 @@ func processReceivedMsg(_ res: ChatEvent) async {
         }
     case let .groupChatItemsDeleted(user, groupInfo, chatItemIDs, _, member_):
         await groupChatItemsDeleted(user, groupInfo, chatItemIDs, member_)
-    case let .receivedGroupInvitation(user, groupInfo, _, _, _):
+    case let .receivedGroupInvitation(user, groupInfo, _, _, _),
+         let .receivedGroupInvitationViaGroup(user, groupInfo, _, _, _):
         if active(user) {
             m.updateGroup(groupInfo) // update so that repeat group invitations are not duplicated
             NtfManager.shared.notifyGroupInvitation(user, groupInfo)
@@ -575,6 +576,9 @@ func processReceivedMsg(_ res: ChatEvent) async {
         await chatItemSimpleUpdate(user, aChatItem)
     case let .rcvFileComplete(user, aChatItem):
         await chatItemSimpleUpdate(user, aChatItem)
+        if active(user), let file = aChatItem.chatItem.file, m.receivedFileToOpen(file) {
+            await MainActor.run { m.openReceivedFile(file) }
+        }
     case let .rcvFileSndCancelled(user, aChatItem, _):
         await chatItemSimpleUpdate(user, aChatItem)
         Task { cleanupFile(aChatItem) }

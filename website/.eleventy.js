@@ -81,7 +81,7 @@ function replaceLink(link, _env) {
 
 // The implementation of Glossary feature
 const md = new markdownIt({ replaceLink }).use(markdownItReplaceLink)
-// Resolve the glossary's relative links (e.g. ./SIMPLEX.md) as if rendered from
+// Resolve the glossary's relative links (e.g. ./POPOPX.md) as if rendered from
 // its built location, so tooltips embedded on other pages get absolute URLs.
 const glossaryInputPath = path.resolve(__dirname, 'src/docs/GLOSSARY.md')
 const glossaryMarkdownContent = fs.readFileSync(path.resolve(__dirname, '../docs/GLOSSARY.md'), 'utf8')
@@ -153,7 +153,7 @@ function parseChildren(node, html) {
 
 const globalConfig = {
   onionLocation: "http://isdb4l77sjqoy2qq7ipum6x3at6hyn3jmxfx4zdhc72ufbmuq4ilwkqd.onion",
-  siteLocation: "https://simplex.chat"
+  siteLocation: "https://popopx.chat"
 }
 
 const translationsDirectoryPath = './langs'

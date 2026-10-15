@@ -452,6 +452,7 @@ func messageText(
                     pxRunAttrs[webLinkAttrKey] = true
                     pxHandleTaps = true
                 }
+                pxRunText = displayedUri(pxRunText)
             case let .hyperLink(pxLabel, pxURI):
                 pxRunAttrs = pxLinkAttrsBuilder()
                 if let pxLabel { pxRunText = pxLabel }

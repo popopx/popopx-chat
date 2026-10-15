@@ -4,7 +4,7 @@
 
 ## Overview
 
-Establishing a contact connection in SimpleX Chat follows an invitation-link model. One party creates a connection link (one-time invitation or long-term address), shares it out-of-band, and the other party connects via that link. The process uses SMP queues for the handshake, with no central server involved in identity management.
+Establishing a contact connection in POPOPX Chat follows an invitation-link model. One party creates a connection link (one-time invitation or long-term address), shares it out-of-band, and the other party connects via that link. The process uses SMP queues for the handshake, with no central server involved in identity management.
 
 Connections support incognito mode, where a random profile is used per-connection instead of the user's real profile.
 
@@ -12,7 +12,7 @@ Connections support incognito mode, where a random profile is used per-connectio
 
 - Chat is initialized and running.
 - An active user profile exists.
-- For connecting: a valid SimpleX connection link (invitation or address).
+- For connecting: a valid POPOPX connection link (invitation or address).
 
 ---
 
@@ -36,7 +36,7 @@ suspend fun apiAddContact(rh: Long?, incognito: Boolean): Pair<Pair<CreatedConnL
 
 ### 1.2 Long-Term Contact Address
 
-1. User goes to Settings and creates a SimpleX address.
+1. User goes to Settings and creates a POPOPX address.
 2. This creates a persistent address link that multiple people can use.
 3. Incoming connection requests from the address require explicit acceptance (see section 4).
 
@@ -222,12 +222,12 @@ While connecting, the chat list shows a `PendingContactConnection` with status:
 
 | Type | Location | Purpose |
 |------|----------|---------|
-| `CreatedConnLink` | `model/SimpleXAPI.kt` | Connection link with full URI and short link |
+| `CreatedConnLink` | `model/POPOPXAPI.kt` | Connection link with full URI and short link |
 | `PendingContactConnection` | `model/ChatModel.kt` | In-progress connection shown in chat list |
-| `ConnectionPlan` | `model/SimpleXAPI.kt` | Sealed class: InvitationLink, ContactAddress, GroupLink, Error |
-| `InvitationLinkPlan` | `model/SimpleXAPI.kt` | Ok, OwnLink, Connecting, Known |
-| `ContactAddressPlan` | `model/SimpleXAPI.kt` | Ok, OwnLink, ConnectingConfirmReconnect, ConnectingProhibit, Known |
-| `GroupLinkPlan` | `model/SimpleXAPI.kt` | Ok, OwnLink, ConnectingConfirmReconnect, ConnectingProhibit, Known |
+| `ConnectionPlan` | `model/POPOPXAPI.kt` | Sealed class: InvitationLink, ContactAddress, GroupLink, Error |
+| `InvitationLinkPlan` | `model/POPOPXAPI.kt` | Ok, OwnLink, Connecting, Known |
+| `ContactAddressPlan` | `model/POPOPXAPI.kt` | Ok, OwnLink, ConnectingConfirmReconnect, ConnectingProhibit, Known |
+| `GroupLinkPlan` | `model/POPOPXAPI.kt` | Ok, OwnLink, ConnectingConfirmReconnect, ConnectingProhibit, Known |
 | `ConnectProgressManager` | `model/ChatModel.kt` | Manages connect progress indicator with timeout |
 | `Contact` | `model/ChatModel.kt` | Established contact with profile, connection status |
 | `ContactRequest` | `model/ChatModel.kt` | Pending inbound contact request |

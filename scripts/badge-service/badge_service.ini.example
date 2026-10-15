@@ -36,7 +36,7 @@ session_minutes = 60
 waiting_seconds = 3
 idle_seconds = 60
 
-; index is the one clients verify against; private_key is from `simplex-chat badge keygen`.
+; index is the one clients verify against; private_key is from `popopx-chat badge keygen`.
 ; To rotate, change both together, once clients trust the new index.
 [issuer]
 index = 1
@@ -50,5 +50,5 @@ private_key = replace-me
 ; display_name must be a name the chat core accepts unchanged: one it would spell
 ; differently stops the whole service, payments included, from starting.
 ;[group]
-;display_name = SimpleX Badges
+;display_name = POPOPX Badges
 ;description = Welcome to the badges group

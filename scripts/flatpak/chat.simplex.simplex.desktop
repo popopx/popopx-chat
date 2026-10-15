@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
 Terminal=false
-Name=SimpleX Chat
+Name=POPOPX Chat
 Comment=A private & encrypted open-source messenger without any user IDs (not even random ones)!
-Keywords=chat;message;private;secure;simplex;
+Keywords=chat;message;private;secure;popopx;
 Categories=Utility;Chat;InstantMessaging;
-Exec=simplex %U
-Icon=chat.simplex.simplex
-StartupWMClass=simplex-chat
+Exec=popopx %U
+Icon=chat.popopx.popopx
+StartupWMClass=popopx-chat

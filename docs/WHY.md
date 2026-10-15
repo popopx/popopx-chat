@@ -1,4 +1,4 @@
-# Why we are building SimpleX Network
+# Why we are building POPOPX Network
 
 You were born without an account.
 

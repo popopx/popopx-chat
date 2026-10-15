@@ -1,4 +1,4 @@
-import {T} from "@simplex-chat/types"
+import {T} from "@popopx-chat/types"
 import {api, bot, util} from "popopx-chat"
 import {Calc, Update, calculatorText, initialCalc, keyNames, press, textInput} from "./calculator.js"
 import {calculatorIcon} from "./icon.js"

@@ -17,7 +17,7 @@
     <meta property="og:url" content="{% cfg 'siteLocation' %}{{ permalink }}" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{ title }}" />
-    <meta property="og:image" content="{% cfg 'siteLocation' %}/img/share_simplex.jpg" />
+    <meta property="og:image" content="{% cfg 'siteLocation' %}/img/share_popopx.jpg" />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon.ico" />
     {% include "markdown-alternate.html" %}
@@ -223,9 +223,9 @@
       <div class="py-6 md:p-[60px]">{{ content | safe }}</div>
     </section>
 
-    <div id="mint-simplex-nft" class="overlay hidden fixed top-0 left-0 bottom-0 right-0 before:absolute before:w-full before:h-full bg-transparent before:bg-secondary-bg-light dark:before:bg-primary-bg-dark before:opacity-90 items-center justify-center p-3 md:p-10 z-[10000]">
+    <div id="mint-popopx-nft" class="overlay hidden fixed top-0 left-0 bottom-0 right-0 before:absolute before:w-full before:h-full bg-transparent before:bg-secondary-bg-light dark:before:bg-primary-bg-dark before:opacity-90 items-center justify-center p-3 md:p-10 z-[10000]">
         <div class="overlay-card w-full md:max-w-[1276px] bg-white dark:bg-card-bg-dark opacity-100 h-full md:max-h-[720px] z-[10001] rounded-md shadow-[0px_3px_12px_rgba(0,0,0,0.2)] p-6 py-10 sm:p-14 overflow-auto scale-100">
-            <h1 id="nft-app-title" class="text-4xl font-bold text-active-blue mb-6 text-center gradient-text">Mint SimpleX NFT</h1>
+            <h1 id="nft-app-title" class="text-4xl font-bold text-active-blue mb-6 text-center gradient-text">Mint POPOPX NFT</h1>
             <div id="nft-app-content"></div>
 
             <script>
@@ -235,7 +235,7 @@
                 let appState;
 
                 function showNftApp() {
-                    if (window.location.hash === "#mint-simplex-nft") {
+                    if (window.location.hash === "#mint-popopx-nft") {
                         if (!appState) initNftApp();
                         renderNftApp();
                     } else if (nextPollInterval) {
@@ -312,7 +312,7 @@
                         nftAddress: '',
                         hasToken: false,
                         tokenId: null,
-                        name: 'Mint SimpleX NFT',
+                        name: 'Mint POPOPX NFT',
                         metadata: null,
                         nextId: null,
                         nextUri: null,
@@ -578,13 +578,13 @@
                         case STATES.NOT_CONNECTED:
                             if (window.ethereum) {
                                 content.innerHTML += `<div style="text-align: center; margin-top: 20px;">
-                                    <p class="mb-5"><img src="/img/design_3/simplex_nft_smpx.jpg" width="200" style="display: inline; border-radius: 10px;"></p>
+                                    <p class="mb-5"><img src="/img/design_3/popopx_nft_smpx.jpg" width="200" style="display: inline; border-radius: 10px;"></p>
                                     <button class="btn btn-primary" id="connect">Connect Wallet</button>
                                     <p>${currentConfig.name}</p>
                                 </div>`;
                                 setTimeout(() => document.getElementById('connect').onclick = connectWallet, 0);
                             } else {
-                                content.innerHTML += `<p class="no-metamask"><img src="/img/design_3/simplex_nft_smpx.jpg"></p>
+                                content.innerHTML += `<p class="no-metamask"><img src="/img/design_3/popopx_nft_smpx.jpg"></p>
                                     <p class="no-metamask">
                                         <a href="https://metamask.io/download/" target="_blank">Install MetaMask wallet</a>
                                     </p>`;
@@ -613,8 +613,8 @@
                             }
                             html += `<div class="metadata">`;
                             html += appState.state == STATES.MINTED
-                                ? `<p class="congrats">You minted SimpleX NFT #${appState.tokenId}!</p>`
-                                : `<p class="congrats">You have SimpleX NFT #${appState.tokenId}</p>`;
+                                ? `<p class="congrats">You minted POPOPX NFT #${appState.tokenId}!</p>`
+                                : `<p class="congrats">You have POPOPX NFT #${appState.tokenId}</p>`;
                             if (meta) {
                                 if (meta.description) html += `<p>${meta.description}</p>`;
                                 html += renderAttributes(meta.attributes, appState.openedTraits);
@@ -686,7 +686,7 @@
 
                 function renderMintButton() {
                     let html = '<div style="text-align: center; margin-top: 20px;">';
-                    html += `<button class="btn btn-primary btn-large" id="mintBtn">Mint SimpleX NFT #${appState.nextId}</button>`;
+                    html += `<button class="btn btn-primary btn-large" id="mintBtn">Mint POPOPX NFT #${appState.nextId}</button>`;
                     if (appState.mintEndTime > 0) {
                         const endDate = new Date(appState.mintEndTime * 1000).toLocaleString();
                         html += `<p>Until ${endDate}</p>`;

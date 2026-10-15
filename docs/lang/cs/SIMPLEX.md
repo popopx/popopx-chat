@@ -1,10 +1,10 @@
 ---
-title: Platforma SimpleX
+title: Platforma POPOPX
 revision: 07.02.2023
 ---
-| Aktualizováno 07.02.2023 | Jazyky: CZ, [EN](/docs/SIMPLEX.md), [FR](/docs/lang/fr/SIMPLEX.md), [PL](/docs/lang/pl/SIMPLEX.md) |
+| Aktualizováno 07.02.2023 | Jazyky: CZ, [EN](/docs/POPOPX.md), [FR](/docs/lang/fr/POPOPX.md), [PL](/docs/lang/pl/POPOPX.md) |
 
-# Platforma SimpleX - motivace a srovnání
+# Platforma POPOPX - motivace a srovnání
 
 ## Problémy
 
@@ -22,45 +22,45 @@ Koncentrace komunikace v malém počtu centralizovaných platforem činí řeše
 
 Navrhovaný zásobník protokolů řeší tyto problémy tím, že zprávy i kontakty jsou uloženy pouze v klientských zařízeních, čímž se role serverů omezuje na pouhé zprostředkovatele zpráv, kteří vyžadují pouze autorizaci zpráv odesílaných do front, ale NEvyžadují autentizaci uživatelů - chráněny jsou nejen zprávy, ale i metadata, protože uživatelé nemají přiřazeny žádné identifikátory - na rozdíl od jiných platforem.
 
-Více informací o cílech a technickém návrhu platformy naleznete v dokumentu [SimpleX whitepaper](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md).
+Více informací o cílech a technickém návrhu platformy naleznete v dokumentu [POPOPX whitepaper](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md).
 
-## Proč používat SimpleX
+## Proč používat POPOPX
 
-## Jedinečný přístup SimpleX k ochraně soukromí a zabezpečení
+## Jedinečný přístup POPOPX k ochraně soukromí a zabezpečení
 
 Každý by měl dbát na soukromí a bezpečnost své komunikace - i obyčejné konverzace vás mohou ohrozit.
 
 ### Úplné soukromí vaší identity, profilu, kontaktů a metadat.
 
-**Na rozdíl od všech ostatních existujících platforem pro zasílání zpráv nemá SimpleX žádné identifikátory přiřazené uživatelům** - k identifikaci svých uživatelů nepoužívá telefonní čísla (jako Signal nebo WhatsApp), adresy založené na doméně (jako e-mail, XMPP nebo Matrix), uživatelská jména (jako Telegram), veřejné klíče nebo dokonce náhodná čísla (jako všechny ostatní messengery) - ani nevíme, kolik lidí SimpleX používá.
+**Na rozdíl od všech ostatních existujících platforem pro zasílání zpráv nemá POPOPX žádné identifikátory přiřazené uživatelům** - k identifikaci svých uživatelů nepoužívá telefonní čísla (jako Signal nebo WhatsApp), adresy založené na doméně (jako e-mail, XMPP nebo Matrix), uživatelská jména (jako Telegram), veřejné klíče nebo dokonce náhodná čísla (jako všechny ostatní messengery) - ani nevíme, kolik lidí POPOPX používá.
 
-K doručování zpráv místo identifikátorů uživatelů, které používají všechny ostatní platformy, používá SimpleX adresy jednosměrných (simplexních) front zpráv. Používání služby SimpleX je jako mít pro každý kontakt jinou e-mailovou adresu nebo telefonní číslo, ale bez starostí se správou všech těchto adres. V blízké budoucnosti budou aplikace SimpleX také automaticky měnit fronty zpráv a přesouvat konverzace z jednoho serveru na druhý, aby uživatelům poskytly ještě lepší soukromí.
+K doručování zpráv místo identifikátorů uživatelů, které používají všechny ostatní platformy, používá POPOPX adresy jednosměrných (popopxních) front zpráv. Používání služby POPOPX je jako mít pro každý kontakt jinou e-mailovou adresu nebo telefonní číslo, ale bez starostí se správou všech těchto adres. V blízké budoucnosti budou aplikace POPOPX také automaticky měnit fronty zpráv a přesouvat konverzace z jednoho serveru na druhý, aby uživatelům poskytly ještě lepší soukromí.
 
-Tento přístup chrání soukromí toho, s kým komunikujete, a skrývá ho před servery platformy SimpleX a před jakýmikoli pozorovateli. Své soukromí můžete dále zlepšit nastavením přístupu k síti tak, abyste se k serverům SimpleX připojovali prostřednictvím některé překryvné transportní sítě, např. sítě Tor.
+Tento přístup chrání soukromí toho, s kým komunikujete, a skrývá ho před servery platformy POPOPX a před jakýmikoli pozorovateli. Své soukromí můžete dále zlepšit nastavením přístupu k síti tak, abyste se k serverům POPOPX připojovali prostřednictvím některé překryvné transportní sítě, např. sítě Tor.
 
 ### Nejlepší ochrana proti spamu a zneužití
 
-Protože na platformě SimpleX nemáte žádný identifikátor, nelze vás kontaktovat, pokud nesdílíte odkaz s jednorázovou pozvánkou nebo volitelnou dočasnou uživatelskou adresu. I v případě volitelných uživatelských adres je sice lze využít k zasílání nevyžádaných kontaktů, ale můžete je změnit nebo zcela odstranit, aniž byste přišli o jakékoli spojení.
+Protože na platformě POPOPX nemáte žádný identifikátor, nelze vás kontaktovat, pokud nesdílíte odkaz s jednorázovou pozvánkou nebo volitelnou dočasnou uživatelskou adresu. I v případě volitelných uživatelských adres je sice lze využít k zasílání nevyžádaných kontaktů, ale můžete je změnit nebo zcela odstranit, aniž byste přišli o jakékoli spojení.
 
 ### Úplné vlastnictví, kontrola a zabezpečení vašich údajů
 
-SimpleX ukládá všechna uživatelská data v klientských zařízeních, zprávy jsou pouze dočasně uchovávány na relay serverech SimpleX, dokud nejsou přijaty.
+POPOPX ukládá všechna uživatelská data v klientských zařízeních, zprávy jsou pouze dočasně uchovávány na relay serverech POPOPX, dokud nejsou přijaty.
 
 Používáme přenosný formát databáze, který lze použít na všech podporovaných zařízeních - brzy přidáme možnost exportovat databázi chatu z mobilní aplikace, aby ji bylo možné použít na jiném zařízení.
 
-Na rozdíl od serverů federativních sítí (e-mail, XMPP nebo Matrix) servery SimpleX neukládají uživatelské účty, pouze předávají zprávy příjemcům, čímž chrání soukromí obou stran. Mezi odesílaným a přijímaným provozem serveru nejsou žádné společné identifikátory ani šifrované zprávy, a to díky dodatečné vrstvě šifrování doručovaných zpráv. Pokud tedy kdokoli sleduje provoz serveru, nemůže snadno zjistit, kdo s kým komunikuje (známé útoky na korelaci provozu viz [SimpleX whitepaper](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md)).
+Na rozdíl od serverů federativních sítí (e-mail, XMPP nebo Matrix) servery POPOPX neukládají uživatelské účty, pouze předávají zprávy příjemcům, čímž chrání soukromí obou stran. Mezi odesílaným a přijímaným provozem serveru nejsou žádné společné identifikátory ani šifrované zprávy, a to díky dodatečné vrstvě šifrování doručovaných zpráv. Pokud tedy kdokoli sleduje provoz serveru, nemůže snadno zjistit, kdo s kým komunikuje (známé útoky na korelaci provozu viz [POPOPX whitepaper](https://github.com/simplex-chat/simplexmq/blob/master/protocol/overview-tjr.md)).
 
-### Uživatelé vlastní síť SimpleX
+### Uživatelé vlastní síť POPOPX
 
-Můžete používat SimpleX s vlastními servery a přitom komunikovat s lidmi, kteří používají servery předkonfigurované v aplikacích nebo jakékoli jiné servery SimpleX.
+Můžete používat POPOPX s vlastními servery a přitom komunikovat s lidmi, kteří používají servery předkonfigurované v aplikacích nebo jakékoli jiné servery POPOPX.
 
-Platforma SimpleX používá otevřený protokol a poskytuje SDK pro vytváření chatovacích botů, což umožňuje implementaci služeb, s nimiž mohou uživatelé komunikovat prostřednictvím aplikací SimpleX Chat - opravdu se těšíme, jaké služby SimpleX bude možné vytvořit.
+Platforma POPOPX používá otevřený protokol a poskytuje SDK pro vytváření chatovacích botů, což umožňuje implementaci služeb, s nimiž mohou uživatelé komunikovat prostřednictvím aplikací POPOPX Chat - opravdu se těšíme, jaké služby POPOPX bude možné vytvořit.
 
-Pokud uvažujete o vývoji s platformou SimpleX, ať už jde o služby chatovacích botů pro uživatele aplikací SimpleX, nebo o integraci knihovny SimpleX Chat do vašich mobilních aplikací, obraťte se na nás pro případné rady a podporu.
+Pokud uvažujete o vývoji s platformou POPOPX, ať už jde o služby chatovacích botů pro uživatele aplikací POPOPX, nebo o integraci knihovny POPOPX Chat do vašich mobilních aplikací, obraťte se na nás pro případné rady a podporu.
 
 ## Srovnání s jinými protokoly
 
-| | SimpleX chat | Signal, big platforms | XMPP, Matrix | P2P protocols |
+| | POPOPX chat | Signal, big platforms | XMPP, Matrix | P2P protocols |
 | :--------------------------------------------- | :----------------: | :-------------------: | :-------------: | :-------------: |
 | Vyžaduje uživatelské identifikátory | Ne = private | Ano<sup>1</sup> | Ano<sup>2</sup> | Yes<sup>3</sup> |
 | Možnost MITM útoku | Žádná = bezpečné | Ano<sup>4</sup> | Ano | Ano | Ano |
@@ -87,7 +87,7 @@ Existuje několik protokolů P2P pro chatování/zprávy a jejich implementací,
 
 4. Implementace P2P mohou být blokovány některými poskytovateli internetu (jako například [BitTorrent][11]). Navrhovaný návrh je transportně agnostický - může fungovat přes standardní webové protokoly a servery mohou být nasazeny na stejných doménách jako webové stránky.
 
-5. Všechny známé sítě P2P jsou pravděpodobně zranitelné vůči [Sybilovu útoku][12], protože každý uzel je zjistitelný a síť funguje jako celek. Známá opatření ke snížení pravděpodobnosti Sybilova útoku buď vyžadují centralizovanou složku, nebo nákladný [proof of work][13]. Navrhovaný návrh naopak nemá žádnou zjistitelnost serverů - servery nejsou propojeny, nejsou známy navzájem ani všem klientům. Síť SimpleX je fragmentovaná a funguje jako několik izolovaných spojení. To znemožňuje útoky na celou síť SimpleX - i když jsou některé servery kompromitovány, ostatní části sítě mohou fungovat normálně a postižení klienti mohou přejít na používání jiných serverů, aniž by ztratili kontakty nebo zprávy.
+5. Všechny známé sítě P2P jsou pravděpodobně zranitelné vůči [Sybilovu útoku][12], protože každý uzel je zjistitelný a síť funguje jako celek. Známá opatření ke snížení pravděpodobnosti Sybilova útoku buď vyžadují centralizovanou složku, nebo nákladný [proof of work][13]. Navrhovaný návrh naopak nemá žádnou zjistitelnost serverů - servery nejsou propojeny, nejsou známy navzájem ani všem klientům. Síť POPOPX je fragmentovaná a funguje jako několik izolovaných spojení. To znemožňuje útoky na celou síť POPOPX - i když jsou některé servery kompromitovány, ostatní části sítě mohou fungovat normálně a postižení klienti mohou přejít na používání jiných serverů, aniž by ztratili kontakty nebo zprávy.
 
 6. Sítě P2P jsou pravděpodobně [zranitelné][14] vůči [útoku DRDoS][15]. V navrhovaném návrhu klienti pouze předávají provoz ze známého důvěryhodného spojení a nelze je použít k odrážení a zesilování provozu v celé síti.
 

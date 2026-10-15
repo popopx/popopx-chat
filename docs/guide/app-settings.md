@@ -19,7 +19,7 @@ This section is labelled **"You"** in the app settings.
 
 Tap on your avatar/name to update your current profile names and avatar.
 
-Display name cannot have any spaces and it is recommended to use latin characters and numbers to make it easier to type these names to the users who use [SimpleX Chat for the terminal](../CLI.md) (CLI).
+Display name cannot have any spaces and it is recommended to use latin characters and numbers to make it easier to type these names to the users who use [POPOPX Chat for the terminal](../CLI.md) (CLI).
 
 **Please note**: When you save your profile, the update will be sent to all your contacts (excluding the contacts with whom your incognito profiles were shared). If you have a large number of contacts it can take several seconds.
 
@@ -29,13 +29,13 @@ This page allows adding and configuring your chat profiles. Please see [Your cha
 
 ### Incognito
 
-This feature is unique to SimpleX Chat – it is independent from chat profiles.
+This feature is unique to POPOPX Chat – it is independent from chat profiles.
 
 When "Incognito” is turned on, your current profile name and image are NOT shared with your new contacts. It allows connections with other people without any shared data – when you make new connections or join groups via a link a new random profile name will be generated for each contact or group.
 
-Please read more in [this post](../../blog/20220901-simplex-chat-v3.2-incognito-mode.md#incognito-mode).
+Please read more in [this post](../../blog/20220901-popopx-chat-v3.2-incognito-mode.md#incognito-mode).
 
-### Your SimpleX contact address
+### Your POPOPX contact address
 
 <img src="../../blog/images/20221108-address1.png" width="288"> &nbsp;&nbsp; <img src="../../blog/images/20221108-address2.png" width="288">
 
@@ -45,9 +45,9 @@ When people connect to you via this address, you will receive a connection reque
 
 If you start receiving too many requests via this address it is always safe to remove it – all the connections you created via this address will remain active, as this address is not used to deliver the messages.
 
-See the comparison with [1-time invitation links](./making-connections.md#comparison-of-1-time-invitation-links-and-simplex-contact-addresses).
+See the comparison with [1-time invitation links](./making-connections.md#comparison-of-1-time-invitation-links-and-popopx-contact-addresses).
 
-Read more in [this post](../../blog/20221108-simplex-chat-v4.2-security-audit-new-website.md#auto-accept-contact-requests).
+Read more in [this post](../../blog/20221108-popopx-chat-v4.2-security-audit-new-website.md#auto-accept-contact-requests).
 
 ### Chat preferences
 
@@ -67,7 +67,7 @@ This section is labelled **"Settings"** in the app settings.
 
 ### Notifications
 
-This page allows to configure the notifications mode: instant, periodic or only when the app is running. There are some differences in how these options work on iOS and Android. Please read more in [this post](../../blog/20220404-simplex-chat-instant-notifications.md) about how notifications work.
+This page allows to configure the notifications mode: instant, periodic or only when the app is running. There are some differences in how these options work on iOS and Android. Please read more in [this post](../../blog/20220404-popopx-chat-instant-notifications.md) about how notifications work.
 
 You can also configure whether the message preview is shown when the message arrives.
 
@@ -89,7 +89,7 @@ By default, the app has preset relays configured – you can change them to your
 
 This page also allows testing the connection with the servers.
 
-Read more in [this post](../../blog/20221206-simplex-chat-v4.3-voice-messages.md#smp-servers-configuration-and-password).
+Read more in [this post](../../blog/20221206-popopx-chat-v4.3-voice-messages.md#smp-servers-configuration-and-password).
 
 #### Use SOCKS proxy (Android only)
 
@@ -123,7 +123,7 @@ While iOS does not support SOCKS proxies, you can install Orbot app that works a
 
 This option is only available if you have enabled developer tools.
 
-Please read the details in [this post](../../blog/20230204-simplex-chat-v4-5-user-chat-profiles.md#transport-isolation).
+Please read the details in [this post](../../blog/20230204-popopx-chat-v4-5-user-chat-profiles.md#transport-isolation).
 
 #### Advanced network settings
 
@@ -133,9 +133,9 @@ If your network is slow, and connections to the servers keep failing (you would 
 
 ### Privacy and security
 
-#### SimpleX Lock
+#### POPOPX Lock
 
-SimpleX Lock when enabled requires to pass the device authentication when you open the app or use some security- or privacy-sensitive features.
+POPOPX Lock when enabled requires to pass the device authentication when you open the app or use some security- or privacy-sensitive features.
 
 You will be offered to enable it after you open the app a few times.
 
@@ -143,7 +143,7 @@ To enable it later:
 
 - [Open the app settings](#opening-the-app-settings).
 - Tap on "Privacy & security".
-- Toggle on "SimpleX Lock" slider.
+- Toggle on "POPOPX Lock" slider.
 - Confirm your phone credentials.
 
 Done! Now you will be required to authenticate when you start or resume the app after 30 seconds in background.
@@ -170,15 +170,15 @@ Enabling sending link previews may reduce privacy – your app will be loading l
 - Tap on "Privacy & security".
 - Toggle on "Send link previews".
 
-#### SimpleX Links
+#### POPOPX Links
 
-This option affects how the links to connect to other SimpleX users or to join groups are shown in the conversations. You can choose between:
+This option affects how the links to connect to other POPOPX users or to join groups are shown in the conversations. You can choose between:
 
 - _description_ (default): only the link description and server host name are shown. The link won't be opened in the browser.
 - _full link_: the full link is shown. The link will still not be opened in the browser.
-- _via browser_: the full link is shown, and it will be opened in the browser. In this case, if the link domain is different from simplex.chat, the link will be shown in red color, as it might be malicious.
+- _via browser_: the full link is shown, and it will be opened in the browser. In this case, if the link domain is different from popopx.chat, the link will be shown in red color, as it might be malicious.
 
-Read more about [SimpleX Links security](../../blog/20221206-simplex-chat-v4.3-voice-messages.md#privacy-and-security-of-simplex-invitation-links).
+Read more about [POPOPX Links security](../../blog/20221206-popopx-chat-v4.3-voice-messages.md#privacy-and-security-of-popopx-invitation-links).
 
 ### Appearance
 
@@ -198,7 +198,7 @@ Read more in [Managing Your Data](./managing-data.md) page.
 
 This section has information on how to use the app and the links to connect to the team. Please use [Send questions and ideas](https://simplex.chat/contact#/?v=1&smp=smp%3A%2F%2FPQUV2eL0t7OStZOoAsPEV2QYWt4-xilbakvGUGOItUo%3D%40smp6.simplex.im%2FK1rslx-m5bpXVIdMZg9NLUZ_8JBm8xTt%23%2F%3Fv%3D1%26dh%3DMCowBQYDK2VuAyEALDeVe-sG8mRY22LsXlPgiwTNs9dbiLrNuA7f3ZMAJ2w%253D%26srv%3Dbylepyau3ty4czmn77q4fglvperknl4bi2eb2fdy2bh4jxtf32kf73yd.onion) to connect to us via the chat to ask any questions, make any suggestions and report any issues.
 
-## Support SimpleX Chat
+## Support POPOPX Chat
 
 - contribute - the link to the information about how to contribute and to donate to the project.
 - rate the app - rate and review it on the App Store or Play Store - your feedback helps a lot.

@@ -1,12 +1,12 @@
 ---
-title: Join SimpleX Chat team
+title: Join POPOPX Chat team
 permalink: /jobs/index.html
 layout: layouts/jobs.html
 ---
 
-# Join SimpleX Chat team
+# Join POPOPX Chat team
 
-Join SimpleX Chat team to build the future of secure, private, and decentralized communications.
+Join POPOPX Chat team to build the future of secure, private, and decentralized communications.
 
 ## Who we are looking for
 
@@ -49,6 +49,6 @@ This is a part-time remote contract. You must be in UTC +/- 8 hours timezone.
 
 ## How to join the team
 
-To apply, please [install SimpleX Chat app](./DOWNLOADS.md) and send your achievements to this [SimpleX address](https://smp16.simplex.im/a#OGL3qf7utOrUERFoFOROgdQaAkj_znzoeACNKDAsFNA).
+To apply, please [install POPOPX Chat app](./DOWNLOADS.md) and send your achievements to this [POPOPX address](https://smp16.popopx.im/a#OGL3qf7utOrUERFoFOROgdQaAkj_znzoeACNKDAsFNA).
 
 **We do NOT review CVs at the initial stage, please only send the links to your achievements**.

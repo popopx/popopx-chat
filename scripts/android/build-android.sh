@@ -157,7 +157,7 @@ build() {
 }
 
 final() {
-  printf 'Simplex-chat was successfully compiled: %s/popopx-chat-*.apk\nDelete nix and gradle caches with "rm -rf /nix && rm $HOME/.nix* && $HOME/.gradle/caches" in case if no longer needed.\n' "$PWD"
+  printf 'POPOPX Chat was successfully compiled: %s/popopx-chat-*.apk\nDelete nix and gradle caches with "rm -rf /nix && rm $HOME/.nix* && $HOME/.gradle/caches" in case if no longer needed.\n' "$PWD"
 }
 
 pre() {

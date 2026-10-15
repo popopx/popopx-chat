@@ -2,7 +2,7 @@
 
 ## Background
 
-SimpleX Chat users participate in public groups that were created for small, fully connected p2p groups - working groups, teams, etc. The ability to join the groups via the links was added as an afterthought, without forward looking design, simply to accomodate the interest from the users to use SimpleX platform for public groups and communities. Overall, it's correct to say that the emergence of public groups was unexpected in the context of private messaging, and it shows that protecting participants and publishers identity, and having per-group identity is important for many people.
+POPOPX Chat users participate in public groups that were created for small, fully connected p2p groups - working groups, teams, etc. The ability to join the groups via the links was added as an afterthought, without forward looking design, simply to accomodate the interest from the users to use POPOPX platform for public groups and communities. Overall, it's correct to say that the emergence of public groups was unexpected in the context of private messaging, and it shows that protecting participants and publishers identity, and having per-group identity is important for many people.
 
 ## Problems of the current p2p design
 
@@ -46,7 +46,7 @@ Super-peer would manage this merkle-tree state based on the messages from owners
 
 ## Joining group
 
-The current model when the link to join the group is, effectively, an address of one of the admins, is not censorship-resistant, reliable or convenient - the admin can be offline, be removed, etc. So we want to somehow include addresses of multiple super-peers to join the group. Without identity-layer, the addresses are quite large already, and including multiple addresses in one link, while possible, would make the qr code very hard to scan. Practically, without creating identity layer, we can use up to 2-3 super-peer addresses for the group, and increase it later. 2 addresses is likely to be satisfactory, as one of them could be super-peer hosted by SimpleX Chat, and another - by group owners.
+The current model when the link to join the group is, effectively, an address of one of the admins, is not censorship-resistant, reliable or convenient - the admin can be offline, be removed, etc. So we want to somehow include addresses of multiple super-peers to join the group. Without identity-layer, the addresses are quite large already, and including multiple addresses in one link, while possible, would make the qr code very hard to scan. Practically, without creating identity layer, we can use up to 2-3 super-peer addresses for the group, and increase it later. 2 addresses is likely to be satisfactory, as one of them could be super-peer hosted by POPOPX Chat, and another - by group owners.
 
 The client then will be connecting to all super-peers in the address. Once connected, these super-peers could send the addresses of the additional super-peers, but this is probably unnecessary for the initial release.
 

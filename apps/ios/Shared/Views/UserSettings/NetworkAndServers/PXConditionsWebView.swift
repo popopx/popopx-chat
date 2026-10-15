@@ -48,11 +48,12 @@ private enum PXHTMLSanitizer {
 // MARK: - POPOPX Style Builder
 private struct PXConditionsStyleBuilder {
     let theme: AppTheme
+    let nonce: String
 
     func pxBuildStyles() -> String {
         let codeOpacity = theme.colors.isLight ? PXConditionsLayout.lightCodeOpacity : PXConditionsLayout.darkCodeOpacity
         return """
-        <style>
+        <style nonce="\(nonce)">
         body {
             color: \(theme.colors.onBackground.toHTMLHex());
             font-family: \(PXConditionsLayout.htmlFontFamily);
@@ -64,26 +65,38 @@ private struct PXConditionsStyleBuilder {
             font-family: \(PXConditionsLayout.htmlCodeFontFamily);
             background: \(theme.colors.secondary.opacity(codeOpacity).toHTMLHex());
         }
+        pre {
+            overflow-x: auto;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid \(theme.colors.secondary.toHTMLHex());
+            padding: 4px 8px;
+        }
+        img {
+            max-width: 100%;
+        }
         </style>
         """
     }
 
     func pxBuildHead() -> String {
-        "<head>\(PXConditionsLayout.viewportMeta)<meta http-equiv='Content-Security-Policy' content=\"\(pxCSP)\">\(pxBuildStyles())</head>"
-    }
-
-    var pxCSP: String {
-        "default-src 'none'; style-src 'unsafe-inline'; img-src data:; block-all-mixed-content"
+        let pxCSP = "default-src 'none'; style-src 'nonce-\(nonce)'; img-src data:; base-uri 'none'; form-action 'none'"
+        return "<head>\(PXConditionsLayout.viewportMeta)<meta http-equiv='Content-Security-Policy' content=\"\(pxCSP)\">\(pxBuildStyles())</head>"
     }
 }
 
 struct ConditionsWebView: UIViewRepresentable {
     @State var html: String
+    var openLink: (URL) -> Void = openExternalLink
     @EnvironmentObject var theme: AppTheme
     @State var pageLoaded = false
 
     func makeUIView(context: Context) -> WKWebView {
         let config = WKWebViewConfiguration()
+        config.defaultWebpagePreferences.allowsContentJavaScript = false
         config.websiteDataStore = .nonPersistent()
         let view = WKWebView(frame: .zero, configuration: config)
         view.backgroundColor = .clear
@@ -106,7 +119,8 @@ struct ConditionsWebView: UIViewRepresentable {
     // MARK: - POPOPX Content Loading
 
     private func pxLoadContent(_ webView: WKWebView) {
-        let styleBuilder = PXConditionsStyleBuilder(theme: theme)
+        let nonce = UUID().uuidString
+        let styleBuilder = PXConditionsStyleBuilder(theme: theme, nonce: nonce)
         let sanitized = PXHTMLSanitizer.pxSanitize(html)
         let head = styleBuilder.pxBuildHead()
         webView.loadHTMLString(head + sanitized, baseURL: nil)
@@ -116,12 +130,18 @@ struct ConditionsWebView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Cordinator {
-        Cordinator()
+        Cordinator(openLink: openLink)
     }
 
     // MARK: - POPOPX Navigation Coordinator
 
     class Cordinator: NSObject, WKNavigationDelegate {
+        let openLink: (URL) -> Void
+
+        init(openLink: @escaping (URL) -> Void) {
+            self.openLink = openLink
+        }
+
         func webView(_ webView: WKWebView,
                      decidePolicyFor navigationAction: WKNavigationAction,
                      decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -131,13 +151,9 @@ struct ConditionsWebView: UIViewRepresentable {
             switch navigationAction.navigationType {
             case .linkActivated:
                 decisionHandler(.cancel)
-                openExternalLink(url)
-            case .other:
-                // Allow the initial load and programmatic loads from pxLoadContent
-                decisionHandler(.allow)
+                openLink(url)
             default:
-                // Block form submissions, redirects, and other navigation
-                decisionHandler(.cancel)
+                decisionHandler(url.scheme == "about" ? .allow : .cancel)
             }
         }
     }
@@ -148,10 +164,6 @@ extension ConditionsWebView {
     static let _pxBrand = "PX_CONDITIONS_WEB_VIEW"
 
     var pxComponentTag: String { "PX_CONDITIONS_WEB_VIEW" }
-
-    var pxSanitizedCSP: String {
-        "default-src 'none'; style-src 'unsafe-inline'; img-src data:; block-all-mixed-content"
-    }
 
     var pxLoadDelay: TimeInterval { PXConditionsLayout.loadDelay }
 

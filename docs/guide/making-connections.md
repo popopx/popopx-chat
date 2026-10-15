@@ -5,7 +5,7 @@ title: Making connections
 
 _Work in progress_
 
-Because you have no identifier on the SimpleX platform, nobody can contact you unless you share a one-time or temporary user address, such as a QR code or a link.
+Because you have no identifier on the POPOPX platform, nobody can contact you unless you share a one-time or temporary user address, such as a QR code or a link.
 
 Even with the optional user address, while it can be used to send spam contact requests, you can change or completely delete it without losing any of your connections.
 
@@ -13,21 +13,21 @@ Private Connection — connect using an invitation link or QR code via video or 
 
 Group Chat — Users have the option to create a secret group, share their contact link [which can be deleted later on], or generate a one-time invitation link.
 
-## Your SimpleX contact address
+## Your POPOPX contact address
 
-You can [create an optional long term address](./app-settings.md#your-simplex-contact-address) for other people to connect with you. Unlike 1-time invitation links, these addresses can be used many times, that makes them good to share online, e.g. on social media platforms, or in email signatures. That helps more people discover SimpleX Chat, so please do it!
+You can [create an optional long term address](./app-settings.md#your-popopx-contact-address) for other people to connect with you. Unlike 1-time invitation links, these addresses can be used many times, that makes them good to share online, e.g. on social media platforms, or in email signatures. That helps more people discover POPOPX Chat, so please do it!
 
-When people connect to you via this address, you will receive a connection request that you can accept or reject. You can configure an automatic acceptance of connection request and an automatic welcome message that will be sent to the new contacts. You can also share this address as part of your SimpleX profile, so group members can connect to you, and your contacts can share it with others - if this is something that you want.
+When people connect to you via this address, you will receive a connection request that you can accept or reject. You can configure an automatic acceptance of connection request and an automatic welcome message that will be sent to the new contacts. You can also share this address as part of your POPOPX profile, so group members can connect to you, and your contacts can share it with others - if this is something that you want.
 
 If you start receiving too many requests via this address it is always safe to remove it – all the connections you created via this address will remain active, as this address is not used to deliver the messages.
 
-### Comparison of 1-time invitation links and SimpleX Contact addresses
+### Comparison of 1-time invitation links and POPOPX Contact addresses
 
 <table>
   <tr>
     <th></th>
     <th>1-time invitation link</th>
-    <th>SimpleX contact address</th>
+    <th>POPOPX contact address</th>
   </tr>
   <tr>
     <td>Can be used many times?</td>
@@ -57,7 +57,7 @@ If you start receiving too many requests via this address it is always safe to r
   <tr>
     <td>Advantages over other platforms</td>
     <td>There is no direct analogy, other platforms don’t offer one-time invitations without any fixed part identifying the user.</td>
-    <td>Unlike addresses in other platforms, SimpleX addresses are not used to deliver the messages &mdash; only the initial connection requests.<br>It means that removing this address will not break the contacts made via it (like changing an email address would), it would only prevent new connections, which makes it a good solution against spam and abuse.</td>
+    <td>Unlike addresses in other platforms, POPOPX addresses are not used to deliver the messages &mdash; only the initial connection requests.<br>It means that removing this address will not break the contacts made via it (like changing an email address would), it would only prevent new connections, which makes it a good solution against spam and abuse.</td>
   </tr>
   <tr>
     <td>Vulnerability to attacks</td>

@@ -1,4 +1,4 @@
-# Domain Term Glossary -- SimpleX Chat (Android & Desktop, Kotlin Multiplatform)
+# Domain Term Glossary -- POPOPX Chat (Android & Desktop, Kotlin Multiplatform)
 
 This glossary is self-contained and covers the Android and Desktop (Kotlin/Compose Multiplatform) codebase only.
 
@@ -20,15 +20,15 @@ This glossary is self-contained and covers the Android and Desktop (Kotlin/Compo
 
 ## 1. Protocols & Cryptography
 
-### SMP (SimpleX Messaging Protocol)
+### SMP (POPOPX Messaging Protocol)
 The core message-relay protocol. Clients send and receive messages through SMP relay servers without exposing sender/receiver identity correlation. The protocol uses unidirectional queues -- each contact pair maintains separate send and receive queues on potentially different servers.
 
-*See:* `common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt` -- `SMPErrorType`, `SMPProxyMode`, `SMPProxyFallback`, `SMPWebPortServers`
+*See:* `common/src/commonMain/kotlin/chat/popopx/common/model/POPOPXAPI.kt` -- `SMPErrorType`, `SMPProxyMode`, `SMPProxyFallback`, `SMPWebPortServers`
 
-### XFTP (SimpleX File Transfer Protocol)
+### XFTP (POPOPX File Transfer Protocol)
 Protocol for transferring files through relay servers. Files are chunked, encrypted, and uploaded to XFTP relays. Recipients download chunks and reassemble locally. Supports inline transfer for small files.
 
-*See:* `common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt` -- `CC.ApiUploadStandaloneFile`, `CC.ApiDownloadStandaloneFile`, `CC.ApiStandaloneFileInfo`
+*See:* `common/src/commonMain/kotlin/chat/popopx/common/model/POPOPXAPI.kt` -- `CC.ApiUploadStandaloneFile`, `CC.ApiDownloadStandaloneFile`, `CC.ApiStandaloneFileInfo`
 
 ### E2E Encryption (End-to-End Encryption)
 All messages are encrypted end-to-end. The app never transmits plaintext to relay servers. Encryption keys are negotiated during connection establishment using X3DH-like key agreement and then maintained via the double-ratchet algorithm.
@@ -36,22 +36,22 @@ All messages are encrypted end-to-end. The app never transmits plaintext to rela
 ### Double Ratchet
 The core key-management algorithm. After initial key agreement, each message derives a new symmetric key, providing forward secrecy per message. Ratchet state can be re-synchronized via `APISyncContactRatchet` / `APISyncGroupMemberRatchet` commands.
 
-*See:* `SimpleXAPI.kt` -- `CC.APISyncContactRatchet(contactId, force)`, `CC.APISyncGroupMemberRatchet(groupId, groupMemberId, force)`, `CR.ContactRatchetSync`, `CR.GroupMemberRatchetSync`
+*See:* `POPOPXAPI.kt` -- `CC.APISyncContactRatchet(contactId, force)`, `CC.APISyncGroupMemberRatchet(groupId, groupMemberId, force)`, `CR.ContactRatchetSync`, `CR.GroupMemberRatchetSync`
 
 ### PQ (Post-Quantum)
 Post-quantum key exchange support. Connections track PQ state via `Connection.pqSupport`, `Connection.pqEncryption`, `Connection.pqSndEnabled`, and `Connection.pqRcvEnabled` fields. When both peers support PQ, the key exchange incorporates a post-quantum KEM to resist future quantum attacks.
 
-*See:* `ChatModel.kt` -- `Connection.pqSupport`, `Connection.pqEncryption`; `SimpleXAPI.kt` -- `SHARED_PREFS_PQ_EXPERIMENTAL_ENABLED` (legacy, no longer used)
+*See:* `ChatModel.kt` -- `Connection.pqSupport`, `Connection.pqEncryption`; `POPOPXAPI.kt` -- `SHARED_PREFS_PQ_EXPERIMENTAL_ENABLED` (legacy, no longer used)
 
 ### SMP Proxy / Private Routing
 Messages can be sent through an intermediate SMP proxy relay to hide the sender's IP from the destination relay. Controlled by `SMPProxyMode` (Always, Unknown, Unprotected, Never) and `SMPProxyFallback` (Allow, AllowProtected, Prohibit).
 
-*See:* `SimpleXAPI.kt` -- `AppPreferences.networkSMPProxyMode`, `AppPreferences.networkSMPProxyFallback`
+*See:* `POPOPXAPI.kt` -- `AppPreferences.networkSMPProxyMode`, `AppPreferences.networkSMPProxyFallback`
 
 ### Transport Session Mode
 Controls how TCP sessions to SMP relays are multiplexed. Options: `User` (one session per user profile), `Session` (single shared session), `Server` (one per server), `Entity` (one per queue/entity -- maximum metadata protection).
 
-*See:* `SimpleXAPI.kt` -- `AppPreferences.networkSessionMode`, `TransportSessionMode`
+*See:* `POPOPXAPI.kt` -- `AppPreferences.networkSessionMode`, `TransportSessionMode`
 
 ---
 
@@ -180,7 +180,7 @@ The sealed class representing all commands the app can send to the Haskell core 
 
 Each command variant has a `cmdString` property that serializes it to the text protocol consumed by the Haskell FFI.
 
-*See:* `SimpleXAPI.kt:3529` -- `sealed class CC`
+*See:* `POPOPXAPI.kt:3529` -- `sealed class CC`
 
 ### CR (Chat Response)
 The sealed class representing all responses / events received from the Haskell core. Over 130 response types. Examples:
@@ -195,7 +195,7 @@ The sealed class representing all responses / events received from the Haskell c
 - `CallInvitation`, `CallOffer`, `CallAnswer`, `CallExtraInfo`, `CallEnded` -- call signaling
 - `ChatError` -- error wrapper
 
-*See:* `SimpleXAPI.kt:6114` -- `sealed class CR`
+*See:* `POPOPXAPI.kt:6114` -- `sealed class CR`
 
 ### API
 The top-level response wrapper. Two variants:
@@ -204,7 +204,7 @@ The top-level response wrapper. Two variants:
 
 Properties: `ok` (Boolean -- true if `CR.CmdOk`), `result` (CR?), `rhId` (Long? -- remote host ID).
 
-*See:* `SimpleXAPI.kt:5975` -- `sealed class API`
+*See:* `POPOPXAPI.kt:5975` -- `sealed class API`
 
 ### ChatError
 The error hierarchy returned from the Haskell core:
@@ -216,18 +216,18 @@ The error hierarchy returned from the Haskell core:
 - `ChatErrorRemoteCtrl(remoteCtrlError)` -- remote controller errors
 - `ChatErrorInvalidJSON(json)` -- parse failure
 
-*See:* `SimpleXAPI.kt:6974` -- `sealed class ChatError`
+*See:* `POPOPXAPI.kt:6974` -- `sealed class ChatError`
 
 ### sendCmd / recvMsg
 The core FFI bridge. `sendCmd(rhId, cmd)` serializes a `CC` command and sends it to the Haskell backend via `chatSendCmd`. `recvMsg(ctrl)` blocks on `chatRecvMsg` to receive the next `API` response/event. The receiver loop runs in `ChatController.startReceiver()` on `Dispatchers.IO`.
 
-*See:* `SimpleXAPI.kt` -- `ChatController.sendCmd()`, `ChatController.startReceiver()`
+*See:* `POPOPXAPI.kt` -- `ChatController.sendCmd()`, `ChatController.startReceiver()`
 
 ---
 
 ## 4. Connection & Identity
 
-### SimpleX Address (User Address)
+### POPOPX Address (User Address)
 A long-lived contact address that others can use to send connection requests. Created via `ApiCreateMyAddress`, retrieved via `ApiShowMyAddress`, deleted via `ApiDeleteMyAddress`. Can optionally include a short link (`ApiAddMyAddressShortLink`). Stored as `ChatModel.userAddress` (`UserContactLinkRec`).
 
 ### Contact Link / Connection Link
@@ -242,12 +242,12 @@ A compact form of a contact or group link. Created via `ApiAddMyAddressShortLink
 ### Incognito Mode
 When enabled (`AppPreferences.incognito`), the app generates a random profile name for new connections instead of using the user's real profile. Each connection gets a unique random identity. The `customUserProfileId` on a `Connection` tracks which incognito profile is used for that connection.
 
-*See:* `SimpleXAPI.kt` -- `AppPreferences.incognito`; `ChatModel.kt` -- `Connection.customUserProfileId`
+*See:* `POPOPXAPI.kt` -- `AppPreferences.incognito`; `ChatModel.kt` -- `Connection.customUserProfileId`
 
 ### Hidden Profile
 A user profile protected by a password (`viewPwdHash`). Hidden profiles do not appear in the profile list unless unlocked with the password. Created via `ApiHideUser(userId, viewPwd)`, revealed via `ApiUnhideUser(userId, viewPwd)`. When switching away from a hidden profile, its notifications are cancelled.
 
-*See:* `SimpleXAPI.kt` -- `CC.ApiHideUser`, `CC.ApiUnhideUser`; `ChatModel.kt` -- `User.viewPwdHash`
+*See:* `POPOPXAPI.kt` -- `CC.ApiHideUser`, `CC.ApiUnhideUser`; `ChatModel.kt` -- `User.viewPwdHash`
 
 ### Connection Verification (Security Code)
 Each connection has an optional `SecurityCode` (`Connection.connectionCode`). Users can verify connections out-of-band by comparing security codes displayed via `APIGetContactCode` / `APIGetGroupMemberCode` and confirming via `APIVerifyContact` / `APIVerifyGroupMember`.
@@ -255,7 +255,7 @@ Each connection has an optional `SecurityCode` (`Connection.connectionCode`). Us
 ### Connection Plan
 Before connecting via a link, `APIConnectPlan` analyzes the link and returns a `ConnectionPlan` indicating whether the link leads to an existing contact, a new contact, a group join, etc. This prevents duplicate connections.
 
-*See:* `SimpleXAPI.kt` -- `CC.APIConnectPlan`, `CR.CRConnectionPlan`
+*See:* `POPOPXAPI.kt` -- `CC.APIConnectPlan`, `CR.CRConnectionPlan`
 
 ### Prepared Contact / Prepared Group
 An intermediate state in the connection flow. `APIPrepareContact` / `APIPrepareGroup` creates the local record and displays the contact/group preview before the user confirms the connection. The user can then change the active profile (`APIChangePreparedContactUser` / `APIChangePreparedGroupUser`) and finally confirm via `APIConnectPreparedContact` / `APIConnectPreparedGroup`.
@@ -267,12 +267,12 @@ An intermediate state in the connection flow. `APIPrepareContact` / `APIPrepareG
 ### Delivery Receipt
 Confirmation that a message was delivered to the recipient's device. Controlled per-user via `sendRcptsContacts` and `sendRcptsSmallGroups` on `User`. The global setting flow is triggered by `ChatModel.setDeliveryReceipts`. Individual overrides per-contact are managed via `ApiSetUserContactReceipts` / `ApiSetUserGroupReceipts`.
 
-*See:* `SimpleXAPI.kt` -- `CC.SetAllContactReceipts`, `CC.ApiSetUserContactReceipts`, `CC.ApiSetUserGroupReceipts`; `AppPreferences.privacyDeliveryReceiptsSet`
+*See:* `POPOPXAPI.kt` -- `CC.SetAllContactReceipts`, `CC.ApiSetUserContactReceipts`, `CC.ApiSetUserGroupReceipts`; `AppPreferences.privacyDeliveryReceiptsSet`
 
 ### Timed Message (Disappearing Message)
 Messages with a time-to-live after which they are automatically deleted. Configured as a `ChatFeature` / `GroupFeature` with a TTL parameter in seconds. The `customDisappearingMessageTime` preference stores the last custom duration used. Per-chat TTL can be set via `APISetChatTTL`. Global TTL via `APISetChatItemTTL`.
 
-*See:* `SimpleXAPI.kt` -- `CC.APISetChatItemTTL`, `CC.APISetChatTTL`; `AppPreferences.customDisappearingMessageTime`
+*See:* `POPOPXAPI.kt` -- `CC.APISetChatItemTTL`, `CC.APISetChatTTL`; `AppPreferences.customDisappearingMessageTime`
 
 ### Live Message
 A message that updates in real-time as the sender types. Controlled by `CC.ApiSendMessages` with `live=true`. The `ComposeState.liveMessage` tracks the current live message being composed. An alert is shown on first use (`AppPreferences.liveMessageAlertShown`).
@@ -308,7 +308,7 @@ The real-time communication framework used for audio and video calls. The app us
 ### Call (data class)
 Represents an active call session. Fields: `remoteHostId`, `userProfile`, `contact`, `callUUID`, `callState` (CallState enum), `initialCallType` (Audio/Video), `localMediaSources`, `localCapabilities`, `peerMediaSources`, `hasSharedKey` (whether an E2E call encryption key was agreed), `connectionInfo`, `connectedAt`.
 
-*See:* `common/src/commonMain/kotlin/chat/simplex/common/views/call/WebRTC.kt:14`
+*See:* `common/src/commonMain/kotlin/chat/popopx/common/views/call/WebRTC.kt:14`
 
 ### CallState
 Enum tracking call progression: `WaitCapabilities` -> `InvitationSent` / `InvitationAccepted` -> `OfferSent` / `OfferReceived` -> `Negotiated` -> `Connected` -> `Ended`.
@@ -323,22 +323,22 @@ The command/response protocol between the Kotlin app and the WebRTC JavaScript l
 ### CallManager
 Manages incoming call invitations and the active call lifecycle. Handles reporting new incoming calls, accepting calls, switching between calls, and ending calls. Interacts with `ChatModel.callInvitations`, `ChatModel.activeCall`, and the platform notification manager.
 
-*See:* `common/src/commonMain/kotlin/chat/simplex/common/views/call/CallManager.kt`
+*See:* `common/src/commonMain/kotlin/chat/popopx/common/views/call/CallManager.kt`
 
 ### Android: CallActivity
 A dedicated Android `Activity` that displays the call UI. Launched when accepting an incoming call or initiating an outgoing call. Uses an Android `WebView` to host the WebRTC JavaScript.
 
-*See:* `android/src/main/java/chat/simplex/app/views/call/CallActivity.kt`
+*See:* `android/src/main/java/chat/popopx/app/views/call/CallActivity.kt`
 
 ### Android: CallService
 An Android foreground `Service` that keeps the call alive when the app is in the background. Holds a `WakeLock`, displays an ongoing call notification, and manages the call lifecycle. Uses notification channel `CALL_SERVICE_NOTIFICATION`.
 
-*See:* `android/src/main/java/chat/simplex/app/CallService.kt`
+*See:* `android/src/main/java/chat/popopx/app/CallService.kt`
 
 ### Desktop: Browser-based WebRTC via NanoWSD
 On Desktop, calls are implemented by opening the system browser to a locally-hosted WebSocket server. A `NanoHTTPD`/`NanoWSD` server runs on `localhost:50395`, serving the WebRTC call page and communicating with the Kotlin app via WebSocket messages. Commands are sent as JSON-serialized `WVAPICall` objects; responses are parsed as `WVAPIMessage` objects.
 
-*See:* `common/src/desktopMain/kotlin/chat/simplex/common/views/call/CallView.desktop.kt`
+*See:* `common/src/desktopMain/kotlin/chat/popopx/common/views/call/CallView.desktop.kt`
 
 ### ICE Servers
 STUN/TURN servers used for WebRTC NAT traversal. Configurable via `AppPreferences.webrtcIceServers`. The relay policy (`AppPreferences.webrtcPolicyRelay`) controls whether calls must use TURN relays (for IP privacy) or can attempt direct connections.
@@ -353,39 +353,39 @@ Enum: `Mic`, `Camera`, `ScreenAudio`, `ScreenVideo`. Used in `WCallCommand.Media
 
 ## 7. Notifications & Background
 
-### Android: SimplexService
-A foreground `Service` that keeps the chat backend running in the background. Uses a `WakeLock` and displays a persistent notification ("SimpleX Chat service" channel). Started with `START_STICKY` for automatic restart. Manages the `chatRecvMsg` loop indirectly by keeping the process alive.
+### Android: PopopxService
+A foreground `Service` that keeps the chat backend running in the background. Uses a `WakeLock` and displays a persistent notification ("POPOPX Chat service" channel). Started with `START_STICKY` for automatic restart. Manages the `chatRecvMsg` loop indirectly by keeping the process alive.
 
-Notification channel: `chat.simplex.app.SIMPLEX_SERVICE_NOTIFICATION` ("SimpleX Chat service")
+Notification channel: `chat.popopx.app.POPOPX_SERVICE_NOTIFICATION` ("POPOPX Chat service")
 
-*See:* `android/src/main/java/chat/simplex/app/SimplexService.kt`
+*See:* `android/src/main/java/chat/popopx/app/PopopxService.kt`
 
 ### Android: MessagesFetcherWorker
 A `WorkManager` periodic worker that wakes the app to fetch new messages when the foreground service is not running (i.e., when `NotificationsMode` is `PERIODIC`). Provides a battery-friendly alternative to the always-on service.
 
-*See:* `android/src/main/java/chat/simplex/app/MessagesFetcherWorker.kt`
+*See:* `android/src/main/java/chat/popopx/app/MessagesFetcherWorker.kt`
 
 ### Android: NotificationsMode
 Enum controlling background message fetching:
 - `OFF` -- no background activity; messages received only when app is open
 - `PERIODIC` -- uses `MessagesFetcherWorker` for periodic fetches
-- `SERVICE` -- uses `SimplexService` foreground service (default)
+- `SERVICE` -- uses `PopopxService` foreground service (default)
 
-*See:* `SimpleXAPI.kt:7739` -- `enum class NotificationsMode`
+*See:* `POPOPXAPI.kt:7739` -- `enum class NotificationsMode`
 
 ### Android: Notification Channels
 Android notification channels registered by the app:
-- **Messages:** `chat.simplex.app.MESSAGE_NOTIFICATION` -- high importance, for incoming messages
-- **Calls:** `chat.simplex.app.CALL_NOTIFICATION_2` -- high importance, for incoming call alerts with custom sound
-- **Service:** `chat.simplex.app.SIMPLEX_SERVICE_NOTIFICATION` -- low importance, persistent foreground service indicator
-- **Call Service:** `chat.simplex.app.CALL_SERVICE_NOTIFICATION` -- default importance, ongoing call indicator
+- **Messages:** `chat.popopx.app.MESSAGE_NOTIFICATION` -- high importance, for incoming messages
+- **Calls:** `chat.popopx.app.CALL_NOTIFICATION_2` -- high importance, for incoming call alerts with custom sound
+- **Service:** `chat.popopx.app.POPOPX_SERVICE_NOTIFICATION` -- low importance, persistent foreground service indicator
+- **Call Service:** `chat.popopx.app.CALL_SERVICE_NOTIFICATION` -- default importance, ongoing call indicator
 
-*See:* `android/src/main/java/chat/simplex/app/model/NtfManager.android.kt`, `SimplexService.kt`, `CallService.kt`
+*See:* `android/src/main/java/chat/popopx/app/model/NtfManager.android.kt`, `PopopxService.kt`, `CallService.kt`
 
 ### Android: NtfManager
 The Android-specific notification manager. Handles creating notification channels, displaying message notifications (with grouping via `MessageGroup`), displaying incoming call notifications (with full-screen intent for lock-screen calls), and managing notification actions (accept/reject call, open chat).
 
-*See:* `android/src/main/java/chat/simplex/app/model/NtfManager.android.kt`
+*See:* `android/src/main/java/chat/popopx/app/model/NtfManager.android.kt`
 
 ### Desktop: System Notifications
 On Desktop, notifications use the system notification mechanism (typically via the JVM's `SystemTray` or platform-specific notification APIs). The notification manager interface is shared (`ntfManager`) but the implementation is platform-specific.
@@ -414,7 +414,7 @@ The singleton controller that bridges the Kotlin UI layer and the Haskell core l
 - Provides the `messagesChannel` (Kotlin coroutine `Channel<API>`) for consumers to observe events
 - Manages retry logic for transient network errors (`sendCmdWithRetry`)
 
-*See:* `SimpleXAPI.kt:493` -- `object ChatController`
+*See:* `POPOPXAPI.kt:493` -- `object ChatController`
 
 ### ChatModel
 The singleton reactive state container for the entire app. Uses Compose `mutableStateOf` and `mutableStateListOf` for reactive UI updates. Key state:
@@ -425,7 +425,7 @@ The singleton reactive state container for the entire app. Uses Compose `mutable
 - `groupMembers` -- members of the currently viewed group
 - `callInvitations` -- pending incoming call invitations
 - `activeCall` -- the currently active call
-- `userAddress` -- the user's SimpleX address
+- `userAddress` -- the user's POPOPX address
 - `chatItemTTL` -- global message TTL setting
 - `userTags` -- chat tags
 - `terminalItems` -- debug terminal log items
@@ -436,17 +436,17 @@ The singleton reactive state container for the entire app. Uses Compose `mutable
 ### AppPreferences
 A class wrapping platform-specific key-value storage (`Settings` from `com.russhwolf.settings`). On Android, backed by `SharedPreferences`. On Desktop, backed by Java `Properties` files. Provides type-safe accessors for all user preferences.
 
-*See:* `SimpleXAPI.kt:94` -- `class AppPreferences`
+*See:* `POPOPXAPI.kt:94` -- `class AppPreferences`
 
 ### ComposeState
 Data class holding the state of the message composition area. Fields: `message` (ComposeMessage), `parsedMessage` (formatted text), `liveMessage`, `preview` (ComposePreview), `contextItem` (ComposeContextItem -- reply/edit context), `inProgress`, `progressByTimeout`, `useLinkPreviews`, `mentions`.
 
-*See:* `common/src/commonMain/kotlin/chat/simplex/common/views/chat/ComposeView.kt:98`
+*See:* `common/src/commonMain/kotlin/chat/popopx/common/views/chat/ComposeView.kt:98`
 
 ### ModalManager
 Manages the modal/sheet presentation stack. Supports multiple placements (default, center, fullscreen, end). Holds an ordered list of `ModalViewHolder` items and exposes `showModal`, `showCustomModal`, `showModalCloseable`, `closeModal`. Uses Compose state (`modalCount`) to trigger recomposition.
 
-*See:* `common/src/commonMain/kotlin/chat/simplex/common/views/helpers/ModalView.kt:92`
+*See:* `common/src/commonMain/kotlin/chat/popopx/common/views/helpers/ModalView.kt:92`
 
 ### AlertManager
 Singleton for displaying alert dialogs. Provides `showAlertMsg`, `showAlertDialog`, `showAlertDialogButtons`, etc. Works with `AlertManager.shared` for the default instance.
@@ -468,7 +468,7 @@ Utility functions for launching coroutines on background threads. Used throughou
 
 ### AppPreferences (Storage)
 All preferences are accessed through `ChatController.appPrefs`, which is a lazy-initialized `AppPreferences` instance. The underlying storage is:
-- **Android:** `SharedPreferences` with ID `chat.simplex.app.SIMPLEX_APP_PREFS`
+- **Android:** `SharedPreferences` with ID `chat.popopx.app.POPOPX_APP_PREFS`
 - **Desktop:** Java `Properties` files via `com.russhwolf.settings`
 
 Theme overrides have separate storage (`SHARED_PREFS_THEMES_ID`).
@@ -535,7 +535,7 @@ A generic wrapper providing `get()` and `set(value)` for a single preference. Al
 **UI:**
 - `oneHandUI` -- one-handed UI mode (bottom-aligned navigation)
 - `chatBottomBar` -- show bottom bar in chat view
-- `simplexLinkMode` -- how SimpleX links are displayed (DESCRIPTION / FULL / BROWSER)
+- `popopxLinkMode` -- how POPOPX links are displayed (DESCRIPTION / FULL / BROWSER)
 - `showUnreadAndFavorites` -- filter chat list to unread/favorites
 - `developerTools` -- enable developer tools (terminal, etc.)
 
@@ -558,4 +558,4 @@ A generic wrapper providing `get()` and `set(value)` for a single preference. Al
 - `onboardingStage` -- current onboarding step
 - `lastMigratedVersionCode` -- last app version that ran migrations
 
-*See:* `SimpleXAPI.kt:94-489` -- `class AppPreferences` with all `SHARED_PREFS_*` constants
+*See:* `POPOPXAPI.kt:94-489` -- `class AppPreferences` with all `SHARED_PREFS_*` constants

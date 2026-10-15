@@ -4,7 +4,7 @@
 
 ## Overview
 
-Messaging is the core interaction in SimpleX Chat. Users compose and send text, images, video, voice notes, files, and link previews. Messages can be replied to, edited, deleted, forwarded, and reacted to with emoji. Special modes include timed (disappearing) messages, live messages (real-time typing), and message reports for moderation.
+Messaging is the core interaction in POPOPX Chat. Users compose and send text, images, video, voice notes, files, and link previews. Messages can be replied to, edited, deleted, forwarded, and reacted to with emoji. Special modes include timed (disappearing) messages, live messages (real-time typing), and message reports for moderation.
 
 All message operations flow through the Haskell core via `ChatController.apiSendMessages`, with responses updating `ChatModel` and triggering Compose UI recomposition.
 
@@ -187,8 +187,8 @@ All message operations flow through the Haskell core via `ChatController.apiSend
 | `ComposeState` | `views/chat/ComposeView.kt` | Tracks compose field state |
 | `ComposePreview` | `views/chat/ComposeView.kt` | Preview type: NoPreview, CLinkPreview, MediaPreview, VoicePreview, FilePreview |
 | `ComposeContextItem` | `views/chat/ComposeView.kt` | Context: NoContextItem, QuotedItem, EditingItem, ForwardingItems, ReportedItem |
-| `ComposedMessage` | `model/SimpleXAPI.kt` | Wire format for sending: fileSource, quotedItemId, msgContent, mentions |
-| `UpdatedMessage` | `model/SimpleXAPI.kt` | Wire format for editing: msgContent, mentions |
+| `ComposedMessage` | `model/POPOPXAPI.kt` | Wire format for sending: fileSource, quotedItemId, msgContent, mentions |
+| `UpdatedMessage` | `model/POPOPXAPI.kt` | Wire format for editing: msgContent, mentions |
 | `MsgContent` | `model/ChatModel.kt` | Sealed class: MCText, MCLink, MCImage, MCVideo, MCVoice, MCFile, MCReport, MCChat, MCUnknown |
 | `LiveMessage` | `views/chat/ComposeView.kt` | Tracks live message state |
 | `MsgReaction` | `model/ChatModel.kt` | Emoji reaction type |

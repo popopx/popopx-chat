@@ -46,8 +46,8 @@ validateServersTest = describe "validate user servers" $ do
     validateUserServers [invalidNoStorage] [] `shouldBe` ([USEStorageMissing aSMP Nothing], [])
   it "should fail with duplicate host" $ do
     validateUserServers [invalidDuplicateSrv] []
-      `shouldBe` ( [ USEDuplicateServer aSMP "smp://0YuTwO05YJWS8rkjn9eLJDjQhFKvIYd8d4xG8X1blIU=@smp8.simplex.im,beccx4yfxxbvyhqypaavemqurytl6hozr47wfc7uuecacjqdvwpw2xid.onion" "smp8.simplex.im",
-                     USEDuplicateServer aSMP "smp://abcd@smp8.simplex.im" "smp8.simplex.im"
+      `shouldBe` ( [ USEDuplicateServer aSMP "smp://0YuTwO05YJWS8rkjn9eLJDjQhFKvIYd8d4xG8X1blIU=@smp8.popopx.im,beccx4yfxxbvyhqypaavemqurytl6hozr47wfc7uuecacjqdvwpw2xid.onion" "smp8.popopx.im",
+                     USEDuplicateServer aSMP "smp://abcd@smp8.popopx.im" "smp8.popopx.im"
                    ],
                    []
                  )
@@ -57,7 +57,7 @@ validateServersTest = describe "validate user servers" $ do
     validateUserServers [duplicateChatRelayName] [] `shouldBe` ([], [])
   it "should fail with duplicate chat relay address" $ do
     validateUserServers [invalidDuplicateChatRelayAddress] []
-      `shouldBe` ( [ USEDuplicateChatRelayAddress "SimpleX Chat Relay 2" duplicateAddr,
+      `shouldBe` ( [ USEDuplicateChatRelayAddress "POPOPX Chat Relay 2" duplicateAddr,
                      USEDuplicateChatRelayAddress "chat_relay_4" duplicateAddr
                    ],
                    []
@@ -187,9 +187,9 @@ perServerRolesTest = describe "per-server roles" $ do
     -- host matches no operator domain -> self-hosted
     selfHostedSMP :: ServerRolesOverride -> NewUserServer 'PSMP
     selfHostedSMP r = (newUserServer "smp://abcd@self.example.com" :: NewUserServer 'PSMP) {roles = r}
-    -- host matches operator domain simplex.im
+    -- host matches operator domain popopx.im
     opMatchedSMP :: ServerRolesOverride -> NewUserServer 'PSMP
-    opMatchedSMP r = (newUserServer "smp://abcd@smp8.simplex.im" :: NewUserServer 'PSMP) {roles = r}
+    opMatchedSMP r = (newUserServer "smp://abcd@smp8.popopx.im" :: NewUserServer 'PSMP) {roles = r}
     selfHostedUser :: ServerRolesOverride -> UpdatedUserOperatorServers
     selfHostedUser r =
       UpdatedUserOperatorServers
@@ -240,7 +240,7 @@ invalidNoStorage =
 invalidDuplicateSrv :: UpdatedUserOperatorServers
 invalidDuplicateSrv =
   (valid :: UpdatedUserOperatorServers)
-    { smpServers = map (AUS SDBNew) $ popopxChatSMPServers <> [presetServer True "smp://abcd@smp8.simplex.im"]
+    { smpServers = map (AUS SDBNew) $ popopxChatSMPServers <> [presetServer True "smp://abcd@smp8.popopx.im"]
     }
 
 invalidNoChatRelays :: UpdatedUserOperatorServers
@@ -249,14 +249,14 @@ invalidNoChatRelays = (valid :: UpdatedUserOperatorServers) {chatRelays = []}
 duplicateChatRelayName :: UpdatedUserOperatorServers
 duplicateChatRelayName =
   (valid :: UpdatedUserOperatorServers)
-    { chatRelays = map (AUCR SDBNew) $ popopxChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_1" Nothing) ["simplex.im"] (either error id $ strDecode "https://smp444.simplex.im/r#Pz9qz7ZVljMofoRxiDDpL_w2DZSazK8IgafxqnWKv6Y")]
+    { chatRelays = map (AUCR SDBNew) $ popopxChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_1" Nothing) ["popopx.im"] (either error id $ strDecode "https://smp444.popopx.im/r#Pz9qz7ZVljMofoRxiDDpL_w2DZSazK8IgafxqnWKv6Y")]
     }
 
 invalidDuplicateChatRelayAddress :: UpdatedUserOperatorServers
 invalidDuplicateChatRelayAddress =
   (valid :: UpdatedUserOperatorServers)
-    { chatRelays = map (AUCR SDBNew) $ popopxChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_4" Nothing) ["simplex.im"] duplicateAddr]
+    { chatRelays = map (AUCR SDBNew) $ popopxChatRelays <> [presetChatRelay True (mkRelayProfile "chat_relay_4" Nothing) ["popopx.im"] duplicateAddr]
     }
 
 duplicateAddr :: ShortLinkContact
-duplicateAddr = either error id $ strDecode "https://smp6.simplex.im/r#_qlQfogHGDJ8MAF2wKmkglRBM-xHR142gDJstKiGRQQ"
+duplicateAddr = either error id $ strDecode "https://smp6.popopx.im/r#_qlQfogHGDJ8MAF2wKmkglRBM-xHR142gDJstKiGRQQ"

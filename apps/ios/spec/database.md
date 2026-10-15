@@ -40,7 +40,7 @@ Both databases are initialized and migrated via the C FFI function `chat_migrate
 ### [Path Resolution](../POPOPXSwitch/FileUtils.swift#L63-L73) (FileUtils.swift)
 
 ```swift
-let DB_FILE_PREFIX = "simplex_v1"
+let DB_FILE_PREFIX = "popopx_v1"
 
 // Database path depends on container preference
 func getAppDatabasePath() -> URL {
@@ -50,8 +50,8 @@ func getAppDatabasePath() -> URL {
 }
 
 // Full database file paths:
-// Chat:  {container}/simplex_v1_chat.db
-// Agent: {container}/simplex_v1_agent.db
+// Chat:  {container}/popopx_v1_chat.db
+// Agent: {container}/popopx_v1_agent.db
 ```
 
 ### [File Constants](../POPOPXSwitch/FileUtils.swift#L38-L44)
@@ -82,12 +82,12 @@ All database operations are implemented in Haskell. Key store modules (paths rel
 
 | Module | Path | Size | Description |
 |--------|------|------|-------------|
-| Messages | `src/Simplex/Chat/Store/Messages.hs` | ~178KB | Message CRUD, pagination, search, reactions, delivery receipts |
-| Groups | `src/Simplex/Chat/Store/Groups.hs` | ~126KB | Group CRUD, member management, roles, links, invitations |
-| Direct | `src/Simplex/Chat/Store/Direct.hs` | ~52KB | Direct contact connections, contact requests. See `createDirectChat` in `Store/Direct.hs` |
-| Files | `src/Simplex/Chat/Store/Files.hs` | ~43KB | File transfer state, XFTP chunks, inline files |
-| Profiles | `src/Simplex/Chat/Store/Profiles.hs` | ~42KB | User profiles, contact profiles, incognito profiles |
-| Connections | `src/Simplex/Chat/Store/Connections.hs` | ~17KB | Connection lifecycle, queue management |
+| Messages | `src/POPOPX/Chat/Store/Messages.hs` | ~178KB | Message CRUD, pagination, search, reactions, delivery receipts |
+| Groups | `src/POPOPX/Chat/Store/Groups.hs` | ~126KB | Group CRUD, member management, roles, links, invitations |
+| Direct | `src/POPOPX/Chat/Store/Direct.hs` | ~52KB | Direct contact connections, contact requests. See `createDirectChat` in `Store/Direct.hs` |
+| Files | `src/POPOPX/Chat/Store/Files.hs` | ~43KB | File transfer state, XFTP chunks, inline files |
+| Profiles | `src/POPOPX/Chat/Store/Profiles.hs` | ~42KB | User profiles, contact profiles, incognito profiles |
+| Connections | `src/POPOPX/Chat/Store/Connections.hs` | ~17KB | Connection lifecycle, queue management |
 
 ### Data Model (key tables)
 
@@ -111,7 +111,7 @@ chat_tags_chats    -- Tag-to-chat assignments
 Database migrations are managed by the Haskell core. Migration files are located in:
 
 ```
-src/Simplex/Chat/Store/SQLite/Migrations/
+src/POPOPX/Chat/Store/SQLite/Migrations/
 ```
 
 Migrations are numbered sequentially starting from `M20220101` through `M20260122` (200+ migrations). Each migration is a Haskell module containing SQL statements for schema changes.
@@ -177,8 +177,8 @@ The encryption key is stored in the iOS Keychain via `kcDatabasePassword`:
 │   ├── temp_files/         -- Temporary files during transfer
 │   └── assets/wallpapers/  -- Custom wallpaper images
 ├── {App Group Container}/
-│   ├── simplex_v1_chat.db  -- Chat database
-│   ├── simplex_v1_agent.db -- Agent database
+│   ├── popopx_v1_chat.db  -- Chat database
+│   ├── popopx_v1_agent.db -- Agent database
 │   └── ...
 ```
 
@@ -262,8 +262,8 @@ The main app and NSE share database access through the iOS App Group container:
 
 ```
 Main App ──┐
-            ├── {App Group}/simplex_v1_chat.db
-            ├── {App Group}/simplex_v1_agent.db
+            ├── {App Group}/popopx_v1_chat.db
+            ├── {App Group}/popopx_v1_agent.db
 NSE ────────┘
 ```
 
@@ -294,5 +294,5 @@ The NSE checks this flag to determine whether to process notifications (it avoid
 | Database management UI | [`Shared/Views/Database/DatabaseView.swift`](../Shared/Views/Database/DatabaseView.swift) |
 | Encryption settings UI | [`Shared/Views/Database/DatabaseEncryptionView.swift`](../Shared/Views/Database/DatabaseEncryptionView.swift) |
 | C FFI (migration, file ops) | `POPOPXSwitch/Popopx.h` |
-| Haskell store root | `../../src/Simplex/Chat/Store/` |
-| Haskell migrations | `../../src/Simplex/Chat/Store/SQLite/Migrations/` |
+| Haskell store root | `../../src/POPOPX/Chat/Store/` |
+| Haskell migrations | `../../src/POPOPX/Chat/Store/SQLite/Migrations/` |

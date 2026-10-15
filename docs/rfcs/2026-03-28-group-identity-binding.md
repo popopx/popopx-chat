@@ -37,7 +37,7 @@ The cloning risk (copied entity ID in a malicious group) is acceptable now: grou
 
 ### Key hierarchy context
 
-The root key is a **bootstrap key**: it signs `OwnerAuth` entries to certify owners (see [simplexmq owner chain](https://github.com/simplex-chat/simplexmq/blob/master/rfcs/2025-04-04-short-links-for-groups.md#multiple-owners-managing-queue-data)), then need not be used again. Owner keys sign admin messages, group updates, and future rotation statements. This conceals the creator's identity — all owners are indistinguishable.
+The root key is a **bootstrap key**: it signs `OwnerAuth` entries to certify owners (see [popopxmq owner chain](https://github.com/simplex-chat/simplexmq/blob/master/rfcs/2025-04-04-short-links-for-groups.md#multiple-owners-managing-queue-data)), then need not be used again. Owner keys sign admin messages, group updates, and future rotation statements. This conceals the creator's identity — all owners are indistinguishable.
 
 Using the genesis root key *hash* as identity aligns with this: after rotation, the root key changes but the identity persists, bridged by owner-signed rotation statements.
 
@@ -55,7 +55,7 @@ Using the genesis root key *hash* as identity aligns with this: after rotation, 
 
 ### Done
 
-1. **Agent API** (`simplexmq`): `prepareConnectionLink` takes caller-provided root key pair and entity ID instead of generating the key internally. Caller controls both.
+1. **Agent API** (`popopxmq`): `prepareConnectionLink` takes caller-provided root key pair and entity ID instead of generating the key internally. Caller controls both.
 
 2. **Link creation** (`Commands.hs`): owner generates root key pair, computes `sharedGroupId = sha256(rootPubKey)`, passes both to `prepareConnectionLink`. The entity ID is baked into signed `FixedLinkData`.
 

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "description": "JTD schema for SimpleX Chat Protocol messages for chat functions"
+    "description": "JTD schema for POPOPX Chat Protocol messages for chat functions"
   },
   "definitions": {
     "profile": {

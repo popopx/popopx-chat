@@ -31,7 +31,7 @@ Configure all aspects of app behavior including notifications, network/servers, 
 | Notifications | `ic_bolt` / `ic_bolt_off` | `NotificationsSettingsView` | Push notification mode and preview settings |
 | Network & servers | `ic_wifi_tethering` | `NetworkAndServersView` | SMP/XFTP servers, proxy, .onion hosts, advanced network |
 | Audio & video calls | `ic_videocam` | `CallSettingsView` | WebRTC relay policy, ICE servers |
-| Privacy & security | `ic_lock` | `PrivacySettingsView` | SimpleX Lock, delivery receipts, link previews, auto-accept |
+| Privacy & security | `ic_lock` | `PrivacySettingsView` | POPOPX Lock, delivery receipts, link previews, auto-accept |
 | Appearance | `ic_light_mode` | `AppearanceView` | Theme, language, profile images, chat bubbles |
 
 All rows disabled when `chatModel.chatRunning != true` (except Appearance).
@@ -70,7 +70,7 @@ Organized in sections:
 
 | Setting | Description |
 |---|---|
-| SimpleX Lock | `SimplexLockView` -- app lock with system auth or passcode (`LAMode.SYSTEM` / `LAMode.PASSCODE`) |
+| POPOPX Lock | `PopopxLockView` -- app lock with system auth or passcode (`LAMode.SYSTEM` / `LAMode.PASSCODE`) |
 
 **Chats Section**:
 
@@ -117,10 +117,10 @@ Database icon shows warning color (`WarningOrange`) when database is not encrypt
 
 | Row | Icon | Destination | Description |
 |---|---|---|---|
-| How to use SimpleX Chat | `ic_help` | `HelpView` | Usage guide |
+| How to use POPOPX Chat | `ic_help` | `HelpView` | Usage guide |
 | What's new | `ic_add` | `WhatsNewView` | Version changelog |
-| About SimpleX Chat | `ic_info` | `SimpleXInfo` (non-onboarding mode) | App information |
-| Chat with the founder | `ic_tag` | Opens SimpleX link | Direct chat with SimpleX team |
+| About POPOPX Chat | `ic_info` | `POPOPXInfo` (non-onboarding mode) | App information |
+| Chat with the founder | `ic_tag` | Opens POPOPX link | Direct chat with POPOPX team |
 | Send us an email | `ic_mail` | Opens mailto: | Email support |
 
 ### Support Section

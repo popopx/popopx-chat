@@ -5,7 +5,7 @@ _$s*
 _OBJC_CLASS_$_*
 _OBJC_METACLASS_$_*
 
-# C API (SimpleX.h bridging header)
+# C API (POPOPX.h bridging header)
 _chat_*
 _haskell_init*
 _hs_init*

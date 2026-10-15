@@ -1,17 +1,17 @@
 ---
-title: SimpleX Directory
+title: POPOPX Directory
 revision: 18.08.2023
 ---
 
-# SimpleX Directory
+# POPOPX Directory
 
-You can use SimpleX Directory to discover the groups created and registered by other users.
+You can use POPOPX Directory to discover the groups created and registered by other users.
 
 ## Searching for groups
 
-SimpleX Directory is available at [simplex.chat/directory](https://simplex.chat/directory/) or via this [onion link](http://isdb4l77sjqoy2qq7ipum6x3at6hyn3jmxfx4zdhc72ufbmuq4ilwkqd.onion/directory/).
+POPOPX Directory is available at [popopx.chat/directory](https://simplex.chat/directory/) or via this [onion link](http://isdb4l77sjqoy2qq7ipum6x3at6hyn3jmxfx4zdhc72ufbmuq4ilwkqd.onion/directory/).
 
-You can also connect to SimpleX Directory via [this address](https://smp4.simplex.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) and send the message containing the words you want to find in the group name or welcome message. You will receive up to 10 groups with the largest number of members in the response, together with the links to join these groups.
+You can also connect to POPOPX Directory via [this address](https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok) and send the message containing the words you want to find in the group name or welcome message. You will receive up to 10 groups with the largest number of members in the response, together with the links to join these groups.
 
 Please note that your search queries can be kept by the bot as the conversation history, but you can use incognito mode when connecting to the bot, to avoid correlation with any other communications. See [Privacy policy](../PRIVACY.md) for more details.
 
@@ -22,7 +22,7 @@ Please note that your search queries can be kept by the bot as the conversation 
 
 To add a group you must be its owner. Once you connect to the directory service and send `/help`, the service will guide you through the process.
 
-1. Invite SimpleX Service Directory to the group as `admin` member. You can also set the role to `admin` after inviting the directory service. The member who invited the directory service will be the owner of the group record in the directory service.
+1. Invite POPOPX Service Directory to the group as `admin` member. You can also set the role to `admin` after inviting the directory service. The member who invited the directory service will be the owner of the group record in the directory service.
 
 The directory service needs to be `admin` to provide a good user experience of joining the group, as it will create a new link to join the group, which is expected to be online 99% of the time.
 
@@ -91,7 +91,7 @@ Group owners are expected to moderate the content in the groups, if members post
 
 We reserve the right to not accept the group listing in the directory or cancel its listing, and there may be cases when we can't provide an explanation. We will certainly try to avoid it by communicating with the group owners first.
 
-The combination of display name and full name has to be unique for the listed groups. If a group uses the name or logo of SimpleX, SimpleX network or SimpleX Chat it must be consistent with [Permitted Uses of SimpleX trademark](./TRADEMARK.md).
+The combination of display name and full name has to be unique for the listed groups. If a group uses the name or logo of POPOPX, POPOPX network or POPOPX Chat it must be consistent with [Permitted Uses of POPOPX trademark](./TRADEMARK.md).
 
 Once the group is listed in the directory, the bot will invite you to join the group of the group owners, where you can send any ideas or suggestions for how the groups functionality should evolve, and help steer both the product and the policies.
 

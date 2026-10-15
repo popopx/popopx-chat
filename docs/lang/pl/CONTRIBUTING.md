@@ -19,7 +19,7 @@ cp scripts/cabal.project.local.mac cabal.project.local
 
 ## OpenSSL na MacOS
 
-MacOS ma domyślnie zainstalowany LibreSSL, OpenSSL musi być zainstalowany, aby skompilować SimpleX z kodu źródłowego.
+MacOS ma domyślnie zainstalowany LibreSSL, OpenSSL musi być zainstalowany, aby skompilować POPOPX z kodu źródłowego.
 
 OpenSSL można zainstalować za pomocą `brew install openssl@3.0`
 
@@ -28,7 +28,7 @@ Będziesz musiał dodać `/opt/homebrew/opt/openssl@3.0/bin` do swojego PATH, ab
 
 ## Branche projektu
 
-**W repo simplex-chat**
+**W repo popopx-chat**
 
 
 - `stable` - stabilne wydanie aplikacji, może być używane do aktualizacji poprzedniego stabilnego wydania (GHC 9.6.3).
@@ -49,17 +49,17 @@ Będziesz musiał dodać `/opt/homebrew/opt/openssl@3.0/bin` do swojego PATH, ab
 
 Branche `master-ios` i `windows-ghc8107` powinny być takie same jak `master-ghc8107` z wyjątkiem plików konfiguracyjnych Nix.
 
-**W repo simplexmq**
+**W repo popopxmq**
 
-- `master` - używa GHC 9.6.3, jego commit powinien być użyty w branchu `master` repo simplex-chat.
+- `master` - używa GHC 9.6.3, jego commit powinien być użyty w branchu `master` repo popopx-chat.
 
-- `master-ghc8107` - jego commit powinien być użyty w branchu `master-android` (i `master-ios`) repo simplex-chat. Przestarzałe.
+- `master-ghc8107` - jego commit powinien być użyty w branchu `master-android` (i `master-ios`) repo popopx-chat. Przestarzałe.
 
 ## Development i proces wydawania
 
-1. Tworzenie PR-ów do brancha `master` _tylko_ dla repozytoriów simplex-chat i simplexmq.
+1. Tworzenie PR-ów do brancha `master` _tylko_ dla repozytoriów popopx-chat i popopxmq.
 
-2. Jeśli repozytorium simplexmq zostało zmienione, aby skompilować mobilne biblioteki rdzenia należy połączyć jego branch `master` z branchem `master-ghc8107`.
+2. Jeśli repozytorium popopxmq zostało zmienione, aby skompilować mobilne biblioteki rdzenia należy połączyć jego branch `master` z branchem `master-ghc8107`.
 
 3. Aby skompilować podstawowe biblioteki dla Androida, iOS i Windows:
 
@@ -81,7 +81,7 @@ Branche `master-ios` i `windows-ghc8107` powinny być takie same jak `master-ghc
 
 - `master-android` do `stable-android`.
 
-7. Branch `master` repo simplexmq powinien zostać niezależnie scalony z branchem `stable` w wydaniach stabilnych.
+7. Branch `master` repo popopxmq powinien zostać niezależnie scalony z branchem `stable` w wydaniach stabilnych.
 
 
 ## Różnice pomiędzy GHC 8.10.7 i GHC 9.6.3

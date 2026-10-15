@@ -517,7 +517,7 @@
 "Safe web links" = "安全網頁連結";
 "Non-profit governance" = "非營利治理";
 "To make POPOPX Network last." = "為了讓 POPOPX 網路持久。";
-"By chat profile (default) or [by connection](https://popopxchat.com/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "依聊天設定檔（預設）或[依連線](https://popopxchat.com/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation)（BETA）。";
+"By chat profile (default) or [by connection](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "依聊天設定檔（預設）或[依連線](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation)（BETA）。";
 "Thanks to the users – [contribute via Weblate](https://github.com/popopx/popopx/tree/stable#help-translating-popopx)!" = "感謝使用者——[透過 Weblate 貢獻](https://github.com/popopx/popopx/tree/stable#help-translating-popopx)！";
 "Now admins can:\n- delete members' messages.\n- disable members (\"observer\" role)" = "現在管理員可以：\n- 刪除成員的訊息。\n- 停用成員（「觀察者」角色）";
 "- voice messages up to 5 minutes.\n- custom time to disappear.\n- editing history." = "- 語音訊息最長 5 分鐘。\n- 自訂消失時間。\n- 編輯歷史記錄。";
@@ -1182,7 +1182,7 @@
 "**Warning**: the archive will be removed." = "**警告**：封存檔將被移除。";
 "**e2e encrypted** audio call" = "**端到端加密**音訊通話";
 "**e2e encrypted** video call" = "**端到端加密**視訊通話";
-"- connect to [directory service](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- 連線至[目錄服務](popop:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)（BETA）！\n- 送達確認（最多 20 位成員）。\n- 更快速且更穩定。";
+"- connect to [directory service](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- 連線至[目錄服務](popop:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)（BETA）！\n- 送達確認（最多 20 位成員）。\n- 更快速且更穩定。";
 "0 sec" = "0 秒";
 "0s" = "0秒";
 "1 day" = "1 天";
@@ -1196,7 +1196,7 @@
 "30 seconds" = "30 秒";
 "5 minutes" = "5 分鐘";
 "6" = "6";
-"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via SimpleX Chat</a></p>" = "<p>你好！</p>\n<p><a href=\"%@\">透過 POPOPX Chat 與我連線</a></p>";
+"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via POPOPX Chat</a></p>" = "<p>你好！</p>\n<p><a href=\"%@\">透過 POPOPX Chat 與我連線</a></p>";
 "A link for one person to connect" = "供一人連線的連結";
 "A new contact" = "新聯絡人";
 "A new random profile will be shared." = "將分享新的隨機個人資料。";
@@ -1337,11 +1337,11 @@
 "Both you and your contact can send files and media." = "您和您的聯絡人都可以傳送檔案和媒體。";
 "Both you and your contact can send voice messages." = "您和您的聯絡人都可以傳送語音訊息。";
 "Bottom bar" = "底部列";
-"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "保加利亞文、芬蘭文、泰文和烏克蘭文——感謝使用者和 [Weblate](https://github.com/popopxchat/simplex-chat/tree/stable#help-translating-simplex-chat)！";
+"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "保加利亞文、芬蘭文、泰文和烏克蘭文——感謝使用者和 [Weblate](https://github.com/popopxchat/popopx-chat/tree/stable#help-translating-popopx-chat)！";
 "Business address" = "商業地址";
 "Business connection" = "商業連線";
 "Businesses" = "商業";
-"By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "依聊天設定檔（預設）或[依連線](https://popopxchat.com/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation)（BETA）。";
+"By chat profile (default) or [by connection](https://popopxchat/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "依聊天設定檔（預設）或[依連線](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation)（BETA）。";
 "Call already ended!" = "通話已結束！";
 "Calls prohibited!" = "禁止通話！";
 "Can't call contact" = "無法撥打聯絡人";
@@ -1479,7 +1479,7 @@ This is your own POPOPX address!" = "連線到自己？\n這是您自己的 POPO
 "Create group link" = "建立群組連結";
 "Create link" = "建立連結";
 "Create list" = "建立列表";
-"Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" = "在[桌面應用程式](https://popopxchat.com/downloads/)中建立新設定檔。💻";
+"Create new profile in [desktop app](https://popopxchat/downloads/). 💻" = "在[桌面應用程式](https://popopxchat.com/downloads/)中建立新設定檔。💻";
 "Create queue" = "建立佇列";
 "Create your link" = "建立您的連結";
 "Create your public address" = "建立您的公開地址";
@@ -2157,7 +2157,7 @@ This is your own POPOPX address!" = "連線到自己？\n這是您自己的 POPO
 "Receiving address will be changed to a different server. Address change will complete after sender comes online." = "接收地址將變更為不同的伺服器。地址變更將在寄件者上線後完成。";
 "Receiving file will be stopped." = "接收檔案將被停止。";
 "Receiving via" = "接收經由";
-"Recent history and improved [directory bot](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." = "最近的歷史記錄和改進的[目錄機器人](popop:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)。";
+"Recent history and improved [directory bot](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." = "最近的歷史記錄和改進的[目錄機器人](popop:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)。";
 "Recipient(s) can't see who this message is from." = "收件者無法看到此訊息來自誰。";
 "Reconnect" = "重新連線";
 "Reconnect all servers" = "重新連線所有伺服器";
@@ -2453,7 +2453,7 @@ This is your own POPOPX address!" = "連線到自己？\n這是您自己的 POPO
 "Test servers" = "測試伺服器";
 "Tests failed!" = "測試失敗！";
 "Thank you for installing POPOPX Chat!" = "感謝您安裝 POPOPX Chat！";
-"Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "感謝使用者——[透過 Weblate 貢獻](https://github.com/popopxchat/simplex-chat/tree/stable#help-translating-simplex-chat)！";
+"Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "感謝使用者——[透過 Weblate 貢獻](https://github.com/popopxchat/popopx-chat/tree/stable#help-translating-popopx-chat)！";
 "The ID of the next message is incorrect (less or equal to the previous).\nIt can happen because of some bug or when the connection is compromised." = "下一則訊息的 ID 不正確（小於或等於前一則）。\n這可能是因為某些錯誤或連線已被入侵。";
 "The address will be short, and your profile will be shared via the address." = "地址將很短，您的個人資料將透過地址分享。";
 "The app can notify you when you receive messages or contact requests - please open settings to enable." = "應用程式可以在您收到訊息或聯絡人請求時通知您 - 請開啟設定以啟用。";

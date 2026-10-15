@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=POPOPX Chat
+Comment=Private and secure open-source messenger - no user IDs (not even random numbers)
+Exec=/opt/popopx/bin/popopx
+Icon=/opt/popopx/lib/popopx
+Categories=Network;Chat;

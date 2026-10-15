@@ -186,7 +186,7 @@ When the user taps a notification:
 
 ### [URL Deep Link](../../Shared/ContentView.swift#L281)
 
-POPOPX links (`simplex:/chat#...`) are handled via [`connectViaUrl()`](../../Shared/ContentView.swift#L439):
+POPOPX links (`popopx:/chat#...`) are handled via [`connectViaUrl()`](../../Shared/ContentView.swift#L439):
 
 ```swift
 .onOpenURL { url in

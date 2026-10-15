@@ -92,12 +92,12 @@ Invoke-WebRequest -Uri "https://github.com/popopx/popopx-chat/releases/latest/do
 ### Mobile Apps
 
 #### iOS
-- App Store: [PopopX Chat](https://apps.apple.com/app/popopx-chat) (coming soon)
+- App Store: [PopopX Chat](https://apps.apple.com/app/simplex-chat) (coming soon)
 - TestFlight: [Join beta](https://testflight.apple.com/join/XXXXX) (coming soon)
 
 #### Android
-- Google Play: [PopopX Chat](https://play.google.com/store/apps/details?id=chat.popopx.app) (coming soon)
-- F-Droid: [PopopX Chat](https://f-droid.org/packages/chat.popopx.app) (coming soon)
+- Google Play: [PopopX Chat](https://play.google.com/store/apps/details?id=chat.simplex.app) (coming soon)
+- F-Droid: [PopopX Chat](https://f-droid.org/packages/chat.simplex.app) (coming soon)
 - Direct APK: [Download](https://github.com/popopx/popopx-chat/releases/latest/download/popopx-chat.apk)
 
 ## Build from Source
@@ -191,7 +191,7 @@ cabal build --flag client_postgres
 - [Bot Development](docs/BOTS.md) - Creating bots for PopopX Chat
 
 ### Protocol Documentation
-- [Chat Protocol](docs/protocol/simplex-chat.md) - Core protocol specification
+- [Chat Protocol](docs/protocol/popopx-chat.md) - Core protocol specification
 - [Channels Protocol](docs/protocol/channels-protocol.md) - Channel implementation
 - [Names Overview](docs/protocol/names-overview.md) - PopopX names system
 
@@ -281,9 +281,9 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ## Community
 
 - **GitHub Discussions**: [Join the conversation](https://github.com/popopx/popopx-chat/discussions)
-- **Reddit**: [r/PopopXChat](https://www.reddit.com/r/PopopXChat) (coming soon)
-- **Twitter**: [@PopopXChat](https://twitter.com/PopopXChat) (coming soon)
-- **Matrix**: [#popopx-chat:matrix.org](https://matrix.to/#/#popopx-chat:matrix.org) (coming soon)
+- **Reddit**: [r/PopopXChat](https://www.reddit.com/r/SimpleXChat) (coming soon)
+- **Twitter**: [@PopopXChat](https://twitter.com/SimpleXChat) (coming soon)
+- **Matrix**: [#popopx-chat:matrix.org](https://matrix.to/#/#simplex-chat:matrix.org) (coming soon)
 
 ## Security
 
@@ -317,7 +317,7 @@ This project uses various open-source dependencies. See [NOTICE](NOTICE) for det
 
 ## Acknowledgments
 
-- **SimpleX Chat Team**: For the original implementation and protocol design
+- **POPOPX Chat Team**: For the original implementation and protocol design
 - **Trail of Bits**: For security audit
 - **Privacy Guides**: For recommendations
 - **Community Contributors**: For feedback and improvements

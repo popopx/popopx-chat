@@ -82,6 +82,7 @@ let DEFAULT_PRIVACY_SHOW_SIGNATURE = "privacyShowSignature"
 let DEFAULT_PRIVACY_SHOW_FILE_ENCRYPTION = "privacyShowFileEncryption"
 let DEFAULT_PRIVACY_VERIFY_POPOPX_NAMES = "privacyVerifyPopopxNames"
 let DEFAULT_SHOW_SUBSCRIPTION_PERCENTAGE = "showSubscriptionPercentage"
+let DEFAULT_MARKDOWN_FILE_TEXT_VIEW = "markdownFileTextView"
 
 let DEFAULT_CURRENT_THEME = "currentTheme"
 let DEFAULT_SYSTEM_DARK_THEME = "systemDarkTheme"
@@ -140,6 +141,7 @@ let appDefaults: [String: Any] = [
     DEFAULT_SHOW_DELETE_CONTACT_NOTICE: true,
     DEFAULT_SHOW_SENT_VIA_RPOXY: false,
     DEFAULT_SHOW_SUBSCRIPTION_PERCENTAGE: false,
+    DEFAULT_MARKDOWN_FILE_TEXT_VIEW: false,
     ANDROID_DEFAULT_CALL_ON_LOCK_SCREEN: AppSettingsLockScreenCalls.show.rawValue,
 
     DEFAULT_THEME_OVERRIDES: "{}",

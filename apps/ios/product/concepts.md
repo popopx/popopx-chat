@@ -77,9 +77,9 @@ Core data entities, their storage, and the operations that manage their lifecycl
 
 - Product overview: [README.md](README.md)
 - Glossary: [glossary.md](glossary.md)
-- Haskell core controller: `../../src/Simplex/Chat/Controller.hs`
-- Haskell core types: `../../src/Simplex/Chat/Types.hs`
-- Haskell store layer: `../../src/Simplex/Chat/Store/` (Direct.hs, Groups.hs, Messages.hs, Files.hs, Profiles.hs, Connections.hs)
+- Haskell core controller: `../../src/POPOPX/Chat/Controller.hs`
+- Haskell core types: `../../src/POPOPX/Chat/Types.hs`
+- Haskell store layer: `../../src/POPOPX/Chat/Store/` (Direct.hs, Groups.hs, Messages.hs, Files.hs, Profiles.hs, Connections.hs)
 - Swift model: `Shared/Model/ChatModel.swift`
 - Swift API types: `POPOPXSwitch/APITypes.swift`, `POPOPXSwitch/ChatTypes.swift`
 - Swift API bridge: `POPOPXSwitch/API.swift`, `Shared/Model/POPOPXAPI.swift`

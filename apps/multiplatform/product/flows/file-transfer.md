@@ -4,7 +4,7 @@
 
 ## Overview
 
-SimpleX Chat transfers files using two protocols based on file size: inline delivery through SMP messages for small files, and XFTP (SimpleX File Transfer Protocol) for larger files. All locally stored files can be AES-encrypted via CryptoFile. The system supports automatic receiving of small media, manual download for larger files, and cancellation at any stage.
+POPOPX Chat transfers files using two protocols based on file size: inline delivery through SMP messages for small files, and XFTP (POPOPX File Transfer Protocol) for larger files. All locally stored files can be AES-encrypted via CryptoFile. The system supports automatic receiving of small media, manual download for larger files, and cancellation at any stage.
 
 ## Prerequisites
 

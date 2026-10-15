@@ -21,7 +21,7 @@ root_dir="$(dirname "$(dirname "$(readlink "$0")")")"
 cd $root_dir
 BUILD_DIR=dist-newstyle/build/$ARCH-$OS/ghc-${GHC_VERSION}/popopx-chat-*
 
-exports=( $(sed 's/foreign export ccall "chat_migrate_init_key"//' src/Simplex/Chat/Mobile.hs | sed 's/foreign export ccall "chat_reopen_store"//' |grep "foreign export ccall" | cut -d '"' -f2) )
+exports=( $(sed 's/foreign export ccall "chat_migrate_init_key"//' src/Popopx/Chat/Mobile/ | sed 's/foreign export ccall "chat_reopen_store"//' |grep "foreign export ccall" | cut -d '"' -f2) )
 for elem in "${exports[@]}"; do count=$(grep -R "$elem$" libpopopx.dll.def | wc -l); if [ $count -ne 1 ]; then echo Wrong exports in libpopopx.dll.def. Add \"$elem\" to that file; exit 1; fi ; done
 for elem in "${exports[@]}"; do count=$(grep -R "\"$elem\"" flake.nix | wc -l); if [ $count -ne 2 ]; then echo Wrong exports in flake.nix. Add \"$elem\" in two places of the file; exit 1; fi ; done
 

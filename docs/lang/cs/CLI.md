@@ -1,10 +1,10 @@
 ---
-title: SimpleX Chat terminálová
+title: POPOPX Chat terminálová
 revision: 31.01.2023
 ---
 | Aktualizováno 31.01.2023 | Jazyky: CZ, [EN](/docs/CLI.md), [FR](/docs/lang/fr/CLI.md), [PL](/docs/lang/pl/CLI.md) |
 
-# SimpleX Chat terminálová (konzolová) aplikace pro Linux/MacOS/Windows
+# POPOPX Chat terminálová (konzolová) aplikace pro Linux/MacOS/Windows
 
 ## Obsah
 
@@ -19,7 +19,7 @@ revision: 31.01.2023
 - [Použití](#usage)
   - [Spuštění klienta chatu](#running-the-chat-client)
   - [Přístup k serverům pro zasílání zpráv přes Tor](#access-messaging-servers-via-tor-beta)
-  - [Jak používat chat SimpleX](#how-to-use-simplex-chat)
+  - [Jak používat chat POPOPX](#how-to-use-popopx-chat)
   - [Skupiny](#groups)
   - [Posílání souborů](#sending-files)
   - [Kontaktní adresy uživatelů](#user-contact-addresses)
@@ -35,7 +35,7 @@ revision: 31.01.2023
 - Automaticky vyplňované jméno příjemce - po navázání spojení stačí napsat zprávu a odpovědět odesílateli.
 - K dispozici ukázkové servery SMP, které jsou v aplikaci předkonfigurovány - nebo si můžete [nasadit vlastní server](https://github.com/simplex-chat/simplexmq#using-smp-server-and-smp-agent).
 - Žádná globální identita ani žádná jména nejsou pro server(y) viditelná, což zajišťuje plné soukromí vašich kontaktů a konverzací.
-- Dvě vrstvy šifrování E2E (double-ratchet pro duplexní spojení s použitím dohody klíčů X3DH s efemérními klíči Curve448 a NaCl crypto_box pro fronty SMP s použitím klíčů Curve25519) a předávání klíčů příjemců mimo pásmo (viz [Jak používat chat SimpleX](#how-to-use-simplex-chat)).
+- Dvě vrstvy šifrování E2E (double-ratchet pro duplexní spojení s použitím dohody klíčů X3DH s efemérními klíči Curve448 a NaCl crypto_box pro fronty SMP s použitím klíčů Curve25519) a předávání klíčů příjemců mimo pásmo (viz [Jak používat chat POPOPX](#how-to-use-popopx-chat)).
 - Ověřování integrity zpráv (pomocí zahrnutí digestů předchozích zpráv).
 - Ověřování každého příkazu/zprávy servery SMP pomocí automaticky generovaných klíčů Ed448.
 - Transportní šifrování TLS 1.3.
@@ -53,7 +53,7 @@ Technické podrobnosti viz [Použité šifrovací primitivy](https://github.com/
 
 #### Linux a MacOS
 
-Chcete-li **nainstalovat** nebo **aktualizovat** `simplex-chat`, měli byste spustit instalační skript. K tomu použijte následující příkaz cURL nebo Wget:
+Chcete-li **nainstalovat** nebo **aktualizovat** `popopx-chat`, měli byste spustit instalační skript. K tomu použijte následující příkaz cURL nebo Wget:
 
 ```sh
 curl -o- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/install.sh | bash
@@ -63,13 +63,13 @@ curl -o- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/inst
 wget -qO- https://raw.githubusercontent.com/simplex-chat/simplex-chat/stable/install.sh | bash
 ```
 
-Jakmile se chatovací klient stáhne, můžete jej spustit pomocí příkazu `simplex-chat` v terminálu.
+Jakmile se chatovací klient stáhne, můžete jej spustit pomocí příkazu `popopx-chat` v terminálu.
 
 Případně můžete binární soubor chatu pro váš systém stáhnout ručně z [latest stable release](https://github.com/simplex-chat/simplex-chat/releases) a spustit jej podle následujícího návodu.
 
 ```sh
 chmod +x <binary>
-mv <binary> ~/.local/bin/simplex-chat
+mv <binary> ~/.local/bin/popopx-chat
 ```
 
 (nebo v jakémkoli jiném preferovaném umístění v `PATH`).
@@ -79,7 +79,7 @@ V systému MacOS musíte také [povolit spuštění nástroje Gatekeeper](https:
 #### Windows
 
 ```sh
-move <binary> %APPDATA%/local/bin/simplex-chat.exe
+move <binary> %APPDATA%/local/bin/popopx-chat.exe
 ```
 
 ### Sestavení ze zdrojových kódů
@@ -91,8 +91,8 @@ move <binary> %APPDATA%/local/bin/simplex-chat.exe
 V systému Linux můžete spustitelný soubor chatu sestavit pomocí [docker build with custom output](https://docs.docker.com/engine/reference/commandline/build/#custom-build-outputs):
 
 ```shell
-git clone git@github.com:simplex-chat/simplex-chat.git
-cd simplex-chat
+git clone git@github.com:popopx-chat/popopx-chat.git
+cd popopx-chat
 git checkout stable
 DOCKER_BUILDKIT=1 docker build --output ~/.local/bin .
 ```
@@ -110,8 +110,8 @@ curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 2. Sestavte projekt:
 
 ```shell
-git clone git@github.com:simplex-chat/simplex-chat.git
-cd simplex-chat
+git clone git@github.com:popopx-chat/popopx-chat.git
+cd popopx-chat
 git checkout stable
 # v Linuxu
 apt-get update && apt-get install -y build-essential libgmp3-dev zlib1g-dev
@@ -128,14 +128,14 @@ cabal install
 
 ### Spuštění klienta chatu
 
-Chcete-li spustit klienta chatu, spusťte z terminálu příkaz `simplex-chat`.
+Chcete-li spustit klienta chatu, spusťte z terminálu příkaz `popopx-chat`.
 
-Ve výchozím nastavení je datový adresář aplikace vytvořen v domovském adresáři (`~/.simplex` nebo `%APPDATA%/simplex` ve Windows) a jsou v něm inicializovány dva databázové soubory SQLite `simplex_v1_chat.db` a `simplex_v1_agent.db`.
+Ve výchozím nastavení je datový adresář aplikace vytvořen v domovském adresáři (`~/.popopx` nebo `%APPDATA%/popopx` ve Windows) a jsou v něm inicializovány dva databázové soubory SQLite `popopx_v1_chat.db` a `popopx_v1_agent.db`.
 
 Chcete-li zadat jiný prefix cesty k souborům databáze, použijte volbu příkazového řádku `-d`:
 
 ```shell
-$ simplex-chat -d alice
+$ popopx-chat -d alice
 ```
 
 Spuštění výše uvedeného příkladu vytvoří databázové soubory `alice_v1_chat.db` a `alice_v1_agent.db` v aktuálním adresáři.
@@ -145,14 +145,14 @@ Na serveru Linode jsou umístěny tři výchozí servery SMP - jsou [předkonfig
 Pokud jste nasadili vlastní SMP server(y), můžete klienta nakonfigurovat pomocí volby `-s`:
 
 ```shell
-$ simplex-chat -s smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=@smp.example.com
+$ popopx-chat -s smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=@smp.example.com
 ```
 
 Řetězec zakódovaný v Base64url před adresou serveru je offline otisk certifikátu serveru, který je ověřován klientem během TLS handshake.
 
 S lidmi můžete stále hovořit pomocí výchozího nebo jakéhokoli jiného serveru - ovlivňuje to pouze umístění fronty zpráv při navazování spojení (a fronta odpovědí může být na jiném serveru, jak nastaví klient druhé strany).
 
-Spusťte `simplex-chat -h` a zobrazte všechny dostupné možnosti.
+Spusťte `popopx-chat -h` a zobrazte všechny dostupné možnosti.
 
 ### Přístup k serverům pro zasílání zpráv přes Tor
 
@@ -166,19 +166,19 @@ brew services start tor
 Pro přístup k serverům přes Tor použijte volbu `-x`:
 
 ```
-simplex-chat -x
+popopx-chat -x
 ```
 
 Můžete také použít volbu `--socks-proxy=ipv4:port` nebo `--socks-proxy=:port` pro konfiguraci hostitele a portu vašeho SOCKS5 proxy serveru, např. pokud jej provozujete na jiném hostiteli nebo portu.
 
-### Jak používat SimpleX chat
+### Jak používat POPOPX chat
 
 Po spuštění chatu budete vyzváni k zadání svého "zobrazovacího jména" a volitelného "celého jména" pro vytvoření místního profilu chatu. Vaše zobrazované jméno je přezdívka, pod kterou se na vás mohou obracet vaše kontakty - není jedinečné a neslouží jako globální identita. Pokud si některé vaše kontakty zvolily stejné zobrazovací jméno, přidá chatovací klient k jejich místnímu zobrazovacímu jménu číselnou příponu.
 
 Následující schéma ukazuje, jak se připojit ke kontaktu a poslat mu zprávu:
 
 <div align="center">
-  <img align="center" src="/images/how-to-use-simplex.svg">
+  <img align="center" src="/images/how-to-use-popopx.svg">
 </div>
 
 Po nastavení místního profilu zadejte `/c` (pro `/connect`) pro vytvoření nového spojení a vygenerování pozvánky. Tuto pozvánku odešlete svému kontaktu prostřednictvím jakéhokoli jiného kanálu.
@@ -197,7 +197,7 @@ Seznam dostupných příkazů zobrazíte pomocí `/help` v chatu.
 
 Skupinu vytvoříte příkazem `/g <group>` a kontakty do ní přidáte příkazem `/a <group> <name>`. Do skupiny pak můžete posílat zprávy zadáním `#<skupina> <zpráva>`. Pro další příkazy použijte `/help groups`.
 
-![simplex-chat](/images/groups.gif)
+![popopx-chat](/images/groups.gif)
 
 > **Upozornění**: skupiny nejsou uloženy na žádném serveru, jsou vedeny jako seznam členů v databázi aplikace, kterým budou zprávy zasílány.
 
@@ -205,7 +205,7 @@ Skupinu vytvoříte příkazem `/g <group>` a kontakty do ní přidáte příkaz
 
 Soubor můžete odeslat kontaktu pomocí `/f @<contact> <soubor_cesta>` - příjemce jej bude muset před odesláním přijmout. Pro další příkazy použijte `/help files`.
 
-![simplex-chat](/images/files.gif)
+![popopx-chat](/images/files.gif)
 
 Soubory můžete posílat skupině pomocí `/f #<skupina> <soubor_cesta>`.
 
@@ -219,4 +219,4 @@ Uživatelská adresa je "dlouhodobá" v tom smyslu, že se jedná o odkaz pro v�
 
 Pro ostatní příkazy použijte `/help address`.
 
-![simplex-chat](/images/user-addresses.gif)
+![popopx-chat](/images/user-addresses.gif)

@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Main screen of the SimpleX Chat Android and Desktop apps. Displays all conversations sorted by last activity, serves as the navigation root, and provides access to user profiles, settings, and new chat creation.
+Main screen of the POPOPX Chat Android and Desktop apps. Displays all conversations sorted by last activity, serves as the navigation root, and provides access to user profiles, settings, and new chat creation.
 
 ## Route / Navigation
 
@@ -43,13 +43,13 @@ The toolbar supports two layout modes controlled by `appPrefs.oneHandUI`:
 | Element | Description |
 |---|---|
 | Search icon | Magnifying glass icon at leading edge |
-| Text field | `SearchTextField` with placeholder "Search or paste SimpleX link" |
+| Text field | `SearchTextField` with placeholder "Search or paste POPOPX link" |
 | Filter button | `ToggleFilterEnabledButton` (filter icon) toggles unread-only filter; shown when search text is empty |
 | Clear button | Appears when text is entered; `BackHandler` clears search on back |
 
 Behavior:
 - Filters chat list in real-time by contact/group name via `filteredChats()`
-- Detects pasted SimpleX links (`strHasSingleSimplexLink`) and triggers `planAndConnect()` connection dialogue
+- Detects pasted POPOPX links (`strHasSinglePopopxLink`) and triggers `planAndConnect()` connection dialogue
 - In one-hand UI mode, search bar appears below tag filters with IME spacer; in standard mode, above tag filters
 
 ### Chat Filter Tags (`TagsView`)
@@ -113,7 +113,7 @@ Each chat type provides specific dropdown menu items:
 | Element | Condition | Description |
 |---|---|---|
 | One-hand UI card (`ToggleChatListCard`) | `oneHandUICardShown == false` | Dismissible card introducing bottom toolbar mode with toggle switch |
-| Address creation card (`AddressCreationCard`) | `addressCreationCardShown == false` | Prompts user to create a SimpleX address; tappable card opens `UserAddressLearnMore` |
+| Address creation card (`AddressCreationCard`) | `addressCreationCardShown == false` | Prompts user to create a POPOPX address; tappable card opens `UserAddressLearnMore` |
 | FAB (new chat button) | Standard mode, search empty, chat running | `FloatingActionButton` at bottom-right, pencil icon, opens `NewChatSheet` |
 | Crowdfunding banner (`GetStakeBanner`) | `crowdfundingAvailable()` and not dismissed | Gradient card above the chats, and below the onboarding cards when there are no conversations; opens `GetStakeView`. The dismiss X appears once the banner has been tapped and there is at least one chat; dismissing hides it until hints are reset |
 

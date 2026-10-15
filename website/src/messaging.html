@@ -1,7 +1,7 @@
 ---
 layout: layouts/main.html
-title: "SimpleX Chat: The World's Most Secure Messaging"
-description: "SimpleX Chat - a private and encrypted messenger without any user IDs (not even random ones)! Make a private connection via link / QR code to send messages and make calls."
+title: "POPOPX Chat: The World's Most Secure Messaging"
+description: "POPOPX Chat - a private and encrypted messenger without any user IDs (not even random ones)! Make a private connection via link / QR code to send messages and make calls."
 templateEngineOverride: njk
 ---
 {%- from "components/macro.njk" import overlay -%}
@@ -12,8 +12,8 @@ templateEngineOverride: njk
     </div>
 </section>
 
-{# Why SimpleX is unique #}
-{% include "sections/simplex_unique.html" %}
+{# Why POPOPX is unique #}
+{% include "sections/popopx_unique.html" %}
 
 {# Features #}
 <section id="features" class="bg-secondary-bg-light dark:bg-secondary-bg-dark py-[95px] px-5 lg:h-[888px]">
@@ -34,15 +34,15 @@ templateEngineOverride: njk
     </div>
 </section>
 
-{# what makes simplex private #}
+{# what makes popopx private #}
 <section id="privacy" class="bg-primary-bg-light dark:bg-primary-bg-dark py-[90px] overflow-hidden px-5 lg:h-[888px]">
     <div class="container scale-100">
-        <h2 class="text-grey-black dark:text-white text-[35px] leading-[45px] md:leading-[55px] lg:text-[45px] text-center font-bold mb-20">{{ "simplex-private-section-header" | i18n({}, lang ) | safe }}</h2>
+        <h2 class="text-grey-black dark:text-white text-[35px] leading-[45px] md:leading-[55px] lg:text-[45px] text-center font-bold mb-20">{{ "popopx-private-section-header" | i18n({}, lang ) | safe }}</h2>
 
         <div class="swiper private-swiper overflow-hidden px-4 py-2">
             <div class="swiper-wrapper mb-16">
 
-                {% for section in what_makes_simplex_private.sections %}
+                {% for section in what_makes_popopx_private.sections %}
                 <div class="card swiper-slide relative h-[480px] rounded-[20px] bg-card-bg-light dark:bg-card-bg-dark border-[#859096] border-solid border-[1px] dark:border-none shadow-[2px_2px_0px_#859096] dark:shadow-none overflow-hidden">
                     <div class="flex items-center justify-center py-12 px-6 h-[322px]">
                         <img class="w-full max-w-[223px] h-full max-h-[226px] dark:hidden" src="{{ section.imgLight }}" alt=""/>
@@ -79,8 +79,8 @@ templateEngineOverride: njk
 {# Network #}
 <section id="network" class="bg-secondary-bg-light dark:bg-secondary-bg-dark lg:h-[642px] py-[95px] px-5">
     <div class="container">
-        <h2 class="text-grey-black dark:text-white text-[35px] leading-[45px] md:leading-[55px] lg:text-[45px] text-center font-bold mb-5">{{ "simplex-network-section-header" | i18n({}, lang ) | safe }}</h2>
-        <p class="text-black dark:text-white text-[16px] font-normal text-center mb-16">{{ "simplex-network-section-desc" | i18n({}, lang ) | safe }}</p>
+        <h2 class="text-grey-black dark:text-white text-[35px] leading-[45px] md:leading-[55px] lg:text-[45px] text-center font-bold mb-5">{{ "popopx-network-section-header" | i18n({}, lang ) | safe }}</h2>
+        <p class="text-black dark:text-white text-[16px] font-normal text-center mb-16">{{ "popopx-network-section-desc" | i18n({}, lang ) | safe }}</p>
 
         <div class="flex flex-col lg:flex-row justify-between gap-12 md:gap-14 lg:gap-16">
             <div class="flex flex-col md:flex-row lg:flex-col items-center md:gap-9 lg:gap-0">
@@ -89,10 +89,10 @@ templateEngineOverride: njk
                     <img src="/img/new/network-1-dark.svg" alt="" class="hidden dark:block"/>
                 </div>
                 <div class="md:flex-[2] flex flex-col items-center justify-center">
-                    <h3 class="text-active-blue text-xl font-bold text-center md:text-left lg:text-center self-stretch">{{ "simplex-network-1-header" | i18n({}, lang ) | safe }}</h3>
+                    <h3 class="text-active-blue text-xl font-bold text-center md:text-left lg:text-center self-stretch">{{ "popopx-network-1-header" | i18n({}, lang ) | safe }}</h3>
                     <p class="text-black dark:text-white text-base font-normal text-center md:text-left lg:text-center">
-                        {{ "simplex-network-1-desc" | i18n({}, lang ) | safe }} <a href="javascript:void(0)" data-show-overlay="{{ simplex_network_overlay.sections[0].overlayContent.overlayId }}" class="open-overlay-btn">{{ "simplex-network-1-overlay-linktext" | i18n({}, lang ) | safe }}</a>.
-                        {{ overlay(simplex_network_overlay.sections[0],lang) }}
+                        {{ "popopx-network-1-desc" | i18n({}, lang ) | safe }} <a href="javascript:void(0)" data-show-overlay="{{ popopx_network_overlay.sections[0].overlayContent.overlayId }}" class="open-overlay-btn">{{ "popopx-network-1-overlay-linktext" | i18n({}, lang ) | safe }}</a>.
+                        {{ overlay(popopx_network_overlay.sections[0],lang) }}
                     </p>
                 </div>
             </div>
@@ -105,9 +105,9 @@ templateEngineOverride: njk
                     <img src="/img/new/network-2-dark.svg" alt="" class="hidden dark:block"/>
                 </div>
                 <div class="md:flex-[2] flex flex-col items-center justify-center">
-                    <h3 class="text-active-blue text-xl font-bold text-center md:text-left lg:text-center self-stretch">{{ "simplex-network-2-header" | i18n({}, lang ) | safe }}</h3>
+                    <h3 class="text-active-blue text-xl font-bold text-center md:text-left lg:text-center self-stretch">{{ "popopx-network-2-header" | i18n({}, lang ) | safe }}</h3>
                     <p class="text-black dark:text-white text-base font-normal text-center md:text-left lg:text-center">
-                        {{ "simplex-network-2-desc" | i18n({}, lang ) | safe }}
+                        {{ "popopx-network-2-desc" | i18n({}, lang ) | safe }}
                     </p>
                 </div>
             </div>
@@ -120,9 +120,9 @@ templateEngineOverride: njk
                     <img src="/img/new/network-3-dark.svg" alt="" class="hidden dark:block"/>
                 </div>
                 <div class="md:flex-[2] flex flex-col items-center justify-center">
-                    <h3 class="text-active-blue text-xl font-bold text-center md:text-left lg:text-center self-stretch">{{ "simplex-network-3-header" | i18n({}, lang ) | safe }}</h3>
+                    <h3 class="text-active-blue text-xl font-bold text-center md:text-left lg:text-center self-stretch">{{ "popopx-network-3-header" | i18n({}, lang ) | safe }}</h3>
                     <p class="text-black dark:text-white text-base font-normal text-center md:text-left lg:text-center">
-                        {{ "simplex-network-3-desc" | i18n({}, lang ) | safe }}
+                        {{ "popopx-network-3-desc" | i18n({}, lang ) | safe }}
                     </p>
                 </div>
             </div>
@@ -133,8 +133,8 @@ templateEngineOverride: njk
 </section>
 
 
-{# simplex explained #}
-{% include "simplex_explained.html" %}
+{# popopx explained #}
+{% include "popopx_explained.html" %}
 
 
 {# Comparison #}
@@ -148,8 +148,8 @@ templateEngineOverride: njk
                     <tr>
                         <th></th>
                         <th class="flex items-center justify-center pb-4">
-                            <img class="h-[34px] dark:hidden" alt="simplex logo" src="/img/new/logo-light.png"/>
-                            <img class="h-[34px] hidden dark:block" alt="simplex logo" src="/img/new/logo-dark.png"/>
+                            <img class="h-[34px] dark:hidden" alt="popopx logo" src="/img/new/logo-light.png"/>
+                            <img class="h-[34px] hidden dark:block" alt="popopx logo" src="/img/new/logo-dark.png"/>
                         </th>
                         <th class="pb-4">{{ "protocol-1-text" | i18n({}, lang ) | safe }}</th>
                         <th class="pb-4">{{ "protocol-2-text" | i18n({}, lang ) | safe }}</th>
@@ -225,29 +225,29 @@ templateEngineOverride: njk
                     <tr>
                         <th></th>
                         <th class="pb-4">
-                            <img class="h-[60px] mr-auto ml-auto" alt="simplex logo" src="/img/messengers/session.svg"/>
+                            <img class="h-[60px] mr-auto ml-auto" alt="popopx logo" src="/img/messengers/session.svg"/>
                             <p>Session</p>
                         </th>
                         <th class="pb-4">
-                            <img class="h-[60px] mr-auto ml-auto" alt="simplex logo" src="/img/messengers/briar.svg"/>
+                            <img class="h-[60px] mr-auto ml-auto" alt="popopx logo" src="/img/messengers/briar.svg"/>
                             <p>Briar</p>
                         </th>
                         <th class="pb-4">
-                            <img class="h-[60px] mr-auto ml-auto" alt="simplex logo" src="/img/messengers/element.svg"/>
+                            <img class="h-[60px] mr-auto ml-auto" alt="popopx logo" src="/img/messengers/element.svg"/>
                             <p>Element</p>
                         </th>
                         <th class="pb-4">
-                            <img class="h-[60px] mr-auto ml-auto" alt="simplex logo" src="/img/messengers/cwtch.png"/>
+                            <img class="h-[60px] mr-auto ml-auto" alt="popopx logo" src="/img/messengers/cwtch.png"/>
                             <p>Cwtch</p>
                         </th>
                         <th class="pb-4">
-                            <img class="h-[60px] mr-auto ml-auto" alt="simplex logo" src="/img/messengers/signal.png"/>
+                            <img class="h-[60px] mr-auto ml-auto" alt="popopx logo" src="/img/messengers/signal.png"/>
                             <p>Signal</p>
                         </th>
                         <th class="pb-4">
-                            <img class="h-[60px] mr-auto ml-auto dark:hidden" alt="simplex logo" src="/img/new/logo-symbol-light.svg"/>
-                            <img class="h-[60px] mr-auto ml-auto hidden dark:block" alt="simplex logo" src="/img/new/logo-symbol-dark.svg"/>
-                            <p>SimpleX</p>
+                            <img class="h-[60px] mr-auto ml-auto dark:hidden" alt="popopx logo" src="/img/new/logo-symbol-light.svg"/>
+                            <img class="h-[60px] mr-auto ml-auto hidden dark:block" alt="popopx logo" src="/img/new/logo-symbol-dark.svg"/>
+                            <p>POPOPX</p>
                         </th>
                     </tr>
                 </thead>
@@ -327,5 +327,5 @@ templateEngineOverride: njk
     </div>
 </section>
 
-{# join simplex #}
-{# {% include "sections/join_simplex.html" %} #}
+{# join popopx #}
+{# {% include "sections/join_popopx.html" %} #}

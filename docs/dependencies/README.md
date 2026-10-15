@@ -1,4 +1,4 @@
-# SimpleX Chat and SimpleX servers dependencies
+# POPOPX Chat and POPOPX servers dependencies
 
 [SQLCipher](https://github.com/sqlcipher/sqlcipher): Extension of [SQLite](https://sqlite.org) with encryption ([BSD-style](./licences/apps/sqlcipher/LICENSE.md))
 

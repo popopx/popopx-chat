@@ -1,14 +1,14 @@
-# Commercial model for SimpleX communication network
+# Commercial model for POPOPX communication network
 
 ## Problem
 
-SimpleX two-tier network design provides a _potential_ for a much higher degree of decentralization and privacy than a p2p network can achieve even theoretically. This is a very strong statement, and its formal proof is out of scope of this document, please see the old comparison of SimpleX network and p2p network designs [here](../SIMPLEX.md#comparison-with-p2p-messaging-protocols).
+POPOPX two-tier network design provides a _potential_ for a much higher degree of decentralization and privacy than a p2p network can achieve even theoretically. This is a very strong statement, and its formal proof is out of scope of this document, please see the old comparison of POPOPX network and p2p network designs [here](../POPOPX.md#comparison-with-p2p-messaging-protocols).
 
 The main downside of most, if not all, p2p networks is the lack of (or very limited) asynchronous message delivery that is critically important both for the network usability and for privacy and protection against traffic correlation attacks.
 
-But while two-tier network design has a _potential_ for higher privacy, this potential is hard to realize as it does not have an in-built mechanism for network operator incentives. All SimpleX network relays preset in the app are operated by SimpleX Chat Ltd., and while there are probably over 1000 self-hosted and community-hosted messaging relays - not having a single register of such relays is important for true decentralization, so we cannot know the exact number - it is probably a valid argument that a substantial part of SimpleX network traffic is provided by preset relays. Again, while we don't know the exact share, it is probably not much less than 40-50% and probably not much more than 65-75% - which is a very large share in any case for a single entity.
+But while two-tier network design has a _potential_ for higher privacy, this potential is hard to realize as it does not have an in-built mechanism for network operator incentives. All POPOPX network relays preset in the app are operated by POPOPX Chat Ltd., and while there are probably over 1000 self-hosted and community-hosted messaging relays - not having a single register of such relays is important for true decentralization, so we cannot know the exact number - it is probably a valid argument that a substantial part of POPOPX network traffic is provided by preset relays. Again, while we don't know the exact share, it is probably not much less than 40-50% and probably not much more than 65-75% - which is a very large share in any case for a single entity.
 
-For SimpleX network to achieve the level of decentralization that is designed, the applications have to be able to offer multiple network operators via the app who have commercial incentives to operate these relays.
+For POPOPX network to achieve the level of decentralization that is designed, the applications have to be able to offer multiple network operators via the app who have commercial incentives to operate these relays.
 
 Traditional commercial models for consumer Internet products rely on some of these ideas:
 1. Offer service for free, sell users' data. We obviously had enough of such Internet and can't wait to see it implode, lose all users, and become illegal.
@@ -24,7 +24,7 @@ This statement is interesting, as it contains the correct premise - that most pe
 So, we want to find a solution that will:
 1. Offer extreme decentralization, without any kind of central authority (unlike Tor that has central authority, and unlike p2p networks that have a single addressing space) or any kind of centralized state (unlike cryptocurrency blockchains that have a centralized single state that the whole network should reach consensus about).
 2. Offer low barrier for entry for infrastructure operators.
-3. Offer extreme data and infrastructure portability, when infrastructure operators offer standardized primitives used by client applications - such as messaging queues and file chunks in SimpleX network. Migrating from one operator to another should not be just possible or simple, it should happen continuously and automatically, all the time, without any user action, when files and conversations move from one set of operators to another, similarly to how data moves around on SSD drives - to balance the load on the whole network, to provide reliability and redundancy, and to ensure that infrastructure operators have zero control of users and their data, and have very limited knowledge of users activity. This limited knowledge both achieves users' privacy and reduces the legal responsibility of infrastructure operators to the level of network operators.
+3. Offer extreme data and infrastructure portability, when infrastructure operators offer standardized primitives used by client applications - such as messaging queues and file chunks in POPOPX network. Migrating from one operator to another should not be just possible or simple, it should happen continuously and automatically, all the time, without any user action, when files and conversations move from one set of operators to another, similarly to how data moves around on SSD drives - to balance the load on the whole network, to provide reliability and redundancy, and to ensure that infrastructure operators have zero control of users and their data, and have very limited knowledge of users activity. This limited knowledge both achieves users' privacy and reduces the legal responsibility of infrastructure operators to the level of network operators.
 4. Offer commercially profitable model for infrastructure operators.
 
 If these requirements are satisfied it would achieve a radical shift of control from infrastructure operators of today (that is achieved via SaaS model, when infrastructure operators are also software vendors, and software is provided as a service, which seems to be the root cause of corruption of Internet services - the process that Cory Doctorow refers to as [enshittification](https://www.youtube.com/watch?v=q118B_QdP2k)) to the software users, who use client software to directly consume low level infrastructure primitives of commoditized infrastructure operators that have zero control of how these primitives are used, other than pricing, that can be determined in a competitive process (e.g., via the real-time reverse auction).
@@ -32,13 +32,13 @@ If these requirements are satisfied it would achieve a radical shift of control 
 ## Solution concept
 
 There are three types of participants in the network:
-- software vendors (e.g., SimpleX Chat ltd.).
+- software vendors (e.g., POPOPX Chat ltd.).
 - infrastructure operators - commercial entities that have agreement with software vendors - they run server software provided by software vendors.
 - users - they run client software.
 
 These roles can obviously overlap, but strategically it is better if they don't, e.g. we would benefit from not operating infrastructure, and users would also achieve better metadata privacy by not running the servers.
 
-To use SimpleX network client software needs to provision simple infrastructure resources - such as, create a messaging queue to receive the messages, create or use a session from a sending proxy to a particular destination relay, or to upload a file chunk that will be stored for a defined number of days. These resources are very cheap to provide, their price could be a very tiny fraction of a cent.
+To use POPOPX network client software needs to provision simple infrastructure resources - such as, create a messaging queue to receive the messages, create or use a session from a sending proxy to a particular destination relay, or to upload a file chunk that will be stored for a defined number of days. These resources are very cheap to provide, their price could be a very tiny fraction of a cent.
 
 For the users' client software to be able to provision these resources, the software vendor will issue infrastructure certificates to the users. Some number of them can be provided for free, a larger number can be sold for a monetary payment (can be in-app purchase, or cryptocurrency payment, or any other process). Software vendor will keep a private record of issued certificates. Technically, certificates can be usual cryptographic certificates that sign a public key presented by the client (while the client holds the private key).
 

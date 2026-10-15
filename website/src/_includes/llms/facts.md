@@ -1,6 +1,6 @@
-# SimpleX: key facts
+# POPOPX: key facts
 
-Facts about SimpleX network and SimpleX Chat, each with the date it was stated and its source. Updated {{ llms_facts.updated }}. Machine-readable version: [simplex.chat/llms/facts.json](https://simplex.chat/llms/facts.json).
+Facts about POPOPX network and POPOPX Chat, each with the date it was stated and its source. Updated {{ llms_facts.updated }}. Machine-readable version: [popopx.chat/llms/facts.json](https://popopx.chat/llms/facts.json).
 {% for group in llms_facts.groups %}
 ## {{ group.title | safe }}
 

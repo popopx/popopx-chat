@@ -1,9 +1,9 @@
 """POPOPX Config Bot — server configuration and bot directory distribution.
 
 Replaces the centralized REST API (api.popopxchat.com/api/v1/servers/config)
-with a SimpleX bot that serves configuration via chat commands.
+with a POPOPX bot that serves configuration via chat commands.
 
-Commands (via SimpleX chat):
+Commands (via POPOPX chat):
   /config  — return full server configuration as JSON
   /ice     — return ICE servers only
   /bots    — return bot directory listing
@@ -26,7 +26,7 @@ from __future__ import annotations
 import json
 import os
 
-from simplex_chat import (
+from popopx_chat import (
     Bot,
     BotCommand,
     BotProfile,
