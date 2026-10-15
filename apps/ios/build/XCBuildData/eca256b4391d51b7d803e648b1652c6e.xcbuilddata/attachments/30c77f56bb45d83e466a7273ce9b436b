@@ -1,5 +1,0 @@
- extern const unsigned char POPOPXSwitchVersionString[];
- extern const double POPOPXSwitchVersionNumber;
-
- const unsigned char POPOPXSwitchVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:POPOPXSwitch  PROJECT:POPOPX-4" "\n";
- const double POPOPXSwitchVersionNumber __attribute__ ((used)) = (double)4.;

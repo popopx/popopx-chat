@@ -1,4 +1,0 @@
-module BitFoundation {
-header "BitFoundation-Swift.h"
-export *
-}

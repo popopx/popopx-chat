@@ -2490,7 +2490,7 @@
 			name = "Generate WebRTC dSYM";
 			shellPath = /bin/sh;
 			shellScript = (
-				"${SRCROOT}/../popopx-chat/scripts/ios/generate-webrtc-dsym.sh",
+				"${SRCROOT}/../../scripts/ios/generate-webrtc-dsym.sh",
 				"",
 			);
 		};
@@ -2500,7 +2500,7 @@
 			name = "Run Script";
 			shellPath = /bin/sh;
 			shellScript = (
-				"${SRCROOT}/../popopx-chat/scripts/ios/copy-assets.sh",
+				"${SRCROOT}/../../scripts/ios/copy-assets.sh",
 				"",
 			);
 		};

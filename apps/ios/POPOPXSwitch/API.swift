@@ -976,7 +976,7 @@ public func chatErrorString(_ err: ChatError) -> String {
     }
 }
 
-public enum DBMigrationResult: Decodable, Equatable {
+public enum DBMigrationResult: Equatable {
     case ok
     case invalidConfirmation
     case errorNotADatabase(dbFile: String)
@@ -985,6 +985,91 @@ public enum DBMigrationResult: Decodable, Equatable {
     case errorKeychain
     case errorKeyGeneration
     case unknown(json: String)
+}
+
+extension DBMigrationResult: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case _owsf, ok, invalidConfirmation, errorNotADatabase,
+             errorMigration, errorSQL, errorKeychain, errorKeyGeneration
+    }
+
+    private enum DBMDataKeys: String, CodingKey {
+        case dbFile, migrationError, migrationSQLError
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        // Check for _owsf tag (swift JSON format)
+        if container.contains(._owsf) {
+            let allKeys = Set(container.allKeys.map { $0.stringValue })
+            let constructorKey = allKeys.first { $0 != "_owsf" }
+
+            guard let key = constructorKey else {
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath,
+                                         debugDescription: "No constructor key found alongside _owsf tag")
+                )
+            }
+
+            switch key {
+            case "ok":
+                self = .ok
+            case "invalidConfirmation":
+                self = .invalidConfirmation
+            case "errorNotADatabase":
+                let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let dbFile = try nested.decode(String.self, forKey: .dbFile)
+                self = .errorNotADatabase(dbFile: dbFile)
+            case "errorMigration":
+                let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let dbFile = try nested.decode(String.self, forKey: .dbFile)
+                let migrationError = try nested.decode(MigrationError.self, forKey: .migrationError)
+                self = .errorMigration(dbFile: dbFile, migrationError: migrationError)
+            case "errorSQL":
+                let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let dbFile = try nested.decode(String.self, forKey: .dbFile)
+                let migrationSQLError = try nested.decode(String.self, forKey: .migrationSQLError)
+                self = .errorSQL(dbFile: dbFile, migrationSQLError: migrationSQLError)
+            case "errorKeychain":
+                self = .errorKeychain
+            case "errorKeyGeneration":
+                self = .errorKeyGeneration
+            default:
+                self = .unknown(json: key)
+            }
+        } else {
+            // Fallback: standard decoding without _owsf tag
+            if container.contains(.ok) {
+                self = .ok
+            } else if container.contains(.invalidConfirmation) {
+                self = .invalidConfirmation
+            } else if container.contains(.errorNotADatabase) {
+                let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: .errorNotADatabase)
+                let dbFile = try nested.decode(String.self, forKey: .dbFile)
+                self = .errorNotADatabase(dbFile: dbFile)
+            } else if container.contains(.errorMigration) {
+                let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: .errorMigration)
+                let dbFile = try nested.decode(String.self, forKey: .dbFile)
+                let migrationError = try nested.decode(MigrationError.self, forKey: .migrationError)
+                self = .errorMigration(dbFile: dbFile, migrationError: migrationError)
+            } else if container.contains(.errorSQL) {
+                let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: .errorSQL)
+                let dbFile = try nested.decode(String.self, forKey: .dbFile)
+                let migrationSQLError = try nested.decode(String.self, forKey: .migrationSQLError)
+                self = .errorSQL(dbFile: dbFile, migrationSQLError: migrationSQLError)
+            } else if container.contains(.errorKeychain) {
+                self = .errorKeychain
+            } else if container.contains(.errorKeyGeneration) {
+                self = .errorKeyGeneration
+            } else {
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath,
+                                         debugDescription: "Unknown DBMigrationResult format")
+                )
+            }
+        }
+    }
 }
 
 public enum MigrationConfirmation: String {
@@ -997,10 +1082,75 @@ public func defaultMigrationConfirmation() -> MigrationConfirmation {
     confirmDBUpgradesGroupDefault.get() ? .error : .yesUp
 }
 
-public enum MigrationError: Decodable, Equatable {
+public enum MigrationError: Equatable {
     case upgrade(upMigrations: [UpMigration])
     case downgrade(downMigrations: [String])
     case migrationError(mtrError: MTRError)
+}
+
+extension MigrationError: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case _owsf, upgrade, downgrade, migrationError
+    }
+
+    private enum MEDataKeys: String, CodingKey {
+        case upMigrations, downMigrations, mtrError
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        if container.contains(._owsf) {
+            let allKeys = Set(container.allKeys.map { $0.stringValue })
+            let constructorKey = allKeys.first { $0 != "_owsf" }
+
+            guard let key = constructorKey else {
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath,
+                                         debugDescription: "No constructor key found alongside _owsf tag")
+                )
+            }
+
+            switch key {
+            case "upgrade":
+                let nested = try container.nestedContainer(keyedBy: MEDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let upMigrations = try nested.decode([UpMigration].self, forKey: .upMigrations)
+                self = .upgrade(upMigrations: upMigrations)
+            case "downgrade":
+                let nested = try container.nestedContainer(keyedBy: MEDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let downMigrations = try nested.decode([String].self, forKey: .downMigrations)
+                self = .downgrade(downMigrations: downMigrations)
+            case "migrationError":
+                let nested = try container.nestedContainer(keyedBy: MEDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let mtrError = try nested.decode(MTRError.self, forKey: .mtrError)
+                self = .migrationError(mtrError: mtrError)
+            default:
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath,
+                                         debugDescription: "Unknown MigrationError constructor: \(key)")
+                )
+            }
+        } else {
+            if container.contains(.upgrade) {
+                let nested = try container.nestedContainer(keyedBy: MEDataKeys.self, forKey: .upgrade)
+                let upMigrations = try nested.decode([UpMigration].self, forKey: .upMigrations)
+                self = .upgrade(upMigrations: upMigrations)
+            } else if container.contains(.downgrade) {
+                let nested = try container.nestedContainer(keyedBy: MEDataKeys.self, forKey: .downgrade)
+                let downMigrations = try nested.decode([String].self, forKey: .downMigrations)
+                self = .downgrade(downMigrations: downMigrations)
+            } else if container.contains(.migrationError) {
+                let nested = try container.nestedContainer(keyedBy: MEDataKeys.self, forKey: .migrationError)
+                let mtrError = try nested.decode(MTRError.self, forKey: .mtrError)
+                self = .migrationError(mtrError: mtrError)
+            } else {
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath,
+                                         debugDescription: "Unknown MigrationError format")
+                )
+            }
+        }
+    }
 }
 
 public struct UpMigration: Decodable, Equatable {
@@ -1017,9 +1167,68 @@ public func downMigrationWarnings(_ downMigrations: [String]) -> [String] {
     }
 }
 
-public enum MTRError: Decodable, Equatable {
+public enum MTRError: Equatable {
     case noDown(dbMigrations: [String])
     case different(appMigration: String, dbMigration: String)
+}
+
+extension MTRError: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case _owsf, noDown, different
+    }
+
+    private enum MTRErrorDataKeys: String, CodingKey {
+        case dbMigrations, appMigration, dbMigration
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        if container.contains(._owsf) {
+            let allKeys = Set(container.allKeys.map { $0.stringValue })
+            let constructorKey = allKeys.first { $0 != "_owsf" }
+
+            guard let key = constructorKey else {
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath,
+                                         debugDescription: "No constructor key found alongside _owsf tag")
+                )
+            }
+
+            switch key {
+            case "noDown":
+                let nested = try container.nestedContainer(keyedBy: MTRErrorDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let dbMigrations = try nested.decode([String].self, forKey: .dbMigrations)
+                self = .noDown(dbMigrations: dbMigrations)
+            case "different":
+                let nested = try container.nestedContainer(keyedBy: MTRErrorDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let appMigration = try nested.decode(String.self, forKey: .appMigration)
+                let dbMigration = try nested.decode(String.self, forKey: .dbMigration)
+                self = .different(appMigration: appMigration, dbMigration: dbMigration)
+            default:
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath,
+                                         debugDescription: "Unknown MTRError constructor: \(key)")
+                )
+            }
+        } else {
+            if container.contains(.noDown) {
+                let nested = try container.nestedContainer(keyedBy: MTRErrorDataKeys.self, forKey: .noDown)
+                let dbMigrations = try nested.decode([String].self, forKey: .dbMigrations)
+                self = .noDown(dbMigrations: dbMigrations)
+            } else if container.contains(.different) {
+                let nested = try container.nestedContainer(keyedBy: MTRErrorDataKeys.self, forKey: .different)
+                let appMigration = try nested.decode(String.self, forKey: .appMigration)
+                let dbMigration = try nested.decode(String.self, forKey: .dbMigration)
+                self = .different(appMigration: appMigration, dbMigration: dbMigration)
+            } else {
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath,
+                                         debugDescription: "Unknown MTRError format")
+                )
+            }
+        }
+    }
 }
 
 func dbMigrationResult(_ d: Data?) -> DBMigrationResult {

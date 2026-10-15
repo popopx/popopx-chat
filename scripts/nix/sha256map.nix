@@ -2,7 +2,7 @@
   "file:///Users/elliot/POPOPX/popopxmq"."local-fix" = "18fa4qkfd2p4abbxh4289f9nl2yy64v05cbdlyxiw4wlrla21d96";
   "file:///Users/elliot/POPOPX/popopxmq"."local-fix-v2" = "18fa4qkfd2p4abbxh4289f9nl2yy64v05cbdlyxiw4wlrla21d96";
   "file:///Users/elliot/POPOPX/popopxmq"."f6fac824054192d768bd5103ddaad5dd6c6f06ac" = "18fa4qkfd2p4abbxh4289f9nl2yy64v05cbdlyxiw4wlrla21d96";
-  "file:///tmp/popopxmq-fix"."f6fac824054192d768bd5103ddaad5dd6c6f06ac" = "18fa4qkfd2p4abbxh4289f9nl2yy64v05cbdlyxiw4wlrla21d96";
+  "https://github.com/popopx/popopxmq.git"."f6fac824054192d768bd5103ddaad5dd6c6f06ac" = "3vqEnVxKG4WYoSmO6iEHd5+sIqeRYm3Uz4Z4gSQaSHY=";
   "https://github.com/popopx/popopxmq.git"."fd728547c75baf207c13a0dd6b4f47fdae3ada5e" = "1by0n8bghkjw2zbn2lfwzg8gjqaqx0l1l1yq98150920x6rgi9b0";
   "https://github.com/simplex-chat/hs-socks.git"."a30cc7a79a08d8108316094f8f2f82a0c5e1ac51" = "0yasvnr7g91k76mjkamvzab2kvlb1g5pspjyjn2fr6v83swjhj38";
   "https://github.com/simplex-chat/direct-sqlcipher.git"."2330df3dc8c4b660674d3c02d76bb86f66c2abee" = "11pfj1vqsjdl26nplkr2l6z1xj7cn153qijj5gknmlzq3krn7x1i";

@@ -1,4 +1,0 @@
-module Ink {
-header "Ink-Swift.h"
-export *
-}

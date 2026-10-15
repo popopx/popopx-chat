@@ -1,3 +1,0 @@
-#!/bin/sh
-${SRCROOT}/../../scripts/ios/copy-assets.sh
-
