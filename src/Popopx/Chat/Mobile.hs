@@ -58,6 +58,9 @@ import Popopx.Messaging.Agent.Env.SQLite (createAgentStore)
 import Popopx.Messaging.Agent.Protocol (AgentErrorType)
 import Popopx.Messaging.Agent.Store.Interface (closeDBStore, reopenDBStore)
 import Popopx.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..), MigrationError)
+#if !defined(dbPostgres)
+import Popopx.Messaging.Agent.Store.SQLite.Common (DBOpts (..))
+#endif
 import qualified Popopx.Messaging.Crypto as C
 import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Parsers (defaultJSON, dropPrefix, sumTypeJSON)
