@@ -1007,7 +1007,9 @@ data GroupRelayInvitation = GroupRelayInvitation
   { fromMember :: MemberIdRole,
     fromMemberProfile :: Profile,
     relayMemberId :: MemberId,
-    groupLink :: ShortLinkContact
+    groupLink :: ShortLinkContact,
+    publicGroupId :: Maybe B64UrlByteString,
+    fromMemberKey :: Maybe MemberKey
   }
   deriving (Eq, Show)
 
@@ -1210,13 +1212,15 @@ data GroupMember = GroupMember
     relayLink :: Maybe ShortLinkContact,
     -- out-of-band verified security code for connectionless (channel) members;
     -- regular members carry it in activeConn instead (see memberSecurityCode)
-    memberVerifiedCode :: Maybe SecurityCode
+    memberVerifiedCode :: Maybe SecurityCode,
+    memberBadgeProof :: NoJSON BadgeProof
   }
   deriving (Eq, Show)
 
 data RelayRequestData = RelayRequestData
   { relayInvId :: InvitationId,
     reqGroupLink :: ShortLinkContact,
+    reqPublicGroupId :: Maybe B64UrlByteString,
     reqChatVRange :: VersionRangeChat,
     reqDelay :: Int64,
     reqRetries :: Int,

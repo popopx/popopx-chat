@@ -169,6 +169,7 @@ data MessageDeliveryJob = MessageDeliveryJob
     jobScope :: DeliveryJobScope,
     senderGMIds :: [GroupMemberId],
     body :: ByteString,
+    notification :: Bool,
     cursorGMId_ :: Maybe GroupMemberId
   }
   deriving (Show)

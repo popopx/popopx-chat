@@ -54,9 +54,15 @@ module Popopx.Chat.Badges
     BadgeProofRow,
     badgeProofToRow,
     rowToBadgeProof,
+    MaybeBadgeProofRow,
+    maybeRowToBadgeProof,
     badgeToRow,
     localBadgeToRow,
     rowToBadge,
+    acceptedProof,
+    acceptedBadge,
+    sameBadgeProof,
+    unboundProof,
   ) where
 
 import Control.Concurrent.STM
@@ -270,7 +276,14 @@ maxSndXFTPFileSize lims now = \case
 -- presentation, not bound to any context; the 'T' tag marks it so master rejects it.
 -- PHUnknown is the forward-compat catch-all for tags this version does not interpret.
 
-data ProofPresHeaderTag = PHTestTag | PHChatTag | PHFileInvTag | PHFileDescrTag | PHUnknownTag Char
+data ProofPresHeaderTag
+  = PHTestTag -- random nonce: released clients
+  | PHChatTag -- direct chat ratchet, group member key
+  | PHFileInvTag -- file invitation
+  | PHFileDescrTag -- file description
+  | PHRequestTag -- request to address without ratchet keys
+  | PHLinkTag -- invitation and address link data
+  | PHUnknownTag Char -- tags of newer versions
 
 instance StrEncoding ProofPresHeaderTag where
   strEncode = B.singleton . \case
@@ -278,6 +291,8 @@ instance StrEncoding ProofPresHeaderTag where
     PHChatTag -> 'C'
     PHFileInvTag -> 'F'
     PHFileDescrTag -> 'D'
+    PHRequestTag -> 'R'
+    PHLinkTag -> 'L'
     PHUnknownTag c -> c
   strP = tag <$> A.anyChar
     where
@@ -286,6 +301,8 @@ instance StrEncoding ProofPresHeaderTag where
         'C' -> PHChatTag
         'F' -> PHFileInvTag
         'D' -> PHFileDescrTag
+        'R' -> PHRequestTag
+        'L' -> PHLinkTag
         c -> PHUnknownTag c
 
 data ProofPresHeader
@@ -293,6 +310,8 @@ data ProofPresHeader
   | PHChat ByteString
   | PHFileInv {chatBinding :: ByteString, fileSize :: Int64}
   | PHFileDescr {chatBinding :: ByteString, fileSize :: Int64, descrHash :: ByteString, fileExpires :: Maybe UTCTime}
+  | PHRequest ByteString
+  | PHLink ByteString
   | PHUnknown Char ByteString
   deriving (Eq, Show)
 
@@ -311,6 +330,8 @@ instance StrEncoding ProofPresHeader where
       strEncode PHFileInvTag <> smpEncode (chatBinding, fileSize)
     PHFileDescr {chatBinding, fileSize, descrHash, fileExpires} ->
       strEncode PHFileDescrTag <> smpEncode (chatBinding, fileSize, descrHash, utcToSystemTime <$> fileExpires)
+    PHRequest code -> strEncode PHRequestTag <> code
+    PHLink linkKey -> strEncode PHLinkTag <> linkKey
     PHUnknown c b -> strEncode (PHUnknownTag c) <> b
   strP =
     strP >>= \case
@@ -322,6 +343,8 @@ instance StrEncoding ProofPresHeader where
       PHFileDescrTag -> do
         (chatBinding, fileSize, descrHash, expires_) <- smpP
         pure PHFileDescr {chatBinding, fileSize, descrHash, fileExpires = systemToUTCTime <$> expires_}
+      PHRequestTag -> PHRequest <$> A.takeByteString
+      PHLinkTag -> PHLink <$> A.takeByteString
       PHUnknownTag c -> PHUnknown c <$> A.takeByteString
 
 -- v6.5.x accepts both; v7 will reject PHTest/PHUnknown
@@ -331,7 +354,25 @@ proofPresHeaderAccepted = \case
   PHChat _ -> True
   PHFileInv {} -> True
   PHFileDescr {} -> True
+  PHRequest _ -> True
+  PHLink _ -> True
   PHUnknown _ _ -> True
+
+acceptedProof :: Maybe ProofPresHeader -> BadgeProof -> Bool
+acceptedProof expected_ b@BadgeProof {presHeader = BBSPresHeader ph} = unboundProof b || any ((ph ==) . strEncode) expected_
+
+acceptedBadge :: Maybe ProofPresHeader -> Maybe BadgeProof -> Maybe BadgeProof -> Maybe BadgeProof
+acceptedBadge expected_ stored_ received_ = if all (acceptedProof expected_) received_ then received_ else stored_
+
+sameBadgeProof :: Maybe BadgeProof -> Maybe BadgeProof -> Bool
+sameBadgeProof b_ b_' = (proofContent <$> b_) == (proofContent <$> b_')
+  where
+    proofContent b@BadgeProof {presHeader, badgeInfo} = (if unboundProof b then Nothing else Just presHeader, badgeInfo)
+
+unboundProof :: BadgeProof -> Bool
+unboundProof BadgeProof {presHeader = BBSPresHeader ph} = case strDecode ph of
+  Right (PHTest _) -> True
+  _ -> False
 
 -- Payment proof
 
@@ -458,6 +499,12 @@ rowToBadgeProof :: BadgeProofRow -> Maybe BadgeProof
 rowToBadgeProof (Binary p, Binary ph, idx, type_, badgeExpiry, badgeExtra) = do
   badgeType <- textDecode type_
   pure $ BadgeProof idx (BBSPresHeader ph) (BBSProof p) BadgeInfo {badgeType, badgeExpiry, badgeExtra}
+
+type MaybeBadgeProofRow = (Maybe (Binary ByteString), Maybe (Binary ByteString), Maybe Int, Maybe Text, Maybe UTCTime, Maybe Text)
+
+maybeRowToBadgeProof :: MaybeBadgeProofRow -> Maybe BadgeProof
+maybeRowToBadgeProof (p_, ph_, idx_, type_, expiry_, extra_) =
+  rowToBadgeProof =<< (,,,,,) <$> p_ <*> ph_ <*> idx_ <*> type_ <*> expiry_ <*> extra_
 
 -- (proof, pres_header, expiry, type, verified, extra, master_key, signature, key_idx) - binary columns wrapped in Binary (BLOB/bytea)
 type BadgeRow = (Maybe (Binary ByteString), Maybe (Binary ByteString), Maybe UTCTime, Maybe Text, Maybe BoolInt, Maybe Text, Maybe (Binary ByteString), Maybe (Binary ByteString), Maybe Int)

@@ -181,20 +181,24 @@ cChatMigrateInitQueue :: CString -> CString -> CString -> CInt -> Ptr (StablePtr
 cChatMigrateInitQueue fp key conf queueSize = cChatMigrateInit_ fp key False conf False (fromIntegral queueSize)
 
 cChatMigrateInit_ :: CString -> CString -> Bool -> CString -> Bool -> Int -> Ptr (StablePtr ChatController) -> IO CJSONString
-cChatMigrateInit_ fp key keepKey conf background queueSize ctrl = do
-  -- ensure we are set to UTF-8; iOS does not have locale, and will default to
-  -- US-ASCII all the time.
-  setLocaleEncoding utf8
-  setFileSystemEncoding utf8
-  setForeignEncoding utf8
+cChatMigrateInit_ fp key keepKey conf background queueSize ctrl =
+  catchAll
+    ( do
+        -- ensure we are set to UTF-8; iOS does not have locale, and will default to
+        -- US-ASCII all the time.
+        setLocaleEncoding utf8
+        setFileSystemEncoding utf8
+        setForeignEncoding utf8
 
-  chatDbOpts <- mobileDbOpts fp key
-  confirm <- peekCAString conf
-  r <-
-    chatMigrateInitKey chatDbOpts keepKey confirm background queueSize >>= \case
-      Right cc -> (newStablePtr cc >>= poke ctrl) $> DBMOk
-      Left e -> pure e
-  newCStringFromLazyBS $ J.encode r
+        chatDbOpts <- mobileDbOpts fp key
+        confirm <- peekCAString conf
+        r <-
+          chatMigrateInitKey chatDbOpts keepKey confirm background queueSize >>= \case
+            Right cc -> (newStablePtr cc >>= poke ctrl) $> DBMOk
+            Left e -> pure e
+        newCStringFromLazyBS $ J.encode r
+    )
+    (\e -> newCStringFromLazyBS $ J.encode $ DBMErrorSQL "" (show e))
 
 cChatMigrateInitKeyBytes :: CString -> Ptr Word8 -> CInt -> CInt -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
 cChatMigrateInitKeyBytes fp keyPtr keyLen keepKey conf background ctrl =
