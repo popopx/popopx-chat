@@ -28,7 +28,7 @@ import Data.Functor (($>))
 import Data.List (find)
 import qualified Data.List.NonEmpty as L
 import Data.Maybe (fromMaybe)
-import Data.Text (Text)
+import Data.Text (Text, pack)
 import Data.Text.Encoding (encodeUtf8)
 import Data.Word (Word8)
 import Foreign.C.String
@@ -63,7 +63,7 @@ import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Parsers (defaultJSON, dropPrefix, sumTypeJSON)
 import Popopx.Messaging.Protocol (AProtoServerWithAuth (..), AProtocolType (..), BasicAuth (..), ProtoServerWithAuth (..), ProtocolServer (..))
 import Popopx.Messaging.Util (catchAll, liftEitherWith, safeDecodeUtf8)
-import System.IO (utf8)
+import System.IO (hPutStrLn, stderr, utf8)
 import System.Timeout (timeout)
 import qualified URI.ByteString as U
 #if !defined(dbPostgres)
