@@ -384,9 +384,9 @@ chatMigrateInitKey chatDbOpts keepKey confirm backgroundMode queueSize = runExce
         liftIO $ TIO.hPutStrLn stderr $ "[Migration] Creating store, dbFile=" <> pack (dbFilePath dbOpts)
         result <- (first (DBMErrorMigration errDbStr) <$> createStore dbOpts confirmMigrations)
 #if !defined(dbPostgres)
-          `catch` (pure . checkDBError)
+          `catch` (\e -> liftIO (TIO.hPutStrLn stderr $ "[Migration] checkDBError: sqlError=" <> pack (show $ sqlError e)) >> pure (checkDBError e))
 #endif
-          `catchAll` (pure . dbError)
+          `catchAll` (\e -> liftIO (TIO.hPutStrLn stderr $ "[Migration] catchAll: " <> pack (show e)) >> pure (dbError e))
         case result of
           Left e -> liftIO $ TIO.hPutStrLn stderr $ "[Migration] ERROR: " <> pack (show e)
           Right _ -> liftIO $ TIO.hPutStrLn stderr $ "[Migration] Store created successfully"
@@ -394,11 +394,9 @@ chatMigrateInitKey chatDbOpts keepKey confirm backgroundMode queueSize = runExce
       where
         errDbStr = errorDbStr dbOpts
 #if !defined(dbPostgres)
-        checkDBError e = do
-          liftIO $ TIO.hPutStrLn stderr $ "[Migration] checkDBError: sqlError=" <> pack (show $ sqlError e)
-          case sqlError e of
-            DB.ErrorNotADatabase -> Left $ DBMErrorNotADatabase errDbStr
-            _ -> dbError e
+        checkDBError e = case sqlError e of
+          DB.ErrorNotADatabase -> Left $ DBMErrorNotADatabase errDbStr
+          _ -> dbError e
 #endif
         dbError :: Show e => e -> Either DBMigrationResult DBStore
         dbError e = Left . DBMErrorSQL errDbStr $ show e
