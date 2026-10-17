@@ -363,8 +363,12 @@ chatMigrateInitKey chatDbOpts keepKey confirm backgroundMode queueSize = runExce
   unless (queueSize > 0) $ throwError DBMInvalidQueueSize
   confirmMigrations <- liftEitherWith (const DBMInvalidConfirmation) $ strDecode $ B.pack confirm
   let migrationConfig = MigrationConfig confirmMigrations (Just "")
+  let dbPrefix = dbFilePrefix chatDbOpts
+  liftIO $ hPutStrLn stderr $ "[Migration] Starting chat store migration for: " <> pack dbPrefix
   chatStore <- migrate createChatStore (toDBOpts chatDbOpts chatSuffix keepKey chatDBFunctions) migrationConfig
+  liftIO $ hPutStrLn stderr $ "[Migration] Chat store migration completed successfully"
   agentStore <- migrate createAgentStore (toDBOpts chatDbOpts agentSuffix keepKey []) migrationConfig
+  liftIO $ hPutStrLn stderr $ "[Migration] Agent store migration completed successfully"
   ExceptT $ initialize chatStore ChatDatabase {chatStore, agentStore}
   where
     opts = mobileChatOpts (removeDbKey chatDbOpts) (fromIntegral queueSize)
@@ -372,18 +376,25 @@ chatMigrateInitKey chatDbOpts keepKey confirm backgroundMode queueSize = runExce
       user_ <- liftIO $ getActiveUser_ st
       first DBMAgentError <$> newChatController db user_ defaultMobileConfig opts backgroundMode
     migrate createStore dbOpts confirmMigrations =
-      ExceptT $
-        (first (DBMErrorMigration errDbStr) <$> createStore dbOpts confirmMigrations)
+      ExceptT $ do
+        liftIO $ hPutStrLn stderr $ "[Migration] Creating store, dbFile=" <> pack (dbFilePath dbOpts)
+        result <- (first (DBMErrorMigration errDbStr) <$> createStore dbOpts confirmMigrations)
 #if !defined(dbPostgres)
           `catch` (pure . checkDBError)
 #endif
           `catchAll` (pure . dbError)
+        case result of
+          Left e -> liftIO $ hPutStrLn stderr $ "[Migration] ERROR: " <> pack (show e)
+          Right _ -> liftIO $ hPutStrLn stderr $ "[Migration] Store created successfully"
+        pure result
       where
         errDbStr = errorDbStr dbOpts
 #if !defined(dbPostgres)
-        checkDBError e = case sqlError e of
-          DB.ErrorNotADatabase -> Left $ DBMErrorNotADatabase errDbStr
-          _ -> dbError e
+        checkDBError e = do
+          liftIO $ hPutStrLn stderr $ "[Migration] checkDBError: sqlError=" <> pack (show $ sqlError e)
+          case sqlError e of
+            DB.ErrorNotADatabase -> Left $ DBMErrorNotADatabase errDbStr
+            _ -> dbError e
 #endif
         dbError :: Show e => e -> Either DBMigrationResult DBStore
         dbError e = Left . DBMErrorSQL errDbStr $ show e
