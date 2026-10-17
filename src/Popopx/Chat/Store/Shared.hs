@@ -32,7 +32,7 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Time.Clock (UTCTime (..), getCurrentTime)
 import Data.Type.Equality
-import Popopx.Chat.Badges (BadgeRow, badgeToRow, rowToBadge, verifyBadge_)
+import Popopx.Chat.Badges (BadgeRow, MaybeBadgeProofRow, ProofPresHeader, badgeToRow, maybeRowToBadgeProof, rowToBadge, verifyBadge_)
 import Popopx.Chat.Names (PopopxDomainProof, PopopxDomainClaim (..), claimDomain)
 import Popopx.Chat.Messages
 import Popopx.Chat.Remote.Types
@@ -785,6 +785,7 @@ toGroupMember now userContactId ((groupMemberId, groupId, indexInGroup, memberId
       invitedBy = toInvitedBy userContactId invitedById
       activeConn = Nothing
       memberVerifiedCode = SecurityCode <$> memberCode_ <*> memberCodeVerifiedAt_
+      memberBadgeProof = NoJSON Nothing
       memberChatVRange = fromMaybe (versionToRange maxVer) $ safeVersionRange minVer maxVer
       supportChat = case supportChatTs_ of
         Just chatTs ->
@@ -811,15 +812,17 @@ groupMemberQuery =
       c.connection_id, c.agent_conn_id, c.conn_level, c.via_contact, c.via_user_contact_link, c.via_group_link, c.group_link_id, c.xcontact_id, c.custom_user_profile_id,
       c.conn_status, c.conn_type, c.contact_conn_initiated, c.local_alias, c.contact_id, c.group_member_id, c.user_contact_link_id,
       c.created_at, c.security_code, c.security_code_verified_at, c.pq_support, c.pq_encryption, c.pq_snd_enabled, c.pq_rcv_enabled, c.auth_err_counter, c.quota_err_counter,
-      c.conn_chat_version, c.peer_chat_min_version, c.peer_chat_max_version
+      c.conn_chat_version, c.peer_chat_min_version, c.peer_chat_max_version,
+      bp.badge_proof, bp.badge_pres_header, bp.badge_key_idx, bp.badge_type, bp.badge_expiry, bp.badge_extra
     FROM group_members m
     JOIN contact_profiles p ON p.contact_profile_id = COALESCE(m.member_profile_id, m.contact_profile_id)
     LEFT JOIN connections c ON c.group_member_id = m.group_member_id
+    LEFT JOIN group_member_badge_proofs bp ON bp.group_member_id = m.group_member_id
   |]
 
-toContactMember :: UTCTime -> StoreCxt -> User -> (GroupMemberRow :. MaybeConnectionRow) -> GroupMember
-toContactMember now cxt User {userContactId} (memberRow :. connRow) =
-  (toGroupMember now userContactId memberRow) {activeConn = toMaybeConnection cxt connRow}
+toContactMember :: UTCTime -> StoreCxt -> User -> (GroupMemberRow :. MaybeConnectionRow :. MaybeBadgeProofRow) -> GroupMember
+toContactMember now cxt User {userContactId} (memberRow :. connRow :. proofRow) =
+  (toGroupMember now userContactId memberRow) {activeConn = toMaybeConnection cxt connRow, memberBadgeProof = NoJSON $ maybeRowToBadgeProof proofRow}
 
 rowToLocalProfile :: UTCTime -> ProfileRow -> LocalProfile
 rowToLocalProfile now ((profileId, displayName, fullName, shortDescr, description, image, contactLink, peerType, localAlias, encodedPrefs, receivedPrefs) :. badgeRow :. domainRow) =

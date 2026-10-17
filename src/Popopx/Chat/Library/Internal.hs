@@ -1193,14 +1193,15 @@ rejectRelayInvitationAsync
   -> Int64
   -> StoreCxt
   -> GroupRelayInvitation
+  -> Maybe ProofPresHeader
   -> InvitationId
   -> VersionRangeChat
   -> Int64
   -> RelayRejectionReason
   -> CM ()
-rejectRelayInvitationAsync user uclId cxt groupRelayInv invId reqChatVRange initialDelay reason = do
+rejectRelayInvitationAsync user uclId cxt groupRelayInv presHeader_ invId reqChatVRange initialDelay reason = do
   (_gInfo, ownerMember) <- withStore $ \db ->
-    createRelayRequestGroup db cxt user groupRelayInv invId reqChatVRange initialDelay GSMemInvited RSRejected
+    createRelayRequestGroup db cxt user groupRelayInv presHeader_ invId reqChatVRange initialDelay GSMemInvited RSRejected
   let GroupMember {groupMemberId} = ownerMember
       msg = XGrpRelayReject reason
   subMode <- chatReadVar subscriptionMode
@@ -2339,6 +2340,10 @@ groupBindingData gInfo memberId memberKey = case publicGroup' gInfo of
   Just PublicGroupProfile {publicGroupId} -> smpEncode (publicGroupId, memberId)
   Nothing -> smpEncode (memberId, memberKey)
 
+memberKeyPresHeader :: Maybe B64UrlByteString -> MemberId -> C.PublicKeyEd25519 -> ProofPresHeader
+memberKeyPresHeader publicGroupId_ memberId k =
+  PHChat $ encodeChatBinding CBGroup $ maybe (smpEncode (memberId, k)) (\publicGroupId -> smpEncode (publicGroupId, memberId, k)) publicGroupId_
+
 type HistoryFile = (FileInvitation, RcvFileDescrText, Maybe UTCTime, Maybe BadgeProof)
 
 directChatBinding :: Contact -> CM (Maybe ByteString)
@@ -2847,7 +2852,7 @@ sendFwdMemberMessage :: GroupMember -> GrpMsgForward -> VerifiedMsg 'Json -> CM 
 sendFwdMemberMessage member fwd verifiedMsg =
   forM_ (readyMemberConn member) $ \(_, conn) -> do
     let body = encodeBinaryBatch [encodeFwdElement fwd verifiedMsg]
-    void $ withAgent $ \a -> sendMessages a [(aConnId conn, PQEncOff, MsgFlags False, VRValue Nothing body)]
+    void $ withAgent $ \a -> sendMessages a [(aConnId conn, PQEncOff, MsgFlags {notification = msgHasNotification verifiedMsg}, VRValue Nothing body)]
 
 -- TODO ensure order - pending messages interleave with user input messages
 sendPendingGroupMessages :: User -> GroupInfo -> GroupMember -> Connection -> CM ()

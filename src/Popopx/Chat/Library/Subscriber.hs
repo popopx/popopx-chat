@@ -117,9 +117,20 @@ smallGroupsRcptsMemLimit = 20
 -- Verifies member signatures over CBGroup <> (publicGroupId, memberId) or (memberId, pubKey) <> signedBody under the given key.
 -- signatures is NonEmpty so the verification can't be vacuously true.
 verifyGroupSig :: C.PublicKeyEd25519 -> GroupInfo -> MemberId -> NonEmpty MsgSignature -> ByteString -> Bool
-verifyGroupSig key gInfo memberId signatures signedBody =
-  let prefix = encodeChatBinding CBGroup $ groupBindingData gInfo memberId key
+verifyGroupSig key gInfo memberId = verifyMemberSig key (groupBindingData gInfo memberId key)
+
+verifyMemberSig :: C.PublicKeyEd25519 -> ByteString -> NonEmpty MsgSignature -> ByteString -> Bool
+verifyMemberSig key bindingData signatures signedBody =
+  let prefix = encodeChatBinding CBGroup bindingData
    in all (\case (MsgSignature KRMember sig) -> C.verify (C.APublicVerifyKey C.SEd25519 key) sig (prefix <> signedBody)) signatures
+
+relayInvPresHeader :: Maybe SignedMsg -> GroupRelayInvitation -> Maybe ProofPresHeader
+relayInvPresHeader signedMsg_ GroupRelayInvitation {fromMember = MemberIdRole {memberId}, publicGroupId, fromMemberKey} = do
+  gId <- publicGroupId
+  MemberKey k <- fromMemberKey
+  SignedMsg {chatBinding = CBGroup, signatures, signedBody} <- signedMsg_
+  guard $ verifyMemberSig k (smpEncode (gId, memberId)) signatures signedBody
+  pure $ memberKeyPresHeader (Just gId) memberId k
 
 processAgentMessage :: ACorrId -> ConnId -> AEvent 'AEConn -> CM ()
 processAgentMessage _ _ (DEL_RCVQS delQs) =
@@ -784,7 +795,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
         case memberCategory m of
           GCInviteeMember ->
             case chatMsgEvent of
-              XGrpAcpt memId mKey
+              XGrpAcpt memId mKey _
                 | sameMemberId memId m -> do
                     withStore $ \db -> liftIO $ updateGroupMemberStatus db userId m GSMemAccepted
                     forM_ mKey $ \(MemberKey k) -> withStore' $ \db -> setMemberPubKey db (groupMemberId' m) k
@@ -1400,7 +1411,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
           XContact p memberKey_ xContactId_ welcomeMsgId_ requestMsg_ -> profileContactRequest invId chatVRange p memberKey_ xContactId_ welcomeMsgId_ requestMsg_ pqSupport rejectionSupported
           XMember p joiningMemberId joiningMemberKey viaRelay -> memberJoinRequestViaRelay invId chatVRange signedMsg_ p joiningMemberId joiningMemberKey viaRelay
           XInfo p _ -> profileContactRequest invId chatVRange p Nothing Nothing Nothing Nothing pqSupport rejectionSupported
-          XGrpRelayInv groupRelayInv -> xGrpRelayInv invId chatVRange groupRelayInv
+          XGrpRelayInv groupRelayInv -> xGrpRelayInv invId chatVRange signedMsg_ groupRelayInv
           XGrpRelayTest challenge _ -> xGrpRelayTest invId chatVRange challenge
           -- TODO show/log error, other events in contact request
           _ -> pure ()
@@ -1637,15 +1648,16 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                       | otherwise -> do
                           mem <- acceptGroupJoinSendRejectAsync user uclId gInfo invId chatVRange p xContactId_ rjctReason
                           toViewTE $ TERejectingGroupJoinRequestMember user gInfo mem rjctReason
-        xGrpRelayInv :: InvitationId -> VersionRangeChat -> GroupRelayInvitation -> CM ()
-        xGrpRelayInv invId chatVRange groupRelayInv@GroupRelayInvitation {groupLink} = do
+        xGrpRelayInv :: InvitationId -> VersionRangeChat -> Maybe SignedMsg -> GroupRelayInvitation -> CM ()
+        xGrpRelayInv invId chatVRange signedMsg_ groupRelayInv@GroupRelayInvitation {groupLink} = do
           rejected <- withStore' $ \db -> isRelayGroupRejected db user groupLink
           initialDelay <- asks $ initialInterval . relayRequestRetryInterval . config
+          let presHeader_ = relayInvPresHeader signedMsg_ groupRelayInv
           if rejected
-            then rejectRelayInvitationAsync user uclId cxt groupRelayInv invId chatVRange initialDelay RRRRejoinRejected
+            then rejectRelayInvitationAsync user uclId cxt groupRelayInv presHeader_ invId chatVRange initialDelay RRRRejoinRejected
             else do
               (_gInfo, _ownerMember) <- withStore $ \db ->
-                createRelayRequestGroup db cxt user groupRelayInv invId chatVRange initialDelay GSMemAccepted RSInvited
+                createRelayRequestGroup db cxt user groupRelayInv presHeader_ invId chatVRange initialDelay GSMemAccepted RSInvited
               lift $ void $ getRelayRequestWorker True
         xGrpRelayTest :: InvitationId -> VersionRangeChat -> ByteString -> CM ()
         xGrpRelayTest invId chatVRange challenge
@@ -2697,7 +2709,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                 -- the transient host connection view with the group and removes its chat
                 joinGroupAsync hostContact_ sameLink = do
                   subMode <- chatReadVar subscriptionMode
-                  dm <- encodeConnInfo $ XGrpAcpt membershipMemId (Just $ groupMemberKey gks)
+                  dm <- encodeConnInfo $ XGrpAcpt membershipMemId (Just $ groupMemberKey gks) Nothing
                   connIds@(cmdId, acId) <- prepareAgentJoin user Nothing True connRequest
                   withStore' $ \db -> do
                     when sameLink $ setViaGroupLinkUri db groupId connId
@@ -4163,8 +4175,9 @@ runDeliveryTaskWorker a deliveryKey Worker {doWork} = do
                   withWorkItems a doWork (withStore' $ \db -> getNextDeliveryTasks db gInfo task) $ \nextTasks -> do
                     let (body_, acceptedTasks, largeTasks) = batchDeliveryTasks1 (vr cxt) maxForwardBatchLength nextTasks
                         senderGMIds = S.toList . S.fromList $ map (\MessageDeliveryTask {senderGMId} -> senderGMId) acceptedTasks
+                        notification = any (\MessageDeliveryTask {verifiedMsg} -> msgHasNotification verifiedMsg) acceptedTasks
                     withStore' $ \db -> do
-                      forM_ body_ $ \body -> createMsgDeliveryJob db gInfo jobScope senderGMIds body
+                      forM_ body_ $ \body -> createMsgDeliveryJob db gInfo jobScope senderGMIds notification body
                       forM_ acceptedTasks $ \t -> updateDeliveryTaskStatus db (deliveryTaskId t) DTSProcessed
                       forM_ largeTasks $ \t -> setDeliveryTaskErrStatus db (deliveryTaskId t) "large"
                     when (isJust body_) . lift . void $ getDeliveryJobWorker True deliveryKey
@@ -4177,7 +4190,7 @@ runDeliveryTaskWorker a deliveryKey Worker {doWork} = do
                       fwd = GrpMsgForward {fwdSender, fwdBrokerTs}
                       body = encodeBinaryBatch [encodeFwdElement fwd verifiedMsg]
                   withStore' $ \db -> do
-                    createMsgDeliveryJob db gInfo jobScope [senderGMId] body
+                    createMsgDeliveryJob db gInfo jobScope [senderGMId] (msgHasNotification verifiedMsg) body
                     updateDeliveryTaskStatus db (deliveryTaskId task) DTSProcessed
                   lift . void $ getDeliveryJobWorker True deliveryKey
 
@@ -4258,7 +4271,7 @@ runDeliveryJobWorker a deliveryKey Worker {doWork} = do
                   deleteGroupConnections user gInfo True
                   withStore' $ \db -> updateDeliveryJobStatus db jobId DJSComplete
           where
-            MessageDeliveryJob {jobId, jobScope, senderGMIds, body, cursorGMId_ = startingCursor} = job
+            MessageDeliveryJob {jobId, jobScope, senderGMIds, body, notification, cursorGMId_ = startingCursor} = job
             singleSenderGMId_ = case senderGMIds of
               [s] -> Just s
               _ -> Nothing
@@ -4337,16 +4350,16 @@ runDeliveryJobWorker a deliveryKey Worker {doWork} = do
                               addRecipient acc r = case readyMemberConn r of
                                 Just (_, conn) -> snd $ foldl' (addPiece conn) (0 :: Int, acc) (recipientBodyPieces r)
                                 Nothing -> acc
-                              addPiece conn (k, (issued, reqs)) (bid, msgBody) =
+                              addPiece conn (k, (issued, reqs)) (bid, ntf, msgBody) =
                                 let vor
                                       | IS.member bid issued = VRRef bid
                                       | otherwise = VRValue (Just bid) msgBody
                                     issued' = IS.insert bid issued
                                     connId = if k == 0 then aConnId conn else B.empty
-                                 in (k + 1, (issued', (connId, PQEncOff, MsgFlags False, vor) : reqs))
+                                 in (k + 1, (issued', (connId, PQEncOff, MsgFlags {notification = ntf}, vor) : reqs))
                               recipientBodyPieces r =
-                                [(i, b) | (i, (b, ss)) <- overflowWithIds, any missing ss]
-                                  <> [if any missing inBodySenders then (1, extBody) else (0, body)]
+                                [(i, False, b) | (i, (b, ss)) <- overflowWithIds, any missing ss]
+                                  <> [if any missing inBodySenders then (1, notification, extBody) else (0, notification, body)]
                                 where
                                   missing s = case M.lookup (groupMemberId' s) senderVec of
                                     Just vec -> getRelation (indexInGroup r) vec == MRNew
@@ -4410,7 +4423,7 @@ runDeliveryJobWorker a deliveryKey Worker {doWork} = do
                         addReq conn (memIdx_, reqs) =
                           (subtract 1 <$> memIdx_, req : reqs)
                           where
-                            req = (aConnId conn, PQEncOff, MsgFlags False, vrValue_)
+                            req = (aConnId conn, PQEncOff, MsgFlags {notification}, vrValue_)
                             vrValue_ = case memIdx_ of
                               Nothing -> VRValue Nothing msgBody -- sending to one member, do not reference body
                               Just 1 -> VRValue (Just 1) msgBody

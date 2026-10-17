@@ -151,6 +151,16 @@ setPreference_ f pref_ prefs =
     SCFCalls -> prefs {calls = pref_}
     SCFSessions -> prefs {sessions = pref_}
 
+newtype NoJSON a = NoJSON {unNoJSON :: Maybe a}
+  deriving (Eq, Show)
+
+instance ToJSON (NoJSON a) where
+  toJSON _ = Null
+  toEncoding _ = JE.null_
+
+instance FromJSON (NoJSON a) where
+  parseJSON _ = pure $ NoJSON Nothing
+
 newtype PrefsJSON = PrefsJSON {unPrefsJSON :: Maybe Object}
   deriving (Eq, Show)
 
