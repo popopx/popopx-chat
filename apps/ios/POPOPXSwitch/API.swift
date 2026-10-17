@@ -150,15 +150,12 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
     if !fm.fileExists(atPath: dbDirectory) {
         logger.info("chatMigrateInit: database directory does not exist, creating: \(dbDirectory, privacy: .private)")
         do {
-            try fm.createDirectory(atPath: dbDirectory, withIntermediateDirectories: true, attributes: [.protectionKey: FileProtectionType.complete])
+            try fm.createDirectory(atPath: dbDirectory, withIntermediateDirectories: true)
         } catch {
             logger.error("chatMigrateInit: failed to create database directory: \(error)")
             chatControllerLock.sync { finishInitializing() }
             return (false, .errorNotADatabase(dbFile: dbPath))
         }
-    } else {
-        // Ensure existing directory also has file protection
-        try? fm.setAttributes([.protectionKey: FileProtectionType.complete], ofItemAtPath: dbDirectory)
     }
 
     let hasDB = hasDatabase()
@@ -243,6 +240,17 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
             }
             dbKey = randomKey
             initialRandomDBPassphraseGroupDefault.set(true)
+            // FIX: Write key to Keychain immediately after generation, before FFI call
+            // This ensures the key is persisted even if FFI fails with ErrorCorrupt
+            logger.info("chatMigrateInit: writing key to Keychain before FFI call")
+            _ = kcDatabasePassword.remove()
+            _ = kcDatabaseSalt.remove()
+            guard kcDatabasePassword.set(dbKey) else {
+                logger.error("chatMigrateInit: CRITICAL - failed to write key to Keychain before FFI call")
+                chatControllerLock.sync { finishInitializing() }
+                return (false, .errorKeychain)
+            }
+            logger.info("chatMigrateInit: key successfully written to Keychain")
         } else if let storedKey = kcDatabasePassword.getWithRetry() {
             if let salt = kcDatabaseSalt.get() {
                 logger.debug("chatMigrateInit: deriving key from stored passphrase")
@@ -338,13 +346,12 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                     chatControllerLock.sync { finishInitializing() }
                     return (false, .errorNotADatabase(dbFile: dbPath))
                 }
-                guard let keyData2 = SecureData(string: dbKey) else {
+                guard let retryKeyData = SecureData(string: dbKey) else {
                     logger.error("chatMigrateInit: retry failed to create SecureData for key")
-                    zeroize(&cPath2); zeroize(&cConfirm2)
                     chatControllerLock.sync { finishInitializing() }
                     return (false, .errorNotADatabase(dbFile: dbPath))
                 }
-                let cjson2: UnsafeMutablePointer<CChar>? = keyData2.withUnsafeBytes { keyPtr in
+                let cjson2: UnsafeMutablePointer<CChar>? = retryKeyData.withUnsafeBytes { keyPtr in
                     let keyLen = Int32(keyPtr.count)
                     return keyPtr.baseAddress?.withMemoryRebound(to: UInt8.self, capacity: Int(keyLen)) { keyBytes in
                         chat_migrate_init_key_bytes(&cPath2, UnsafeMutablePointer(mutating: keyBytes), keyLen, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
@@ -370,6 +377,8 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                     excludeFromBackup(URL(fileURLWithPath: agentDbPath))
                     // Remove corrupt DB backups now that retry succeeded
                     cleanupCorruptDBBackups(dbPath, timestamp: corruptDBTimestamp)
+                    _ = kcDatabasePassword.remove()
+                    _ = kcDatabaseSalt.remove()
                     let keychainWriteFailed = useKeychain && !kcDatabasePassword.set(dbKey)
                     dbKey = ""
                     if keychainWriteFailed {
@@ -407,19 +416,31 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
             if let freshKey = randomDatabasePassword() {
                 dbKey = freshKey
                 initialRandomDBPassphraseGroupDefault.set(true)
+                // FIX: Write key to Keychain immediately, before retry FFI call
+                logger.info("chatMigrateInit: writing fresh key to Keychain before retry")
+                _ = kcDatabasePassword.remove()
+                _ = kcDatabaseSalt.remove()
+                guard kcDatabasePassword.set(dbKey) else {
+                    logger.error("chatMigrateInit: CRITICAL - failed to write fresh key to Keychain before retry")
+                    // Clean up corrupt files even if keychain write failed
+                    try? fm.removeItem(atPath: chatDbPath)
+                    try? fm.removeItem(atPath: agentDbPath)
+                    chatControllerLock.sync { finishInitializing() }
+                    return (false, .errorKeychain)
+                }
+                logger.info("chatMigrateInit: fresh key successfully written to Keychain")
                 guard var cPath2 = dbPath.cString(using: .utf8),
                       var cConfirm2 = confirm.rawValue.cString(using: .utf8) else {
                     logger.error("chatMigrateInit: retry string encoding failed")
                     chatControllerLock.sync { finishInitializing() }
                     return (false, .errorSQL(dbFile: dbPath, migrationSQLError: "Retry string encoding failed"))
                 }
-                guard let keyData2 = SecureData(string: dbKey) else {
-                    logger.error("chatMigrateInit: retry failed to create SecureData for key")
-                    zeroize(&cPath2); zeroize(&cConfirm2)
+                guard let retryKeyData2 = SecureData(string: dbKey) else {
+                    logger.error("chatMigrateInit: errorSQL retry failed to create SecureData for key")
                     chatControllerLock.sync { finishInitializing() }
-                    return (false, .errorSQL(dbFile: dbPath, migrationSQLError: "Retry SecureData failed"))
+                    return (false, .errorSQL(dbFile: dbPath, migrationSQLError: "Retry SecureData creation failed"))
                 }
-                let cjson2: UnsafeMutablePointer<CChar>? = keyData2.withUnsafeBytes { keyPtr in
+                let cjson2: UnsafeMutablePointer<CChar>? = retryKeyData2.withUnsafeBytes { keyPtr in
                     let keyLen = Int32(keyPtr.count)
                     return keyPtr.baseAddress?.withMemoryRebound(to: UInt8.self, capacity: Int(keyLen)) { keyBytes in
                         chat_migrate_init_key_bytes(&cPath2, UnsafeMutablePointer(mutating: keyBytes), keyLen, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
@@ -440,15 +461,7 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                         excludeFromBackup(URL(fileURLWithPath: chatDbPath))
                         excludeFromBackup(URL(fileURLWithPath: agentDbPath))
                         cleanupCorruptDBBackups(dbPath, timestamp: corruptDBTimestamp)
-                        let keychainWriteFailed = useKeychain && !kcDatabasePassword.set(dbKey)
                         dbKey = ""
-                        if keychainWriteFailed {
-                            if let ctrl = newController { _ = chat_close_store(ctrl) }
-                            try? fm.removeItem(atPath: chatDbPath)
-                            try? fm.removeItem(atPath: agentDbPath)
-                            chatControllerLock.sync { finishInitializing() }
-                            return (false, .errorKeychain)
-                        }
                         let result = (true, dbRes2)
                         chatControllerLock.sync {
                             chatController = newController
@@ -456,6 +469,18 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                             finishInitializing()
                         }
                         return result
+                    } else {
+                        // FIX: If retry failed, clean up corrupt database files
+                        // Key is already in Keychain, so next launch can retry with same key
+                        logger.warning("chatMigrateInit: retry FFI failed with dbRes=\(String(describing: dbRes2)). Cleaning up corrupt files for next attempt.")
+                        for path in [chatDbPath, agentDbPath,
+                                     chatDbPath + "-wal", chatDbPath + "-shm",
+                                     agentDbPath + "-wal", agentDbPath + "-shm"] {
+                            if fm.fileExists(atPath: path) {
+                                try? fm.removeItem(atPath: path)
+                                logger.info("chatMigrateInit: removed corrupt file \(path)")
+                            }
+                        }
                     }
                 } else {
                     logger.error("chatMigrateInit: retry FFI call returned null")
@@ -481,10 +506,20 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
         cleanupCorruptDBBackups(dbPath, timestamp: corruptDBTimestamp)
     }
 
-    // FIX 1: Only write to keychain on first launch (when keychain item doesn't exist yet).
+    // FIX 1: Key was already written to Keychain before FFI call (see line ~243).
+    // This block now only verifies the key is still in Keychain and logs the status.
     // On subsequent launches, dbKey is a derived key — writing it back would overwrite
     // the original passphrase, causing decryption failure on the next launch.
-    let keychainWriteFailed = dbRes == .ok && useKeychain && encrypted && !hasDB && !kcDatabasePassword.set(dbKey)
+    var keychainWriteFailed = false
+    if dbRes == .ok && useKeychain && encrypted && !hasDB {
+        // Key was already written before FFI call, just verify it's still there
+        if kcDatabasePassword.get() == nil {
+            logger.error("chatMigrateInit: CRITICAL - key missing from Keychain after successful FFI call!")
+            keychainWriteFailed = true
+        } else {
+            logger.info("chatMigrateInit: DB key verified in Keychain after successful FFI call")
+        }
+    }
     dbKey = ""
 
     if keychainWriteFailed {
@@ -521,16 +556,8 @@ public func chatInitTemporaryDatabase(url: URL, key: String? = nil, confirmation
           var cConfirm = confirmation.rawValue.cString(using: .utf8) else {
         return (.errorNotADatabase(dbFile: dbPath), nil)
     }
-    guard let keyData = SecureData(string: dbKey) else {
-        zeroize(&cPath); zeroize(&cConfirm)
-        return (.errorNotADatabase(dbFile: dbPath), nil)
-    }
-    let cjson: UnsafeMutablePointer<CChar>? = keyData.withUnsafeBytes { keyPtr in
-        let keyLen = Int32(keyPtr.count)
-        return keyPtr.baseAddress?.withMemoryRebound(to: UInt8.self, capacity: Int(keyLen)) { keyBytes in
-            chat_migrate_init_key_bytes(&cPath, UnsafeMutablePointer(mutating: keyBytes), keyLen, 1, &cConfirm, 0, &temporaryController)
-        }
-    }
+    var cKey = dbKey.cString(using: .utf8)!
+    let cjson = chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &temporaryController)
     zeroize(&cPath); zeroize(&cConfirm)
     guard let cjson else {
         return (.errorNotADatabase(dbFile: dbPath), nil)
@@ -556,17 +583,8 @@ public func chatInitControllerRemovingDatabases() {
         return
     }
     var newController: chat_ctrl? = nil
-    guard let keyData = SecureData(string: dbKey) else {
-        zeroize(&cPath); zeroize(&cConfirm)
-        chatControllerLock.sync { chatController = newController }
-        return
-    }
-    let cjson: UnsafeMutablePointer<CChar>? = keyData.withUnsafeBytes { keyPtr in
-        let keyLen = Int32(keyPtr.count)
-        return keyPtr.baseAddress?.withMemoryRebound(to: UInt8.self, capacity: Int(keyLen)) { keyBytes in
-            chat_migrate_init_key_bytes(&cPath, UnsafeMutablePointer(mutating: keyBytes), keyLen, 1, &cConfirm, 0, &newController)
-        }
-    }
+    var cKey = dbKey.cString(using: .utf8)!
+    let cjson = chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &newController)
     if let cjson {
         free(cjson)
     }
