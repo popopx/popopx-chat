@@ -992,28 +992,28 @@ acceptContactRequest nm user@User {userId} UserContactRequest {agentInvitationId
       pqSup' = pqSup `CR.pqSupportAnd` pqSupport
   cxt <- chatStoreCxt
   let chatV = vr cxt `peerConnChatVersion` cReqChatVRange
-  (ct, conn, incognitoProfile) <- case contactId_ of
+  (ct, conn, incognitoProfile, getPresHeader) <- case contactId_ of
     Nothing -> do
       incognitoProfile <- if incognito then Just . NewIncognito <$> liftIO (generateIncognitoProfile user) else pure Nothing
-      (connId, _) <- withAgent $ \a -> prepareConnectionToAccept a (aUserId user) True invId pqSup'
+      (connId, binding) <- withAgent $ \a -> prepareConnectionToAccept a (aUserId user) True invId pqSup'
       (ct, conn) <- withStore' $ \db ->
         createContactFromRequest db user userContactLinkId_ connId chatV cReqChatVRange cName profileId cp xContactId incognitoProfile subMode pqSup' False
-      pure (ct, conn, incognitoProfile)
+      pure (ct, conn, incognitoProfile, pure $ Just $ directPresHeader binding)
     Just contactId -> do
       ct <- withFastStore $ \db -> getContact db cxt user contactId
       case contactConn ct of
         Nothing -> do
           incognitoProfile <- if incognito then Just . NewIncognito <$> liftIO (generateIncognitoProfile user) else pure Nothing
-          (connId, _) <- withAgent $ \a -> prepareConnectionToAccept a (aUserId user) True invId pqSup'
+          (connId, binding) <- withAgent $ \a -> prepareConnectionToAccept a (aUserId user) True invId pqSup'
           currentTs <- liftIO getCurrentTime
           conn <- withStore' $ \db -> do
             forM_ xContactId $ \xcId -> setContactAcceptedXContactId db ct xcId
             createAcceptedContactConn db user userContactLinkId_ contactId connId chatV cReqChatVRange pqSup' incognitoProfile subMode currentTs
-          pure (ct {activeConn = Just conn} :: Contact, conn, incognitoProfile)
+          pure (ct {activeConn = Just conn} :: Contact, conn, incognitoProfile, pure $ Just $ directPresHeader binding)
         Just conn@Connection {customUserProfileId} -> do
           incognitoProfile <- forM customUserProfileId $ \pId -> withFastStore $ \db -> getProfileById db userId pId
-          pure (ct, conn, ExistingIncognito <$> incognitoProfile)
-  profileToSend <- presentUserBadge user incognitoProfile Nothing $ userProfileDirect user (fromIncognitoProfile <$> incognitoProfile) (Just ct) True
+          pure (ct, conn, ExistingIncognito <$> incognitoProfile, connPresHeader conn)
+  profileToSend <- presentUserBadgeWith user incognitoProfile getPresHeader $ userProfileDirect user (fromIncognitoProfile <$> incognitoProfile) (Just ct) True
   dm <- encodeConnInfoPQ pqSup' $ XInfo profileToSend Nothing
   (ct,conn,) <$> withAgent (\a -> acceptContact a nm (aUserId user) (aConnId conn) True invId dm pqSup' subMode)
 
@@ -1025,10 +1025,10 @@ acceptContactRequestAsync
   UserContactRequest {agentInvitationId = AgentInvId cReqInvId, cReqChatVRange, xContactId, pqSupport = cReqPQSup}
   incognitoProfile = do
     subMode <- chatReadVar subscriptionMode
-    profileToSend <- presentUserBadge user incognitoProfile Nothing $ userProfileDirect user (fromIncognitoProfile <$> incognitoProfile) (Just ct) True
     cxt <- chatStoreCxt
     let chatV = vr cxt `peerConnChatVersion` cReqChatVRange
-    ((cmdId, acId), _) <- prepareAgentAccept user True cReqInvId cReqPQSup
+    ((cmdId, acId), presHeader) <- prepareAgentAccept user True cReqInvId cReqPQSup
+    profileToSend <- presentUserBadge user incognitoProfile (Just presHeader) $ userProfileDirect user (fromIncognitoProfile <$> incognitoProfile) (Just ct) True
     currentTs <- liftIO getCurrentTime
     ct' <- withStore $ \db -> do
       forM_ xContactId $ \xcId -> liftIO $ setContactAcceptedXContactId db ct xcId
@@ -1038,7 +1038,7 @@ acceptContactRequestAsync
     agentAcceptContactAsync cmdId acId True cReqInvId (XInfo profileToSend Nothing) cReqPQSup subMode
     pure ct'
 
-acceptGroupJoinRequestAsync :: User -> Int64 -> GroupInfoKeys -> InvitationId -> VersionRangeChat -> Profile -> Maybe XContactId -> Maybe MemberId -> Maybe SharedMsgId -> GroupAcceptance -> GroupMemberRole -> Maybe IncognitoProfile -> Maybe MemberKey -> Maybe GroupMember -> Maybe ProofPresHeader -> CM GroupMember
+acceptGroupJoinRequestAsync :: User -> Int64 -> GroupInfoKeys -> InvitationId -> VersionRangeChat -> Profile -> Maybe ProofPresHeader -> Maybe XContactId -> Maybe MemberId -> Maybe SharedMsgId -> GroupAcceptance -> GroupMemberRole -> Maybe IncognitoProfile -> Maybe MemberKey -> Maybe GroupMember -> CM GroupMember
 acceptGroupJoinRequestAsync
   user@User {userId}
   uclId
@@ -1046,6 +1046,7 @@ acceptGroupJoinRequestAsync
   cReqInvId
   cReqChatVRange
   cReqProfile
+  presHeader_
   cReqXContactId_
   cReqMemberId_
   welcomeMsgId_
@@ -1053,8 +1054,7 @@ acceptGroupJoinRequestAsync
   gLinkMemRole
   incognitoProfile
   memberKey_
-  existingMem_
-  presHeader_ = do
+  existingMem_ = do
     gVar <- asks random
     let initialStatus = acceptanceToStatus (memberAdmission groupProfile) gAccepted
     -- a roster-established privileged member attaches a connection to its existing record (keeping
@@ -1656,12 +1656,12 @@ updateGroupFromLinkData user gInfo@GroupInfo {groupProfile = p, groupSummary = G
     newClaim = groupClaim groupProfile
     verifyResolved = isJust resolvedDomain_ && resolvedDomain_ == newClaim
 
-updateContactFromLinkData :: User -> Contact -> Maybe ProofPresHeader -> Profile -> CM Contact
-updateContactFromLinkData user ct@Contact {profile = profile@LocalProfile {contactDomain = prevClaim, contactDomainVerified}} presHeader_ linkProfile@Profile {contactDomain = newClaim}
+updateContactFromLinkData :: User -> Contact -> ProofPresHeader -> Profile -> CM Contact
+updateContactFromLinkData user ct@Contact {profile = profile@LocalProfile {contactDomain = prevClaim, contactDomainVerified}} presHeader linkProfile@Profile {contactDomain = newClaim}
   | profileChanged || verifyChanged = do
       cxt <- chatStoreCxt
       withFastStore $ \db -> do
-        ct' <- updateContactProfile db cxt user ct presHeader_ linkProfile
+        ct' <- updateContactProfile db cxt user ct (Just presHeader) linkProfile
         if verifyChanged then liftIO $ setContactDomainVerified db user ct' True else pure ct'
   | otherwise = pure ct
   where
@@ -2275,9 +2275,9 @@ presentsUserBadge User {profile = LocalProfile {localBadge}} = case localBadge o
 
 -- receiving side of contact/invitation link data: verify the badge proof from the link profile
 -- and set the crypto-free display badge for the UI (the raw proof stays in profile for APIPrepareContact)
-linkDataBadge :: ContactShortLinkData -> CM ContactShortLinkData
-linkDataBadge cld@ContactShortLinkData {profile = Profile {badge}} = case badge of
-  Nothing -> pure cld
+linkDataBadge :: ProofPresHeader -> ContactShortLinkData -> CM ContactShortLinkData
+linkDataBadge presHeader cld@ContactShortLinkData {profile = Profile {badge}} = case mfilter (acceptedProof (Just presHeader)) badge of
+  Nothing -> pure (cld :: ContactShortLinkData) {localBadge = Nothing}
   Just b@(BadgeProof _ _ _ info) -> do
     keys <- asks $ badgePublicKeys . config
     verified <- liftIO $ verifyBadge keys b
@@ -2531,8 +2531,7 @@ encodeSignedConnInfo pqSup signing chatMsgEvent = do
     ECMLarge -> throwChatError $ CEException "large signed info"
 
 encodeConnInfoSigning :: MsgEncodingI e => PQSupport -> Maybe MsgSigning -> ChatMsgEvent e -> CM ByteString
-encodeConnInfoSigning pqSup (Just signing) = encodeSignedConnInfo pqSup signing
-encodeConnInfoSigning pqSup Nothing = encodeConnInfoPQ pqSup
+encodeConnInfoSigning pqSup = maybe (encodeConnInfoPQ pqSup) (encodeSignedConnInfo pqSup)
 
 encodeXGrpAcpt :: User -> GroupInfoKeys -> VersionRangeChat -> CM ByteString
 encodeXGrpAcpt user g@(GIK gInfo@GroupInfo {membership = GroupMember {memberId}} gks) peerVRange = do
@@ -2731,7 +2730,7 @@ sendGroupProfileUpdate user g@(GIK gInfo gks) scope asGroup members =
             _ -> False
     sendProfileUpdate = do
       -- shouldSendProfileUpdate excludes incognito membership, so the badge is presented
-      profileUpdate <- presentUserBadge user Nothing Nothing $ redactedMemberProfile gInfo (membership gInfo) $ fromLocalProfile p
+      profileUpdate <- presentUserBadge user Nothing (groupPresHeader gInfo) $ redactedMemberProfile gInfo (membership gInfo) $ fromLocalProfile p
       void $ sendGroupMessage' user g members $ XInfo profileUpdate (Just $ groupMemberKey gks)
       currentTs <- liftIO getCurrentTime
       withStore' $ \db -> updateUserMemberProfileSentAt db user gInfo currentTs
@@ -2942,12 +2941,13 @@ saveGroupRcvMsg user groupId authorMember conn@Connection {connId} agentMsgMeta 
   msg <-
     withStore (\db -> createNewMessageAndRcvMsgDelivery db (GroupId groupId) newMsg sharedMsgId_ rcvMsgDelivery $ Just amGroupMemId)
       `catchAllErrors` \e -> case e of
-        ChatErrorStore (SEDuplicateGroupMessage _ _ _ (Just forwardedByGroupMemberId)) -> do
+        ChatErrorStore (SEDuplicateGroupMessage _ _ _ forwardedByGroupMemberId_) -> do
           unlessM isMainApp $ toView $ CEvtDuplicateGroupMessage user am'
-          cxt <- chatStoreCxt
-          fm <- withStore $ \db -> getGroupMember db cxt user groupId forwardedByGroupMemberId
-          forM_ (memberConn fm) $ \fmConn ->
-            void $ sendDirectMemberMessage fmConn (XGrpMemCon amMemId) groupId
+          forM_ forwardedByGroupMemberId_ $ \forwardedByGroupMemberId -> do
+            cxt <- chatStoreCxt
+            fm <- withStore $ \db -> getGroupMember db cxt user groupId forwardedByGroupMemberId
+            forM_ (memberConn fm) $ \fmConn ->
+              void $ sendDirectMemberMessage fmConn (XGrpMemCon amMemId) groupId
           throwError e
         _ -> throwError e
   pure (am', conn', msg)
@@ -3112,13 +3112,11 @@ prepareAgentCreation user cmdFunction enableNtfs cMode = do
   connId <- withAgent $ \a -> prepareConnectionToCreate a (aUserId user) enableNtfs cMode PQSupportOff
   pure (cmdId, connId)
 
-prepareAgentJoin :: User -> Maybe Connection -> Bool -> ConnectionRequestUri c -> CM (CommandId, ConnId)
-prepareAgentJoin user conn_ enableNtfs cReqUri = do
-  cmdId <- withStore' $ \db -> createCommand db user (dbConnId <$> conn_) CFJoinConn
-  connId <- case conn_ of
-    Just conn -> pure $ aConnId conn
-    Nothing -> fst <$> withAgent (\a -> prepareConnectionToJoin a (aUserId user) enableNtfs cReqUri PQSupportOff)
-  pure (cmdId, connId)
+prepareAgentJoin :: User -> Bool -> ConnectionRequestUri c -> CM ((CommandId, ConnId), ProofPresHeader)
+prepareAgentJoin user enableNtfs cReqUri = do
+  cmdId <- withStore' $ \db -> createCommand db user Nothing CFJoinConn
+  (connId, binding) <- withAgent $ \a -> prepareConnectionToJoin a (aUserId user) enableNtfs cReqUri PQSupportOff
+  pure ((cmdId, connId), directPresHeader binding)
 
 joinAgentConnectionAsync :: CommandId -> Bool -> ConnId -> Bool -> ConnectionRequestUri c -> ConnInfo -> SubscriptionMode -> CM ()
 joinAgentConnectionAsync cmdId updateConn connId enableNtfs cReqUri cInfo subMode =
@@ -3129,9 +3127,7 @@ allowAgentConnectionAsync user conn@Connection {pqSupport} confId gInfo_ msg = d
   let signing_ = case gInfo_ of
         Just gInfo@(GIK g _) | useRelays' g || maxVersion (peerChatVRange conn) >= relayWebCapVersion -> groupMsgSigning False gInfo msg
         _ -> Nothing
-  dm <- case signing_ of
-    Just signing -> encodeSignedConnInfo pqSupport signing msg
-    Nothing -> encodeConnInfoPQ pqSupport msg
+  dm <- encodeConnInfoSigning pqSupport signing_ msg
   allowAgentConnectionInfo user conn confId dm
 
 allowAgentConnectionInfo :: User -> Connection -> ConfirmationId -> ByteString -> CM ()
