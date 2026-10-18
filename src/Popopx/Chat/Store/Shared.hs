@@ -44,12 +44,12 @@ import Popopx.Messaging.Agent.Protocol (AConnShortLink (..), AConnectionRequestU
 import Popopx.Messaging.Agent.Store (AnyStoreError (..))
 import Popopx.Messaging.Agent.Store.AgentStore (firstRow, maybeFirstRow)
 import Popopx.Messaging.Agent.Store.Common (withSavepoint)
-import Popopx.Messaging.Agent.Store.DB (Binary (..), BoolInt (..))
+import Popopx.Messaging.Agent.Store.DB (BoolInt (..))
 import qualified Popopx.Messaging.Agent.Store.DB as DB
 import qualified Popopx.Messaging.Crypto as C
 import Popopx.Messaging.Crypto.Ratchet (PQEncryption (..), PQSupport (..))
 import qualified Popopx.Messaging.Crypto.Ratchet as CR
-import Popopx.Messaging.Encoding.String (StrEncoding (..), StrJSON (..))
+import Popopx.Messaging.Encoding.String (StrJSON (..))
 import Popopx.Messaging.Parsers (dropPrefix, sumTypeJSON)
 import Popopx.Messaging.Protocol (SubscriptionMode (..))
 import Popopx.Messaging.Util (AnyError (..))
@@ -417,13 +417,13 @@ createContact db cxt user profile = do
   void $ createContact_ db cxt user Nothing profile emptyChatPrefs Nothing "" currentTs
 
 createContact_ :: DB.Connection -> StoreCxt -> User -> Maybe ProofPresHeader -> Profile -> Preferences -> Maybe (ACreatedConnLink, Maybe SharedMsgId) -> LocalAlias -> UTCTime -> ExceptT StoreError IO ContactId
-createContact_ db cxt User {userId} presHeader_ Profile {displayName, fullName, shortDescr, description, image, contactLink, contactDomain, peerType, badge, preferences} ctUserPreferences prepared localAlias currentTs =
+createContact_ db cxt User {userId} presHeader_ p@Profile {displayName, fullName, shortDescr, description, image, contactLink, contactDomain, peerType, preferences} ctUserPreferences prepared localAlias currentTs =
   ExceptT . withLocalDisplayName db userId displayName $ \ldn -> do
-    (Profile {badge = badge'}, badgeVerified) <- profileBadgeVerified presHeader_ (badgeKeys cxt) Nothing Profile {displayName, fullName, shortDescr, description, image, contactLink, contactDomain, peerType, badge, preferences}
+    (Profile {badge}, badgeVerified) <- profileBadgeVerified presHeader_ (badgeKeys cxt) Nothing p
     DB.execute
       db
       "INSERT INTO contact_profiles (display_name, full_name, short_descr, description, image, contact_link, chat_peer_type, user_id, local_alias, created_at, updated_at, badge_proof, badge_pres_header, badge_expiry, badge_type, badge_verified, badge_extra, badge_master_key, badge_signature, badge_key_idx, contact_domain, contact_domain_proof, preferences, preferences_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-      ((displayName, fullName, shortDescr, description, image, contactLink, peerType) :. (userId, localAlias, currentTs, currentTs) :. badgeToRow badge' badgeVerified :. contactDomainToRow contactDomain :. prefsToRow preferences)
+      ((displayName, fullName, shortDescr, description, image, contactLink, peerType) :. (userId, localAlias, currentTs, currentTs) :. badgeToRow badge badgeVerified :. contactDomainToRow contactDomain :. prefsToRow preferences)
     profileId <- insertedRowId db
     DB.execute
       db
@@ -591,14 +591,11 @@ getConnReqInv db connId =
 
 getConnReqContact :: DB.Connection -> Int64 -> ExceptT StoreError IO (ConnReqContact, Maybe ProofPresHeader)
 getConnReqContact db connId =
-  ExceptT . firstRow (\(cReq, presHeader_) -> (cReq, presHeader_ >>= eitherToMaybe . strDecode . binary)) (SEConnectionNotFoundById connId) $
+  ExceptT . firstRow id (SEConnectionNotFoundById connId) $
     DB.query
       db
       "SELECT via_contact_uri, pres_header FROM connections WHERE connection_id = ?"
       (Only connId)
-  where
-    binary (Binary b) = b
-    eitherToMaybe = either (const Nothing) Just
 
 -- | Saves unique local display name based on passed displayName, suffixed with _N if required.
 -- This function should be called inside transaction.
@@ -750,14 +747,15 @@ toPublicGroupAccess (groupWebPage, groupDomain_, domainWebPage_, allowEmbedding_
     domainWebPage = maybe False unBI domainWebPage_
     allowEmbedding = maybe False unBI allowEmbedding_
 
-mkGroupKeys :: DB.Connection -> StoreCxt -> GroupInfo -> GroupKeysRow -> ExceptT StoreError IO GroupKeys
-mkGroupKeys db cxt g@GroupInfo {groupId, groupProfile = GroupProfile {publicGroup}, membership} (rootPrivKey, rootPubKey, memberPrivKey_) = do
+mkGroupInfoKeys :: DB.Connection -> StoreCxt -> GroupInfo -> GroupKeysRow -> ExceptT StoreError IO GroupInfoKeys
+mkGroupInfoKeys db cxt g@GroupInfo {groupId, groupProfile = GroupProfile {publicGroup}, membership} (rootPrivKey, rootPubKey, memberPrivKey_) = do
   memberPrivKey <- case memberPrivKey_ of
     Just k -> pure k
     Nothing -> do
       (_, k) <- atomically $ C.generateKeyPair (drg cxt)
       setUserMemberKey db groupId (groupMemberId' membership) k
-  pure $ case (useRelays' g, isJust publicGroup, GRKPrivate <$> rootPrivKey <|> GRKPublic <$> rootPubKey) of
+  let membership' = membership {memberPubKey = Just $ C.publicKey memberPrivKey} :: GroupMember
+  pure $ GIK g {membership = membership'} $ case (useRelays' g, isJust publicGroup, GRKPrivate <$> rootPrivKey <|> GRKPublic <$> rootPubKey) of
     (False, _, _) -> GKGroup {memberPrivKey}
     (True, True, Just groupRootKey) -> GKPublicGroup {groupRootKey, memberPrivKey}
     (True, True, Nothing) -> GKPreparedPublicGroup {memberPrivKey}
@@ -944,11 +942,7 @@ addGroupChatTags db g@GroupInfo {groupId} = do
   pure (g :: GroupInfo) {chatTags}
 
 getGroupInfoKeys :: DB.Connection -> StoreCxt -> User -> Int64 -> ExceptT StoreError IO GroupInfoKeys
-getGroupInfoKeys db cxt user groupId = do
-  (g@GroupInfo {membership}, keysData) <- getGroupInfoRow db cxt user groupId
-  gks <- mkGroupKeys db cxt g keysData
-  let membership' = membership {memberPubKey = Just $ C.publicKey $ memberPrivKey gks} :: GroupMember
-  pure $ GIK (g :: GroupInfo) {membership = membership'} gks
+getGroupInfoKeys db cxt user groupId = uncurry (mkGroupInfoKeys db cxt) =<< getGroupInfoRow db cxt user groupId
 
 getGroupInfo :: DB.Connection -> StoreCxt -> User -> Int64 -> ExceptT StoreError IO GroupInfo
 getGroupInfo db cxt user groupId = fst <$> getGroupInfoRow db cxt user groupId
@@ -960,6 +954,7 @@ getGroupInfoRow db cxt User {userId, userContactId} groupId = ExceptT $ do
   firstRow (toGroupInfo currentTs cxt userContactId chatTags) (SEGroupNotFound groupId) $
     DB.query
       db
+      -- mu.user_id steers the planner to idx_group_members_group_id; contact_id index is quadratic over all groups
       (groupInfoQuery <> " WHERE g.group_id = ? AND g.user_id = ? AND mu.user_id = ? AND mu.contact_id = ?")
       (groupId, userId, userId, userContactId)
 

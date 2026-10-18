@@ -117,11 +117,10 @@ import Popopx.Chat.Types.Preferences
 import Popopx.Chat.Types.UITheme
 import Popopx.Messaging.Agent.Protocol (AConnectionRequestUri (..), ACreatedConnLink (..), ConnId, ConnShortLink, ConnectionModeI (..), ConnectionRequestUri, CreatedConnLink (..), SConnectionMode (..), PopopxNameInfo (..), UserId)
 import Popopx.Messaging.Agent.Store.AgentStore (firstRow, maybeFirstRow)
-import Popopx.Messaging.Agent.Store.DB (Binary (..), BoolInt (..))
+import Popopx.Messaging.Agent.Store.DB (BoolInt (..))
 import qualified Popopx.Messaging.Agent.Store.DB as DB
 import Popopx.Messaging.Crypto.Ratchet (PQSupport, pattern PQSupportOff)
 import qualified Popopx.Messaging.Crypto.Ratchet as CR
-import Popopx.Messaging.Encoding.String (StrEncoding (..))
 import Popopx.Messaging.Protocol (SubscriptionMode (..))
 import Popopx.Messaging.Util ((<$$>))
 #if defined(dbPostgres)
@@ -164,8 +163,8 @@ deletePendingContactConnection db userId connId =
     |]
     (userId, connId, ConnContact)
 
-createConnReqConnection :: DB.Connection -> UserId -> ConnId -> Maybe PreparedChatEntity -> ConnReqContact -> ConnReqUriHash -> Maybe ShortLinkContact -> XContactId -> Maybe IncognitoProfile -> Maybe GroupLinkId -> Maybe ProofPresHeader -> SubscriptionMode -> VersionChat -> PQSupport -> IO Connection
-createConnReqConnection db userId acId preparedEntity_ cReq cReqHash sLnk xContactId incognitoProfile groupLinkId presHeader_ subMode chatV pqSup = do
+createConnReqConnection :: DB.Connection -> UserId -> ConnId -> Maybe PreparedChatEntity -> ConnReqContact -> ProofPresHeader -> ConnReqUriHash -> Maybe ShortLinkContact -> XContactId -> Maybe IncognitoProfile -> Maybe GroupLinkId -> SubscriptionMode -> VersionChat -> PQSupport -> IO Connection
+createConnReqConnection db userId acId preparedEntity_ cReq presHeader cReqHash sLnk xContactId incognitoProfile groupLinkId subMode chatV pqSup = do
   currentTs <- getCurrentTime
   customUserProfileId <- forM incognitoProfile $ \case
     NewIncognito p -> createIncognitoProfile_ db userId currentTs p
@@ -176,16 +175,15 @@ createConnReqConnection db userId acId preparedEntity_ cReq cReqHash sLnk xConta
     [sql|
       INSERT INTO connections (
         user_id, agent_conn_id, conn_status, conn_type, contact_conn_initiated,
-        via_contact_uri, via_contact_uri_hash, via_short_link_contact, contact_id, group_member_id,
+        via_contact_uri, pres_header, via_contact_uri_hash, via_short_link_contact, contact_id, group_member_id,
         xcontact_id, custom_user_profile_id, via_group_link, group_link_id,
-        created_at, updated_at, to_subscribe, conn_chat_version, pq_support, pq_encryption, pres_header
+        created_at, updated_at, to_subscribe, conn_chat_version, pq_support, pq_encryption
       ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     |]
     ( (userId, acId, connStatus, connType, BI True)
-        :. (cReq, cReqHash, sLnk, contactId_, groupMemberId_)
+        :. (cReq, presHeader, cReqHash, sLnk, contactId_, groupMemberId_)
         :. (xContactId, customUserProfileId, BI (isJust groupLinkId), groupLinkId)
         :. (currentTs, currentTs, BI (subMode == SMOnlyCreate), chatV, pqSup, pqSup)
-        :. Only (strEncode <$> presHeader_)
     )
   connId <- insertedRowId db
   case preparedEntity_ of
@@ -565,31 +563,32 @@ deleteUnusedProfile_ db userId profileId =
     )
 
 updateContactProfile :: DB.Connection -> StoreCxt -> User -> Contact -> Maybe ProofPresHeader -> Profile -> ExceptT StoreError IO Contact
-updateContactProfile db cxt user@User {userId} c presHeader_ claimProfile = do
+updateContactProfile db cxt user@User {userId} c presHeader_ p' = do
   currentTs <- liftIO getCurrentTime
-  (p'@Profile {badge}, badgeVerified) <- liftIO $ profileBadgeVerified presHeader_ (badgeKeys cxt) (Just lp) claimProfile
-  let p'' = (p' :: Profile) {contactDomain = (\d -> d {proof = if claimChanged then Nothing else proof =<< prevClaim}) <$> contactDomain}
-      nameVerified = if claimChanged then Nothing else prevVerification
+  (p'', badgeVerified) <- liftIO $ profileBadgeVerified presHeader_ (badgeKeys cxt) (Just lp) claimProfile
+  let nameVerified = if claimChanged then Nothing else prevVerification
       profile = toLocalProfile profileId p'' localAlias currentTs badgeVerified nameVerified
-  if displayName == newName
-    then do
-      liftIO $ updateContactProfile_' db userId profileId p'' badgeVerified currentTs
-      liftIO clearVerificationIfClaimChanged
-      pure c {profile, mergedPreferences}
-    else do
-      ExceptT . withLocalDisplayName db userId newName $ \ldn -> do
-        updateContactProfile_' db userId profileId p'' badgeVerified currentTs
-        updateContactLDN_ db user contactId localDisplayName ldn currentTs
-        clearVerificationIfClaimChanged
-        pure $ Right c {localDisplayName = ldn, profile, mergedPreferences}
+  updateContactProfile' currentTs p'' badgeVerified profile
   where
     Contact {contactId, localDisplayName, profile = lp@LocalProfile {profileId, displayName, localAlias, contactDomain = prevClaim, contactDomainVerified = prevVerification}, userPreferences} = c
-    Profile {displayName = newName, contactDomain, preferences} = claimProfile
+    Profile {displayName = newName, contactDomain, preferences} = p'
     mergedPreferences = contactUserPreferences user userPreferences preferences $ contactConnIncognito c
     claimChanged = (domain <$> prevClaim) /= (domain <$> contactDomain)
+    claimProfile = (p' :: Profile) {contactDomain = (\d -> d {proof = if claimChanged then Nothing else proof =<< prevClaim}) <$> contactDomain}
     clearVerificationIfClaimChanged =
       when claimChanged $
         DB.execute db "UPDATE contact_profiles SET contact_domain_verified = NULL WHERE user_id = ? AND contact_profile_id = ?" (userId, profileId)
+    updateContactProfile' currentTs p'' badgeVerified profile
+      | displayName == newName = do
+          liftIO $ updateContactProfile_' db userId profileId p'' badgeVerified currentTs
+          liftIO clearVerificationIfClaimChanged
+          pure c {profile, mergedPreferences}
+      | otherwise =
+          ExceptT . withLocalDisplayName db userId newName $ \ldn -> do
+            updateContactProfile_' db userId profileId p'' badgeVerified currentTs
+            updateContactLDN_ db user contactId localDisplayName ldn currentTs
+            clearVerificationIfClaimChanged
+            pure $ Right c {localDisplayName = ldn, profile, mergedPreferences}
 
 setContactDomainVerified :: DB.Connection -> User -> Contact -> Bool -> IO Contact
 setContactDomainVerified db User {userId} ct@Contact {contactId, profile = p} verified = do

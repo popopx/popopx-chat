@@ -14,8 +14,8 @@ packages: .
 index-state: 2023-12-12T00:00:00Z
 
 
-package popopxmq
-   flags: +client_library +swift +commoncrypto
+-- package popopxmq
+--    flags: +client_library +swift +commoncrypto
 
 -- package popopx-chat
 --    flags: +client_library +swift +commoncrypto

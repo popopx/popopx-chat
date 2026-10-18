@@ -994,7 +994,7 @@ acceptContactRequest nm user@User {userId} UserContactRequest {agentInvitationId
   let chatV = vr cxt `peerConnChatVersion` cReqChatVRange
   (ct, conn, incognitoProfile) <- case contactId_ of
     Nothing -> do
-      incognitoProfile <- if incognito then Just . NewIncognito <$> liftIO generateRandomProfile else pure Nothing
+      incognitoProfile <- if incognito then Just . NewIncognito <$> liftIO (generateIncognitoProfile user) else pure Nothing
       (connId, _) <- withAgent $ \a -> prepareConnectionToAccept a (aUserId user) True invId pqSup'
       (ct, conn) <- withStore' $ \db ->
         createContactFromRequest db user userContactLinkId_ connId chatV cReqChatVRange cName profileId cp xContactId incognitoProfile subMode pqSup' False
@@ -1003,7 +1003,7 @@ acceptContactRequest nm user@User {userId} UserContactRequest {agentInvitationId
       ct <- withFastStore $ \db -> getContact db cxt user contactId
       case contactConn ct of
         Nothing -> do
-          incognitoProfile <- if incognito then Just . NewIncognito <$> liftIO generateRandomProfile else pure Nothing
+          incognitoProfile <- if incognito then Just . NewIncognito <$> liftIO (generateIncognitoProfile user) else pure Nothing
           (connId, _) <- withAgent $ \a -> prepareConnectionToAccept a (aUserId user) True invId pqSup'
           currentTs <- liftIO getCurrentTime
           conn <- withStore' $ \db -> do
@@ -1335,6 +1335,9 @@ introduceInChannel cxt user g@(GIK gInfo _) subscriber@GroupMember {activeConn =
   where
     sendIntros ms = forM_ (L.nonEmpty $ map (memberIntroEvt gInfo) ms) $ \evts ->
       sendGroupMemberMessages user g conn evts
+
+generateIncognitoProfile :: User -> IO Profile
+generateIncognitoProfile User {profile = LocalProfile {peerType}} = generateRandomProfile peerType
 
 userProfileInGroup :: User -> GroupInfo -> Maybe Profile -> Profile
 userProfileInGroup user g = userProfileInGroup' user (Just g)
@@ -2940,6 +2943,7 @@ saveGroupRcvMsg user groupId authorMember conn@Connection {connId} agentMsgMeta 
     withStore (\db -> createNewMessageAndRcvMsgDelivery db (GroupId groupId) newMsg sharedMsgId_ rcvMsgDelivery $ Just amGroupMemId)
       `catchAllErrors` \e -> case e of
         ChatErrorStore (SEDuplicateGroupMessage _ _ _ (Just forwardedByGroupMemberId)) -> do
+          unlessM isMainApp $ toView $ CEvtDuplicateGroupMessage user am'
           cxt <- chatStoreCxt
           fm <- withStore $ \db -> getGroupMember db cxt user groupId forwardedByGroupMemberId
           forM_ (memberConn fm) $ \fmConn ->
@@ -2957,19 +2961,24 @@ saveGroupFwdRcvMsg user gInfo@GroupInfo {groupId} forwardingMember refAuthorMemb
   -- TODO [relays] TBC highlighting difference between deduplicated messages (useRelays branch)
   withStore' (\db -> runExceptT $ createNewRcvMessage db (GroupId groupId) newMsg sharedMsgId_ refAuthorId fwdMemberId) >>= \case
     Right msg -> pure $ Just msg
-    Left e@SEDuplicateGroupMessage {authorGroupMemberId, forwardedByGroupMemberId}
-      | useRelays' gInfo -> pure Nothing -- with chat relays, duplicates are expected
-      | otherwise -> case (authorGroupMemberId, forwardedByGroupMemberId) of
-          (Just authorGMId, Nothing) -> do
-            cxt <- chatStoreCxt
-            am@GroupMember {memberId = amMemberId} <- withStore $ \db -> getGroupMember db cxt user groupId authorGMId
-            if maybe False (\ref -> sameMemberId (memberId' ref) am) refAuthorMember_
-              then forM_ (memberConn forwardingMember) $ \fmConn ->
-                void $ sendDirectMemberMessage fmConn (XGrpMemCon amMemberId) groupId
-              else toView $ CEvtMessageError user "error" "saveGroupFwdRcvMsg: referenced author member id doesn't match message member id"
-            throwError $ ChatErrorStore e
-          _ -> throwError $ ChatErrorStore e
+    Left e@SEDuplicateGroupMessage {authorGroupMemberId, forwardedByGroupMemberId} -> do
+      unlessM isMainApp $ toView $ CEvtDuplicateGroupMessage user forwardingMember
+      if
+        | useRelays' gInfo -> pure Nothing -- with chat relays, duplicates are expected
+        | otherwise -> case (authorGroupMemberId, forwardedByGroupMemberId) of
+            (Just authorGMId, Nothing) -> do
+              cxt <- chatStoreCxt
+              am@GroupMember {memberId = amMemberId} <- withStore $ \db -> getGroupMember db cxt user groupId authorGMId
+              if maybe False (\ref -> sameMemberId (memberId' ref) am) refAuthorMember_
+                then forM_ (memberConn forwardingMember) $ \fmConn ->
+                  void $ sendDirectMemberMessage fmConn (XGrpMemCon amMemberId) groupId
+                else toView $ CEvtMessageError user "error" "saveGroupFwdRcvMsg: referenced author member id doesn't match message member id"
+              throwError $ ChatErrorStore e
+            _ -> throwError $ ChatErrorStore e
     Left e -> throwError $ ChatErrorStore e
+
+isMainApp :: CM Bool
+isMainApp = (SMSubscribe ==) <$> chatReadVar subscriptionMode
 
 saveSndChatItem :: ChatTypeI c => User -> ChatDirection c 'MDSnd -> SndMessage -> CIContent 'MDSnd -> CM (ChatItem c 'MDSnd)
 saveSndChatItem user cd msg content = saveSndChatItem' user cd msg content Nothing Nothing Nothing Nothing False

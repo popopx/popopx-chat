@@ -474,6 +474,7 @@ chatEventToView hu ChatConfig {logLevel, showReactions, showReceipts, testView} 
   CEvtUnknownMemberCreated u g fwdM um -> ttyUser u [ttyGroup' g <> ": " <> ttyMember fwdM <> " forwarded a message from an unknown member, creating unknown member record " <> ttyMember um]
   CEvtUnknownMemberBlocked u g byM um -> ttyUser u [ttyGroup' g <> ": " <> ttyMember byM <> " blocked an unknown member, creating unknown member record " <> ttyMember um]
   CEvtUnknownMemberAnnounced u g _ um m -> ttyUser u [ttyGroup' g <> ": unknown member " <> ttyMember um <> " updated to " <> ttyMember m]
+  CEvtDuplicateGroupMessage {} -> []
   CEvtRcvFileDescrReady _ _ _ _ -> []
   CEvtRcvFileAccepted u ci -> ttyUser u $ savingFile' ci
   CEvtRcvFileAcceptedSndCancelled u ft -> ttyUser u $ viewRcvFileSndCancelled ft
@@ -522,9 +523,8 @@ chatEventToView hu ChatConfig {logLevel, showReactions, showReceipts, testView} 
      in ttyUser u [sShow connId <> ": END"]
   CEvtSubscriptionStatus srv status conns -> [plain $ subStatusStr status <> " " <> tshow (length conns) <> " connections on server " <> showSMPServer srv]
   CEvtServiceSubStatus srv event -> [plain $ serviceSubEventStr srv event]
-  CEvtReceivedGroupInvitation {user = u, groupInfo = g, contact = c, memberRole = r} -> ttyUser u $ viewReceivedGroupInvitation g c r
-  CEvtReceivedGroupInvitationViaGroup {user = u, groupInfo = g, viaGroupInfo = vg, viaMember = vm} ->
-    ttyUser u $ ["invitation to join " <> ttyGroup' g <> " received via " <> ttyGroup' vg <> " from " <> ttyMember vm]
+  CEvtReceivedGroupInvitation {user = u, groupInfo = g, contact = c, memberRole = r} -> ttyUser u $ viewReceivedGroupInvitation g (ttyContact' c) r
+  CEvtReceivedGroupInvitationViaGroup {user = u, groupInfo = g, viaGroupInfo = viaG, viaMember = m, memberRole = r} -> ttyUser u $ viewReceivedGroupInvitation g (ttyMember m <> " in " <> ttyGroup' viaG) r
   CEvtUserJoinedGroup u g m -> ttyUser u $ viewUserJoinedGroup g m
   CEvtGroupLinkDataUpdated u g groupLink relays relaysChanged
     | relaysChanged -> ttyUser u $ viewGroupLinkRelaysUpdated g groupLink relays
@@ -1412,9 +1412,9 @@ viewConnectedToGroupMember g@GroupInfo {groupId} m@GroupMember {groupMemberId, m
     ]
   _ -> [ttyGroup' g <> ": " <> connectedMember m <> " is connected"]
 
-viewReceivedGroupInvitation :: GroupInfo -> Contact -> GroupMemberRole -> [StyledString]
-viewReceivedGroupInvitation g c role =
-  ttyFullGroup g <> ": " <> ttyContact' c <> " invites you to join the group as " <> showRole role
+viewReceivedGroupInvitation :: GroupInfo -> StyledString -> GroupMemberRole -> [StyledString]
+viewReceivedGroupInvitation g inviter role =
+  ttyFullGroup g <> ": " <> inviter <> " invites you to join the group as " <> showRole role
     : case incognitoMembershipProfile g of
       Just mp -> ["use " <> highlight ("/j " <> viewGroupName g) <> " to join incognito as " <> incognitoProfile' (fromLocalProfile mp)]
       Nothing -> ["use " <> highlight ("/j " <> viewGroupName g) <> " to accept"]

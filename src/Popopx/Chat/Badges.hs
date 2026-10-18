@@ -47,7 +47,10 @@ module Popopx.Chat.Badges
     generateBadgeProof,
     badgeProof,
     verifyBadge,
-    verifyBadge_,
+    acceptedProof,
+    acceptedBadge,
+    sameBadgeProof,
+    unboundProof,
     mkBadgeStatus,
     BadgeRow,
     BadgeProofKind (..),
@@ -59,10 +62,6 @@ module Popopx.Chat.Badges
     badgeToRow,
     localBadgeToRow,
     rowToBadge,
-    acceptedProof,
-    acceptedBadge,
-    sameBadgeProof,
-    unboundProof,
   ) where
 
 import Control.Concurrent.STM
@@ -82,7 +81,7 @@ import Data.Text.Encoding (encodeUtf8)
 import Data.Time.Clock (NominalDiffTime, UTCTime, addUTCTime, nominalDay)
 import Data.Time.Clock.System (systemToUTCTime, utcToSystemTime)
 import Popopx.FileTransfer.Description (gb, maxFileSize)
-import Popopx.Messaging.Agent.Store.DB (Binary (..), BoolInt (..), fromTextField_)
+import Popopx.Messaging.Agent.Store.DB (Binary (..), BoolInt (..), blobFieldDecoder, fromTextField_)
 import qualified Popopx.Messaging.Crypto as C
 import Popopx.Messaging.Crypto.BBS
 import Popopx.Messaging.Crypto.Entitlement (Entitlement (Entitlement), EntitlementCredential (EntitlementCredential), MasterKey (MasterKey), entitlementBBSHeader)
@@ -273,7 +272,7 @@ maxSndXFTPFileSize lims now = \case
   _ -> noBadge lims
 
 -- Presentation header: a tag char + payload. PHTest is unbound - a fresh random nonce per
--- presentation, not bound to any context; the 'T' tag marks it so master rejects it.
+-- presentation, not bound to any context.
 -- PHUnknown is the forward-compat catch-all for tags this version does not interpret.
 
 data ProofPresHeaderTag
@@ -346,17 +345,6 @@ instance StrEncoding ProofPresHeader where
       PHRequestTag -> PHRequest <$> A.takeByteString
       PHLinkTag -> PHLink <$> A.takeByteString
       PHUnknownTag c -> PHUnknown c <$> A.takeByteString
-
--- v6.5.x accepts both; v7 will reject PHTest/PHUnknown
-proofPresHeaderAccepted :: ProofPresHeader -> Bool
-proofPresHeaderAccepted = \case
-  PHTest _ -> True
-  PHChat _ -> True
-  PHFileInv {} -> True
-  PHFileDescr {} -> True
-  PHRequest _ -> True
-  PHLink _ -> True
-  PHUnknown _ _ -> True
 
 acceptedProof :: Maybe ProofPresHeader -> BadgeProof -> Bool
 acceptedProof expected_ b@BadgeProof {presHeader = BBSPresHeader ph} = unboundProof b || any ((ph ==) . strEncode) expected_
@@ -466,15 +454,14 @@ verifyBadge keys b@(BadgeProof keyIdx _ _ _) = case M.lookup keyIdx keys of
   Just pk -> Just <$> verifyBadgeWith pk b
 
 verifyBadgeWith :: BBSPublicKey -> BadgeProof -> IO Bool
-verifyBadgeWith pk (BadgeProof _ ph@(BBSPresHeader phBytes) proof badgeInfo)
-  | either (const False) proofPresHeaderAccepted (strDecode phBytes) =
-      bbsProofVerify pk proof bbsBadgeHeader ph bbsBadgeDisclosedIndexes bbsBadgeMessageCount (badgeInfoMessages badgeInfo)
-  | otherwise = pure False
-
-verifyBadge_ :: Map Int BBSPublicKey -> Maybe BadgeProof -> IO (Maybe Bool)
-verifyBadge_ keys = maybe (pure (Just False)) (verifyBadge keys)
+verifyBadgeWith pk (BadgeProof _ ph proof badgeInfo) =
+  bbsProofVerify pk proof bbsBadgeHeader ph bbsBadgeDisclosedIndexes bbsBadgeMessageCount (badgeInfoMessages badgeInfo)
 
 -- DB
+
+instance FromField ProofPresHeader where fromField = blobFieldDecoder strDecode
+
+instance ToField ProofPresHeader where toField = toField . Binary . strEncode
 
 instance FromField BadgeType where fromField = fromTextField_ textDecode
 

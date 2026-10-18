@@ -75,7 +75,7 @@ import System.FilePath ((</>))
 import Text.Read (readMaybe)
 
 fixtureDir :: FilePath
-fixtureDir = "apps" </> "popopx-badge-service" </> "test-fixtures" </> "btcpay"
+fixtureDir = "apps" </> "simplex-badge-service" </> "test-fixtures" </> "btcpay"
 
 fakeApiKey :: Text
 fakeApiKey = "7f3c1d9a2e5b48c6905ad1e2f3b4c5d6e7f80912"

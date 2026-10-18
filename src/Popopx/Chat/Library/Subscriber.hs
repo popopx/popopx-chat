@@ -58,7 +58,6 @@ import Popopx.Chat.Messages
 import Popopx.Chat.Messages.Batch (batchDeliveryTasks1, batchProfiles, batchProfilesWithBody, encodeBinaryBatch, encodeFwdElement, maxBatchElementSize)
 import Popopx.Chat.Messages.CIContent
 import Popopx.Chat.Messages.CIContent.Events
-import Popopx.Chat.ProfileGenerator (generateRandomProfile)
 import Popopx.Chat.Protocol
 import Popopx.Chat.Store
 import Popopx.Chat.Store.Connections
@@ -159,13 +158,13 @@ processAgentMessage corrId connId msg = do
       Just (user, entity, gks_) -> processAgentMessageConn cxt user entity gks_ corrId connId msg `catchAllErrors` eToView
       _ -> throwChatError $ CENoConnectionUser (AgentConnId connId)
   where
-    getUserEntity :: StoreCxt -> DB.Connection -> ExceptT StoreError IO (Maybe (User, ConnectionEntity, Maybe GroupKeys))
+    getUserEntity :: StoreCxt -> DB.Connection -> ExceptT StoreError IO (Maybe (User, ConnectionEntity, Maybe GroupInfoKeys))
     getUserEntity cxt db =
       liftIO (getUserByAConnId db $ AgentConnId connId)
         >>= mapM (\user -> do
               (entity, groupKeysData_) <- getConnectionEntityKeys db cxt user (AgentConnId connId)
               gks_ <- case entity of
-                RcvGroupMsgConnection _ gInfo _ -> mapM (mkGroupKeys db cxt gInfo) groupKeysData_
+                RcvGroupMsgConnection _ gInfo _ -> mapM (mkGroupInfoKeys db cxt gInfo) groupKeysData_
                 _ -> pure Nothing
               (user,,gks_) <$> liftIO (updateConnStatus db entity))
 
@@ -454,7 +453,7 @@ processAgentMsgRcvFile _corrId aFileId msg = do
 
 type ShouldDeleteGroupConns = Bool
 
-processAgentMessageConn :: StoreCxt -> User -> ConnectionEntity -> Maybe GroupKeys -> ACorrId -> ConnId -> AEvent 'AEConn -> CM ()
+processAgentMessageConn :: StoreCxt -> User -> ConnectionEntity -> Maybe GroupInfoKeys -> ACorrId -> ConnId -> AEvent 'AEConn -> CM ()
 processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId agentMessage =
   case agentMessage of
     END -> case entity of
@@ -464,8 +463,8 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
     _ -> case entity of
       RcvDirectMsgConnection conn contact_ ->
         processDirectMessage agentMessage entity conn contact_
-      RcvGroupMsgConnection conn gInfo m -> case gks_ of
-        Just gks -> processGroupMessage agentMessage entity conn (GIK gInfo gks) m
+      RcvGroupMsgConnection conn _ m -> case gks_ of
+        Just gks -> processGroupMessage agentMessage entity conn gks m
         Nothing -> throwChatError $ CEInternalError "group connection entity without group keys"
       UserContactConnection conn uc ->
         processContactConnMessage agentMessage entity conn uc
@@ -878,9 +877,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                 deleteMemberConnection' m True
                 withStore' $ \db -> deleteGroupMember db user m
             | otherwise -> do
-                m' <- case mKey of
-                  Just (MemberKey k) -> m {memberPubKey = Just k} <$ storeMemberKey gInfo m signedMsg_ (MemberKey k)
-                  Nothing -> pure m
+                m' <- maybe (pure m) (storeMemberKey gInfo m signedMsg_) mKey
                 void $ processMemberProfileUpdate gInfo m' signedMsg_ memProfile Nothing
           XOk ->
             -- transient relay-reject row cleanup after the rejection handshake completes
@@ -1115,7 +1112,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
               XGrpMemNew memInfo msgScope -> fmap ctx <$> xGrpMemNew (GIK gInfo' gks) m'' memInfo msgScope msg brokerTs
               XGrpMemIntro memInfo memRestrictions_ -> Nothing <$ xGrpMemIntro gInfo' m'' memInfo memRestrictions_
               XGrpMemInv memId introInv -> Nothing <$ xGrpMemInv gInfo' m'' memId introInv
-              XGrpMemFwd memInfo introInv -> Nothing <$ xGrpMemFwd gInfo' m'' memInfo introInv
+              XGrpMemFwd memInfo introInv -> Nothing <$ xGrpMemFwd (GIK gInfo' gks) m'' memInfo introInv
               XGrpMemRole memId memRole memberKey rosterVer -> fmap ctx <$> xGrpMemRole (GIK gInfo' gks) Nothing m'' memId memRole memberKey rosterVer msg brokerTs
               XGrpMemRestrict memId memRestrictions -> fmap ctx <$> xGrpMemRestrict gInfo' m'' memId memRestrictions msg brokerTs
               XGrpMemCon memId -> Nothing <$ xGrpMemCon gInfo' m'' memId
@@ -1543,7 +1540,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                       Just AutoAccept {acceptIncognito} -> do
                         incognitoProfile <-
                           if not shortLinkDataSet && acceptIncognito
-                            then Just . NewIncognito <$> liftIO generateRandomProfile
+                            then Just . NewIncognito <$> liftIO (generateIncognitoProfile user)
                             else pure Nothing
                         ct' <- acceptContactRequestAsync user uclId ct ucr incognitoProfile
                         toView $ CEvtAcceptingContactRequest user ct'
@@ -1662,16 +1659,20 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                           mem <- acceptGroupJoinSendRejectAsync user uclId gInfo invId chatVRange p xContactId_ rjctReason
                           toViewTE $ TERejectingGroupJoinRequestMember user gInfo mem rjctReason
         xGrpRelayInv :: InvitationId -> VersionRangeChat -> Maybe SignedMsg -> GroupRelayInvitation -> CM ()
-        xGrpRelayInv invId chatVRange signedMsg_ groupRelayInv@GroupRelayInvitation {groupLink} = do
-          rejected <- withStore' $ \db -> isRelayGroupRejected db user groupLink
-          initialDelay <- asks $ initialInterval . relayRequestRetryInterval . config
-          let presHeader_ = relayInvPresHeader signedMsg_ groupRelayInv
-          if rejected
-            then rejectRelayInvitationAsync user uclId cxt groupRelayInv presHeader_ invId chatVRange initialDelay RRRRejoinRejected
-            else do
-              (_gInfo, _ownerMember) <- withStore $ \db ->
-                createRelayRequestGroup db cxt user groupRelayInv presHeader_ invId chatVRange initialDelay GSMemAccepted RSInvited
-              lift $ void $ getRelayRequestWorker True
+        xGrpRelayInv invId chatVRange signedMsg_ groupRelayInv@GroupRelayInvitation {groupLink}
+          | maxVersion chatVRange >= groupInvVersion && isNothing presHeader_ =
+              messageError "x.grp.relay.inv: invitation is not signed by the owner"
+          | otherwise = do
+              rejected <- withStore' $ \db -> isRelayGroupRejected db user groupLink
+              initialDelay <- asks $ initialInterval . relayRequestRetryInterval . config
+              if rejected
+                then rejectRelayInvitationAsync user uclId cxt groupRelayInv presHeader_ invId chatVRange initialDelay RRRRejoinRejected
+                else do
+                  (_gInfo, _ownerMember) <- withStore $ \db ->
+                    createRelayRequestGroup db cxt user groupRelayInv presHeader_ invId chatVRange initialDelay GSMemAccepted RSInvited
+                  lift $ void $ getRelayRequestWorker True
+          where
+            presHeader_ = relayInvPresHeader signedMsg_ groupRelayInv
         xGrpRelayTest :: InvitationId -> VersionRangeChat -> ByteString -> CM ()
         xGrpRelayTest invId chatVRange challenge
           | isTrue userChatRelay && isNothing ucGroupId_ =
@@ -2872,8 +2873,8 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
 
     xInfoMember :: GroupInfo -> GroupMember -> Profile -> Maybe MemberKey -> RcvMessage -> UTCTime -> CM (Maybe DeliveryJobScope)
     xInfoMember gInfo m p' mKey msg@RcvMessage {signedMsg_} brokerTs = do
-      mapM_ (storeMemberKey gInfo m signedMsg_) mKey
-      void $ processMemberProfileUpdate gInfo m signedMsg_ p' (Just (msg, brokerTs))
+      m' <- maybe (pure m) (storeMemberKey gInfo m signedMsg_) mKey
+      void $ processMemberProfileUpdate gInfo m' signedMsg_ p' (Just (msg, brokerTs))
       pure $ memberEventDeliveryScope m
 
     xGrpLinkMem :: GroupInfo -> GroupMember -> Connection -> Profile -> Maybe MemberKey -> RcvMessage -> CM ()
@@ -2881,23 +2882,26 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
       xGrpLinkMemReceived <- withStore $ \db -> getXGrpLinkMemReceived db groupMemberId
       if (viaGroupLink || isJust businessChat) && isNothing (memberContactId m) && memberCategory == GCHostMember && not xGrpLinkMemReceived
         then do
-          mapM_ (storeMemberKey gInfo m signedMsg_) mKey
-          m' <- processMemberProfileUpdate gInfo m signedMsg_ p' Nothing
+          m' <- maybe (pure m) (storeMemberKey gInfo m signedMsg_) mKey
+          m'' <- processMemberProfileUpdate gInfo m' signedMsg_ p' Nothing
           withStore' $ \db -> setXGrpLinkMemReceived db groupMemberId True
           let connectedIncognito = memberIncognito membership
-          probeMatchingMemberContact m' connectedIncognito
+          probeMatchingMemberContact m'' connectedIncognito
         else messageError "x.grp.link.mem error: invalid group link host profile update"
 
-    storeMemberKey :: GroupInfo -> GroupMember -> Maybe SignedMsg -> MemberKey -> CM ()
-    storeMemberKey gInfo GroupMember {groupMemberId, memberPubKey, memberId} signedMsg_ (MemberKey k) = case memberPubKey of
-      Just k0 -> when (k /= k0) $ messageError "member key change rejected, keeping current key"
+    storeMemberKey :: GroupInfo -> GroupMember -> Maybe SignedMsg -> MemberKey -> CM GroupMember
+    storeMemberKey gInfo m@GroupMember {groupMemberId, memberPubKey, memberId} signedMsg_ (MemberKey k) = case memberPubKey of
+      Just k0 -> m <$ when (k /= k0) (messageError "member key change rejected, keeping current key")
       Nothing
-        | signed -> withStore' $ \db -> setMemberPubKey db groupMemberId k
-        | otherwise -> messageError "member key not signed by that key, ignored"
+        | signed -> m {memberPubKey = Just k} <$ withStore' (\db -> setMemberPubKey db groupMemberId k)
+        | otherwise -> m <$ messageError "member key not signed by that key, ignored"
       where
-        signed = case signedMsg_ of
-          Just SignedMsg {chatBinding = CBGroup, signatures, signedBody} -> verifyGroupSig k gInfo memberId signatures signedBody
-          _ -> False
+        signed = memberSigned gInfo memberId k signedMsg_
+
+    memberSigned :: GroupInfo -> MemberId -> C.PublicKeyEd25519 -> Maybe SignedMsg -> Bool
+    memberSigned gInfo memberId k = \case
+      Just SignedMsg {chatBinding = CBGroup, signatures, signedBody} -> verifyGroupSig k gInfo memberId signatures signedBody
+      _ -> False
 
     xGrpLinkAcpt :: GroupInfoKeys -> GroupMember -> GroupAcceptance -> GroupMemberRole -> MemberId -> RcvMessage -> UTCTime -> CM ()
     xGrpLinkAcpt g@(GIK gInfo@GroupInfo {membership} _) m acceptance role memberId msg brokerTs
@@ -3395,8 +3399,8 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
             Right reMember -> sendGroupMemberMessage gInfo reMember $ XGrpMemFwd (memberInfo gInfo m) introInv
         _ -> messageError "x.grp.mem.inv can be only sent by invitee member"
 
-    xGrpMemFwd :: GroupInfo -> GroupMember -> MemberInfo -> IntroInvitation -> CM ()
-    xGrpMemFwd gInfo@GroupInfo {membership, chatSettings} m memInfo@(MemberInfo memId memRole memChatVRange _ _) IntroInvitation {groupConnReq} = do
+    xGrpMemFwd :: GroupInfoKeys -> GroupMember -> MemberInfo -> IntroInvitation -> CM ()
+    xGrpMemFwd g@(GIK gInfo@GroupInfo {membership, chatSettings} _) m memInfo@(MemberInfo memId memRole memChatVRange _ _) IntroInvitation {groupConnReq} = do
       let GroupMember {memberId = membershipMemId} = membership
       checkHostRole m memRole
       toMember <- withStore $ \db -> do
@@ -3407,7 +3411,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
             -- member receiving x.grp.mem.fwd should have also received x.grp.mem.new prior to that.
             -- For now, this branch compensates for the lack of delayed message delivery.
             `catchError` \case
-              SEGroupMemberNotFoundByMemberId _ -> createNewGroupMember db cxt user gInfo m memInfo Nothing GCPostMember GSMemAnnounced
+              SEGroupMemberNotFoundByMemberId _ -> createNewGroupMember db cxt user gInfo m memInfo (memberInfoPresHeader gInfo memInfo) GCPostMember GSMemAnnounced
               e -> throwError e
         -- TODO [knocking] separate pending statuses from GroupMemberStatus?
         -- TODO            add GSMemIntroInvitedPending, GSMemConnectedPending, etc.?
@@ -3416,14 +3420,16 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
         liftIO $ updateGroupMemberStatus db userId toMember newMemberStatus
         pure toMember
       subMode <- chatReadVar subscriptionMode
+      let mcvr = maybe chatInitialVRange fromChatVRange memChatVRange
+          chatV = vr cxt `peerConnChatVersion` mcvr
       -- [incognito] send membership incognito profile
-      membershipProfile <- presentUserBadge user (incognitoMembershipProfile gInfo) Nothing $ redactedMemberProfile gInfo membership $ fromLocalProfile $ memberProfile membership
-      dm <- encodeConnInfo $ XGrpMemInfo membershipMemId membershipProfile
+      membershipProfile <- membershipHandshakeProfile user gInfo
+      let msg = XGrpMemInfo membershipMemId membershipProfile
+          signing_ = if chatV >= relayWebCapVersion then groupMsgSigning False g msg else Nothing
+      dm <- encodeConnInfoSigning PQSupportOff signing_ msg
       -- [async agent commands] no continuation needed, but commands should be asynchronous for stability
       let enableNtfsGrp = chatHasNtfs chatSettings
       groupConnIds@(gCmdId, gAcId) <- prepareAgentJoin user Nothing enableNtfsGrp groupConnReq
-      let mcvr = maybe chatInitialVRange fromChatVRange memChatVRange
-          chatV = vr cxt `peerConnChatVersion` mcvr
       withStore' $ \db -> createIntroToMemberContact db user m toMember chatV mcvr groupConnIds subMode
       joinAgentConnectionAsync gCmdId False gAcId enableNtfsGrp groupConnReq dm subMode
 
@@ -4570,22 +4576,23 @@ runRelayRequestWorker a Worker {doWork} = do
             eToView e
         processRelayRequest :: GroupId -> RelayRequestData -> CM ()
         processRelayRequest groupId rrd = do
-          (g@(GIK gInfo _), groupLink_) <- withStore $ \db -> do
+          (g@(GIK gInfo _), groupLink_, ownerMember) <- withStore $ \db -> do
             g@(GIK gInfo _) <- getGroupInfoKeys db cxt user groupId
             groupLink_ <- liftIO $ runExceptT $ getGroupLink db user gInfo
-            pure (g, groupLink_)
+            ownerMember <- getHostMember db cxt user groupId
+            pure (g, groupLink_, ownerMember)
           -- Check if relay link already exists (recovery case)
           case groupLink_ of
             Right GroupLink {connLinkContact = CCLink _ sLnk_} ->
               case sLnk_ of
-                Just sLnk -> acceptOwnerConnection rrd gInfo sLnk
+                Just sLnk -> acceptOwnerConnection rrd gInfo ownerMember sLnk
                 Nothing -> throwChatError $ CEException "processRelayRequest: relay link doesn't have short link"
             Left _ -> do
-              (gInfo', sLnk) <- getLinkDataCreateRelayLink rrd g
-              acceptOwnerConnection rrd gInfo' sLnk
+              (gInfo', sLnk) <- getLinkDataCreateRelayLink rrd g ownerMember
+              acceptOwnerConnection rrd gInfo' ownerMember sLnk
           where
-            getLinkDataCreateRelayLink :: RelayRequestData -> GroupInfoKeys -> CM (GroupInfo, ShortLinkContact)
-            getLinkDataCreateRelayLink RelayRequestData {reqGroupLink} (GIK gInfo gks) = do
+            getLinkDataCreateRelayLink :: RelayRequestData -> GroupInfoKeys -> GroupMember -> CM (GroupInfo, ShortLinkContact)
+            getLinkDataCreateRelayLink RelayRequestData {reqGroupLink, reqPublicGroupId} (GIK gInfo gks) GroupMember {memberId = MemberId ownerMemberId, memberPubKey = claimedOwnerKey_} = do
               memberPrivKey' <- case gks of
                 GKRelayRequest {memberPrivKey} -> pure memberPrivKey
                 _ -> throwChatError $ CEException "getLinkDataCreateRelayLink: group is not a relay request"
@@ -4595,8 +4602,10 @@ runRelayRequestWorker a Worker {doWork} = do
                 Just GroupShortLinkData {groupProfile = gp@GroupProfile {publicGroup}} -> do
                   pg <- case (linkEntityId, publicGroup) of
                     (Just entityId, Just pg@PublicGroupProfile {publicGroupId})
-                      | B64UrlByteString entityId == publicGroupId -> pure pg
-                    _ -> throwChatError $ CEException "getLinkDataCreateRelayLink: linkEntityId does not match profile publicGroupId"
+                      | B64UrlByteString entityId == publicGroupId && all (== publicGroupId) reqPublicGroupId -> pure pg
+                    _ -> throwChatError $ CEException "getLinkDataCreateRelayLink: linkEntityId does not match publicGroupId of profile or invitation"
+                  unless (all (\k -> any (\OwnerAuth {ownerId, ownerKey} -> ownerId == ownerMemberId && ownerKey == k) owners) claimedOwnerKey_) $
+                    throwChatError $ CEException "getLinkDataCreateRelayLink: owner key of invitation does not match link data"
                   validateGroupProfile gp
                   sLnk <- createRelayLink gInfo (C.publicKey memberPrivKey', memberPrivKey')
                   gInfo' <- withStore $ \db -> do
@@ -4631,7 +4640,6 @@ runRelayRequestWorker a Worker {doWork} = do
                   subRole <- asks $ channelSubscriberRole . config
                   void $ withFastStore $ \db -> createGroupLink db gVar user gi connId ccLink' groupLinkId subRole subMode
                   pure sLnk
-            acceptOwnerConnection :: RelayRequestData -> GroupInfo -> ShortLinkContact -> CM ()
-            acceptOwnerConnection RelayRequestData {relayInvId, reqChatVRange} gi relayLink = do
-              ownerMember <- withStore $ \db -> getHostMember db cxt user groupId
+            acceptOwnerConnection :: RelayRequestData -> GroupInfo -> GroupMember -> ShortLinkContact -> CM ()
+            acceptOwnerConnection RelayRequestData {relayInvId, reqChatVRange} gi ownerMember relayLink =
               void $ acceptRelayJoinRequestAsync user uclId gi ownerMember relayInvId reqChatVRange relayLink

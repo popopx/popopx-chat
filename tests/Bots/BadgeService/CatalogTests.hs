@@ -202,7 +202,7 @@ testPriceOfferAnyPrice = do
 
 testNoDriftFromWeb :: IO ()
 testNoDriftFromWeb = do
-  src <- T.readFile "apps/popopx-badge-service/web/src/catalog.ts"
+  src <- T.readFile "apps/simplex-badge-service/web/src/catalog.ts"
   case parseCatalogSource src of
     Nothing -> expectationFailure "could not parse CATALOG out of web/src/catalog.ts -- its shape has changed"
     Just (webPrices, webOffers) -> do

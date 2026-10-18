@@ -87,6 +87,7 @@ composer test                    # Run PHPUnit tests
 - **Package index:** 2023-12-12T00:00:00Z (pinned in cabal.project)
 - **Source packages** pinned to specific commits (popopxmq, direct-sqlcipher, etc.)
 - **OpenSSL path** on macOS: `/usr/local/opt/openssl@3.0/` (see `cabal.project.local`)
+- **popopxmq API 重命名:** `resolvePopopxName` → `resolvePoName`（2026-10-16 更新后函数名变更）
 
 ### Nix
 - **Flake inputs:** haskell.nix, mac2ios (for iOS cross-compilation)

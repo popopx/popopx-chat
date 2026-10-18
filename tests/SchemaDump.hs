@@ -17,7 +17,7 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import Database.SQLite.Simple (Only (..), Query (..))
-import Popopx.Chat.Options.SQLite (chatDBFunctions)
+import Popopx.Chat.Options.SQLite (ChatDbOpts (..), agentSuffix, chatDBFunctions, chatSuffix, toDBOpts)
 import Popopx.Chat.Store (createChatStore)
 import qualified Popopx.Chat.Store as Store
 import Popopx.Messaging.Agent.Env.SQLite (createAgentStore)
@@ -32,11 +32,23 @@ import System.Directory (doesFileExist, removeFile)
 import System.Process (readCreateProcess, shell)
 import Test.Hspec
 
+testDBPrefix :: String
+testDBPrefix = "tests/tmp/test"
+
+testAgentDBPrefix :: String
+testAgentDBPrefix = "tests/tmp/test_agent"
+
+testChatDBOpts :: DBOpts
+testChatDBOpts = toDBOpts (ChatDbOpts testDBPrefix "test_schema_key" TQOff True) chatSuffix False chatDBFunctions
+
+testAgentDBOpts :: DBOpts
+testAgentDBOpts = toDBOpts (ChatDbOpts testAgentDBPrefix "test_schema_key" TQOff True) agentSuffix False []
+
 testDB :: FilePath
-testDB = "tests/tmp/test_chat.db"
+testDB = dbFilePath testChatDBOpts
 
 testAgentDB :: FilePath
-testAgentDB = "tests/tmp/test_agent.db"
+testAgentDB = dbFilePath testAgentDBOpts
 
 appSchema :: FilePath
 appSchema = "src/Popopx/Chat/Store/SQLite/Migrations/chat_schema.sql"
@@ -64,7 +76,7 @@ testVerifySchemaDump :: IO ()
 testVerifySchemaDump = do
   savedSchema <- ifM (doesFileExist appSchema) (readFile appSchema) (pure "")
   savedSchema `deepseq` pure ()
-  void $ createChatStore (DBOpts testDB chatDBFunctions "" False True TQOff) (MigrationConfig MCError Nothing)
+  void $ createChatStore (testChatDBOpts) (MigrationConfig MCError Nothing)
   getSchema testDB appSchema `shouldReturn` savedSchema
   removeFile testDB
 
@@ -72,14 +84,14 @@ testVerifyLintFKeyIndexes :: IO ()
 testVerifyLintFKeyIndexes = do
   savedLint <- ifM (doesFileExist appLint) (readFile appLint) (pure "")
   savedLint `deepseq` pure ()
-  void $ createChatStore (DBOpts testDB chatDBFunctions "" False True TQOff) (MigrationConfig MCError Nothing)
+  void $ createChatStore (testChatDBOpts) (MigrationConfig MCError Nothing)
   getLintFKeyIndexes testDB "tests/tmp/chat_lint.sql" `shouldReturn` savedLint
   removeFile testDB
 
 testSchemaMigrations :: IO ()
 testSchemaMigrations = do
   let noDownMigrations = dropWhileEnd (\Migration {down} -> isJust down) Store.migrations
-  Right st <- createDBStore (DBOpts testDB chatDBFunctions "" False True TQOff) noDownMigrations (MigrationConfig MCError Nothing)
+  Right st <- createDBStore (testChatDBOpts) noDownMigrations (MigrationConfig MCError Nothing)
   mapM_ (testDownMigration st) $ drop (length noDownMigrations) Store.migrations
   closeDBStore st
   removeFile testDB
@@ -103,7 +115,7 @@ testSchemaMigrations = do
 
 testVerifyStrict :: IO ()
 testVerifyStrict = do
-  Right st <- createDBStore (DBOpts testDB chatDBFunctions "" False True TQOff) Store.migrations (MigrationConfig MCConsole Nothing)
+  Right st <- createDBStore (testChatDBOpts) Store.migrations (MigrationConfig MCConsole Nothing)
   withConnection st (`DB.query_` "SELECT name FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence' AND sql NOT LIKE '% STRICT'")
     `shouldReturn` ([] :: [Only Text])
 
@@ -167,7 +179,7 @@ saveQueryPlans = it "verify and overwrite query plans" $ \TestParams {chatQueryS
     updatePlans
       appChatQueryPlans
       chatQueryStats
-      (createChatStore (DBOpts testDB chatDBFunctions "" False True TQOff) (MigrationConfig MCError Nothing))
+      (createChatStore (testChatDBOpts) (MigrationConfig MCError Nothing))
       (\db -> do
         DB.execute_ db "CREATE TABLE IF NOT EXISTS temp_conn_ids (conn_id BLOB)"
         DB.execute_ db "CREATE TABLE IF NOT EXISTS temp_delete_members (contact_profile_id INTEGER, member_profile_id INTEGER, local_display_name TEXT)"
@@ -176,7 +188,7 @@ saveQueryPlans = it "verify and overwrite query plans" $ \TestParams {chatQueryS
     updatePlans
       appAgentQueryPlans
       agentQueryStats
-      (createAgentStore (DBOpts testAgentDB [] "" False True TQOff) (MigrationConfig MCError Nothing))
+      (createAgentStore testAgentDBOpts (MigrationConfig MCError Nothing))
       (const $ pure ())
   chatSavedPlans' == chatSavedPlans `shouldBe` True
   agentSavedPlans' == agentSavedPlans `shouldBe` True

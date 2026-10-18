@@ -749,7 +749,7 @@ data Profile = Profile
   }
   deriving (Eq, Show)
 
-data ChatPeerType = CPTHuman | CPTBot | CPTAgent | CPTBusiness | CPTUnknown Text
+data ChatPeerType = CPTHuman | CPTBot | CPTBusiness | CPTAgent | CPTUnknown Text
   deriving (Eq, Show)
 
 instance FromJSON ChatPeerType where
@@ -767,14 +767,14 @@ instance TextEncoding ChatPeerType where
   textDecode s = Just $ case s of
     "human" -> CPTHuman
     "bot" -> CPTBot
-    "agent" -> CPTAgent
     "business" -> CPTBusiness
+    "agent" -> CPTAgent
     tag -> CPTUnknown tag
   textEncode = \case
     CPTHuman -> "human"
     CPTBot -> "bot"
-    CPTAgent -> "agent"
     CPTBusiness -> "business"
+    CPTAgent -> "agent"
     CPTUnknown tag -> tag
 
 profileFromName :: ContactName -> Profile
@@ -861,6 +861,8 @@ profileBadgeVerified :: Maybe ProofPresHeader -> Map Int BBSPublicKey -> Maybe L
 profileBadgeVerified expected keys lp_ p@Profile {badge = rcvBadge} =
   (,) p {badge = newBadge} <$> case (storedBadge, newBadge) of
     (_, Nothing) -> pure (Just False)
+    -- an unchanged badge that verified before stays verified; failed or unknown-key badges
+    -- are re-verified, so an unknown key heals once an app update adds it
     (Just lb, Just (BadgeProof _ _ _ newInfo))
       | localBadgeInfo lb == newInfo && localBadgeStatus lb `notElem` [BSFailed, BSUnknownKey] -> pure (Just True)
     (_, Just newB) -> verifyBadge keys newB

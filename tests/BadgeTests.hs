@@ -797,10 +797,10 @@ testEntryTypeColumns = do
   mapM_ (\d -> wireTag (J.toJSON (SEDebit d)) "debit" `shouldBe` Just (debitTypeTag d)) debits
   -- the three types this version writes survive a round trip through the columns
   mapM_
-    (\t -> uncurry3 entryTypeFromColumns (entryTypeColumns t) `shouldSatisfy` sameEntryType t)
+    (\t -> uncurry3 (entryTypeFromColumns Nothing) (entryTypeColumns t) `shouldSatisfy` sameEntryType t)
     [SECredit SCCode, SEDebit SDBadge, SEDebit SDLapse]
   -- a type that needs a reference column is not silently read back as something else
-  uncurry3 entryTypeFromColumns (entryTypeColumns (SECredit (SCCharge "ch1"))) `shouldSatisfy` isNothing
+  uncurry3 (entryTypeFromColumns Nothing) (entryTypeColumns (SECredit (SCCharge "ch1"))) `shouldSatisfy` isNothing
   -- which is why every type is stored as its own JSON as well, and read from that first: the
   -- columns alone would answer a row naming an invoice or a purchase as no row at all
   mapM_ roundTrips credits

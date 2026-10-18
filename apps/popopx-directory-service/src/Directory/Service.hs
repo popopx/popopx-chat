@@ -69,7 +69,7 @@ import Popopx.Chat.Protocol (GroupShortLinkData (..), LinkOwnerSig (..), MsgChat
 import Popopx.Chat.Store.Direct (getContact)
 import Popopx.Chat.Store.Groups (getGroupLink, getGroupMember, getGroupMemberByMemberId, setGroupCustomData) -- TODO remove setGroupCustomData
 import Popopx.Chat.Store.Profiles (GroupLinkInfo (..), getGroupLinkInfo)
-import Popopx.Chat.Store.Shared (StoreError (..), getGroupInfoRow, mkGroupKeys)
+import Popopx.Chat.Store.Shared (StoreError (..), getGroupInfoRow, mkGroupInfoKeys)
 import Popopx.Chat.Terminal (terminalChatConfig)
 import Popopx.Chat.Terminal.Main (popopxChatCLI')
 import Popopx.Chat.Types
@@ -1596,8 +1596,8 @@ updateGroupLinkData :: ChatController -> User -> GroupInfo -> GroupLink -> IO (E
 updateGroupLinkData cc user gInfo@GroupInfo {groupId} gLink = do
   gInfoKeysRes <- withDB' "getGroupInfoKeys" cc $ \db -> do
     (gInfo', keysRow) <- runExceptT (getGroupInfoRow db (storeCxt cc) user groupId) >>= either (fail . show) pure
-    gks <- runExceptT (mkGroupKeys db (storeCxt cc) gInfo' keysRow) >>= either (fail . show) pure
-    pure $ GIK gInfo' gks
+    gks <- runExceptT (mkGroupInfoKeys db (storeCxt cc) gInfo' keysRow) >>= either (fail . show) pure
+    pure gks
   case gInfoKeysRes of
     Left e -> pure $ Left $ ChatErrorStore $ SEInternalError e
     Right gInfoKeys -> runReaderT (runExceptT $ setGroupLinkData NRMBackground user gInfoKeys gLink) cc

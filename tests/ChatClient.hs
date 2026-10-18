@@ -60,7 +60,7 @@ import Popopx.Messaging.Client (ProtocolClientConfig (..))
 import Popopx.Messaging.Client.Agent (defaultSMPClientAgentConfig)
 import Popopx.Messaging.Protocol (ProtoServerWithAuth (..), ProtocolServer (..), ProtocolType (..))
 import Popopx.Messaging.Server (runSMPServerBlocking)
-import Popopx.Messaging.Server.Env.STM (ServerConfig (..), ServerStoreCfg (..), StartOptions (..), StorePaths (..), defaultMessageExpiration, defaultIdleQueueInterval, defaultNtfExpiration, defaultInactiveClientExpiration)
+import Popopx.Messaging.Server.Env.STM (ServerConfig (..), ServerStoreCfg (..), StartOptions (..), StorePaths (..), defaultMessageExpiration, defaultNtfExpiration, defaultInactiveClientExpiration)
 import NameResolver (NameRegistry, resolverNamesConfig, withNameResolver)
 import Popopx.Messaging.Server.MsgStore.STM (STMMsgStore)
 import Popopx.Messaging.Transport
@@ -638,8 +638,6 @@ smpServerCfg p =
     { transports = [(smpTestPort p, transport @TLS, False)],
       tbqSize = 4,
       msgQueueQuota = 16,
-      maxJournalMsgCount = 24,
-      maxJournalStateLines = 4,
       queueIdBytes = 24,
       msgIdBytes = 24,
       serverStoreCfg = SSCMemory Nothing, -- $ Just StorePaths {storeLogFile = "tmp/smp-server-store.log", storeMsgsFile = Just "tmp/smp-server-messages.log"},
@@ -650,10 +648,10 @@ smpServerCfg p =
       controlPortUserAuth = Nothing,
       controlPortAdminAuth = Nothing,
       dailyBlockQueueQuota = 20,
+      maxClientCmdWait = 10,
       messageExpiration = Just defaultMessageExpiration,
       expireMessagesOnStart = False,
       expireMessagesOnSend = False,
-      idleQueueInterval = defaultIdleQueueInterval,
       notificationExpiration = defaultNtfExpiration,
       inactiveClientExpiration = Just defaultInactiveClientExpiration,
       smpCredentials =
