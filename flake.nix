@@ -1,10 +1,10 @@
 {
   description = "nix flake for popopx-chat";
-  inputs.haskellNix.url = "github:input-output-hk/haskell.nix/d0c35e75cbbc6858770af42ac32b0b85495fbd71";
+  inputs.haskellNix.url = "github:input-output-hk/haskell.nix/armv7a";
   inputs.nixpkgs.follows = "haskellNix/nixpkgs-2305";
   inputs.mac2ios.url = "github:zw3rk/mobile-core-tools";
   inputs.hackage = {
-    url = "github:input-output-hk/hackage.nix?ref=for-stackage";
+    url = "github:input-output-hk/hackage.nix";
     flake = false;
   };
   inputs.haskellNix.inputs.hackage.follows = "hackage";
