@@ -204,6 +204,8 @@ chatEventNotification t@ChatTerminal {sendNotification} cc = \case
   CEvtReceivedGroupInvitation u g ct _ _ ->
     when (contactNtf u ct False) $
       sendNtf ("#" <> viewGroupName g <> " " <> viewContactName ct <> "> ", "invited you to join the group")
+  CEvtReceivedGroupInvitationViaGroup u g vg vm _ _ ->
+    sendNtf ("#" <> viewGroupName g <> " via #" <> viewGroupName vg <> " " <> viewMemberName vm <> "> ", "invited you to join the group")
   CEvtUserJoinedGroup u g _ -> when (groupNtf u g False) $ do
     whenCurrUser cc u $ setActiveGroup t g
     sendNtf ("#" <> viewGroupName g, "you are connected to group")

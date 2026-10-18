@@ -520,6 +520,8 @@ chatEventToView hu ChatConfig {logLevel, showReactions, showReceipts, testView} 
   CEvtSubscriptionStatus srv status conns -> [plain $ subStatusStr status <> " " <> tshow (length conns) <> " connections on server " <> showSMPServer srv]
   CEvtServiceSubStatus srv event -> [plain $ serviceSubEventStr srv event]
   CEvtReceivedGroupInvitation {user = u, groupInfo = g, contact = c, memberRole = r} -> ttyUser u $ viewReceivedGroupInvitation g c r
+  CEvtReceivedGroupInvitationViaGroup {user = u, groupInfo = g, viaGroupInfo = vg, viaMember = vm} ->
+    ttyUser u $ ["invitation to join " <> ttyGroup' g <> " received via " <> ttyGroup' vg <> " from " <> ttyMember vm]
   CEvtUserJoinedGroup u g m -> ttyUser u $ viewUserJoinedGroup g m
   CEvtGroupLinkDataUpdated u g groupLink relays relaysChanged
     | relaysChanged -> ttyUser u $ viewGroupLinkRelaysUpdated g groupLink relays

@@ -24,7 +24,7 @@ import Control.Monad.IO.Class
 import Crypto.Random (ChaChaDRG)
 import Data.Int (Int64)
 import Data.Time.Clock (getCurrentTime)
-import Popopx.Chat.Badges (badgeToRow, verifyBadge_)
+import Popopx.Chat.Badges (ProofPresHeader, badgeToRow)
 import Popopx.Chat.Protocol (MsgContent, businessChatsVersion)
 import Popopx.Chat.Store.Direct
 import Popopx.Chat.Store.Groups
@@ -57,6 +57,7 @@ createOrUpdateContactRequest ::
   Bool ->
   InvitationId ->
   VersionRangeChat ->
+  Maybe ProofPresHeader ->
   Profile ->
   Maybe XContactId ->
   Maybe SharedMsgId ->
@@ -74,6 +75,7 @@ createOrUpdateContactRequest
   isPopopxTeam
   invId
   cReqChatVRange@(VersionRange minV maxV)
+  presHeader_
   profile@Profile {displayName, fullName, shortDescr, description, image, contactLink, badge, preferences}
   xContactId_
   welcomeMsgId_
@@ -167,13 +169,13 @@ createOrUpdateContactRequest
       createContactRequest :: ExceptT StoreError IO RequestStage
       createContactRequest = do
         currentTs <- liftIO $ getCurrentTime
-        badgeVerified <- liftIO $ verifyBadge_ (badgeKeys cxt) badge
+        (Profile {badge = badge'}, badgeVerified) <- liftIO $ profileBadgeVerified presHeader_ (badgeKeys cxt) Nothing profile
         ExceptT $ withLocalDisplayName db userId displayName $ \ldn -> runExceptT $ do
           liftIO $
             DB.execute
               db
               "INSERT INTO contact_profiles (display_name, full_name, short_descr, description, image, contact_link, user_id, local_alias, created_at, updated_at, badge_proof, badge_pres_header, badge_expiry, badge_type, badge_verified, badge_extra, badge_master_key, badge_signature, badge_key_idx, preferences, preferences_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-              ((displayName, fullName, shortDescr, description, image, contactLink, userId) :. ("" :: LocalAlias, currentTs, currentTs) :. badgeToRow badge badgeVerified :. prefsToRow preferences)
+              ((displayName, fullName, shortDescr, description, image, contactLink, userId) :. ("" :: LocalAlias, currentTs, currentTs) :. badgeToRow badge' badgeVerified :. prefsToRow preferences)
           profileId <- liftIO $ insertedRowId db
           liftIO $
             DB.execute
@@ -234,7 +236,7 @@ createOrUpdateContactRequest
         pure $ RSCurrentRequest (Just ucr) ucr' re_
         where
           updateProfile currentTs = do
-            badgeVerified <- liftIO $ verifyBadge_ (badgeKeys cxt) badge
+            (Profile {badge = badge'}, badgeVerified) <- liftIO $ profileBadgeVerified presHeader_ (badgeKeys cxt) Nothing profile
             DB.execute
               db
               [sql|
@@ -262,7 +264,7 @@ createOrUpdateContactRequest
                   AND contact_request_id = ?
               )
             |]
-              ((displayName, fullName, shortDescr, description, image, contactLink, currentTs) :. badgeToRow badge badgeVerified :. (userId, contactRequestId))
+              ((displayName, fullName, shortDescr, description, image, contactLink, currentTs) :. badgeToRow badge' badgeVerified :. (userId, contactRequestId))
           updateRequest currentTs =
             if displayName == oldDisplayName
               then

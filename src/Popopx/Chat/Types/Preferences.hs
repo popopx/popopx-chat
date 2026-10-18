@@ -157,9 +157,11 @@ newtype NoJSON a = NoJSON {unNoJSON :: Maybe a}
 instance ToJSON (NoJSON a) where
   toJSON _ = Null
   toEncoding _ = JE.null_
+  omitField _ = True
 
 instance FromJSON (NoJSON a) where
   parseJSON _ = pure $ NoJSON Nothing
+  omittedField = Just $ NoJSON Nothing
 
 newtype PrefsJSON = PrefsJSON {unPrefsJSON :: Maybe Object}
   deriving (Eq, Show)
