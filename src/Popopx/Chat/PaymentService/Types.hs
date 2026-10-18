@@ -4,9 +4,12 @@
 -- This file was modified by POPOPX Team in 2026.
 -- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
 
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Popopx.Chat.PaymentService.Types
@@ -14,6 +17,7 @@ module Popopx.Chat.PaymentService.Types
     InvoiceId (..),
     PaymentId (..),
     PaymentProvider (..),
+    StoreTransactionRef (..),
     CardProvider (..),
     CryptoCurrency (..),
     ServicePaymentMethod (..),
@@ -32,7 +36,16 @@ import Data.ByteString.Char8 (ByteString)
 import Data.Text (Text)
 import Data.Time.Clock (UTCTime)
 import Data.Word (Word32)
+import Popopx.Messaging.Agent.Store.DB (fromTextField_)
+import Popopx.Messaging.Encoding.String (TextEncoding (..))
 import Popopx.Messaging.Parsers (dropPrefix, enumJSON, taggedObjectJSON)
+#if defined(dbPostgres)
+import Database.PostgreSQL.Simple.FromField (FromField (..))
+import Database.PostgreSQL.Simple.ToField (ToField (..))
+#else
+import Database.SQLite.Simple.FromField (FromField (..))
+import Database.SQLite.Simple.ToField (ToField (..))
+#endif
 
 -- USD etc. are in minor units, following Stripe etc. convention
 newtype CurrencyAmount = CurrencyAmount Word32
@@ -49,6 +62,31 @@ newtype PaymentId = PaymentId Text
 
 -- confirmed
 data PaymentProvider = PPApple | PPGoogle | PPStripe | PPCrypto | PPCode | PPReceipt
+  deriving (Eq, Show)
+
+instance TextEncoding PaymentProvider where
+  textEncode = \case
+    PPApple -> "apple"
+    PPGoogle -> "google"
+    PPStripe -> "stripe"
+    PPCrypto -> "crypto"
+    PPCode -> "code"
+    PPReceipt -> "receipt"
+  textDecode = \case
+    "apple" -> Just PPApple
+    "google" -> Just PPGoogle
+    "stripe" -> Just PPStripe
+    "crypto" -> Just PPCrypto
+    "code" -> Just PPCode
+    "receipt" -> Just PPReceipt
+    _ -> Nothing
+
+instance FromField PaymentProvider where fromField = fromTextField_ textDecode
+
+instance ToField PaymentProvider where toField = toField . textEncode
+
+-- | The stable name of one store transaction, by which a retry resolves to the same row.
+data StoreTransactionRef = StoreTransactionRef {provider :: PaymentProvider, transactionRef :: Text}
   deriving (Eq, Show)
 
 data CardProvider = CPStripe

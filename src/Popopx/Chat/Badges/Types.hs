@@ -36,6 +36,7 @@ module Popopx.Chat.Badges.Types
     BadgeAlert (..),
     BadgeAlertPrice (..),
     BadgeState (..),
+    OpenStorePurchase (..),
   ) where
 
 import Control.Applicative ((<|>))
@@ -49,7 +50,7 @@ import Data.Text.Encoding (decodeLatin1, encodeUtf8)
 import Data.Time.Clock (UTCTime)
 import Data.Word (Word8)
 import Popopx.Chat.Badges hiding (BadgePurchase (..))
-import Popopx.Chat.PaymentService.Types (InvoiceId, PaymentId, StoredPayment)
+import Popopx.Chat.PaymentService.Types (InvoiceId, PaymentId)
 import Popopx.Chat.Types (BoolDef (..))
 import Popopx.Messaging.Agent.Protocol (UserId)
 import Popopx.Messaging.Agent.Store.DB (fromTextField_)
@@ -242,12 +243,14 @@ data BadgeServiceErrorCode
   | BSEPaymentNotEntitled
   | BSEPaymentPending
   | BSEProviderUnavailable
+  | BSEProviderNotConfigured -- no verifier deployed: a dev service, not the store failing to answer
   | BSERateLimited
   | BSECodeInvalid
   | BSECodeUsed
   | BSECodeExpired
   | BSEReceiptInvalid
   | BSEReceiptUsed
+  | BSETestPurchase -- the store vouched for a purchase that cost nothing: Apple's sandbox, a Play license tester
   | BSEInternal
   | BSEUnknown Text -- forwards-compatible: service is deployed ahead of clients
   deriving (Eq, Show)
@@ -284,6 +287,17 @@ data BadgeState = BadgeState
     alert :: Maybe BadgeAlert,
     issueError :: Maybe BadgeIssueError,
     nextWakeAt :: Maybe UTCTime
+  }
+  deriving (Show)
+
+-- | One of a profile's store purchases that no receipt has reached yet, or whose receipt is held until
+-- the service credits it; transactionRef is set once a receipt arrived. Neither reference is a secret:
+-- Apple's is the transaction id, Google's is a hash of the token. creditError is set only while the
+-- held receipt's last attempt failed in a way that cannot clear on its own.
+data OpenStorePurchase = OpenStorePurchase
+  { invoiceId :: Maybe Text,
+    transactionRef :: Maybe Text,
+    creditError :: Maybe BadgeIssueFailure
   }
   deriving (Show)
 
@@ -331,12 +345,14 @@ instance TextEncoding BadgeServiceErrorCode where
     BSEPaymentNotEntitled -> "payment_not_entitled"
     BSEPaymentPending -> "payment_pending"
     BSEProviderUnavailable -> "provider_unavailable"
+    BSEProviderNotConfigured -> "provider_not_configured"
     BSERateLimited -> "rate_limited"
     BSECodeInvalid -> "code_invalid"
     BSECodeUsed -> "code_used"
     BSECodeExpired -> "code_expired"
     BSEReceiptInvalid -> "receipt_invalid"
     BSEReceiptUsed -> "receipt_used"
+    BSETestPurchase -> "test_purchase"
     BSEInternal -> "internal"
     BSEUnknown t -> t
   textDecode s = Just $ case s of
@@ -350,12 +366,14 @@ instance TextEncoding BadgeServiceErrorCode where
     "payment_not_entitled" -> BSEPaymentNotEntitled
     "payment_pending" -> BSEPaymentPending
     "provider_unavailable" -> BSEProviderUnavailable
+    "provider_not_configured" -> BSEProviderNotConfigured
     "rate_limited" -> BSERateLimited
     "code_invalid" -> BSECodeInvalid
     "code_used" -> BSECodeUsed
     "code_expired" -> BSECodeExpired
     "receipt_invalid" -> BSEReceiptInvalid
     "receipt_used" -> BSEReceiptUsed
+    "test_purchase" -> BSETestPurchase
     "internal" -> BSEInternal
     t -> BSEUnknown t
 
@@ -416,3 +434,5 @@ $(JQ.deriveJSON (sumTypeJSON $ dropPrefix "BIF") ''BadgeIssueFailure)
 $(JQ.deriveJSON defaultJSON ''BadgeIssueError)
 
 $(JQ.deriveJSON defaultJSON ''BadgeState)
+
+$(JQ.deriveJSON defaultJSON ''OpenStorePurchase)

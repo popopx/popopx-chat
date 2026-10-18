@@ -182,6 +182,7 @@ import Popopx.Chat.Store.SQLite.Migrations.M20260925_badge_bindings
 import Popopx.Chat.Store.SQLite.Migrations.M20261009_binthere_bar_flag
 import Popopx.Chat.Store.SQLite.Migrations.M20261010_invite_member_via_group
 import Popopx.Chat.Store.SQLite.Migrations.M20261012_delivery_job_notification
+import Popopx.Chat.Store.SQLite.Migrations.M20261016_badge_store_receipts
 import Popopx.Messaging.Agent.Store.Shared (Migration (..))
 
 schemaMigrations :: [(String, Query, Maybe Query)]
@@ -363,7 +364,8 @@ schemaMigrations =
     ("20260925_badge_bindings", m20260925_badge_bindings, Just down_m20260925_badge_bindings),
     ("20261009_binthere_bar_flag", m20261009_binthere_bar_flag, Just down_m20261009_binthere_bar_flag),
     ("20261010_invite_member_via_group", m20261010_invite_member_via_group, Just down_m20261010_invite_member_via_group),
-    ("20261012_delivery_job_notification", m20261012_delivery_job_notification, Just down_m20261012_delivery_job_notification)
+    ("20261012_delivery_job_notification", m20261012_delivery_job_notification, Just down_m20261012_delivery_job_notification),
+    ("20261016_badge_store_receipts", m20261016_badge_store_receipts, Just down_m20261016_badge_store_receipts)
   ]
 
 -- | The list of migrations in ascending order by date
