@@ -227,7 +227,7 @@ createOrUpdateContactRequest
                 ucr <- getContactRequest db user contactRequestId
                 pure $ RSCurrentRequest Nothing ucr (Just $ REBusinessChat gInfo clientMember)
       updateContactRequest :: UserContactRequest -> ExceptT StoreError IO RequestStage
-      updateContactRequest ucr@UserContactRequest {contactRequestId, contactId_, localDisplayName = oldLdn, profile = LocalProfile {displayName = oldDisplayName}} = do
+      updateContactRequest ucr@UserContactRequest {contactRequestId, contactId_, localDisplayName = oldLdn, profile = oldProfile@LocalProfile {displayName = oldDisplayName}} = do
         currentTs <- liftIO getCurrentTime
         liftIO $ updateProfile currentTs
         updateRequest currentTs
@@ -236,7 +236,7 @@ createOrUpdateContactRequest
         pure $ RSCurrentRequest (Just ucr) ucr' re_
         where
           updateProfile currentTs = do
-            (Profile {badge = badge'}, badgeVerified) <- liftIO $ profileBadgeVerified presHeader_ (badgeKeys cxt) Nothing profile
+            (Profile {badge = badge'}, badgeVerified) <- liftIO $ profileBadgeVerified presHeader_ (badgeKeys cxt) (Just oldProfile) profile
             DB.execute
               db
               [sql|

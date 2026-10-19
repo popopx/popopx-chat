@@ -43,7 +43,7 @@ import Popopx.Chat
 import Popopx.Chat.Badges.Code (badgeCodeText, parseBadgeCode)
 import Popopx.Chat.Controller
 import Popopx.Chat.Library.Commands
-import Popopx.Chat.Markdown (ParsedMarkdown (..), parseMaybeMarkdownList, parseUri, sanitizeUri)
+import Popopx.Chat.Markdown (ParsedMarkdown (..), parseMaybeMarkdownList, parseUri, parsedMarkdown, sanitizeUri)
 import Popopx.Chat.Mobile.Badges
 import Popopx.Chat.Mobile.File
 import Popopx.Chat.Mobile.Shared
@@ -59,9 +59,6 @@ import Popopx.Messaging.Agent.Env.SQLite (createAgentStore)
 import Popopx.Messaging.Agent.Protocol (AgentErrorType)
 import Popopx.Messaging.Agent.Store.Interface (closeDBStore, reopenDBStore)
 import Popopx.Messaging.Agent.Store.Shared (MigrationConfig (..), MigrationConfirmation (..), MigrationError)
-#if !defined(dbPostgres)
-import Popopx.Messaging.Agent.Store.SQLite.Common (DBOpts (..))
-#endif
 import qualified Popopx.Messaging.Crypto as C
 import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Parsers (defaultJSON, dropPrefix, sumTypeJSON)
@@ -121,9 +118,9 @@ foreign export ccall "chat_migrate_init" cChatMigrateInit :: CString -> CString 
 
 foreign export ccall "chat_migrate_init_key" cChatMigrateInitKey :: CString -> CString -> CInt -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
 
-foreign export ccall "chat_migrate_init_queue" cChatMigrateInitQueue :: CString -> CString -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
-
 foreign export ccall "chat_migrate_init_key_bytes" cChatMigrateInitKeyBytes :: CString -> Ptr Word8 -> CInt -> CInt -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
+
+foreign export ccall "chat_migrate_init_queue" cChatMigrateInitQueue :: CString -> CString -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
 
 foreign export ccall "chat_close_store" cChatCloseStore :: StablePtr ChatController -> IO CString
 
@@ -381,7 +378,7 @@ chatMigrateInitKey chatDbOpts keepKey confirm backgroundMode queueSize = runExce
       first DBMAgentError <$> newChatController db user_ defaultMobileConfig opts backgroundMode
     migrate createStore dbOpts confirmMigrations =
       ExceptT $ do
-        liftIO $ TIO.hPutStrLn stderr $ "[Migration] Creating store, dbFile=" <> pack (dbFilePath dbOpts)
+        liftIO $ TIO.hPutStrLn stderr $ "[Migration] Creating store"
         result <- (first (DBMErrorMigration errDbStr) <$> createStore dbOpts confirmMigrations)
 #if !defined(dbPostgres)
           `catch` (\e -> liftIO (TIO.hPutStrLn stderr $ "[Migration] checkDBError: sqlError=" <> pack (show $ sqlError e)) >> pure (checkDBError e))
@@ -433,7 +430,7 @@ chatRecvMsgWait :: ChatController -> Int -> IO JSONByteString
 chatRecvMsgWait cc time = fromMaybe "" <$> timeout time (chatRecvMsg cc)
 
 chatParseMarkdown :: ByteString -> JSONByteString
-chatParseMarkdown = J.encode . ParsedMarkdown . parseMaybeMarkdownList . safeDecodeUtf8
+chatParseMarkdown = J.encode . parsedMarkdown . safeDecodeUtf8
 {-# INLINE chatParseMarkdown #-}
 
 chatParseServer :: ByteString -> JSONByteString

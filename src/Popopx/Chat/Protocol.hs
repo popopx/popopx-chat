@@ -87,7 +87,8 @@ import Popopx.Messaging.Version hiding (version)
 -- 18 - relay web capabilities (2026-05-31)
 -- 19 - group roster (2026-06-18)
 -- 20 - p2p group member keys for signing (2026-07-26)
--- 22 - group invite via group, owner-signed relay invitations (2026-10-10)
+-- 21 - command keywords with any characters (2026-09-27)
+-- 22 - owner-signed relay invitations, group invitations via member connections (2026-10-10)
 
 -- This should not be used directly in code, instead use `maxVersion chatVRange` from ChatConfig.
 -- This indirection is needed for backward/forward compatibility testing.
@@ -1373,6 +1374,7 @@ requiresSignature = \case
   XGrpRoster_ -> True
   XInfo_ -> True
   XGrpLinkMem_ -> True
+  XGrpRelayInv_ -> True
   _ -> False
 
 -- | Content events a member may sign (XMsgNew opt-in; XMsgUpdate/XMsgDel when the target was signed).

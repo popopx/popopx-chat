@@ -52,8 +52,9 @@ import Popopx.Chat.Controller
 import Popopx.Chat.Delivery
 import Popopx.Chat.Files (getChatTempDirectory, safeFileNameStr)
 import Popopx.Chat.Library.Internal
-import Popopx.Chat.Web (channelContentChanged, channelProfileUpdated, channelRemoved)
+import Popopx.Chat.Markdown (ParsedMarkdown (..))
 import Popopx.Chat.BinThere.Protocol (burnAfterReadTTL)
+import Popopx.Chat.Web (channelContentChanged, channelProfileUpdated, channelRemoved)
 import Popopx.Chat.Messages
 import Popopx.Chat.Messages.Batch (batchDeliveryTasks1, batchProfiles, batchProfilesWithBody, encodeBinaryBatch, encodeFwdElement, maxBatchElementSize)
 import Popopx.Chat.Messages.CIContent
@@ -1129,9 +1130,9 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
               XGrpRoster gr -> fmap ctx <$> xGrpRoster gInfo' m'' m'' gr verifiedMsg sharedMsgId_ brokerTs
               XGrpRosterAck ackVer ackErr -> Nothing <$ xGrpRosterAck (GIK gInfo' gks) m'' ackVer ackErr
               XGrpRosterRequest reqVer -> Nothing <$ xGrpRosterRequest (GIK gInfo' gks) m'' reqVer
+              XGrpInv gInv -> Nothing <$ xGrpInv gInfo' m'' conn' gInv msg brokerTs
               -- TODO [knocking] why don't we forward these messages?
               XGrpDirectInv connReq mContent_ msgScope -> memberCanSend (Just m'') msgScope $ Nothing <$ xGrpDirectInv gInfo' m'' conn' connReq mContent_ msg brokerTs
-              XGrpInv gInv -> Nothing <$ xGrpInv gInfo' m'' conn' gInv msg brokerTs
               XGrpMsgForward fwd msg' -> Nothing <$ xGrpMsgForward (GIK gInfo' gks) Nothing m'' fwd (ParsedMsg Nothing Nothing msg') brokerTs
               XInfoProbe probe -> Nothing <$ xInfoProbe (COMGroupMember m'') probe
               XInfoProbeCheck probeHash -> Nothing <$ xInfoProbeCheck (COMGroupMember m'') probeHash
@@ -2241,11 +2242,11 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                       createContentItem gInfo' (Just m') scopeInfo
                       pure $ Just $ infoToDeliveryContext gInfo' scopeInfo sentAsGroup
       where
-        rejected gInfo' m' scopeInfo f = newChatItem gInfo' m' scopeInfo (ciContentNoParse $ CIRcvGroupFeatureRejected f) Nothing Nothing False False
+        rejected gInfo' m' scopeInfo f = newChatItem gInfo' m' scopeInfo (ciContentNoParse $ CIRcvGroupFeatureRejected f) Nothing Nothing False
         timed_ gInfo' = if bar' then Just CITimed {ttl = burnAfterReadTTL, deleteAt = Nothing} else if forwarded then rcvCITimed_ (Just Nothing) itemTTL else rcvGroupCITimed gInfo' itemTTL
         live' = fromMaybe False live_
-        bar' = fromMaybe False bar_
         MsgContainer {content = c, mentions = MsgMentions mentions, file = fInv_, ttl = itemTTL, live = live_, scope = msgScope_, asGroup = asGroup_, burnAfterRead = bar_} = mc
+        bar' = fromMaybe False bar_
         content = case c of
           MCChat {text, chatLink, ownerSig = Just LinkOwnerSig {chatBinding = B64UrlByteString binding}} -> case publicGroup of
             Just pgp | maybe False (binding ==) (expectedBinding pgp) -> c
@@ -2256,7 +2257,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
           | otherwise = (\GroupMember {memberId} -> encodeChatBinding CBGroup (smpEncode (publicGroupId, memberId))) <$> m_
         GroupInfo {groupProfile = GroupProfile {publicGroup}} = gInfo
         sentAsGroup = asGroup_ == Just True
-        ts@(_, ft_) = msgContentTexts content
+        ts@(_, ParsedMarkdown ft_ _) = msgContentTexts content
         -- m' is Maybe GroupMember
         saveRcvCI gInfo' m' scopeInfo =
           let itemMember_ = if sentAsGroup then Nothing else m'
@@ -2265,7 +2266,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
         createBlockedByAdmin gInfo' m' scopeInfo
           | groupFeatureAllowed SGFFullDelete gInfo' = do
               -- ignores member role when blocked by admin
-              (ci, cInfo) <- saveRcvCI gInfo' m' scopeInfo (ciContentNoParse CIRcvBlocked) Nothing (timed_ gInfo') False False M.empty
+              (ci, cInfo) <- saveRcvCI gInfo' m' scopeInfo (ciContentNoParse CIRcvBlocked) Nothing (timed_ gInfo') False bar' M.empty
               ci' <- withStore' $ \db -> updateGroupCIBlockedByAdmin db user gInfo' ci brokerTs
               groupMsgToView cInfo ci'
           | otherwise = do
@@ -2277,7 +2278,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
           | moderatorRole < GRModerator || moderatorRole < memberRole =
               createContentItem gInfo' (Just m') scopeInfo
           | groupFeatureMemberAllowed SGFFullDelete moderator gInfo' = do
-              (ci, cInfo) <- saveRcvCI gInfo' (Just m') scopeInfo (ciContentNoParse CIRcvModerated) Nothing (timed_ gInfo') False False M.empty
+              (ci, cInfo) <- saveRcvCI gInfo' (Just m') scopeInfo (ciContentNoParse CIRcvModerated) Nothing (timed_ gInfo') False bar' M.empty
               ci' <- withStore' $ \db -> updateGroupChatItemModerated db user gInfo' ci moderator moderatedAt
               groupMsgToView cInfo ci'
           | otherwise = do
@@ -2288,17 +2289,17 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
         -- m' is Maybe GroupMember
         createNonLive gInfo' m' scopeInfo file_ = do
           let mentions' = if maybe False memberBlocked m' then M.empty else mentions
-          saveRcvCI gInfo' m' scopeInfo (CIRcvMsgContent content, ts) (snd <$> file_) (timed_ gInfo') False False mentions'
+          saveRcvCI gInfo' m' scopeInfo (CIRcvMsgContent content, ts) (snd <$> file_) (timed_ gInfo') False bar' mentions'
         createContentItem gInfo' m' scopeInfo = do
           file_ <- processFileInv gInfo' m'
-          newChatItem gInfo' m' scopeInfo (CIRcvMsgContent content, ts) (snd <$> file_) (timed_ gInfo') live' bar'
+          newChatItem gInfo' m' scopeInfo (CIRcvMsgContent content, ts) (snd <$> file_) (timed_ gInfo') live'
           unless (maybe False memberBlocked m') $ autoAcceptFile file_
         processFileInv gInfo' m' =
           let fileMember_ = if sentAsGroup then Nothing else m'
            in processFileInvitation fInv_ content bar' (rcvGroupFileProhibited gInfo' m' sentAsGroup) $ \db -> createRcvGroupFileTransfer db userId gInfo' fileMember_ FTNormal sharedMsgId_
-        newChatItem gInfo' m' scopeInfo ciContent ciFile_ timed live bar = do
+        newChatItem gInfo' m' scopeInfo ciContent ciFile_ timed live = do
           let mentions' = if maybe False memberBlocked m' then M.empty else mentions
-          (ci, cInfo) <- saveRcvCI gInfo' m' scopeInfo ciContent ciFile_ timed live bar mentions'
+          (ci, cInfo) <- saveRcvCI gInfo' m' scopeInfo ciContent ciFile_ timed live bar' mentions'
           ci' <- maybe (pure ci) (\m -> blockedMemberCI gInfo' m ci) m'
           let memberId_ = memberId' <$> m'
           reactions <- maybe (pure []) (\sharedMsgId -> withStore' $ \db -> getGroupCIReactions db gInfo' memberId_ sharedMsgId) sharedMsgId_
@@ -2345,7 +2346,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
                     pure $ Just $ infoToDeliveryContext gInfo' scopeInfo showGroupAsSender
       where
         content = CIRcvMsgContent mc
-        ts@(_, ft_) = msgContentTexts mc
+        ts@(_, ParsedMarkdown ft_ _) = msgContentTexts mc
         live = fromMaybe False live_
         updateRcvChatItem = do
           (cci, scopeInfo) <- withStore $ \db -> do
@@ -2760,35 +2761,6 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
       joinAgentConnectionAsync cmdId False acId True connRequest dm subMode
       toView $ CEvtUserAcceptedGroupSent user gInfo {membership = membership {memberStatus = GSMemAccepted}} hostContact_
 
-    xGrpInv :: GroupInfo -> GroupMember -> Connection -> GroupInvitation -> RcvMessage -> UTCTime -> CM ()
-    xGrpInv viaGInfo m mConn@Connection {peerChatVRange} inv msg brokerTs
-      | useRelays' viaGInfo = messageError "x.grp.inv: not allowed in channels"
-      | isJust publicGroup = messageError "x.grp.inv: can't invite to channel"
-      | not (groupFeatureMemberAllowed SGFDirectMessages m viaGInfo) = messageError "x.grp.inv: direct messages not allowed"
-      | memberBlocked m = messageWarning "x.grp.inv: member is blocked (ignoring)"
-      | fromRole < GRAdmin || fromRole < memRole = messageError "x.grp.inv: inviting member role"
-      | fromMemId == memId = messageError "x.grp.inv: duplicate member ID"
-      | otherwise = do
-          memberKeys <- atomically . C.generateKeyPair =<< asks random
-          let incognitoProfileId = localProfileId <$> incognitoMembershipProfile viaGInfo
-          (g@(GIK gInfo@GroupInfo {groupId, localDisplayName, groupProfile, membership} _), hostId) <- withStore $ \db -> createGroupInvitation db cxt user (Right m) peerChatVRange inv incognitoProfileId memberKeys
-          void $ createChatItem user (CDGroupSnd gInfo Nothing) False CIChatBanner Nothing Nothing (Just epochStart)
-          let GroupMember {groupMemberId} = membership
-              createInvitationItem invStatus = do
-                let content = CIRcvGroupInvitation (CIGroupInvitation {groupId, groupMemberId, localDisplayName, groupProfile, status = invStatus}) memRole
-                (ci, cInfo) <- saveRcvChatItemNoParse user (CDGroupRcv viaGInfo Nothing m) msg brokerTs content
-                withStore' $ \db -> setGroupInvitationChatItemId db user groupId (chatItemId' ci)
-                groupMsgToView cInfo ci
-          if isTrue (autoAcceptGroupInvitations user)
-            then when (memberStatus membership == GSMemInvited) $ do
-              joinGroupAsync g hostId mConn connRequest Nothing False
-              createInvitationItem CIGISAccepted
-            else do
-              createInvitationItem CIGISPending
-              toView CEvtReceivedGroupInvitationViaGroup {user, groupInfo = gInfo, viaGroupInfo = viaGInfo, viaMember = m, fromMemberRole = fromRole, memberRole = memRole}
-      where
-        GroupInvitation {fromMember = MemberIdRole fromMemId fromRole, invitedMember = MemberIdRole memId memRole, connRequest, groupProfile = GroupProfile {publicGroup}} = inv
-
     checkIntegrityCreateItem :: forall c. ChatTypeI c => ChatDirection c 'MDRcv -> MsgMeta -> CM ()
     checkIntegrityCreateItem cd MsgMeta {integrity, broker = (_, brokerTs)} = case integrity of
       MsgOk -> pure ()
@@ -2838,7 +2810,7 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
             toView $ CEvtContactUpdated user c c'
             pure c'
         | otherwise ->
-          pure c
+            pure c
       where
         p@Profile {badge = storedBadge} = fromLocalProfile lp
         Contact {userPreferences = ctUserPrefs@Preferences {timedMessages = ctUserTMPref}} = c
@@ -3919,6 +3891,35 @@ processAgentMessageConn cxt user@User {userId} entity gks_ corrId agentConnId ag
       | otherwise = do
           unless (isUserGrpFwdRelay gInfo) $ connectToRelayAsync user gInfo rl
           pure $ Just DJSGroup {jobSpec = DJDeliveryJob {includePending = False}}
+
+    xGrpInv :: GroupInfo -> GroupMember -> Connection -> GroupInvitation -> RcvMessage -> UTCTime -> CM ()
+    xGrpInv viaGInfo m mConn@Connection {peerChatVRange} inv msg brokerTs
+      | useRelays' viaGInfo = messageError "x.grp.inv: not allowed in channels"
+      | isJust publicGroup = messageError "x.grp.inv: can't invite to channel"
+      | not (groupFeatureMemberAllowed SGFDirectMessages m viaGInfo) = messageError "x.grp.inv: direct messages not allowed"
+      | memberBlocked m = messageWarning "x.grp.inv: member is blocked (ignoring)"
+      | fromRole < GRAdmin || fromRole < memRole = messageError "x.grp.inv: inviting member role"
+      | fromMemId == memId = messageError "x.grp.inv: duplicate member ID"
+      | otherwise = do
+          memberKeys <- atomically . C.generateKeyPair =<< asks random
+          let incognitoProfileId = localProfileId <$> incognitoMembershipProfile viaGInfo
+          (g@(GIK gInfo@GroupInfo {groupId, localDisplayName, groupProfile, membership} _), hostId) <- withStore $ \db -> createGroupInvitation db cxt user (Right m) peerChatVRange inv incognitoProfileId memberKeys
+          void $ createChatItem user (CDGroupSnd gInfo Nothing) False CIChatBanner Nothing Nothing (Just epochStart)
+          let GroupMember {groupMemberId} = membership
+              createInvitationItem invStatus = do
+                let content = CIRcvGroupInvitation (CIGroupInvitation {groupId, groupMemberId, localDisplayName, groupProfile, status = invStatus}) memRole
+                (ci, cInfo) <- saveRcvChatItemNoParse user (CDGroupRcv viaGInfo Nothing m) msg brokerTs content
+                withStore' $ \db -> setGroupInvitationChatItemId db user groupId (chatItemId' ci)
+                groupMsgToView cInfo ci
+          if isTrue (autoAcceptGroupInvitations user)
+            then when (memberStatus membership == GSMemInvited) $ do
+              joinGroupAsync g hostId mConn connRequest Nothing False
+              createInvitationItem CIGISAccepted
+            else do
+              createInvitationItem CIGISPending
+              toView CEvtReceivedGroupInvitationViaGroup {user, groupInfo = gInfo, viaGroupInfo = viaGInfo, viaMember = m, fromMemberRole = fromRole, memberRole = memRole}
+      where
+        GroupInvitation {fromMember = MemberIdRole fromMemId fromRole, invitedMember = MemberIdRole memId memRole, connRequest, groupProfile = GroupProfile {publicGroup}} = inv
 
     xGrpDirectInv :: GroupInfo -> GroupMember -> Connection -> ConnReqInvitation -> Maybe MsgContent -> RcvMessage -> UTCTime -> CM ()
     xGrpDirectInv g@GroupInfo {groupId, groupProfile = gp} m mConn@Connection {connId = mConnId} connReq mContent_ msg brokerTs

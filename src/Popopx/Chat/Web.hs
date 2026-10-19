@@ -1,3 +1,9 @@
+-- Original Work Copyright (C) 2020-2022 simplex.chat
+--
+-- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
+-- This file was modified by POPOPX Team in 2026.
+-- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
+
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE GADTs #-}
@@ -31,6 +37,7 @@ import Control.Monad
 import Control.Monad.Except (runExceptT)
 import Data.Either (rights)
 import Data.Int (Int64)
+import Data.List.NonEmpty (NonEmpty)
 import qualified Data.Aeson as J
 import qualified Data.Aeson.TH as JQ
 import qualified Data.ByteString.Char8 as B
@@ -44,7 +51,7 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Data.Time.Clock (UTCTime, getCurrentTime)
 import Popopx.Chat.Controller (ChatController (..), CorsOrigin (..), PublishableGroup (..), WebPreviewConfig (..), WebPreviewState (..), storeCxt)
-import Popopx.Chat.Markdown (FormattedText (..), MarkdownList, parseMaybeMarkdownList)
+import Popopx.Chat.Markdown (MarkdownBlock, MarkdownList, ParsedMarkdown (..), parsedMarkdown)
 import Popopx.Chat.Messages
   ( CChatItem (..),
     CIDirection (..),
@@ -101,6 +108,7 @@ data WebMessage = WebMessage
     ts :: UTCTime,
     content :: MsgContent,
     formattedText :: Maybe MarkdownList,
+    markdownBlocks :: Maybe (NonEmpty MarkdownBlock),
     file :: Maybe WebFileInfo,
     quote :: Maybe QuotedMsg,
     reactions :: [CIReactionCount],
@@ -112,7 +120,9 @@ data WebMessage = WebMessage
 data WebChannelPreview = WebChannelPreview
   { channel :: GroupProfile,
     shortDescription :: Maybe MarkdownList,
+    shortDescriptionBlocks :: Maybe (NonEmpty MarkdownBlock),
     welcomeMessage :: Maybe MarkdownList,
+    welcomeMessageBlocks :: Maybe (NonEmpty MarkdownBlock),
     members :: [WebMemberProfile],
     subscribers :: Maybe Int64,
     messages :: [WebMessage],
@@ -247,10 +257,14 @@ renderGroupPreview WebPreviewConfig {webJsonDir, webPreviewItemCount} cc user gI
       let rendered = mapMaybe toRenderedItem $ rights items
           msgs = map fst rendered
           senders = collectSenders $ map memberToProfile owners <> concatMap snd rendered
+          ParsedMarkdown shortDescription shortDescriptionBlocks = maybe (ParsedMarkdown Nothing Nothing) parsedMarkdown sd
+          ParsedMarkdown welcomeMessage welcomeMessageBlocks = maybe (ParsedMarkdown Nothing Nothing) parsedMarkdown wd
           preview = WebChannelPreview
             { channel = gp,
-              shortDescription = toFormattedText =<< sd,
-              welcomeMessage = toFormattedText =<< wd,
+              shortDescription,
+              shortDescriptionBlocks,
+              welcomeMessage,
+              welcomeMessageBlocks,
               members = senders,
               subscribers,
               messages = msgs,
@@ -307,7 +321,7 @@ channelRemoved cc gId =
     void $ tryPutTMVar wakeSignal ()
 
 toRenderedItem :: CChatItem 'CTGroup -> Maybe (WebMessage, [WebMemberProfile])
-toRenderedItem (CChatItem _ ChatItem {chatDir, meta = CIMeta {itemTs, itemTimed, itemForwarded, itemEdited}, content, formattedText, quotedItem, reactions, file})
+toRenderedItem (CChatItem _ ChatItem {chatDir, meta = CIMeta {itemTs, itemTimed, itemForwarded, itemEdited}, content, formattedText, markdownBlocks, quotedItem, reactions, file})
   | isJust itemTimed = Nothing
   | otherwise = case ciMsgContent content of
       Just mc | not (isReport mc) ->
@@ -323,6 +337,7 @@ toRenderedItem (CChatItem _ ChatItem {chatDir, meta = CIMeta {itemTs, itemTimed,
                     ts = itemTs,
                     content = mc,
                     formattedText,
+                    markdownBlocks,
                     file = webFileInfo <$> file,
                     quote = quotedItem >>= ciQuoteToQuotedMsg,
                     reactions,
@@ -422,13 +437,6 @@ removeStaleFiles dir activeFiles = do
   forM_ (S.difference allFiles activeFiles) $ \f ->
     removeFile (dir </> f) `catchOwn'` \(e :: SomeException) ->
       logError $ "web preview: error removing stale file " <> T.pack f <> ": " <> tshow e
-
-toFormattedText :: Text -> Maybe MarkdownList
-toFormattedText t = case parseMaybeMarkdownList t of
-  Just fts | any hasFormat fts -> Just fts
-  _ -> Nothing
-  where
-    hasFormat (FormattedText fmt _) = isJust fmt
 
 publicGroupIdFileName :: B64UrlByteString -> String
 publicGroupIdFileName = B.unpack . strEncode

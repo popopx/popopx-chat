@@ -64,8 +64,6 @@ import qualified Popopx.Chat.Badges.Ledger as L
 import Popopx.Chat.Badges.Types (BadgeAlert (..), BadgeAlertKind (..), BadgeIssueError (..), BadgeIssueFailure (..), BadgeState (..), OpenStorePurchase (..))
 import Popopx.Chat.Badges.Code (badgeCodeText, parseBadgeCode)
 import Popopx.Chat.Badges.Service (BadgeBalance (..), BadgeServiceCommand (..), BadgeServiceErrorCode (..), BadgeServiceRequest (..), BadgeServiceResponse (..), BadgeStatement (..), StatementDebitType (..), StatementEntry (..), StatementEntryType (..), currentBadgeServiceVersion)
-import Popopx.Chat.PaymentService (ServicePayment (..), appleTransactionId, googlePurchaseRef)
-import Popopx.Chat.PaymentService.Types (PaymentProvider (..), StoreTransactionRef (..))
 import Popopx.Chat.Names (PopopxDomainProof (..), PopopxDomainClaim (..), claimDomain, mkDomainClaim)
 import Popopx.Chat.Call
 import Popopx.Chat.Controller
@@ -78,6 +76,8 @@ import Popopx.Chat.Messages.CIContent
 import Popopx.Chat.Messages.CIContent.Events
 import Popopx.Chat.Operators
 import Popopx.Chat.Options
+import Popopx.Chat.PaymentService (ServicePayment (..), appleTransactionId, googlePurchaseRef)
+import Popopx.Chat.PaymentService.Types (PaymentProvider (..), StoreTransactionRef (..))
 import Popopx.Chat.ProfileGenerator (generateRandomProfile)
 import Popopx.Chat.Protocol
 import Popopx.Chat.Remote
@@ -834,7 +834,7 @@ processChatCommand cxt nm = \case
     CTGroup -> withGroupLock "updateChatItem" chatId $ do
       g@(GIK gInfo@GroupInfo {groupId, membership} _) <- withFastStore $ \db -> getGroupInfoKeys db cxt user chatId
       when (isNothing scope) $ assertUserGroupRole gInfo GRAuthor
-      let (_, ft_) = msgContentTexts mc
+      let (_, ParsedMarkdown ft_ _) = msgContentTexts mc
       if prohibitedPopopxLinks gInfo membership mc ft_
         then throwCmdError ("feature not allowed " <> T.unpack (groupFeatureNameText GFPopopxLinks))
         else do
@@ -2789,10 +2789,10 @@ processChatCommand cxt nm = \case
       pure (gInfo, relays)
     pure $ CRGroupRelays user gInfo relays
   APIAddGroupRelays groupId relayIds -> withUser $ \user -> withGroupLock "addGroupRelays" groupId $ do
-    (GIK gInfo gks, existingRelays) <- withFastStore $ \db -> do
-      giK@(GIK gi _) <- getGroupInfoKeys db cxt user groupId
+    (g@(GIK gInfo _), existingRelays) <- withFastStore $ \db -> do
+      g@(GIK gi _) <- getGroupInfoKeys db cxt user groupId
       rs <- liftIO $ getGroupRelays db gi
-      pure (giK, rs)
+      pure (g, rs)
     assertUserGroupRole gInfo GROwner
     unless (useRelays' gInfo) $ throwCmdError "group does not use relays"
     let existingRelayIds = map (\GroupRelay {userChatRelay = UserChatRelay {chatRelayId = DBEntityId rId}} -> rId) existingRelays
@@ -2802,7 +2802,7 @@ processChatCommand cxt nm = \case
       Just sl -> pure sl
       Nothing -> throwChatError $ CEException "group link has no short link"
     relays <- withFastStore $ \db -> mapM (getChatRelayById db user) (L.toList relayIds)
-    results <- addRelays user (GIK gInfo gks) sLnk relays
+    results <- addRelays user g sLnk relays
     case partitionEithers (map snd results) of
       ([], _) -> do
         relays' <- withFastStore $ \db -> liftIO $ getGroupRelays db gInfo
@@ -4933,6 +4933,7 @@ processChatCommand cxt nm = \case
                 Just file@(CryptoFile filePath cfArgs) -> do
                   let User {profile = LocalProfile {localBadge}} = user
                   fileSize <- checkSndFile (if contactConnIncognito ct then Nothing else localBadge) file
+                  binding_ <- ifM ((not (contactConnIncognito ct) &&) <$> fileNeedsBadge fileSize) (directChatBinding ct) (pure Nothing)
                   file' <- if burnAfterRead && isNothing cfArgs
                     then do
                       cfArgs' <- atomically . CF.randomArgs =<< asks random
@@ -4945,7 +4946,6 @@ processChatCommand cxt nm = \case
                           pure $ CryptoFile filePath (Just cfArgs')
                         Left _ -> pure file
                     else pure file
-                  binding_ <- ifM ((not (contactConnIncognito ct) &&) <$> fileNeedsBadge fileSize) (directChatBinding ct) (pure Nothing)
                   (fInv, ciFile) <- xftpSndFileTransfer user file' fileSize 1 (CGContact ct) binding_
                   pure (Just fInv, Just ciFile)
                 Nothing -> pure (Nothing, Nothing)
@@ -4958,12 +4958,12 @@ processChatCommand cxt nm = \case
                     fl_ <- liftIO $ ciffForwardLink db ciff
                     pure (mcForward fl_ mc, Nothing)
                   (Just qiId, Nothing) -> do
-                    CChatItem _ qci@ChatItem {meta = CIMeta {itemTs, itemSharedMsgId}, formattedText, file} <-
+                    CChatItem _ qci@ChatItem {meta = CIMeta {itemTs, itemSharedMsgId}, formattedText, markdownBlocks, file} <-
                       getDirectChatItem db user contactId qiId
                     (origQmc, qd, sent) <- quoteData qci
                     let msgRef = MsgRef {msgId = itemSharedMsgId, sentAt = itemTs, sent, memberId = Nothing}
                         qmc = quoteContent mc origQmc file
-                        quotedItem = CIQuote {chatDir = qd, itemId = Just qiId, sharedMsgId = itemSharedMsgId, sentAt = itemTs, content = qmc, formattedText}
+                        quotedItem = CIQuote {chatDir = qd, itemId = Just qiId, sharedMsgId = itemSharedMsgId, sentAt = itemTs, content = qmc, formattedText, markdownBlocks}
                     pure (mcQuote QuotedMsg {msgRef, content = qmc} mc, Just quotedItem)
                   (Just _, Just _) -> throwError SEInvalidQuote
                 pure (mc' {file = fInv_, ttl = ttl' <$> timed_, live = justTrue live, burnAfterRead = justTrue burnAfterRead}, quotedItem_)
@@ -5005,7 +5005,7 @@ processChatCommand cxt nm = \case
             findProhibited :: [ComposedMessageReq] -> Maybe GroupFeature
             findProhibited =
               foldr'
-                (\(ComposedMessage {fileSource, msgContent = mc}, _, (_, ft), _) acc -> prohibitedGroupContent gInfo membership chatScopeInfo mc ft fileSource True <|> acc)
+                (\(ComposedMessage {fileSource, msgContent = mc}, _, (_, ParsedMarkdown ft _), _) acc -> prohibitedGroupContent gInfo membership chatScopeInfo mc ft fileSource True <|> acc)
                 Nothing
         processComposedMessages ::  CM ChatResponse
         processComposedMessages = do
@@ -5031,6 +5031,8 @@ processChatCommand cxt nm = \case
                 Just file@(CryptoFile filePath cfArgs) -> do
                   let User {profile = LocalProfile {localBadge}} = user
                   fileSize <- checkSndFile (if incognitoMembership gInfo then Nothing else localBadge) file
+                  needsBadge <- fileNeedsBadge fileSize
+                  let binding_ = if needsBadge && not (incognitoMembership gInfo) then sndGroupChatBinding gInfo showGroupAsSender else Nothing
                   file' <- if bar && isNothing cfArgs
                     then do
                       cfArgs' <- atomically . CF.randomArgs =<< asks random
@@ -5043,8 +5045,6 @@ processChatCommand cxt nm = \case
                           pure $ CryptoFile filePath (Just cfArgs')
                         Left _ -> pure file
                     else pure file
-                  needsBadge <- fileNeedsBadge fileSize
-                  let binding_ = if needsBadge && not (incognitoMembership gInfo) then sndGroupChatBinding gInfo showGroupAsSender else Nothing
                   (fInv, ciFile) <- xftpSndFileTransfer user file' fileSize n (CGGroup gInfo recipients) binding_
                   fInv' <-
                     if signMsgs && useRelays' gInfo
@@ -5199,7 +5199,7 @@ processChatCommand cxt nm = \case
         prepareLocalItemsData ::
           NonEmpty ComposedMessageReq ->
           NonEmpty (Maybe (CIFile 'MDSnd)) ->
-          NonEmpty (CIContent 'MDSnd, Maybe (CIFile 'MDSnd), Maybe CIForwardedFrom, (Text, Maybe MarkdownList))
+          NonEmpty (CIContent 'MDSnd, Maybe (CIFile 'MDSnd), Maybe CIForwardedFrom, (Text, ParsedMarkdown))
         prepareLocalItemsData =
           L.zipWith $ \(ComposedMessage {msgContent = mc}, itemForwarded, ts, _) f ->
             (CISndMsgContent mc, f, itemForwarded, ts)
@@ -5307,7 +5307,7 @@ updatedRelays relays UserOperatorServers {operator, smpServers, xftpServers, cha
     disableRelay relay@UserChatRelay {preset} =
       AUCR SDBStored $ if preset then relay {enabled = False} else relay {deleted = True}
 
-type ComposedMessageReq = (ComposedMessage, Maybe CIForwardedFrom, (Text, Maybe MarkdownList), Map MemberName CIMention)
+type ComposedMessageReq = (ComposedMessage, Maybe CIForwardedFrom, (Text, ParsedMarkdown), Map MemberName CIMention)
 
 composedMessage :: Maybe CryptoFile -> MsgContent -> ComposedMessage
 composedMessage f mc = ComposedMessage {fileSource = f, quotedItemId = Nothing, msgContent = mc, mentions = M.empty}
@@ -5317,7 +5317,7 @@ composedMessageReq cm@ComposedMessage {msgContent = mc} = (cm, Nothing, msgConte
 
 composedMessageReqMentions :: DB.Connection -> User -> GroupInfo -> ComposedMessage -> ExceptT StoreError IO ComposedMessageReq
 composedMessageReqMentions db user g cm@ComposedMessage {msgContent = mc, mentions} = do
-  let ts@(_, ft_) = msgContentTexts mc
+  let ts@(_, ParsedMarkdown ft_ _) = msgContentTexts mc
   (cm,Nothing,ts,) <$> getCIMentions db user g ft_ mentions
 
 data ChangedProfileContact = ChangedProfileContact
@@ -5380,7 +5380,7 @@ redeemBadgeCode nm user@User {userId} codeText = do
   code <- maybe (throwRedeemError BREInvalidCode) pure $ parseBadgeCode codeText
   sendTarget <- requireBadgeService
   g <- asks random
-  now <- badgeNow
+  now <- liftIO getCurrentTime
   let codeSent = badgeCodeText code
   -- the guard, the request and the write are one section: without it two codes redeemed at once
   -- both pass the guard and are both spent, for one badge
@@ -6398,6 +6398,10 @@ chatCommandP =
       "/_get items " *> (APIGetChatItems <$> chatPaginationP <*> optional (" search=" *> textP)),
       "/_get item info " *> (APIGetChatItemInfo <$> chatRefP <* A.space <*> A.decimal),
       "/_send " *> (APISendMessages <$> sendRefP <*> liveMessageP <*> sendMessageTTLP <*> signMessagesP <*> burnAfterReadP <*> (" json " *> jsonP <|> " text " *> composedMessagesTextP)),
+      "/_binthere list " *> (APIListBinThereBots <$> A.decimal),
+      "/_binthere add " *> (APIAddBinThereBot <$> A.decimal <* A.space <*> jsonP),
+      "/_binthere update " *> (APIUpdateBinThereBot <$> A.decimal <* A.space <*> jsonP),
+      "/_binthere delete " *> (APIDeleteBinThereBot <$> A.decimal <* A.space <*> A.decimal),
       "/_create tag " *> (APICreateChatTag <$> jsonP),
       "/_tags " *> (APISetChatTags <$> chatRefP <*> optional _strP),
       "/_delete tag " *> (APIDeleteChatTag <$> A.decimal),
@@ -6433,10 +6437,6 @@ chatCommandP =
       "/_badge state " *> (APIGetBadgeState <$> A.decimal),
       "/_badge ledger " *> (APIGetBadgeLedger <$> A.decimal <* A.space <*> A.decimal),
       "/_badge ack " *> (APIAckBadgeAlert <$> A.decimal <* A.space <*> A.decimal <* A.space <*> badgeAlertKindP <* A.space <*> onOffP <* A.space <*> textP),
-      "/_binthere list " *> (APIListBinThereBots <$> A.decimal),
-      "/_binthere add " *> (APIAddBinThereBot <$> A.decimal <* A.space <*> jsonP),
-      "/_binthere update " *> (APIUpdateBinThereBot <$> A.decimal <* A.space <*> jsonP),
-      "/_binthere delete " *> (APIDeleteBinThereBot <$> A.decimal <* A.space <*> A.decimal),
       "/_service_response " *> (APISendServiceResponse <$> A.decimal <* A.space <*> strP <* A.space <*> jsonP),
       "/_call invite @" *> (APISendCallInvitation <$> A.decimal <* A.space <*> jsonP),
       "/call " *> char_ '@' *> (SendCallInvitation <$> displayNameP <*> pure defaultCallType),

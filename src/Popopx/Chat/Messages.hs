@@ -263,6 +263,7 @@ data ChatItem (c :: ChatType) (d :: MsgDirection) = ChatItem
     -- The key is a name used in the message text, used to look up CIMention.
     mentions :: Map MemberName CIMention,
     formattedText :: Maybe MarkdownList,
+    markdownBlocks :: Maybe (NonEmpty MarkdownBlock),
     quotedItem :: Maybe (CIQuote c),
     reactions :: [CIReactionCount],
     file :: Maybe (CIFile d)
@@ -525,6 +526,7 @@ data CIMeta (c :: ChatType) (d :: MsgDirection) = CIMeta
     forwardedByMember :: Maybe GroupMemberId,
     showGroupAsSender :: ShowGroupAsSender,
     msgVerified :: Maybe MsgVerified,
+    markdownBlocks :: Maybe (NonEmpty MarkdownBlock),
     itemBurnAfterRead :: Bool,
     createdAt :: UTCTime,
     updatedAt :: UTCTime
@@ -533,12 +535,12 @@ data CIMeta (c :: ChatType) (d :: MsgDirection) = CIMeta
 
 type ShowGroupAsSender = Bool
 
-mkCIMeta :: forall c d. ChatTypeI c => ChatItemId -> CIContent d -> Text -> CIStatus d -> Maybe Bool -> Maybe SharedMsgId -> Maybe CIForwardedFrom -> Maybe (CIDeleted c) -> Bool -> Maybe CITimed -> Maybe Bool -> Bool -> Bool -> UTCTime -> ChatItemTs -> Maybe GroupMemberId -> Bool -> Maybe MsgVerified -> Bool -> UTCTime -> UTCTime -> CIMeta c d
-mkCIMeta itemId itemContent itemText itemStatus sentViaProxy itemSharedMsgId itemForwarded itemDeleted itemEdited itemTimed itemLive userMention hasLink_ currentTs itemTs forwardedByMember showGroupAsSender msgVerified itemBurnAfterRead createdAt updatedAt =
+mkCIMeta :: forall c d. ChatTypeI c => ChatItemId -> CIContent d -> Text -> CIStatus d -> Maybe Bool -> Maybe SharedMsgId -> Maybe CIForwardedFrom -> Maybe (CIDeleted c) -> Bool -> Maybe CITimed -> Maybe Bool -> Bool -> Bool -> UTCTime -> ChatItemTs -> Maybe GroupMemberId -> Bool -> Maybe MsgVerified -> Maybe (NonEmpty MarkdownBlock) -> Bool -> UTCTime -> UTCTime -> CIMeta c d
+mkCIMeta itemId itemContent itemText itemStatus sentViaProxy itemSharedMsgId itemForwarded itemDeleted itemEdited itemTimed itemLive userMention hasLink_ currentTs itemTs forwardedByMember showGroupAsSender msgVerified markdownBlocks itemBurnAfterRead createdAt updatedAt =
   let deletable = deletable' itemContent itemDeleted itemTs nominalDay currentTs
       editable = deletable && isNothing itemForwarded
       hasLink = BoolDef hasLink_
-   in CIMeta {itemId, itemTs, itemText, itemStatus, sentViaProxy, itemSharedMsgId, itemForwarded, itemDeleted, itemEdited, itemTimed, itemLive, userMention, hasLink, deletable, editable, forwardedByMember, showGroupAsSender, msgVerified, itemBurnAfterRead, createdAt, updatedAt}
+   in CIMeta {itemId, itemTs, itemText, itemStatus, sentViaProxy, itemSharedMsgId, itemForwarded, itemDeleted, itemEdited, itemTimed, itemLive, userMention, hasLink, deletable, editable, forwardedByMember, showGroupAsSender, msgVerified, markdownBlocks, itemBurnAfterRead, createdAt, updatedAt}
 
 deletable' :: forall c d. ChatTypeI c => CIContent d -> Maybe (CIDeleted c) -> UTCTime -> NominalDiffTime -> UTCTime -> Bool
 deletable' itemContent itemDeleted itemTs allowedInterval currentTs =
@@ -570,6 +572,7 @@ dummyMeta itemId ts itemText =
       forwardedByMember = Nothing,
       showGroupAsSender = False,
       msgVerified = Nothing,
+      markdownBlocks = Nothing,
       itemBurnAfterRead = False,
       createdAt = ts,
       updatedAt = ts
@@ -613,9 +616,15 @@ data CIQuote (c :: ChatType) = CIQuote
     sharedMsgId :: Maybe SharedMsgId, -- Nothing for the messages from the old clients
     sentAt :: UTCTime,
     content :: MsgContent,
-    formattedText :: Maybe MarkdownList
+    formattedText :: Maybe MarkdownList,
+    markdownBlocks :: Maybe (NonEmpty MarkdownBlock)
   }
   deriving (Show)
+
+mkCIQuote :: CIQDirection c -> Maybe ChatItemId -> Maybe SharedMsgId -> UTCTime -> MsgContent -> CIQuote c
+mkCIQuote chatDir itemId sharedMsgId sentAt content = CIQuote {chatDir, itemId, sharedMsgId, sentAt, content, formattedText, markdownBlocks}
+  where
+    ParsedMarkdown formattedText markdownBlocks = parsedMarkdown $ msgContentText content
 
 quoteItemId :: CIQuote c -> Maybe ChatItemId
 quoteItemId CIQuote {itemId} = itemId
@@ -1362,13 +1371,14 @@ data ChatItemVersion = ChatItemVersion
   { chatItemVersionId :: Int64,
     msgContent :: MsgContent,
     formattedText :: Maybe MarkdownList,
+    markdownBlocks :: Maybe (NonEmpty MarkdownBlock),
     itemVersionTs :: UTCTime,
     createdAt :: UTCTime
   }
   deriving (Eq, Show)
 
 mkItemVersion :: ChatItem c d -> Maybe ChatItemVersion
-mkItemVersion ChatItem {content, formattedText, meta} = version <$> ciMsgContent content
+mkItemVersion ChatItem {content, formattedText, markdownBlocks, meta} = version <$> ciMsgContent content
   where
     CIMeta {itemId, itemTs, createdAt} = meta
     version mc =
@@ -1376,6 +1386,7 @@ mkItemVersion ChatItem {content, formattedText, meta} = version <$> ciMsgContent
         { chatItemVersionId = itemId,
           msgContent = mc,
           formattedText,
+          markdownBlocks,
           itemVersionTs = itemTs,
           createdAt = createdAt
         }

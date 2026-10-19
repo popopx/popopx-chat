@@ -53,7 +53,7 @@ import Data.Text.Encoding (encodeUtf8)
 import Data.Time (addUTCTime)
 import Data.Time.Calendar (fromGregorian)
 import Data.Time.Clock (UTCTime (..), diffUTCTime, getCurrentTime, nominalDiffTimeToSeconds, secondsToDiffTime)
-import Popopx.Chat.Badges (BadgeCredential (..), BadgeInfo (..), ProofPresHeader (..), BadgeProof (..), BadgeProofKind (..), BadgeStatus (..), FileSizeLimits (..), LocalBadge (..), acceptedProof, badgeProof, badgeSndGraceInterval, generateBadgeProof, localBadgeStatus, maxXFTPFileSize, mkBadgeStatus, verifyBadge)
+import Popopx.Chat.Badges (BadgeCredential (..), BadgeInfo (..), ProofPresHeader (..), BadgeProof (..), BadgeProofKind (..), BadgeStatus (..), FileSizeLimits (..), LocalBadge (..), acceptedProof, badgeSndGraceInterval, generateBadgeProof, localBadgeStatus, maxXFTPFileSize, mkBadgeStatus, verifyBadge)
 import Popopx.Chat.Names (PopopxDomainClaim (..), claimDomain)
 import Popopx.Chat.Call
 import Popopx.Chat.Controller
@@ -217,13 +217,13 @@ prepareGroupMsg db user g@GroupInfo {membership} msgScope showGroupAsSender mc m
       fl_ <- liftIO $ ciffForwardLink db ciff
       pure (mcForward fl_ mc, Nothing)
     (Just quotedItemId, Nothing) -> do
-      CChatItem _ qci@ChatItem {meta = CIMeta {itemTs, itemSharedMsgId}, formattedText, mentions = quoteMentions, file} <-
+      CChatItem _ qci@ChatItem {meta = CIMeta {itemTs, itemSharedMsgId}, formattedText, markdownBlocks, mentions = quoteMentions, file} <-
         getGroupCIWithReactions db user g quotedItemId
       (origQmc, qd, sent, member_) <- quoteData qci membership
       let msgRef = MsgRef {msgId = itemSharedMsgId, sentAt = itemTs, sent, memberId = memberId' <$> member_}
           qmc = quoteContent mc origQmc file
           (qmc', ft', _) = updatedMentionNames qmc formattedText quoteMentions
-          quotedItem = CIQuote {chatDir = qd, itemId = Just quotedItemId, sharedMsgId = itemSharedMsgId, sentAt = itemTs, content = qmc', formattedText = ft'}
+          quotedItem = CIQuote {chatDir = qd, itemId = Just quotedItemId, sharedMsgId = itemSharedMsgId, sentAt = itemTs, content = qmc', formattedText = ft', markdownBlocks}
       pure (mcQuote QuotedMsg {msgRef, content = qmc'} mc, Just quotedItem)
     (Just _, Just _) -> throwError SEInvalidQuote
   let mc'' = mc' {mentions = MsgMentions mentions, file = fInv_, ttl = ttl' <$> timed_, live = justTrue live, scope = msgScope, asGroup = justTrue showGroupAsSender, burnAfterRead = justTrue burnAfterRead}
@@ -362,11 +362,11 @@ getMessageMentions db user gId msg = case parseMaybeMarkdownList msg of
       fmap (name,) . eitherToMaybe
         <$> runExceptT (getGroupMemberIdByName db user gId name)
 
-msgContentTexts :: MsgContent -> (Text, Maybe MarkdownList)
-msgContentTexts mc = let t = msgContentText mc in (t, parseMaybeMarkdownList t)
+msgContentTexts :: MsgContent -> (Text, ParsedMarkdown)
+msgContentTexts mc = let t = msgContentText mc in (t, parsedMarkdown t)
 
-ciContentTexts :: CIContent d -> (Text, Maybe MarkdownList)
-ciContentTexts content = let t = ciContentToText content in (t, parseMaybeMarkdownList t)
+ciContentTexts :: CIContent d -> (Text, ParsedMarkdown)
+ciContentTexts content = let t = ciContentToText content in (t, parsedMarkdown t)
 
 quoteContent :: forall d. MsgContent -> MsgContent -> Maybe (CIFile d) -> MsgContent
 quoteContent mc qmc ciFile_
@@ -2272,6 +2272,28 @@ presentsUserBadge User {profile = LocalProfile {localBadge}} = case localBadge o
   Just (OwnBadge _ st) -> st == BSActive || st == BSExpired
   _ -> False
 
+groupPresHeader :: GroupInfo -> Maybe ProofPresHeader
+groupPresHeader gInfo@GroupInfo {membership = GroupMember {memberId, memberPubKey}} = memberPresHeader gInfo memberId memberPubKey
+
+membershipHandshakeProfile :: User -> GroupInfo -> CM Profile
+membershipHandshakeProfile user gInfo@GroupInfo {membership} =
+  presentUserBadge user (incognitoMembershipProfile gInfo) (groupPresHeader gInfo) $ redactedMemberProfile gInfo membership $ fromLocalProfile $ memberProfile membership
+
+directPresHeader :: ContactRequestBinding -> ProofPresHeader
+directPresHeader = \case
+  CRBRatchet ConnVerifyCodes {codeAD} -> PHChat $ encodeChatBinding CBDirect $ C.sha256Hash $ "PopopX badge" <> codeAD
+  CRBRequest code -> PHRequest code
+
+linkPresHeader :: ConnShortLink c -> ProofPresHeader
+linkPresHeader = \case
+  CSLInvitation _ _ _ (LinkKey key) -> PHLink key
+  CSLContact _ _ _ (LinkKey key) -> PHLink key
+
+connPresHeader :: Connection -> CM (Maybe ProofPresHeader)
+connPresHeader conn = M.lookup (aConnId conn) <$> connsPresHeaders [conn]
+
+connsPresHeaders :: [Connection] -> CM (Map ConnId ProofPresHeader)
+connsPresHeaders conns = M.map (directPresHeader . CRBRatchet) <$> withAgent (`getConnectionsVerifyCodes` map aConnId conns)
 
 -- receiving side of contact/invitation link data: verify the badge proof from the link profile
 -- and set the crypto-free display badge for the UI (the raw proof stays in profile for APIPrepareContact)
@@ -2352,39 +2374,6 @@ groupBindingData gInfo memberId memberKey = case publicGroup' gInfo of
   Just PublicGroupProfile {publicGroupId} -> smpEncode (publicGroupId, memberId)
   Nothing -> smpEncode (memberId, memberKey)
 
-memberKeyPresHeader :: Maybe B64UrlByteString -> MemberId -> C.PublicKeyEd25519 -> ProofPresHeader
-memberKeyPresHeader publicGroupId_ memberId k =
-  PHChat $ encodeChatBinding CBGroup $ maybe (smpEncode (memberId, k)) (\publicGroupId -> smpEncode (publicGroupId, memberId, k)) publicGroupId_
-
-groupPresHeader :: GroupInfo -> Maybe ProofPresHeader
-groupPresHeader gInfo@GroupInfo {membership = GroupMember {memberId, memberPubKey}} = memberPresHeader gInfo memberId memberPubKey
-
-membershipHandshakeProfile :: User -> GroupInfo -> CM Profile
-membershipHandshakeProfile user gInfo@GroupInfo {membership} =
-  presentUserBadge user (incognitoMembershipProfile gInfo) (groupPresHeader gInfo) $ redactedMemberProfile gInfo membership $ fromLocalProfile $ memberProfile membership
-
-directPresHeader :: ContactRequestBinding -> ProofPresHeader
-directPresHeader = \case
-  CRBRatchet ConnVerifyCodes {codeAD} -> PHChat $ encodeChatBinding CBDirect $ C.sha256Hash $ "PopopX badge" <> codeAD
-  CRBRequest code -> PHRequest code
-
-linkPresHeader :: ConnShortLink c -> ProofPresHeader
-linkPresHeader = \case
-  CSLInvitation _ _ _ (LinkKey key) -> PHLink key
-  CSLContact _ _ _ (LinkKey key) -> PHLink key
-
-connPresHeader :: Connection -> CM (Maybe ProofPresHeader)
-connPresHeader conn = M.lookup (aConnId conn) <$> connsPresHeaders [conn]
-
-connsPresHeaders :: [Connection] -> CM (Map ConnId ProofPresHeader)
-connsPresHeaders conns = M.map (directPresHeader . CRBRatchet) <$> withAgent (`getConnectionsVerifyCodes` map aConnId conns)
-
-memberPresHeader :: GroupInfo -> MemberId -> Maybe C.PublicKeyEd25519 -> Maybe ProofPresHeader
-memberPresHeader gInfo memberId = fmap $ memberKeyPresHeader ((\PublicGroupProfile {publicGroupId} -> publicGroupId) <$> publicGroup' gInfo) memberId
-
-memberInfoPresHeader :: GroupInfo -> MemberInfo -> Maybe ProofPresHeader
-memberInfoPresHeader gInfo MemberInfo {memberId, memberKey} = memberPresHeader gInfo memberId ((\(MemberKey k) -> k) <$> memberKey)
-
 type HistoryFile = (FileInvitation, RcvFileDescrText, Maybe UTCTime, Maybe BadgeProof)
 
 directChatBinding :: Contact -> CM (Maybe ByteString)
@@ -2402,6 +2391,16 @@ rcvGroupChatBinding gInfo m_ asGroup badge_ =
     (Nothing, False, Just GroupMember {memberId, memberPubKey}) ->
       (\k -> encodeChatBinding CBGroup $ smpEncode (memberId, k)) <$> (memberPubKey <|> proofMemberKey memberId badge_)
     _ -> Nothing
+
+memberPresHeader :: GroupInfo -> MemberId -> Maybe C.PublicKeyEd25519 -> Maybe ProofPresHeader
+memberPresHeader gInfo memberId = fmap $ memberKeyPresHeader ((\PublicGroupProfile {publicGroupId} -> publicGroupId) <$> publicGroup' gInfo) memberId
+
+memberKeyPresHeader :: Maybe B64UrlByteString -> MemberId -> C.PublicKeyEd25519 -> ProofPresHeader
+memberKeyPresHeader publicGroupId_ memberId k =
+  PHChat $ encodeChatBinding CBGroup $ maybe (smpEncode (memberId, k)) (\publicGroupId -> smpEncode (publicGroupId, memberId, k)) publicGroupId_
+
+memberInfoPresHeader :: GroupInfo -> MemberInfo -> Maybe ProofPresHeader
+memberInfoPresHeader gInfo MemberInfo {memberId, memberKey} = memberPresHeader gInfo memberId ((\(MemberKey k) -> k) <$> memberKey)
 
 proofMemberKey :: MemberId -> Maybe BadgeProof -> Maybe C.PublicKeyEd25519
 proofMemberKey memberId badge_ = do
@@ -2533,14 +2532,6 @@ encodeSignedConnInfo pqSup signing chatMsgEvent = do
 encodeConnInfoSigning :: MsgEncodingI e => PQSupport -> Maybe MsgSigning -> ChatMsgEvent e -> CM ByteString
 encodeConnInfoSigning pqSup = maybe (encodeConnInfoPQ pqSup) (encodeSignedConnInfo pqSup)
 
-encodeXGrpAcpt :: User -> GroupInfoKeys -> VersionRangeChat -> CM ByteString
-encodeXGrpAcpt user g@(GIK gInfo@GroupInfo {membership = GroupMember {memberId}} gks) peerVRange = do
-  let incognitoProfile = incognitoMembershipProfile gInfo
-  profile <- presentUserBadge user incognitoProfile (groupPresHeader gInfo) (userProfileInGroup user gInfo $ fromLocalProfile <$> incognitoProfile)
-  let msg = XGrpAcpt memberId (Just $ groupMemberKey gks) (Just profile)
-      signing_ = if maxVersion peerVRange >= relayWebCapVersion then groupMsgSigning False g msg else Nothing
-  encodeConnInfoSigning PQSupportOff signing_ msg
-
 -- signed XMember for a relay-group join: proves the joiner holds the member key it asserts, and carries
 -- viaRelay = the target relay's memberId inside the signed body so a sibling relay can't accept a replay
 encodeXMemberConnInfo :: PQSupport -> GroupInfoKeys -> MemberId -> Profile -> CM ByteString
@@ -2550,6 +2541,14 @@ encodeXMemberConnInfo pqSup (GIK gInfo@GroupInfo {membership = GroupMember {memb
       bindingData = groupBindingData gInfo memberId (C.publicKey memberPrivKey')
       signing = MsgSigning CBGroup bindingData KRMember memberPrivKey'
    in encodeSignedConnInfo pqSup signing xMemberEvt
+
+encodeXGrpAcpt :: User -> GroupInfoKeys -> VersionRangeChat -> CM ByteString
+encodeXGrpAcpt user g@(GIK gInfo@GroupInfo {membership = GroupMember {memberId}} gks) peerVRange = do
+  let incognitoProfile = incognitoMembershipProfile gInfo
+  profile <- presentUserBadge user incognitoProfile (groupPresHeader gInfo) (userProfileInGroup user gInfo $ fromLocalProfile <$> incognitoProfile)
+  let msg = XGrpAcpt memberId (Just $ groupMemberKey gks) (Just profile)
+      signing_ = if maxVersion peerVRange >= relayWebCapVersion then groupMsgSigning False g msg else Nothing
+  encodeConnInfoSigning PQSupportOff signing_ msg
 
 deliverMessage :: Connection -> CMEventTag e -> MsgBody -> MessageId -> CM (Int64, PQEncryption)
 deliverMessage conn cmEventTag msgBody msgId = do
@@ -2994,7 +2993,7 @@ saveSndChatItem' user cd msg content ciFile quotedItem itemForwarded itemTimed l
 data NewSndChatItemData c = NewSndChatItemData
   { msg :: SndMessage,
     content :: CIContent 'MDSnd,
-    itemTexts :: (Text, Maybe MarkdownList),
+    itemTexts :: (Text, ParsedMarkdown),
     itemMentions :: Map MemberName CIMention,
     ciFile :: Maybe (CIFile 'MDSnd),
     quotedItem :: Maybe (CIQuote c),
@@ -3020,8 +3019,8 @@ saveSndChatItems user cd showGroupAsSender itemsData itemTimed live burnAfterRea
   lift $ withStoreBatch (\db -> map (bindRight $ createItem db createdAt) itemsData)
   where
     createItem :: DB.Connection -> UTCTime -> NewSndChatItemData c -> IO (Either ChatError (ChatItem c 'MDSnd))
-    createItem db createdAt NewSndChatItemData {msg = msg@SndMessage {sharedMsgId, signedMsg_}, content, itemTexts, itemMentions, ciFile, quotedItem, itemForwarded} = do
-      let hasLink_ = ciContentHasLink content (snd itemTexts)
+    createItem db createdAt NewSndChatItemData {msg = msg@SndMessage {sharedMsgId, signedMsg_}, content, itemTexts = itemTexts@(_, ParsedMarkdown ft_ _), itemMentions, ciFile, quotedItem, itemForwarded} = do
+      let hasLink_ = ciContentHasLink content ft_
       ciId <- createNewSndChatItem db user cd showGroupAsSender msg content quotedItem itemForwarded itemTimed live hasLink_ burnAfterRead createdAt
       forM_ ciFile $ \CIFile {fileId} -> updateFileTransferChatItemId db fileId ciId createdAt
       let ci = mkChatItem_ cd showGroupAsSender ciId content itemTexts ciFile quotedItem (Just sharedMsgId) itemForwarded itemTimed live False hasLink_ createdAt Nothing (toMsgVerified (signMessagesRequired cd) (MSSVerified <$ signedMsg_)) burnAfterRead createdAt
@@ -3032,15 +3031,15 @@ saveSndChatItems user cd showGroupAsSender itemsData itemTimed live burnAfterRea
 saveRcvChatItemNoParse :: (ChatTypeI c, ChatTypeQuotable c) => User -> ChatDirection c 'MDRcv -> RcvMessage -> UTCTime -> CIContent 'MDRcv -> CM (ChatItem c 'MDRcv, ChatInfo c)
 saveRcvChatItemNoParse user cd msg brokerTs = saveRcvChatItem user cd msg brokerTs . ciContentNoParse
 
-saveRcvChatItem :: (ChatTypeI c, ChatTypeQuotable c) => User -> ChatDirection c 'MDRcv -> RcvMessage -> UTCTime -> (CIContent 'MDRcv, (Text, Maybe MarkdownList)) -> CM (ChatItem c 'MDRcv, ChatInfo c)
+saveRcvChatItem :: (ChatTypeI c, ChatTypeQuotable c) => User -> ChatDirection c 'MDRcv -> RcvMessage -> UTCTime -> (CIContent 'MDRcv, (Text, ParsedMarkdown)) -> CM (ChatItem c 'MDRcv, ChatInfo c)
 saveRcvChatItem user cd msg@RcvMessage {sharedMsgId_} brokerTs content =
   saveRcvChatItem' user cd msg sharedMsgId_ brokerTs content Nothing Nothing False False M.empty
 
-ciContentNoParse :: CIContent 'MDRcv -> (CIContent 'MDRcv, (Text, Maybe MarkdownList))
-ciContentNoParse content = (content, (ciContentToText content, Nothing))
+ciContentNoParse :: CIContent 'MDRcv -> (CIContent 'MDRcv, (Text, ParsedMarkdown))
+ciContentNoParse content = (content, (ciContentToText content, ParsedMarkdown Nothing Nothing))
 
-saveRcvChatItem' :: (ChatTypeI c, ChatTypeQuotable c) => User -> ChatDirection c 'MDRcv -> RcvMessage -> Maybe SharedMsgId -> UTCTime -> (CIContent 'MDRcv, (Text, Maybe MarkdownList)) -> Maybe (CIFile 'MDRcv) -> Maybe CITimed -> Bool -> Bool -> Map MemberName MsgMention -> CM (ChatItem c 'MDRcv, ChatInfo c)
-saveRcvChatItem' user cd msg@RcvMessage {chatMsgEvent, msgSigned, forwardedByMember} sharedMsgId_ brokerTs (content, (t, ft_)) ciFile itemTimed live burnAfterRead mentions = do
+saveRcvChatItem' :: (ChatTypeI c, ChatTypeQuotable c) => User -> ChatDirection c 'MDRcv -> RcvMessage -> Maybe SharedMsgId -> UTCTime -> (CIContent 'MDRcv, (Text, ParsedMarkdown)) -> Maybe (CIFile 'MDRcv) -> Maybe CITimed -> Bool -> Bool -> Map MemberName MsgMention -> CM (ChatItem c 'MDRcv, ChatInfo c)
+saveRcvChatItem' user cd msg@RcvMessage {chatMsgEvent, msgSigned, forwardedByMember} sharedMsgId_ brokerTs (content, ts@(_, ParsedMarkdown ft_ _)) ciFile itemTimed live burnAfterRead mentions = do
   createdAt <- liftIO getCurrentTime
   cxt <- chatStoreCxt
   withStore' $ \db -> do
@@ -3056,7 +3055,7 @@ saveRcvChatItem' user cd msg@RcvMessage {chatMsgEvent, msgSigned, forwardedByMem
     itemForwarded <- rcvForwardedFrom db user cd msg
     (ciId, quotedItem) <- createNewRcvChatItem db user cd msg sharedMsgId_ content itemForwarded itemTimed live userMention hasLink_ burnAfterRead brokerTs createdAt
     forM_ ciFile $ \CIFile {fileId} -> updateFileTransferChatItemId db fileId ciId createdAt
-    let ci = mkChatItem_ cd showAsGroup ciId content (t, ft_) ciFile quotedItem sharedMsgId_ itemForwarded itemTimed live userMention hasLink_ brokerTs forwardedByMember (toMsgVerified (signMessagesRequired cd) msgSigned) burnAfterRead createdAt
+    let ci = mkChatItem_ cd showAsGroup ciId content ts ciFile quotedItem sharedMsgId_ itemForwarded itemTimed live userMention hasLink_ brokerTs forwardedByMember (toMsgVerified (signMessagesRequired cd) msgSigned) burnAfterRead createdAt
     ci' <- case toChatInfo cd of
       GroupChat g _ | not (null mentions') -> createGroupCIMentions db g ci mentions'
       _ -> pure ci
@@ -3086,15 +3085,15 @@ saveRcvChatItem' user cd msg@RcvMessage {chatMsgEvent, msgSigned, forwardedByMem
 -- TODO [mentions] optimize by avoiding unnecessary parsing
 mkChatItem :: (ChatTypeI c, MsgDirectionI d) => ChatDirection c d -> ShowGroupAsSender -> ChatItemId -> CIContent d -> Maybe (CIFile d) -> Maybe (CIQuote c) -> Maybe SharedMsgId -> Maybe CIForwardedFrom -> Maybe CITimed -> Bool -> Bool -> ChatItemTs -> Maybe GroupMemberId -> Maybe MsgVerified -> UTCTime -> ChatItem c d
 mkChatItem cd showGroupAsSender ciId content file quotedItem sharedMsgId itemForwarded itemTimed live userMention itemTs forwardedByMember msgVerified currentTs =
-  let ts@(_, ft_) = ciContentTexts content
+  let ts@(_, ParsedMarkdown ft_ _) = ciContentTexts content
       hasLink_ = ciContentHasLink content ft_
    in mkChatItem_ cd showGroupAsSender ciId content ts file quotedItem sharedMsgId itemForwarded itemTimed live userMention hasLink_ itemTs forwardedByMember msgVerified False currentTs
 
-mkChatItem_ :: (ChatTypeI c, MsgDirectionI d) => ChatDirection c d -> ShowGroupAsSender -> ChatItemId -> CIContent d -> (Text, Maybe MarkdownList) -> Maybe (CIFile d) -> Maybe (CIQuote c) -> Maybe SharedMsgId -> Maybe CIForwardedFrom -> Maybe CITimed -> Bool -> Bool -> Bool -> ChatItemTs -> Maybe GroupMemberId -> Maybe MsgVerified -> Bool -> UTCTime -> ChatItem c d
-mkChatItem_ cd showGroupAsSender ciId content (itemText, formattedText) file quotedItem sharedMsgId itemForwarded itemTimed live userMention hasLink_ itemTs forwardedByMember msgVerified itemBurnAfterRead currentTs =
+mkChatItem_ :: (ChatTypeI c, MsgDirectionI d) => ChatDirection c d -> ShowGroupAsSender -> ChatItemId -> CIContent d -> (Text, ParsedMarkdown) -> Maybe (CIFile d) -> Maybe (CIQuote c) -> Maybe SharedMsgId -> Maybe CIForwardedFrom -> Maybe CITimed -> Bool -> Bool -> Bool -> ChatItemTs -> Maybe GroupMemberId -> Maybe MsgVerified -> Bool -> UTCTime -> ChatItem c d
+mkChatItem_ cd showGroupAsSender ciId content (itemText, ParsedMarkdown formattedText markdownBlocks) file quotedItem sharedMsgId itemForwarded itemTimed live userMention hasLink_ itemTs forwardedByMember msgVerified itemBurnAfterRead currentTs =
   let itemStatus = ciCreateStatus content
-      meta = mkCIMeta ciId content itemText itemStatus Nothing sharedMsgId itemForwarded Nothing False itemTimed (justTrue live) userMention hasLink_ currentTs itemTs forwardedByMember showGroupAsSender msgVerified itemBurnAfterRead currentTs currentTs
-   in ChatItem {chatDir = toCIDirection cd, meta, content, mentions = M.empty, formattedText, quotedItem, reactions = [], file}
+      meta = mkCIMeta ciId content itemText itemStatus Nothing sharedMsgId itemForwarded Nothing False itemTimed (justTrue live) userMention hasLink_ currentTs itemTs forwardedByMember showGroupAsSender msgVerified markdownBlocks itemBurnAfterRead currentTs currentTs
+   in ChatItem {chatDir = toCIDirection cd, meta, content, mentions = M.empty, formattedText, markdownBlocks, quotedItem, reactions = [], file}
 
 ciContentHasLink :: CIContent d -> Maybe MarkdownList -> Bool
 ciContentHasLink content ft_ = case ciMsgContent content of
@@ -3408,7 +3407,7 @@ memberAttentionChange unread brokerTs_ rcvMem_ = \case
 createLocalChatItems ::
   User ->
   ChatDirection 'CTLocal 'MDSnd ->
-  NonEmpty (CIContent 'MDSnd, Maybe (CIFile 'MDSnd), Maybe CIForwardedFrom, (Text, Maybe MarkdownList)) ->
+  NonEmpty (CIContent 'MDSnd, Maybe (CIFile 'MDSnd), Maybe CIForwardedFrom, (Text, ParsedMarkdown)) ->
   UTCTime ->
   CM [ChatItem 'CTLocal 'MDSnd]
 createLocalChatItems user cd itemsData createdAt = do
@@ -3418,8 +3417,8 @@ createLocalChatItems user cd itemsData createdAt = do
   unless (null errs) $ toView $ CEvtChatErrors errs
   pure items
   where
-    createItem :: DB.Connection -> (CIContent 'MDSnd, Maybe (CIFile 'MDSnd), Maybe CIForwardedFrom, (Text, Maybe MarkdownList)) -> IO (ChatItem 'CTLocal 'MDSnd)
-    createItem db (content, ciFile, itemForwarded, ts@(_, ft_)) = do
+    createItem :: DB.Connection -> (CIContent 'MDSnd, Maybe (CIFile 'MDSnd), Maybe CIForwardedFrom, (Text, ParsedMarkdown)) -> IO (ChatItem 'CTLocal 'MDSnd)
+    createItem db (content, ciFile, itemForwarded, ts@(_, ParsedMarkdown ft_ _)) = do
       let hasLink_ = ciContentHasLink content ft_
       ciId <- createNewChatItem_ db user cd False Nothing Nothing content (Nothing, Nothing, Nothing, Nothing, Nothing) itemForwarded Nothing False False hasLink_ False createdAt Nothing Nothing Nothing Nothing createdAt
       forM_ ciFile $ \CIFile {fileId} -> updateFileTransferChatItemId db fileId ciId createdAt
