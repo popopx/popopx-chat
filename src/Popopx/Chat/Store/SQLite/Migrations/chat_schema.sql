@@ -63,6 +63,7 @@ CREATE TABLE users(
   ON UPDATE CASCADE
   DEFERRABLE INITIALLY DEFERRED
 ) STRICT;
+CREATE TABLE sqlite_sequence(name,seq);
 CREATE TABLE display_names(
   user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
   local_display_name TEXT NOT NULL,

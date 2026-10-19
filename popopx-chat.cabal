@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           popopx-chat
-version:        7.1.0.12
+version:        7.1.0.14
 category:       Web, System, Services, Cryptography
 homepage:       https://github.com/popopx/popopx-chat#readme
 author:         popopx.chat
