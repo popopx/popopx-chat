@@ -166,3 +166,51 @@ cd backend && composer test
 - Scripts: `scripts/`
 - Nix config: `flake.nix`, `cabal.project`
 - OpenSSL config: `cabal.project.local`
+
+## Upstream Sync
+
+This project is a fork of [simplex-chat](https://github.com/simplex-chat/simplex-chat), rebranded as POPOPX.
+
+### Upstream Repository
+- **Location:** `/home/ubuntu/simplex-chat` (local) or `https://github.com/simplex-chat/simplex-chat.git` (remote)
+- **Git remote name:** `upstream`
+- **Current sync point:** `35bc0b66d` (2026-10-19)
+- **Version:** `7.1.0.12`
+
+### Sync Process
+When syncing with upstream:
+1. **Fetch upstream changes:** `git fetch upstream`
+2. **Compare versions:** Check `git log --oneline upstream/master --not master`
+3. **Sync build configs:** Update `cabal.project`, `popopx-chat.cabal`, `flake.nix`
+   - Keep popopxmq fork references (not simplexmq)
+   - Update dependency tags to match upstream where applicable
+   - Preserve POPOPX-specific package flags
+4. **Sync source files:** Update all `src/Popopx/Chat/*.hs` files
+   - Apply upstream changes while preserving POPOPX branding
+   - Replace `Simplex` → `Popopx`, `simplex` → `popopx` in module names and imports
+   - Keep POPOPX-specific features: burnAfterRead, BinThere bots, custom FFI exports
+5. **Verify compilation:** `cabal build --flag client_library --flag swift`
+6. **Commit and push:** Use conventional commit format with `sync:` prefix
+
+### POPOPX-Specific Features (DO NOT REMOVE)
+- **burnAfterRead:** Read-after-burn messaging with TTL
+- **BinThere bots:** Bot system with API commands (list/add/update/delete)
+- **Custom FFI exports:** `cChatMigrateInitKeyBytes`, migration logging
+- **peerType/chat_peer_type:** Profile peer type field
+- **LinkEncryption:** Custom encryption module
+- **RemoteConfig:** Remote configuration module
+- **BinThere migrations:** `M20260905_binthere_bots`, `M20260906_bot_directory`, `M20261009_binthere_bar_flag`
+
+### Key Differences from Upstream
+- **Module namespace:** `Popopx.Chat.*` instead of `Simplex.Chat.*`
+- **MQ library:** `popopxmq` (fork) instead of `simplexmq`
+- **Version scheme:** Aligned with upstream but may diverge for POPOPX-specific releases
+- **Extra modules:** Bot, BinThere, LinkEncryption, RemoteConfig
+- **Database:** Additional migrations for POPOPX features
+
+### Common Sync Issues
+1. **popopxmq tag mismatch:** Local uses fork tags, not upstream simplexmq tags
+2. **Module name conflicts:** Always replace Simplex → Popopx in imports
+3. **Function signature changes:** Upstream may add parameters (e.g., markdownBlocks, burnAfterRead)
+4. **Name shadowing:** Watch for duplicate function definitions after sync
+5. **Ambiguous record fields:** Use explicit field names when multiple records have same field
