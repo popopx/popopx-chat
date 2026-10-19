@@ -1,11 +1,11 @@
-# POPOPX Chat Node.js library
+# Popopx Chat Node.js library
 
-This library replaced now deprecated [POPOPX Chat WebRTC TypeScript client](https://www.npmjs.com/package/@popopx-chat/webrtc-client).
+This library replaced now deprecated [Popopx Chat WebRTC TypeScript client](https://www.npmjs.com/package/@popopx-chat/webrtc-client).
 
 ## Use cases
 
-- chat bots: you can implement any logic of connecting with and communicating with POPOPX Chat users. Using chat groups a chat bot can connect POPOPX Chat users with each other.
-- control of the equipment: e.g. servers or home automation. POPOPX Chat provides secure and authorised connections, so this is more secure than using rest APIs.
+- chat bots: you can implement any logic of connecting with and communicating with Popopx Chat users. Using chat groups a chat bot can connect Popopx Chat users with each other.
+- control of the equipment: e.g. servers or home automation. Popopx Chat provides secure and authorised connections, so this is more secure than using rest APIs.
 - any scenarios of scripted message sending.
 - chat and chat-based interfaces.
 
@@ -24,13 +24,13 @@ Simple bot that replies with squares of numbers you send to it:
   const {bot} = await import("popopx-chat")
   // if you are running from this GitHub repo:
   // const {bot} = await import("../dist/index.js")
-  const [chat, _user, _address] = await bot.run({
+  await bot.run({
     profile: {displayName: "Squaring bot example", fullName: ""},
     dbOpts: {type: "sqlite", filePrefix: "./squaring_bot"},
     options: {
       addressSettings: {welcomeMessage: "Send a number, I will square it.",
     },
-    onMessage: async (ci, content) => {
+    onMessage: async (ci, content, chat) => {
       const n = +content.text
       const reply = typeof n === "number" && !isNaN(n)
                     ? `${n} * ${n} = ${n * n}`
@@ -55,37 +55,64 @@ If you cloned this repository, you can:
 cd ./packages/popopx-chat-nodejs
 npm install
 npm run build
-node ./examples/squaring-bot-readme.js
+SIMPLEX_ADDON_PATH=build/Release/popopx.node node ./examples/squaring-bot-readme.js
 ```
+
+Building the Node.js add-on from source needs [node-gyp](https://github.com/nodejs/node-gyp) build tools.
 
 There is an example with more options in [./examples/squaring-bot.ts](./examples/squaring-bot.ts).
 
 You can run it with: `npx ts-node ./examples/squaring-bot.ts`
 
-## PostgreSQL backend
+A larger example, with a business address and commands as keys: [Popopx Calculator](../../apps/popopx-calculator-bot/).
 
-By default, the package uses SQLite. To use PostgreSQL instead:
+## Live messages
+
+Live messages are shown to recipients while they are written, e.g. a streamed reply of a language model.
+
+`onMessage` handler for `bot.run` that streams a reply:
+
+```javascript
+const {api, util} = require("popopx-chat")
+
+async function onMessage(ci, content, chat) {
+  const {chatType, chatId} = util.chatInfoRef(ci.chatInfo)
+  const live = new api.LiveMessage(chat, chatType, chatId)
+  let text = ""
+  for await (const delta of streamReply(content.text)) {
+    text += delta
+    live.update(text)
+  }
+  await live.end()
+}
+```
+
+`streamReply` stands for your function that returns text fragments as an async iterable.
+
+`update` sends the first text at once, and then updates the message at most once per 3 seconds (`interval` parameter). `end` finalizes the message; a message without text is deleted.
+
+The underlying commands: `apiSendMessages` with `liveMessage = true` sends a live message, `apiUpdateChatItem` with `liveMessage = true` updates it, and with `liveMessage = false` finalizes it.
+
+## Native library
+
+`libpopopx` and the prebuilt Node.js add-on are downloaded on first use into the user cache (`$XDG_CACHE_HOME/popopx-chat` or `~/.cache/popopx-chat` on Linux, `~/Library/Caches/popopx-chat` on macOS, `%LOCALAPPDATA%\popopx-chat` on Windows), shared with the Python library. To download them ahead of time, for example in a Dockerfile, run as the user that runs the app:
 
 ```bash
-npm install popopx-chat --popopx_backend=postgres
+npx popopx-chat install                     # sqlite (default)
+npx popopx-chat install --backend postgres  # Linux x86_64 only
 ```
 
-Or persist the setting in `.npmrc`:
+Set `SIMPLEX_LIBS_DIR` to a directory with a local build of `libpopopx` and its dependencies to use it instead; it must be built for the backend in use. Set `SIMPLEX_ADDON_PATH` to a locally built add-on (`build/Release/popopx.node`) to use it instead of the downloaded one.
 
-```ini
-popopx_backend=postgres
-```
+`ChatApi.init` loads the library for `DbConfig.type`; the low-level `core` functions require `core.loadLibrary(backend)` first.
 
-### Prerequisites (PostgreSQL)
+## PostgreSQL backend
+
+`DbConfig.type` selects the backend; one backend per process.
 
 - `libpq5` must be installed on the host system (`apt install libpq5` on Debian/Ubuntu)
 - PostgreSQL backend is only available for Linux x86_64
 - A PostgreSQL server accessible via connection string
-
-### Passing PostgreSQL connection
-
-The `DbConfig` type is a discriminated union — pick the variant that matches
-the backend you installed:
 
 ```ts
 // SQLite (default)
@@ -117,13 +144,30 @@ This library uses [@popopx-chat/types](https://www.npmjs.com/package/@popopx-cha
 
 Library provides types and functions to:
 
-- create and change user profile (although, in most cases you can do it manually, via POPOPX Chat terminal app).
+- create and change user profile (although, in most cases you can do it manually, via Popopx Chat terminal app).
 - create and accept invitations or connect with the contacts.
 - create and manage long-term user address, accepting connection requests automatically.
 - send, receive, delete and update messages, and add message reactions.
+- send live messages, e.g. streamed replies.
 - create, join and manage group.
 - send and receive files.
 - etc.
+
+## Tests
+
+```sh
+npm install
+npm run build
+npm test
+```
+
+To run one test file: `npm test -- tests/core.test.ts`.
+
+A local SMP server is started for the API and bot tests. On Linux x86-64 and arm64, `smp-server` is downloaded from [popopxmq releases](https://github.com/popopx-chat/popopxmq/releases) to `node_modules/.cache/smp-server`. To use another build, or on other systems, set `SMP_SERVER` to the path of `smp-server`:
+
+```sh
+SMP_SERVER=/path/to/smp-server npm test
+```
 
 ## License
 
