@@ -176,6 +176,12 @@ This project is a fork of [simplex-chat](https://github.com/simplex-chat/simplex
 - **Git remote name:** `upstream`
 - **Current sync point:** `35bc0b66d` (2026-10-19)
 - **Version:** `7.1.0.12`
+- **Latest sync:** 2026-10-19 - See `UPSTREAM_SYNC_20261019.md` for details
+  - WebRTC ICE restart support (rtcSession field)
+  - Timestamp normalization (roundDownToSecond)
+  - AUTOINCREMENT migration for 8 tables
+  - Block markdown tests sync
+  - Schema SQL fix (removed invalid sqlite_sequence CREATE)
 
 ### Sync Process
 When syncing with upstream:
