@@ -5240,7 +5240,7 @@ nameResolvesTo sLnk = any (either (const False) (sameShortLinkContact sLnk) . st
 -- the resolver now also reports names that are not registered, which stay the agent's NAME NOT_FOUND
 resolveNameRecord :: User -> NetworkRequestMode -> PopopxDomain -> CM NameRecord
 resolveNameRecord user nm domain = do
-  NameResponse {registration} <- withAgent $ \a -> resolvePoName a nm (aUserId user) domain
+  NameResponse {registration} <- withAgent $ \a -> resolvePopopxName a nm (aUserId user) domain
   case registration of
     NRRegistered {nameRecord} -> pure nameRecord
     _ -> throwError $ chatErrorAgent $ SMP "" (NAME SMP.NOT_FOUND)
