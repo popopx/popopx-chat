@@ -132,7 +132,8 @@ chatCommandsDocsData =
         ("APIAddGroupRelays", [], "Add relays to group.", ["CRGroupRelaysAdded", "CRGroupRelaysAddFailed", "CRChatCmdError"], [], Just UNInteractive, "/_add relays #" <> Param "groupId" <> " " <> Join ',' "relayIds"),
         ("APIAllowRelayGroup", [], "Clear relay rejection for a channel (relay operator).", ["CRRelayGroupAllowed", "CRChatCmdError"], [], Just UNBackground, "/_relay allow #" <> Param "groupId"),
         ("APIUpdateGroupProfile", [], "Update group profile.", ["CRGroupUpdated", "CRChatCmdError"], [], Just UNBackground, "/_group_profile #" <> Param "groupId" <> " " <> Json "groupProfile"),
-        ("APIVerifyGroupDomain", [], "Verify group domain", ["CRGroupDomainVerified"], [], Just UNInteractive, "/_verify domain #" <> Param "groupId")
+        ("APIVerifyGroupDomain", [], "Verify group domain", ["CRGroupDomainVerified"], [], Just UNInteractive, "/_verify domain #" <> Param "groupId"),
+        ("APIAddMemberViaGroup", [], "Add member to group via another group. Requires Admin role.", ["CRSentGroupInvitation", "CRChatCmdError"], [], Just UNInteractive, "/_add_via #" <> Param "groupId" <> " " <> Param "viaGroupId" <> " " <> Param "groupMemberId" <> " " <> Param "memberRole")
       ]
     ),
     ( "Group link commands",
@@ -215,6 +216,20 @@ chatCommandsDocsData =
       "Allows a bot to accept an incoming remote control session from a POPOPX Desktop client, giving the desktop live access to the bot's POPOPX instance.",
       [ ("ConnectRemoteCtrl", [], "Connect to a remote controller using an OOB invitation link.", ["CRRemoteCtrlConnecting", "CRChatCmdError"], [], Just UNInteractive, "/crc " <> Param "remoteInvitation"),
         ("VerifyRemoteCtrlSession", [], "Verify the remote controller session code to complete the connection.", ["CRRemoteCtrlConnected", "CRChatCmdError"], [], Nothing, "/verify remote ctrl " <> Param "sessionCode")
+      ]
+    ),
+    ( "BinThere bot commands",
+      "Commands to manage BinThere bots - a POPOPX-specific feature for bot directory and management.",
+      [ ("APIListBinThereBots", [], "List all BinThere bots for user.", ["CRBinThereBotsList", "CRChatCmdError"], [], Nothing, "/_list_binthere_bots " <> Param "userId"),
+        ("APIAddBinThereBot", [], "Add a new BinThere bot.", ["CRBinThereBotAdded", "CRChatCmdError"], [], Just UNInteractive, "/_add_binthere_bot " <> Param "userId" <> " " <> Json "bot"),
+        ("APIUpdateBinThereBot", [], "Update an existing BinThere bot.", ["CRBinThereBotUpdated", "CRChatCmdError"], [], Just UNInteractive, "/_update_binthere_bot " <> Param "userId" <> " " <> Json "bot"),
+        ("APIDeleteBinThereBot", [], "Delete a BinThere bot.", ["CRBinThereBotDeleted", "CRChatCmdError"], [], Just UNBackground, "/_delete_binthere_bot " <> Param "userId" <> " " <> Param "botId")
+      ]
+    ),
+    ( "Badge purchase commands",
+      "Commands for purchasing and managing supporter badges - a POPOPX-specific feature.",
+      [ ("APICreateBadgeInvoice", [], "Create an invoice for badge purchase. Returns an invoice ID that will be echoed by the store.", ["CRBadgeInvoice", "CRChatCmdError"], [], Just UNInteractive, "/_create_badge_invoice " <> Param "userId"),
+        ("APIPurchaseBadge", [], "Submit a store receipt for badge purchase. Held until a worker credits it.", ["CRBadgeRedeemed", "CRChatCmdError"], [], Just UNBackground, "/_purchase_badge " <> Param "userId" <> Optional "" (" " <> Param "echoedInvoiceId") "echoedInvoiceId" <> " " <> Json "payment")
       ]
     )
   ]

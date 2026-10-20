@@ -107,7 +107,13 @@ chatResponsesDocsData =
     ("CRUserProfileUpdated", "User profile updated"),
     ("CRUserProfileNoChange", "User profile was not changed"),
     ("CRUsersList", "Users"),
-    ("CRApiChats", "Chat previews (paginated). Use this instead of CRContactsList / CRGroupsList when scanning at scale.")
+    ("CRApiChats", "Chat previews (paginated). Use this instead of CRContactsList / CRGroupsList when scanning at scale."),
+    ("CRBadgeInvoice", "Badge purchase invoice created"),
+    ("CRBadgeRedeemed", "Badge redeemed successfully"),
+    ("CRBinThereBotAdded", "BinThere bot added"),
+    ("CRBinThereBotDeleted", "BinThere bot deleted"),
+    ("CRBinThereBotUpdated", "BinThere bot updated"),
+    ("CRBinThereBotsList", "List of BinThere bots")
     -- ("CRApiChat", "Chat and messages"),
     -- ("CRChatCleared", ""),
     -- ("CRChatItemInfo", "Message information"),
@@ -135,7 +141,6 @@ undocumentedResponses =
     "CRArchiveExported",
     "CRArchiveImported",
     "CRBadgeLedger",
-    "CRBadgeRedeemed",
     "CRBadgeState",
     "CRBroadcastSent",
     "CRCallInvitations",
