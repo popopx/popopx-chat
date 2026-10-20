@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cabal build 2>&1 | grep -A 6 \"Migrate.hs:34\" | head -10)"
+      "Bash(cabal build 2>&1 | grep -A 6 \"Migrate.hs:34\" | head -10)",
+      "Bash(diff <\\(ls /home/ubuntu/popopx-chat/src/Popopx/Chat/Store/SQLite/Migrations/ | sort\\) <\\(ls /home/ubuntu/simplex-chat/src/Simplex/Chat/Store/SQLite/Migrations/ | sort\\))",
+      "Bash(ldd /home/ubuntu/popopx-chat/dist-newstyle/build/x86_64-linux/ghc-9.6.3/popopx-chat-7.1.0.11/t/popopx-chat-test/build/popopx-chat-test/popopx-chat-test 2>/dev/null | grep -i \"sql\\\\|cipher\" | head -10)"
     ]
   }
 }
