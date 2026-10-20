@@ -58,7 +58,8 @@ async function downloadSmpServer(path: string): Promise<void> {
   if (process.platform !== "linux" || !arch) {
     throw new Error(`smp-server release binaries are not available for ${process.platform} ${process.arch}, set SMP_SERVER to the smp-server path`)
   }
-  const url = `https://github.com/simplex-chat/simplexmq/releases/download/${smpServerRelease}/smp-server-ubuntu-22_04-${arch}`
+  // Use POPOPX fork releases or local build
+  const url = `https://github.com/popopx/popopxmq/releases/download/${smpServerRelease}/smp-server-ubuntu-22_04-${arch}`
   const response = await fetch(url)
   if (!response.ok) throw new Error(`error downloading ${url}: ${response.status}`)
   mkdirSync(dirname(path), {recursive: true})

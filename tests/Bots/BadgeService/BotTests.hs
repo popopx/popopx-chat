@@ -2410,7 +2410,7 @@ inAnyOrder cc blocks = do
 
 -- | The required lines under one budget in any order, and the tolerated ones only if they come at
 -- all: the agent announces UP for a subscription that was still pending in the session answering it
--- (simplexmq processSubOk), so "subscribed N connections" may never be printed, and when it is it
+-- (popopxmq processSubOk), so "subscribed N connections" may never be printed, and when it is it
 -- races a settlement that arrived in the same batch. getTermLine' would bound each line at 20s.
 expectLinesWithin :: HasCallStack => Int -> TestCC -> [String] -> [String] -> IO ()
 expectLinesWithin seconds cc@TestCC {termQ, printOutput} required tolerated = go (seconds * 10) required
