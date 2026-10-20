@@ -771,7 +771,7 @@ fun UsageConditionsView(
         modifier = Modifier
           .clip(shape = CircleShape)
           .clickable {
-            val commitUrl = "https://github.com/simplex-chat/simplex-chat/commit/$commit"
+            val commitUrl = "https://github.com/popopx-chat/popopx-chat/commit/$commit"
             uriHandler.openExternalLink(commitUrl)
           }
           .padding(horizontal = 6.dp, vertical = 4.dp),

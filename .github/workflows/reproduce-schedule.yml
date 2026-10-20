@@ -15,7 +15,7 @@ jobs:
           curl --proto '=https' \
                --tlsv1.2 \
                -sSf -L \
-               'https://api.github.com/repos/simplex-chat/simplex-chat/releases/latest' \
+               'https://api.github.com/repos/popopx-chat/popopx-chat/releases/latest' \
                2>/dev/null | \
           grep -i "tag_name" | \
           awk -F \" '{print "TAG="$4}' >> $GITHUB_ENV
@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ env.TAG }}
-          repository: simplex-chat/simplex-chat
+          repository: popopx-chat/popopx-chat
 
       # Otherwise we run out of disk space with Docker build
       - name: Free disk space
@@ -37,9 +37,9 @@ jobs:
       - name: Check if build has been reproduced
         env:
           # TODO: These secret names could be renamed from STATUS_SIMPLEX_* to STATUS_POPOPX_* later
-          url: ${{ secrets.STATUS_SIMPLEX_WEBHOOK_URL }}
-          user: ${{ secrets.STATUS_SIMPLEX_WEBHOOK_USER }}
-          pass: ${{ secrets.STATUS_SIMPLEX_WEBHOOK_PASS }}
+          url: ${{ secrets.STATUS_POPOPX_WEBHOOK_URL }}
+          user: ${{ secrets.STATUS_POPOPX_WEBHOOK_USER }}
+          pass: ${{ secrets.STATUS_POPOPX_WEBHOOK_PASS }}
         run: |
           if [ -f "${GITHUB_WORKSPACE}/${TAG}-popopx-chat/_sha256sums" ]; then
             exit 0

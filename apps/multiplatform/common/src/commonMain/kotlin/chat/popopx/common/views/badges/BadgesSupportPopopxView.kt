@@ -127,7 +127,7 @@ private fun GetCodeButton() {
   val uriHandler = LocalUriHandler.current
   TextButtonBelowOnboardingButton(
     text = stringResource(MR.strings.badges_get_your_code),
-    onClick = { uriHandler.openExternalLink("https://simplex.chat/badges/") }
+    onClick = { uriHandler.openExternalLink("https://popopxchat.com/badges/") }
   )
 }
 

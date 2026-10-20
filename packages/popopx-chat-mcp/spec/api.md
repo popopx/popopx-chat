@@ -322,7 +322,7 @@ Request lines:
 | `send` | `I want to send a message to SUBJECT:`, with `, where I am incognito` before the colon in incognito chats<br>done: `I sent a message to ...` | text, one code span per line<br>`replying to NAME: QUOTE` with `reply_to`<br>`mentioning @A, @'B C'` with `mention` |
 | `leave` | `I want to delete KIND NAME (@N).` or `I want to leave KIND NAME (#N).`<br>done: `I deleted ...` or `I left ...` | |
 
-SUBJECT is `KIND NAME`, or `an unnamed KIND`, followed by ` (SIMPLEX_NAME)` when known ([actions.ts:263-266](../src/actions.ts#L263-L266)). For `connect`, SIMPLEX_NAME is the target when it is a name; for `send`, the chat's verified Popopx name.
+SUBJECT is `KIND NAME`, or `an unnamed KIND`, followed by ` (POPOPX_NAME)` when known ([actions.ts:263-266](../src/actions.ts#L263-L266)). For `connect`, POPOPX_NAME is the target when it is a name; for `send`, the chat's verified Popopx name.
 
 Last line:
 

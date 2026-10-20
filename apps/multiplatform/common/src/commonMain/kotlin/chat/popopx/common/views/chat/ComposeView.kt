@@ -430,7 +430,7 @@ fun ComposeView(
   val chatScope = remember(chatsCtx) { chatsCtx.groupScopeInfo?.toChatScope() }
   val scopeChatId = remember { chat.id }
   fun isPopopxLink(link: String): Boolean =
-    link.startsWith("https://simplex.chat", true) || link.startsWith("http://simplex.chat", true)
+    link.startsWith("https://popopxchat.com", true) || link.startsWith("http://popopxchat.com", true)
 
   fun getMessageLinks(parsedMsg: List<FormattedText>?): Pair<String?, Boolean> {
     if (parsedMsg == null) return null to false

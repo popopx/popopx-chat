@@ -4659,7 +4659,7 @@ val operatorsInfo: Map<OperatorTag, ServerOperatorInfo> = mapOf(
       "POPOPX Chat is the first communication network that has no user profile IDs of any kind, not even random numbers or keys that identify the users.",
       "POPOPX Chat Ltd develops the communication software for POPOPX network."
     ),
-    website = "https://simplex.chat",
+    website = "https://popopxchat.com",
     logo = MR.images.decentralized,
     largeLogo = MR.images.logo,
     logoDarkMode = MR.images.decentralized_light,
@@ -4757,7 +4757,7 @@ data class ServerOperator(
   companion object {
     val dummyOperatorInfo = ServerOperatorInfo(
       description = listOf("Default"),
-      website = "https://simplex.chat",
+      website = "https://popopxchat.com",
       logo = MR.images.decentralized,
       largeLogo = MR.images.logo,
       logoDarkMode = MR.images.decentralized_light,

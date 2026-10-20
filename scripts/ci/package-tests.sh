@@ -30,7 +30,7 @@ test_nodejs() {
 }
 
 test_python() {
-  (unset SIMPLEX_LIBS_DIR && cd "$python_package" && "$python" -m pip install -e ".[test]" && "$python" -m pytest -q)
+  (unset POPOPX_LIBS_DIR && cd "$python_package" && "$python" -m pip install -e ".[test]" && "$python" -m pytest -q)
 }
 
 case "${1:-}" in
@@ -49,7 +49,7 @@ case "${1:-}" in
     zip=popopx-chat-libs-$2.zip
     "$python" scripts/ci/packages_release.py download "$LIBS_RELEASE" "$zip" "$temp/libs"
     "$python" -m zipfile -e "$temp/libs/$zip" "$temp/libs"
-    SIMPLEX_LIBS_DIR=$temp/libs/libs test_nodejs
+    POPOPX_LIBS_DIR=$temp/libs/libs test_nodejs
     gh release upload "$ADDON_TAG" "$nodejs/build/popopx-chat-nodejs-$2.node" --clobber --repo "$LIBS_REPOSITORY"
     ;;
   publish)

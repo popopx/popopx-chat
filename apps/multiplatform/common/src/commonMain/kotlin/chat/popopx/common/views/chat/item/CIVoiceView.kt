@@ -26,7 +26,7 @@ import dev.icerock.moko.resources.ImageResource
 import kotlinx.coroutines.flow.*
 import kotlin.math.*
 
-// TODO refactor https://github.com/simplex-chat/simplex-chat/pull/1451#discussion_r1033429901
+// TODO refactor https://github.com/popopx-chat/popopx-chat/pull/1451#discussion_r1033429901
 
 @Composable
 fun CIVoiceView(

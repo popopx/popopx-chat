@@ -433,7 +433,7 @@ export class ChatApi {
       case "userProfileNoChange":
         return r.user
       default:
-        throw new ChatCommandError("error setting SimpleX name", r)
+        throw new ChatCommandError("error setting POPOPX name", r)
     }
   }
 
@@ -726,7 +726,7 @@ export class ChatApi {
   }
 
   /**
-   * Determine SimpleX link type and if the bot is already connected via this link.
+   * Determine POPOPX link type and if the bot is already connected via this link.
    * Network usage: interactive.
    */
   async apiConnectPlan(userId: number, connectionLink: string): Promise<[T.ConnectionPlan, T.CreatedConnLink]> {
@@ -736,7 +736,7 @@ export class ChatApi {
   }
 
   /**
-   * Connect via prepared SimpleX link. The link can be 1-time invitation link, contact address or group link
+   * Connect via prepared POPOPX link. The link can be 1-time invitation link, contact address or group link
    * Network usage: interactive.
    */
   async apiConnect(userId: number, incognito: boolean, preparedLink: T.CreatedConnLink): Promise<ConnReqType> {
@@ -745,7 +745,7 @@ export class ChatApi {
   }
 
   /**
-   * Connect via SimpleX link as string in the active user profile.
+   * Connect via POPOPX link as string in the active user profile.
    * Network usage: interactive.
    */
   async apiConnectActiveUser(connLink: string): Promise<ConnReqType> {

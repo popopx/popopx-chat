@@ -55,7 +55,7 @@ If you cloned this repository, you can:
 cd ./packages/popopx-chat-nodejs
 npm install
 npm run build
-SIMPLEX_ADDON_PATH=build/Release/popopx.node node ./examples/squaring-bot-readme.js
+POPOPX_ADDON_PATH=build/Release/popopx.node node ./examples/squaring-bot-readme.js
 ```
 
 Building the Node.js add-on from source needs [node-gyp](https://github.com/nodejs/node-gyp) build tools.
@@ -102,7 +102,7 @@ npx popopx-chat install                     # sqlite (default)
 npx popopx-chat install --backend postgres  # Linux x86_64 only
 ```
 
-Set `SIMPLEX_LIBS_DIR` to a directory with a local build of `libpopopx` and its dependencies to use it instead; it must be built for the backend in use. Set `SIMPLEX_ADDON_PATH` to a locally built add-on (`build/Release/popopx.node`) to use it instead of the downloaded one.
+Set `POPOPX_LIBS_DIR` to a directory with a local build of `libpopopx` and its dependencies to use it instead; it must be built for the backend in use. Set `POPOPX_ADDON_PATH` to a locally built add-on (`build/Release/popopx.node`) to use it instead of the downloaded one.
 
 `ChatApi.init` loads the library for `DbConfig.type`; the low-level `core` functions require `core.loadLibrary(backend)` first.
 

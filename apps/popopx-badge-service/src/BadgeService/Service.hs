@@ -112,7 +112,7 @@ checkIssuerKey BadgeServiceOpts {issuerKey} serviceCfg cfg = case issuerKey of
   Left e -> pure (Left e)
   Right (Just k) -> checkOne cfg k
   Right Nothing -> case serviceCfg >>= issuer of
-    Nothing -> pure $ Left "an issuer key is required - pass --issuer-key-idx and --issuer-secret, or add an [issuer] section to badge_service.ini (see `simplex-chat badge keygen`)"
+    Nothing -> pure $ Left "an issuer key is required - pass --issuer-key-idx and --issuer-secret, or add an [issuer] section to badge_service.ini (see `popopx-chat badge keygen`)"
     Just k -> checkOne cfg k
 
 checkOne :: ChatConfig -> BadgeIssuerKey -> IO (Either String BadgeIssuerKey)

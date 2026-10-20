@@ -21,7 +21,7 @@ function sha256(data: Buffer): string {
   return crypto.createHash("sha256").update(data).digest("hex")
 }
 const LINUX_LIB = "libpopopx.so"
-const {XDG_CACHE_HOME, LOCALAPPDATA, SIMPLEX_LIBS_DIR, SIMPLEX_ADDON_PATH} = process.env
+const {XDG_CACHE_HOME, LOCALAPPDATA, POPOPX_LIBS_DIR, POPOPX_ADDON_PATH} = process.env
 
 function setEnv(name: string, value: string | undefined): void {
   if (value === undefined) delete process.env[name]
@@ -36,15 +36,15 @@ beforeEach(() => {
   jest.spyOn(https, "get").mockImplementation(() => { throw new Error("unexpected download") })
   setEnv("XDG_CACHE_HOME", home)
   setEnv("LOCALAPPDATA", home)
-  setEnv("SIMPLEX_LIBS_DIR", undefined)
-  setEnv("SIMPLEX_ADDON_PATH", undefined)
+  setEnv("POPOPX_LIBS_DIR", undefined)
+  setEnv("POPOPX_ADDON_PATH", undefined)
 })
 afterEach(() => {
   jest.restoreAllMocks()
   setEnv("XDG_CACHE_HOME", XDG_CACHE_HOME)
   setEnv("LOCALAPPDATA", LOCALAPPDATA)
-  setEnv("SIMPLEX_LIBS_DIR", SIMPLEX_LIBS_DIR)
-  setEnv("SIMPLEX_ADDON_PATH", SIMPLEX_ADDON_PATH)
+  setEnv("POPOPX_LIBS_DIR", POPOPX_LIBS_DIR)
+  setEnv("POPOPX_ADDON_PATH", POPOPX_ADDON_PATH)
   fs.rmSync(home, {recursive: true, force: true})
 })
 
@@ -90,22 +90,22 @@ describe("paths", () => {
     expect(releaseUrl("nodejs-addon-1", addonAsset("windows-x86_64"))).toBe(`${releases}/nodejs-addon-1/popopx-chat-nodejs-windows-x86_64.node`)
   })
 
-  it("resolves an absolute SIMPLEX_LIBS_DIR", async () => {
-    await expect(resolveLibsDir("postgres", {SIMPLEX_LIBS_DIR: libsDir})).resolves.toBe(libsDir)
+  it("resolves an absolute POPOPX_LIBS_DIR", async () => {
+    await expect(resolveLibsDir("postgres", {POPOPX_LIBS_DIR: libsDir})).resolves.toBe(libsDir)
   })
 
-  it("uses SIMPLEX_LIBS_DIR on an unsupported CPU", async () => {
+  it("uses POPOPX_LIBS_DIR on an unsupported CPU", async () => {
     fs.writeFileSync(path.join(libsDir, LINUX_LIB), "lib")
-    await expect(resolveLibsDir("sqlite", {SIMPLEX_LIBS_DIR: libsDir}, "linux", "arm")).resolves.toBe(libsDir)
+    await expect(resolveLibsDir("sqlite", {POPOPX_LIBS_DIR: libsDir}, "linux", "arm")).resolves.toBe(libsDir)
   })
 
-  it("uses SIMPLEX_LIBS_DIR for postgres outside linux-x86_64", async () => {
+  it("uses POPOPX_LIBS_DIR for postgres outside linux-x86_64", async () => {
     fs.writeFileSync(path.join(libsDir, LINUX_LIB), "lib")
-    await expect(resolveLibsDir("postgres", {SIMPLEX_LIBS_DIR: libsDir}, "linux", "arm64")).resolves.toBe(libsDir)
+    await expect(resolveLibsDir("postgres", {POPOPX_LIBS_DIR: libsDir}, "linux", "arm64")).resolves.toBe(libsDir)
   })
 
-  it("returns a relative SIMPLEX_LIBS_DIR as absolute", async () => {
-    await expect(resolveLibsDir("sqlite", {SIMPLEX_LIBS_DIR: path.relative(process.cwd(), libsDir)})).resolves.toBe(libsDir)
+  it("returns a relative POPOPX_LIBS_DIR as absolute", async () => {
+    await expect(resolveLibsDir("sqlite", {POPOPX_LIBS_DIR: path.relative(process.cwd(), libsDir)})).resolves.toBe(libsDir)
   })
 
   it.each([
@@ -114,23 +114,23 @@ describe("paths", () => {
     ["win32", "x64", "libpopopx.dll"],
   ])("looks for the %s library name", async (platform, arch, lib) => {
     fs.rmSync(libPath(libsDir))
-    await expect(resolveLibsDir("sqlite", {SIMPLEX_LIBS_DIR: libsDir}, platform, arch)).rejects.toThrow(`SIMPLEX_LIBS_DIR has no ${lib}: `)
+    await expect(resolveLibsDir("sqlite", {POPOPX_LIBS_DIR: libsDir}, platform, arch)).rejects.toThrow(`POPOPX_LIBS_DIR has no ${lib}: `)
   })
 
-  it("returns a relative SIMPLEX_ADDON_PATH as absolute", async () => {
+  it("returns a relative POPOPX_ADDON_PATH as absolute", async () => {
     const addon = path.join(libsDir, "popopx.node")
     fs.writeFileSync(addon, "addon")
-    await expect(resolveAddonPath({SIMPLEX_ADDON_PATH: path.relative(process.cwd(), addon)})).resolves.toBe(addon)
+    await expect(resolveAddonPath({POPOPX_ADDON_PATH: path.relative(process.cwd(), addon)})).resolves.toBe(addon)
   })
 
-  it("rejects a missing SIMPLEX_ADDON_PATH", async () => {
+  it("rejects a missing POPOPX_ADDON_PATH", async () => {
     const addon = path.join(libsDir, "popopx.node")
-    await expect(resolveAddonPath({SIMPLEX_ADDON_PATH: addon})).rejects.toThrow(`SIMPLEX_ADDON_PATH does not exist: ${addon}`)
+    await expect(resolveAddonPath({POPOPX_ADDON_PATH: addon})).rejects.toThrow(`POPOPX_ADDON_PATH does not exist: ${addon}`)
   })
 
-  it("rejects a SIMPLEX_LIBS_DIR without libpopopx", async () => {
+  it("rejects a POPOPX_LIBS_DIR without libpopopx", async () => {
     fs.rmSync(libPath(libsDir))
-    await expect(resolveLibsDir("sqlite", {SIMPLEX_LIBS_DIR: libsDir})).rejects.toThrow(`SIMPLEX_LIBS_DIR has no ${path.basename(libPath(libsDir))}: ${libsDir}`)
+    await expect(resolveLibsDir("sqlite", {POPOPX_LIBS_DIR: libsDir})).rejects.toThrow(`POPOPX_LIBS_DIR has no ${path.basename(libPath(libsDir))}: ${libsDir}`)
   })
 })
 
@@ -343,10 +343,10 @@ describe("installLibs", () => {
       .rejects.toThrow("no SHA-256 is pinned for popopx-chat-libs-macos-x86_64.zip")
   })
 
-  it("requires SIMPLEX_ADDON_PATH without a pinned add-on release", async () => {
+  it("requires POPOPX_ADDON_PATH without a pinned add-on release", async () => {
     jest.replaceProperty(release, "ADDON_RELEASE", undefined)
     await expect(resolveAddonPath({XDG_CACHE_HOME: tmp}, "linux", "x64"))
-      .rejects.toThrow("no prebuilt Node.js add-on is pinned in this version; set SIMPLEX_ADDON_PATH")
+      .rejects.toThrow("no prebuilt Node.js add-on is pinned in this version; set POPOPX_ADDON_PATH")
   })
 
   it("rejects a missing add-on and cleans up", async () => {
@@ -415,8 +415,8 @@ describe("installLibs", () => {
 
 describe("cli", () => {
   function installWith(libsDir: string, addon: string): Promise<number> {
-    setEnv("SIMPLEX_LIBS_DIR", libsDir)
-    setEnv("SIMPLEX_ADDON_PATH", addon)
+    setEnv("POPOPX_LIBS_DIR", libsDir)
+    setEnv("POPOPX_ADDON_PATH", addon)
     return main(["install"])
   }
 
@@ -454,7 +454,7 @@ describe("cli", () => {
     try {
       await expect(installWith(dir, path.join(dir, "popopx.node"))).resolves.toBe(1)
       expect(log).not.toHaveBeenCalled()
-      expect(error).toHaveBeenCalledWith(expect.stringContaining("install failed: SIMPLEX_ADDON_PATH does not exist"))
+      expect(error).toHaveBeenCalledWith(expect.stringContaining("install failed: POPOPX_ADDON_PATH does not exist"))
     } finally {
       fs.rmSync(dir, {recursive: true, force: true})
     }
@@ -467,7 +467,7 @@ describe("cli", () => {
     const error = jest.spyOn(console, "error").mockImplementation(() => {})
     try {
       await expect(installWith(dir, addon)).resolves.toBe(1)
-      expect(error).toHaveBeenCalledWith(expect.stringContaining("install failed: SIMPLEX_LIBS_DIR has no"))
+      expect(error).toHaveBeenCalledWith(expect.stringContaining("install failed: POPOPX_LIBS_DIR has no"))
     } finally {
       fs.rmSync(dir, {recursive: true, force: true})
     }

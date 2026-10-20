@@ -56,10 +56,10 @@ data FakePlay = FakePlay
   }
 
 fakePackageName :: Text
-fakePackageName = "chat.simplex.app"
+fakePackageName = "chat.popopx.app"
 
 fakeClientEmail :: Text
-fakeClientEmail = "badge-verifier@simplex-badges-test.iam.gserviceaccount.com"
+fakeClientEmail = "badge-verifier@popopx-badges-test.iam.gserviceaccount.com"
 
 -- | Warp chooses the port, so a server left over from an earlier run cannot answer instead.
 -- The service account key is made per run, since a committed one trips secret scanning.

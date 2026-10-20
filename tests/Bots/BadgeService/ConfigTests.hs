@@ -66,7 +66,7 @@ fullIni =
       "static_dir = /srv/badges",
       -- [group] stays before [btcpay], since tests append btcpay keys to this fixture.
       "[group]",
-      "display_name = SimpleX Badges",
+      "display_name = POPOPX Badges",
       "description = badge ops desk",
       "[btcpay]",
       "host = https://btcpay.example.org",
@@ -311,7 +311,7 @@ testHostMustBeHttps =
       Left e -> e `shouldContain` "https"
       Right _ -> expectationFailure "an http host carries the api key in the clear"
 
--- A real 32-byte base64url secret, as `simplex-chat badge keygen` prints it.
+-- A real 32-byte base64url secret, as `popopx-chat badge keygen` prints it.
 issuerSecret :: T.Text
 issuerSecret = "Ea5wG-J2mQjPBu9YfSJRKPnGnzoIdEE-8VaMh_wY2Bg="
 
@@ -353,7 +353,7 @@ testIssuerIndexInvalid =
 testIssuerBadSecret :: IO ()
 testIssuerBadSecret =
   issuerRefusal ["index = 1", "private_key = not-a-key"]
-    `shouldReturn` "issuer.private_key is not a valid issuer secret; use the value from `simplex-chat badge keygen`"
+    `shouldReturn` "issuer.private_key is not a valid issuer secret; use the value from `popopx-chat badge keygen`"
 
 testIssuerOldFormat :: IO ()
 testIssuerOldFormat = do
@@ -387,8 +387,8 @@ withDev :: T.Text -> (Either String ServiceConfig -> IO a) -> IO a
 withDev keys act = withIni (fullIni <> "[dev]\n" <> keys) $ \p -> readServiceConfig p >>= act
 
 appleIni, googleIni :: T.Text
-appleIni = "[apple]\nbundle_id = chat.simplex.app\nroot_certificates = /etc/badges/AppleRootCA-G3.cer ,/etc/badges/AppleRootCA-G4.cer,\n"
-googleIni = "[google]\npackage_name = chat.simplex.app\nservice_account_file = /etc/badges/play.json\n"
+appleIni = "[apple]\nbundle_id = chat.popopx.app\nroot_certificates = /etc/badges/AppleRootCA-G3.cer ,/etc/badges/AppleRootCA-G4.cer,\n"
+googleIni = "[google]\npackage_name = chat.popopx.app\nservice_account_file = /etc/badges/play.json\n"
 
 testStoresAbsent :: IO ()
 testStoresAbsent = withIni fullIni $ \p -> do
@@ -399,11 +399,11 @@ testStoresAbsent = withIni fullIni $ \p -> do
 testStoresRead :: IO ()
 testStoresRead = withIni (fullIni <> appleIni <> googleIni) $ \p -> do
   Right cfg <- readServiceConfig p
-  appleStore cfg `shouldBe` Just AppleStoreConfig {aBundleId = "chat.simplex.app", aRootCertificates = "/etc/badges/AppleRootCA-G3.cer" :| ["/etc/badges/AppleRootCA-G4.cer"]}
+  appleStore cfg `shouldBe` Just AppleStoreConfig {aBundleId = "chat.popopx.app", aRootCertificates = "/etc/badges/AppleRootCA-G3.cer" :| ["/etc/badges/AppleRootCA-G4.cer"]}
   playStore cfg
     `shouldBe` Just
       PlayStoreConfig
-        { gPackageName = "chat.simplex.app",
+        { gPackageName = "chat.popopx.app",
           gServiceAccountFile = "/etc/badges/play.json",
           gApiHost = "https://androidpublisher.googleapis.com",
           gTokenUrl = "https://oauth2.googleapis.com/token"
@@ -411,9 +411,9 @@ testStoresRead = withIni (fullIni <> appleIni <> googleIni) $ \p -> do
 
 testStoresIncomplete :: IO ()
 testStoresIncomplete = do
-  refused (T.replace "bundle_id = chat.simplex.app\n" "" appleIni) "apple.bundle_id"
+  refused (T.replace "bundle_id = chat.popopx.app\n" "" appleIni) "apple.bundle_id"
   refused (T.replace "root_certificates = /etc/badges/AppleRootCA-G3.cer ,/etc/badges/AppleRootCA-G4.cer,\n" "" appleIni) "apple.root_certificates"
-  refused (T.replace "package_name = chat.simplex.app\n" "" googleIni) "google.package_name"
+  refused (T.replace "package_name = chat.popopx.app\n" "" googleIni) "google.package_name"
   refused (T.replace "service_account_file = /etc/badges/play.json\n" "" googleIni) "google.service_account_file"
   where
     refused section key =
@@ -452,8 +452,8 @@ groupIni body = parseIni (listenerIni <> "[group]\n" <> body)
 
 testGroupNameAndDescription :: IO ()
 testGroupNameAndDescription = do
-  r <- groupIni "display_name = SimpleX Badges\ndescription = Welcome\n"
-  fmap group r `shouldBe` Right (Just GroupConfig {gDisplayName = "SimpleX Badges", gDescription = Just "Welcome"})
+  r <- groupIni "display_name = POPOPX Badges\ndescription = Welcome\n"
+  fmap group r `shouldBe` Right (Just GroupConfig {gDisplayName = "POPOPX Badges", gDescription = Just "Welcome"})
 
 testGroupNoDescription :: IO ()
 testGroupNoDescription = do

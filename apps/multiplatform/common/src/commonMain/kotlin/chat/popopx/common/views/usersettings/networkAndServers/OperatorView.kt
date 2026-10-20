@@ -705,7 +705,7 @@ private fun SingleOperatorUsageConditionsView(
   }
 }
 
-val defaultConditionsLink = "https://github.com/simplex-chat/simplex-chat/blob/stable/PRIVACY.md"
+val defaultConditionsLink = "https://github.com/popopx-chat/popopx-chat/blob/stable/PRIVACY.md"
 
 @Composable
 fun ConditionsTextView(
@@ -722,7 +722,7 @@ fun ConditionsTextView(
         val conditions = getUsageConditions(rh = rhId)
 
         if (conditions != null) {
-          val parentLink = "https://github.com/simplex-chat/simplex-chat/blob/${conditions.first.conditionsCommit}"
+          val parentLink = "https://github.com/popopx-chat/popopx-chat/blob/${conditions.first.conditionsCommit}"
           val conditionsText = conditions.second
           val preparedText = if (conditionsText != null) prepareMarkdown(conditionsText.trimIndent(), parentLink) else null
           val modifiedConditions = Triple(conditions.first, preparedText, conditions.third)
@@ -756,7 +756,7 @@ fun ConditionsTextView(
         }
       }
     } else {
-      val conditionsLink = "https://github.com/simplex-chat/simplex-chat/blob/${usageConditions.conditionsCommit}/PRIVACY.md"
+      val conditionsLink = "https://github.com/popopx-chat/popopx-chat/blob/${usageConditions.conditionsCommit}/PRIVACY.md"
       ConditionsLinkView(conditionsLink)
     }
   } else if (failedToLoad.value) {
@@ -845,12 +845,12 @@ fun ConditionsLinkButton() {
     DefaultDropdownMenu(showMenu, offset = if (oneHandUI.value) DpOffset(0.dp, -AppBarHeight * fontSizeSqrtMultiplier * 3) else DpOffset.Zero) {
       val commit = chatModel.conditions.value.currentConditions.conditionsCommit
       ItemAction(stringResource(MR.strings.operator_open_conditions), painterResource(MR.images.ic_draft), onClick = {
-        val mdUrl = "https://github.com/simplex-chat/simplex-chat/blob/$commit/PRIVACY.md"
+        val mdUrl = "https://github.com/popopx-chat/popopx-chat/blob/$commit/PRIVACY.md"
         showMenu.value = false
         uriHandler.openExternalLink(mdUrl)
       })
       ItemAction(stringResource(MR.strings.operator_open_changes), painterResource(MR.images.ic_more_horiz), onClick = {
-        val commitUrl = "https://github.com/simplex-chat/simplex-chat/commit/$commit"
+        val commitUrl = "https://github.com/popopx-chat/popopx-chat/commit/$commit"
         showMenu.value = false
         uriHandler.openExternalLink(commitUrl)
       })

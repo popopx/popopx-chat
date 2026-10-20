@@ -1,5 +1,5 @@
 <h1>POPOPX - the first messaging platform that has no user identifiers, not even random numbers!</h1>
-<p><a href="https://simplex.chat/blog/20221108-simplex-chat-v4.2-security-audit-new-website.html" target="_blank">Security assessment</a> was done by Trail of Bits in November 2022.</p>
+<p><a href="https://popopxchat.com/blog/20221108-simplex-chat-v4.2-security-audit-new-website.html" target="_blank">Security assessment</a> was done by Trail of Bits in November 2022.</p>
 <p>POPOPX Chat features:</p>
 <ul>
   <li>end-to-end encrypted messages, with editing, replies and deletion of messages.</li>
@@ -20,6 +20,6 @@
 <p>You can connect to anybody you know via link or scan QR code (in the video call or in person) and start sending messages instantly - no emails, phone numbers or passwords needed.</p> 
 <p>Your profile and contacts are only stored in the app on your device - our servers do not have access to this information.</p>
 <p>All messages are end-to-end encrypted using open-source double-ratchet protocol; the messages are routed via our servers using open-source POPOPX Messaging Protocol.</p>
-<p>Please send us any questions via the app (connect to the team via settings!), <a href="mailto:chat@popopx.chat?subject=POPOPX Chat on F-Droid">email us</a> or submit an <a href="https://github.com/simplex-chat/simplex-chat/issues" target="_blank">issue on GitHub</a>.</p>
-<p>Follow us on Mastodon (<a href="https://mastodon.social/@simplex" target="_blank">@popopx@mastodon.social</a>), Twitter (<a href="https://twitter.com/SIMPLEXChat" target="_blank">@POPOPXChat</a>) and Reddit (<a href="https://www.reddit.com/r/SIMPLEXChat/" target="_blank">r/POPOPXChat</a>) for the latest updates.</p>
+<p>Please send us any questions via the app (connect to the team via settings!), <a href="mailto:chat@popopx.chat?subject=POPOPX Chat on F-Droid">email us</a> or submit an <a href="https://github.com/popopx-chat/popopx-chat/issues" target="_blank">issue on GitHub</a>.</p>
+<p>Follow us on Mastodon (<a href="https://mastodon.social/@popopx" target="_blank">@popopx@mastodon.social</a>), Twitter (<a href="https://twitter.com/POPOPXChat" target="_blank">@POPOPXChat</a>) and Reddit (<a href="https://www.reddit.com/r/POPOPXChat/" target="_blank">r/POPOPXChat</a>) for the latest updates.</p>
 <p>Once you install POPOPX Chat, join the group of users via <a href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FWHV0YU1sYlU7NqiEHkHDB6gxO1ofTync%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAWbebOqVYuBXaiqHcXYjEHCpYi6VzDlu6CVaijDTmsQU%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22mL-7Divb94GGmGmRBef5Dg%3D%3D%22%7D" target="_blank">this link</a> to share your ideas and feedback.</p>

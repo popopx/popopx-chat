@@ -281,9 +281,9 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ## Community
 
 - **GitHub Discussions**: [Join the conversation](https://github.com/popopx/popopx-chat/discussions)
-- **Reddit**: [r/PopopXChat](https://www.reddit.com/r/SimpleXChat) (coming soon)
-- **Twitter**: [@PopopXChat](https://twitter.com/SimpleXChat) (coming soon)
-- **Matrix**: [#popopx-chat:matrix.org](https://matrix.to/#/#simplex-chat:matrix.org) (coming soon)
+- **Reddit**: [r/PopopXChat](https://www.reddit.com/r/POPOPXChat) (coming soon)
+- **Twitter**: [@PopopXChat](https://twitter.com/POPOPXChat) (coming soon)
+- **Matrix**: [#popopx-chat:matrix.org](https://matrix.to/#/#popopx-chat:matrix.org) (coming soon)
 
 ## Security
 

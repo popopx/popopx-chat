@@ -25,9 +25,9 @@ jobs:
           PERSONAL_ACCESS_TOKEN : ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
           path-to-signatures: 'signatures/v1.1/cla.json'
-          path-to-document: 'https://github.com/simplex-chat/cla/blob/master/CLA.md'
+          path-to-document: 'https://github.com/popopx-chat/cla/blob/master/CLA.md'
           # branch should not be protected
-          remote-organization-name: simplex-chat
+          remote-organization-name: popopx-chat
           remote-repository-name: cla
           branch: 'master'
           # allowlist: user1,bot*

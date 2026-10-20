@@ -182,5 +182,5 @@ private fun embedCode(groupRelays: List<GroupRelay>, groupInfo: GroupInfo): Stri
   data-app-download-buttons="on"
   data-color-scheme="light"
 ></div>
-<script src="https://simplex.chat/js/channel-preview.js"></script>"""
+<script src="https://popopxchat.com/js/channel-preview.js"></script>"""
 }

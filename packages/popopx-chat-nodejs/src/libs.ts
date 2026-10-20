@@ -77,9 +77,9 @@ export async function resolveLibsDir(
   arch: string = process.arch
 ): Promise<string> {
   const lib = libName(platform, arch)
-  if (env.SIMPLEX_LIBS_DIR) {
-    const dir = path.resolve(env.SIMPLEX_LIBS_DIR)
-    if (!fs.existsSync(path.join(dir, lib))) throw new Error(`SIMPLEX_LIBS_DIR has no ${lib}: ${dir}`)
+  if (env.POPOPX_LIBS_DIR) {
+    const dir = path.resolve(env.POPOPX_LIBS_DIR)
+    if (!fs.existsSync(path.join(dir, lib))) throw new Error(`POPOPX_LIBS_DIR has no ${lib}: ${dir}`)
     return dir
   }
   const tag = platformTag(platform, arch)
@@ -99,12 +99,12 @@ export async function resolveAddonPath(
   platform: string = process.platform,
   arch: string = process.arch
 ): Promise<string> {
-  if (env.SIMPLEX_ADDON_PATH) {
-    const file = path.resolve(env.SIMPLEX_ADDON_PATH)
-    if (!fs.existsSync(file)) throw new Error(`SIMPLEX_ADDON_PATH does not exist: ${file}`)
+  if (env.POPOPX_ADDON_PATH) {
+    const file = path.resolve(env.POPOPX_ADDON_PATH)
+    if (!fs.existsSync(file)) throw new Error(`POPOPX_ADDON_PATH does not exist: ${file}`)
     return file
   }
-  if (!ADDON_RELEASE) throw new Error("no prebuilt Node.js add-on is pinned in this version; set SIMPLEX_ADDON_PATH")
+  if (!ADDON_RELEASE) throw new Error("no prebuilt Node.js add-on is pinned in this version; set POPOPX_ADDON_PATH")
   const asset = addonAsset(platformTag(platform, arch))
   const target = path.resolve(cacheRoot(platform, env), ADDON_RELEASE, asset)
   if (!fs.existsSync(target)) await installAddon(releaseUrl(ADDON_RELEASE, asset), pinnedSha256(asset), target)

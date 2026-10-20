@@ -179,7 +179,7 @@ badgeServiceTests = do
       it "should answer other requests while a Play receipt is with the store, and credit it once Play answers" testPlayHoldsNoOtherRequest
 
 badgeBotName :: Text
-badgeBotName = "SimpleX Badges"
+badgeBotName = "POPOPX Badges"
 
 badgeProfile :: Profile
 badgeProfile = Profile {displayName = badgeBotName, fullName = "", shortDescr = Nothing, description = Nothing, image = Nothing, contactLink = Nothing, peerType = Just CPTBot, preferences = Nothing, badge = Nothing, contactDomain = Nothing}

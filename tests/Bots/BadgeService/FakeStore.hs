@@ -36,7 +36,7 @@ import Popopx.Messaging.Util (safeDecodeUtf8)
 import System.FilePath ((</>))
 
 fixtureDir :: FilePath
-fixtureDir = "apps" </> "simplex-badge-service" </> "test-fixtures" </> "apple"
+fixtureDir = "apps" </> "popopx-badge-service" </> "test-fixtures" </> "apple"
 
 -- | The Apple JWS are the fixtures under no real signature, so they are accepted as these exact
 -- strings only, never because a payload decodes - which a real verifier must refuse to do.

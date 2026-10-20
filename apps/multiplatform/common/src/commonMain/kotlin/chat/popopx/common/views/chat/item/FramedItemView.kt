@@ -730,7 +730,7 @@ fun PreviewTextItemViewQuote(@PreviewParameter(EditedProvider::class) edited: Bo
       ChatItem.getSampleData(
         1, CIDirection.DirectSnd(),
         Clock.System.now(),
-        "https://simplex.chat",
+        "https://popopxchat.com",
         CIStatus.SndSent(),
         quotedItem = CIQuote.getSample(1, Clock.System.now(), "hi", chatDir = CIDirection.DirectRcv()),
         itemEdited = edited
