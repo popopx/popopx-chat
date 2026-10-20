@@ -69,7 +69,7 @@ export async function startServer(options: ServeOptions): Promise<RunningServer>
     const token = serverToken(data, options.newToken)
     writeHeadersFile(data, token)
     const chat = await api.ChatApi.init({type: "sqlite", filePrefix: join(data, "popopx")})
-    log(`Popopx MCP server ${version}, agent "${name}"`)
+    log(`POPOPX MCP server ${version}, agent "${name}"`)
     log(`Data folder: ${data}`)
     log(`Approval mode: ${options.approve}`)
     try {

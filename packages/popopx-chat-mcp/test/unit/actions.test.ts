@@ -18,7 +18,7 @@ function sendFields(text = "trail running shoes"): NewAction {
   return {
     tool: "send",
     input: {chat: "@4", text},
-    subject: {kind: "bot", name: "PopopxX Directory", popopxName: "@directory.popopx", incognito: false},
+    subject: {kind: "bot", name: "POPOPX Directory", popopxName: "@directory.popopx", incognito: false},
     chat: "@4",
     mentions: [],
     responses: new Collected(),
@@ -29,7 +29,7 @@ function connectFields(): NewAction {
   return {
     tool: "connect",
     input: {target: "@directory.popopx"},
-    subject: {kind: "bot", name: "PopopxX Directory", popopxName: "@directory.popopx", incognito: false},
+    subject: {kind: "bot", name: "POPOPX Directory", popopxName: "@directory.popopx", incognito: false},
     plan: {cardKind: "bot", type: "contact", takesMessage: true},
     messages: new Collected(),
   }
@@ -50,7 +50,7 @@ describe("actions in mode requests", () => {
     expect(action).toMatchObject({n: 7, state: "pending", open: 0})
     expect(actions.next).toBe(8)
     expect(fake.calls).toEqual(["counter 8", "card 7"])
-    expect(logLines).toEqual(["Action 7: send to bot PopopxX Directory (@4)"])
+    expect(logLines).toEqual(["Action 7: send to bot POPOPX Directory (@4)"])
   })
 
   it("performs an approved action and edits its card", async () => {
@@ -342,17 +342,17 @@ describe("actions in mode requests", () => {
     expect(action.state).toBe("done")
     expect(action.card).toBeUndefined()
     expect(fake.calls).toEqual(["counter 2", "perform 1", "outcome 1 done"])
-    expect(logLines).toEqual(["Action 1: send to bot PopopxX Directory (@4)", "Action 1 approved by Alice: sent."])
+    expect(logLines).toEqual(["Action 1: send to bot POPOPX Directory (@4)", "Action 1 approved by Alice: sent."])
   })
 
   it("logs leave actions", async () => {
     const fake = fakeHooks()
     const actions = actionsWith("requests", fake)
-    const subject = {kind: "bot", name: "PopopxX Directory", popopxName: "@directory.popopx", incognito: false}
+    const subject = {kind: "bot", name: "POPOPX Directory", popopxName: "@directory.popopx", incognito: false}
     const contact = actions.create("a", {tool: "leave", input: {chat: "@4"}, subject, chat: "@4"})
     const group = actions.create("b", {tool: "leave", input: {chat: "#2"}, subject: {kind: "business", name: "ep", incognito: false}, chat: "#2"})
     await settled()
-    expect(logLines).toEqual(["Action 1: delete bot PopopxX Directory (@4)", "Action 2: leave business ep (#2)"])
+    expect(logLines).toEqual(["Action 1: delete bot POPOPX Directory (@4)", "Action 2: leave business ep (#2)"])
     actions.approve(contact, "Alice")
     actions.approve(group, "Alice")
     fake.performs[0].resolve()
@@ -368,7 +368,7 @@ describe("actions in mode host", () => {
     const actions = actionsWith("host", fake)
     const action = actions.create("k", connectFields())
     expect(action.state).toBe("performing")
-    expect(logLines).toEqual(["Action 1: connect to bot PopopxX Directory, as itself"])
+    expect(logLines).toEqual(["Action 1: connect to bot POPOPX Directory, as itself"])
     await settled()
     fake.performs[0].resolve()
     await settled()

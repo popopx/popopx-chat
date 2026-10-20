@@ -1,11 +1,11 @@
-# Popopx MCP server: reference
+# POPOPX MCP server: reference
 
 [README](README.md) has the short version.
 
-`@popopx-chat/mcp` is a local server that gives an AI agent its own presence on the Popopx network. The agent connects to people, bots, groups, channels and directories, as itself or incognito, sends messages and receives all the responses. Bots tell it which commands they understand, so every bot on the network becomes a service the agent can use. You supervise the agent from its control chat in Popopx: it asks there before it connects, sends or leaves, and you approve or reject from your phone with one tap, or approve all its messages to a chat you trust. Five tools cover it: `connect`, `send`, `receive`, `list`, `leave`. Setup is one command to start the agent, a scan to join its control chat, and one command to add it to Claude Code.
+`@popopx-chat/mcp` is a local server that gives an AI agent its own presence on the POPOPX network. The agent connects to people, bots, groups, channels and directories, as itself or incognito, sends messages and receives all the responses. Bots tell it which commands they understand, so every bot on the network becomes a service the agent can use. You supervise the agent from its control chat in POPOPX: it asks there before it connects, sends or leaves, and you approve or reject from your phone with one tap, or approve all its messages to a chat you trust. Five tools cover it: `connect`, `send`, `receive`, `list`, `leave`. Setup is one command to start the agent, a scan to join its control chat, and one command to add it to Claude Code.
 
 What it isn't:
-- **Not a directory or a search service.** The agent reaches chats through links, Popopx names and the directories it connects to.
+- **Not a directory or a search service.** The agent reaches chats through links, POPOPX names and the directories it connects to.
 - **Not a push channel into the agent.** An MCP server can't start a turn of the agent, so news reaches it only as results of calls it makes: waits inside `send` and `receive`, or polling.
 - **Not an always-on service.** The agent acts while its session runs; services that must always be up should be bots.
 - **Not hosted.** It runs on your machine, one process per agent.
@@ -42,24 +42,24 @@ Status: v0.1. [`TESTING.md`](TESTING.md) describes a local build and test. The d
 - The POPOPX Chat app on a phone or computer, for the owner.
 - Claude Code; other MCP hosts with Streamable HTTP and custom headers can be configured by hand.
 
-At its first start the server downloads the Popopx core library, 29 to 50 MB depending on the platform, into `~/.cache/popopx-chat` (macOS: `~/Library/Caches/popopx-chat`, Windows: `%LOCALAPPDATA%\popopx-chat`). Unpacked on Linux, it takes about 240 MB.
+At its first start the server downloads the POPOPX core library, 29 to 50 MB depending on the platform, into `~/.cache/popopx-chat` (macOS: `~/Library/Caches/popopx-chat`, Windows: `%LOCALAPPDATA%\popopx-chat`). Unpacked on Linux, it takes about 240 MB.
 
 ## Quick start
 
-1. Start the agent's server in a terminal and keep it running. NAME, here `my-agent`, names the agent's data folder and its entry in Claude Code; `--display-name` is the name people see in Popopx, NAME by default:
+1. Start the agent's server in a terminal and keep it running. NAME, here `my-agent`, names the agent's data folder and its entry in Claude Code; `--display-name` is the name people see in POPOPX, NAME by default:
 
    ```
    npx -y @popopx-chat/mcp serve my-agent --display-name "My Agent"
    ```
 
-   The first start prints, after two lines about downloading the Popopx core library and the Node.js add-on:
+   The first start prints, after two lines about downloading the POPOPX core library and the Node.js add-on:
 
    ```
-   Popopx MCP server 0.1.0, agent "my-agent"
+   POPOPX MCP server 0.1.0, agent "my-agent"
    Data folder: /home/alice/.popopx-mcp/my-agent
    Approval mode: requests
    Agent control chat "My Agent" created.
-   Join the agent control chat in the Popopx app. The link works once:
+   Join the agent control chat in the POPOPX app. The link works once:
    <QR code>
    https://smp4.popopx.im/g#...
    If the QR code does not scan, restart with --qr-code large, or paste the link into the app.
@@ -69,7 +69,7 @@ At its first start the server downloads the Popopx core library, 29 to 50 MB dep
 
    `-y` answers npm's prompt to install the package. The server asks no questions: every choice is an option. The QR code of such a link is 37 columns wide and 19 lines high; `--qr-code large` draws it twice as wide and twice as high.
 
-2. In the Popopx app, scan the QR code or open the link, and tap Join. The chat "My Agent" appears in the chat list, and the agent writes: `I'm your agent. I ask here before I connect or send.` The terminal prints:
+2. In the POPOPX app, scan the QR code or open the link, and tap Join. The chat "My Agent" appears in the chat list, and the agent writes: `I'm your agent. I ask here before I connect or send.` The terminal prints:
 
    ```
    Alice joined (member 3) and is now an owner. The link is deleted.
@@ -84,12 +84,12 @@ At its first start the server downloads the Popopx core library, 29 to 50 MB dep
    Added to Claude Code: scope user, server popopx-my-agent.
    ```
 
-4. Add `"mcp__popopx-my-agent"` to `permissions.allow` in `~/.claude/settings.json`, so Claude Code does not prompt for each call; approval happens in the Popopx app.
+4. Add `"mcp__popopx-my-agent"` to `permissions.allow` in `~/.claude/settings.json`, so Claude Code does not prompt for each call; approval happens in the POPOPX app.
 
-5. Start Claude Code and ask it, for example: `Connect to the Popopx Directory at https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok and search it for trail running shoes.` In the chat "My Agent", the agent writes:
+5. Start Claude Code and ask it, for example: `Connect to the POPOPX Directory at https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok and search it for trail running shoes.` In the chat "My Agent", the agent writes:
 
    ```
-   I want to connect to bot Popopx Directory, as myself.
+   I want to connect to bot POPOPX Directory, as myself.
    `Find groups, channels, businesses and bots.`
    /approve 1 or /reject 1
    ```
@@ -114,7 +114,7 @@ With `--owners`, only the owners listed in it approve actions. An owner added la
 
    The output is the same as in the quick start, with the line `The link adds an observer. Its ID and name are printed when it joins.` in place of `Whoever joins by this link ...`.
 
-2. Join the agent control chat in the Popopx app with the link. The link is deleted. The terminal prints, and the agent posts in the chat:
+2. Join the agent control chat in the POPOPX app with the link. The link is deleted. The terminal prints, and the agent posts in the chat:
 
    ```
    Alice joined (member 3). Restart the server with --owners 3:Alice
@@ -194,7 +194,7 @@ In `host` mode, approval is left to the MCP host. The server marks `connect`, `s
 
 ## Expiry
 
-A pending action expires after `--expire HOURS`, 23 by default and at most: Popopx allows edits of a message for 24 hours, and the outcome of a pending action is an edit of its card. Cards don't show the time; `/pending` does. The last line of its card is edited to `Expired.`, and the agent's call returns `{"action": N, "status": "expired"}`. For the same reason, a `connect` waits for the other side at most until 23 hours 50 minutes after the action was created.
+A pending action expires after `--expire HOURS`, 23 by default and at most: POPOPX allows edits of a message for 24 hours, and the outcome of a pending action is an edit of its card. Cards don't show the time; `/pending` does. The last line of its card is edited to `Expired.`, and the agent's call returns `{"action": N, "status": "expired"}`. For the same reason, a `connect` waits for the other side at most until 23 hours 50 minutes after the action was created.
 
 A result that no call has returned is dropped after the action's expiry time; a repeated call after that creates a new action. At most 20 actions are pending at once; a further `connect`, `send` or `leave` fails until the owner decides.
 
@@ -202,10 +202,10 @@ Actions last only while the server runs. When the server stops, the last line of
 
 ## What the owner sees
 
-All of it is in the agent control chat, posted by the agent's profile. The chat has the agent's display name; to see it under another name in your chat list, set an alias for the chat in the app. Names that are valid display names are shown plain. All other text written by the agent or by peers, other names included, is shown as code, line by line; names and errors take one line. Commands and Popopx links inside it cannot be tapped: a valid display name cannot contain `/`, and the app parses each line of a message separately.
+All of it is in the agent control chat, posted by the agent's profile. The chat has the agent's display name; to see it under another name in your chat list, set an alias for the chat in the app. Names that are valid display names are shown plain. All other text written by the agent or by peers, other names included, is shown as code, line by line; names and errors take one line. Commands and POPOPX links inside it cannot be tapped: a valid display name cannot contain `/`, and the app parses each line of a message separately.
 
 ```
-My Agent: I want to connect to bot Popopx Directory (@directory.popopx), as myself.
+My Agent: I want to connect to bot POPOPX Directory (@directory.popopx), as myself.
           `Find groups, channels, businesses and bots.`
           /approve 1 or /reject 1
 
@@ -259,13 +259,13 @@ Five tools:
 
 | Tool | What it does |
 |---|---|
-| `connect` | Joins a contact, bot, business, group or channel by a link or a Popopx name, as the agent's profile or incognito. Returns the chat, its profile, welcome message, the commands a bot advertises, and the messages so far. |
+| `connect` | Joins a contact, bot, business, group or channel by a link or a POPOPX name, as the agent's profile or incognito. Returns the chat, its profile, welcome message, the commands a bot advertises, and the messages so far. |
 | `send` | Sends a message and returns every message received in that chat after it, until none arrives for `idle` seconds (30 by default). A directory bot's search results arrive this way. |
 | `receive` | Returns the chat's unread messages and those that arrive while it waits, waiting for one when asked. |
 | `list` | Lists the agent's chats with unread counts and `approved: true` for chats approved for all messages, and its actions without a result. |
 | `leave` | Deletes a contact, or leaves a group, business chat or channel, and deletes the chat; the contact or the members are notified. |
 
-A `send` to a chat that `list` shows with `connected: false` is refused before any card. A `send` is refused with `text: too long for its approval card; shorten it.` when its card, in its longest outcome form, would exceed 15000 bytes in the Popopx message, which holds at most 15602; a text of many lines or multi-byte characters reaches it below 12000 characters.
+A `send` to a chat that `list` shows with `connected: false` is refused before any card. A `send` is refused with `text: too long for its approval card; shorten it.` when its card, in its longest outcome form, would exceed 15000 bytes in the POPOPX message, which holds at most 15602; a text of many lines or multi-byte characters reaches it below 12000 characters.
 
 Incognito: the core creates a random profile for that one chat, so peers of different chats can't link them. The tools' inputs, results and errors are in [`PLAN.md`](PLAN.md), section "What the agent sees: tools", and the call sequences of the scenarios in section "Sequence diagrams".
 
@@ -317,7 +317,7 @@ Usage:
 
 serve options:
   --data DIR             data folder (default: ~/.popopx-mcp/NAME)
-  --display-name TEXT    the agent's name in Popopx (default at the first start: NAME)
+  --display-name TEXT    the agent's name in POPOPX (default at the first start: NAME)
   --approve MODE         what the owner approves in the agent control chat:
                            requests  the agent's connections and messages (default)
                            host      nothing; the MCP host asks
@@ -342,8 +342,8 @@ register options:
 
 ```
 ~/.popopx-mcp/my-agent/
-  popopx_chat.db    Popopx chat database: the agent's profile and chats
-  popopx_agent.db   Popopx agent database: connections and keys
+  popopx_chat.db    POPOPX chat database: the agent's profile and chats
+  popopx_agent.db   POPOPX agent database: connections and keys
   token              access token, readable only by the user
   headers.json       the token as the Authorization header for Claude Code, readable only by the user
   server.json        name, port and expiry of the server, read by register
@@ -356,7 +356,7 @@ The server keeps its action counter in the chat database, as custom data of the 
 
 The server keeps no log file: it writes its log to the terminal where `serve` runs, events to stdout and errors to stderr.
 
-One server runs per data folder: a second one exits, because two processes on one database break each other's connections (a Popopx server delivers a queue's messages only to the last process that subscribed to it).
+One server runs per data folder: a second one exits, because two processes on one database break each other's connections (a POPOPX server delivers a queue's messages only to the last process that subscribed to it).
 
 ## Security
 

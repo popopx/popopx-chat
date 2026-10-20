@@ -307,7 +307,7 @@ export class Control implements Pick<ActionHooks, "refusal" | "saveCounter" | "p
   private async openLink(role: T.GroupMemberRole): Promise<void> {
     await this.deleteLink()
     const link = await this.chat.apiCreateGroupLink(this.groupId, role)
-    log("Join the agent control chat in the Popopx app. The link works once:")
+    log("Join the agent control chat in the POPOPX app. The link works once:")
     log(qrCodeText(link, this.options.qrCode))
     log(link)
     if (this.options.qrCode === "small") log(qrCodeHint)

@@ -90,7 +90,7 @@
           "asOf": "October 2026",
           "sources": [
             { "title": "Wefunder memo", "url": "https://popopx.chat/wefunder.md" },
-            { "title": "GitHub", "url": "https://github.com/simplex-chat/simplex-chat" }
+            { "title": "GitHub", "url": "https://github.com/popopx/popopx-chat" }
           ]
         }
       ]
@@ -116,7 +116,7 @@
           "asOf": "October 2022",
           "sources": [
             { "title": "Blog", "url": "https://popopx.chat/blog/20221108-popopx-chat-v4.2-security-audit-new-website.md" },
-            { "title": "Report", "url": "https://github.com/simplex-chat/simplex-chat/blob/stable/docs/SimpleX_Chat_Final_Report_11_03_2022.pdf" }
+            { "title": "Report", "url": "https://github.com/popopx/popopx-chat/blob/stable/docs/POPOPX_Chat_Final_Report_11_03_2022.pdf" }
           ]
         },
         {
@@ -125,7 +125,7 @@
           "asOf": "July 2024",
           "sources": [
             { "title": "Blog", "url": "https://popopx.chat/blog/20241014-popopx-network-v6-1-security-review-better-calls-user-experience.md" },
-            { "title": "Report", "url": "https://github.com/simplex-chat/simplex-chat/blob/stable/docs/SimpleX_Design_Review_2024_Summary_Report_12_08_2024.pdf" }
+            { "title": "Report", "url": "https://github.com/popopx/popopx-chat/blob/stable/docs/POPOPX_Design_Review_2024_Summary_Report_12_08_2024.pdf" }
           ]
         },
         {
@@ -138,7 +138,7 @@
           "fact": "Licence",
           "value": "AGPL-3.0",
           "asOf": "2026",
-          "sources": [{ "title": "LICENSE", "url": "https://github.com/simplex-chat/simplex-chat/blob/stable/LICENSE" }]
+          "sources": [{ "title": "LICENSE", "url": "https://github.com/popopx/popopx-chat/blob/stable/LICENSE" }]
         }
       ]
     },

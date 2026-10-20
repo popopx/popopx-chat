@@ -1,4 +1,4 @@
-# Popopx MCP server: specification
+# POPOPX MCP server: specification
 
 > Technical specification of `@popopx-chat/mcp` 0.1.0 in `packages/popopx-chat-mcp`. Statements are checked against the source at commit `a83005bc4` with the uncommitted source changes of 2026-10-18 20:05 UTC (app error texts in `log.ts`, `fullDomainName` in `messages.ts`), and each section links to the code.
 >
@@ -15,11 +15,11 @@
 
 ## Executive summary
 
-`@popopx-chat/mcp` is a local server that gives an MCP host one Popopx profile per process. The host reaches it with Streamable HTTP on `127.0.0.1` and a bearer token. The server exposes five tools: `connect`, `send`, `receive`, `list` and `leave`.
+`@popopx-chat/mcp` is a local server that gives an MCP host one POPOPX profile per process. The host reaches it with Streamable HTTP on `127.0.0.1` and a bearer token. The server exposes five tools: `connect`, `send`, `receive`, `list` and `leave`.
 
-The Popopx core (libpopopx, release `core-7.1.0.12`) runs inside the same Node.js process, loaded by the `popopx-chat` library. The core keeps the profile, chats and connections in two SQLite databases of the data folder. The MCP protocol is served by the MCP TypeScript SDK (`@modelcontextprotocol/server` 2.3.1 and `@modelcontextprotocol/node` 2.1.1).
+The POPOPX core (libpopopx, release `core-7.1.0.12`) runs inside the same Node.js process, loaded by the `popopx-chat` library. The core keeps the profile, chats and connections in two SQLite databases of the data folder. The MCP protocol is served by the MCP TypeScript SDK (`@modelcontextprotocol/server` 2.3.1 and `@modelcontextprotocol/node` 2.1.1).
 
-`connect`, `send` and `leave` are actions. In mode `requests` the server posts each action as a card in the agent control chat, a Popopx group created and owned by the agent's profile. An owner approves or rejects the card with a command in that chat, and the server performs the action after the approval. An owner can also approve all messages to one chat in advance. In mode `host` the server performs actions at once and marks the three tools for the host's own confirmation.
+`connect`, `send` and `leave` are actions. In mode `requests` the server posts each action as a card in the agent control chat, a POPOPX group created and owned by the agent's profile. An owner approves or rejects the card with a command in that chat, and the server performs the action after the approval. An owner can also approve all messages to one chat in advance. In mode `host` the server performs actions at once and marks the three tools for the host's own confirmation.
 
 A tool call is held open by the server until the owner decides and, for `connect` and `send`, until the replies arrive. A repeated call with the same arguments is attached to the same action, so a call that the host ends early is resumed.
 

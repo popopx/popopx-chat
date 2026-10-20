@@ -116,30 +116,30 @@ async function showPromotedGroups() {
 |___/___|_|  |_|_| |____|___/_/ \\_\\\\___|_||_/_/ \\_\\_|
 
 POPOPX directory: https://popopx.chat/directory
-Ask POPOPX team: https://smp6.simplex.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw
-GitHub: https://github.com/simplex-chat/simplex-chat
+Ask POPOPX team: https://smp6.popopx.im/a#lrdvu2d8A1GumSmoKb2krQmtKhWXq-tyGpHuM7aMwsw
+GitHub: https://github.com/popopx/popopx-chat
 Reddit: https://www.reddit.com/r/POPOPXChat
 X/Twitter: https://x.com/POPOPXChat
 
 Docs
 ----
-Whitepaper: https://github.com/simplex-chat/simplexmq/blob/stable/protocol/overview-tjr.md
-Bots API: https://github.com/simplex-chat/simplex-chat/tree/stable/bots
-TypeScript library: https://github.com/simplex-chat/simplex-chat/tree/stable/packages/simplex-chat-client/typescript
-Terminal CLI: https://github.com/simplex-chat/simplex-chat/blob/stable/docs/CLI.md
+Whitepaper: https://github.com/popopx/popopxmq/blob/stable/protocol/overview-tjr.md
+Bots API: https://github.com/popopx/popopx-chat/tree/stable/bots
+TypeScript library: https://github.com/popopx/popopx-chat/tree/stable/packages/popopx-chat-client/typescript
+Terminal CLI: https://github.com/popopx/popopx-chat/blob/stable/docs/CLI.md
 Hosting SMP servers: https://popopx.chat/docs/server.html
 
 Downloads
 ---------
 Apps: https://popopx.chat/downloads
-Servers: https://github.com/simplex-chat/simplexmq/releases
+Servers: https://github.com/popopx/popopxmq/releases
 
 Project
 -------
 About & Contact us: https://popopx.chat/about
 Privacy policy: https://popopx.chat/privacy
 Join team: https://popopx.chat/jobs
-Donations: https://github.com/simplex-chat/simplex-chat#please-support-us-with-your-donations
+Donations: https://github.com/popopx/popopx-chat#please-support-us-with-your-donations
 `
         );
     }
@@ -150,154 +150,154 @@ Donations: https://github.com/simplex-chat/simplex-chat#please-support-us-with-y
             {
                 displayName: "Bitcoin&LightningNetwork",
                 groupLink: {
-                    connShortLink: "https://smp4.simplex.im/g#-xXBhQRrvRB1ffhxcPpB44Im1_ci4BMIdCHwj8m8IHo"
+                    connShortLink: "https://smp4.popopx.im/g#-xXBhQRrvRB1ffhxcPpB44Im1_ci4BMIdCHwj8m8IHo"
                 },
                 imageFile: "images/F4hPy5IGO6G9QUH6-nM_-A.jpg"
             },
             {
                 displayName: "Freedom.Tech",
                 groupLink: {
-                    connShortLink: "https://smp4.simplex.im/g#r5z3uzHp8_pL3ZPyuBCJWmvzQxMnc0Tj3QMLTEnyw6c"
+                    connShortLink: "https://smp4.popopx.im/g#r5z3uzHp8_pL3ZPyuBCJWmvzQxMnc0Tj3QMLTEnyw6c"
                 },
                 imageFile: "images/HylzOLARvIhUR1wiq0fnJA.png"
             },
             {
                 displayName: "Spirituality",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#OZ8ml_2dj5AutxnNIrHy0CPn1QdnSkQ0oh_84nAv5io"
+                    connShortLink: "https://smp5.popopx.im/g#OZ8ml_2dj5AutxnNIrHy0CPn1QdnSkQ0oh_84nAv5io"
                 },
                 imageFile: "images/eb2RINRsdEBI0a06ghzqVg.jpg"
             },
             {
                 displayName: "SovereignStack",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#u2D3BdOb3nt9wMR_qoweAINLcEZaU60Xjwfpf74Dq2I"
+                    connShortLink: "https://smp5.popopx.im/g#u2D3BdOb3nt9wMR_qoweAINLcEZaU60Xjwfpf74Dq2I"
                 },
                 imageFile: "images/YLLz-47eBnAoIH1PKYJ75g.jpg"
             },
             {
                 displayName: "Monero",
                 groupLink: {
-                    connShortLink: "https://smp6.simplex.im/g#FlIy4-q4TzZDI9fK2aw3lQTUvnmaoiLCyeKCoP27kGU"
+                    connShortLink: "https://smp6.popopx.im/g#FlIy4-q4TzZDI9fK2aw3lQTUvnmaoiLCyeKCoP27kGU"
                 },
                 imageFile: "images/TwaN96DcV2OCMfUo6oJ4LQ.png"
             },
             {
                 displayName: "Start9 - Sovereign Computing",
                 groupLink: {
-                    connShortLink: "https://smp4.simplex.im/g#JArWigpS6OB0gYE2U94pDSzPQyejOdmqe98ohBNoW2Q"
+                    connShortLink: "https://smp4.popopx.im/g#JArWigpS6OB0gYE2U94pDSzPQyejOdmqe98ohBNoW2Q"
                 },
                 imageFile: "images/478ec86_izoJb95VXKWEhg.jpg"
             },
             {
                 displayName: "Meshtastic",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#Ub1c3ByH5vkhXMMsRdG0fBhSik_qPuEZHcx8AQ2f2Tw"
+                    connShortLink: "https://smp5.popopx.im/g#Ub1c3ByH5vkhXMMsRdG0fBhSik_qPuEZHcx8AQ2f2Tw"
                 },
                 imageFile: "images/PPTLdveOyb9Wsg3bm6Y_IQ.png"
             },
             {
                 displayName: "GrapheneOS (unofficial)",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#6OTo6kP4ccV4lPOOHekZfOajdxGkxC1_DkAR39_cU4U"
+                    connShortLink: "https://smp5.popopx.im/g#6OTo6kP4ccV4lPOOHekZfOajdxGkxC1_DkAR39_cU4U"
                 },
                 imageFile: "images/zIotMF8Zoe85k956B48N9g.jpg"
             },
             {
                 displayName: "BasicSwap",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#yXMQy5Si6sD5YAdCB4DlUM0kvlKYcUfSiIvOA-RXI_U"
+                    connShortLink: "https://smp5.popopx.im/g#yXMQy5Si6sD5YAdCB4DlUM0kvlKYcUfSiIvOA-RXI_U"
                 },
                 imageFile: "images/AXalaTZ4HsgGtEkaGFbclg.png"
             },
             {
                 displayName: "Linux",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#gqXY-Fxwral34c4bsHlYKZ5QuB6ptVSRMwhWgLKHz54"
+                    connShortLink: "https://smp5.popopx.im/g#gqXY-Fxwral34c4bsHlYKZ5QuB6ptVSRMwhWgLKHz54"
                 },
                 imageFile: "images/gqyRO21CwqK3huZ2zbkOqQ.jpg"
             },
             {
                 displayName: "ModernSurvival",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#e4_r2E20FSWl97XGsHyXoPOkW5B6SmjlWQ1ngVW6Umc"
+                    connShortLink: "https://smp5.popopx.im/g#e4_r2E20FSWl97XGsHyXoPOkW5B6SmjlWQ1ngVW6Umc"
                 },
                 imageFile: "images/5QzoN8PNFD2dkButszPu5g.png"
             },
             {
                 displayName: "Qubes OS",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#COegA1s1ppZG4hRbcpuWwx_QWB4ScouQcIDWwXx64SY"
+                    connShortLink: "https://smp5.popopx.im/g#COegA1s1ppZG4hRbcpuWwx_QWB4ScouQcIDWwXx64SY"
                 },
                 imageFile: "images/Wsdcf731ufbEOYpHc2rqrg.jpg"
             },
             {
                 displayName: "RoboSats",
                 groupLink: {
-                    connShortLink: "https://smp4.simplex.im/g#PNRhbupXbsSr5SpkjqP8IjkI6ACPCr2WOxAqSAW4jr0"
+                    connShortLink: "https://smp4.popopx.im/g#PNRhbupXbsSr5SpkjqP8IjkI6ACPCr2WOxAqSAW4jr0"
                 },
                 imageFile: "images/uZU6Cn1przsjVJ-DBm1-eA.jpg"
             },
             {
                 displayName: "Guardian Project (Unofficial)",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#7zpeTUzhVIwEbZpvo9SUGz1LE35jKfmF_AHYx5YLsxQ"
+                    connShortLink: "https://smp5.popopx.im/g#7zpeTUzhVIwEbZpvo9SUGz1LE35jKfmF_AHYx5YLsxQ"
                 },
                 imageFile: "images/NvmOInofh4RSB2fHdN0zQA.jpg"
             },
             {
                 displayName: "Private Messaging Apps 2",
                 groupLink: {
-                    connShortLink: "https://smp6.simplex.im/g#aPhAePNB7Nn-W4kUBNBpZELXttysG-yAM8ZiU2XoB10"
+                    connShortLink: "https://smp6.popopx.im/g#aPhAePNB7Nn-W4kUBNBpZELXttysG-yAM8ZiU2XoB10"
                 },
                 imageFile: "images/9aT7qRY_JbSJsW4qDaIHEg.jpg"
             },
             {
                 displayName: "Cake Wallet - Official",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#D46rZgLF1eLDLkOyqYnaifRuZcYjlEMgkujKV2buH6k"
+                    connShortLink: "https://smp5.popopx.im/g#D46rZgLF1eLDLkOyqYnaifRuZcYjlEMgkujKV2buH6k"
                 },
                 imageFile: "images/YhyznG68PNewCNjoD_ceOg.png"
             },
             {
                 displayName: "CoMaps (EN)",
                 groupLink: {
-                    connShortLink: "https://smp4.simplex.im/g#mBdIDCJotrN7pimTmXoaAPybC7CmCaaAFxQcwultCvo"
+                    connShortLink: "https://smp4.popopx.im/g#mBdIDCJotrN7pimTmXoaAPybC7CmCaaAFxQcwultCvo"
                 },
                 imageFile: "images/BD6FXuHO-eKOnYCAzkRfmA.jpg"
             },
             {
                 displayName: "POPOPX users group",
                 groupLink: {
-                    connShortLink: "https://smp4.simplex.im/g#hr4lvFeBmndWMKTwqiodPz3VBo_6UmdGWocXd1SupsM"
+                    connShortLink: "https://smp4.popopx.im/g#hr4lvFeBmndWMKTwqiodPz3VBo_6UmdGWocXd1SupsM"
                 },
                 imageFile: "images/CX-1MPD3r3a7NYBvW7de6g.jpg"
             },
             {
                 displayName: "NBTV Community",
                 groupLink: {
-                    connShortLink: "https://smp6.simplex.im/g#RX598AUwyQBG6bqa4TOnEnUg7xONdrA-_e0CmNGxEBI"
+                    connShortLink: "https://smp6.popopx.im/g#RX598AUwyQBG6bqa4TOnEnUg7xONdrA-_e0CmNGxEBI"
                 },
                 imageFile: "images/n3VLCEBWhqU9rVtlEAKUhQ.jpg"
             },
             {
                 displayName: "Lossless Audio Community",
                 groupLink: {
-                    connShortLink: "https://smp6.simplex.im/g#D4P5ENAzT-JoVlFNvRC7geHkkMUuQ9IuhQQC15OFE-o"
+                    connShortLink: "https://smp6.popopx.im/g#D4P5ENAzT-JoVlFNvRC7geHkkMUuQ9IuhQQC15OFE-o"
                 },
                 imageFile: "images/B3xza7zUzYi3dHiRsg6Afg.jpg"
             },
             {
                 displayName: "RetoSwap – Official POPOPXChat Group",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#-_h6fBWisca6RKhteZtVuXol1a49vFH1Jo-n74fnRK0"
+                    connShortLink: "https://smp5.popopx.im/g#-_h6fBWisca6RKhteZtVuXol1a49vFH1Jo-n74fnRK0"
                 },
                 imageFile: "images/ESomaJp7MlFlThqcoj3Ycg.png"
             },
             {
                 displayName: "UW Support 💬",
                 groupLink: {
-                    connShortLink: "https://smp5.simplex.im/g#6KPZcRjE6KDNQ1VcS1a2wd9LRuJy1zgdvldaE5bhg5c"
+                    connShortLink: "https://smp5.popopx.im/g#6KPZcRjE6KDNQ1VcS1a2wd9LRuJy1zgdvldaE5bhg5c"
                 },
                 imageFile: "images/t1RmI4AhKgelVoWeSBTqUA.jpg"
             }

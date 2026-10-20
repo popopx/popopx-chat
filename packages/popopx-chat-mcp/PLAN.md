@@ -1,4 +1,4 @@
-# Popopx MCP server v0.1: plan
+# POPOPX MCP server v0.1: plan
 
 Status: draft · 2026-10-17 · person-facing manual: `README.md`, in full `REFERENCE.md`. Code references: master `139ce5f8c` (`/code/popopx-chat-6`), unless marked `9711dcfc9` (core 7.1.0.11, which `popopx-chat` 7.1.0-beta.6.x loads). Pending decisions: section Open.
 
@@ -6,11 +6,11 @@ Status: draft · 2026-10-17 · person-facing manual: `README.md`, in full `REFER
 
 In:
 
-- one agent per process: one Popopx profile, one data folder, one port;
+- one agent per process: one POPOPX profile, one data folder, one port;
 - MCP over Streamable HTTP on 127.0.0.1, registered in Claude Code;
 - the agent control chat: the owner approves the agent's connects, sends and leaves there, or all sends to one chat;
 - five tools: `connect`, `send`, `receive`, `list`, `leave`;
-- connections to contact addresses, one-time links, groups, channels and Popopx names, as the agent's profile or incognito;
+- connections to contact addresses, one-time links, groups, channels and POPOPX names, as the agent's profile or incognito;
 - bots as services: the commands a bot advertises are returned by `connect`.
 
 Out of v0.1:
@@ -27,12 +27,12 @@ Out of v0.1:
 ```
 participant       what it is                                                       where it acts
 person            runs serve and register in a terminal                            CLI
-owner             a human member of the agent control chat with role owner         Popopx app, the agent control chat
-approver          an owner whose /approve and /reject the agent's server accepts   Popopx app, the agent control chat
+owner             a human member of the agent control chat with role owner         POPOPX app, the agent control chat
+approver          an owner whose /approve and /reject the agent's server accepts   POPOPX app, the agent control chat
 agent             a model in an MCP host, at http://127.0.0.1:PORT/mcp             tool calls
-agent's profile   the Popopx profile of the process, display name DISPLAY         the agent control chat; chats connected as itself
+agent's profile   the POPOPX profile of the process, display name DISPLAY         the agent control chat; chats connected as itself
 incognito profile a random profile the core creates for one connection             one chat connected incognito
-peer              a person, bot, agent or business in one of the agent's chats     Popopx apps, bots, other agents
+peer              a person, bot, agent or business in one of the agent's chats     POPOPX apps, bots, other agents
 ```
 
 - Approvers:
@@ -55,10 +55,10 @@ agent name       NAME                 person, serve                       person
 display name     DISPLAY              person, --display-name, else NAME   owner, peers      the agent's profile; the agent control chat's name
 action           N                    server: counter in the custom data  owner, agent      /approve [CHAT] N, /reject [CHAT] N; tool results; list
                                       of the agent control chat
-chat             @N contact, #N group Popopx core                        agent, owner      tool inputs and results; CHAT in commands and cards
-item             N                    Popopx core                        agent             reply_to; messages
-member           N (groupMemberId)    Popopx core                        agent             from_member; mention
-owner entry      ID:NAME              Popopx core, log                   person            --owners
+chat             @N contact, #N group POPOPX core                        agent, owner      tool inputs and results; CHAT in commands and cards
+item             N                    POPOPX core                        agent             reply_to; messages
+member           N (groupMemberId)    POPOPX core                        agent             from_member; mention
+owner entry      ID:NAME              POPOPX core, log                   person            --owners
 ```
 
 - Chat, item and member IDs are rows of the agent's database.
@@ -148,7 +148,7 @@ log.ts        stdout log lines, stderr errors
 ```
 path               contents                                     mode
 DIR/               created at first start                       0700, set at every start except on Windows
-DIR/popopx_*.db   Popopx chat and agent databases             core default
+DIR/popopx_*.db   POPOPX chat and agent databases             core default
 DIR/token          32 random bytes, base64url                   0600
 DIR/headers.json   {"Authorization": "Bearer <token>"}, written 0600
                    at every start
@@ -191,7 +191,7 @@ register NAME:
 ```
 
 - NAME names the data folder and the Claude Code entry `popopx-NAME`; a later `serve NAME` uses the data folder of NAME.
-- `--display-name` is the agent's name in Popopx, which peers see and which the app shows above its cards. The first start creates the profile with it, NAME when absent, and peer type agent; a later start with another value updates the profile. A display name has 1 to 50 characters, none of `.,;/\#@'"`~`, and starts with a letter, a digit or a symbol (`mkValidName`, `Commands.hs:6948-6976`); another value exits with code 2: `--display-name: not a valid Popopx name; try <the valid form>`.
+- `--display-name` is the agent's name in POPOPX, which peers see and which the app shows above its cards. The first start creates the profile with it, NAME when absent, and peer type agent; a later start with another value updates the profile. A display name has 1 to 50 characters, none of `.,;/\#@'"`~`, and starts with a letter, a digit or a symbol (`mkValidName`, `Commands.hs:6948-6976`); another value exits with code 2: `--display-name: not a valid POPOPX name; try <the valid form>`.
 - `--owners` with no value: the next argument is absent or starts with `--`; parsing is custom, because `util.parseArgs` takes an option either as a flag or with a value. Entries whose NAME has characters other than letters, digits, `_` and `-` are printed in single quotes, `'` escaped as `'\''` (double quotes on Windows): `--owners '3:Alice Smith'`. The register hint adds `--data <folder>`, quoted the same way, when serve was started with `--data`.
 - `--port` and `--expire` apply to one run; `server.json` records them at each start for `register`. An agent on another port takes the same `--port` at every start; after a change of `--port` or `--expire`, `register NAME` runs again.
 - `--expire` at most 23: a sent message is editable for 24 hours (`deletable'`, `Messages.hs:537-548`; refused edit, `Commands.hs:845-868`), so the outcome edit of a pending card falls within that window. Standing and host-mode outcomes are posted, not edited.
@@ -214,11 +214,11 @@ NAME not ^[a-z0-9](-?[a-z0-9])*-?$,   NAME: 1 to 32 lowercase letters, digits an
 $ npx -y @popopx-chat/mcp serve my-agent --display-name "My Agent"
 Downloading libpopopx from https://github.com/popopx-chat/popopx-chat-libs/releases/download/core-7.1.0.12/popopx-chat-libs-linux-x86_64.zip ...
 Downloading the Node.js add-on from https://github.com/popopx-chat/popopx-chat-libs/releases/download/... ...
-Popopx MCP server 0.1.0, agent "my-agent"
+POPOPX MCP server 0.1.0, agent "my-agent"
 Data folder: /home/alice/.popopx-mcp/my-agent
 Approval mode: requests
 Agent control chat "My Agent" created.
-Join the agent control chat in the Popopx app. The link works once:
+Join the agent control chat in the POPOPX app. The link works once:
 <QR code>
 https://smp4.popopx.im/g#...
 If the QR code does not scan, restart with --qr-code large, or paste the link into the app.
@@ -280,8 +280,8 @@ claude not on PATH, local  Add this entry under "projects" > "<project folder>" 
 
 ```
 moment                          line
-action created                  Action 2: send to bot Popopx Directory (@4)
-action created                  Action 1: connect to bot Popopx Directory, as itself
+action created                  Action 2: send to bot POPOPX Directory (@4)
+action created                  Action 1: connect to bot POPOPX Directory, as itself
 action decided                  Action 2 approved by Alice: sent. | Action 1 approved by Alice: connected. | Action 5 approved by Alice: connection requested. | Action 2 approved by Alice: failed: <error>.
 action decided                  Action 2 rejected by Alice. | Action 2 expired.
 mode host                       Action 2: performed without approval (mode host). | ...; failed: <error>.
@@ -295,7 +295,7 @@ shutdown                        Cancelled 2 actions. Stopped.   (the count only 
 
 ## What the owner sees: the agent control chat
 
-The agent control chat has the agent's display name, for example "My Agent". Everything below is in its main chat, posted by the agent's profile, in the first person: the app shows the profile's name above each message. Text from peers and from the agent is shown as code spans, line by line, with backticks replaced by `'`. Commands inside it are not tappable: the core parses each line separately (`parseMaybeMarkdownList`, `T.lines`, `Markdown.hs:149-167`). A code span whose content starts or ends with a space is not code but unmarked text with its backticks (`formattedP`, `md`, `:227-235`), so a leading and a trailing space of a span become U+00A0. A name or an error with a line break would split its code span across lines, so both are folded to one line first. The e2e test "peer text and names ..." checks the received card's `formattedText`: only the card's own commands, no Popopx link, and every peer line a snippet. `/'approve 1'` shows in the app as the tappable `/approve 1` (`bots/README.md`).
+The agent control chat has the agent's display name, for example "My Agent". Everything below is in its main chat, posted by the agent's profile, in the first person: the app shows the profile's name above each message. Text from peers and from the agent is shown as code spans, line by line, with backticks replaced by `'`. Commands inside it are not tappable: the core parses each line separately (`parseMaybeMarkdownList`, `T.lines`, `Markdown.hs:149-167`). A code span whose content starts or ends with a space is not code but unmarked text with its backticks (`formattedP`, `md`, `:227-235`), so a leading and a trailing space of a span become U+00A0. A name or an error with a line break would split its code span across lines, so both are folded to one line first. The e2e test "peer text and names ..." checks the received card's `formattedText`: only the card's own commands, no POPOPX link, and every peer line a snippet. `/'approve 1'` shows in the app as the tappable `/approve 1` (`bots/README.md`).
 
 Names written by peers and members (contacts, groups, members, approvers) are folded to one line in cards, replies, `/pending`, `/list` and membership messages: runs of `\p{Cc}`, `\p{Cf}`, `\p{Zl}` and `\p{Zp}` become one space, and a name that is not a valid display name (`validName`) is a code span. Log lines fold names the same way, without the code span.
 
@@ -308,7 +308,7 @@ My Agent: I'm your agent. I ask here before I connect or send.
 ### Connect card
 
 ```
-My Agent: I want to connect to bot Popopx Directory (@directory.popopx), as myself.
+My Agent: I want to connect to bot POPOPX Directory (@directory.popopx), as myself.
           `Find groups, channels, businesses and bots.`
           /'approve 1' or /'reject 1'
 ```
@@ -316,8 +316,8 @@ My Agent: I want to connect to bot Popopx Directory (@directory.popopx), as myse
 ```
 part                                             source
 contact | bot | agent | business | group | channel   plan type; channel when groupSLinkInfo_.direct = false; business when ContactShortLinkData.business; bot or agent from the contact profile's peerType
-Popopx Directory                                the contact's or group's display name from the link
-(@directory.popopx)                             the target, when it is a Popopx name
+POPOPX Directory                                the contact's or group's display name from the link
+(@directory.popopx)                             the target, when it is a POPOPX name
 as myself | incognito                            input.incognito
 quoted lines                                     short description and welcome message from the link
 "With the message:" and the message lines        with message; after the quoted lines
@@ -326,7 +326,7 @@ quoted lines                                     short description and welcome m
 ### Send card
 
 ```
-My Agent: I want to send a message to bot Popopx Directory (@directory.popopx):
+My Agent: I want to send a message to bot POPOPX Directory (@directory.popopx):
           `trail running shoes`
           /'approve @4 2', /'approve @4 all' or /'reject @4 2'
 ```
@@ -334,8 +334,8 @@ My Agent: I want to send a message to bot Popopx Directory (@directory.popopx):
 ```
 part                                                  source
 contact | bot | agent | business | group | channel    as in the connect card: the type of chat; bot or agent from the contact profile's peerType
-Popopx Directory                                     the chat's display name
-(@directory.popopx)                                  the chat's verified Popopx name, when the core has one (popopx_name of connect and list)
+POPOPX Directory                                     the chat's display name
+(@directory.popopx)                                  the chat's verified POPOPX name, when the core has one (popopx_name of connect and list)
 , where I am incognito             incognito chats
 ```
 
@@ -356,7 +356,7 @@ mentioning @Switchback                       mention
 My Agent: I want to leave business Ridgeline (#9).
           /'approve #9 12' or /'reject #9 12'
 
-My Agent: I want to delete bot Popopx Directory (@4).
+My Agent: I want to delete bot POPOPX Directory (@4).
           /'approve @4 13' or /'reject @4 13'
 ```
 
@@ -396,16 +396,16 @@ command             result
 /reject [CHAT] N    the card is edited
 /approve CHAT all   the standing approval of CHAT by the sender; its pending sends are approved
 /revoke CHAT        the standing approval of CHAT is removed
-/pending            one line per pending action: "2  send to bot Popopx Directory  expires 2026-10-18 09:15 UTC"; "No pending actions." when none
+/pending            one line per pending action: "2  send to bot POPOPX Directory  expires 2026-10-18 09:15 UTC"; "No pending actions." when none
 /list               one line per chat of the agent, as list returns them: the 100 most recent chats, each line cut to 100 bytes as encoded in the message, "…" included; then "K older chats are not shown." ("1 older chat is not shown.") when more exist
 ```
 
 `/list`:
 
 ```
-@4  bot Popopx Directory
+@4  bot POPOPX Directory
 #9  business Ridgeline, approved for this chat by Alice
-@2  contact Ask Popopx Team, not connected
+@2  contact Ask POPOPX Team, not connected
 ```
 
 Replies:
@@ -445,10 +445,10 @@ an owner in LIST loses the role or leaves,            Alice (member 3) is no lon
 ### Server instructions
 
 ```
-You act in Popopx chats through these tools, as the agent DISPLAY.
-connect joins a contact, group, channel or directory by a link or a Popopx name, as your profile DISPLAY or incognito with a new random name for that chat only.
+You act in POPOPX chats through these tools, as the agent DISPLAY.
+connect joins a contact, group, channel or directory by a link or a POPOPX name, as your profile DISPLAY or incognito with a new random name for that chat only.
 leave deletes a contact, or leaves a group or channel, and deletes the chat.
-connect, send and leave are actions: in mode requests your owner approves each one in the Popopx app, and the call waits for the decision. A send to a chat with approved: true in list is performed without waiting for approval.
+connect, send and leave are actions: in mode requests your owner approves each one in the POPOPX app, and the call waits for the decision. A send to a chat with approved: true in list is performed without waiting for approval.
 send returns every message received in its chat after your message, until no new one arrives for idle seconds or wait ends. receive returns messages that arrived later. A call returns once; call again for later messages.
 Bots advertise commands: connect returns them in commands; send a command as text, for example /help.
 If a call ends without a result, repeat it with the same arguments: it attaches to the same action. list shows your chats and the actions without a result. A server restart cancels actions; a repeated call after it creates a new one.
@@ -486,7 +486,7 @@ mentions_me     boolean   meta.userMention
 
 ```
 input field   type      rule
-target        string    required; Popopx link, @name.popopx or #name.popopx
+target        string    required; POPOPX link, @name.popopx or #name.popopx
 incognito     boolean   optional; default false; true: the core creates a random profile for this chat only; the description asks for true unless the user asked to connect as the profile
 message       string    optional; 1 to 2000 characters; for contact and business addresses with short link data; the description asks for one only when the user asked for it
 wait          number    optional; seconds from the approval for the other side to accept and, with message, to send its first reply; the call returns at the latest then; 0 to 86400; default 60; the wait for the connection ends at most 23 h 50 min after the action's creation, so the card's outcome edit falls within 24 hours
@@ -501,7 +501,7 @@ chat          string      done, once the chat exists; known
 connected     boolean     done, known
 type          string      done, known: contact | business | group | channel
 name          string      done, known; the contact's or group's display name
-popopx_name  string      done, known; the verified Popopx name, when the core has one
+popopx_name  string      done, known; the verified POPOPX name, when the core has one
 peer_type     string      done, known, contacts: human | bot | agent | business, when the profile has one
 description   string      done, known; short description from the link, when present
 welcome       string      done, known; welcome message from the link, when present
@@ -518,7 +518,7 @@ Command:
   {label, commands}            CBCMenu: a group of commands (:426-429)
 ```
 
-- `connected: false`: the other side has not accepted within `wait`; `chat` is present when perform found a known chat or `action.conn` names a contact or group (Popopx names, addresses with `message`, channels, `contactViaAddress`, chats prepared earlier), and absent when `action.conn` is only `{pcc}` (invitation links, group links, addresses without `message`); `list` shows the chat when it connects.
+- `connected: false`: the other side has not accepted within `wait`; `chat` is present when perform found a known chat or `action.conn` names a contact or group (POPOPX names, addresses with `message`, channels, `contactViaAddress`, chats prepared earlier), and absent when `action.conn` is only `{pcc}` (invitation links, group links, addresses without `message`); `list` shows the chat when it connects.
 - Live messages (still streamed by the sender) are left out of `messages`, `responses` and `receive`, stay unread, and count in `more` until their final update; a deleted live message is dropped.
 - `commands` come from the contact's profile preferences (`Preferences.commands`, `Types/Preferences.hs:193`) or the group's preferences (`:410`); the directory bot advertises `new`, `help`, `list` and a "Group settings" menu (`role`, `filter`, `link`, `delete`) for owners of listed groups (`Directory/Service.hs:236-244`), and treats any other text as a search (`DCSearchGroup`, `Directory/Events.hs:205`).
 - A target the agent is already connected to returns `status: "known"` with its chat, without an action or a card.
@@ -610,30 +610,30 @@ control chat lost                  The agent lost its control chat. The person w
 20 actions pending                 20 actions are pending; wait for the owner's decisions.
 card over 15000 bytes (send)       text: too long for its approval card; shorten it.
 unknown chat                       No chat #13. list shows the agent's chats.
-not a link or name                 Not a Popopx link or name: <target>
+not a link or name                 Not a POPOPX link or name: <target>
 link not joinable                  <target> can't be joined now: <plan type>.
 message not for an address         message: <target> is not a contact or business address with short link data, or its contact exists without a connection.
 chat not connected (send)          The agent is not connected to @2 and can't post; list shows connected: false.
 role below author                  The agent has role observer in #12 and can't post.
 reply_to not in chat               reply_to: #15 has no item 999.
 mention not a member               mention: #15 has no member 45. (in a contact chat: mention: @4 is a contact chat; mentions apply to groups and channels.)
-Popopx error worded by the apps   the apps' text (table below), for example: Name not found: This Popopx name is not registered. Please check the name.
-other Popopx error                Popopx error: <the chain of error types>: <the scalar fields of the chain as JSON, at most 500 characters>
-                                     for example: Popopx error: error: groupUserRole: {"requiredRole":"author"}
+POPOPX error worded by the apps   the apps' text (table below), for example: Name not found: This POPOPX name is not registered. Please check the name.
+other POPOPX error                POPOPX error: <the chain of error types>: <the scalar fields of the chain as JSON, at most 500 characters>
+                                     for example: POPOPX error: error: groupUserRole: {"requiredRole":"author"}
 ```
 
-Popopx errors worded by the apps (`chatErrorText`, `log.ts`), copied from the Android app's alerts (`PopopxAPI.kt`, strings in `moko-resources/base/strings.xml`) and iOS (`PopopxAPI.swift`, `ErrorAlert.swift`). The alert's title and message form one line, joined by ": ", or by a space after "!" and "?"; HOST is the first host of the server address. The text has no "Popopx error:" prefix, as the title names the error.
+POPOPX errors worded by the apps (`chatErrorText`, `log.ts`), copied from the Android app's alerts (`POPOPXAPI.kt`, strings in `moko-resources/base/strings.xml`) and iOS (`POPOPXAPI.swift`, `ErrorAlert.swift`). The alert's title and message form one line, joined by ": ", or by a space after "!" and "?"; HOST is the first host of the server address. The text has no "POPOPX error:" prefix, as the title names the error.
 
 ```
 error shape                                              text
 error invalidConnReq                                     Invalid connection link: Please check that you used the correct link or ask your contact to send you another one.
 error unsupportedConnReq                                 Unsupported connection link: This link requires a newer app version. Please upgrade the app or ask your contact to send a compatible link.
-error popopxDomainNotReady noValidLink                  No valid link: The Popopx name NAME is registered, but it has no valid link.
-error popopxDomainNotReady unknownDomain                Unconfirmed name: The Popopx name NAME is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.
-errorAgent NO_NAME_SERVERS                               Popopx name error: None of your servers are set to resolve Popopx names. Use a connection link.
-errorAgent SMP NAME NOT_FOUND                            Name not found: This Popopx name is not registered. Please check the name.
-errorAgent SMP NAME NO_RESOLVER                          Popopx name error: Server SERVER does not support name resolution. Use a connection link.
-errorAgent SMP NAME RESOLVER                             Popopx name error: Resolver error: RESOLVER ERROR
+error popopxDomainNotReady noValidLink                  No valid link: The POPOPX name NAME is registered, but it has no valid link.
+error popopxDomainNotReady unknownDomain                Unconfirmed name: The POPOPX name NAME is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.
+errorAgent NO_NAME_SERVERS                               POPOPX name error: None of your servers are set to resolve POPOPX names. Use a connection link.
+errorAgent SMP NAME NOT_FOUND                            Name not found: This POPOPX name is not registered. Please check the name.
+errorAgent SMP NAME NO_RESOLVER                          POPOPX name error: Server SERVER does not support name resolution. Use a connection link.
+errorAgent SMP NAME RESOLVER                             POPOPX name error: Resolver error: RESOLVER ERROR
 errorAgent SMP AUTH                                      Connection link removed: Your contact removed this link, or it was a one-time link that was already used. To connect, ask your contact to create a new link.
 errorAgent SMP BLOCKED                                   Connection blocked: Connection is blocked by server operator: Spam. (or: Content violates conditions of use.)
 errorAgent SMP QUOTA                                     Undelivered messages: The connection reached the limit of undelivered messages, your contact may be offline.
@@ -692,7 +692,7 @@ serve(NAME, options):
   chat = ChatApi.init({type: "sqlite", filePrefix: DIR/popopx})
   profile = the user, or created: /_create user {profile: {displayName: <--display-name or NAME>, fullName: "", peerType: agent}, pastTimestamp: false}
   write DIR/server.json {name: NAME, port, expireHours}
-  /network socks=off smp-proxy=always smp-proxy-fallback=protected           # the apps' defaults, PopopxAPI.kt:5427-5447
+  /network socks=off smp-proxy=always smp-proxy-fallback=protected           # the apps' defaults, POPOPXAPI.kt:5427-5447
   buffer events; chat.startChat()
   --display-name differs from profile.displayName, or peerType is not agent: /_profile <user> {the profile with displayName and peerType agent}       # APIUpdateProfile, parser Commands.hs:6399; before startChat the core returns chatNotStarted
   group = /_groups <user> -> the group with customData.popopxMcp.control, or createControlChat()
@@ -723,7 +723,7 @@ SIGINT, SIGTERM (process.on; the second signal joins the stop in progress):
   chat.close(); remove DIR/lock; log "Stopped."; exit 0
 ```
 
-- The preset contact "Ask Popopx Team", created with every user (`createPresetContactCards`, `Commands.hs:479`), stays in `list` as an unconnected contact.
+- The preset contact "Ask POPOPX Team", created with every user (`createPresetContactCards`, `Commands.hs:479`), stays in `list` as an unconnected contact.
 
 `createControlChat(n = 1)`:
 
@@ -872,7 +872,7 @@ action(tool, input, ctx):
     N = nextAction; nextAction = N + 1; create action N; log "Action N: ..."
     /_set custom #group {popopxMcp: {control: true, nextAction}}, queued after earlier writes, awaited
     mode requests, a send to a chat whose approval applies: standing; decidedBy = approvedBy; start perform(N); its end posts the outcome card
-    mode requests otherwise: /_send #group text <card>; card = its item ID; post failed: state failed, error "Popopx error"
+    mode requests otherwise: /_send #group text <card>; card = its item ID; post failed: state failed, error "POPOPX error"
     mode host: start perform(N); its end posts the outcome card
   open += 1
   wait for: state done, failed, rejected or expired | the call's signal
@@ -895,8 +895,8 @@ connect(input, ctx):
   an action in memory with tool connect and equal action fields: action(connect, input, ctx); go to result
   /_connect plan <user> <target>                                         # APIConnectPlan, parser Commands.hs:6559
     error with errorType invalidConnReq: tool error "not a link or name"
-    other errors: tool error "Popopx error"                             # e.g. an unregistered name: SMP NAME NOT_FOUND (resolveNameRecord, 9711dcfc9 Commands.hs:5175-5180), "Name not found: ..."
-  plan type error (a caught store error, Commands.hs:4517, :4549): tool error "Popopx error" with plan.chatError
+    other errors: tool error "POPOPX error"                             # e.g. an unregistered name: SMP NAME NOT_FOUND (resolveNameRecord, 9711dcfc9 Commands.hs:5175-5180), "Name not found: ..."
+  plan type error (a caught store error, Commands.hs:4517, :4549): tool error "POPOPX error" with plan.chatError
   plan summary: type, name, popopxName, description, welcome, commands, connLink, direct, linkData
   plan with connectionPlanProceed false (Controller.hs:1226-1245):
     invitationLink known, contactAddress known, groupLink known: result {status: "known", chat: @contact.contactId or #groupInfo.groupId, chat fields, connected}; no action
@@ -1045,7 +1045,7 @@ list():
 
 ## Sequence diagrams
 
-Participants: P person (CLI), O owner Alice (Popopx app), S the agent's server, A the agent "My Agent", D the Popopx Directory bot, V vendor Ridgeline's bot, R a channel #12, G a group #15 where the agent has role member, with member Switchback (member 44). Item IDs are rows of the agent's database.
+Participants: P person (CLI), O owner Alice (POPOPX app), S the agent's server, A the agent "My Agent", D the POPOPX Directory bot, V vendor Ridgeline's bot, R a channel #12, G a group #15 where the agent has role member, with member Switchback (member 44). Item IDs are rows of the agent's database.
 
 ### Setup
 
@@ -1070,16 +1070,16 @@ sequenceDiagram
   participant A as Agent
   participant S as Server
   participant O as Owner
-  participant D as Popopx Directory
+  participant D as POPOPX Directory
   A->>S: connect {target: "@directory.popopx"}
   S->>S: /_connect plan: contact address, bot, commands new, help, list
-  S->>O: My Agent: "I want to connect to bot Popopx Directory (@directory.popopx), as myself. /approve 1 or /reject 1"
+  S->>O: My Agent: "I want to connect to bot POPOPX Directory (@directory.popopx), as myself. /approve 1 or /reject 1"
   O->>S: /approve 1
   S->>D: /_prepare contact ...; /_connect contact @4 incognito=off
   D->>S: contactConnected @4; welcome message
   S->>A: {action: 1, status: done, chat: "@4", connected: true, type: "contact", peer_type: "bot", commands: [{keyword: "help", ...}, ...], messages: [welcome]}
   A->>S: send {chat: "@4", text: "trail running shoes"}
-  S->>O: My Agent: "I want to send a message to bot Popopx Directory (@directory.popopx): 'trail running shoes'. /approve @4 2, /approve @4 all or /reject @4 2"
+  S->>O: My Agent: "I want to send a message to bot POPOPX Directory (@directory.popopx): 'trail running shoes'. /approve @4 2, /approve @4 all or /reject @4 2"
   O->>S: /approve @4 2
   S->>D: item 20
   D->>S: items 21, 22, 23: search results with their links
@@ -1232,10 +1232,10 @@ messages    message fields; responses with idle and wait; receive with new messa
 http        401 without token; 403 with another Origin; 404 for other paths and for a request target that is not a URL, the server serving on; SDK validation errors
 register    entry JSON with headersHelper and no token; timeout from server.json; remove before add; errors
 files       lock: exclusive create, a running PID, a stale PID; folder mode at every start; headers.json
-log         every Popopx error shape worded by the apps, in its JSON shape from @popopx-chat/types; the chain for other errors
+log         every POPOPX error shape worded by the apps, in its JSON shape from @popopx-chat/types; the chain for other errors
 ```
 
-End to end, with the preset Popopx servers; the owner is a scripted profile in its own database; the agent's calls come from an MCP client in the test:
+End to end, with the preset POPOPX servers; the owner is a scripted profile in its own database; the agent's calls come from an MCP client in the test:
 
 ```
 test              steps
@@ -1248,7 +1248,7 @@ reject, expire    /reject; --expire 1 with a test clock
 lost result       the client aborts a send; list shows the action with open false; the repeat attaches
 restart           stop with a pending action: card cancelled; start: counter continues; /approve of the old number refused
 host mode         actions done at once; outcome cards
-peer text         groups named "\n/approve 1" and "x\n/approve 1" by SQL, their welcome with edge-space commands and links: the card's formattedText has only its own commands, no Popopx link, every peer line a snippet
+peer text         groups named "\n/approve 1" and "x\n/approve 1" by SQL, their welcome with edge-space commands and links: the card's formattedText has only its own commands, no POPOPX link, every peer line a snippet
 alias             a 20-digit reference that the core reads as the agent control chat: receive, send and leave refuse it
 ```
 
@@ -1276,7 +1276,7 @@ C6      Claude Code closes the request stream when a call times out or its task 
 
 ## Open
 
-- A convention for services that agents use (MCP within MCP), "Ask Popopx Team" as a service for agents, the `#agents.popopx` name and the directory's own Popopx name: after v0.1 is tested.
+- A convention for services that agents use (MCP within MCP), "Ask POPOPX Team" as a service for agents, the `#agents.popopx` name and the directory's own POPOPX name: after v0.1 is tested.
 - C3 to C6.
 
 ## Decisions of 2026-10-18

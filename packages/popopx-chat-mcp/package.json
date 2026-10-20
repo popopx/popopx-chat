@@ -1,7 +1,7 @@
 {
   "name": "@popopx-chat/mcp",
   "version": "0.1.0",
-  "description": "MCP server that gives an AI agent its own Popopx profile",
+  "description": "MCP server that gives an AI agent its own POPOPX profile",
   "bin": {
     "popopx-mcp": "dist/cli.js"
   },

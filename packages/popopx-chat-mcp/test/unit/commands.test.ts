@@ -21,7 +21,7 @@ function fields(chat = "@4", text = "hi"): NewAction {
   return {
     tool: "send",
     input: {chat, text},
-    subject: {kind: "bot", name: "PopopxX Directory", incognito: false},
+    subject: {kind: "bot", name: "POPOPX Directory", incognito: false},
     chat,
     mentions: [],
     responses: new Collected(),
@@ -31,7 +31,7 @@ function fields(chat = "@4", text = "hi"): NewAction {
 function agentChats(): FakeChat {
   const chat = new FakeChat()
   chat.members.set(10, [self, alice, bob])
-  chat.chats.set("@4", {chatInfo: direct(contact(4, "PopopxX Directory", {peerType: "bot"})), items: []})
+  chat.chats.set("@4", {chatInfo: direct(contact(4, "POPOPX Directory", {peerType: "bot"})), items: []})
   chat.chats.set("#2", {chatInfo: groupChat(group(2, "ep", member(1, "agent"), {businessChat: {}})), items: []})
   chat.chats.set("#10", {chatInfo: groupChat(group(10, "agent")), items: []})
   return chat
@@ -92,7 +92,7 @@ describe("owner commands", () => {
 
   it("approves and rejects an action named with its chat", async () => {
     const {control, actions, action} = await setup()
-    const connect = actions.create("c", {tool: "connect", input: {target: "@directory.popopx"}, subject: {kind: "bot", name: "PopopxX Directory", incognito: false}, plan: {cardKind: "bot", type: "contact", takesMessage: true}, messages: new Collected()})
+    const connect = actions.create("c", {tool: "connect", input: {target: "@directory.popopx"}, subject: {kind: "bot", name: "POPOPX Directory", incognito: false}, plan: {cardKind: "bot", type: "contact", takesMessage: true}, messages: new Collected()})
     await settled()
     expect(await control.ownerCommand(alice, {keyword: "reject", params: "#2 5"})).toBe("Action 5 is not for #2.")
     expect(await control.ownerCommand(alice, {keyword: "approve", params: "@4 6"})).toBe("Action 6 is not for @4.")
@@ -118,15 +118,15 @@ describe("owner commands", () => {
 
   it("lists pending actions", async () => {
     const {control, action, actions} = await setup()
-    const connect = actions.create("c", {tool: "connect", input: {target: "@directory.popopx"}, subject: {kind: "bot", name: "PopopxX Directory", incognito: true}, plan: {cardKind: "bot", type: "contact", takesMessage: true}, messages: new Collected()})
+    const connect = actions.create("c", {tool: "connect", input: {target: "@directory.popopx"}, subject: {kind: "bot", name: "POPOPX Directory", incognito: true}, plan: {cardKind: "bot", type: "contact", takesMessage: true}, messages: new Collected()})
     const leave = actions.create("l", {tool: "leave", input: {chat: "#2"}, subject: {kind: "business", name: "ep", incognito: false}, chat: "#2"})
-    const remove = actions.create("d", {tool: "leave", input: {chat: "@4"}, subject: {kind: "bot", name: "PopopxX Directory", incognito: false}, chat: "@4"})
+    const remove = actions.create("d", {tool: "leave", input: {chat: "@4"}, subject: {kind: "bot", name: "POPOPX Directory", incognito: false}, chat: "@4"})
     await settled()
     expect((await control.ownerCommand(alice, {keyword: "pending", params: ""}))!.split("\n")).toEqual([
-      `5  send to bot PopopxX Directory  expires ${utcMinutes(action.expires)}`,
-      `6  connect to bot PopopxX Directory  expires ${utcMinutes(connect.expires)}`,
+      `5  send to bot POPOPX Directory  expires ${utcMinutes(action.expires)}`,
+      `6  connect to bot POPOPX Directory  expires ${utcMinutes(connect.expires)}`,
       `7  leave business ep  expires ${utcMinutes(leave.expires)}`,
-      `8  delete bot PopopxX Directory  expires ${utcMinutes(remove.expires)}`,
+      `8  delete bot POPOPX Directory  expires ${utcMinutes(remove.expires)}`,
     ])
     expect(utcMinutes(action.expires)).toMatch(/^\d{4}-\d\d-\d\d \d\d:\d\d UTC$/)
     for (const pending of [action, connect, leave, remove]) actions.reject(pending, "Alice")
@@ -150,8 +150,8 @@ describe("owner commands", () => {
     expect(await control.ownerCommand(mallory, {keyword: "reject", params: "@4 5"})).toBeUndefined()
     expect(action.decidedBy).toBe("`Mallory /'approve 9'`")
     expect(cardText(action, "requests").split("\n").at(-1)).toBe("Rejected by `Mallory /'approve 9'`.")
-    expect(await control.ownerCommand(mallory, {keyword: "approve", params: "@4 all"})).toBe("Approved for bot PopopxX Directory (@4) by `Mallory /'approve 9'`. /'revoke @4'")
-    expect((await control.ownerCommand(mallory, {keyword: "list", params: ""}))!.split("\n")[0]).toBe("@4  bot PopopxX Directory, approved for this chat by `Mallory /'approve 9'`")
+    expect(await control.ownerCommand(mallory, {keyword: "approve", params: "@4 all"})).toBe("Approved for bot POPOPX Directory (@4) by `Mallory /'approve 9'`. /'revoke @4'")
+    expect((await control.ownerCommand(mallory, {keyword: "list", params: ""}))!.split("\n")[0]).toBe("@4  bot POPOPX Directory, approved for this chat by `Mallory /'approve 9'`")
     expect(customDataOf(chat, "@4")).toMatchObject({popopxMcp: {approvedBy: "Mallory\n/'approve 9'"}})
     expect(actions.pending()).toEqual([])
   })
@@ -198,7 +198,7 @@ describe("owner commands", () => {
     control.onMessage(event(chatInfo, item(4, "/approve @4 all", {type: "groupRcv", groupMember: alice})))
     control.onMessage(event(chatInfo, item(5, "/revoke @4", {type: "groupRcv", groupMember: alice})))
     await new Promise(resolve => setImmediate(resolve))
-    expect(chat.replies).toEqual(["Action 4 is not pending.", "Approved for bot PopopxX Directory (@4) by Alice. /'revoke @4'", "Messages to bot PopopxX Directory (@4) need approval again."])
+    expect(chat.replies).toEqual(["Action 4 is not pending.", "Approved for bot POPOPX Directory (@4) by Alice. /'revoke @4'", "Messages to bot POPOPX Directory (@4) need approval again."])
   })
 })
 
@@ -209,9 +209,9 @@ describe("approval of all messages to a chat", () => {
     directory.customData = {other: 1}
     const second = actions.create("k2", fields("@4", "second"))
     const other = actions.create("k3", fields("#2"))
-    const leave = actions.create("k4", {tool: "leave", input: {chat: "@4"}, subject: {kind: "bot", name: "PopopxX Directory", incognito: false}, chat: "@4"})
+    const leave = actions.create("k4", {tool: "leave", input: {chat: "@4"}, subject: {kind: "bot", name: "POPOPX Directory", incognito: false}, chat: "@4"})
     await settled()
-    expect(await control.ownerCommand(alice, {keyword: "approve", params: "@4 all"})).toBe("Approved for bot PopopxX Directory (@4) by Alice. /'revoke @4'")
+    expect(await control.ownerCommand(alice, {keyword: "approve", params: "@4 all"})).toBe("Approved for bot POPOPX Directory (@4) by Alice. /'revoke @4'")
     expect(customDataOf(chat, "@4")).toEqual({other: 1, popopxMcp: {approvedBy: "Alice", approvedById: 3, approvedAt: expect.stringMatching(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/)}})
     expect([action, second, other, leave].map(({state, decidedBy}) => [state, decidedBy])).toEqual([["performing", "Alice"], ["performing", "Alice"], ["pending", undefined], ["pending", undefined]])
     expect(control.standingApprover(chatInfoOf(chat, "@4"))).toBe("Alice")
@@ -232,7 +232,7 @@ describe("approval of all messages to a chat", () => {
     const {contact: directory} = chatInfoOf(chat, "@4") as T.ChatInfo.Direct
     directory.customData = {other: 1}
     await control.ownerCommand(alice, {keyword: "approve", params: "@4 all"})
-    expect(await control.ownerCommand(alice, {keyword: "revoke", params: "@4"})).toBe("Messages to bot PopopxX Directory (@4) need approval again.")
+    expect(await control.ownerCommand(alice, {keyword: "revoke", params: "@4"})).toBe("Messages to bot POPOPX Directory (@4) need approval again.")
     expect(customDataOf(chat, "@4")).toEqual({other: 1})
     expect(control.standingApprover(chatInfoOf(chat, "@4"))).toBeUndefined()
     expect(await control.ownerCommand(alice, {keyword: "revoke", params: "@4"})).toBe("Messages to @4 have no standing approval.")
@@ -263,13 +263,13 @@ describe("approval of all messages to a chat", () => {
 describe("chat list in the agent control chat", () => {
   it("lists the agent's chats with their approvals and connection state", async () => {
     const {control, chat} = await setup()
-    chat.chats.set("@6", {chatInfo: direct({...contact(6, "Ask PopopxX Team"), activeConn: undefined}), items: []})
+    chat.chats.set("@6", {chatInfo: direct({...contact(6, "Ask POPOPX Team"), activeConn: undefined}), items: []})
     chat.chats.set("#7", {chatInfo: groupChat(group(7, "/approve 9", member(1, "agent"))), items: []})
     await control.ownerCommand(alice, {keyword: "approve", params: "@4 all"})
     expect((await control.ownerCommand(alice, {keyword: "list", params: ""}))!.split("\n")).toEqual([
-      "@4  bot PopopxX Directory, approved for this chat by Alice",
+      "@4  bot POPOPX Directory, approved for this chat by Alice",
       "#2  business ep",
-      "@6  contact Ask PopopxX Team, not connected",
+      "@6  contact Ask POPOPX Team, not connected",
       "#7  group `/approve 9`",
     ])
   })
@@ -287,7 +287,7 @@ describe("chat list in the agent control chat", () => {
     for (let i = 100; i < 200; i++) chat.chats.set(`@${i}`, {chatInfo: direct(contact(i, `contact ${i}`)), items: []})
     const lines = (await control.ownerCommand(alice, {keyword: "list", params: ""}))!.split("\n")
     expect(lines).toHaveLength(101)
-    expect(lines.slice(0, 4)).toEqual(["@4  bot PopopxX Directory", "#2  business ep", `#7  group ${"😀".repeat(21)}…`, "@100  contact contact 100"])
+    expect(lines.slice(0, 4)).toEqual(["@4  bot POPOPX Directory", "#2  business ep", `#7  group ${"😀".repeat(21)}…`, "@100  contact contact 100"])
     expect(lines.at(-1)).toBe("3 older chats are not shown.")
     chat.chats.delete("@198")
     chat.chats.delete("@199")
@@ -355,7 +355,7 @@ describe("sends to a chat approved for all messages", () => {
     expect(result!.structuredContent).toMatchObject({action: 1, status: "done", chat: "@4", responses: [], more: 0})
     expect(chat.sent.filter(({chat: [, id]}) => id === 4).map(({messages: [{msgContent}]}) => msgContent.text)).toEqual(["trail shoes"])
     await settled()
-    expect(cards(chat)).toEqual(["I sent a message to bot PopopxX Directory:\n`trail shoes`\nApproved for this chat by Alice. /'revoke @4'"])
+    expect(cards(chat)).toEqual(["I sent a message to bot POPOPX Directory:\n`trail shoes`\nApproved for this chat by Alice. /'revoke @4'"])
   })
 
   it("posts a card when the approving member is no longer an approver", async () => {
@@ -364,7 +364,7 @@ describe("sends to a chat approved for all messages", () => {
     const sending = tools.call("send", {chat: "@4", text: "trail shoes", wait: 0}, call)
     await settled()
     expect(actions.get(1)).toMatchObject({state: "pending", standing: false})
-    expect(cards(chat)).toEqual(["I want to send a message to bot PopopxX Directory:\n`trail shoes`\n/'approve @4 1', /'approve @4 all' or /'reject @4 1'"])
+    expect(cards(chat)).toEqual(["I want to send a message to bot POPOPX Directory:\n`trail shoes`\n/'approve @4 1', /'approve @4 all' or /'reject @4 1'"])
     expect(chat.sent.filter(({chat: [, id]}) => id === 4)).toEqual([])
     controller.abort()
     expect(await sending).toBeUndefined()
@@ -376,7 +376,7 @@ describe("sends to a chat approved for all messages", () => {
     const leaving = tools.call("leave", {chat: "@4"}, call)
     await settled()
     expect(actions.get(1)).toMatchObject({tool: "leave", state: "pending", standing: false})
-    expect(cards(chat)).toEqual(["I want to delete bot PopopxX Directory (@4).\n/'approve @4 1' or /'reject @4 1'"])
+    expect(cards(chat)).toEqual(["I want to delete bot POPOPX Directory (@4).\n/'approve @4 1' or /'reject @4 1'"])
     controller.abort()
     expect(await leaving).toBeUndefined()
   })
@@ -386,10 +386,10 @@ describe("sends to a chat approved for all messages", () => {
     expect(control.standingApprover(chatInfoOf(chat, "@4"))).toBeUndefined()
     const {chats} = (await tools.call("list", {}, signal().call))!.structuredContent as {chats: {chat: string}[]}
     expect(chats.find(({chat: ref}) => ref === "@4")).not.toHaveProperty("approved")
-    expect((await control.ownerCommand(alice, {keyword: "list", params: ""}))!.split("\n")[0]).toBe("@4  bot PopopxX Directory")
+    expect((await control.ownerCommand(alice, {keyword: "list", params: ""}))!.split("\n")[0]).toBe("@4  bot POPOPX Directory")
     expect((await tools.call("send", {chat: "@4", text: "trail shoes", wait: 0}, signal().call))!.structuredContent).toMatchObject({action: 1, status: "done"})
     await settled()
-    expect(cards(chat)).toEqual(["I sent a message to bot PopopxX Directory:\n`trail shoes`\nPerformed without approval (mode host)."])
+    expect(cards(chat)).toEqual(["I sent a message to bot POPOPX Directory:\n`trail shoes`\nPerformed without approval (mode host)."])
   })
 })
 

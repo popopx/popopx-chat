@@ -1,4 +1,4 @@
-# Popopx MCP server: architecture
+# POPOPX MCP server: architecture
 
 > System structure, modules, state, process lifecycle, approval model and security boundaries of `@popopx-chat/mcp` 0.1.0.
 >
@@ -39,7 +39,7 @@ flowchart LR
     files["files.ts"]
     log["log.ts"]
     lib["popopx-chat<br/>ChatApi"]
-    core["Popopx core<br/>libpopopx core-7.1.0.12"]
+    core["POPOPX core<br/>libpopopx core-7.1.0.12"]
   end
   cli["cli.ts"] --> serve
   cli --> register["register.ts"]
@@ -61,7 +61,7 @@ flowchart LR
   lib --> core
   core --> db[("DATA:<br/>popopx_chat.db<br/>popopx_agent.db")]
   core <-->|"SMP<br/>private routing"| smp["SMP servers"]
-  smp <--> owner["Owner's Popopx app<br/>agent control chat"]
+  smp <--> owner["Owner's POPOPX app<br/>agent control chat"]
   smp <--> peers["Peers:<br/>contacts and bots<br/>groups and channels"]
   log --> term["Terminal:<br/>stdout<br/>stderr"]
 ```
@@ -130,7 +130,7 @@ Tool definitions, call handlers, connect plans and perform steps.
 | Symbol | Line | Contents |
 |---|---|---|
 | `ConnectInput`, `SendInput`, `ReceiveInput`, `LeaveInput` | [31-57](../src/tools.ts#L31-L57) | tool inputs |
-| `PlanSummary` | [63](../src/tools.ts#L63) | card kind, chat type, name, Popopx name, peer type, description, welcome, commands, `takesMessage` |
+| `PlanSummary` | [63](../src/tools.ts#L63) | card kind, chat type, name, POPOPX name, peer type, description, welcome, commands, `takesMessage` |
 | `ChatFields` | [75](../src/tools.ts#L75) | chat fields of `connect` and `list` results |
 | `Agent` | [89](../src/tools.ts#L89) | `ChatApi`, user, `Actions`, `ChatItemsWatch`, control chat reference, standing approver lookup |
 | `JoinMethod` | [98](../src/tools.ts#L98) | `prepared`, `prepareChannel`, `viaAddress`, `prepareContact`, `connect` |
@@ -154,7 +154,7 @@ Tool definitions, call handlers, connect plans and perform steps.
 | `Mode` | [5](../src/actions.ts#L5) | `requests`, `host` |
 | `State` | [6](../src/actions.ts#L6) | `pending`, `performing`, `done`, `failed`, `rejected`, `expired` |
 | `ToolError` | [16](../src/actions.ts#L16) | errors the model can correct; text returned as is |
-| `Subject` | [18](../src/actions.ts#L18) | kind, name, Popopx name, incognito flag of a card |
+| `Subject` | [18](../src/actions.ts#L18) | kind, name, POPOPX name, incognito flag of a card |
 | `ConnRef` | [25](../src/actions.ts#L25) | pending connection, contact or group of a connect action |
 | `ActionRecord` | [31](../src/actions.ts#L31) | number, key, times, change signal, standing flag, state, card, decider, open calls, interrupted flag, error |
 | `ConnectAction`, `SendAction`, `LeaveAction` | [47-79](../src/actions.ts#L47-L79) | per-tool fields |
@@ -241,7 +241,7 @@ Hooks are bound in [`serve.ts:97-103`](../src/serve.ts#L97-L103): `refusal`, `sa
 | `log`, `logError` | [31-37](../src/log.ts#L31-L37) | stdout lines; stderr lines |
 | `errorText`, `chatErrorText` | [39-47](../src/log.ts#L39-L47) | error text, folded to one line: the apps' wording for known error shapes, otherwise the type chain |
 | `appErrorText` | [49-58](../src/log.ts#L49-L58) | wording of the apps' alerts for chat, agent and store errors |
-| `chainText`, `errorChain` | [193-205](../src/log.ts#L193-L205) | `Popopx error: <type chain>: <scalar fields>`, details at most 500 characters |
+| `chainText`, `errorChain` | [193-205](../src/log.ts#L193-L205) | `POPOPX error: <type chain>: <scalar fields>`, details at most 500 characters |
 
 ---
 

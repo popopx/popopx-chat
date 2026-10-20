@@ -38,7 +38,7 @@ export function logError(context: string, error: unknown): void {
 
 export function errorText(error: unknown): string {
   if (error instanceof core.ChatAPIError && error.chatError) return chatErrorText(error.chatError)
-  if (error instanceof api.ChatCommandError) return `Popopx error: unexpected response ${error.response.type}`
+  if (error instanceof api.ChatCommandError) return `POPOPX error: unexpected response ${error.response.type}`
   return error instanceof Error ? error.message : String(error)
 }
 
@@ -66,8 +66,8 @@ function chatErrorTypeText(error: T.ChatErrorType): string | undefined {
     case "popopxDomainNotReady": {
       const name = fullDomainName(error.popopxDomain)
       return error.popopxDomainError.type === "noValidLink"
-        ? `No valid link: The Popopx name ${name} is registered, but it has no valid link.`
-        : `Unconfirmed name: The Popopx name ${name} is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.`
+        ? `No valid link: The POPOPX name ${name} is registered, but it has no valid link.`
+        : `Unconfirmed name: The POPOPX name ${name} is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.`
     }
     default:
       return undefined
@@ -77,7 +77,7 @@ function chatErrorTypeText(error: T.ChatErrorType): string | undefined {
 function agentErrorText(error: T.AgentErrorType): string | undefined {
   switch (error.type) {
     case "NO_NAME_SERVERS":
-      return "Popopx name error: None of your servers are set to resolve Popopx names. Use a connection link."
+      return "POPOPX name error: None of your servers are set to resolve POPOPX names. Use a connection link."
     case "SMP":
       return smpErrorText(error.smpErr, error.serverAddress)
     case "BROKER":
@@ -115,11 +115,11 @@ function smpErrorText(error: T.ErrorType, server: string): string | undefined {
 function nameErrorText(error: T.NameErrorType, server: string): string {
   switch (error.type) {
     case "NOT_FOUND":
-      return "Name not found: This Popopx name is not registered. Please check the name."
+      return "Name not found: This POPOPX name is not registered. Please check the name."
     case "NO_RESOLVER":
-      return `Popopx name error: Server ${server} does not support name resolution. Use a connection link.`
+      return `POPOPX name error: Server ${server} does not support name resolution. Use a connection link.`
     case "RESOLVER":
-      return `Popopx name error: Resolver error: ${error.resolverErr}`
+      return `POPOPX name error: Resolver error: ${error.resolverErr}`
   }
 }
 
@@ -194,7 +194,7 @@ function chainText(chatError: T.ChatError): string {
   const {types, details} = errorChain(chatError)
   const chain = types.join(": ")
   const text = JSON.stringify(details)
-  return text === "{}" ? `Popopx error: ${chain}` : `Popopx error: ${chain}: ${text.slice(0, maxDetails)}`
+  return text === "{}" ? `POPOPX error: ${chain}` : `POPOPX error: ${chain}: ${text.slice(0, maxDetails)}`
 }
 
 function errorChain({type, ...fields}: {type: string}): {types: string[]; details: object} {

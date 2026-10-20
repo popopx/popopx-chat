@@ -169,10 +169,13 @@ library
           Popopx.Chat.Store.Postgres.Migrations.M20260822_forward_link
           Popopx.Chat.Store.Postgres.Migrations.M20260828_file_expiry
           Popopx.Chat.Store.Postgres.Migrations.M20260904_file_badges
+          Popopx.Chat.Store.Postgres.Migrations.M20260905_binthere_bots
+          Popopx.Chat.Store.Postgres.Migrations.M20260906_bot_directory
           Popopx.Chat.Store.Postgres.Migrations.M20260915_user_badges
           Popopx.Chat.Store.Postgres.Migrations.M20260918_badge_issue_errors
           Popopx.Chat.Store.Postgres.Migrations.M20260923_preferences_json
           Popopx.Chat.Store.Postgres.Migrations.M20260925_badge_bindings
+          Popopx.Chat.Store.Postgres.Migrations.M20261009_binthere_bar_flag
           Popopx.Chat.Store.Postgres.Migrations.M20261010_invite_member_via_group
           Popopx.Chat.Store.Postgres.Migrations.M20261012_delivery_job_notification
           Popopx.Chat.Store.Postgres.Migrations.M20261016_badge_store_receipts
@@ -390,7 +393,7 @@ library
     , http2 >=4.2.2 && <4.3
     , memory ==0.18.*
     , mtl >=2.3.1 && <3.0
-    , network ==3.1.*
+    , network >=3.1.2.7 && <3.2
     , network-transport ==0.5.6
     , optparse-applicative >=0.15 && <0.17
     , random >=1.1 && <1.3

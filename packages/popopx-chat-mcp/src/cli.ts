@@ -13,7 +13,7 @@ export const helpText = `Usage:
 
 serve options:
   --data DIR             data folder (default: ~/.popopx-mcp/NAME)
-  --display-name TEXT    the agent's name in Popopx (default at the first start: NAME)
+  --display-name TEXT    the agent's name in POPOPX (default at the first start: NAME)
   --approve MODE         what the owner approves in the agent control chat:
                            requests  the agent's connections and messages (default)
                            host      nothing; the MCP host asks
@@ -145,7 +145,7 @@ export function validAgentName(name: string): boolean {
 
 function displayName(value: string): string {
   const valid = validName(value)
-  if (valid !== value) throw usageError(`--display-name: not a valid Popopx name; try ${valid}`)
+  if (valid !== value) throw usageError(`--display-name: not a valid POPOPX name; try ${valid}`)
   return value
 }
 

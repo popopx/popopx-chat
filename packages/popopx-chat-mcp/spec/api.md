@@ -1,4 +1,4 @@
-# Popopx MCP server: API
+# POPOPX MCP server: API
 
 > The five MCP tools, the agent control chat commands, replies and cards, and the CLI of `@popopx-chat/mcp` 0.1.0.
 >
@@ -75,7 +75,7 @@ Input:
 
 | Field | Type | Range | Default | Rule |
 |---|---|---|---|---|
-| `target` | string | 1 character or more | required | Popopx link (`https://...`, `popopx:/...`), contact name `@name.popopx` or channel name `#name.popopx`; whitespace refused |
+| `target` | string | 1 character or more | required | POPOPX link (`https://...`, `popopx:/...`), contact name `@name.popopx` or channel name `#name.popopx`; whitespace refused |
 | `incognito` | boolean | | `false` | `true`: `incognito=on` in the connect command |
 | `message` | string | 1 to 2000 characters | | first message of a contact request; plans with `takesMessage` only |
 | `wait` | number | 0 to 86400 | 60 | seconds from the approval: for the other side to accept and, with `message`, for its first reply |
@@ -113,8 +113,8 @@ Tool errors:
 
 | Text | Condition | Code |
 |---|---|---|
-| `Not a Popopx link or name: TARGET` | whitespace in `target`, or `invalidConnReq` from the plan command | [tools.ts:468](../src/tools.ts#L468), [:474](../src/tools.ts#L474) |
-| an app error text, for example `Name not found: This Popopx name is not registered. Please check the name.`, or `Popopx error: CHAIN: DETAILS` | other errors of the plan command, or a plan of type `error` | [tools.ts:475](../src/tools.ts#L475), [:826](../src/tools.ts#L826), [log.ts:45-47](../src/log.ts#L45-L47) |
+| `Not a POPOPX link or name: TARGET` | whitespace in `target`, or `invalidConnReq` from the plan command | [tools.ts:468](../src/tools.ts#L468), [:474](../src/tools.ts#L474) |
+| an app error text, for example `Name not found: This POPOPX name is not registered. Please check the name.`, or `POPOPX error: CHAIN: DETAILS` | other errors of the plan command, or a plan of type `error` | [tools.ts:475](../src/tools.ts#L475), [:826](../src/tools.ts#L826), [log.ts:45-47](../src/log.ts#L45-L47) |
 | `TARGET can't be joined now: PLAN.` | `invitationLink ownLink` or `connecting`<br>`contactAddress ownLink` or `connectingProhibit`<br>`groupLink ownLink`, `connectingProhibit`, `noRelays` or `updateRequired` | [tools.ts:817](../src/tools.ts#L817), [:830](../src/tools.ts#L830), [:848](../src/tools.ts#L848), [:870](../src/tools.ts#L870) |
 | `message: TARGET is not a contact or business address with short link data, or its contact exists without a connection.` | `message` given and the plan has `takesMessage: false` | [tools.ts:419](../src/tools.ts#L419) |
 | refusals | see [1.8](#18-action-refusals) | |
@@ -322,7 +322,7 @@ Request lines:
 | `send` | `I want to send a message to SUBJECT:`, with `, where I am incognito` before the colon in incognito chats<br>done: `I sent a message to ...` | text, one code span per line<br>`replying to NAME: QUOTE` with `reply_to`<br>`mentioning @A, @'B C'` with `mention` |
 | `leave` | `I want to delete KIND NAME (@N).` or `I want to leave KIND NAME (#N).`<br>done: `I deleted ...` or `I left ...` | |
 
-SUBJECT is `KIND NAME`, or `an unnamed KIND`, followed by ` (POPOPX_NAME)` when known ([actions.ts:263-266](../src/actions.ts#L263-L266)). For `connect`, POPOPX_NAME is the target when it is a name; for `send`, the chat's verified Popopx name.
+SUBJECT is `KIND NAME`, or `an unnamed KIND`, followed by ` (POPOPX_NAME)` when known ([actions.ts:263-266](../src/actions.ts#L263-L266)). For `connect`, POPOPX_NAME is the target when it is a name; for `send`, the chat's verified POPOPX name.
 
 Last line:
 
@@ -428,7 +428,7 @@ Server name: `popopx-NAME` ([register.ts:33](../src/register.ts#L33)).
 | 2 | `NAME: 1 to 32 lowercase letters, digits and single hyphens, starting with a letter or digit.` | [cli.ts:46](../src/cli.ts#L46) |
 | 2 | `OPTION: a value expected.` | [cli.ts:131](../src/cli.ts#L131) |
 | 2 | `Unknown option OPTION. Run popopx-mcp --help.` | [cli.ts:184](../src/cli.ts#L184) |
-| 2 | `--display-name: not a valid Popopx name; try VALID` | [cli.ts:148](../src/cli.ts#L148) |
+| 2 | `--display-name: not a valid POPOPX name; try VALID` | [cli.ts:148](../src/cli.ts#L148) |
 | 2 | `--approve: requests or host expected, got VALUE` | [cli.ts:153](../src/cli.ts#L153) |
 | 2 | `--qr-code: small or large expected, got VALUE` | [cli.ts:158](../src/cli.ts#L158) |
 | 2 | `--scope: user or local expected, got VALUE` | [cli.ts:163](../src/cli.ts#L163) |
@@ -452,9 +452,9 @@ stdout ([log.ts:31-33](../src/log.ts#L31-L33)):
 
 | Moment | Line | Code |
 |---|---|---|
-| start | `Popopx MCP server VERSION, agent "NAME"`<br>`Data folder: DATA`<br>`Approval mode: MODE` | [serve.ts:72-74](../src/serve.ts#L72-L74) |
+| start | `POPOPX MCP server VERSION, agent "NAME"`<br>`Data folder: DATA`<br>`Approval mode: MODE` | [serve.ts:72-74](../src/serve.ts#L72-L74) |
 | control chat created | `Agent control chat "DISPLAY" created.` | [control.ts:383](../src/control.ts#L383) |
-| link opened | `Join the agent control chat in the Popopx app. The link works once:`<br>QR code<br>link<br>small QR code: `If the QR code does not scan, restart with --qr-code large, or paste the link into the app.`<br>role line | [control.ts:304-310](../src/control.ts#L304-L310) |
+| link opened | `Join the agent control chat in the POPOPX app. The link works once:`<br>QR code<br>link<br>small QR code: `If the QR code does not scan, restart with --qr-code large, or paste the link into the app.`<br>role line | [control.ts:304-310](../src/control.ts#L304-L310) |
 | listening | `Listening on http://127.0.0.1:PORT/mcp` | [serve.ts:120](../src/serve.ts#L120) |
 | owner setup done | `Add the agent to Claude Code:`<br>`  npx -y @popopx-chat/mcp register NAME [--data DATA]` | [serve.ts:164-166](../src/serve.ts#L164-L166) |
 | owner joined | `NAME joined (member ID) and is now an owner. The link is deleted.` | [control.ts:271](../src/control.ts#L271) |

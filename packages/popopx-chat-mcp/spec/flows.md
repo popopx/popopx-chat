@@ -1,4 +1,4 @@
-# Popopx MCP server: flows
+# POPOPX MCP server: flows
 
 > Sequence diagrams of the main flows, each with notes and source locations.
 >
@@ -14,8 +14,8 @@ Participants:
 | T | `AgentTools` |
 | X | `Actions` |
 | K | `Control` |
-| C | the Popopx core behind `ChatApi` |
-| O | the owner in the Popopx app |
+| C | the POPOPX core behind `ChatApi` |
+| O | the owner in the POPOPX app |
 | D | a peer |
 
 `#G` is the agent control chat, `USER` the agent's user ID, `LINK` the link as `connFullLink [connShortLink]`. Chat commands are shown as the server sends them. Card and progress texts with a semicolon are shown with a comma in the diagrams; the exact texts are in the notes.
@@ -181,7 +181,7 @@ Notes:
 |---|---|
 | known prepared contact or group | `/_connect contact @C incognito=X [json M]`<br>`/_connect group #G incognito=X [json M]` |
 | channel link (`direct` false, with link data) | `/_prepare group USER LINK direct=off [domain=D] JSON`<br>`/_connect group #G incognito=X` |
-| contact address with link data, and a Popopx name or a message | `/_prepare contact USER LINK [domain=D] JSON`<br>`/_connect contact @C incognito=X [json M]`, or `/_connect group #G ...` for a business |
+| contact address with link data, and a POPOPX name or a message | `/_prepare contact USER LINK [domain=D] JSON`<br>`/_connect contact @C incognito=X [json M]`, or `/_connect group #G ...` for a business |
 | `contactViaAddress` | `/_connect contact USER incognito=X CONTACT_ID` |
 | other links | `/_connect USER incognito=X LINK` |
 

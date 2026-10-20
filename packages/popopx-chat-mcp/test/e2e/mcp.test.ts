@@ -124,7 +124,7 @@ test("agent with an owner, a bot and the tools", async () => {
     expect(listed.result.actions).toEqual([{action: n4, tool: "send", input: {chat, text: "lost result", idle: 2}, state: "pending", open: false}])
     expect(listed.result.chats).toEqual([
       expect.objectContaining({chat, type: "contact", name: "Directory", connected: true, incognito: false, unread: 0}),
-      expect.objectContaining({type: "contact", name: "Ask PopopxX Team", connected: false}),
+      expect.objectContaining({type: "contact", name: "Ask POPOPX Team", connected: false}),
     ])
     await ownerSends(`/approve ${n4}`)
     await until(() => server!.actions.get(n4)!.state === "done")

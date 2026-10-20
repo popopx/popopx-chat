@@ -38,8 +38,8 @@ describe("message fields", () => {
   })
 
   it("describes direct, channel and sent messages", () => {
-    const directory = direct(contact(4, "PopopxX Directory", {peerType: "bot"}))
-    expect(toMessage(directory, item(21, "found 3", {type: "directRcv"}, {status: "rcvRead"}), self)).toMatchObject({chat: "@4", from: "PopopxX Directory", from_type: "bot", new: false})
+    const directory = direct(contact(4, "POPOPX Directory", {peerType: "bot"}))
+    expect(toMessage(directory, item(21, "found 3", {type: "directRcv"}, {status: "rcvRead"}), self)).toMatchObject({chat: "@4", from: "POPOPX Directory", from_type: "bot", new: false})
     expect(toMessage(directory, item(20, "shoes", {type: "directSnd"}), self)).toEqual({
       chat: "@4",
       item: 20,
@@ -145,7 +145,7 @@ function agentTools(chat: FakeChat, actions: Actions = actionsWith("requests", f
 describe("receive", () => {
   it("returns unread messages and messages arriving during the call, once each, and marks them read", async () => {
     const chat = new FakeChat()
-    const chatInfo = direct(contact(4, "PopopxX Directory"))
+    const chatInfo = direct(contact(4, "POPOPX Directory"))
     chat.chats.set("@4", {chatInfo, items: [item(20, "old", {type: "directRcv"}, {status: "rcvRead"}), item(21, "first", {type: "directRcv"})]})
     const {tools, watch} = agentTools(chat)
     const call = tools.call("receive", {chat: "@4", wait: 5}, signal().call)
@@ -164,7 +164,7 @@ describe("receive", () => {
 
   it("waits for a new message", async () => {
     const chat = new FakeChat()
-    const chatInfo = direct(contact(4, "PopopxX Directory"))
+    const chatInfo = direct(contact(4, "POPOPX Directory"))
     chat.chats.set("@4", {chatInfo, items: []})
     const {tools, watch} = agentTools(chat)
     const {call, progress} = signal()
@@ -179,7 +179,7 @@ describe("receive", () => {
 
   it("counts the overflow in more", async () => {
     const chat = new FakeChat()
-    chat.chats.set("@4", {chatInfo: direct(contact(4, "PopopxX Directory")), items: []})
+    chat.chats.set("@4", {chatInfo: direct(contact(4, "POPOPX Directory")), items: []})
     const {tools, watch} = agentTools(chat)
     const {call, progress} = signal()
     const receiving = tools.call("receive", {chat: "@4", wait: 30}, call)
@@ -230,7 +230,7 @@ describe("receive", () => {
   it("stops reading after limit + 1 new messages and counts the unread rest in more", async () => {
     const chat = new FakeChat()
     const items = Array.from({length: 450}, (_, i) => item(100 + i, `m${i}`, {type: "directRcv"}, {status: i < 50 ? "rcvRead" : "rcvNew"}))
-    chat.chats.set("@4", {chatInfo: direct(contact(4, "PopopxX Directory")), items})
+    chat.chats.set("@4", {chatInfo: direct(contact(4, "POPOPX Directory")), items})
     const {tools} = agentTools(chat)
     const result = (await tools.call("receive", {chat: "@4", limit: 150}, signal().call))!.structuredContent as {messages: {item: number}[]; more: number}
     expect(result.messages.map(({item}) => item)).toEqual(Array.from({length: 150}, (_, i) => 150 + i))
@@ -243,7 +243,7 @@ describe("receive", () => {
 
   it("reads on past live messages, so a message that arrives during the call never passes an unread one", async () => {
     const chat = new FakeChat()
-    const chatInfo = direct(contact(4, "PopopxX Directory"))
+    const chatInfo = direct(contact(4, "POPOPX Directory"))
     chat.chats.set("@4", {chatInfo, items: Array.from({length: 500}, (_, i) => item(100 + i, `m${i}`, {type: "directRcv"}, {live: i < 120}))})
     const {tools, watch} = agentTools(chat)
     const receiving = tools.call("receive", {chat: "@4", limit: 150}, signal().call)
@@ -257,7 +257,7 @@ describe("receive", () => {
   it("counts only messages in more when it reads every unread item, and marks the other unread items it read", async () => {
     const chat = new FakeChat()
     const event = (itemId: number): T.ChatItem => ({...item(itemId, "", {type: "directRcv"}), content: {type: "rcvDecryptionError"}}) as unknown as T.ChatItem
-    chat.chats.set("@4", {chatInfo: direct(contact(4, "PopopxX Directory")), items: [event(20), item(21, "a", {type: "directRcv"}), event(22), item(23, "b", {type: "directRcv"}), event(24)]})
+    chat.chats.set("@4", {chatInfo: direct(contact(4, "POPOPX Directory")), items: [event(20), item(21, "a", {type: "directRcv"}), event(22), item(23, "b", {type: "directRcv"}), event(24)]})
     const {tools} = agentTools(chat)
     const first = (await tools.call("receive", {chat: "@4", limit: 1}, signal().call))!.structuredContent as {messages: {item: number}[]; more: number}
     expect(first).toMatchObject({messages: [{item: 21}], more: 1})
@@ -271,7 +271,7 @@ describe("send", () => {
   it("returns the responses received after the sent item", async () => {
     jest.useFakeTimers()
     const chat = new FakeChat()
-    const chatInfo = direct(contact(4, "PopopxX Directory", {peerType: "bot"}))
+    const chatInfo = direct(contact(4, "POPOPX Directory", {peerType: "bot"}))
     chat.chats.set("@4", {chatInfo, items: []})
     const fake = fakeHooks()
     const actions = actionsWith("requests", fake)
@@ -303,7 +303,7 @@ describe("send", () => {
   it("waits and limits as the attaching call asks", async () => {
     jest.useFakeTimers()
     const chat = new FakeChat()
-    chat.chats.set("@4", {chatInfo: direct(contact(4, "PopopxX Directory", {peerType: "bot"})), items: []})
+    chat.chats.set("@4", {chatInfo: direct(contact(4, "POPOPX Directory", {peerType: "bot"})), items: []})
     const fake = fakeHooks()
     const actions = actionsWith("requests", fake)
     const {tools, watch} = agentTools(chat, actions)
@@ -405,7 +405,7 @@ describe("send", () => {
     chat.chats.set("#12", {chatInfo: groupChat(group(12, "News", observer)), items: []})
     chat.chats.set("#15", {chatInfo: groupChat(group(15, "Trail", member(1, "agent"))), items: []})
     chat.members.set(15, [member(44, "Switchback")])
-    chat.chats.set("@2", {chatInfo: direct({...contact(2, "Ask PopopxX Team"), activeConn: undefined}), items: []})
+    chat.chats.set("@2", {chatInfo: direct({...contact(2, "Ask POPOPX Team"), activeConn: undefined}), items: []})
     chat.chats.set("#16", {chatInfo: groupChat(group(16, "Old", member(1, "agent", T.GroupMemberRole.Member, T.GroupMemberStatus.Removed))), items: []})
     const actions = actionsWith("requests", fakeHooks())
     const {tools} = agentTools(chat, actions)
@@ -435,7 +435,7 @@ describe("send", () => {
     await settled()
     const action = actions.get(1)!
     actions.approve(action, "Alice")
-    const error = 'PopopxX error: error: groupUserRole: {"requiredRole":"author"}'
+    const error = 'POPOPX error: error: groupUserRole: {"requiredRole":"author"}'
     expect((await sending)!.structuredContent).toEqual({action: 1, status: "failed", error})
     expect(cardText(action, "requests").split("\n").at(-1)).toBe(`Approved by Alice; failed: \`${error}\`.`)
   })
@@ -492,7 +492,7 @@ describe("connect", () => {
       } as unknown as T.ChatError)
     }
     const {tools} = connectTools(chat)
-    expect(textOf(await tools.call("connect", {target: "@nobody.popopx"}, signal().call))).toBe("Name not found: This PopopxX name is not registered. Please check the name.")
+    expect(textOf(await tools.call("connect", {target: "@nobody.popopx"}, signal().call))).toBe("Name not found: This POPOPX name is not registered. Please check the name.")
   })
 
   it("connects a known prepared contact, and deletes it when the connection fails", async () => {
@@ -503,7 +503,7 @@ describe("connect", () => {
     const connecting = tools.call("connect", {target: link, message: "trail shoes?"}, signal().call)
     await settled()
     actions.approve(actions.get(1)!, "Alice")
-    expect((await connecting)!.structuredContent).toEqual({action: 1, status: "failed", error: "PopopxX error: unexpected response cmdOk"})
+    expect((await connecting)!.structuredContent).toEqual({action: 1, status: "failed", error: "POPOPX error: unexpected response cmdOk"})
     expect(chat.commands).toContain(`/_connect contact @7 incognito=off json {"type":"text","text":"trail shoes?"}`)
     expect(chat.deleted).toEqual([{chatType: T.ChatType.Direct, chatId: 7, mode: {type: "full", notify: false}}])
   })
@@ -662,12 +662,12 @@ describe("connect", () => {
     expect(chat.commands.at(-1)).toBe("/_read chat items @12 41")
   })
 
-  it("prepares a contact found by its PopopxX name with the domain, and returns no unverified popopx_name", async () => {
+  it("prepares a contact found by its POPOPX name with the domain, and returns no unverified popopx_name", async () => {
     jest.useFakeTimers()
     const chat = new FakeChat()
-    const linkData = {profile: {displayName: "PopopxX Directory", fullName: "", peerType: "bot"}, business: false}
-    const joining = {...contact(9, "PopopxX Directory"), activeConn: {connId: 209, connStatus: {type: "joined"}}} as unknown as T.Contact
-    const ready = {...contact(9, "PopopxX Directory"), activeConn: {connId: 209, connStatus: {type: "ready"}}} as unknown as T.Contact
+    const linkData = {profile: {displayName: "POPOPX Directory", fullName: "", peerType: "bot"}, business: false}
+    const joining = {...contact(9, "POPOPX Directory"), activeConn: {connId: 209, connStatus: {type: "joined"}}} as unknown as T.Contact
+    const ready = {...contact(9, "POPOPX Directory"), activeConn: {connId: 209, connStatus: {type: "ready"}}} as unknown as T.Contact
     const prepare = `/_prepare contact 1 ${link} domain=directory.popopx ${JSON.stringify(linkData)}`
     const name = {nameType: "contact", nameDomain: {nameTLD: "popopx", domain: "directory", subDomain: []}}
     chat.chats.set("@9", {chatInfo: direct(joining), items: []})
@@ -678,7 +678,7 @@ describe("connect", () => {
     const connecting = tools.call("connect", {target: "@directory.popopx"}, signal().call)
     await jest.advanceTimersByTimeAsync(0)
     const action = actions.get(1)!
-    expect(action.subject).toEqual({kind: "bot", name: "PopopxX Directory", popopxName: "@directory.popopx", incognito: false})
+    expect(action.subject).toEqual({kind: "bot", name: "POPOPX Directory", popopxName: "@directory.popopx", incognito: false})
     actions.approve(action, "Alice")
     await jest.advanceTimersByTimeAsync(0)
     expect(chat.commands.filter(cmd => /^\/_(prepare|connect contact)/.test(cmd))).toEqual([prepare, "/_connect contact @9 incognito=off"])
@@ -686,7 +686,7 @@ describe("connect", () => {
     tools.onContactConnected({type: "contactConnected", user, contact: ready})
     await jest.advanceTimersByTimeAsync(30_000)
     const result = (await connecting)!.structuredContent
-    expect(result).toMatchObject({status: "done", chat: "@9", type: "contact", name: "PopopxX Directory", connected: true})
+    expect(result).toMatchObject({status: "done", chat: "@9", type: "contact", name: "POPOPX Directory", connected: true})
     expect(result).not.toHaveProperty("popopx_name")
   })
 })
@@ -702,12 +702,12 @@ describe("leave", () => {
 
   it("deletes a contact with notification", async () => {
     const chat = new FakeChat()
-    chat.chats.set("@4", {chatInfo: direct(contact(4, "PopopxX Directory", {peerType: "bot"})), items: []})
+    chat.chats.set("@4", {chatInfo: direct(contact(4, "POPOPX Directory", {peerType: "bot"})), items: []})
     const {tools, actions} = leaveTools(chat)
     const leaving = tools.call("leave", {chat: "@4"}, signal().call)
     await settled()
     const action = actions.get(1)!
-    expect(action).toMatchObject({tool: "leave", state: "pending", chat: "@4", subject: {kind: "bot", name: "PopopxX Directory", incognito: false}})
+    expect(action).toMatchObject({tool: "leave", state: "pending", chat: "@4", subject: {kind: "bot", name: "POPOPX Directory", incognito: false}})
     actions.approve(action, "Alice")
     expect((await leaving)!.structuredContent).toEqual({action: 1, status: "done", chat: "@4"})
     expect(chat.left).toEqual([])
@@ -780,13 +780,13 @@ describe("leave", () => {
 describe("list", () => {
   it("marks the chats approved for all messages", async () => {
     const chat = new FakeChat()
-    chat.chats.set("@4", {chatInfo: direct(contact(4, "PopopxX Directory", {peerType: "bot"})), items: [item(20, "hi")]})
+    chat.chats.set("@4", {chatInfo: direct(contact(4, "POPOPX Directory", {peerType: "bot"})), items: [item(20, "hi")]})
     chat.chats.set("#2", {chatInfo: groupChat(group(2, "ep", member(1, "agent"))), items: []})
     chat.chats.set("#10", {chatInfo: groupChat(group(10, "agent")), items: []})
     const {tools} = agentTools(chat, actionsWith("requests", fakeHooks()), chatInfo => (chatInfo.type === "direct" ? "Alice" : undefined))
     const {chats} = (await tools.call("list", {}, signal().call))!.structuredContent as {chats: object[]}
     expect(chats).toEqual([
-      {chat: "@4", type: "contact", name: "PopopxX Directory", peer_type: "bot", incognito: false, connected: true, unread: 1, approved: true},
+      {chat: "@4", type: "contact", name: "POPOPX Directory", peer_type: "bot", incognito: false, connected: true, unread: 1, approved: true},
       {chat: "#2", type: "group", name: "ep", incognito: false, connected: true, unread: 0},
     ])
     expect(chats[1]).not.toHaveProperty("approved")

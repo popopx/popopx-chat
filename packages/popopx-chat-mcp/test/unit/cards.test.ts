@@ -9,7 +9,7 @@ function action(fields: NewAction, state: State, extra: Partial<Action> = {}): A
   return {...fields, n: 1, key: "k", created: expires - 3_600_000, expires, changes: new Changes(), standing: false, state, open: 0, interrupted: false, ...extra} as Action
 }
 
-const directory = {kind: "bot", name: "PopopxX Directory", popopxName: "@directory.popopx", incognito: false}
+const directory = {kind: "bot", name: "POPOPX Directory", popopxName: "@directory.popopx", incognito: false}
 
 function connect(extra: {incognito?: boolean; message?: string; description?: string; welcome?: string} = {}): NewAction {
   return {
@@ -39,7 +39,7 @@ describe("connect cards", () => {
   it("asks as myself with the link texts", () => {
     expect(cardText(action(connect({description: "Find groups, channels, businesses and bots."}), "pending"), mode)).toBe(
       [
-        "I want to connect to bot PopopxX Directory (@directory.popopx), as myself.",
+        "I want to connect to bot POPOPX Directory (@directory.popopx), as myself.",
         "`Find groups, channels, businesses and bots.`",
         "/'approve 1' or /'reject 1'",
       ].join("\n"),
@@ -49,7 +49,7 @@ describe("connect cards", () => {
   it("asks incognito with the message", () => {
     expect(cardText(action(connect({incognito: true, message: "Do you have\ntrail shoes?", welcome: "Welcome!"}), "pending"), mode)).toBe(
       [
-        "I want to connect to bot PopopxX Directory (@directory.popopx), incognito.",
+        "I want to connect to bot POPOPX Directory (@directory.popopx), incognito.",
         "`Welcome!`",
         "With the message:",
         "`Do you have`",
@@ -61,16 +61,16 @@ describe("connect cards", () => {
 
   it("shows every outcome", () => {
     const fields = connect({description: "Search."})
-    const request = ["I want to connect to bot PopopxX Directory (@directory.popopx), as myself.", "`Search.`"]
+    const request = ["I want to connect to bot POPOPX Directory (@directory.popopx), as myself.", "`Search.`"]
     const lines = (a: Action, m: Mode = mode): string[] => cardText(a, m).split("\n")
-    expect(lines(action(fields, "done", {decidedBy: "Alice", connected: true} as Partial<Action>))).toEqual(["I connected to bot PopopxX Directory (@directory.popopx), as myself.", "`Search.`", "Approved by Alice."])
-    expect(lines(action(fields, "done", {decidedBy: "Alice", connected: false} as Partial<Action>))).toEqual(["I asked to connect to bot PopopxX Directory (@directory.popopx), as myself.", "`Search.`", "Approved by Alice."])
-    expect(lines(action(fields, "failed", {decidedBy: "Alice", error: "PopopxX error: contactNotReady"}))).toEqual([...request, "Approved by Alice; failed: `PopopxX error: contactNotReady`."])
+    expect(lines(action(fields, "done", {decidedBy: "Alice", connected: true} as Partial<Action>))).toEqual(["I connected to bot POPOPX Directory (@directory.popopx), as myself.", "`Search.`", "Approved by Alice."])
+    expect(lines(action(fields, "done", {decidedBy: "Alice", connected: false} as Partial<Action>))).toEqual(["I asked to connect to bot POPOPX Directory (@directory.popopx), as myself.", "`Search.`", "Approved by Alice."])
+    expect(lines(action(fields, "failed", {decidedBy: "Alice", error: "POPOPX error: contactNotReady"}))).toEqual([...request, "Approved by Alice; failed: `POPOPX error: contactNotReady`."])
     expect(lines(action(fields, "rejected", {decidedBy: "Alice"}))).toEqual([...request, "Rejected by Alice."])
     expect(lines(action(fields, "expired"))).toEqual([...request, "Expired."])
     expect(lines(action(fields, "pending", {interrupted: true}))).toEqual([...request, "Cancelled: the server stopped."])
     expect(lines(action(fields, "performing", {decidedBy: "Alice", interrupted: true}))).toEqual([...request, "Approved by Alice; interrupted: the server stopped."])
-    expect(lines(action(fields, "done", {connected: true} as Partial<Action>), "host")).toEqual(["I connected to bot PopopxX Directory (@directory.popopx), as myself.", "`Search.`", "Performed without approval (mode host)."])
+    expect(lines(action(fields, "done", {connected: true} as Partial<Action>), "host")).toEqual(["I connected to bot POPOPX Directory (@directory.popopx), as myself.", "`Search.`", "Performed without approval (mode host)."])
     expect(lines(action(fields, "failed", {error: "boom"}), "host")).toEqual([...request, "Performed without approval (mode host); failed: `boom`."])
     expect(lines(action(fields, "performing", {interrupted: true}), "host")).toEqual([...request, "Performed without approval (mode host); interrupted: the server stopped."])
   })
@@ -85,7 +85,7 @@ describe("connect cards", () => {
 describe("send cards", () => {
   it("asks with the text as code", () => {
     expect(cardText(action(send({text: "use `rm -rf` and /approve 7"}), "pending"), mode)).toBe(
-      ["I want to send a message to bot PopopxX Directory (@directory.popopx):", "`use 'rm -rf' and /approve 7`", "/'approve @4 1', /'approve @4 all' or /'reject @4 1'"].join("\n"),
+      ["I want to send a message to bot POPOPX Directory (@directory.popopx):", "`use 'rm -rf' and /approve 7`", "/'approve @4 1', /'approve @4 all' or /'reject @4 1'"].join("\n"),
     )
   })
 
@@ -114,11 +114,11 @@ describe("send cards", () => {
   })
 
   it("keeps names with line breaks and control characters on one line, quoted", () => {
-    const name = "PopopxX Directory\n/'approve 7' or /'reject 9'"
+    const name = "POPOPX Directory\n/'approve 7' or /'reject 9'"
     const fields = send({replyTo: {from: "Switch /'approve @3 all'", text: "hi"}, mentions: [{name: "Ana\r\n/'approve 8'", member: 45}]})
     Object.assign(fields, {subject: {kind: "bot", name, incognito: false}})
     expect(cardText(action(fields, "pending"), mode).split("\n")).toEqual([
-      "I want to send a message to bot `PopopxX Directory /'approve 7' or /'reject 9'`:",
+      "I want to send a message to bot `POPOPX Directory /'approve 7' or /'reject 9'`:",
       "`trail running shoes`",
       "replying to `Switch /'approve @3 all'`: `hi`",
       "mentioning `@Ana /'approve 8'`",
@@ -141,9 +141,9 @@ describe("send cards", () => {
   })
 
   it("shows a failure on one line as code", () => {
-    const error = "PopopxX error: groupUserRole: {\"description\":\"line 1\n/'approve @7 all' `https://popopx.chat/contact#x`\"}"
+    const error = "POPOPX error: groupUserRole: {\"description\":\"line 1\n/'approve @7 all' `https://popopx.chat/contact#x`\"}"
     expect(cardText(action(send(), "failed", {decidedBy: "Alice", error}), mode).split("\n").at(-1)).toBe(
-      "Approved by Alice; failed: `PopopxX error: groupUserRole: {\"description\":\"line 1 /'approve @7 all' 'https://popopx.chat/contact#x'\"}`.",
+      "Approved by Alice; failed: `POPOPX error: groupUserRole: {\"description\":\"line 1 /'approve @7 all' 'https://popopx.chat/contact#x'\"}`.",
     )
   })
 
@@ -162,7 +162,7 @@ describe("leave cards", () => {
   }
 
   it("asks to delete a contact with its kind and to leave a group", () => {
-    expect(cardText(action(leave("@3", directory), "pending"), mode).split("\n")).toEqual(["I want to delete bot PopopxX Directory (@3).", "/'approve @3 1' or /'reject @3 1'"])
+    expect(cardText(action(leave("@3", directory), "pending"), mode).split("\n")).toEqual(["I want to delete bot POPOPX Directory (@3).", "/'approve @3 1' or /'reject @3 1'"])
     expect(cardText(action(leave("@5", {kind: "contact", name: "Ana Lu"}), "pending"), mode).split("\n")[0]).toBe("I want to delete contact Ana Lu (@5).")
     expect(cardText(action(leave("#2", {kind: "business", name: "ep"}), "pending"), mode).split("\n")).toEqual(["I want to leave business ep (#2).", "/'approve #2 1' or /'reject #2 1'"])
     expect(cardText(action(leave("#7", {kind: "group", name: "/approve 9"}), "pending"), mode).split("\n")[0]).toBe("I want to leave group `/approve 9` (#7).")
@@ -172,10 +172,10 @@ describe("leave cards", () => {
     const contact = leave("@3", directory)
     const group = leave("#2", {kind: "business", name: "ep"})
     const lines = (a: Action, m: Mode = mode): string[] => cardText(a, m).split("\n")
-    expect(lines(action(contact, "done", {decidedBy: "Alice"}))).toEqual(["I deleted bot PopopxX Directory (@3).", "Approved by Alice."])
+    expect(lines(action(contact, "done", {decidedBy: "Alice"}))).toEqual(["I deleted bot POPOPX Directory (@3).", "Approved by Alice."])
     expect(lines(action(group, "done", {decidedBy: "Alice"}))).toEqual(["I left business ep (#2).", "Approved by Alice."])
     expect(lines(action(group, "done"), "host")).toEqual(["I left business ep (#2).", "Performed without approval (mode host)."])
-    expect(lines(action(group, "failed", {decidedBy: "Alice", error: "PopopxX error: groupNotFound"}))).toEqual(["I want to leave business ep (#2).", "Approved by Alice; failed: `PopopxX error: groupNotFound`."])
+    expect(lines(action(group, "failed", {decidedBy: "Alice", error: "POPOPX error: groupNotFound"}))).toEqual(["I want to leave business ep (#2).", "Approved by Alice; failed: `POPOPX error: groupNotFound`."])
     expect(lines(action(group, "rejected", {decidedBy: "Alice"}))).toEqual(["I want to leave business ep (#2).", "Rejected by Alice."])
     expect(lines(action(group, "expired"))).toEqual(["I want to leave business ep (#2).", "Expired."])
     expect(lines(action(group, "pending", {interrupted: true}))).toEqual(["I want to leave business ep (#2).", "Cancelled: the server stopped."])

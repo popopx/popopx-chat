@@ -1,19 +1,19 @@
 #!/usr/bin/env sh
 set -eu
 
-POPOPX_KEY='3C:52:C4:FD:3C:AD:1C:07:C9:B0:0A:70:80:E3:58:FA:B9:FE:FC:B8:AF:5A:EC:14:77:65:F1:6D:0F:21:AD:85'
+SIMPLEX_KEY='3C:52:C4:FD:3C:AD:1C:07:C9:B0:0A:70:80:E3:58:FA:B9:FE:FC:B8:AF:5A:EC:14:77:65:F1:6D:0F:21:AD:85'
 
 REPO_NAME="popopx-chat"
 REPO="https://github.com/popopx-chat/${REPO_NAME}"
 
-IMAGE_NAME='popopx-local-android'
-CONTAINER_NAME='popopx-builder-android'
+IMAGE_NAME='sx-local-android'
+CONTAINER_NAME='sx-builder-android'
 DOCKER_PATH_PROJECT='/project'
 DOCKER_PATH_VERIFY='/verify'
 
 export DOCKER_BUILDKIT=1
 
-POPOPX_REPO='popopx-chat/popopx-chat'
+SIMPLEX_REPO='popopx-chat/popopx-chat'
 CMDS="curl git docker"
 
 INIT_DIR="$PWD"
@@ -234,7 +234,7 @@ Continue?'
   
     download_apk "$tag" "$filename" "${apk_directory}/${filename}.${SUFFIX_DOWNLOADED}"
 
-    if check_apk "${filename}.${SUFFIX_DOWNLOADED}" "$POPOPX_KEY"; then
+    if check_apk "${filename}.${SUFFIX_DOWNLOADED}" "$SIMPLEX_KEY"; then
       printf "${COLOR_CYAN}APK for %s is signed by valid key.${COLOR_RESET}\n" "$arch"
     else
       printf "${COLOR_CYAN}Signature of APK for %s is invalid., aborting the script.${COLOR_RESET}\n" "$arch"
@@ -246,7 +246,12 @@ Continue?'
   for arch in $ARCHES; do
     case "$arch" in
       armv7a)
-        build_tag="${tag}-armv7a"
+        # Releases made before the master-android branch was merged have armv7a in a separate tag.
+        if git -C "$build_directory" rev-parse -q --verify "refs/tags/${tag}-armv7a" > /dev/null; then
+          build_tag="${tag}-armv7a"
+        else
+          build_tag="${tag}"
+        fi
         ;;
       aarch64)
         build_tag="${tag}"

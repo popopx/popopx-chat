@@ -88,8 +88,8 @@ describe("serve options", () => {
   })
 
   it("checks the display name", () => {
-    expect(usage(["serve", "agent", "--display-name", "agent.bot"])).toBe("--display-name: not a valid PopopxX name; try agentbot")
-    expect(usage(["serve", "agent", "--display-name", " agent"])).toBe("--display-name: not a valid PopopxX name; try agent")
+    expect(usage(["serve", "agent", "--display-name", "agent.bot"])).toBe("--display-name: not a valid POPOPX name; try agentbot")
+    expect(usage(["serve", "agent", "--display-name", " agent"])).toBe("--display-name: not a valid POPOPX name; try agent")
     expect(parseCommand(["serve", "agent", "--display-name", "Ridgeline Scout"], home)).toMatchObject({options: {displayName: "Ridgeline Scout"}})
   })
 })

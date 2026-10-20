@@ -9,28 +9,28 @@ const forwarding = (brokerErr: object): object => ({type: "SMP", serverAddress: 
 const destination = (proxyErr: object): object => ({type: "PROXY", proxyServer: server, relayServer: relay, proxyErr: {type: "protocolError", protocolErr: {type: "PROXY", proxyErr}}})
 const domain = {nameTLD: T.PopopxTLD.Popopx, domain: "ridgeline", subDomain: []}
 
-describe("PopopxX errors", () => {
+describe("POPOPX errors", () => {
   const cases: [string, T.ChatError, string][] = [
     ["invalid link", {type: "error", errorType: {type: "invalidConnReq"}}, "Invalid connection link: Please check that you used the correct link or ask your contact to send you another one."],
     ["unsupported link", {type: "error", errorType: {type: "unsupportedConnReq"}}, "Unsupported connection link: This link requires a newer app version. Please upgrade the app or ask your contact to send a compatible link."],
     [
       "name without a valid link",
       {type: "error", errorType: {type: "popopxDomainNotReady", popopxDomain: domain, popopxDomainError: {type: "noValidLink"}}},
-      "No valid link: The PopopxX name ridgeline.popopx is registered, but it has no valid link.",
+      "No valid link: The POPOPX name ridgeline.popopx is registered, but it has no valid link.",
     ],
     [
       "name not in a profile",
       {type: "error", errorType: {type: "popopxDomainNotReady", popopxDomain: domain, popopxDomainError: {type: "unknownDomain"}}},
-      "Unconfirmed name: The PopopxX name ridgeline.popopx is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.",
+      "Unconfirmed name: The POPOPX name ridgeline.popopx is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.",
     ],
-    ["no name servers", agentError({type: "NO_NAME_SERVERS"}), "PopopxX name error: None of your servers are set to resolve PopopxX names. Use a connection link."],
-    ["name not found", agentError({type: "SMP", serverAddress: server, smpErr: {type: "NAME", nameErr: {type: "NOT_FOUND"}}}), "Name not found: This PopopxX name is not registered. Please check the name."],
+    ["no name servers", agentError({type: "NO_NAME_SERVERS"}), "POPOPX name error: None of your servers are set to resolve POPOPX names. Use a connection link."],
+    ["name not found", agentError({type: "SMP", serverAddress: server, smpErr: {type: "NAME", nameErr: {type: "NOT_FOUND"}}}), "Name not found: This POPOPX name is not registered. Please check the name."],
     [
       "no name resolver",
       agentError({type: "SMP", serverAddress: server, smpErr: {type: "NAME", nameErr: {type: "NO_RESOLVER"}}}),
-      `PopopxX name error: Server ${server} does not support name resolution. Use a connection link.`,
+      `POPOPX name error: Server ${server} does not support name resolution. Use a connection link.`,
     ],
-    ["resolver error", agentError({type: "SMP", serverAddress: server, smpErr: {type: "NAME", nameErr: {type: "RESOLVER", resolverErr: "bad\nreply"}}}), "PopopxX name error: Resolver error: bad reply"],
+    ["resolver error", agentError({type: "SMP", serverAddress: server, smpErr: {type: "NAME", nameErr: {type: "RESOLVER", resolverErr: "bad\nreply"}}}), "POPOPX name error: Resolver error: bad reply"],
     [
       "link removed",
       agentError({type: "SMP", serverAddress: server, smpErr: {type: "AUTH"}}),
@@ -103,10 +103,10 @@ describe("PopopxX errors", () => {
 
   it("keeps the chain of error types and their scalar fields for other errors", () => {
     expect(chatErrorText({type: "error", errorType: {type: "groupUserRole", groupInfo: {groupId: 15}, requiredRole: T.GroupMemberRole.Author}} as unknown as T.ChatError)).toBe(
-      'PopopxX error: error: groupUserRole: {"requiredRole":"author"}',
+      'POPOPX error: error: groupUserRole: {"requiredRole":"author"}',
     )
     const noService = {...agentError(broker({type: "NO_SERVICE"})), connectionEntity_: {type: "rcvDirectMsgConnection", entityConnection: {connId: 1}}} as T.ChatError
-    expect(chatErrorText(noService)).toBe(`PopopxX error: errorAgent: BROKER: NO_SERVICE: {"agentConnId":"","brokerAddress":"${server}"}`)
-    expect(chatErrorText(agentError({type: "INTERNAL", internalErr: "other\nline"}))).toBe('PopopxX error: errorAgent: INTERNAL: {"agentConnId":"","internalErr":"other\\nline"}')
+    expect(chatErrorText(noService)).toBe(`POPOPX error: errorAgent: BROKER: NO_SERVICE: {"agentConnId":"","brokerAddress":"${server}"}`)
+    expect(chatErrorText(agentError({type: "INTERNAL", internalErr: "other\nline"}))).toBe('POPOPX error: errorAgent: INTERNAL: {"agentConnId":"","internalErr":"other\\nline"}')
   })
 })

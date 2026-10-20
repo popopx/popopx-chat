@@ -15,7 +15,7 @@ let actions: Actions
 
 async function start(mode: Mode = "requests"): Promise<void> {
   const chat = new FakeChat()
-  chat.chats.set("@4", {chatInfo: direct(contact(4, "PopopxX Directory")), items: []})
+  chat.chats.set("@4", {chatInfo: direct(contact(4, "POPOPX Directory")), items: []})
   actions = actionsWith(mode, fakeHooks())
   const tools = new AgentTools({chat: chat.api(), user, actions, watch: new ChatItemsWatch(), controlChat: () => "#10", standingApprover: () => undefined}, mode)
   const factory = (): McpServer => {

@@ -50,10 +50,13 @@ import Popopx.Chat.Store.Postgres.Migrations.M20260813_auto_accept_group_invitat
 import Popopx.Chat.Store.Postgres.Migrations.M20260822_forward_link
 import Popopx.Chat.Store.Postgres.Migrations.M20260828_file_expiry
 import Popopx.Chat.Store.Postgres.Migrations.M20260904_file_badges
+import Popopx.Chat.Store.Postgres.Migrations.M20260905_binthere_bots
+import Popopx.Chat.Store.Postgres.Migrations.M20260906_bot_directory
 import Popopx.Chat.Store.Postgres.Migrations.M20260915_user_badges
 import Popopx.Chat.Store.Postgres.Migrations.M20260918_badge_issue_errors
 import Popopx.Chat.Store.Postgres.Migrations.M20260923_preferences_json
 import Popopx.Chat.Store.Postgres.Migrations.M20260925_badge_bindings
+import Popopx.Chat.Store.Postgres.Migrations.M20261009_binthere_bar_flag
 import Popopx.Chat.Store.Postgres.Migrations.M20261010_invite_member_via_group
 import Popopx.Chat.Store.Postgres.Migrations.M20261012_delivery_job_notification
 import Popopx.Chat.Store.Postgres.Migrations.M20261016_badge_store_receipts
@@ -107,10 +110,13 @@ schemaMigrations =
     ("20260822_forward_link", m20260822_forward_link, Just down_m20260822_forward_link),
     ("20260828_file_expiry", m20260828_file_expiry, Just down_m20260828_file_expiry),
     ("20260904_file_badges", m20260904_file_badges, Just down_m20260904_file_badges),
+    ("20260905_binthere_bots", m20260905_binthere_bots, Just down_m20260905_binthere_bots),
+    ("20260906_bot_directory", m20260906_bot_directory, Just down_m20260906_bot_directory),
     ("20260915_user_badges", m20260915_user_badges, Just down_m20260915_user_badges),
     ("20260918_badge_issue_errors", m20260918_badge_issue_errors, Just down_m20260918_badge_issue_errors),
     ("20260923_preferences_json", m20260923_preferences_json, Just down_m20260923_preferences_json),
     ("20260925_badge_bindings", m20260925_badge_bindings, Just down_m20260925_badge_bindings),
+    ("20261009_binthere_bar_flag", m20261009_binthere_bar_flag, Just down_m20261009_binthere_bar_flag),
     ("20261010_invite_member_via_group", m20261010_invite_member_via_group, Just down_m20261010_invite_member_via_group),
     ("20261012_delivery_job_notification", m20261012_delivery_job_notification, Just down_m20261012_delivery_job_notification),
     ("20261016_badge_store_receipts", m20261016_badge_store_receipts, Just down_m20261016_badge_store_receipts)

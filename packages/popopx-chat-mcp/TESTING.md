@@ -27,10 +27,10 @@ Until the package is published, the printed hint `npx -y @popopx-chat/mcp regist
 
 ## Start, join, register
 
-1. `node dist/cli.js serve my-agent --display-name "My Agent"`. NAME, here `my-agent`, names the data folder and the Claude Code entry; `--display-name` is the name people see in Popopx. It prints the data folder (`~/.popopx-mcp/my-agent`), creates the agent control chat "My Agent", and prints a QR code and a link that works once. For a short link the QR code has 33 modules and takes 37 columns × 19 lines; `--qr-code large` prints it at 74 × 37. Keep it running; Ctrl-C stops it. `node dist/cli.js --help` lists the options.
-2. In the Popopx app, scan the QR code, or paste the link into "Connect via link". If the code does not scan, restart with `--qr-code large`. The chat "My Agent" appears with `I'm your agent. I ask here before I connect or send.` The terminal prints `Alice joined (member N) and is now an owner. The link is deleted.` and the register hint.
+1. `node dist/cli.js serve my-agent --display-name "My Agent"`. NAME, here `my-agent`, names the data folder and the Claude Code entry; `--display-name` is the name people see in POPOPX. It prints the data folder (`~/.popopx-mcp/my-agent`), creates the agent control chat "My Agent", and prints a QR code and a link that works once. For a short link the QR code has 33 modules and takes 37 columns × 19 lines; `--qr-code large` prints it at 74 × 37. Keep it running; Ctrl-C stops it. `node dist/cli.js --help` lists the options.
+2. In the POPOPX app, scan the QR code, or paste the link into "Connect via link". If the code does not scan, restart with `--qr-code large`. The chat "My Agent" appears with `I'm your agent. I ask here before I connect or send.` The terminal prints `Alice joined (member N) and is now an owner. The link is deleted.` and the register hint.
 3. `node dist/cli.js register my-agent`. It prints `Added to Claude Code: scope user, server popopx-my-agent.` Run it in a terminal with the same `CLAUDE_CONFIG_DIR` as the one where `claude` runs: `claude mcp add-json` writes to the config of its own environment.
-4. Add `"mcp__popopx-my-agent"` to `permissions.allow` in `~/.claude/settings.json`, so Claude Code does not prompt for each call; approval happens in the Popopx app.
+4. Add `"mcp__popopx-my-agent"` to `permissions.allow` in `~/.claude/settings.json`, so Claude Code does not prompt for each call; approval happens in the POPOPX app.
 5. Start `claude`. `/mcp` shows `popopx-my-agent` connected with 5 tools. A session started before `register` does not load the entry; start a new one.
 
 ## Try the tools
@@ -39,13 +39,13 @@ Prompts for Claude Code, one at a time. A call that waits more than 2 minutes, f
 
 By name, first:
 
-- `Connect to @directory.popopx as yourself.` While the name is not registered: the tool error `Name not found: This Popopx name is not registered. Please check the name.`, and no card. Once it is registered: the card `I want to connect to bot Popopx Directory (@directory.popopx), as myself.`; after the approval, step 1 below returns `status: known`, with no card.
+- `Connect to @directory.popopx as yourself.` While the name is not registered: the tool error `Name not found: This POPOPX name is not registered. Please check the name.`, and no card. Once it is registered: the card `I want to connect to bot POPOPX Directory (@directory.popopx), as myself.`; after the approval, step 1 below returns `status: known`, with no card.
 
 The directory by its address (`docs/DIRECTORY.md`):
 
-1. `Connect to the Popopx Directory as yourself at https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok and tell me which commands it advertises.`
-   Card: `I want to connect to bot Popopx Directory, as myself.` Tap `/approve 1`. The card becomes `I connected to ...` with `Approved by Alice.`; Claude gets `status: done`, the chat `@N`, `commands` and the welcome message.
-2. `Search the directory for hiking groups.` Card: `I want to send a message to bot Popopx Directory:` with the text. Approve it; Claude gets the bot's answers in `responses`.
+1. `Connect to the POPOPX Directory as yourself at https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok and tell me which commands it advertises.`
+   Card: `I want to connect to bot POPOPX Directory, as myself.` Tap `/approve 1`. The card becomes `I connected to ...` with `Approved by Alice.`; Claude gets `status: done`, the chat `@N`, `commands` and the welcome message.
+2. `Search the directory for hiking groups.` Card: `I want to send a message to bot POPOPX Directory:` with the text. Approve it; Claude gets the bot's answers in `responses`.
 3. `Send /help to the directory.` A bot command is sent as text.
 4. `Check for new messages from the directory, waiting up to 60 seconds.` `receive` with `wait`.
 5. `List your chats and pending actions.` `list`.
@@ -53,11 +53,11 @@ The directory by its address (`docs/DIRECTORY.md`):
 
 Approval of all messages to a chat, and leaving:
 
-1. `Search the directory for Monero groups.` On the card, tap `/approve @N all`. The reply is `Approved for bot Popopx Directory (@N) by Alice. /revoke @N`, and the search is sent.
-2. `Send /help to the directory.` It is sent without a card; the agent control chat then gets `I sent a message to bot Popopx Directory:`, `` `/help` `` and `Approved for this chat by Alice. /revoke @N`. `list` shows `approved: true` for the directory.
+1. `Search the directory for Monero groups.` On the card, tap `/approve @N all`. The reply is `Approved for bot POPOPX Directory (@N) by Alice. /revoke @N`, and the search is sent.
+2. `Send /help to the directory.` It is sent without a card; the agent control chat then gets `I sent a message to bot POPOPX Directory:`, `` `/help` `` and `Approved for this chat by Alice. /revoke @N`. `list` shows `approved: true` for the directory.
 3. Tap `/list` in the command menu: one line per chat; the directory's line ends with `, approved for this chat by Alice`.
-4. Tap `/revoke @N`: `Messages to bot Popopx Directory (@N) need approval again.` The next send gets a card.
-5. `Leave the directory.` Card: `I want to delete bot Popopx Directory (@N).` Approve it: the call returns `status: done`, and `list` no longer shows the directory.
+4. Tap `/revoke @N`: `Messages to bot POPOPX Directory (@N) need approval again.` The next send gets a card.
+5. `Leave the directory.` Card: `I want to delete bot POPOPX Directory (@N).` Approve it: the call returns `status: done`, and `list` no longer shows the directory.
 6. Join a group from the search results, then `Leave that group.` Card: `I want to leave group <name> (#N).` Approve it: the members see that the agent left.
 
 A channel:
@@ -69,7 +69,7 @@ A channel:
 Incognito, as a second agent, because the first one already knows the directory:
 
 1. `node dist/cli.js serve scout --display-name "Scout" --port 5227`; join its control chat "Scout" with the printed link; `node dist/cli.js register scout`; add `"mcp__popopx-scout"` to `permissions.allow`; `/mcp reconnect all`.
-2. `Using popopx-scout, connect to the directory incognito: https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok` Card: `I want to connect to bot Popopx Directory, incognito.` Approve it; Claude gets `known_as`, a random name.
+2. `Using popopx-scout, connect to the directory incognito: https://smp4.popopx.im/a#lXUjJW5vHYQzoLYgmi8GbxkGP41_kjefFvBrdwg-0Ok` Card: `I want to connect to bot POPOPX Directory, incognito.` Approve it; Claude gets `known_as`, a random name.
 3. `Using popopx-scout, list your chats.` The directory has `incognito: true` and the same `known_as`. A send card for it says `where I am incognito`.
 
 Stop and restart:
@@ -84,9 +84,9 @@ Stop and restart:
    ```
    claude -p "Call the list tool and show its result." --strict-mcp-config --mcp-config c2.json --allowedTools mcp__popopx-my-agent
    ```
-   Each run shows the chats, with the preset contact "Ask Popopx Team".
+   Each run shows the chats, with the preset contact "Ask POPOPX Team".
 2. C3, subagent: `Use a subagent to send "trail shoes" to the directory.` While the card waits, the subagent's call stays in the foreground, with no background task; it returns after `/approve`.
 3. C4, reconnect: restart `serve my-agent`; in the running session, `/mcp reconnect all`; `list` returns the chats.
 4. C5, register again: `node dist/cli.js register my-agent` prints `Added to Claude Code: scope user, server popopx-my-agent.`; `claude mcp list` shows one `popopx-my-agent`.
 5. C6, Esc: ask for a send, and press Esc while its card waits; `List your pending actions.` shows the action with `open: false`; the same request again attaches to it, and `/approve` returns the result to that call.
-6. Host mode: restart with `node dist/cli.js serve my-agent --approve host`, then `/mcp reconnect all`. `Send /help to the directory.` makes Claude Code prompt, despite the allow rule; so does `leave`. After you allow it, the agent control chat gets `I sent a message to bot Popopx Directory:`, `` `/help` `` and `Performed without approval (mode host).` A `connect` to a link not yet joined gets the same prompt and an outcome card; a target already joined returns `status: known`, with no card.
+6. Host mode: restart with `node dist/cli.js serve my-agent --approve host`, then `/mcp reconnect all`. `Send /help to the directory.` makes Claude Code prompt, despite the allow rule; so does `leave`. After you allow it, the agent control chat gets `I sent a message to bot POPOPX Directory:`, `` `/help` `` and `Performed without approval (mode host).` A `connect` to a link not yet joined gets the same prompt and an outcome card; a target already joined returns `status: known`, with no card.

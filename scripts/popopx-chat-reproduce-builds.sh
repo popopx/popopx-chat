@@ -129,7 +129,7 @@ for os_pair in ${oses}; do
             # Appimage
             docker exec \
                 -t "${container_name}" \
-                sh -c "export ASSETS_DIR='../../assets'; ./scripts/desktop/make-appimage-linux.sh && mv ./apps/multiplatform/release/main/*popopx*.AppImage ./apps/multiplatform/release/main/popopx.appimage"
+                sh -c "export ASSETS_DIR='../../assets'; ./scripts/desktop/make-appimage-linux.sh && mv ./apps/multiplatform/release/main/*imple*.AppImage ./apps/multiplatform/release/main/popopx.appimage"
 
             # Copy appimage
             docker cp \
