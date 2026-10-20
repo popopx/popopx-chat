@@ -728,7 +728,7 @@ private suspend fun MutableState<MigrationToState?>.cleanUpOnBack(chatReceiver: 
 }
 
 private fun strHasPopopxFileLink(text: String): Boolean =
-  text.startsWith("simplex:/file") || text.startsWith("https://simplex.chat/file")
+  text.startsWith("popopx:/file") || text.startsWith("https://popopxchat.com/file")
 
 private fun fileForTemporaryDatabase(): File =
   File(getMigrationTempFilesDirectory(), generateNewFileName("migration", "db", getMigrationTempFilesDirectory()))

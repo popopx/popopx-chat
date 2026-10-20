@@ -527,7 +527,7 @@ private val versionDescriptions: List<VersionDescription> = listOf(
         icon = MR.images.ic_desktop,
         titleId = MR.strings.v5_3_new_desktop_app,
         descrId = MR.strings.v5_3_new_desktop_app_descr,
-        link = "https://simplex.chat/downloads/"
+        link = "https://popopxchat.com/downloads/"
       ),
       VersionFeature.FeatureDescription(
         icon = MR.images.ic_lock,

@@ -7347,7 +7347,7 @@ data class CreatedConnLink(val connFullLink: String, val connShortLink: String?)
 }
 
 fun popopxChatLink(uri: String): String =
-  if (uri.startsWith("simplex:/")) uri.replace("simplex:/", "https://simplex.chat/")
+  if (uri.startsWith("popopx:/")) uri.replace("popopx:/", "https://popopxchat.com/")
   else uri
 
 @Serializable
