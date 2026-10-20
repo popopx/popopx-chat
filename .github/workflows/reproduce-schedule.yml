@@ -36,7 +36,6 @@ jobs:
 
       - name: Check if build has been reproduced
         env:
-          # TODO: These secret names could be renamed from STATUS_SIMPLEX_* to STATUS_POPOPX_* later
           url: ${{ secrets.STATUS_POPOPX_WEBHOOK_URL }}
           user: ${{ secrets.STATUS_POPOPX_WEBHOOK_USER }}
           pass: ${{ secrets.STATUS_POPOPX_WEBHOOK_PASS }}

@@ -99,7 +99,7 @@ fun SupportPopopXBanner(
 
 @Composable
 private fun HeroThumbnail(heroWidth: Dp, heroVisibleHeight: Dp, cardHeight: Dp, trailingPadding: Dp) {
-  if (BuildConfigCommon.SIMPLEX_ASSETS) {
+  if (BuildConfigCommon.POPOPX_ASSETS) {
     // draws at natural aspect, top-aligned in a shorter slot; ContentScale.Crop cuts the overflow at card bottom
     Image(
       painterResource(if (isInDarkTheme()) MR.images.phone_supporter_light else MR.images.phone_supporter),
