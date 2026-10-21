@@ -190,8 +190,8 @@
 		64C3B0212A0D359700E19930 /* PXCustomTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C3B0202A0D359700E19930 /* PXCustomTimePicker.swift */; };
 		64C8299D2D54AEEE006B9E89 /* libgmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C829982D54AEED006B9E89 /* libgmp.a */; };
 		64C8299E2D54AEEE006B9E89 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C829992D54AEEE006B9E89 /* libffi.a */; };
-		64C8299F2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6-ghc9.6.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6-ghc9.6.3.a */; };
-		64C829A02D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6.a */; };
+		64C8299F2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a */; };
+		64C829A02D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a */; };
 		64C829A12D54AEEE006B9E89 /* libgmpxx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C8299C2D54AEEE006B9E89 /* libgmpxx.a */; };
 		64D0C2C029F9688300B38D5F /* PXUserAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D0C2BF29F9688300B38D5F /* PXUserAddressView.swift */; };
 		64D0C2C229FA57AB00B38D5F /* UserAddressLearnMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D0C2C129FA57AB00B38D5F /* UserAddressLearnMore.swift */; };
@@ -799,8 +799,8 @@
 		64C3B0202A0D359700E19930 /* PXCustomTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCustomTimePicker.swift; sourceTree = "<group>"; };
 		64C829982D54AEED006B9E89 /* libgmp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmp.a; sourceTree = "<group>"; };
 		64C829992D54AEEE006B9E89 /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libffi.a; sourceTree = "<group>"; };
-		64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6-ghc9.6.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6-ghc9.6.3.a"; sourceTree = "<group>"; };
-		64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6.a"; sourceTree = "<group>"; };
+		64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a"; sourceTree = "<group>"; };
+		64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libHSpopopx-chat-7.1.0.14-inplace.a"; sourceTree = "<group>"; };
 		64C8299C2D54AEEE006B9E89 /* libgmpxx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmpxx.a; sourceTree = "<group>"; };
 		64D0C2BF29F9688300B38D5F /* PXUserAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUserAddressView.swift; sourceTree = "<group>"; };
 		64D0C2C129FA57AB00B38D5F /* UserAddressLearnMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddressLearnMore.swift; sourceTree = "<group>"; };
@@ -1201,8 +1201,8 @@
 				64C8299D2D54AEEE006B9E89 /* libgmp.a in Frameworks */,
 				64C8299E2D54AEEE006B9E89 /* libffi.a in Frameworks */,
 				64C829A12D54AEEE006B9E89 /* libgmpxx.a in Frameworks */,
-				64C8299F2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6-ghc9.6.3.a in Frameworks */,
-				64C829A02D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6.a in Frameworks */,
+				64C8299F2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a in Frameworks */,
+				64C829A02D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a in Frameworks */,
 				5CE2BA7A284530CC00EC33A7 /* libcactus_engine.a in Frameworks */,
 				CE38A29C2C3FCD72005ED185 /* SwiftyGif in Frameworks */,
 				C2D3E4F506C80001A1B20001 /* WebRTC in Frameworks */,
@@ -1311,8 +1311,8 @@
 				64C829992D54AEEE006B9E89 /* libffi.a */,
 				64C829982D54AEED006B9E89 /* libgmp.a */,
 				64C8299C2D54AEEE006B9E89 /* libgmpxx.a */,
-				64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6-ghc9.6.3.a */,
-				64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.10-9jS7IdrBnWQ1P75y3lNdN6.a */,
+				64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a */,
+				64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
