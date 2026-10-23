@@ -45,10 +45,27 @@
         # We need this, to specify we want the cabal project.
         # If the stack.yaml was dropped, this would not be necessary.
         projectFileName = "cabal.project";
-        src = pkgs.haskell-nix.haskellLib.cleanGit {
-          name = "popopx-chat";
-          src = ./.;
-        };
+        src = let
+          gitSrc = pkgs.haskell-nix.haskellLib.cleanGit {
+            name = "popopx-chat";
+            src = ./.;
+          };
+          # Include submodule contents from local paths
+        in pkgs.runCommand "popopx-chat-src" {} ''
+          cp -rL ${gitSrc} $out
+          chmod -R u+w $out
+          # Remove empty submodule directories and copy actual content
+          rm -rf $out/popopxmq
+          cp -r ${pkgs.lib.cleanSource ./popopxmq} $out/popopxmq
+          rm -rf $out/aeson
+          cp -r ${pkgs.lib.cleanSource ./aeson} $out/aeson
+          rm -rf $out/hs-socks
+          cp -r ${pkgs.lib.cleanSource ./hs-socks} $out/hs-socks
+          rm -rf $out/direct-sqlcipher
+          cp -r ${pkgs.lib.cleanSource ./direct-sqlcipher} $out/direct-sqlcipher
+          rm -rf $out/sqlcipher-simple
+          cp -r ${pkgs.lib.cleanSource ./sqlcipher-simple} $out/sqlcipher-simple
+        '';
         sha256map = import ./scripts/nix/sha256map.nix;
         modules = [
           ({ pkgs, lib, config, ... }:
@@ -125,7 +142,7 @@
         # we need threaded here, otherwise all the queing logic doesn't work properly.
         # for iOS we also use -staticlib, to get one rolled up library.
         # still needs mac2ios patching of the archives.
-        ghcOptions = [ "-staticlib" "-threaded" "-DIOS" ];
+        ghcOptions = [ "-staticlib" "-threaded" "-DIOS" "-O1" ];
         postInstall = iosPostInstall bundleName;
       }; in
       rec {
@@ -560,6 +577,24 @@
                 }];
               }).popopx-chat.components.library.override (
                 iosOverrides "pkg-ios-aarch64-swift-json"
+              );
+              # aarch64-darwin iOS simulator build (to be patched with mac2ios)
+              "aarch64-darwin-ios-simulator:lib:popopx-chat" = (drv' {
+                pkgs' = pkgs;
+                extra-modules = [{
+                  packages.popopx-chat.flags.swift = true;
+                  packages.popopxmq.flags.swift = true;
+                  packages.direct-sqlcipher.flags.commoncrypto = true;
+                  packages.popopxmq.flags.commoncrypto = true;
+                  packages.entropy.flags.DoNotGetEntropy = true;
+                  packages.popopx-chat.flags.client_library = true;
+                  packages.popopxmq.flags.client_library = true;
+                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
+                    (pkgs.openssl.override { static = true; })
+                  ];
+                }];
+              }).popopx-chat.components.library.override (
+                iosOverrides "pkg-ios-aarch64-simulator-swift-json"
               );
 	            # aarch64-darwin build with tagged JSON format (for Mac & Flutter)
               "aarch64-darwin:lib:popopx-chat" = (drv' {
