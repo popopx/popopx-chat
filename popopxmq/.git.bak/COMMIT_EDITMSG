@@ -1,0 +1,5 @@
+Sync upstream v7.1.0.12: fix queue store map cleanup on delete
+
+Delete now removes queue entries from queues, senders, and links maps
+(previously only senders — memory leak). Simplify StoreLog withQueue
+using $>>= operator. Add testDeleteQueueMaps test coverage.

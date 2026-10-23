@@ -1,0 +1,16 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/simplex-chat/direct-sqlcipher.git
+	fetch = +refs/heads/master:refs/remotes/origin/master
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[submodule "sqlcipher"]
+	active = true
+	url = https://github.com/sqlcipher/sqlcipher.git

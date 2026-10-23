@@ -1,0 +1,16 @@
+name: POPOPX - xftp-server
+
+services:
+  xftp-server:
+    image: ${POPOPX_XFTP_IMAGE:-popopx/xftp-server:latest}
+    environment:
+      ADDR: ${ADDR?"Please specify the domain."}
+      QUOTA: ${QUOTA?"Please specify disk quota."}
+      PASS: ${PASS:-}
+    volumes:
+      - ./xftp_configs:/etc/opt/popopx-xftp
+      - ./xftp_state:/var/opt/popopx-xftp
+      - ./xftp_files:/srv/xftp
+    ports:
+      - 443:443
+    restart: unless-stopped

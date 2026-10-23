@@ -1,0 +1,163 @@
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE OverloadedLists #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
+{-# OPTIONS_GHC -fno-warn-ambiguous-fields #-}
+
+module AgentTests.ResolveNameTests (resolveNameTests) where
+
+import AgentTests.FunctionalAPITests (withAgent)
+import Control.Monad.Except (runExceptT)
+import qualified Data.ByteString.Lazy as LB
+import Data.List (isInfixOf)
+import Network.HTTP.Types (Status, status200, status404, status502)
+import NamesResolverServer (memCfg, memCfg2, memProxyCfg, withNames)
+import qualified NamesResolverServer as NRS
+import SMPAgentClient
+import SMPClient
+import SMPNamesTests (availableBody, registeredBody, testNameRecord)
+import Popopx.Messaging.Agent (resolvePopopxName)
+import Popopx.Messaging.Agent.Client (AgentClient)
+import Popopx.Messaging.Agent.Env.SQLite (InitialAgentServers (..), ServerCfg, ServerRoles (..), presetServerCfg)
+import Popopx.Messaging.Agent.Protocol (AgentErrorType (..))
+import Popopx.Messaging.Client (SMPProxyFallback (..), SMPProxyMode (..), pattern NRMInteractive)
+import Popopx.Messaging.Protocol (SMPServer)
+import qualified Popopx.Messaging.Protocol as SMP
+import Popopx.Messaging.PopopxName (PopopxDomain (..), PopopxTLD (..))
+import Popopx.Messaging.Transport
+import Test.Hspec hiding (fit, it)
+import Util (HasTestEnv, it)
+
+nameSrvCfg :: SMPServer -> ServerCfg 'SMP.PSMP
+nameSrvCfg = presetServerCfg True ServerRoles {storage = True, proxy = False, names = True} (Just 1) . SMP.noAuthSrv
+
+proxySrvCfg :: SMPServer -> ServerCfg 'SMP.PSMP
+proxySrvCfg = presetServerCfg True ServerRoles {storage = True, proxy = True, names = False} (Just 1) . SMP.noAuthSrv
+
+oneSrv :: HasTestEnv => ServerCfg 'SMP.PSMP -> InitialAgentServers
+oneSrv cfg_ = (initAgentServersProxy_ SPMNever SPFProhibit) {smp = [(1, [cfg_])]}
+
+withDirectResolver :: HasTestEnv => (Status, LB.ByteString) -> (AgentClient -> IO a) -> IO a
+withDirectResolver (st, body) k =
+  NRS.withResolverServer (NRS.resolveResp st body) $ \port _ ->
+    withSmpServerConfigOn (transport @TLS) (withNames port memCfg) testPort $ \_ ->
+      withAgent 1 agentCfg (oneSrv (nameSrvCfg testSMPServer)) testDB k
+
+withProxyAndResolver :: HasTestEnv => (Status, LB.ByteString) -> (AgentClient -> IO a) -> IO a
+withProxyAndResolver (st, body) k =
+  NRS.withResolverServer (NRS.resolveResp st body) $ \port _ ->
+    withSmpServerConfigOn (transport @TLS) memProxyCfg testPort $ \_ ->
+      withSmpServerConfigOn (transport @TLS) (withNames port memCfg2) testPort2 $ \_ ->
+        withAgent 1 agentCfg proxyServers testDB k
+  where
+    -- only testSMPServer2 (the resolver) has the names role; testSMPServer is the proxy
+    proxyServers = (initAgentServersProxy_ SPMAlways SPFProhibit) {smp = [(1, [proxySrvCfg testSMPServer, nameSrvCfg testSMPServer2])]}
+
+withNoResolver :: HasTestEnv => (AgentClient -> IO a) -> IO a
+withNoResolver k =
+  withSmpServerConfigOn (transport @TLS) memCfg testPort $ \_ ->
+    withAgent 1 agentCfg (oneSrv (nameSrvCfg testSMPServer)) testDB k
+
+withNoNameServers :: HasTestEnv => (AgentClient -> IO a) -> IO a
+withNoNameServers k = withAgent 1 agentCfg (oneSrv (proxySrvCfg testSMPServer)) testDB k
+
+resolveNameTests :: Spec
+resolveNameTests = do
+  describe "direct path (SPMNever)" $
+    it "a resolver error propagates as SMP host (NAME RESOLVER)" testDirectResolverErr
+  describe "proxy path (SPMAlways)" $
+    it "a resolver error propagates via proxy as SMP <proxyHost> (NAME RESOLVER)" testProxyResolverErr
+  describe "TLDTesting path" $
+    it "NAME RESOLVER for TLDTesting too" testTestingTldResolverErr
+  describe "TLDWeb path" $
+    it "NAME RESOLVER for TLDWeb too" testWebTldResolverErr
+  describe "no resolver configured" $
+    it "answers NAME NO_RESOLVER" testNoResolver
+  describe "no names servers (names role off everywhere)" $
+    it "fails agent-side with NO_NAME_SERVERS" testNoNameServers
+  describe "backing resolver failure" $
+    it "surfaces as SMP host (NAME (RESOLVER ..))" testBackendError
+  describe "success path" $
+    it "returns NameRecord" testDirectSuccess
+  describe "name availability" $
+    it "an unregistered name answers as available" testAvailSuccess
+
+testAvailSuccess :: (HasCallStack, HasTestEnv) => IO ()
+testAvailSuccess =
+  withDirectResolver (status200, availableBody) $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDPopopx "alice" [])
+    case r of
+      Right SMP.NameResponse {registration = SMP.NRAvailable {}} -> pure ()
+      _ -> expectationFailure $ "expected Right NRAvailable, got: " <> show r
+
+-- | 404 is a resolver that predates /v2/resolve: no status from that endpoint
+-- means "not registered", since an unregistered name answers NRAvailable.
+testDirectResolverErr :: (HasCallStack, HasTestEnv) => IO ()
+testDirectResolverErr =
+  withDirectResolver (status404, "{}") $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDPopopx "alice" [])
+    case r of
+      Left (SMP _ (SMP.NAME (SMP.RESOLVER _))) -> pure ()
+      _ -> expectationFailure $ "expected Left (SMP _ (NAME (RESOLVER _))), got: " <> show r
+
+testProxyResolverErr :: (HasCallStack, HasTestEnv) => IO ()
+testProxyResolverErr =
+  withProxyAndResolver (status404, "{}") $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDPopopx "alice" [])
+    case r of
+      Left (SMP host (SMP.NAME (SMP.RESOLVER _))) | testPort `isInfixOf` host -> pure ()
+      _ -> expectationFailure $ "expected Left (SMP <proxyHost:" <> testPort <> "> (NAME (RESOLVER _))), got: " <> show r
+
+testTestingTldResolverErr :: (HasCallStack, HasTestEnv) => IO ()
+testTestingTldResolverErr =
+  withDirectResolver (status404, "{}") $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDTesting "bob" [])
+    case r of
+      Left (SMP _ (SMP.NAME (SMP.RESOLVER _))) -> pure ()
+      _ -> expectationFailure $ "expected Left (SMP _ (NAME (RESOLVER _))), got: " <> show r
+
+testWebTldResolverErr :: (HasCallStack, HasTestEnv) => IO ()
+testWebTldResolverErr =
+  withDirectResolver (status404, "{}") $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDWeb "example.com" [])
+    case r of
+      Left (SMP _ (SMP.NAME (SMP.RESOLVER _))) -> pure ()
+      _ -> expectationFailure $ "expected Left (SMP _ (NAME (RESOLVER _))), got: " <> show r
+
+testNoResolver :: (HasCallStack, HasTestEnv) => IO ()
+testNoResolver =
+  withNoResolver $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDPopopx "alice" [])
+    case r of
+      Left (SMP _ (SMP.NAME SMP.NO_RESOLVER)) -> pure ()
+      _ -> expectationFailure $ "expected Left (SMP _ (NAME NO_RESOLVER)), got: " <> show r
+
+testNoNameServers :: (HasCallStack, HasTestEnv) => IO ()
+testNoNameServers =
+  withNoNameServers $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDPopopx "alice" [])
+    case r of
+      Left NO_NAME_SERVERS -> pure ()
+      _ -> expectationFailure $ "expected Left NO_NAME_SERVERS, got: " <> show r
+
+testBackendError :: (HasCallStack, HasTestEnv) => IO ()
+testBackendError =
+  withDirectResolver (status502, "{}") $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDPopopx "alice" [])
+    case r of
+      Left (SMP _ (SMP.NAME (SMP.RESOLVER _))) -> pure ()
+      _ -> expectationFailure $ "expected Left (SMP _ (NAME (RESOLVER ..))), got: " <> show r
+
+testDirectSuccess :: (HasCallStack, HasTestEnv) => IO ()
+testDirectSuccess =
+  withDirectResolver (status200, registeredBody testNameRecord) $ \c -> do
+    r <- runExceptT $ resolvePopopxName c NRMInteractive 1 (PopopxDomain TLDPopopx "alice" [])
+    case r of
+      Right SMP.NameResponse {registration = SMP.NRRegistered {nameRecord}} -> nameRecord `shouldBe` testNameRecord
+      _ -> expectationFailure $ "expected Right NRRegistered, got: " <> show r

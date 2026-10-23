@@ -1,0 +1,96 @@
+// Original Work Copyright (C) 2020-2022 simplex.chat
+//
+// --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
+// This file was modified by POPOPX Team in 2026.
+// Changes: Updated module reference comments from Simplex.Messaging.Protocol to Popopx.Messaging.Protocol.
+
+// XFTP server address parsing/formatting -- Popopx.Messaging.Protocol (ProtocolServer)
+//
+// Parses/formats server address strings of the form:
+//   xftp://<keyhash>@<host>[,<host2>,...][:<port>]
+//
+// KeyHash is base64url-encoded SHA-256 fingerprint of the identity certificate.
+
+import {base64urlEncode} from "./description.js"
+
+export interface XFTPServer {
+  keyHash: Uint8Array  // 32-byte SHA-256 fingerprint (decoded from base64url)
+  host: string         // primary hostname
+  port: string         // port number (default "443")
+}
+
+// Decode base64url (RFC 4648 section 5) to Uint8Array.
+function base64urlDecode(s: string): Uint8Array {
+  // Convert base64url to standard base64
+  let b64 = s.replace(/-/g, '+').replace(/_/g, '/')
+  // Add padding if needed
+  while (b64.length % 4 !== 0) b64 += '='
+  const bin = atob(b64)
+  const bytes = new Uint8Array(bin.length)
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
+  return bytes
+}
+
+// Parse an XFTP server address string.
+// Format: xftp://<base64url-keyhash>@<host>[,<host2>,...][:<port>]
+export function parseXFTPServer(address: string): XFTPServer {
+  const m = address.match(/^xftp:\/\/([A-Za-z0-9_-]+={0,2})@(.+)$/)
+  if (!m) throw new Error("parseXFTPServer: invalid address format")
+  const keyHash = base64urlDecode(m[1])
+  if (keyHash.length !== 32) throw new Error("parseXFTPServer: keyHash must be 32 bytes")
+  const hostPart = m[2]
+  // Take the first host (before any comma), then split port from that
+  const firstHost = hostPart.split(',')[0]
+  return {keyHash, ...parseHostPort(firstHost)}
+}
+
+function parseHostPort(firstHost: string): Pick<XFTPServer, "host" | "port"> {
+  if (firstHost.length === 0) throw new Error("parseXFTPServer: missing host")
+  if (firstHost.startsWith('[')) {
+    const bracketEnd = firstHost.indexOf(']')
+    if (bracketEnd < 0) throw new Error("parseXFTPServer: invalid bracketed host")
+    const host = firstHost.substring(0, bracketEnd + 1)
+    const rest = firstHost.substring(bracketEnd + 1)
+    if (rest.length === 0) return {host, port: "443"}
+    if (!rest.startsWith(':')) throw new Error("parseXFTPServer: invalid bracketed host")
+    const port = rest.substring(1)
+    if (port.length === 0) throw new Error("parseXFTPServer: missing port")
+    return {host, port}
+  }
+  const colonIdx = firstHost.lastIndexOf(':')
+  let host: string
+  let port: string
+  if (colonIdx > 0) {
+    host = firstHost.substring(0, colonIdx)
+    port = firstHost.substring(colonIdx + 1)
+  } else {
+    host = firstHost
+    port = "443"
+  }
+  return {host, port}
+}
+
+// Format an XFTPServer back to its URI string representation.
+export function formatXFTPServer(srv: XFTPServer): string {
+  return "xftp://" + base64urlEncode(srv.keyHash) + "@" + srv.host + ":" + srv.port
+}
+
+// Extract unique XFTP servers referenced in a file description's chunk replicas.
+export function getDescriptionServers(fd: {chunks: {replicas: {server: string}[]}[]}): XFTPServer[] {
+  const seen = new Set<string>()
+  const servers: XFTPServer[] = []
+  for (const chunk of fd.chunks) {
+    for (const replica of chunk.replicas) {
+      if (!seen.has(replica.server)) {
+        seen.add(replica.server)
+        servers.push(parseXFTPServer(replica.server))
+      }
+    }
+  }
+  return servers
+}
+
+// Build an HTTPS origin from an XFTP server address.
+export function serverOrigin(server: XFTPServer): string {
+  return server.port === "443" ? `https://${server.host}` : `https://${server.host}:${server.port}`
+}

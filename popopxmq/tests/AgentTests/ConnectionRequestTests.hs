@@ -1,0 +1,380 @@
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE OverloadedLists #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
+{-# OPTIONS_GHC -fno-warn-ambiguous-fields #-}
+
+module AgentTests.ConnectionRequestTests
+  ( connectionRequestTests,
+    connReqData,
+    queueAddr,
+    testE2ERatchetParams12,
+    contactConnRequest,
+    invConnRequest,
+  ) where
+
+import AgentTests.EqInstances ()
+import Data.ByteString (ByteString)
+import qualified Data.ByteString.Char8 as B
+import Data.Either (isLeft)
+import Network.HTTP.Types (urlEncode)
+import Popopx.Messaging.Agent.Protocol
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Crypto.Ratchet
+import Popopx.Messaging.Encoding
+import Popopx.Messaging.Encoding.String
+import Popopx.Messaging.Protocol (EntityId (..), ProtocolServer (..), QueueMode (..), currentSMPClientVersion, supportedSMPClientVRange, pattern VersionSMPC)
+import Popopx.Messaging.ServiceScheme (ServiceScheme (..))
+import Popopx.Messaging.Version
+import Test.Hspec hiding (fit, it)
+import Util
+
+srv :: SMPServer
+srv = SMPServer "smp.popopx.im,jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion" "5223" (C.KeyHash "\215m\248\251")
+
+srv1 :: SMPServer
+srv1 = SMPServer "smp.popopx.im" "5223" (C.KeyHash "\215m\248\251")
+
+queueAddr :: SMPQueueAddress
+queueAddr =
+  SMPQueueAddress
+    { smpServer = srv,
+      senderId = EntityId "\223\142z\251",
+      dhPublicKey = testDhKey,
+      queueMode = Just QMMessaging
+    }
+
+queueAddrNoQM :: SMPQueueAddress
+queueAddrNoQM = queueAddr {queueMode = Nothing}
+
+queueAddrContact :: SMPQueueAddress
+queueAddrContact = queueAddr {queueMode = Just QMContact}
+
+queueAddr1 :: SMPQueueAddress
+queueAddr1 = queueAddr {smpServer = srv1}
+
+queueAddrNoPort :: SMPQueueAddress
+queueAddrNoPort = queueAddr {smpServer = srv {port = ""}}
+
+queueAddrNoPortNoQM :: SMPQueueAddress
+queueAddrNoPortNoQM = queueAddrNoQM {smpServer = srv {port = ""}}
+
+queueAddrNoPort1 :: SMPQueueAddress
+queueAddrNoPort1 = queueAddr {smpServer = srv1 {port = ""}}
+
+-- current version range includes version 1 and it uses legacy encoding
+queue :: SMPQueueUri
+queue = SMPQueueUri supportedSMPClientVRange queueAddr
+
+queueNoQM :: SMPQueueUri
+queueNoQM = SMPQueueUri supportedSMPClientVRange queueAddrNoQM
+
+queueContact :: SMPQueueUri
+queueContact = SMPQueueUri supportedSMPClientVRange queueAddrContact
+
+queueStr :: ByteString
+queueStr = "smp://1234-w==@smp.popopx.im:5223/3456-w==#/?v=1-4&dh=" <> url testDhKeyStr <> "&q=m&k=s" <> "&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion"
+
+queueStrNoQM :: ByteString
+queueStrNoQM = "smp://1234-w==@smp.popopx.im:5223/3456-w==#/?v=1-4&dh=" <> url testDhKeyStr <> "&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion"
+
+queueStrContact :: ByteString
+queueStrContact = "smp://1234-w==@smp.popopx.im:5223/3456-w==#/?v=1-4&dh=" <> url testDhKeyStr <> "&q=c" <> "&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion"
+
+queue1 :: SMPQueueUri
+queue1 = SMPQueueUri supportedSMPClientVRange queueAddr1
+
+queue1Str :: ByteString
+queue1Str = "smp://1234-w==@smp.popopx.im:5223/3456-w==#/?v=1-4&dh=" <> url testDhKeyStr <> "&q=m&k=s"
+
+queueV1 :: SMPQueueUri
+queueV1 = SMPQueueUri (mkVersionRange (VersionSMPC 1) (VersionSMPC 1)) queueAddrNoQM
+
+queueV1NoPort :: SMPQueueUri
+queueV1NoPort = (queueV1 :: SMPQueueUri) {queueAddress = queueAddrNoPortNoQM}
+
+-- version range 2-3 uses new encoding
+-- it is fixed/changed in v5.8.2.
+queueNew :: SMPQueueUri
+queueNew = SMPQueueUri (mkVersionRange (VersionSMPC 2) currentSMPClientVersion) queueAddr
+
+queueNewStr :: ByteString
+queueNewStr = "smp://1234-w==@smp.popopx.im,jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion:5223/3456-w==#/?v=2-4&dh=" <> url testDhKeyStr <> "&q=m&k=s"
+
+queueNewStr' :: ByteString
+queueNewStr' = "smp://1234-w==@smp.popopx.im,jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion:5223/3456-w==#/?v=2-4&dh=" <> testDhKeyStr <> "&q=m&k=s"
+
+queueNewNoPort :: SMPQueueUri
+queueNewNoPort = (queueNew :: SMPQueueUri) {queueAddress = queueAddrNoPort}
+
+queueNew1 :: SMPQueueUri
+queueNew1 = SMPQueueUri (mkVersionRange (VersionSMPC 2) currentSMPClientVersion) queueAddr1
+
+queueNew1Str :: ByteString
+queueNew1Str = "smp://1234-w==@smp.popopx.im:5223/3456-w==#/?v=2-4&dh=" <> url testDhKeyStr <> "&q=m&k=s"
+
+queueNew1NoPort :: SMPQueueUri
+queueNew1NoPort = (queueNew1 :: SMPQueueUri) {queueAddress = queueAddrNoPort1}
+
+testDhKey :: C.PublicKeyX25519
+testDhKey = "MCowBQYDK2VuAyEAjiswwI3O/NlS8Fk3HJUW870EY2bAwmttMBsvRB9eV3o="
+
+testDhKeyStr :: ByteString
+testDhKeyStr = strEncode testDhKey
+
+connReqData :: ConnReqUriData
+connReqData =
+  ConnReqUriData
+    { crScheme = SSPopopx,
+      crAgentVRange = supportedSMPAgentVRange,
+      crSmpQueues = [queue],
+      crClientData = Nothing
+    }
+
+connReqDataNoQM :: ConnReqUriData
+connReqDataNoQM = connReqData {crSmpQueues = [queueNoQM]}
+
+connReqDataContact :: ConnReqUriData
+connReqDataContact = connReqData {crSmpQueues = [queueContact]}
+
+connReqData1 :: ConnReqUriData
+connReqData1 = connReqData {crSmpQueues = [queue1]}
+
+connReqDataV1 :: ConnReqUriData
+connReqDataV1 = connReqData {crAgentVRange = mkVersionRange (VersionSMPA 1) (VersionSMPA 1)}
+
+connReqDataV6 :: ConnReqUriData
+connReqDataV6 = connReqData {crAgentVRange = mkVersionRange (VersionSMPA 6) (VersionSMPA 6)}
+
+connReqDataNew :: ConnReqUriData
+connReqDataNew = connReqData {crSmpQueues = [queueNew]}
+
+connReqDataNew1 :: ConnReqUriData
+connReqDataNew1 = connReqData {crSmpQueues = [queueNew1]}
+
+testDhPubKey :: C.PublicKeyX448
+testDhPubKey = "MEIwBQYDK2VvAzkAmKuSYeQ/m0SixPDS8Wq8VBaTS1cW+Lp0n0h4Diu+kUpR+qXx4SDJ32YGEFoGFGSbGPry5Ychr6U="
+
+testE2ERatchetParams :: RcvE2ERatchetParamsUri 'C.X448
+testE2ERatchetParams = E2ERatchetParamsUri (mkVersionRange (VersionE2E 3) (VersionE2E 3)) testDhPubKey testDhPubKey Nothing
+
+testE2ERatchetParamsStrUri :: ByteString
+testE2ERatchetParamsStrUri = "v%3D3%26x3dh%3DMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D%2CMEIwBQYDK2VvAzkAmKuSYeQ_m0SixPDS8Wq8VBaTS1cW-Lp0n0h4Diu-kUpR-qXx4SDJ32YGEFoGFGSbGPry5Ychr6U%3D"
+
+testE2ERatchetParams12 :: RcvE2ERatchetParamsUri 'C.X448
+testE2ERatchetParams12 = E2ERatchetParamsUri supportedE2EEncryptVRange testDhPubKey testDhPubKey Nothing
+
+connectionRequest :: AConnectionRequestUri
+connectionRequest = ACR SCMInvitation invConnRequest
+
+invConnRequest :: ConnectionRequestUri 'CMInvitation
+invConnRequest = CRInvitationUri connReqData testE2ERatchetParams
+
+connectionRequestNoQM :: AConnectionRequestUri
+connectionRequestNoQM = ACR SCMInvitation $ CRInvitationUri connReqDataNoQM testE2ERatchetParams
+
+connectionRequestContact :: AConnectionRequestUri
+connectionRequestContact = ACR SCMContact $ CRContactUri connReqDataContact Nothing
+
+connectionRequestV1 :: AConnectionRequestUri
+connectionRequestV1 = ACR SCMInvitation $ CRInvitationUri connReqDataV1 testE2ERatchetParams
+
+connectionRequest1 :: AConnectionRequestUri
+connectionRequest1 = ACR SCMInvitation $ CRInvitationUri connReqData1 testE2ERatchetParams
+
+connectionRequestNew :: AConnectionRequestUri
+connectionRequestNew = ACR SCMInvitation $ CRInvitationUri connReqDataNew testE2ERatchetParams
+
+connectionRequestNew1 :: AConnectionRequestUri
+connectionRequestNew1 = ACR SCMInvitation $ CRInvitationUri connReqDataNew1 testE2ERatchetParams
+
+contactAddress :: AConnectionRequestUri
+contactAddress = ACR SCMContact $ contactConnRequest
+
+contactConnRequest :: ConnectionRequestUri 'CMContact
+contactConnRequest = CRContactUri connReqData Nothing
+
+contactAddressDR :: AConnectionRequestUri
+contactAddressDR = ACR SCMContact $ CRContactUri connReqData (Just (RatchetKeyId "0123456789abcdef", testE2ERatchetParams))
+
+contactAddressV6 :: AConnectionRequestUri
+contactAddressV6 = ACR SCMContact $ CRContactUri connReqDataV6 Nothing
+
+contactAddressNew :: AConnectionRequestUri
+contactAddressNew = ACR SCMContact $ CRContactUri connReqDataNew Nothing
+
+connectionRequest2queues :: AConnectionRequestUri
+connectionRequest2queues = ACR SCMInvitation $ CRInvitationUri connReqData {crSmpQueues = [queue, queue]} testE2ERatchetParams
+
+connectionRequest2queuesNew :: AConnectionRequestUri
+connectionRequest2queuesNew = ACR SCMInvitation $ CRInvitationUri connReqDataNew {crSmpQueues = [queueNew, queueNew]} testE2ERatchetParams
+
+contactAddress2queues :: AConnectionRequestUri
+contactAddress2queues = ACR SCMContact $ CRContactUri connReqData {crSmpQueues = [queue, queue]} Nothing
+
+contactAddress2queuesNew :: AConnectionRequestUri
+contactAddress2queuesNew = ACR SCMContact $ CRContactUri connReqDataNew {crSmpQueues = [queueNew, queueNew]} Nothing
+
+connectionRequestClientDataEmpty :: AConnectionRequestUri
+connectionRequestClientDataEmpty = ACR SCMInvitation $ CRInvitationUri connReqData {crClientData = Just "{}"} testE2ERatchetParams
+
+contactAddressClientData :: AConnectionRequestUri
+contactAddressClientData = ACR SCMContact $ CRContactUri connReqData {crClientData = Just "{\"type\":\"group_link\", \"group_link_id\":\"abc\"}"} Nothing
+
+-- binary encoding is defined only for BinaryConnectionRequestUri; drop the address keys for the round-trip
+aBinaryConnReq :: AConnectionRequestUri -> ABinaryConnectionRequestUri
+aBinaryConnReq (ACR m cr) = ABCR m (binaryConnReq cr)
+
+url :: ByteString -> ByteString
+url = urlEncode True
+
+(==#) :: (StrEncoding a, HasCallStack) => a -> ByteString -> Expectation
+a ==# s = strEncode a `shouldBe` s
+
+(#==) :: (StrEncoding a, Eq a, Show a, HasCallStack) => a -> ByteString -> Expectation
+a #== s = strDecode s `shouldBe` Right a
+
+(#==#) :: (StrEncoding a, Eq a, Show a, HasCallStack) => a -> ByteString -> Expectation
+a #==# s = do
+  a ==# s
+  a #== s
+
+connectionRequestTests :: Spec
+connectionRequestTests =
+  describe "connection request parsing / serializing" $ do
+    it "should serialize and parse SMP queue URIs" $ do
+      queue #==# queueStr
+      queue #== ("smp://1234-w==@smp.popopx.im:5223/3456-w==#" <> testDhKeyStr <> "/?v=1-4&extra_param=abc&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion&q=m&k=s")
+      queueNoQM #==# queueStrNoQM
+      queueContact #==# queueStrContact
+      queue1 #==# queue1Str
+      queueNew #==# queueNewStr
+      queueNew #== queueNewStr'
+      queueNew1 #==# queueNew1Str
+      queueNewNoPort #==# ("smp://1234-w==@smp.popopx.im,jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion/3456-w==#/?v=2-4&dh=" <> url testDhKeyStr <> "&q=m&k=s")
+      queueNew1NoPort #==# ("smp://1234-w==@smp.popopx.im/3456-w==#/?v=2-4&dh=" <> url testDhKeyStr <> "&q=m&k=s")
+      queueV1 #==# ("smp://1234-w==@smp.popopx.im:5223/3456-w==#/?v=1&dh=" <> url testDhKeyStr <> "&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion")
+      queueV1 #== ("smp://1234-w==@smp.popopx.im,jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion:5223/3456-w==#" <> testDhKeyStr)
+      queueV1 #== ("smp://1234-w==@smp.popopx.im:5223/3456-w==#/?extra_param=abc&v=1&dh=" <> testDhKeyStr <> "&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion")
+      queueV1 #== ("smp://1234-w==@smp.popopx.im:5223/3456-w==#" <> testDhKeyStr <> "/?v=1&extra_param=abc&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion")
+      queueV1NoPort #==# ("smp://1234-w==@smp.popopx.im/3456-w==#/?v=1&dh=" <> url testDhKeyStr <> "&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion")
+      queueV1NoPort #== ("smp://1234-w==@smp.popopx.im/3456-w==#/?v=1-1&dh=" <> url testDhKeyStr <> "&srv=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion")
+      queueV1NoPort #== ("smp://1234-w==@smp.popopx.im,jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion/3456-w==#" <> testDhKeyStr)
+    it "should serialize and parse connection invitations and contact addresses" $ do
+      connectionRequest #==# ("popopx:/invitation#/?v=6-8&smp=" <> url queueStr <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequest #== ("https://popopx.chat/invitation#/?v=6-8&smp=" <> url queueStr <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequestNoQM #==# ("popopx:/invitation#/?v=6-8&smp=" <> url queueStrNoQM <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequest1 #==# ("popopx:/invitation#/?v=6-8&smp=" <> url queue1Str <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequest2queues #==# ("popopx:/invitation#/?v=6-8&smp=" <> url (queueStr <> ";" <> queueStr) <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequestNew #==# ("popopx:/invitation#/?v=6-8&smp=" <> url queueNewStr <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequestNew1 #==# ("popopx:/invitation#/?v=6-8&smp=" <> url queueNew1Str <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequest2queuesNew #==# ("popopx:/invitation#/?v=6-8&smp=" <> url (queueNewStr <> ";" <> queueNewStr) <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequestV1 #== ("https://popopx.chat/invitation#/?v=1&smp=" <> url queueStr <> "&e2e=" <> testE2ERatchetParamsStrUri)
+      connectionRequestClientDataEmpty #==# ("popopx:/invitation#/?v=6-8&smp=" <> url queueStr <> "&e2e=" <> testE2ERatchetParamsStrUri <> "&data=" <> url "{}")
+      contactAddress #==# ("popopx:/contact#/?v=6-8&smp=" <> url queueStr)
+      contactAddressDR #==# ("popopx:/contact#/?v=6-8&smp=" <> url queueStr <> "&e2e=" <> testE2ERatchetParamsStrUri <> "&rk=MDEyMzQ1Njc4OWFiY2RlZg%3D%3D")
+      contactAddress #== ("https://popopx.chat/contact#/?v=6-8&smp=" <> url queueStr)
+      contactAddress2queues #==# ("popopx:/contact#/?v=6-8&smp=" <> url (queueStr <> ";" <> queueStr))
+      contactAddressNew #==# ("popopx:/contact#/?v=6-8&smp=" <> url queueNewStr)
+      contactAddress2queuesNew #==# ("popopx:/contact#/?v=6-8&smp=" <> url (queueNewStr <> ";" <> queueNewStr))
+      contactAddressV6 #==# ("popopx:/contact#/?v=6&smp=" <> url queueStr)
+      contactAddressV6 #== ("https://popopx.chat/contact#/?v=1&smp=" <> url queueStr) -- adjusted to v6
+      contactAddressV6 #== ("https://popopx.chat/contact#/?v=1-2&smp=" <> url queueStr) -- adjusted to v6
+      contactAddressV6 #== ("https://popopx.chat/contact#/?v=2-2&smp=" <> url queueStr)
+      contactAddressClientData #==# ("popopx:/contact#/?v=6-8&smp=" <> url queueStr <> "&data=" <> url "{\"type\":\"group_link\", \"group_link_id\":\"abc\"}")
+    it "should reject KEM ciphertext without KEM key in e2e params" $
+      strDecode @(RcvE2ERatchetParamsUri 'C.X448) (strEncode testE2ERatchetParams <> "&kem_ct=" <> strEncode (B.replicate 1039 '\0'))
+        `shouldSatisfy` isLeft
+    it "should serialize / parse queue address, connection invitations and contact addresses as binary" $ do
+      smpEncodingTest queue
+      smpEncodingTest queueNoQM -- this passes, no queue mode patch in SMPQueueUri encoding
+      -- smpEncodingTest queueContact -- this fails until SMP client min version is >= sndAuthKeySMPClientVersion
+      smpEncodingTest queue1
+      smpEncodingTest queueNew
+      smpEncodingTest queueNew1
+      smpEncodingTest queueNewNoPort
+      smpEncodingTest queueNew1NoPort
+      smpEncodingTest queueV1
+      smpEncodingTest queueV1NoPort
+      smpEncodingTest (aBinaryConnReq connectionRequest)
+      -- smpEncodingTest connectionRequestNoQM -- this fails, because of queue mode patch
+      smpEncodingTest (aBinaryConnReq connectionRequestContact) -- this passes because of queue mode patch in ConnReqUriData encoding
+      smpEncodingTest (aBinaryConnReq connectionRequest1)
+      smpEncodingTest (aBinaryConnReq connectionRequest2queues)
+      smpEncodingTest (aBinaryConnReq connectionRequestNew)
+      smpEncodingTest (aBinaryConnReq connectionRequestNew1)
+      smpEncodingTest (aBinaryConnReq connectionRequest2queuesNew)
+      smpEncodingTest (aBinaryConnReq connectionRequestClientDataEmpty)
+      smpEncodingTest (aBinaryConnReq contactAddress)
+      smpEncodingTest (aBinaryConnReq contactAddress2queues)
+      smpEncodingTest (aBinaryConnReq contactAddressNew)
+      smpEncodingTest (aBinaryConnReq contactAddress2queuesNew)
+      smpEncodingTest (aBinaryConnReq contactAddressV6)
+      smpEncodingTest (aBinaryConnReq contactAddressClientData)
+    it "should serialize / parse short links" $ do
+      CSLContact SLSServer CCTContact srv (LinkKey "0123456789abcdef0123456789abcdef") #==# "https://smp.popopx.im/a#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY?h=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion&p=5223&c=1234-w"
+      CSLContact SLSServer CCTGroup srv (LinkKey "0123456789abcdef0123456789abcdef") #==# "https://smp.popopx.im/g#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY?h=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion&p=5223&c=1234-w"
+      CSLContact SLSServer CCTContact shortSrv (LinkKey "0123456789abcdef0123456789abcdef") #==# "https://smp.popopx.im/a#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY"
+      CSLInvitation SLSServer srv (EntityId "0123456789abcdef01234567") (LinkKey "0123456789abcdef0123456789abcdef") #==# "https://smp.popopx.im/i#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3/MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY?h=jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion&p=5223&c=1234-w"
+      CSLInvitation SLSServer shortSrv (EntityId "0123456789abcdef01234567") (LinkKey "0123456789abcdef0123456789abcdef") #==# "https://smp.popopx.im/i#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3/MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY"
+      CSLContact SLSPopopx CCTContact srv (LinkKey "0123456789abcdef0123456789abcdef") #==# "popopx:/a#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY?h=smp.popopx.im%2Cjjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion&p=5223&c=1234-w"
+      CSLContact SLSPopopx CCTGroup srv (LinkKey "0123456789abcdef0123456789abcdef") #==# "popopx:/g#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY?h=smp.popopx.im%2Cjjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion&p=5223&c=1234-w"
+      CSLContact SLSPopopx CCTContact shortSrv (LinkKey "0123456789abcdef0123456789abcdef") #==# "popopx:/a#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY?h=smp.popopx.im"
+      CSLInvitation SLSPopopx srv (EntityId "0123456789abcdef01234567") (LinkKey "0123456789abcdef0123456789abcdef") #==# "popopx:/i#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3/MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY?h=smp.popopx.im%2Cjjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion&p=5223&c=1234-w"
+      CSLInvitation SLSPopopx shortSrv (EntityId "0123456789abcdef01234567") (LinkKey "0123456789abcdef0123456789abcdef") #==# "popopx:/i#MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3/MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY?h=smp.popopx.im"
+    it "should shorten / restore short links" $ do
+      let contact = CSLContact SLSServer CCTContact
+      shortenShortLink [srv] (contact srv (LinkKey "0123456789abcdef0123456789abcdef"))
+        `shouldBe` contact shortSrv (LinkKey "0123456789abcdef0123456789abcdef")
+      -- won't shorten link that uses only onion host from preset server
+      shortenShortLink [srv] (contact srvOnion (LinkKey "0123456789abcdef0123456789abcdef"))
+        `shouldBe` contact srvOnion (LinkKey "0123456789abcdef0123456789abcdef")
+      -- will shorten link that uses only public host from preset server
+      shortenShortLink [srv] (contact srv1 (LinkKey "0123456789abcdef0123456789abcdef"))
+        `shouldBe` contact shortSrv (LinkKey "0123456789abcdef0123456789abcdef")
+      shortenShortLink [srv] (contact srv2 (LinkKey "0123456789abcdef0123456789abcdef"))
+        `shouldBe` contact srv2 (LinkKey "0123456789abcdef0123456789abcdef")
+      restoreShortLink [srv] (contact shortSrv (LinkKey "0123456789abcdef0123456789abcdef"))
+        `shouldBe` contact srv (LinkKey "0123456789abcdef0123456789abcdef")
+      -- won't change link that has only public host of preset server with keyhash
+      restoreShortLink [srv] (contact srv1 (LinkKey "0123456789abcdef0123456789abcdef"))
+        `shouldBe` contact srv1 (LinkKey "0123456789abcdef0123456789abcdef")
+      restoreShortLink [srv2] (contact shortSrv (LinkKey "0123456789abcdef0123456789abcdef"))
+        `shouldBe` contact shortSrv (LinkKey "0123456789abcdef0123456789abcdef")
+      restoreShortLink [srv] (contact srv2 (LinkKey "0123456789abcdef0123456789abcdef"))
+        `shouldBe` contact srv2 (LinkKey "0123456789abcdef0123456789abcdef")
+      Right (lnk :: ConnShortLink 'CMContact) <- pure $ strDecode "https://localhost/a#4AkRDmhf64tdRlN406g8lJRg5OCmhD6ynIhi6glOcCM?p=7001&c=LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI"
+      Right (lnk' :: ConnShortLink 'CMContact) <- pure $ strDecode "https://localhost/a#4AkRDmhf64tdRlN406g8lJRg5OCmhD6ynIhi6glOcCM"
+      let presetSrv :: SMPServer = "smp://LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI=@localhost:7001"
+      shortenShortLink [presetSrv] lnk `shouldBe` lnk'
+      restoreShortLink [presetSrv] lnk' `shouldBe` lnk
+      Right (inv :: ConnShortLink 'CMInvitation) <- pure $ strDecode "https://localhost/i#tnUaHYp8saREmyEHR93SBpl8ySHBchOt/LJ1ZQUzxH9Udb0jw5wmJACv5o6oe8e7BsX_hUCUMTSY?p=7001&c=LcJUMfVhwD8yxjAiSaDzzGF3-kLG4Uh0Fl_ZIjrRwjI"
+      Right (inv' :: ConnShortLink 'CMInvitation) <- pure $ strDecode "https://localhost/i#tnUaHYp8saREmyEHR93SBpl8ySHBchOt/LJ1ZQUzxH9Udb0jw5wmJACv5o6oe8e7BsX_hUCUMTSY"
+      shortenShortLink [presetSrv] inv `shouldBe` inv'
+      restoreShortLink [presetSrv] inv' `shouldBe` inv
+    it "should serialize and parse service RPC agent messages" $ do
+      let qInfo = SMPQueueInfo currentSMPClientVersion queueAddr
+      smpEncodingTest $ AgentServiceRequest [qInfo] Nothing "service request payload"
+      smpEncodingTest $ AgentServiceResponse "service response payload"
+      smpEncodingTest $ AgentRejection "rejected: not allowed"
+    it "should serialize and parse ratchet key info" $ do
+      smpDecode "R" `shouldBe` Right (AgentRatchetInfo RatchetInfo {answeredKeyHash = Nothing})
+      smpDecode "R1\3abcdef" `shouldBe` Right (AgentRatchetInfo RatchetInfo {answeredKeyHash = Just "abc"})
+      smpEncodingTest $ AgentRatchetInfo RatchetInfo {answeredKeyHash = Just "0123456789abcdef0123456789abcdef"}
+  where
+    smpEncodingTest :: (Encoding a, Eq a, Show a, HasCallStack) => a -> Expectation
+    smpEncodingTest a = smpDecode (smpEncode a) `shouldBe` Right a
+
+shortSrv :: SMPServer
+shortSrv = SMPServer "smp.popopx.im" "" (C.KeyHash "")
+
+srvOnion :: SMPServer
+srvOnion = SMPServer "jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion" "" (C.KeyHash "\215m\248\251")
+
+srv2 :: SMPServer
+srv2 = SMPServer "smp2.popopx.im,jjbyvoemxysm7qxap7m5d5m35jzv5qq6gnlv7s4rsn7tdwwmuqciwpid.onion" "" (C.KeyHash "\215m\248\251")

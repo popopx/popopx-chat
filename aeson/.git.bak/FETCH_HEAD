@@ -1,0 +1,16 @@
+397b9893cab8d298a537abbe49b436af704cebde		branch 'master' of https://github.com/simplex-chat/aeson
+81b1e1c724280cf9332c1997c0c00fca2df891a0	not-for-merge	branch '0.11.x' of https://github.com/simplex-chat/aeson
+287b2407f755f830d6e0690a096e3787d0fc8aa9	not-for-merge	branch '0.9.x' of https://github.com/simplex-chat/aeson
+b121053fab753d62e6f6a09f873b28bcc3291547	not-for-merge	branch '1.1.x' of https://github.com/simplex-chat/aeson
+6fac9823441262a0ce0c0ffbce69b4c4c9918eb3	not-for-merge	branch '1.2.x' of https://github.com/simplex-chat/aeson
+0f13c595f5e674f0f5bd2bf388616a84e126a293	not-for-merge	branch 'acc-errors' of https://github.com/simplex-chat/aeson
+584135e8e65df292c36530b79fa53f07f15cb3b4	not-for-merge	branch 'acc-seq-vector' of https://github.com/simplex-chat/aeson
+78e838df44288ac7d7ac2cd77863d2c026d86dbb	not-for-merge	branch 'aeson-1.5' of https://github.com/simplex-chat/aeson
+7b8f95e1727a32d7efe9d8a5eb955889fc82df53	not-for-merge	branch 'ep/nullary-to-object' of https://github.com/simplex-chat/aeson
+aab7b5a14d6c5ea64c64dcaee418de1bb00dcc2b	not-for-merge	branch 'ep/owsf-tag-ref' of https://github.com/simplex-chat/aeson
+2542e9078b74db3c93f0cc64b6389ab7145e7d51	not-for-merge	branch 'ep/sort-record-fields' of https://github.com/simplex-chat/aeson
+1d03165812eb76798f2670f93fbb131f0c6c99db	not-for-merge	branch 'gadt-keyvalue-instances' of https://github.com/simplex-chat/aeson
+869acbd6e693d0c9c368adfa27425c3b74a61671	not-for-merge	branch 'maybe-null' of https://github.com/simplex-chat/aeson
+a61aef06e83f6ca9ed0b4742bd93efcb1f2b8c8c	not-for-merge	branch 'simplex-chat-aeson-fork' of https://github.com/simplex-chat/aeson
+c3d04181eb64393d449a68084ffea3a94c3d8064	not-for-merge	branch 'v1420' of https://github.com/simplex-chat/aeson
+7a8fc9cdeedcce06de8bd352f964be71fc482746	not-for-merge	branch 'weeder' of https://github.com/simplex-chat/aeson

@@ -1,0 +1,20 @@
+
+[submodule "popopxmq"]
+	path = popopxmq
+	url = https://github.com/popopx/popopxmq.git
+
+[submodule "aeson"]
+	path = aeson
+	url = https://github.com/simplex-chat/aeson.git
+
+[submodule "hs-socks"]
+	path = hs-socks
+	url = https://github.com/simplex-chat/hs-socks.git
+
+[submodule "direct-sqlcipher"]
+	path = direct-sqlcipher
+	url = https://github.com/simplex-chat/direct-sqlcipher.git
+
+[submodule "sqlcipher-simple"]
+	path = sqlcipher-simple
+	url = https://github.com/simplex-chat/sqlcipher-simple.git

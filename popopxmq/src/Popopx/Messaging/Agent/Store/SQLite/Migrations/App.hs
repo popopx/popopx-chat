@@ -1,0 +1,121 @@
+{-# LANGUAGE NamedFieldPuns #-}
+
+module Popopx.Messaging.Agent.Store.SQLite.Migrations.App (appMigrations) where
+
+import Data.List (sortOn)
+import Database.SQLite.Simple (Query (..))
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220101_initial
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220301_snd_queue_keys
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220322_notifications
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220608_v2
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220625_v2_ntf_mode
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220811_onion_hosts
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220817_connection_ntfs
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220905_commands
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20220915_connection_queues
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230110_users
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230117_fkey_indexes
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230120_delete_errors
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230217_server_key_hash
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230223_files
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230320_retry_state
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230401_snd_files
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230510_files_pending_replicas_indexes
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230516_encrypted_rcv_message_hashes
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230531_switch_status
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230615_ratchet_sync
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230701_delivery_receipts
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230720_delete_expired_messages
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230722_indexes
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230814_indexes
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20230829_crypto_files
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20231222_command_created_at
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20231225_failed_work_items
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20240121_message_delivery_indexes
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20240124_file_redirect
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20240223_connections_wait_delivery
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20240225_ratchet_kem
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20240417_rcv_files_approved_relays
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20240624_snd_secure
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20240702_servers_stats
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20240930_ntf_tokens_to_delete
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20241007_rcv_queues_last_broker_ts
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20241224_ratchet_e2e_snd_params
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20250203_msg_bodies
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20250322_short_links
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20250702_conn_invitations_remove_cascade_delete
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20251009_queue_to_subscribe
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20251010_client_notices
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20251230_strict_tables
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20260410_receive_attempts
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20260411_service_certs
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20260712_address_dr_rpc
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20260823_snd_files_entitlement
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20260919_ratchet_verify_codes
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20260929_ratchet_indexes
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20261005_commands_autoincrement
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20261008_rcv_switch_status
+import Popopx.Messaging.Agent.Store.SQLite.Migrations.M20261018_xftp_autoincrement
+import Popopx.Messaging.Agent.Store.Shared (Migration (..))
+
+schemaMigrations :: [(String, Query, Maybe Query)]
+schemaMigrations =
+  [ ("20220101_initial", m20220101_initial, Nothing),
+    ("20220301_snd_queue_keys", m20220301_snd_queue_keys, Nothing),
+    ("20220322_notifications", m20220322_notifications, Nothing),
+    ("20220607_v2", m20220608_v2, Nothing),
+    ("m20220625_v2_ntf_mode", m20220625_v2_ntf_mode, Nothing),
+    ("m20220811_onion_hosts", m20220811_onion_hosts, Nothing),
+    ("m20220817_connection_ntfs", m20220817_connection_ntfs, Nothing),
+    ("m20220905_commands", m20220905_commands, Nothing),
+    ("m20220915_connection_queues", m20220915_connection_queues, Nothing),
+    ("m20230110_users", m20230110_users, Nothing),
+    ("m20230117_fkey_indexes", m20230117_fkey_indexes, Nothing),
+    ("m20230120_delete_errors", m20230120_delete_errors, Nothing),
+    ("m20230217_server_key_hash", m20230217_server_key_hash, Nothing),
+    ("m20230223_files", m20230223_files, Just down_m20230223_files),
+    ("m20230320_retry_state", m20230320_retry_state, Just down_m20230320_retry_state),
+    ("m20230401_snd_files", m20230401_snd_files, Just down_m20230401_snd_files),
+    ("m20230510_files_pending_replicas_indexes", m20230510_files_pending_replicas_indexes, Just down_m20230510_files_pending_replicas_indexes),
+    ("m20230516_encrypted_rcv_message_hashes", m20230516_encrypted_rcv_message_hashes, Just down_m20230516_encrypted_rcv_message_hashes),
+    ("m20230531_switch_status", m20230531_switch_status, Just down_m20230531_switch_status),
+    ("m20230615_ratchet_sync", m20230615_ratchet_sync, Just down_m20230615_ratchet_sync),
+    ("m20230701_delivery_receipts", m20230701_delivery_receipts, Just down_m20230701_delivery_receipts),
+    ("m20230720_delete_expired_messages", m20230720_delete_expired_messages, Just down_m20230720_delete_expired_messages),
+    ("m20230722_indexes", m20230722_indexes, Just down_m20230722_indexes),
+    ("m20230814_indexes", m20230814_indexes, Just down_m20230814_indexes),
+    ("m20230829_crypto_files", m20230829_crypto_files, Just down_m20230829_crypto_files),
+    ("m20231222_command_created_at", m20231222_command_created_at, Just down_m20231222_command_created_at),
+    ("m20231225_failed_work_items", m20231225_failed_work_items, Just down_m20231225_failed_work_items),
+    ("m20240121_message_delivery_indexes", m20240121_message_delivery_indexes, Just down_m20240121_message_delivery_indexes),
+    ("m20240124_file_redirect", m20240124_file_redirect, Just down_m20240124_file_redirect),
+    ("m20240223_connections_wait_delivery", m20240223_connections_wait_delivery, Just down_m20240223_connections_wait_delivery),
+    ("m20240225_ratchet_kem", m20240225_ratchet_kem, Just down_m20240225_ratchet_kem),
+    ("m20240417_rcv_files_approved_relays", m20240417_rcv_files_approved_relays, Just down_m20240417_rcv_files_approved_relays),
+    ("m20240624_snd_secure", m20240624_snd_secure, Just down_m20240624_snd_secure),
+    ("m20240702_servers_stats", m20240702_servers_stats, Just down_m20240702_servers_stats),
+    ("m20240930_ntf_tokens_to_delete", m20240930_ntf_tokens_to_delete, Just down_m20240930_ntf_tokens_to_delete),
+    ("m20241007_rcv_queues_last_broker_ts", m20241007_rcv_queues_last_broker_ts, Just down_m20241007_rcv_queues_last_broker_ts),
+    ("m20241224_ratchet_e2e_snd_params", m20241224_ratchet_e2e_snd_params, Just down_m20241224_ratchet_e2e_snd_params),
+    ("m20250203_msg_bodies", m20250203_msg_bodies, Just down_m20250203_msg_bodies),
+    ("m20250322_short_links", m20250322_short_links, Just down_m20250322_short_links),
+    ("m20250702_conn_invitations_remove_cascade_delete", m20250702_conn_invitations_remove_cascade_delete, Just down_m20250702_conn_invitations_remove_cascade_delete),
+    ("m20251009_queue_to_subscribe", m20251009_queue_to_subscribe, Just down_m20251009_queue_to_subscribe),
+    ("m20251010_client_notices", m20251010_client_notices, Just down_m20251010_client_notices),
+    ("m20251230_strict_tables", m20251230_strict_tables, Just down_m20251230_strict_tables),
+    ("m20260410_receive_attempts", m20260410_receive_attempts, Just down_m20260410_receive_attempts),
+    ("m20260411_service_certs", m20260411_service_certs, Just down_m20260411_service_certs),
+    ("m20260712_address_dr_rpc", m20260712_address_dr_rpc, Just down_m20260712_address_dr_rpc),
+    ("m20260823_snd_files_entitlement", m20260823_snd_files_entitlement, Just down_m20260823_snd_files_entitlement),
+    ("m20260919_ratchet_verify_codes", m20260919_ratchet_verify_codes, Just down_m20260919_ratchet_verify_codes),
+    ("m20260929_ratchet_indexes", m20260929_ratchet_indexes, Just down_m20260929_ratchet_indexes),
+    ("m20261005_commands_autoincrement", m20261005_commands_autoincrement, Just down_m20261005_commands_autoincrement),
+    ("m20261008_rcv_switch_status", m20261008_rcv_switch_status, Just down_m20261008_rcv_switch_status),
+    ("m20261018_xftp_autoincrement", m20261018_xftp_autoincrement, Just down_m20261018_xftp_autoincrement)
+  ]
+
+-- | The list of migrations in ascending order by date
+appMigrations :: [Migration]
+appMigrations = sortOn name $ map migration schemaMigrations
+  where
+    migration (name, up, down) = Migration {name, up = fromQuery up, down = fromQuery <$> down}

@@ -1,0 +1,23 @@
+*.lock
+# the resolver's Docker image and CI install exactly these
+!/scripts/resolver/service/uv.lock
+# local overrides of scripts/resolver/.env.example
+/scripts/resolver/.env
+*.db
+*.db.bak
+*.session.sql
+tests/tmp
+dist-newstyle/
+
+cabal.project.local
+cabal.project.local~
+
+.hpc/
+*.tix
+.coverage
+
+__pycache__/
+
+.DS_Store
+.github/
+release-assets/

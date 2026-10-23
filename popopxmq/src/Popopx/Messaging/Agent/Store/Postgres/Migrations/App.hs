@@ -1,0 +1,45 @@
+{-# LANGUAGE NamedFieldPuns #-}
+
+module Popopx.Messaging.Agent.Store.Postgres.Migrations.App (appMigrations) where
+
+import Data.List (sortOn)
+import Data.Text (Text)
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20241210_initial
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20250203_msg_bodies
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20250322_short_links
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20250702_conn_invitations_remove_cascade_delete
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20251009_queue_to_subscribe
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20251010_client_notices
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20251230_strict_tables
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20260410_receive_attempts
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20260411_service_certs
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20260712_address_dr_rpc
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20260823_snd_files_entitlement
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20260919_ratchet_verify_codes
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20260929_ratchet_indexes
+import Popopx.Messaging.Agent.Store.Postgres.Migrations.M20261008_rcv_switch_status
+import Popopx.Messaging.Agent.Store.Shared (Migration (..))
+
+schemaMigrations :: [(String, Text, Maybe Text)]
+schemaMigrations =
+  [ ("20241210_initial", m20241210_initial, Nothing),
+    ("20250203_msg_bodies", m20250203_msg_bodies, Just down_m20250203_msg_bodies),
+    ("20250322_short_links", m20250322_short_links, Just down_m20250322_short_links),
+    ("20250702_conn_invitations_remove_cascade_delete", m20250702_conn_invitations_remove_cascade_delete, Just down_m20250702_conn_invitations_remove_cascade_delete),
+    ("20251009_queue_to_subscribe", m20251009_queue_to_subscribe, Just down_m20251009_queue_to_subscribe),
+    ("20251010_client_notices", m20251010_client_notices, Just down_m20251010_client_notices),
+    ("20251230_strict_tables", m20251230_strict_tables, Just down_m20251230_strict_tables),
+    ("20260410_receive_attempts", m20260410_receive_attempts, Just down_m20260410_receive_attempts),
+    ("20260411_service_certs", m20260411_service_certs, Just down_m20260411_service_certs),
+    ("20260712_address_dr_rpc", m20260712_address_dr_rpc, Just down_m20260712_address_dr_rpc),
+    ("20260823_snd_files_entitlement", m20260823_snd_files_entitlement, Just down_m20260823_snd_files_entitlement),
+    ("20260919_ratchet_verify_codes", m20260919_ratchet_verify_codes, Just down_m20260919_ratchet_verify_codes),
+    ("20260929_ratchet_indexes", m20260929_ratchet_indexes, Just down_m20260929_ratchet_indexes),
+    ("20261008_rcv_switch_status", m20261008_rcv_switch_status, Just down_m20261008_rcv_switch_status)
+  ]
+
+-- | The list of migrations in ascending order by date
+appMigrations :: [Migration]
+appMigrations = sortOn name $ map migration schemaMigrations
+  where
+    migration (name, up, down) = Migration {name, up, down = down}

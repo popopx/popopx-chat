@@ -1,0 +1,109 @@
+{-# LANGUAGE AllowAmbiguousTypes #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
+
+module CoreTests.EncodingTests where
+
+import Data.Bits (shiftR)
+import Data.ByteString.Char8 (ByteString)
+import qualified Data.ByteString.Char8 as B
+import Data.ByteString.Internal (w2c)
+import Data.Int (Int64)
+import Data.List.NonEmpty (NonEmpty (..))
+import Data.Time.Clock.System (SystemTime (..), getSystemTime, utcToSystemTime)
+import Data.Time.ISO8601 (parseISO8601)
+import Popopx.Messaging.Encoding
+import Popopx.Messaging.Encoding.String
+import Popopx.Messaging.Parsers (parseAll)
+import Popopx.Messaging.Protocol (ProtocolServer (..), XFTPServer)
+import Popopx.Messaging.ServiceScheme (ServiceScheme (..), SrvLoc (..))
+import Popopx.Messaging.Transport.Client (TransportHost (..))
+import Test.Hspec hiding (fit, it)
+import Test.Hspec.QuickCheck (modifyMaxSuccess)
+import Test.QuickCheck
+import Util
+
+int64 :: Int64
+int64 = 1234567890123456789
+
+s64 :: ByteString
+s64 = B.pack $ map (w2c . fromIntegral . (int64 `shiftR`)) [56, 48, 40, 32, 24, 16, 8, 0]
+
+encodingTests :: Spec
+encodingTests = modifyMaxSuccess (const 1000) $ do
+  describe "Encoding Int64" $ do
+    it "should encode and decode Int64 example" $ do
+      s64 `shouldBe` "\17\34\16\244\125\233\129\21"
+      smpEncode int64 `shouldBe` s64
+      parseAll smpP s64 `shouldBe` Right int64
+    it "parse(encode(Int64) should equal the same Int64" . property $
+      \i -> parseAll smpP (smpEncode i) == Right (i :: Int64)
+  describe "Encoding SystemTime" $ do
+    it "should encode and decode SystemTime" $ do
+      t <- getSystemTime
+      testSystemTime t
+      Just t' <- pure $ utcToSystemTime <$> parseISO8601 "2022-01-01T10:24:05.000Z"
+      systemSeconds t' `shouldBe` 1641032645
+      testSystemTime t'
+    it "parse(encode(SystemTime) should equal the same Int64" . property $
+      \i -> parseAll smpP (smpEncode i) == Right (i :: Int64)
+  describe "Encoding transport hosts" $ do
+    describe "domain name hosts" $ do
+      it "should encode / decode domain name" $ THDomainName "smp.popopx.im" #==# "smp.popopx.im"
+      it "should not allow whitespace or punctuation" $ do
+        shouldNotParse @TransportHost "smp,popopx.im" "endOfInput"
+        shouldNotParse @TransportHost "smp:popopx.im" "endOfInput"
+        shouldNotParse @TransportHost "smp#popopx.im" "endOfInput"
+        shouldNotParse @TransportHost "smp popopx.im" "endOfInput"
+        shouldNotParse @TransportHost "smp\npopopx.im" "endOfInput"
+    describe "onion hosts" $ do
+      it "should encode / decode onion host" $ THOnionHost "beccx4yfxxbvyhqypaavemqurytl6hozr47wfc7uuecacjqdvwpw2xid.onion" #==# "beccx4yfxxbvyhqypaavemqurytl6hozr47wfc7uuecacjqdvwpw2xid.onion"
+      it "should only allow latin letters and digits" $ do
+        shouldNotParse @TransportHost "beccx4yfxxbvyhqypaavemqurytl 6hozr47wfc7uuecacjqdvwpw2xid.onion" "endOfInput"
+        shouldNotParse @TransportHost "beccx4yfxxbvyhqypaavemqurytl\n6hozr47wfc7uuecacjqdvwpw2xid.onion" "endOfInput"
+        shouldNotParse @TransportHost "bèccx4yfxxbvyhqypaavemqurytl6hozr47wfc7uuecacjqdvwpw2xid.onion" "Failed reading: empty"
+    describe "IP address hosts" $ do
+      it "should encode / decode IP address" $ THIPv4 (192, 168, 0, 1) #==# "192.168.0.1"
+      it "should be valid" $ do
+        THDomainName "192.168.1" #==# "192.168.1"
+        THDomainName "192.256.0.1" #==# "192.256.0.1"
+        THDomainName "192.168.0.-1" #==# "192.168.0.-1"
+        shouldNotParse @TransportHost "192.168.0.0.1" "endOfInput"
+        -- brackets are reserved for IPv6 literals
+        shouldReject @TransportHost "[popopx.chat]"
+        shouldReject @TransportHost "[smp.popopx.im]"
+  describe "Encoding service locations" $ do
+    it "should parse bracketed IPv6 host with port" $ do
+      strDecode @ServiceScheme "https://[2001:db8::1]:8443"
+        `shouldBe` Right (SSAppServer $ SrvLoc "2001:db8::1" "8443")
+      strEncode (SSAppServer $ SrvLoc "2001:db8::1" "8443")
+        `shouldBe` "https://[2001:db8::1]:8443"
+    it "should reject bracketed non-IPv6 host" $
+      shouldReject @ServiceScheme "https://[popopx.chat]:8443"
+  describe "Encoding protocol servers" $ do
+    it "should parse bracketed IPv6 server host with port" $
+      case strDecode @XFTPServer "xftp://1234-w==@[2001:db8::1]:443" of
+        Left err -> expectationFailure err
+        Right (ProtocolServer _ parsedHost parsedPort _) -> do
+          parsedHost `shouldBe` (ipv6Host :| [])
+          parsedPort `shouldBe` "443"
+    it "should reject bracketed non-IPv6 server host" $
+      shouldReject @XFTPServer "xftp://1234-w==@[popopx.chat]:443"
+  where
+    ipv6Host :: TransportHost
+    ipv6Host = either error id $ strDecode "2001:db8::1"
+    testSystemTime :: SystemTime -> Expectation
+    testSystemTime t = do
+      smpEncode t `shouldBe` smpEncode (systemSeconds t)
+      smpDecode (smpEncode t) `shouldBe` Right t {systemNanoseconds = 0}
+    (#==#) :: (StrEncoding s, Eq s, Show s) => s -> ByteString -> Expectation
+    (#==#) x s = do
+      strEncode x `shouldBe` s
+      strDecode s `shouldBe` Right x
+    shouldNotParse :: forall s. (StrEncoding s, Eq s, Show s) => ByteString -> String -> Expectation
+    shouldNotParse s err = strDecode s `shouldBe` (Left err :: Either String s)
+    shouldReject :: forall s. (StrEncoding s, Show s) => ByteString -> Expectation
+    shouldReject s = case strDecode s :: Either String s of
+      Left _ -> pure ()
+      Right a -> expectationFailure $ "expected parse failure, got " <> show a

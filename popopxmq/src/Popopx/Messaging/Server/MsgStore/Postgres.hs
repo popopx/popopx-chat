@@ -1,0 +1,387 @@
+{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE QuasiQuotes #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TupleSections #-}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module Popopx.Messaging.Server.MsgStore.Postgres
+  ( PostgresMsgStore,
+    PostgresMsgStoreCfg (..),
+    PostgresQueue,
+    exportDbMessages,
+    getDbMessageStats,
+    getDbMessageCount,
+    deleteAllMessages,
+    batchInsertMessages,
+    updateQueueCounts,
+  )
+where
+
+import Control.Concurrent.STM
+import qualified Control.Exception as E
+import Control.Monad
+import Control.Monad.Trans.Except
+import qualified Data.ByteString as B
+import qualified Data.ByteString.Builder as BB
+import qualified Data.ByteString.Lazy as LB
+import Data.Functor (($>))
+import Data.IORef
+import Data.Int (Int64)
+import Data.List (intersperse)
+import qualified Data.Map.Strict as M
+import Data.Time.Clock.System (SystemTime (..))
+import Database.PostgreSQL.Simple (Binary (..), In (..), Only (..), (:.) (..))
+import qualified Database.PostgreSQL.Simple as DB
+import qualified Database.PostgreSQL.Simple.Copy as DB
+import Database.PostgreSQL.Simple.SqlQQ (sql)
+import Database.PostgreSQL.Simple.ToField (ToField (..))
+import Popopx.Messaging.Agent.Store.Postgres.Common
+import qualified Popopx.Messaging.Crypto as C
+import Popopx.Messaging.Protocol
+import Popopx.Messaging.Server.MsgStore
+import Popopx.Messaging.Server.MsgStore.Types
+import Popopx.Messaging.Server.QueueStore
+import Popopx.Messaging.Server.QueueStore.Postgres
+import Popopx.Messaging.Server.QueueStore.Types
+import Popopx.Messaging.Server.StoreLog (foldLogLines)
+import Popopx.Messaging.Encoding.String
+import Popopx.Messaging.Util (maybeFirstRow, maybeFirstRow')
+import System.IO (Handle, hFlush, stdout)
+
+data PostgresMsgStore = PostgresMsgStore
+  { config :: PostgresMsgStoreCfg,
+    queueStore_ :: PostgresQueueStore'
+  }
+
+data PostgresMsgStoreCfg = PostgresMsgStoreCfg
+  { queueStoreCfg :: PostgresStoreCfg,
+    quota :: Int
+  }
+
+type PostgresQueueStore' = PostgresQueueStore PostgresQueue
+
+data PostgresQueue = PostgresQueue
+  { recipientId' :: RecipientId,
+    queueRec' :: TVar (Maybe QueueRec)
+  }
+
+instance StoreQueueClass PostgresQueue where
+  recipientId = recipientId'
+  {-# INLINE recipientId #-}
+  queueRec = queueRec'
+  {-# INLINE queueRec #-}
+
+instance MsgStoreClass PostgresMsgStore where
+  type QueueStore PostgresMsgStore = PostgresQueueStore'
+  type StoreQueue PostgresMsgStore = PostgresQueue
+  type MsgStoreConfig PostgresMsgStore = PostgresMsgStoreCfg
+
+  newMsgStore :: PostgresMsgStoreCfg -> IO PostgresMsgStore
+  newMsgStore config = do
+    queueStore_ <- newQueueStore @PostgresQueue (queueStoreCfg config)
+    pure PostgresMsgStore {config, queueStore_}
+
+  closeMsgStore :: PostgresMsgStore -> IO ()
+  closeMsgStore = closeQueueStore @PostgresQueue . queueStore_
+
+  expireOldMessages :: Bool -> PostgresMsgStore -> Int64 -> Int64 -> IO MessageStats
+  expireOldMessages _tty ms now ttl =
+    maybeFirstRow' newMessageStats toMessageStats $ withConnection st $ \db ->
+      DB.query db "CALL expire_old_messages(?,?,0,0,0)" (oldMsg, batchSize)
+    where
+      st = dbStore $ queueStore_ ms
+      oldMsg = now - ttl
+      -- expired messages read per page in expire_old_messages, and the page is one
+      -- transaction: queues in it stay row-locked against SEND and ACK until it commits.
+      batchSize = 100 :: Int
+      toMessageStats (expiredMsgsCount, storedMsgsCount, storedQueues) =
+        MessageStats {expiredMsgsCount, storedMsgsCount, storedQueues}
+
+  foldRcvServiceMessages :: PostgresMsgStore -> ServiceId -> (a -> RecipientId -> Either ErrorType (Maybe (QueueRec, Message)) -> IO a) -> a -> IO (Either ErrorType a)
+  foldRcvServiceMessages ms serviceId f acc =
+    runExceptT $ withDB' "foldRcvServiceMessages" (queueStore_ ms) $ \db ->
+      DB.fold
+        db
+        [sql|
+          SELECT q.recipient_id, q.recipient_keys, q.rcv_dh_secret,
+            q.sender_id, q.sender_key, q.queue_mode,
+            q.notifier_id, q.notifier_key, q.rcv_ntf_dh_secret, q.ntf_service_id,
+            q.status, q.updated_at, q.link_id, q.rcv_service_id,
+            m.msg_id, m.msg_ts, m.msg_quota, m.msg_ntf_flag, m.msg_body
+          FROM msg_queues q
+          LEFT JOIN LATERAL (
+              SELECT msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body
+              FROM messages
+              WHERE recipient_id = q.recipient_id
+              ORDER BY message_id ASC
+              LIMIT 1
+          ) m ON true
+          WHERE q.rcv_service_id = ? AND q.deleted_at IS NULL;
+        |]
+        (Only serviceId)
+        acc
+        f'
+    where
+      f' a (qRow :. mRow) =
+        let (rId, qr) = rowToQueueRec qRow
+            msg_ = toMaybeMessage mRow
+         in f a rId $ Right ((qr,) <$> msg_)
+
+  queueStore = queueStore_
+  {-# INLINE queueStore #-}
+
+  loadedQueueCounts :: PostgresMsgStore -> IO LoadedQueueCounts
+  loadedQueueCounts _ = pure LoadedQueueCounts {loadedQueueCount = 0, loadedNotifierCount = 0}
+
+  mkQueue :: PostgresMsgStore -> RecipientId -> QueueRec -> IO PostgresQueue
+  mkQueue _ rId qr = PostgresQueue rId <$> newTVarIO (Just qr)
+  {-# INLINE mkQueue #-}
+
+  deleteQueue :: PostgresMsgStore -> PostgresQueue -> IO (Either ErrorType QueueRec)
+  deleteQueue ms q = deleteStoreQueue (queueStore_ ms) q
+  {-# INLINE deleteQueue #-}
+
+  deleteQueueSize :: PostgresMsgStore -> PostgresQueue -> IO (Either ErrorType (QueueRec, Int))
+  deleteQueueSize ms q = runExceptT $ do
+    size <- getQueueSize ms q
+    qr <- ExceptT $ deleteStoreQueue (queueStore_ ms) q
+    pure (qr, size)
+
+  writeMsg :: PostgresMsgStore -> PostgresQueue -> Bool -> Message -> ExceptT ErrorType IO (Maybe (Message, Bool))
+  writeMsg ms q _ msg =
+    uninterruptibleMask_ $
+      withDB' "writeMsg" (queueStore_ ms) $ \db -> do
+        let (msgQuota, ntf, body) = case msg of
+              Message {msgFlags = MsgFlags ntf', msgBody = C.MaxLenBS body'} -> (False, ntf', body')
+              MessageQuota {} -> (True, False, B.empty)
+        toResult <$>
+          DB.query
+            db
+            "SELECT quota_written, was_empty FROM write_message(?,?,?,?,?,?,?)"
+            (recipientId' q, messageId msg, systemSeconds (messageTs msg), msgQuota, ntf, Binary body, quota)
+    where
+      toResult = \case
+        ((msgQuota, wasEmpty) : _) -> if msgQuota then Nothing else Just (msg, wasEmpty)
+        [] -> Nothing
+      PostgresMsgStore {config = PostgresMsgStoreCfg {quota}} = ms
+
+  getQueueSize :: PostgresMsgStore -> PostgresQueue -> ExceptT ErrorType IO Int
+  getQueueSize ms q =
+    withDB' "getQueueSize" (queueStore_ ms) $ \db ->
+      maybeFirstRow' 0 fromOnly $
+        DB.query db "SELECT msg_queue_size FROM msg_queues WHERE recipient_id = ? AND deleted_at IS NULL" (Only (recipientId' q))
+
+  tryPeekMsg :: PostgresMsgStore -> PostgresQueue -> ExceptT ErrorType IO (Maybe Message)
+  tryPeekMsg ms q =
+    uninterruptibleMask_ $ withDB' "tryPeekMsg" (queueStore_ ms) $ \db ->
+      maybeFirstRow toMessage $
+        DB.query
+          db
+          [sql|
+            SELECT msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body
+            FROM messages
+            WHERE recipient_id = ?
+            ORDER BY message_id ASC LIMIT 1
+          |]
+          (Only (recipientId' q))
+
+  tryPeekMsgs :: PostgresMsgStore -> [PostgresQueue] -> ExceptT ErrorType IO (M.Map RecipientId Message)
+  tryPeekMsgs _ms [] = pure M.empty
+  tryPeekMsgs ms qs =
+    uninterruptibleMask_ $
+      withDB' "tryPeekMsgs" (queueStore_ ms) $ \db ->
+        M.fromList . map toRcvMsg <$>
+          DB.query
+            db
+            [sql|
+              SELECT DISTINCT ON (recipient_id)
+                recipient_id, msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body
+              FROM messages
+              WHERE recipient_id IN ?
+              ORDER BY recipient_id, message_id ASC
+            |]
+            (Only (In (map recipientId' qs)))
+    where
+      toRcvMsg (Only rId :. msg) = (rId, toMessage msg)
+
+  tryDelMsg :: PostgresMsgStore -> PostgresQueue -> MsgId -> ExceptT ErrorType IO (Maybe Message)
+  tryDelMsg ms q msgId =
+    uninterruptibleMask_ $
+      withDB' "tryDelMsg" (queueStore_ ms) $ \db ->
+        maybeFirstRow toMessage $
+          DB.query db "SELECT r_msg_id, r_msg_ts, r_msg_quota, r_msg_ntf_flag, r_msg_body FROM try_del_msg(?, ?)" (recipientId' q, msgId)
+
+  tryDelPeekMsg :: PostgresMsgStore -> PostgresQueue -> MsgId -> ExceptT ErrorType IO (Maybe Message, Maybe Message)
+  tryDelPeekMsg ms q msgId =
+    uninterruptibleMask_ $
+      withDB' "tryDelPeekMsg" (queueStore_ ms) $ \db ->
+        toResult . map toMessage
+          <$> DB.query db "SELECT r_msg_id, r_msg_ts, r_msg_quota, r_msg_ntf_flag, r_msg_body FROM try_del_peek_msg(?, ?)" (recipientId' q, msgId)
+    where
+      toResult = \case
+        [] -> (Nothing, Nothing)
+        [msg]
+          | messageId msg == msgId -> (Just msg, Nothing)
+          | otherwise -> (Nothing, Just msg)
+        deleted : next : _ -> (Just deleted, Just next)
+
+  deleteExpiredMsgs :: PostgresMsgStore -> PostgresQueue -> Int64 -> ExceptT ErrorType IO Int
+  deleteExpiredMsgs ms q old =
+    uninterruptibleMask_ $
+      maybeFirstRow' 0 (fromIntegral @Int64 . fromOnly) $ withDB' "deleteExpiredMsgs" (queueStore_ ms) $ \db ->
+        DB.query db "SELECT delete_expired_msgs(?, ?)" (recipientId' q, old)
+
+uninterruptibleMask_ :: ExceptT ErrorType IO a -> ExceptT ErrorType IO a
+uninterruptibleMask_ = ExceptT . E.uninterruptibleMask_ . runExceptT
+{-# INLINE uninterruptibleMask_ #-}
+
+toMaybeMessage :: (Maybe MsgId, Maybe Int64, Maybe Bool, Maybe Bool, Maybe (Binary MsgBody)) -> Maybe Message
+toMaybeMessage = \case
+  (Just msgId, Just ts, Just msgQuota, Just ntf, Just body) -> Just $ toMessage (msgId, ts, msgQuota, ntf, body)
+  _ -> Nothing
+
+toMessage :: (MsgId, Int64, Bool, Bool, Binary MsgBody) -> Message
+toMessage (msgId, ts, msgQuota, ntf, Binary body)
+  | msgQuota = MessageQuota {msgId, msgTs}
+  | otherwise = Message {msgId, msgTs, msgFlags = MsgFlags ntf, msgBody = C.unsafeMaxLenBS body} -- TODO [messages] unsafeMaxLenBS?
+  where
+    msgTs = MkSystemTime ts 0
+
+exportDbMessages :: Bool -> PostgresMsgStore -> Handle -> IO Int
+exportDbMessages tty ms h = do
+  rows <- newIORef []
+  n <- withConnection st $ \db -> DB.foldWithOptions_ opts db query 0 $ \i r -> do
+    let i' = i + 1
+    if i' `mod` 1000 > 0
+      then modifyIORef rows (r :)
+      else do
+        readIORef rows >>= writeMessages . (r :)
+        writeIORef rows []
+        when tty $ putStr (progress i' <> "\r") >> hFlush stdout
+    pure i'
+  readIORef rows >>= \rs -> unless (null rs) $ writeMessages rs
+  when tty $ putStrLn $ progress n
+  pure n
+  where
+    st = dbStore $ queueStore_ ms
+    opts = DB.defaultFoldOptions {DB.fetchQuantity = DB.Fixed 1000}
+    query =
+      [sql|
+        SELECT recipient_id, msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body
+        FROM messages
+        ORDER BY recipient_id, message_id ASC
+      |]
+    writeMessages = BB.hPutBuilder h . encodeMessages . reverse
+    encodeMessages = mconcat . map (\(Only rId :. msg) -> BB.byteString (strEncode $ MLRv3 rId $ toMessage msg) <> BB.char8 '\n')
+    progress i = "Processed: " <> show i <> " records"
+
+getDbMessageStats :: PostgresMsgStore -> IO MessageStats
+getDbMessageStats ms =
+  maybeFirstRow' newMessageStats toMessageStats $ withConnection st $ \db ->
+    DB.query_
+      db
+      [sql|
+        SELECT
+          (SELECT COUNT (1) FROM msg_queues WHERE deleted_at IS NULL),
+          (SELECT COUNT (1) FROM messages m JOIN msg_queues q USING recipient_id WHERE deleted_at IS NULL)
+      |]
+  where
+    st = dbStore $ queueStore_ ms
+    toMessageStats (storedQueues, storedMsgsCount) =
+      MessageStats {storedQueues, storedMsgsCount, expiredMsgsCount = 0}
+
+getDbMessageCount :: PostgresMsgStore -> IO Int64
+getDbMessageCount ms =
+  maybeFirstRow' 0 fromOnly $
+    withConnection (dbStore $ queueStore_ ms) (`DB.query_` "SELECT COUNT(*) FROM messages")
+
+deleteAllMessages :: PostgresMsgStore -> IO ()
+deleteAllMessages ms =
+  withConnection (dbStore $ queueStore_ ms) $ \db -> do
+    void $ DB.execute_ db "TRUNCATE messages"
+    void $ DB.execute_
+      db
+      [sql|
+        UPDATE msg_queues
+        SET msg_queue_size = 0, msg_can_write = TRUE
+        WHERE msg_queue_size != 0 OR msg_can_write = FALSE
+      |]
+
+updateQueueCounts :: PostgresMsgStore -> IO ()
+updateQueueCounts ms =
+  withConnection (dbStore $ queueStore_ ms) $ \db -> do
+    void $ DB.execute_
+      db
+      [sql|
+        CREATE TEMP TABLE queue_stats AS
+        SELECT recipient_id,
+          COUNT(*) AS size,
+          SUM(CASE WHEN msg_quota THEN 1 ELSE 0 END) AS quota_count
+        FROM messages
+        GROUP BY recipient_id
+      |]
+    void $ DB.execute_
+      db
+      [sql|
+        UPDATE msg_queues
+        SET msg_queue_size = 0, msg_can_write = TRUE
+        WHERE msg_queue_size != 0 OR msg_can_write = FALSE
+      |]
+    void $ DB.execute_
+      db
+      [sql|
+        UPDATE msg_queues q
+        SET msg_queue_size = s.size,
+            msg_can_write = s.quota_count = 0
+        FROM queue_stats s
+        WHERE q.recipient_id = s.recipient_id
+      |]
+    void $ DB.execute_ db "DROP TABLE queue_stats"
+
+batchInsertMessages :: StoreQueueClass q => Bool -> FilePath -> PostgresQueueStore q -> IO Int64
+batchInsertMessages tty f toStore = do
+  putStrLn "Importing messages..."
+  let st = dbStore toStore
+  (_, inserted) <-
+    withTransaction st $ \db -> do
+      DB.copy_
+        db
+        [sql|
+          COPY messages (recipient_id, msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body)
+          FROM STDIN WITH (FORMAT CSV)
+        |]
+      foldLogLines tty f (putMessage db) (0 :: Int, 0) >>= (DB.putCopyEnd db $>)
+  pure inserted
+  where
+    putMessage db (!i, !cnt) _eof s  = do
+      let i' = i + 1
+      cnt' <- case strDecode s of
+        Right (MLRv3 rId msg) -> (cnt + 1) <$ DB.putCopyData db (messageRecToText rId msg)
+        Left e -> cnt <$ putStrLn ("Error parsing line " <> show i' <> ": " <> e)
+      pure (i', cnt')
+
+messageRecToText :: RecipientId -> Message -> B.ByteString
+messageRecToText rId msg =
+  LB.toStrict $ BB.toLazyByteString $ mconcat tabFields <> BB.char7 '\n'
+  where
+    tabFields = BB.char7 ',' `intersperse` fields
+    fields =
+      [ renderField (toField rId),
+        renderField (toField $ messageId msg),
+        renderField (toField $ systemSeconds (messageTs msg)),
+        renderField (toField msgQuota),
+        renderField (toField ntf),
+        renderField (toField $ Binary body)
+      ]
+    (msgQuota, ntf, body) = case msg of
+      Message {msgFlags = MsgFlags ntf', msgBody = C.MaxLenBS body'} -> (False, ntf', body')
+      MessageQuota {} -> (True, False, B.empty)

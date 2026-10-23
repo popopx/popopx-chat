@@ -1,0 +1,7 @@
+# pack-refs with: peeled fully-peeled sorted 
+0f0c4a06219da8345ba5d3530825b977fc0d353c refs/remotes/origin/bellebaum/compressed_proofs
+8d3fbab71ac33780978d55347ec69442565e0a42 refs/remotes/origin/bellebaum/no_varargs
+b962c1ff4312405341b02a6b69e4da7dfb352bc6 refs/remotes/origin/benchmarks
+ac7f5c711a2a2ab08a0d36260c795f94e1501e41 refs/remotes/origin/ep/fix-memmove
+59a0f4bf32e195cb6883de8374825c0f4764c717 refs/remotes/origin/ep/ios-no-getentropy
+7fcc6ccf31009c9e59ede2dc8ec35acb456e4176 refs/remotes/origin/main

@@ -1,0 +1,551 @@
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+
+CREATE SCHEMA smp_server;
+
+
+
+CREATE FUNCTION smp_server.delete_expired_msgs(p_recipient_id bytea, p_old_ts bigint) RETURNS bigint
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  q_size BIGINT;
+  keep_min_id BIGINT;
+  del_count BIGINT;
+BEGIN
+  SELECT msg_queue_size INTO q_size
+  FROM msg_queues
+  WHERE recipient_id = p_recipient_id AND deleted_at IS NULL
+  FOR UPDATE SKIP LOCKED;
+
+  IF NOT FOUND OR q_size = 0 THEN
+    RETURN 0;
+  END IF;
+
+  SELECT MIN(message_id) INTO keep_min_id
+  FROM messages WHERE recipient_id = p_recipient_id AND msg_ts >= p_old_ts AND msg_quota = FALSE;
+
+  IF keep_min_id IS NULL THEN
+    DELETE FROM messages WHERE recipient_id = p_recipient_id AND msg_quota = FALSE;
+  ELSE
+    DELETE FROM messages WHERE recipient_id = p_recipient_id AND message_id < keep_min_id AND msg_quota = FALSE;
+  END IF;
+
+  GET DIAGNOSTICS del_count = ROW_COUNT;
+  IF del_count > 0 THEN
+    UPDATE msg_queues
+    SET msg_can_write = msg_can_write OR msg_queue_size <= del_count,
+        msg_queue_size = GREATEST(msg_queue_size - del_count, 0)
+    WHERE recipient_id = p_recipient_id;
+  END IF;
+  RETURN del_count;
+END;
+$$;
+
+
+
+CREATE PROCEDURE smp_server.expire_old_messages(IN p_old_ts bigint, IN batch_size integer, OUT r_expired_msgs_count bigint, OUT r_stored_msgs_count bigint, OUT r_stored_queues bigint)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  rids BYTEA[];
+  rid BYTEA;
+  last_ts BIGINT := -1;
+  last_rid BYTEA := '\x';
+  next_ts BIGINT;
+  next_rid BYTEA;
+  del_count BIGINT;
+  total_deleted BIGINT := 0;
+BEGIN
+  LOOP
+    -- The page is scanned in (msg_ts, recipient_id) order, so its last row is the next
+    -- keyset cursor. Advancing it past every row read, including queues left unexpired
+    -- because delete_expired_msgs skipped a locked row or raised, is what terminates the
+    -- loop; re-reading from the start instead would repeat those queues forever.
+    SELECT array_agg(DISTINCT recipient_id),
+           (array_agg(msg_ts ORDER BY msg_ts DESC, recipient_id DESC))[1],
+           (array_agg(recipient_id ORDER BY msg_ts DESC, recipient_id DESC))[1]
+    INTO rids, next_ts, next_rid
+    FROM (
+      SELECT msg_ts, recipient_id
+      FROM messages
+      WHERE NOT msg_quota
+        AND msg_ts < p_old_ts
+        AND (msg_ts, recipient_id) > (last_ts, last_rid)
+      ORDER BY msg_ts ASC, recipient_id ASC
+      LIMIT batch_size
+    ) m;
+
+    EXIT WHEN rids IS NULL;
+
+    FOREACH rid IN ARRAY rids
+    LOOP
+      BEGIN
+        del_count := delete_expired_msgs(rid, p_old_ts);
+        total_deleted := total_deleted + del_count;
+      EXCEPTION WHEN OTHERS THEN
+        RAISE WARNING 'STORE, expire_old_messages, error expiring queue %: %', encode(rid, 'base64'), SQLERRM;
+        CONTINUE;
+      END;
+    END LOOP;
+    COMMIT;
+
+    last_ts := next_ts;
+    last_rid := next_rid;
+  END LOOP;
+
+  r_expired_msgs_count := total_deleted;
+  r_stored_msgs_count := (SELECT COUNT(1) FROM messages);
+  r_stored_queues := (SELECT COUNT(1) FROM msg_queues WHERE deleted_at IS NULL);
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.on_queue_delete() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  IF OLD.deleted_at IS NULL THEN
+    IF OLD.rcv_service_id IS NOT NULL THEN
+      PERFORM update_aggregates(OLD.rcv_service_id, 'M', OLD.recipient_id, -1);
+    END IF;
+    IF OLD.ntf_service_id IS NOT NULL AND OLD.notifier_id IS NOT NULL THEN
+      PERFORM update_aggregates(OLD.ntf_service_id, 'N', OLD.notifier_id, -1);
+    END IF;
+  END IF;
+  RETURN OLD;
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.on_queue_insert() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  IF NEW.rcv_service_id IS NOT NULL THEN
+    PERFORM update_aggregates(NEW.rcv_service_id, 'M', NEW.recipient_id, 1);
+  END IF;
+  IF NEW.ntf_service_id IS NOT NULL AND NEW.notifier_id IS NOT NULL THEN
+    PERFORM update_aggregates(NEW.ntf_service_id, 'N', NEW.notifier_id, 1);
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.on_queue_update() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  IF OLD.deleted_at IS NULL AND OLD.rcv_service_id IS NOT NULL THEN
+    IF NOT (NEW.deleted_at IS NULL AND NEW.rcv_service_id IS NOT NULL) THEN
+      PERFORM update_aggregates(OLD.rcv_service_id, 'M', OLD.recipient_id, -1);
+    ELSIF OLD.rcv_service_id IS DISTINCT FROM NEW.rcv_service_id THEN
+      PERFORM update_aggregates(OLD.rcv_service_id, 'M', OLD.recipient_id, -1);
+      PERFORM update_aggregates(NEW.rcv_service_id, 'M', NEW.recipient_id, 1);
+    END IF;
+  ELSIF NEW.deleted_at IS NULL AND NEW.rcv_service_id IS NOT NULL THEN
+    PERFORM update_aggregates(NEW.rcv_service_id, 'M', NEW.recipient_id, 1);
+  END IF;
+
+  IF OLD.deleted_at IS NULL AND OLD.ntf_service_id IS NOT NULL AND OLD.notifier_id IS NOT NULL THEN
+    IF NOT (NEW.deleted_at IS NULL AND NEW.ntf_service_id IS NOT NULL AND NEW.notifier_id IS NOT NULL) THEN
+      PERFORM update_aggregates(OLD.ntf_service_id, 'N', OLD.notifier_id, -1);
+    ELSIF OLD.ntf_service_id IS DISTINCT FROM NEW.ntf_service_id OR OLD.notifier_id IS DISTINCT FROM NEW.notifier_id THEN
+      PERFORM update_aggregates(OLD.ntf_service_id, 'N', OLD.notifier_id, -1);
+      PERFORM update_aggregates(NEW.ntf_service_id, 'N', NEW.notifier_id, 1);
+    END IF;
+  ELSIF NEW.deleted_at IS NULL AND NEW.ntf_service_id IS NOT NULL AND NEW.notifier_id IS NOT NULL THEN
+    PERFORM update_aggregates(NEW.ntf_service_id, 'N', NEW.notifier_id, 1);
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.try_del_msg(p_recipient_id bytea, p_msg_id bytea) RETURNS TABLE(r_msg_id bytea, r_msg_ts bigint, r_msg_quota boolean, r_msg_ntf_flag boolean, r_msg_body bytea)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  q_size BIGINT;
+  msg RECORD;
+BEGIN
+  SELECT msg_queue_size INTO q_size
+  FROM msg_queues
+  WHERE recipient_id = p_recipient_id AND deleted_at IS NULL
+  FOR UPDATE;
+
+  IF NOT FOUND THEN
+    RETURN;
+  END IF;
+
+  SELECT message_id, msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body
+  INTO msg
+  FROM messages
+  WHERE recipient_id = p_recipient_id
+  ORDER BY message_id ASC LIMIT 1;
+
+  IF NOT FOUND THEN
+    IF q_size != 0 THEN
+      UPDATE msg_queues
+      SET msg_can_write = TRUE,
+          msg_queue_size = 0
+      WHERE recipient_id = p_recipient_id;
+    END IF;
+    RETURN;
+  END IF;
+
+  IF msg.msg_id = p_msg_id THEN
+    DELETE FROM messages WHERE message_id = msg.message_id;
+    IF FOUND THEN
+      UPDATE msg_queues
+      SET msg_can_write = msg_can_write OR msg_queue_size <= 1,
+          msg_queue_size = GREATEST(msg_queue_size - 1, 0)
+      WHERE recipient_id = p_recipient_id;
+      RETURN QUERY VALUES (msg.msg_id, msg.msg_ts, msg.msg_quota, msg.msg_ntf_flag, msg.msg_body);
+    END IF;
+  END IF;
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.try_del_peek_msg(p_recipient_id bytea, p_msg_id bytea) RETURNS TABLE(r_msg_id bytea, r_msg_ts bigint, r_msg_quota boolean, r_msg_ntf_flag boolean, r_msg_body bytea)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  q_size BIGINT;
+  msg RECORD;
+  msg_deleted BOOLEAN;
+BEGIN
+  SELECT msg_queue_size INTO q_size
+  FROM msg_queues
+  WHERE recipient_id = p_recipient_id AND deleted_at IS NULL
+  FOR UPDATE;
+
+  IF NOT FOUND THEN
+    RETURN;
+  END IF;
+
+  SELECT message_id, msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body
+  INTO msg
+  FROM messages
+  WHERE recipient_id = p_recipient_id
+  ORDER BY message_id ASC LIMIT 1;
+
+  IF NOT FOUND THEN
+    IF q_size != 0 THEN
+      UPDATE msg_queues
+      SET msg_can_write = TRUE,
+          msg_queue_size = 0
+      WHERE recipient_id = p_recipient_id;
+    END IF;
+    RETURN;
+  END IF;
+
+  IF msg.msg_id = p_msg_id THEN
+    DELETE FROM messages WHERE message_id = msg.message_id;
+
+    msg_deleted := FOUND;
+    IF msg_deleted THEN
+      RETURN QUERY VALUES (msg.msg_id, msg.msg_ts, msg.msg_quota, msg.msg_ntf_flag, msg.msg_body);
+    END IF;
+
+    SELECT msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body
+    INTO msg
+    FROM messages
+    WHERE recipient_id = p_recipient_id
+    ORDER BY message_id ASC LIMIT 1;
+
+    IF FOUND THEN
+      RETURN QUERY VALUES (msg.msg_id, msg.msg_ts, msg.msg_quota, msg.msg_ntf_flag, msg.msg_body);
+      IF msg_deleted THEN
+        UPDATE msg_queues
+        SET msg_can_write = msg_can_write OR msg_queue_size <= 1,
+            msg_queue_size = GREATEST(msg_queue_size - 1, 0)
+        WHERE recipient_id = p_recipient_id;
+      END IF;
+    ELSIF msg_deleted OR q_size != 0 THEN
+      UPDATE msg_queues
+      SET msg_can_write = TRUE,
+          msg_queue_size = 0
+      WHERE recipient_id = p_recipient_id;
+    END IF;
+  ELSE
+    RETURN QUERY VALUES (msg.msg_id, msg.msg_ts, msg.msg_quota, msg.msg_ntf_flag, msg.msg_body);
+  END IF;
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.update_aggregates(p_service_id bytea, p_role text, p_queue_id bytea, p_change bigint) RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  UPDATE services
+  SET queue_count = queue_count + p_change,
+      queue_ids_hash = xor_combine(queue_ids_hash, public.digest(p_queue_id, 'md5'))
+  WHERE service_id = p_service_id AND service_role = p_role;
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.update_all_aggregates() RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  WITH acc AS (
+    SELECT
+      s.service_id,
+      count(1) as q_count,
+      xor_aggregate(public.digest(CASE WHEN s.service_role = 'M' THEN q.recipient_id ELSE COALESCE(q.notifier_id, '\x00000000000000000000000000000000') END, 'md5')) AS q_ids_hash
+    FROM services s
+    JOIN msg_queues q ON (s.service_id = q.rcv_service_id AND s.service_role = 'M') OR (s.service_id = q.ntf_service_id AND s.service_role = 'N')
+    WHERE q.deleted_at IS NULL
+    GROUP BY s.service_id
+  )
+  UPDATE services s
+  SET queue_count = COALESCE(acc.q_count, 0),
+      queue_ids_hash = COALESCE(acc.q_ids_hash, '\x00000000000000000000000000000000')
+  FROM acc
+  WHERE s.service_id = acc.service_id;
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.write_message(p_recipient_id bytea, p_msg_id bytea, p_msg_ts bigint, p_msg_quota boolean, p_msg_ntf_flag boolean, p_msg_body bytea, p_quota integer) RETURNS TABLE(quota_written boolean, was_empty boolean)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  q_can_write BOOLEAN;
+  q_size BIGINT;
+BEGIN
+  SELECT msg_can_write, msg_queue_size INTO q_can_write, q_size
+  FROM msg_queues
+  WHERE recipient_id = p_recipient_id AND deleted_at IS NULL
+  FOR UPDATE;
+
+  IF q_can_write OR q_size = 0 THEN
+    quota_written := p_msg_quota OR q_size >= p_quota;
+    was_empty := q_size = 0;
+
+    INSERT INTO messages(recipient_id, msg_id, msg_ts, msg_quota, msg_ntf_flag, msg_body)
+    VALUES (p_recipient_id, p_msg_id, p_msg_ts, quota_written, p_msg_ntf_flag AND NOT quota_written, CASE WHEN quota_written THEN '' :: BYTEA ELSE p_msg_body END);
+
+    UPDATE msg_queues
+    SET msg_can_write = NOT quota_written,
+        msg_queue_size = msg_queue_size + 1
+    WHERE recipient_id = p_recipient_id;
+
+    RETURN QUERY VALUES (quota_written, was_empty);
+  END IF;
+END;
+$$;
+
+
+
+CREATE FUNCTION smp_server.xor_combine(state bytea, value bytea) RETURNS bytea
+    LANGUAGE plpgsql IMMUTABLE STRICT
+    AS $$
+DECLARE
+  result BYTEA := state;
+  i INTEGER;
+  len INTEGER := octet_length(value);
+BEGIN
+  IF octet_length(state) != len THEN
+    RAISE EXCEPTION 'Inputs must be equal length (% != %)', octet_length(state), len;
+  END IF;
+  FOR i IN 0..len-1 LOOP
+    result := set_byte(result, i, get_byte(state, i) # get_byte(value, i));
+  END LOOP;
+  RETURN result;
+END;
+$$;
+
+
+
+CREATE AGGREGATE smp_server.xor_aggregate(bytea) (
+    SFUNC = smp_server.xor_combine,
+    STYPE = bytea,
+    INITCOND = '\x00000000000000000000000000000000'
+);
+
+
+SET default_table_access_method = heap;
+
+
+CREATE TABLE smp_server.messages (
+    message_id bigint NOT NULL,
+    recipient_id bytea NOT NULL,
+    msg_id bytea NOT NULL,
+    msg_ts bigint NOT NULL,
+    msg_quota boolean NOT NULL,
+    msg_ntf_flag boolean NOT NULL,
+    msg_body bytea NOT NULL
+)
+WITH (autovacuum_vacuum_scale_factor='0.02', autovacuum_analyze_scale_factor='0.01', toast.autovacuum_vacuum_scale_factor='0.02');
+
+
+
+ALTER TABLE smp_server.messages ALTER COLUMN message_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME smp_server.messages_message_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+
+CREATE TABLE smp_server.migrations (
+    name text NOT NULL,
+    ts timestamp without time zone NOT NULL,
+    down text
+);
+
+
+
+CREATE TABLE smp_server.msg_queues (
+    recipient_id bytea NOT NULL,
+    recipient_keys bytea NOT NULL,
+    rcv_dh_secret bytea NOT NULL,
+    sender_id bytea NOT NULL,
+    sender_key bytea,
+    notifier_id bytea,
+    notifier_key bytea,
+    rcv_ntf_dh_secret bytea,
+    status text NOT NULL,
+    updated_at bigint,
+    deleted_at bigint,
+    queue_mode text,
+    link_id bytea,
+    fixed_data bytea,
+    user_data bytea,
+    rcv_service_id bytea,
+    ntf_service_id bytea,
+    msg_can_write boolean DEFAULT true NOT NULL,
+    msg_queue_size bigint DEFAULT 0 NOT NULL
+)
+WITH (fillfactor='80', autovacuum_vacuum_scale_factor='0.02', autovacuum_analyze_scale_factor='0.01', autovacuum_vacuum_cost_limit='1000');
+
+
+
+CREATE TABLE smp_server.services (
+    service_id bytea NOT NULL,
+    service_role text NOT NULL,
+    service_cert bytea NOT NULL,
+    service_cert_hash bytea NOT NULL,
+    created_at bigint NOT NULL,
+    queue_count bigint DEFAULT 0 NOT NULL,
+    queue_ids_hash bytea DEFAULT '\x00000000000000000000000000000000'::bytea NOT NULL
+)
+WITH (fillfactor='70', autovacuum_vacuum_threshold='1000', autovacuum_vacuum_scale_factor='0');
+
+
+
+ALTER TABLE ONLY smp_server.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (message_id);
+
+
+
+ALTER TABLE ONLY smp_server.migrations
+    ADD CONSTRAINT migrations_pkey PRIMARY KEY (name);
+
+
+
+ALTER TABLE ONLY smp_server.msg_queues
+    ADD CONSTRAINT msg_queues_pkey PRIMARY KEY (recipient_id);
+
+
+
+ALTER TABLE ONLY smp_server.services
+    ADD CONSTRAINT services_pkey PRIMARY KEY (service_id);
+
+
+
+ALTER TABLE ONLY smp_server.services
+    ADD CONSTRAINT services_service_cert_hash_key UNIQUE (service_cert_hash);
+
+
+
+CREATE INDEX idx_messages_expire ON smp_server.messages USING btree (msg_ts, recipient_id) WHERE (NOT msg_quota);
+
+
+
+CREATE INDEX idx_messages_recipient_id_message_id ON smp_server.messages USING btree (recipient_id, message_id);
+
+
+
+CREATE INDEX idx_messages_recipient_id_msg_quota ON smp_server.messages USING btree (recipient_id, msg_quota);
+
+
+
+CREATE UNIQUE INDEX idx_msg_queues_link_id ON smp_server.msg_queues USING btree (link_id);
+
+
+
+CREATE INDEX idx_msg_queues_notifier_active ON smp_server.msg_queues USING btree (notifier_id) WHERE ((deleted_at IS NULL) AND (notifier_id IS NOT NULL));
+
+
+
+CREATE UNIQUE INDEX idx_msg_queues_notifier_id ON smp_server.msg_queues USING btree (notifier_id);
+
+
+
+CREATE INDEX idx_msg_queues_ntf_service_id ON smp_server.msg_queues USING btree (ntf_service_id, deleted_at);
+
+
+
+CREATE INDEX idx_msg_queues_rcv_service_id ON smp_server.msg_queues USING btree (rcv_service_id, deleted_at);
+
+
+
+CREATE UNIQUE INDEX idx_msg_queues_sender_id ON smp_server.msg_queues USING btree (sender_id);
+
+
+
+CREATE INDEX idx_services_service_role ON smp_server.services USING btree (service_role);
+
+
+
+CREATE TRIGGER tr_queue_delete AFTER DELETE ON smp_server.msg_queues FOR EACH ROW EXECUTE FUNCTION smp_server.on_queue_delete();
+
+
+
+CREATE TRIGGER tr_queue_insert AFTER INSERT ON smp_server.msg_queues FOR EACH ROW EXECUTE FUNCTION smp_server.on_queue_insert();
+
+
+
+CREATE TRIGGER tr_queue_update AFTER UPDATE ON smp_server.msg_queues FOR EACH ROW EXECUTE FUNCTION smp_server.on_queue_update();
+
+
+
+ALTER TABLE ONLY smp_server.messages
+    ADD CONSTRAINT messages_recipient_id_fkey FOREIGN KEY (recipient_id) REFERENCES smp_server.msg_queues(recipient_id) ON UPDATE RESTRICT ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY smp_server.msg_queues
+    ADD CONSTRAINT msg_queues_ntf_service_id_fkey FOREIGN KEY (ntf_service_id) REFERENCES smp_server.services(service_id) ON UPDATE RESTRICT ON DELETE SET NULL;
+
+
+
+ALTER TABLE ONLY smp_server.msg_queues
+    ADD CONSTRAINT msg_queues_rcv_service_id_fkey FOREIGN KEY (rcv_service_id) REFERENCES smp_server.services(service_id) ON UPDATE RESTRICT ON DELETE SET NULL;

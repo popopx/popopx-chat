@@ -1,0 +1,15 @@
+name: POPOPX - smp-server
+
+services:
+  smp-server:
+    image: ${POPOPX_IMAGE:-popopx/smp-server:latest}
+    environment:
+      WEB_MANUAL: ${WEB_MANUAL:-1}
+      ADDR: ${ADDR?"Please specify the domain."}
+      PASS: ${PASS:-}
+    volumes:
+      - ./smp_configs:/etc/opt/popopx
+      - ./smp_state:/var/opt/popopx
+    ports:
+      - 5223:5223
+    restart: unless-stopped
