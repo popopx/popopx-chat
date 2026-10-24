@@ -109,10 +109,10 @@ connectSQLiteStore DBOpts {dbFilePath, dbFunctions, dbKey = key, keepKey, track}
     -- SQLite database minimum size is one page (typically 4096 bytes with SQLCipher)
     -- Files smaller than this are definitely corrupt/incomplete
     when (fileSize == 0 || fileSize < 1024) $ do
-      TIO.hPutStrLn TIO.stderr $ "[Migration-Debug] connectSQLiteStore: removing zero/small file " <> T.pack dbFilePath <> " (size=" <> show fileSize <> ")"
+      TIO.hPutStrLn TIO.stderr ("[Migration-Debug] connectSQLiteStore: removing zero/small file " <> dbFilePath <> " (size=" <> show fileSize <> ")")
       removeFile dbFilePath
   dbNew <- not <$> doesFileExist dbFilePath
-  TIO.hPutStrLn TIO.stderr $ "[Migration-Debug] connectSQLiteStore: dbNew=" <> show dbNew <> ", path=" <> T.pack dbFilePath
+  TIO.hPutStrLn TIO.stderr ("[Migration-Debug] connectSQLiteStore: dbNew=" <> show dbNew <> ", path=" <> dbFilePath)
   dbConn <- dbBusyLoop $ connectDB dbFilePath dbFunctions key track
   dbConnection <- newMVar dbConn
   dbKey <- newTVarIO $! storeKey key keepKey
@@ -133,7 +133,7 @@ connectDB path functions key track = do
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing PRAGMA key via SQLite3.exec"
       -- Use SQLite3.exec (sqlite3_exec) instead of SQL.execute_ (prepare/step) for PRAGMA key
       -- This is more reliable for SQLCipher initialization on iOS Simulator
-      SQLite3.exec (DB.connectionHandle $ DB.conn db) keyCmd
+      SQLite3.exec (SQL.connectionHandle $ DB.conn db) keyCmd
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: PRAGMA key completed"
       let pragmaSql = "PRAGMA busy_timeout = 100;\nPRAGMA foreign_keys = ON;\n-- PRAGMA trusted_schema = OFF;\nPRAGMA secure_delete = ON;\n-- PRAGMA auto_vacuum = FULL;"
       let pragmaStatements = splitStatements pragmaSql
