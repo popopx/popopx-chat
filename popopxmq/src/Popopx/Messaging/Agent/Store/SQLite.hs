@@ -131,19 +131,15 @@ connectDB path functions key track = do
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: starting"
       let keyCmd = "PRAGMA key = " <> keyString key <> ";"
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing PRAGMA key via SQLite3.exec"
-      -- Use SQLite3.exec (sqlite3_exec) instead of SQL.execute_ (prepare/step) for PRAGMA key
-      -- This is more reliable for SQLCipher initialization on iOS Simulator
+      -- Use SQLite3.exec (sqlite3_exec) for ALL pragmas to avoid ErrorCorrupt on encrypted databases
+      -- The prepare/step API (SQL.execute_) may try to access database metadata before the key is active
       SQLite3.exec (SQL.connectionHandle $ DB.conn db) keyCmd
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: PRAGMA key completed"
-      let pragmaSql = "PRAGMA busy_timeout = 100;\nPRAGMA foreign_keys = ON;\n-- PRAGMA trusted_schema = OFF;\nPRAGMA secure_delete = ON;\n-- PRAGMA auto_vacuum = FULL;"
-      let pragmaStatements = splitStatements pragmaSql
-      TIO.hPutStrLn TIO.stderr $ "[Migration-Debug] connectDB.prepare: splitting " <> show (length pragmaStatements) <> " PRAGMA statements"
-      mapM_ (\stmt -> do
-        TIO.hPutStrLn TIO.stderr $ "[Migration-Debug] connectDB.prepare: executing via SQL.execute_: " <> T.unpack (T.take 50 stmt)
-        SQL.execute_ (DB.conn db) (Query stmt)
-        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: statement completed"
-        ) pragmaStatements
-      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: other PRAGMAs completed"
+      -- Match upstream: use SQLite3.exec for all pragmas, not SQL.execute_
+      let pragmaSql = "PRAGMA busy_timeout = 100;\nPRAGMA foreign_keys = OFF;\n-- PRAGMA trusted_schema = OFF;\nPRAGMA secure_delete = ON;\n-- PRAGMA auto_vacuum = FULL;"
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing remaining PRAGMAs via SQLite3.exec"
+      SQLite3.exec (SQL.connectionHandle $ DB.conn db) pragmaSql
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: all PRAGMAs completed"
       mapM_ addFunction functions'
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: functions registered, prepare completed"
       where

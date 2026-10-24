@@ -73,11 +73,11 @@ run st migrationsTable vacuum = \case
     execSQL db sql = do
       let statements = splitStatements sql
       T.putStrLn $ "[Migration-Debug] execSQL: split into " <> (pack (show $ length statements)) <> " statements"
-      T.putStrLn "[Migration-Debug] execSQL: using SQL.execute_ (prepared statement API)"
+      T.putStrLn "[Migration-Debug] execSQL: using SQLite3.exec (sqlite3_exec) for encrypted database safety"
       mapM_ (\stmt -> do
         let preview = T.take 80 stmt
-        T.putStrLn $ "[Migration-Debug] execSQL: executing statement via SQL.execute_: " <> preview <> "..."
-        SQL.execute_ db (Query stmt)
+        T.putStrLn $ "[Migration-Debug] execSQL: executing statement via SQLite3.exec: " <> preview <> "..."
+        SQLite3.exec (SQL.connectionHandle db) stmt
         T.putStrLn "[Migration-Debug] execSQL: statement completed successfully"
         ) statements
       T.putStrLn "[Migration-Debug] execSQL: all statements completed"
