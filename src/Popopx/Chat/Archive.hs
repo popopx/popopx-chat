@@ -27,7 +27,7 @@ import qualified Database.SQLite3 as SQL
 import Popopx.Chat.Controller
 import Popopx.Chat.Util ()
 import Popopx.Messaging.Agent.Client (agentClientStore)
-import Popopx.Messaging.Agent.Store.SQLite (closeDBStore, keyString, sqlString, storeKey)
+import Popopx.Messaging.Agent.Store.SQLite (closeDBStore, keyString, sqlString, splitStatements, storeKey)
 import Popopx.Messaging.Agent.Store.SQLite.Common (DBStore (..))
 import Popopx.Messaging.Util
 import System.FilePath
@@ -177,8 +177,8 @@ sqlCipherExport DBEncryptionConfig {currentKey = DBEncryptionKey key, newKey = D
       renameFile (exported f) f
       atomically $ writeTVar dbKey $ storeKey key' (fromMaybe False keepKey)
     export f = do
-      withDB f (`SQL.exec` exportSQL) DBErrorExport
-      withDB (exported f) (`SQL.exec` testSQL key') DBErrorOpen
+      withDB f (execMultiStatement exportSQL) DBErrorExport
+      withDB (exported f) (execMultiStatement testSQL key') DBErrorOpen
       where
         exportSQL =
           T.unlines $
@@ -201,6 +201,11 @@ withDB f' a err =
     sqliteError' :: Show e => e -> CM (Maybe SQLiteError)
     sqliteError' = pure . Just . SQLiteError . show
 
+execMultiStatement :: Text -> SQL.Database -> IO ()
+execMultiStatement sql db = do
+  let statements = splitStatements sql
+  mapM_ (\stmt -> SQL.exec db stmt) statements
+
 testSQL :: BA.ScrubbedBytes -> Text
 testSQL k =
   T.unlines $
@@ -218,7 +223,7 @@ sqlCipherTestKey (DBEncryptionKey key) = do
   fs <- lift storageFiles
   testKey `withDBs` fs
   where
-    testKey f = withDB f (`SQL.exec` testSQL key) DBErrorOpen
+    testKey f = withDB f (execMultiStatement testSQL key) DBErrorOpen
 
 withDBs :: Monad m => (FilePath -> m b) -> StorageFiles -> m b
 action `withDBs` StorageFiles {chatStore, agentStore} = action (dbFilePath chatStore) >> action (dbFilePath agentStore)
