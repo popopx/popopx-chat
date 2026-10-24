@@ -119,17 +119,17 @@ connectDB path functions key track = do
     prepare db = do
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: starting"
       let keyCmd = "PRAGMA key = " <> keyString key <> ";"
-      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing PRAGMA key"
-      SQLite3.exec db' keyCmd
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing PRAGMA key via SQL.execute_"
+      SQL.execute_ (DB.conn db) (Query keyCmd)
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: PRAGMA key completed"
-      SQLite3.exec db' . fromQuery $
-        [sql|
-          PRAGMA busy_timeout = 100;
-          PRAGMA foreign_keys = ON;
-          -- PRAGMA trusted_schema = OFF;
-          PRAGMA secure_delete = ON;
-          -- PRAGMA auto_vacuum = FULL;
-        |]
+      let pragmaSql = "PRAGMA busy_timeout = 100;\nPRAGMA foreign_keys = ON;\n-- PRAGMA trusted_schema = OFF;\nPRAGMA secure_delete = ON;\n-- PRAGMA auto_vacuum = FULL;"
+      let pragmaStatements = splitStatements pragmaSql
+      TIO.hPutStrLn TIO.stderr $ "[Migration-Debug] connectDB.prepare: splitting " <> show (length pragmaStatements) <> " PRAGMA statements"
+      mapM_ (\stmt -> do
+        TIO.hPutStrLn TIO.stderr $ "[Migration-Debug] connectDB.prepare: executing via SQL.execute_: " <> T.unpack (T.take 50 stmt)
+        SQL.execute_ (DB.conn db) (Query stmt)
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: statement completed"
+        ) pragmaStatements
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: other PRAGMAs completed"
       mapM_ addFunction functions'
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: functions registered, prepare completed"
@@ -212,6 +212,33 @@ execSQL db query = do
   rs <- newIORef []
   SQLite3.execWithCallback (SQL.connectionHandle $ DB.conn db) query (addSQLResultRow rs)
   reverse <$> readIORef rs
+
+splitStatements :: Text -> [Text]
+splitStatements sql = filter (not . T.null) . map T.strip $ go sql False False "" []
+  where
+    go :: Text -> Bool -> Bool -> Text -> [Text] -> [Text]
+    go input inString inLineComment acc result
+      | T.null input = reverse (if T.null acc then result else acc : result)
+      | otherwise =
+          let c = T.head input
+              rest = T.tail input
+           in case () of
+                _ | inLineComment ->
+                    if c == '\n'
+                      then go rest False False "" result
+                      else go rest True True acc result
+                  | inString ->
+                    if c == '\''
+                      then go rest False False (acc <> T.singleton c) result
+                      else go rest True False (acc <> T.singleton c) result
+                  | c == '\'' ->
+                    go rest True True (acc <> T.singleton c) result
+                  | c == '-' && T.isPrefixOf "--" input ->
+                    go (T.drop 2 input) False True acc result
+                  | c == ';' ->
+                    go rest False False "" (acc : result)
+                  | otherwise ->
+                    go rest False False (acc <> T.singleton c) result
 
 addSQLResultRow :: IORef [Text] -> SQLite3.ColumnIndex -> [Text] -> [Maybe Text] -> IO ()
 addSQLResultRow rs _count names values = modifyIORef' rs $ \case

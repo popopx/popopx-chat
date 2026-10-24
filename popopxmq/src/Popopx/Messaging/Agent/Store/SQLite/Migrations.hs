@@ -126,3 +126,4 @@ initialize st migrationsTable = withTransaction' st $ \db -> do
         "CREATE TABLE IF NOT EXISTS "
           <> table
           <> " (name TEXT NOT NULL PRIMARY KEY, ts TEXT NOT NULL, down TEXT)"
+-- Force rebuild
