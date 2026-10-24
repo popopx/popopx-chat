@@ -177,8 +177,8 @@ sqlCipherExport DBEncryptionConfig {currentKey = DBEncryptionKey key, newKey = D
       renameFile (exported f) f
       atomically $ writeTVar dbKey $ storeKey key' (fromMaybe False keepKey)
     export f = do
-      withDB f (execMultiStatement exportSQL) DBErrorExport
-      withDB (exported f) (execMultiStatement testSQL key') DBErrorOpen
+      withDB f (`execMultiStatement` exportSQL) DBErrorExport
+      withDB (exported f) (`execMultiStatement` testSQL key') DBErrorOpen
       where
         exportSQL =
           T.unlines $
@@ -201,8 +201,8 @@ withDB f' a err =
     sqliteError' :: Show e => e -> CM (Maybe SQLiteError)
     sqliteError' = pure . Just . SQLiteError . show
 
-execMultiStatement :: Text -> SQL.Database -> IO ()
-execMultiStatement sql db = do
+execMultiStatement :: SQL.Database -> Text -> IO ()
+execMultiStatement db sql = do
   let statements = splitStatements sql
   mapM_ (\stmt -> SQL.exec db stmt) statements
 
@@ -223,7 +223,7 @@ sqlCipherTestKey (DBEncryptionKey key) = do
   fs <- lift storageFiles
   testKey `withDBs` fs
   where
-    testKey f = withDB f (execMultiStatement testSQL key) DBErrorOpen
+    testKey f = withDB f (`execMultiStatement` testSQL key) DBErrorOpen
 
 withDBs :: Monad m => (FilePath -> m b) -> StorageFiles -> m b
 action `withDBs` StorageFiles {chatStore, agentStore} = action (dbFilePath chatStore) >> action (dbFilePath agentStore)

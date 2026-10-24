@@ -32,6 +32,7 @@ module Popopx.Messaging.Agent.Store.SQLite
     closeDBStore,
     reopenDBStore,
     execSQL,
+    splitStatements,
     -- used in Popopx.Chat.Archive
     sqlString,
     keyString,
@@ -70,7 +71,7 @@ import Popopx.Messaging.Agent.Store.SQLite.Util
 import Popopx.Messaging.Agent.Store.Shared (Migration (..), MigrationConfig (..), MigrationError (..))
 import qualified Popopx.Messaging.Crypto as C
 import Popopx.Messaging.Util (ifM, packZipWith, safeDecodeUtf8)
-import System.Directory (copyFile, createDirectoryIfMissing, doesFileExist)
+import System.Directory (copyFile, createDirectoryIfMissing, doesFileExist, getFileSize, removeFile)
 import System.FilePath (takeDirectory, takeFileName, (</>))
 import qualified System.IO as TIO
 
@@ -101,7 +102,17 @@ migrateDBSchema st DBOpts {dbFilePath, vacuum} migrationsTable migrations Migrat
 
 connectSQLiteStore :: DBOpts -> IO DBStore
 connectSQLiteStore DBOpts {dbFilePath, dbFunctions, dbKey = key, keepKey, track} = do
+  -- Check if file exists and is potentially corrupt (zero-length or too small for SQLite header)
+  fileExists <- doesFileExist dbFilePath
+  when fileExists $ do
+    fileSize <- getFileSize dbFilePath
+    -- SQLite database minimum size is one page (typically 4096 bytes with SQLCipher)
+    -- Files smaller than this are definitely corrupt/incomplete
+    when (fileSize == 0 || fileSize < 1024) $ do
+      TIO.hPutStrLn TIO.stderr $ "[Migration-Debug] connectSQLiteStore: removing zero/small file " <> T.pack dbFilePath <> " (size=" <> show fileSize <> ")"
+      removeFile dbFilePath
   dbNew <- not <$> doesFileExist dbFilePath
+  TIO.hPutStrLn TIO.stderr $ "[Migration-Debug] connectSQLiteStore: dbNew=" <> show dbNew <> ", path=" <> T.pack dbFilePath
   dbConn <- dbBusyLoop $ connectDB dbFilePath dbFunctions key track
   dbConnection <- newMVar dbConn
   dbKey <- newTVarIO $! storeKey key keepKey
@@ -119,8 +130,10 @@ connectDB path functions key track = do
     prepare db = do
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: starting"
       let keyCmd = "PRAGMA key = " <> keyString key <> ";"
-      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing PRAGMA key via SQL.execute_"
-      SQL.execute_ (DB.conn db) (Query keyCmd)
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing PRAGMA key via SQLite3.exec"
+      -- Use SQLite3.exec (sqlite3_exec) instead of SQL.execute_ (prepare/step) for PRAGMA key
+      -- This is more reliable for SQLCipher initialization on iOS Simulator
+      SQLite3.exec (DB.connectionHandle $ DB.conn db) keyCmd
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: PRAGMA key completed"
       let pragmaSql = "PRAGMA busy_timeout = 100;\nPRAGMA foreign_keys = ON;\n-- PRAGMA trusted_schema = OFF;\nPRAGMA secure_delete = ON;\n-- PRAGMA auto_vacuum = FULL;"
       let pragmaStatements = splitStatements pragmaSql

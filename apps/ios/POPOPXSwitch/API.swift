@@ -160,14 +160,36 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
 
     let hasDB = hasDatabase()
 
-    // Handle partial database files (only one of the two exists)
-    // This can happen if a previous initialization was interrupted
+    // CRITICAL FIX: On fresh install (!hasDB), ensure NO database files exist before FFI call.
+    // SQLCipher fails with ErrorCorrupt if it tries to initialize a file that already exists
+    // but is empty/corrupt from a previous crashed initialization.
     let corruptDBTimestamp = Date().timeIntervalSince1970
-    if !hasDB && (fm.fileExists(atPath: chatDbPath) || fm.fileExists(atPath: agentDbPath)) {
-        logger.warning("chatMigrateInit: partial database detected (chat=\(fm.fileExists(atPath: chatDbPath)), agent=\(fm.fileExists(atPath: agentDbPath))), backing up before cleanup")
-        for path in [chatDbPath, agentDbPath, dbPath + CHAT_DB_BAK, dbPath + AGENT_DB_BAK] {
-            let backupPath = backupPathForCorruptDB(path, timestamp: corruptDBTimestamp)
-            backupCorruptFile(path, to: backupPath, fm: fm)
+    if !hasDB {
+        logger.info("chatMigrateInit: fresh install detected, cleaning up any leftover files")
+        for path in [chatDbPath, agentDbPath, dbPath + CHAT_DB_BAK, dbPath + AGENT_DB_BAK,
+                     chatDbPath + "-wal", chatDbPath + "-shm",
+                     agentDbPath + "-wal", agentDbPath + "-shm"] {
+            if fm.fileExists(atPath: path) {
+                let attrs = try? fm.attributesOfItem(atPath: path)
+                let size = attrs?[.size] as? Int64 ?? -1
+                logger.warning("chatMigrateInit: removing leftover file \(path) (size=\(size))")
+                let backupPath = backupPathForCorruptDB(path, timestamp: corruptDBTimestamp)
+                backupCorruptFile(path, to: backupPath, fm: fm)
+                try? fm.removeItem(atPath: path)
+            }
+        }
+    } else if fm.fileExists(atPath: chatDbPath) || fm.fileExists(atPath: agentDbPath) {
+        logger.warning("chatMigrateInit: partial database detected (chat=\(fm.fileExists(atPath: chatDbPath)), agent=\(fm.fileExists(atPath: agentDbPath))), deleting before retry")
+        for path in [chatDbPath, agentDbPath, dbPath + CHAT_DB_BAK, dbPath + AGENT_DB_BAK,
+                     chatDbPath + "-wal", chatDbPath + "-shm",
+                     agentDbPath + "-wal", agentDbPath + "-shm"] {
+            if fm.fileExists(atPath: path) {
+                let backupPath = backupPathForCorruptDB(path, timestamp: corruptDBTimestamp)
+                backupCorruptFile(path, to: backupPath, fm: fm)
+                // Also delete the original to ensure clean state for FFI
+                try? fm.removeItem(atPath: path)
+                logger.info("chatMigrateInit: removed partial file \(path)")
+            }
         }
     }
 
@@ -200,27 +222,40 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
         logger.error("chatMigrateInit: chat.db is zero-sized (previous migration interrupted), backing up")
         backupCorruptFile(chatDbPath, to: backupPathForCorruptDB(chatDbPath, timestamp: corruptDBTimestamp), fm: fm)
         backupCorruptFile(dbPath + CHAT_DB_BAK, to: backupPathForCorruptDB(dbPath + CHAT_DB_BAK, timestamp: corruptDBTimestamp), fm: fm)
+        // Also clean up WAL and SHM files
+        try? fm.removeItem(atPath: chatDbPath + "-wal")
+        try? fm.removeItem(atPath: chatDbPath + "-shm")
         if agentDbExists && agentDbSize > 0 && agentDbSize < 4096 {
             logger.warning("chatMigrateInit: agent.db is also suspiciously small (\(agentDbSize) bytes), backing up")
             backupCorruptFile(agentDbPath, to: backupPathForCorruptDB(agentDbPath, timestamp: corruptDBTimestamp), fm: fm)
             backupCorruptFile(dbPath + AGENT_DB_BAK, to: backupPathForCorruptDB(dbPath + AGENT_DB_BAK, timestamp: corruptDBTimestamp), fm: fm)
+            try? fm.removeItem(atPath: agentDbPath + "-wal")
+            try? fm.removeItem(atPath: agentDbPath + "-shm")
         }
     } else if agentDbExists && agentDbSize == 0 {
         logger.error("chatMigrateInit: agent.db is zero-sized (previous migration interrupted), backing up")
         backupCorruptFile(agentDbPath, to: backupPathForCorruptDB(agentDbPath, timestamp: corruptDBTimestamp), fm: fm)
         backupCorruptFile(dbPath + AGENT_DB_BAK, to: backupPathForCorruptDB(dbPath + AGENT_DB_BAK, timestamp: corruptDBTimestamp), fm: fm)
+        try? fm.removeItem(atPath: agentDbPath + "-wal")
+        try? fm.removeItem(atPath: agentDbPath + "-shm")
         if chatDbExists && chatDbSize > 0 && chatDbSize < 4096 {
             logger.warning("chatMigrateInit: chat.db is also suspiciously small (\(chatDbSize) bytes), backing up")
             backupCorruptFile(chatDbPath, to: backupPathForCorruptDB(chatDbPath, timestamp: corruptDBTimestamp), fm: fm)
             backupCorruptFile(dbPath + CHAT_DB_BAK, to: backupPathForCorruptDB(dbPath + CHAT_DB_BAK, timestamp: corruptDBTimestamp), fm: fm)
+            try? fm.removeItem(atPath: chatDbPath + "-wal")
+            try? fm.removeItem(atPath: chatDbPath + "-shm")
         }
     } else if chatDbExists && chatDbSize > 0 && chatDbSize < 4096 {
         logger.error("chatMigrateInit: chat.db is suspiciously small (\(chatDbSize) bytes), possible corruption from interrupted migration, backing up")
         backupCorruptFile(chatDbPath, to: backupPathForCorruptDB(chatDbPath, timestamp: corruptDBTimestamp), fm: fm)
         backupCorruptFile(dbPath + CHAT_DB_BAK, to: backupPathForCorruptDB(dbPath + CHAT_DB_BAK, timestamp: corruptDBTimestamp), fm: fm)
+        try? fm.removeItem(atPath: chatDbPath + "-wal")
+        try? fm.removeItem(atPath: chatDbPath + "-shm")
         if agentDbExists && agentDbSize < 4096 {
             backupCorruptFile(agentDbPath, to: backupPathForCorruptDB(agentDbPath, timestamp: corruptDBTimestamp), fm: fm)
             backupCorruptFile(dbPath + AGENT_DB_BAK, to: backupPathForCorruptDB(dbPath + AGENT_DB_BAK, timestamp: corruptDBTimestamp), fm: fm)
+            try? fm.removeItem(atPath: agentDbPath + "-wal")
+            try? fm.removeItem(atPath: agentDbPath + "-shm")
         }
     }
 
@@ -293,6 +328,7 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
     }
 
     let confirm = confirmMigrations ?? defaultMigrationConfirmation()
+    logger.info("chatMigrateInit: preparing FFI call - dbPath=.../\(URL(fileURLWithPath: dbPath).lastPathComponent), confirm=\(confirm.rawValue), keyLength=\(dbKey.count), dbExists=\(hasDB)")
     logger.debug("chatMigrateInit DB path: .../\(URL(fileURLWithPath: dbPath).lastPathComponent), confirm: \(confirm.rawValue)")
     guard var cPath = dbPath.cString(using: .utf8),
           var cConfirm = confirm.rawValue.cString(using: .utf8) else {
@@ -308,6 +344,7 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
         chatControllerLock.sync { finishInitializing() }
         return (false, .errorNotADatabase(dbFile: dbPath))
     }
+    logger.info("chatMigrateInit: calling FFI chat_migrate_init_key_bytes with keyLength=\(keyData.count)")
     let cjson: UnsafeMutablePointer<CChar>? = keyData.withUnsafeBytes { keyPtr in
         let keyLen = Int32(keyPtr.count)
         return keyPtr.baseAddress?.withMemoryRebound(to: UInt8.self, capacity: Int(keyLen)) { keyBytes in
@@ -410,8 +447,12 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
             for path in [chatDbPath, agentDbPath,
                          chatDbPath + "-wal", chatDbPath + "-shm",
                          agentDbPath + "-wal", agentDbPath + "-shm"] {
-                let bp = backupPathForCorruptDB(path, timestamp: corruptDBTimestamp)
-                backupCorruptFile(path, to: bp, fm: fm)
+                if fm.fileExists(atPath: path) {
+                    let bp = backupPathForCorruptDB(path, timestamp: corruptDBTimestamp)
+                    backupCorruptFile(path, to: bp, fm: fm)
+                    // CRITICAL: Also delete original to ensure FFI sees clean state
+                    try? fm.removeItem(atPath: path)
+                }
             }
             if let freshKey = randomDatabasePassword() {
                 dbKey = freshKey
