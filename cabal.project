@@ -1,7 +1,14 @@
-packages: .
--- packages: . ../popopxmq
--- packages: . ../popopxmq ../direct-sqlcipher ../sqlcipher-simple
-
+packages: 
+  .
+  ./aeson
+  ./hs-socks
+  ./direct-sqlcipher
+  ./sqlcipher-simple
+--  ./haskell-terminal
+--  ./android-support
+--  ./wai/warp
+--  ./wai/warp-tls
+--  ./wai/auto-update
 -- uncomment two sections below to run tests with coverage
 -- package *
 --    coverage: True
@@ -13,35 +20,42 @@ packages: .
 
 index-state: 2023-12-12T00:00:00Z
 
+--package popopxmq
+--    flags: +client_library +swift +commoncrypto
+
+--package popopx-chat
+--    flags: +client_library +swift
+
 package cryptostore
     flags: +use_crypton
 
 constraints: zip +disable-bzip2 +disable-zstd
 
+-- All dependencies use local paths except zip
 source-repository-package
     type: git
     location: https://github.com/popopx/popopxmq.git
-    tag: 84a10d06f59fc98fb8d392622490309f7c2b9cbc
+    tag: 14760fb2325040735ab4383cb3894d784324f7e6
 
-source-repository-package
-    type: git
-    location: https://github.com/simplex-chat/hs-socks.git
-    tag: a30cc7a79a08d8108316094f8f2f82a0c5e1ac51
+--source-repository-package
+--    type: git
+--    location: https://github.com/simplex-chat/hs-socks.git
+--    tag: a30cc7a79a08d8108316094f8f2f82a0c5e1ac51
 
-source-repository-package
-    type: git
-    location: https://github.com/simplex-chat/direct-sqlcipher.git
-    tag: f814ee68b16a9447fbb467ccc8f29bdd3546bfd9
+--source-repository-package
+--    type: git
+--    location: https://github.com/simplex-chat/direct-sqlcipher.git
+--    tag: f814ee68b16a9447fbb467ccc8f29bdd3546bfd9
 
-source-repository-package
-    type: git
-    location: https://github.com/simplex-chat/sqlcipher-simple.git
-    tag: a46bd361a19376c5211f1058908fc0ae6bf42446
+--source-repository-package
+--    type: git
+--    location: https://github.com/simplex-chat/sqlcipher-simple.git
+--    tag: a46bd361a19376c5211f1058908fc0ae6bf42446
 
-source-repository-package
-    type: git
-    location: https://github.com/simplex-chat/aeson.git
-    tag: aab7b5a14d6c5ea64c64dcaee418de1bb00dcc2b
+--source-repository-package
+--    type: git
+--    location: https://github.com/simplex-chat/aeson.git
+--    tag: aab7b5a14d6c5ea64c64dcaee418de1bb00dcc2b
 
 source-repository-package
     type: git
@@ -61,10 +75,10 @@ source-repository-package
 
 -- waiting for published warp-tls-3.4.7
 source-repository-package
-    type: git
-    location: https://github.com/yesodweb/wai.git
-    tag: ec5e017d896a78e787a5acea62b37a4e677dec2e
-    subdir: warp-tls
+   type: git
+   location: https://github.com/yesodweb/wai.git
+   tag: ec5e017d896a78e787a5acea62b37a4e677dec2e
+   subdir: warp-tls
 
 -- backported fork due http-5.0
 source-repository-package
