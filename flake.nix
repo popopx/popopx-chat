@@ -54,9 +54,10 @@
         in pkgs.runCommand "popopx-chat-src" {} ''
           cp -rL ${gitSrc} $out
           chmod -R u+w $out
-          # Remove empty submodule directories and copy actual content
+          # Remove empty submodule directories and copy actual content  
+          # Force rebuild 2026-10-25 to pick up popopxmq migration fix
           rm -rf $out/popopxmq
-          cp -r ${pkgs.lib.cleanSource ./popopxmq} $out/popopxmq
+          cp -r ${./popopxmq} $out/popopxmq
           rm -rf $out/aeson
           cp -r ${pkgs.lib.cleanSource ./aeson} $out/aeson
           rm -rf $out/hs-socks
