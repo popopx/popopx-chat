@@ -21,6 +21,19 @@ CREATE TABLE contact_profiles ( -- remote user profile
   properties TEXT NOT NULL DEFAULT '{}' -- JSON with contact profile properties
 );
 
+-- EXPERIMENT 7: Moved files table here to test if error follows the table
+CREATE TABLE files (
+  file_id INTEGER PRIMARY KEY,
+  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
+  group_id INTEGER REFERENCES groups ON DELETE CASCADE,
+  file_name TEXT NOT NULL,
+  file_path TEXT,
+  file_size INTEGER NOT NULL,
+  chunk_size INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE
+);
+
 CREATE INDEX contact_profiles_index ON contact_profiles (display_name, full_name);
 
 CREATE TABLE users (
@@ -149,17 +162,7 @@ CREATE TABLE group_member_intros (
   UNIQUE (re_group_member_id, to_group_member_id)
 );
 
-CREATE TABLE files (
-  file_id INTEGER PRIMARY KEY,
-  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
-  group_id INTEGER REFERENCES groups ON DELETE CASCADE,
-  file_name TEXT NOT NULL,
-  file_path TEXT,
-  file_size INTEGER NOT NULL,
-  chunk_size INTEGER NOT NULL,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE
-);
+-- EXPERIMENT 7: files table moved to position 2
 
 CREATE TABLE snd_files (
   file_id INTEGER NOT NULL REFERENCES files ON DELETE CASCADE,
