@@ -35,6 +35,7 @@ import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Transport.Client (TransportHost)
 import qualified System.IO as TIO
 import Data.Text.Encoding (decodeUtf8)
+import Data.Text.Encoding (decodeUtf8)
 
 getCurrentMigrations :: Maybe Query -> DB.Connection -> IO [Migration]
 getCurrentMigrations migrationsTable DB.Connection {DB.conn} =
@@ -71,16 +72,11 @@ run st migrationsTable vacuum = \case
       execSQL db downQuery
       SQL.execute db ("DELETE FROM " <> table <> " WHERE name = ?") (Only downName)
     execSQL db sql = do
-      let statements = splitStatements sql
-      T.putStrLn $ "[Migration-Debug] execSQL: split into " <> (pack (show $ length statements)) <> " statements"
-      T.putStrLn "[Migration-Debug] execSQL: using SQLite3.exec (sqlite3_exec) for encrypted database safety"
-      mapM_ (\stmt -> do
-        let preview = T.take 80 stmt
-        T.putStrLn $ "[Migration-Debug] execSQL: executing statement via SQLite3.exec: " <> preview <> "..."
-        SQLite3.exec (SQL.connectionHandle db) stmt
-        T.putStrLn "[Migration-Debug] execSQL: statement completed successfully"
-        ) statements
-      T.putStrLn "[Migration-Debug] execSQL: all statements completed"
+      T.putStrLn $ "[Migration-Debug] execSQL: executing full SQL without splitting for transaction safety"
+      -- Execute entire SQL as single unit to preserve transaction integrity with SQLCipher
+      -- Splitting statements and calling sqlite3_exec on each can cause ErrorCorrupt on encrypted databases
+      SQL.execute_ db (Query sql)
+      T.putStrLn "[Migration-Debug] execSQL: SQL executed successfully"
 
 -- | Split multi-statement SQL into individual statements
 -- Handles semicolons within strings and comments
@@ -115,15 +111,21 @@ splitStatements sql = filter (not . T.null) . map T.strip $ go sql False False "
 
 initialize :: DBStore -> Maybe Query -> IO ()
 initialize st migrationsTable = withTransaction' st $ \db -> do
+  TIO.hPutStrLn TIO.stderr "[Migration-Debug] initialize: starting"
   cs :: [Text] <- map fromOnly <$> SQL.query_ db ("SELECT name FROM pragma_table_info('" <> table <> "')")
   case cs of
-    [] -> createMigrations db
-    _ -> when ("down" `notElem` cs) $ SQL.execute_ db $ "ALTER TABLE " <> table <> " ADD COLUMN down TEXT"
+    [] -> do
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] initialize: creating migrations table via SQL.execute_"
+      SQL.execute_ db $ Query $
+        "CREATE TABLE IF NOT EXISTS "
+          <> tableText
+          <> " (name TEXT NOT NULL PRIMARY KEY, ts TEXT NOT NULL, down TEXT)"
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] initialize: migrations table created"
+    _ -> when ("down" `notElem` cs) $ do
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] initialize: adding down column via SQL.execute_"
+      SQL.execute_ db $ Query $ "ALTER TABLE " <> tableText <> " ADD COLUMN down TEXT"
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] initialize: down column added"
   where
     table = fromMaybe "migrations" migrationsTable
-    createMigrations db =
-      SQL.execute_ db $
-        "CREATE TABLE IF NOT EXISTS "
-          <> table
-          <> " (name TEXT NOT NULL PRIMARY KEY, ts TEXT NOT NULL, down TEXT)"
+    tableText = case table of Query t -> t
 -- Force rebuild
