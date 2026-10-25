@@ -15,6 +15,7 @@ module Database.SQLite3.Bindings (
     mkCTraceCallback,
     c_sqlite3_get_autocommit,
     c_sqlite3_enable_shared_cache,
+    c_sqlite3_key,
 
     -- * Simple query execution
     -- | <https://sqlite.org/c3ref/exec.html>
@@ -182,6 +183,12 @@ foreign import ccall "sqlite3_trace"
 -- | <https://www.sqlite.org/c3ref/get_autocommit.html>
 foreign import ccall unsafe "sqlite3_get_autocommit"
     c_sqlite3_get_autocommit :: Ptr CDatabase -> IO CInt
+
+-- | SQLCipher key setting API
+-- Sets the encryption key for the database connection.
+-- Must be called immediately after opening the database, before any other operations.
+foreign import ccall "sqlite3_key"
+    c_sqlite3_key :: Ptr CDatabase -> Ptr () -> CInt -> IO CInt
 
 -- | <https://www.sqlite.org/c3ref/enable_shared_cache.html>
 foreign import ccall unsafe "sqlite3_enable_shared_cache"

@@ -45,21 +45,25 @@ where
 
 import Control.Concurrent.MVar
 import Control.Concurrent.STM
+import Control.Concurrent (threadDelay)
 import Control.Exception (bracketOnError, onException, throwIO)
 import Control.Monad
 import Data.Bits (xor)
 import Data.ByteArray (ScrubbedBytes)
 import qualified Data.ByteArray as BA
 import Data.ByteString (ByteString)
+import qualified Data.ByteString.Unsafe as BSU
 import Data.Functor (($>))
 import Data.IORef
 import Data.Maybe (fromMaybe)
 import Data.Text (Text, unpack)
 import qualified Data.Text as T
+import Data.Text.Encoding (decodeUtf8)
 import Database.SQLite.Simple (Query (..))
 import qualified Database.SQLite.Simple as SQL
 import Database.SQLite.Simple.QQ (sql)
 import qualified Database.SQLite3 as SQLite3
+import qualified Database.SQLite3.Direct as SQLite3Direct
 import Database.SQLite3.Bindings
 import Foreign.C.Types
 import Foreign.Ptr
@@ -129,21 +133,42 @@ connectDB path functions key track = do
   where
     prepare db = do
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: starting"
-      let keyCmd = "PRAGMA key = " <> keyString key <> ";"
-      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing PRAGMA key via SQLite3.exec"
-      -- Use SQLite3.exec (sqlite3_exec) for ALL pragmas to avoid ErrorCorrupt on encrypted databases
-      -- The prepare/step API (SQL.execute_) may try to access database metadata before the key is active
-      SQLite3.exec (SQL.connectionHandle $ DB.conn db) keyCmd
-      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: PRAGMA key completed"
+      -- Use sqlite3_key API directly instead of PRAGMA key for reliable SQLCipher initialization
+      -- This must be called immediately after opening the database, before any other operations
+      unless (BA.null key) $ do
+        let keyBytes = BA.convert key :: ByteString
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: calling sqlite3_key API"
+        rc <- BSU.unsafeUseAsCStringLen keyBytes $ \(ptr, len) ->
+          c_sqlite3_key dbPtr (castPtr ptr) (fromIntegral len)
+        when (rc /= 0) $ do
+          SQLite3Direct.Utf8 errMsgBytes <- SQLite3Direct.errmsg db'
+          throwIO $ userError $ "sqlite3_key failed with error code " ++ show rc ++ ": " ++ T.unpack (decodeUtf8 errMsgBytes)
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: sqlite3_key API completed successfully"
+        -- Also call PRAGMA key to fully activate SQLCipher (hybrid approach)
+        let keyCmd = "PRAGMA key = " <> keyString key <> ";"
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: calling PRAGMA key to fully activate SQLCipher"
+        SQLite3.exec db' keyCmd
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: PRAGMA key completed"
+        -- Verify key activation by checking cipher provider
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: verifying key activation"
+        -- SQLite3.exec throws an exception on error, so if it succeeds, the key is active
+        SQLite3.exec db' "PRAGMA cipher_provider_version;"
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: key activation verified"
+        -- Add delay to allow SQLCipher to fully initialize on iOS simulator
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: waiting 500ms for SQLCipher initialization"
+        threadDelay 500000 -- 500ms in microseconds
+        TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: delay completed"
+      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing remaining PRAGMAs via SQLite3.exec"
       -- Match upstream: use SQLite3.exec for all pragmas, not SQL.execute_
       let pragmaSql = "PRAGMA busy_timeout = 100;\nPRAGMA foreign_keys = OFF;\n-- PRAGMA trusted_schema = OFF;\nPRAGMA secure_delete = ON;\n-- PRAGMA auto_vacuum = FULL;"
-      TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: executing remaining PRAGMAs via SQLite3.exec"
       SQLite3.exec (SQL.connectionHandle $ DB.conn db) pragmaSql
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: all PRAGMAs completed"
       mapM_ addFunction functions'
       TIO.hPutStrLn TIO.stderr "[Migration-Debug] connectDB.prepare: functions registered, prepare completed"
       where
         db' = SQL.connectionHandle $ DB.conn db
+        -- Extract the raw pointer from the Database newtype for FFI calls
+        SQLite3Direct.Database dbPtr = db'
         functions' = SQLiteFuncDef "popopx_xor_md5_combine" 2 (SQLiteFuncPtr True sqliteXorMd5CombinePtr) : functions
         addFunction SQLiteFuncDef {funcName, argCount, funcPtrs} =
           either (throwIO . userError . show) pure =<< case funcPtrs of
