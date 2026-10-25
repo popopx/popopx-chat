@@ -4,6 +4,7 @@ packages:
   ./hs-socks
   ./direct-sqlcipher
   ./sqlcipher-simple
+--  ./popopxmq
 --  ./haskell-terminal
 --  ./android-support
 --  ./wai/warp
@@ -35,7 +36,7 @@ constraints: zip +disable-bzip2 +disable-zstd
 source-repository-package
     type: git
     location: https://github.com/popopx/popopxmq.git
-    tag: v7.1.0.16
+    tag: v7.1.0.18
 
 --source-repository-package
 --    type: git

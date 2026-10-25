@@ -1,4 +1,6 @@
 {
+  "https://github.com/popopx/popopxmq.git"."v7.1.0.18" = "HcvrUZVrFuAw66qSJ19XrShfThxHovDYqWNGrYv7mwE=";
+  "https://github.com/popopx/popopxmq.git"."v7.1.0.17-fix-errorcorrupt" = "yGoQoBU0YBNExBTG4S/+rX+x9Sln1Ii9d72BWOmFPSQ=";
   "https://github.com/popopx/popopxmq.git"."v7.1.0.16" = "12im7f9a222lakj4iwbyy9qq6r9f584gkgj0y856cz1g5hd4k9lp";
   "https://github.com/popopx/popopxmq.git"."f3aa6ff6ae2c924a61d8b51ef61ab1c37d8d0fa8" = "12im7f9a222lakj4iwbyy9qq6r9f584gkgj0y856cz1g5hd4k9lp";
   "https://github.com/popopx/popopxmq.git"."a35ea5cb5294c4bedfc2e1ea6f2d9e710f90f227" = "hKm5XG1GuuXojpwwbA5IRXXKSbtI1w47D3e/vmwvi20=";
