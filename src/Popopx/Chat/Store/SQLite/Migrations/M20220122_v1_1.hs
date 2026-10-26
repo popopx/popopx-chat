@@ -30,7 +30,7 @@ CREATE TABLE pending_group_messages (
 
 -- mutable chat_items presented to user
 CREATE TABLE chat_items (
-  chat_item_id INTEGER PRIMARY KEY,
+  chat_item_id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
   contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
   group_id INTEGER REFERENCES groups ON DELETE CASCADE,

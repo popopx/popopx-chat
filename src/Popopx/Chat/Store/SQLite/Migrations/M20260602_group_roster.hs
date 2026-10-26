@@ -23,7 +23,7 @@ ALTER TABLE groups ADD COLUMN roster_broker_ts TEXT;
 ALTER TABLE groups ADD COLUMN roster_blob BLOB;
 
 CREATE TABLE rcv_roster_transfers(
-  roster_transfer_id INTEGER PRIMARY KEY,
+  roster_transfer_id INTEGER PRIMARY KEY AUTOINCREMENT,
   group_id INTEGER NOT NULL REFERENCES groups ON DELETE CASCADE,
   from_member_id INTEGER NOT NULL REFERENCES group_members ON DELETE CASCADE,
   roster_version INTEGER NOT NULL,

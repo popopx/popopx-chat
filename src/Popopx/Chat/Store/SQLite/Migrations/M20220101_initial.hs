@@ -23,7 +23,7 @@ CREATE TABLE contact_profiles ( -- remote user profile
 
 -- EXPERIMENT 7: Moved files table here to test if error follows the table
 CREATE TABLE files (
-  file_id INTEGER PRIMARY KEY,
+  file_id INTEGER PRIMARY KEY AUTOINCREMENT,
   contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
   group_id INTEGER REFERENCES groups ON DELETE CASCADE,
   file_name TEXT NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE files (
 CREATE INDEX contact_profiles_index ON contact_profiles (display_name, full_name);
 
 CREATE TABLE users (
-  user_id INTEGER PRIMARY KEY,
+  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
   contact_id INTEGER NOT NULL UNIQUE REFERENCES contacts ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED,
   local_display_name TEXT NOT NULL UNIQUE,
@@ -59,7 +59,7 @@ CREATE TABLE display_names (
 ) WITHOUT ROWID;
 
 CREATE TABLE contacts (
-  contact_id INTEGER PRIMARY KEY,
+  contact_id INTEGER PRIMARY KEY AUTOINCREMENT,
   contact_profile_id INTEGER REFERENCES contact_profiles ON DELETE SET NULL,
   user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
   local_display_name TEXT NOT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE group_profiles ( -- shared group profiles
 );
 
 CREATE TABLE groups (
-  group_id INTEGER PRIMARY KEY, -- local group ID
+  group_id INTEGER PRIMARY KEY AUTOINCREMENT, -- local group ID
   user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
   local_display_name TEXT NOT NULL, -- local group name without spaces
   group_profile_id INTEGER REFERENCES group_profiles ON DELETE SET NULL, -- shared group profile
@@ -131,7 +131,7 @@ CREATE TABLE groups (
 CREATE INDEX idx_groups_inv_queue_info ON groups (inv_queue_info);
 
 CREATE TABLE group_members ( -- group members, excluding the local user
-  group_member_id INTEGER PRIMARY KEY,
+  group_member_id INTEGER PRIMARY KEY AUTOINCREMENT,
   group_id INTEGER NOT NULL REFERENCES groups ON DELETE CASCADE,
   member_id BLOB NOT NULL, -- shared member ID, unique per group
   member_role TEXT NOT NULL, -- owner, admin, member
@@ -198,7 +198,7 @@ CREATE TABLE rcv_file_chunks (
 ) WITHOUT ROWID;
 
 CREATE TABLE connections ( -- all SMP agent connections
-  connection_id INTEGER PRIMARY KEY,
+  connection_id INTEGER PRIMARY KEY AUTOINCREMENT,
   agent_conn_id BLOB NOT NULL UNIQUE,
   conn_level INTEGER NOT NULL DEFAULT 0,
   via_contact INTEGER REFERENCES contacts (contact_id) ON DELETE SET NULL,
@@ -227,7 +227,7 @@ CREATE TABLE user_contact_links (
 );
 
 CREATE TABLE contact_requests (
-  contact_request_id INTEGER PRIMARY KEY,
+  contact_request_id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_contact_link_id INTEGER NOT NULL REFERENCES user_contact_links
     ON UPDATE CASCADE ON DELETE CASCADE,
   agent_invitation_id  BLOB NOT NULL,
