@@ -164,6 +164,26 @@ CREATE TABLE group_member_intros (
 
 -- EXPERIMENT 7: files table moved to position 2
 
+CREATE TABLE connections ( -- all SMP agent connections
+  connection_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  agent_conn_id BLOB NOT NULL UNIQUE,
+  conn_level INTEGER NOT NULL DEFAULT 0,
+  via_contact INTEGER REFERENCES contacts (contact_id) ON DELETE SET NULL,
+  conn_status TEXT NOT NULL,
+  conn_type TEXT NOT NULL, -- contact, member, rcv_file, snd_file
+  user_contact_link_id INTEGER REFERENCES user_contact_links ON DELETE CASCADE,
+  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
+  group_member_id INTEGER REFERENCES group_members ON DELETE CASCADE,
+  snd_file_id INTEGER,
+  rcv_file_id INTEGER REFERENCES rcv_files (file_id) ON DELETE CASCADE,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+  FOREIGN KEY (snd_file_id, connection_id)
+    REFERENCES snd_files (file_id, connection_id)
+    ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED
+);
+
 CREATE TABLE snd_files (
   file_id INTEGER NOT NULL REFERENCES files ON DELETE CASCADE,
   connection_id INTEGER NOT NULL REFERENCES connections ON DELETE CASCADE,
@@ -196,26 +216,6 @@ CREATE TABLE rcv_file_chunks (
   chunk_stored INTEGER NOT NULL DEFAULT 0, -- 0 (received), 1 (appended to file)
   PRIMARY KEY (file_id, chunk_number)
 ) WITHOUT ROWID;
-
-CREATE TABLE connections ( -- all SMP agent connections
-  connection_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  agent_conn_id BLOB NOT NULL UNIQUE,
-  conn_level INTEGER NOT NULL DEFAULT 0,
-  via_contact INTEGER REFERENCES contacts (contact_id) ON DELETE SET NULL,
-  conn_status TEXT NOT NULL,
-  conn_type TEXT NOT NULL, -- contact, member, rcv_file, snd_file
-  user_contact_link_id INTEGER REFERENCES user_contact_links ON DELETE CASCADE,
-  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
-  group_member_id INTEGER REFERENCES group_members ON DELETE CASCADE,
-  snd_file_id INTEGER,
-  rcv_file_id INTEGER REFERENCES rcv_files (file_id) ON DELETE CASCADE,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
-  FOREIGN KEY (snd_file_id, connection_id)
-    REFERENCES snd_files (file_id, connection_id)
-    ON DELETE CASCADE
-    DEFERRABLE INITIALLY DEFERRED
-);
 
 CREATE TABLE user_contact_links (
   user_contact_link_id INTEGER PRIMARY KEY,
