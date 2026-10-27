@@ -21,7 +21,7 @@ constraints: zip +disable-bzip2 +disable-zstd
 source-repository-package
     type: git
     location: https://github.com/popopx/popopxmq.git
-    tag: 381828400710344bc1c6ce94e7cdf6e0ca043ee9
+    tag: 71148d994f510a98022f382c4e987a87c7821a97
 
 source-repository-package
     type: git

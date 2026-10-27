@@ -1,10 +1,5 @@
 {
-  "https://github.com/popopx/popopxmq.git"."v7.1.0.18" = "HcvrUZVrFuAw66qSJ19XrShfThxHovDYqWNGrYv7mwE=";
-  "https://github.com/popopx/popopxmq.git"."v7.1.0.17-fix-errorcorrupt" = "yGoQoBU0YBNExBTG4S/+rX+x9Sln1Ii9d72BWOmFPSQ=";
-  "https://github.com/popopx/popopxmq.git"."v7.1.0.16" = "12im7f9a222lakj4iwbyy9qq6r9f584gkgj0y856cz1g5hd4k9lp";
-  "https://github.com/popopx/popopxmq.git"."f3aa6ff6ae2c924a61d8b51ef61ab1c37d8d0fa8" = "12im7f9a222lakj4iwbyy9qq6r9f584gkgj0y856cz1g5hd4k9lp";
-  "https://github.com/popopx/popopxmq.git"."a35ea5cb5294c4bedfc2e1ea6f2d9e710f90f227" = "hKm5XG1GuuXojpwwbA5IRXXKSbtI1w47D3e/vmwvi20=";
-  "https://github.com/popopx/popopxmq.git"."84a10d06f59fc98fb8d392622490309f7c2b9cbc" = "1i9z682ih7777yqybkn05jfm9268f8k2rx64sfbny6rn75mavfsz";
+  "https://github.com/popopx/popopxmq.git"."71148d994f510a98022f382c4e987a87c7821a97" = "196c2hdwzn4km1k0yzs8zndvph4av021sfl1dimzr6z9f9grpqf5";
   "https://github.com/simplex-chat/hs-socks.git"."a30cc7a79a08d8108316094f8f2f82a0c5e1ac51" = "0yasvnr7g91k76mjkamvzab2kvlb1g5pspjyjn2fr6v83swjhj38";
   "https://github.com/simplex-chat/direct-sqlcipher.git"."2330df3dc8c4b660674d3c02d76bb86f66c2abee" = "11pfj1vqsjdl26nplkr2l6z1xj7cn153qijj5gknmlzq3krn7x1i";
   "https://github.com/simplex-chat/sqlcipher-simple.git"."a46bd361a19376c5211f1058908fc0ae6bf42446" = "1z0r78d8f0812kxbgsm735qf6xx8lvaz27k1a0b4a2m0sshpd5gl";
