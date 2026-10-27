@@ -23,7 +23,7 @@ import chat.popopx.common.views.helpers.*
 import chat.popopx.res.*
 
 @Composable
-fun SupportPopopXBanner(
+fun SupportPOPOPXBanner(
   title: String = generalGetString(MR.strings.badges_banner_title),
   subtitle: String = generalGetString(MR.strings.badges_banner_subtitle),
   warning: Boolean = false,

@@ -147,7 +147,9 @@ private func openMarkdownFileLink(_ url: URL) {
     switch format {
     case let .popopxLink(_, _, popopxUri, _)?:
         if let popopxUrl = URL(string: popopxUri) {
-            ChatModel.shared.appOpenUrl = popopxUrl
+            Task { @MainActor in
+                ChatModel.shared.appOpenUrl = popopxUrl
+            }
         } else {
             pxShowInvalidLinkAlert(uri)
         }

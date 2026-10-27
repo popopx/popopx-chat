@@ -41,14 +41,14 @@ import kotlin.math.ceil
 import kotlin.math.floor
 
 @Composable
-fun PopopXInfo(chatModel: ChatModel, onboarding: Boolean = true) {
+fun POPOPXInfo(chatModel: ChatModel, onboarding: Boolean = true) {
   if (onboarding) {
     if (appPlatform.isDesktop) {
-      PopopXInfoDesktop(chatModel)
+      POPOPXInfoDesktop(chatModel)
     } else {
       CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
         ModalView({}, showClose = false, showAppBar = false) {
-          PopopXInfoLayout(
+          POPOPXInfoLayout(
             user = chatModel.currentUser.value,
             onboardingStage = chatModel.controller.appPrefs.onboardingStage
           )
@@ -56,7 +56,7 @@ fun PopopXInfo(chatModel: ChatModel, onboarding: Boolean = true) {
       }
     }
   } else {
-    PopopXInfoLayout(
+    POPOPXInfoLayout(
       user = chatModel.currentUser.value,
       onboardingStage = null
     )
@@ -64,7 +64,7 @@ fun PopopXInfo(chatModel: ChatModel, onboarding: Boolean = true) {
 }
 
 @Composable
-private fun PopopXInfoDesktop(chatModel: ChatModel) {
+private fun POPOPXInfoDesktop(chatModel: ChatModel) {
   val user = chatModel.currentUser.value
   val onboardingStage = chatModel.controller.appPrefs.onboardingStage
   CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
@@ -72,7 +72,7 @@ private fun PopopXInfoDesktop(chatModel: ChatModel) {
       ColumnWithScrollBar(Modifier.padding(horizontal = DEFAULT_PADDING), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(Modifier.height(DEFAULT_PADDING))
         Box(Modifier.widthIn(max = 600.dp).fillMaxWidth(0.45f).align(Alignment.CenterHorizontally)) {
-          PopopXLogo()
+          POPOPXLogo()
         }
         Spacer(Modifier.fillMaxHeight().weight(1f))
         Column(Modifier.widthIn(max = 600.dp).align(Alignment.CenterHorizontally), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -101,7 +101,7 @@ private fun PopopXInfoDesktop(chatModel: ChatModel) {
 }
 
 @Composable
-fun PopopXInfoLayout(
+fun POPOPXInfoLayout(
   user: User?,
   onboardingStage: SharedPreference<OnboardingStage>?
 ) {
@@ -109,7 +109,7 @@ fun PopopXInfoLayout(
   val modifier = Modifier.fillMaxSize().systemBarsPadding().padding(horizontal = DEFAULT_ONBOARDING_HORIZONTAL_PADDING)
   Column(if (topBar) modifier.padding(top = AppBarHeight * fontSizeSqrtMultiplier) else modifier, horizontalAlignment = Alignment.CenterHorizontally) {
     Box(Modifier.padding(top = DEFAULT_PADDING * 2).widthIn(max = if (appPlatform.isAndroid) 185.dp else 160.dp), contentAlignment = Alignment.Center) {
-      PopopXLogo()
+      POPOPXLogo()
     }
     OnboardingShrinkingLayout(
       modifier = Modifier.fillMaxSize(),
@@ -172,7 +172,7 @@ fun PopopXInfoLayout(
 }
 
 @Composable
-fun PopopXLogo() {
+fun POPOPXLogo() {
   Image(
     painter = painterResource(if (isInDarkTheme()) MR.images.logo_light else MR.images.logo),
     contentDescription = stringResource(MR.strings.image_descr_popopx_logo),
@@ -301,9 +301,9 @@ fun OnboardingInformationButton(
   name = "Dark Mode"
 )*/
 @Composable
-fun PreviewPopopXInfo() {
-  PopopXTheme {
-    PopopXInfoLayout(
+fun PreviewPOPOPXInfo() {
+  POPOPXTheme {
+    POPOPXInfoLayout(
       user = null,
       onboardingStage = null
     )

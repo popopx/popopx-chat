@@ -167,12 +167,13 @@
 		644EFFE42937BE9700525D5B /* PXMarkedDeletedItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644EFFE32937BE9700525D5B /* PXMarkedDeletedItemView.swift */; };
 		6454036F2822A9750090DDFF /* PXComposeFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6454036E2822A9750090DDFF /* PXComposeFileView.swift */; };
 		646BB38C283BEEB9001CE359 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646BB38B283BEEB9001CE359 /* LocalAuthentication.framework */; };
+		SEC000010000000000000001 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = SEC0000000000000000000001 /* Security.framework */; };
+		CF0000010000000000000001 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0000000000000000000001 /* CoreFoundation.framework */; };
 		646BB38E283FDB6D001CE359 /* LocalAuthenticationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646BB38D283FDB6D001CE359 /* LocalAuthenticationUtils.swift */; };
 		647B15E82F4C8D2500EB431E /* PXAddChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647B15E72F4C8D2500EB431E /* PXAddChannelView.swift */; };
 		647B15EA2F4C8D5100EB431E /* PXChatRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647B15E92F4C8D5100EB431E /* PXChatRelayView.swift */; };
 		647F090E288EA27B00644C40 /* PXGroupMemberInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F090D288EA27B00644C40 /* PXGroupMemberInfoView.swift */; };
 		648010AB281ADD15009009B9 /* PXCIFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648010AA281ADD15009009B9 /* PXCIFileView.swift */; };
-		F0EED0F10001AAAA0002AAAA /* PXMarkdownFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EED0F10001AAAA0001AAAA /* PXMarkdownFileView.swift */; };
 		648679AB2BC96A74006456E7 /* PXChatItemForwardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648679AA2BC96A74006456E7 /* PXChatItemForwardingView.swift */; };
 		6495D7042F48CFC50060512B /* ChannelMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6495D7032F48CFC50060512B /* ChannelMembersView.swift */; };
 		6495D7062F48CFFD0060512B /* PXChannelRelaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6495D7052F48CFFD0060512B /* PXChannelRelaysView.swift */; };
@@ -191,7 +192,6 @@
 		64C8299D2D54AEEE006B9E89 /* libgmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C829982D54AEED006B9E89 /* libgmp.a */; };
 		64C8299E2D54AEEE006B9E89 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C829992D54AEEE006B9E89 /* libffi.a */; };
 		64C8299F2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a */; };
-		64C829A02D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a */; };
 		64C829A12D54AEEE006B9E89 /* libgmpxx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C8299C2D54AEEE006B9E89 /* libgmpxx.a */; };
 		64D0C2C029F9688300B38D5F /* PXUserAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D0C2BF29F9688300B38D5F /* PXUserAddressView.swift */; };
 		64D0C2C229FA57AB00B38D5F /* UserAddressLearnMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D0C2C129FA57AB00B38D5F /* UserAddressLearnMore.swift */; };
@@ -428,6 +428,7 @@
 		E5F0B0022FA00000BBBB0002 /* BubbleAnimationComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F0B0012FA00000BBBB0001 /* BubbleAnimationComponents.swift */; };
 		E88541D405044AF39946C412 /* FloatingButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B4FBDDB87429591B885BB /* FloatingButtonModel.swift */; };
 		E96D3D1661F5492F8D660493 /* ChatItemWithMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554CA636FC9D4E26A9407D92 /* ChatItemWithMenu.swift */; };
+		F0EED0F10001AAAA0002AAAA /* PXMarkdownFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EED0F10001AAAA0001AAAA /* PXMarkdownFileView.swift */; };
 		FE683D9CB2E864E9DB6B3934 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED809EB5CBCF02597948020 /* AppState.swift */; };
 		GABF000100000000000001 /* ArtCanvasBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = GAFR000100000000000001 /* ArtCanvasBridge.swift */; };
 		GABF000100000000000002 /* ArtEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = GAFR000100000000000002 /* ArtEngine.swift */; };
@@ -775,12 +776,13 @@
 		644EFFE32937BE9700525D5B /* PXMarkedDeletedItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMarkedDeletedItemView.swift; sourceTree = "<group>"; };
 		6454036E2822A9750090DDFF /* PXComposeFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComposeFileView.swift; sourceTree = "<group>"; };
 		646BB38B283BEEB9001CE359 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk/System/Library/Frameworks/LocalAuthentication.framework; sourceTree = DEVELOPER_DIR; };
+		SEC0000000000000000000001 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		CF0000000000000000000001 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		646BB38D283FDB6D001CE359 /* LocalAuthenticationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthenticationUtils.swift; sourceTree = "<group>"; };
 		647B15E72F4C8D2500EB431E /* PXAddChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAddChannelView.swift; sourceTree = "<group>"; };
 		647B15E92F4C8D5100EB431E /* PXChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXChatRelayView.swift; sourceTree = "<group>"; };
 		647F090D288EA27B00644C40 /* PXGroupMemberInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXGroupMemberInfoView.swift; sourceTree = "<group>"; };
 		648010AA281ADD15009009B9 /* PXCIFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCIFileView.swift; sourceTree = "<group>"; };
-		F0EED0F10001AAAA0001AAAA /* PXMarkdownFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMarkdownFileView.swift; sourceTree = "<group>"; };
 		648679AA2BC96A74006456E7 /* PXChatItemForwardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXChatItemForwardingView.swift; sourceTree = "<group>"; };
 		6493D667280ED77F007A76FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6495D7032F48CFC50060512B /* ChannelMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMembersView.swift; sourceTree = "<group>"; };
@@ -800,7 +802,6 @@
 		64C829982D54AEED006B9E89 /* libgmp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmp.a; sourceTree = "<group>"; };
 		64C829992D54AEEE006B9E89 /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libffi.a; sourceTree = "<group>"; };
 		64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a"; sourceTree = "<group>"; };
-		64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libHSpopopx-chat-7.1.0.14-inplace.a"; sourceTree = "<group>"; };
 		64C8299C2D54AEEE006B9E89 /* libgmpxx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmpxx.a; sourceTree = "<group>"; };
 		64D0C2BF29F9688300B38D5F /* PXUserAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUserAddressView.swift; sourceTree = "<group>"; };
 		64D0C2C129FA57AB00B38D5F /* UserAddressLearnMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddressLearnMore.swift; sourceTree = "<group>"; };
@@ -1068,6 +1069,7 @@
 		E5F000012F97000000000003 /* ProfileTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabView.swift; sourceTree = "<group>"; };
 		E5F0B0012FA00000BBBB0001 /* BubbleAnimationComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleAnimationComponents.swift; sourceTree = "<group>"; };
 		F09DFEBD2F1842F2CF31CB4B /* NotificationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationState.swift; sourceTree = "<group>"; };
+		F0EED0F10001AAAA0001AAAA /* PXMarkdownFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMarkdownFileView.swift; sourceTree = "<group>"; };
 		GAFR000100000000000001 /* ArtCanvasBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtCanvasBridge.swift; sourceTree = "<group>"; };
 		GAFR000100000000000002 /* ArtEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtEngine.swift; sourceTree = "<group>"; };
 		GAFR000100000000000003 /* FlowField.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = FlowField.js; sourceTree = "<group>"; };
@@ -1177,6 +1179,8 @@
 				D741547A29AF90B00022400A /* PushKit.framework in Frameworks */,
 				646BB38C283BEEB9001CE359 /* LocalAuthentication.framework in Frameworks */,
 				5C8F01CD27A6F0D8007D2C8D /* CodeScanner in Frameworks */,
+				SEC000010000000000000001 /* Security.framework in Frameworks */,
+				CF0000010000000000000001 /* CoreFoundation.framework in Frameworks */,
 			);
 		};
 		5CA059D4279559F40002BEB4 /* Frameworks */ = {
@@ -1202,7 +1206,6 @@
 				64C8299E2D54AEEE006B9E89 /* libffi.a in Frameworks */,
 				64C829A12D54AEEE006B9E89 /* libgmpxx.a in Frameworks */,
 				64C8299F2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a in Frameworks */,
-				64C829A02D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a in Frameworks */,
 				5CE2BA7A284530CC00EC33A7 /* libcactus_engine.a in Frameworks */,
 				CE38A29C2C3FCD72005ED185 /* SwiftyGif in Frameworks */,
 				C2D3E4F506C80001A1B20001 /* WebRTC in Frameworks */,
@@ -1312,7 +1315,6 @@
 				64C829982D54AEED006B9E89 /* libgmp.a */,
 				64C8299C2D54AEEE006B9E89 /* libgmpxx.a */,
 				64C8299A2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace-ghc9.6.3.a */,
-				64C8299B2D54AEEE006B9E89 /* libHSpopopx-chat-7.1.0.14-inplace.a */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -1323,6 +1325,8 @@
 				D741547929AF90B00022400A /* PushKit.framework */,
 				D741547729AF89AF0022400A /* StoreKit.framework */,
 				646BB38B283BEEB9001CE359 /* LocalAuthentication.framework */,
+				SEC0000000000000000000001 /* Security.framework */,
+				CF0000000000000000000001 /* CoreFoundation.framework */,
 				VSF00000000000000000001 /* Vision.framework */,
 				ARK00000000000000000001 /* ARKit.framework */,
 				APPI00000000000000000001 /* AppIntents.framework */,

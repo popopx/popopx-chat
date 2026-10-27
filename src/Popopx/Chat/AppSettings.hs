@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE StrictData #-}
@@ -64,7 +58,8 @@ data AppSettings = AppSettings
     uiCurrentThemeIds :: Maybe (Map ThemeColorScheme Text),
     uiThemes :: Maybe [UITheme],
     oneHandUI :: Maybe Bool,
-    chatBottomBar :: Maybe Bool
+    chatBottomBar :: Maybe Bool,
+    uiChatLayout :: Maybe ChatLayout
   }
   deriving (Show)
 
@@ -98,7 +93,7 @@ defaultAppSettings =
       notificationMode = Just NMInstant,
       notificationPreviewMode = Just NPMMessage,
       webrtcPolicyRelay = Just True,
-      webrtcICEServers = Just defaultICEServers,
+      webrtcICEServers = Just [],
       confirmRemoteSessions = Just False,
       connectRemoteViaMulticast = Just True,
       connectRemoteViaMulticastAuto = Just True,
@@ -115,15 +110,9 @@ defaultAppSettings =
       uiCurrentThemeIds = Nothing,
       uiThemes = Nothing,
       oneHandUI = Just True,
-      chatBottomBar = Just True
+      chatBottomBar = Just True,
+      uiChatLayout = Just CLClassic
     }
-
--- | Default WebRTC ICE servers for POPOPX (placeholder — replace with real servers)
-defaultICEServers :: [Text]
-defaultICEServers =
-  [ "stun:stun.popopxchat.com:443"
-  , "turns:turn.popopxchat.com:443?transport=tcp"
-  ]
 
 defaultParseAppSettings :: AppSettings
 defaultParseAppSettings =
@@ -160,7 +149,8 @@ defaultParseAppSettings =
       uiCurrentThemeIds = Nothing,
       uiThemes = Nothing,
       oneHandUI = Nothing,
-      chatBottomBar = Nothing
+      chatBottomBar = Nothing,
+      uiChatLayout = Nothing
     }
 
 combineAppSettings :: AppSettings -> AppSettings -> AppSettings
@@ -198,7 +188,8 @@ combineAppSettings platformDefaults storedSettings =
       uiCurrentThemeIds = p uiCurrentThemeIds,
       uiThemes = p uiThemes,
       oneHandUI = p oneHandUI,
-      chatBottomBar = p chatBottomBar
+      chatBottomBar = p chatBottomBar,
+      uiChatLayout = p uiChatLayout
     }
   where
     p :: (AppSettings -> Maybe a) -> Maybe a
@@ -253,6 +244,7 @@ instance FromJSON AppSettings where
     uiThemes <- p "uiThemes"
     oneHandUI <- p "oneHandUI"
     chatBottomBar <- p "chatBottomBar"
+    uiChatLayout <- p "uiChatLayout"
     pure
       AppSettings
         { appPlatform,
@@ -287,7 +279,8 @@ instance FromJSON AppSettings where
           uiCurrentThemeIds,
           uiThemes,
           oneHandUI,
-          chatBottomBar
+          chatBottomBar,
+          uiChatLayout
         }
     where
       p key = v .:? key <|> pure Nothing

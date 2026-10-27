@@ -56,6 +56,7 @@ import Popopx.Chat.Options.DB (FromField (..), ToField (..))
 import Popopx.Chat.Types
 import Popopx.Chat.Types.Preferences
 import Popopx.Chat.Types.Shared
+import Popopx.Chat.Types.UITheme (ChatLayout)
 import qualified Popopx.FileTransfer.Description as FD
 import Popopx.Messaging.Agent.Store.DB (blobFieldDecoder, fromTextField_)
 import Popopx.Messaging.Compression (Compressed, compress1, decompress1, decompressedSize)
@@ -702,8 +703,7 @@ data MsgContainer = MsgContainer
     quote :: Maybe QuotedMsg,
     parent :: Maybe MsgRef,
     forward :: Maybe Bool,
-    forwardLink :: Maybe ForwardLink,
-    burnAfterRead :: Maybe Bool
+    forwardLink :: Maybe ForwardLink
   }
   deriving (Eq, Show)
 
@@ -729,8 +729,7 @@ mcSimple content =
       quote = Nothing,
       parent = Nothing,
       forward = Nothing,
-      forwardLink = Nothing,
-      burnAfterRead = Nothing
+      forwardLink = Nothing
     }
 
 mcQuote :: QuotedMsg -> MsgContent -> MsgContainer
@@ -1614,6 +1613,7 @@ data ContactShortLinkData = ContactShortLinkData
   { profile :: Profile,
     message :: Maybe MsgContent,
     business :: Bool,
+    chatLayout :: Maybe ChatLayout,
     -- set by the receiving client for the UI: the link profile's badge, verified and crypto-free.
     -- never part of the published link data (the link carries the proof inside profile).
     localBadge :: Maybe LocalBadge

@@ -51,7 +51,7 @@ data Markdown = Markdown (Maybe Format) Text | Markdown :|: Markdown
   deriving (Eq, Show)
 
 data Format
-  = Bold {singleStar :: BoolDef}
+  = Bold
   | Italic
   | StrikeThrough
   | Snippet
@@ -350,8 +350,8 @@ markdownP = joinMarkdown <$> A.many' fragmentP
           ' ' -> unmarked <$> A.takeWhile (== ' ')
           '\n' -> unmarked <$> A.string "\n"
           '+' -> phoneP <|> wordP
-          '*' -> doubleP '*' (Bold $ BoolDef False) <|> formattedP '*' (Bold $ BoolDef True)
-          '_' -> doubleP '_' (Bold $ BoolDef False) <|> formattedP '_' Italic
+          '*' -> doubleP '*' Bold <|> formattedP '*' Bold
+          '_' -> doubleP '_' Bold <|> formattedP '_' Italic
           '~' -> doubleP '~' StrikeThrough <|> formattedP '~' StrikeThrough
           '`' -> codeSpanP
           '#' -> A.char '#' *> (secretP <|> nameRefP '#' <|> secretFallback)
@@ -941,7 +941,7 @@ markdownText :: FormattedText -> Text
 markdownText (FormattedText f_ t) = case f_ of
   Nothing -> t
   Just f -> case f of
-    Bold (BoolDef singleStar) -> if singleStar then around '*' else "**" <> t <> "**"
+    Bold -> around '*'
     Italic -> around '_'
     StrikeThrough -> around '~'
     Snippet -> codeSpan

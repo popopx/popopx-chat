@@ -184,11 +184,13 @@ import Popopx.Chat.Store.SQLite.Migrations.M20261010_invite_member_via_group
 import Popopx.Chat.Store.SQLite.Migrations.M20261012_delivery_job_notification
 import Popopx.Chat.Store.SQLite.Migrations.M20261016_badge_store_receipts
 import Popopx.Chat.Store.SQLite.Migrations.M20261018_autoincrement_ids
+import Popopx.Chat.Store.SQLite.Migrations.M20261019_chat_layout
 import Popopx.Messaging.Agent.Store.Shared (Migration (..))
 
 schemaMigrations :: [(String, Query, Maybe Query)]
 schemaMigrations =
-  [ ("20220101_initial", m20220101_initial, Nothing),
+  [ ("20220101_initial", m20220101_initial, Nothing)
+    -- Testing: only initial migration, all others disabled
     ("20220122_v1_1", m20220122_v1_1, Nothing),
     ("20220205_chat_item_status", m20220205_chat_item_status, Nothing),
     ("20220210_deduplicate_contact_requests", m20220210_deduplicate_contact_requests, Nothing),
@@ -355,7 +357,8 @@ schemaMigrations =
     ("20260723_contact_request_rejection", m20260723_contact_request_rejection, Just down_m20260723_contact_request_rejection),
     ("20260813_auto_accept_group_invitations", m20260813_auto_accept_group_invitations, Just down_m20260813_auto_accept_group_invitations),
     ("20260822_forward_link", m20260822_forward_link, Just down_m20260822_forward_link),
-    ("20260828_file_expiry", m20260828_file_expiry, Just down_m20260828_file_expiry),
+    ("20260828_file_expiry", m20260828_file_expiry, Just down_m20260828_file_expiry)
+    -- Temporarily disabled for testing (202609+ migrations):
     ("20260904_file_badges", m20260904_file_badges, Just down_m20260904_file_badges),
     ("20260905_binthere_bots", m20260905_binthere_bots, Just down_m20260905_binthere_bots),
     ("20260906_bot_directory", m20260906_bot_directory, Just down_m20260906_bot_directory),
@@ -367,7 +370,8 @@ schemaMigrations =
     ("20261010_invite_member_via_group", m20261010_invite_member_via_group, Just down_m20261010_invite_member_via_group),
     ("20261012_delivery_job_notification", m20261012_delivery_job_notification, Just down_m20261012_delivery_job_notification),
     ("20261016_badge_store_receipts", m20261016_badge_store_receipts, Just down_m20261016_badge_store_receipts),
-    ("20261018_autoincrement_ids", m20261018_autoincrement_ids, Just down_m20261018_autoincrement_ids)
+    ("20261018_autoincrement_ids", m20261018_autoincrement_ids, Just down_m20261018_autoincrement_ids),
+    ("20261019_chat_layout", m20261019_chat_layout, Just down_m20261019_chat_layout)
   ]
 
 -- | The list of migrations in ascending order by date
