@@ -1,9 +1,3 @@
--- Original Work Copyright (C) 2020-2022 simplex.chat
---
--- --- MODIFICATION NOTICE (AGPL v3 Section 5.a) ---
--- This file was modified by POPOPX Team in 2026.
--- Changes: Rebranded from SimpleX Chat to POPOPX Chat.
-
 {-# LANGUAGE QuasiQuotes #-}
 
 module Popopx.Chat.Store.SQLite.Migrations.M20220101_initial where
@@ -23,15 +17,8 @@ CREATE TABLE contact_profiles ( -- remote user profile
 
 CREATE INDEX contact_profiles_index ON contact_profiles (display_name, full_name);
 
-CREATE TABLE group_profiles ( -- shared group profiles
-  group_profile_id INTEGER PRIMARY KEY,
-  display_name TEXT NOT NULL, -- this name must not contain spaces
-  full_name TEXT NOT NULL,
-  properties TEXT NOT NULL DEFAULT '{}' -- JSON with user or contact profile
-);
-
 CREATE TABLE users (
-  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER PRIMARY KEY,
   contact_id INTEGER NOT NULL UNIQUE REFERENCES contacts ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED,
   local_display_name TEXT NOT NULL UNIQUE,
@@ -53,150 +40,17 @@ CREATE TABLE display_names (
 ) WITHOUT ROWID;
 
 CREATE TABLE contacts (
-  contact_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  contact_id INTEGER PRIMARY KEY,
   contact_profile_id INTEGER REFERENCES contact_profiles ON DELETE SET NULL,
   user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
   local_display_name TEXT NOT NULL,
   is_user INTEGER NOT NULL DEFAULT 0, -- 1 if this contact is a user
-  via_group INTEGER REFERENCES groups (group_id) ON DELETE SET NULL
-    DEFERRABLE INITIALLY DEFERRED,
+  via_group INTEGER REFERENCES groups (group_id) ON DELETE SET NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   FOREIGN KEY (user_id, local_display_name)
     REFERENCES display_names (user_id, local_display_name)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  UNIQUE (user_id, local_display_name),
-  UNIQUE (user_id, contact_profile_id)
-);
-
-CREATE TABLE groups (
-  group_id INTEGER PRIMARY KEY AUTOINCREMENT, -- local group ID
-  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
-  local_display_name TEXT NOT NULL, -- local group name without spaces
-  group_profile_id INTEGER REFERENCES group_profiles ON DELETE SET NULL, -- shared group profile
-  inv_queue_info BLOB, -- received
-  FOREIGN KEY (user_id, local_display_name)
-    REFERENCES display_names (user_id, local_display_name)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  UNIQUE (user_id, local_display_name),
-  UNIQUE (user_id, group_profile_id)
-);
-
-CREATE INDEX idx_groups_inv_queue_info ON groups (inv_queue_info);
-
-CREATE TABLE files (
-  file_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
-  group_id INTEGER REFERENCES groups ON DELETE CASCADE,
-  file_name TEXT NOT NULL,
-  file_path TEXT,
-  file_size INTEGER NOT NULL,
-  chunk_size INTEGER NOT NULL,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE
-);
-
-CREATE TABLE group_members ( -- group members, excluding the local user
-  group_member_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  group_id INTEGER NOT NULL REFERENCES groups ON DELETE CASCADE,
-  member_id BLOB NOT NULL, -- shared member ID, unique per group
-  member_role TEXT NOT NULL, -- owner, admin, member
-  member_category TEXT NOT NULL, -- see GroupMemberCategory
-  member_status TEXT NOT NULL, -- see GroupMemberStatus
-  invited_by INTEGER REFERENCES contacts (contact_id) ON DELETE SET NULL, -- NULL for the members who joined before the current user and for the group creator
-  sent_inv_queue_info BLOB, -- sent
-  group_queue_info BLOB, -- received
-  direct_queue_info BLOB, -- received
-  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
-  local_display_name TEXT NOT NULL, -- should be the same as contact
-  contact_profile_id INTEGER NOT NULL REFERENCES contact_profiles ON DELETE CASCADE,
-  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
-  FOREIGN KEY (user_id, local_display_name)
-    REFERENCES display_names (user_id, local_display_name)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  UNIQUE (group_id, member_id)
-);
-
-CREATE TABLE user_contact_links (
-  user_contact_link_id INTEGER PRIMARY KEY,
-  conn_req_contact BLOB NOT NULL,
-  local_display_name TEXT NOT NULL DEFAULT '',
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
-  UNIQUE (user_id, local_display_name)
-);
-
-CREATE TABLE rcv_files (
-  file_id INTEGER PRIMARY KEY REFERENCES files ON DELETE CASCADE,
-  file_status TEXT NOT NULL, -- new, accepted, connected, completed
-  group_member_id INTEGER REFERENCES group_members ON DELETE CASCADE,
-  file_queue_info BLOB
-);
-
-CREATE TABLE connections ( -- all SMP agent connections
-  connection_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  agent_conn_id BLOB NOT NULL UNIQUE,
-  conn_level INTEGER NOT NULL DEFAULT 0,
-  via_contact INTEGER REFERENCES contacts (contact_id) ON DELETE SET NULL,
-  conn_status TEXT NOT NULL,
-  conn_type TEXT NOT NULL, -- contact, member, rcv_file, snd_file
-  user_contact_link_id INTEGER REFERENCES user_contact_links ON DELETE CASCADE,
-  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
-  group_member_id INTEGER REFERENCES group_members ON DELETE CASCADE,
-  snd_file_id INTEGER,
-  rcv_file_id INTEGER REFERENCES rcv_files (file_id) ON DELETE CASCADE,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
-  FOREIGN KEY (snd_file_id, connection_id)
-    REFERENCES snd_files (file_id, connection_id)
-    ON DELETE CASCADE
-    DEFERRABLE INITIALLY DEFERRED
-);
-
-CREATE TABLE snd_files (
-  file_id INTEGER NOT NULL REFERENCES files ON DELETE CASCADE,
-  connection_id INTEGER NOT NULL REFERENCES connections ON DELETE CASCADE,
-  file_status TEXT NOT NULL, -- new, accepted, connected, completed
-  group_member_id INTEGER REFERENCES group_members ON DELETE CASCADE,
-  PRIMARY KEY (file_id, connection_id)
-) WITHOUT ROWID;
-
-CREATE TABLE snd_file_chunks (
-  file_id INTEGER NOT NULL,
-  connection_id INTEGER NOT NULL,
-  chunk_number INTEGER NOT NULL,
-  chunk_agent_msg_id INTEGER,
-  chunk_sent INTEGER NOT NULL DEFAULT 0, -- 0 (sent to agent), 1 (sent to server)
-  FOREIGN KEY (file_id, connection_id) REFERENCES snd_files ON DELETE CASCADE,
-  PRIMARY KEY (file_id, connection_id, chunk_number)
-) WITHOUT ROWID;
-
-CREATE TABLE rcv_file_chunks (
-  file_id INTEGER NOT NULL REFERENCES rcv_files ON DELETE CASCADE,
-  chunk_number INTEGER NOT NULL,
-  chunk_agent_msg_id INTEGER NOT NULL,
-  chunk_stored INTEGER NOT NULL DEFAULT 0, -- 0 (received), 1 (appended to file)
-  PRIMARY KEY (file_id, chunk_number)
-) WITHOUT ROWID;
-
-CREATE TABLE contact_requests (
-  contact_request_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_contact_link_id INTEGER NOT NULL REFERENCES user_contact_links
-    ON UPDATE CASCADE ON DELETE CASCADE,
-  agent_invitation_id  BLOB NOT NULL,
-  contact_profile_id INTEGER REFERENCES contact_profiles
-    ON DELETE SET NULL
-    DEFERRABLE INITIALLY DEFERRED,
-  local_display_name TEXT NOT NULL,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
-  FOREIGN KEY (user_id, local_display_name)
-    REFERENCES display_names (user_id, local_display_name)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
-    DEFERRABLE INITIALLY DEFERRED,
   UNIQUE (user_id, local_display_name),
   UNIQUE (user_id, contact_profile_id)
 );
@@ -234,6 +88,51 @@ CREATE TABLE known_servers(
   UNIQUE (user_id, host, port)
 ) WITHOUT ROWID;
 
+CREATE TABLE group_profiles ( -- shared group profiles
+  group_profile_id INTEGER PRIMARY KEY,
+  display_name TEXT NOT NULL, -- this name must not contain spaces
+  full_name TEXT NOT NULL,
+  properties TEXT NOT NULL DEFAULT '{}' -- JSON with user or contact profile
+);
+
+CREATE TABLE groups (
+  group_id INTEGER PRIMARY KEY, -- local group ID
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+  local_display_name TEXT NOT NULL, -- local group name without spaces
+  group_profile_id INTEGER REFERENCES group_profiles ON DELETE SET NULL, -- shared group profile
+  inv_queue_info BLOB, -- received
+  FOREIGN KEY (user_id, local_display_name)
+    REFERENCES display_names (user_id, local_display_name)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  UNIQUE (user_id, local_display_name),
+  UNIQUE (user_id, group_profile_id)
+);
+
+CREATE INDEX idx_groups_inv_queue_info ON groups (inv_queue_info);
+
+CREATE TABLE group_members ( -- group members, excluding the local user
+  group_member_id INTEGER PRIMARY KEY,
+  group_id INTEGER NOT NULL REFERENCES groups ON DELETE CASCADE,
+  member_id BLOB NOT NULL, -- shared member ID, unique per group
+  member_role TEXT NOT NULL, -- owner, admin, member
+  member_category TEXT NOT NULL, -- see GroupMemberCategory
+  member_status TEXT NOT NULL, -- see GroupMemberStatus
+  invited_by INTEGER REFERENCES contacts (contact_id) ON DELETE SET NULL, -- NULL for the members who joined before the current user and for the group creator
+  sent_inv_queue_info BLOB, -- sent
+  group_queue_info BLOB, -- received
+  direct_queue_info BLOB, -- received
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+  local_display_name TEXT NOT NULL, -- should be the same as contact
+  contact_profile_id INTEGER NOT NULL REFERENCES contact_profiles ON DELETE CASCADE,
+  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
+  FOREIGN KEY (user_id, local_display_name)
+    REFERENCES display_names (user_id, local_display_name)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  UNIQUE (group_id, member_id)
+);
+
 CREATE TABLE group_member_intros (
   group_member_intro_id INTEGER PRIMARY KEY,
   re_group_member_id INTEGER NOT NULL REFERENCES group_members (group_member_id) ON DELETE CASCADE,
@@ -242,6 +141,100 @@ CREATE TABLE group_member_intros (
   direct_queue_info BLOB,
   intro_status TEXT NOT NULL, -- see GroupMemberIntroStatus
   UNIQUE (re_group_member_id, to_group_member_id)
+);
+
+CREATE TABLE files (
+  file_id INTEGER PRIMARY KEY,
+  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
+  group_id INTEGER REFERENCES groups ON DELETE CASCADE,
+  file_name TEXT NOT NULL,
+  file_path TEXT,
+  file_size INTEGER NOT NULL,
+  chunk_size INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE
+);
+
+CREATE TABLE snd_files (
+  file_id INTEGER NOT NULL REFERENCES files ON DELETE CASCADE,
+  connection_id INTEGER NOT NULL REFERENCES connections ON DELETE CASCADE,
+  file_status TEXT NOT NULL, -- new, accepted, connected, completed
+  group_member_id INTEGER REFERENCES group_members ON DELETE CASCADE,
+  PRIMARY KEY (file_id, connection_id)
+) WITHOUT ROWID;
+
+CREATE TABLE rcv_files (
+  file_id INTEGER PRIMARY KEY REFERENCES files ON DELETE CASCADE,
+  file_status TEXT NOT NULL, -- new, accepted, connected, completed
+  group_member_id INTEGER REFERENCES group_members ON DELETE CASCADE,
+  file_queue_info BLOB
+);
+
+CREATE TABLE snd_file_chunks (
+  file_id INTEGER NOT NULL,
+  connection_id INTEGER NOT NULL,
+  chunk_number INTEGER NOT NULL,
+  chunk_agent_msg_id INTEGER,
+  chunk_sent INTEGER NOT NULL DEFAULT 0, -- 0 (sent to agent), 1 (sent to server)
+  FOREIGN KEY (file_id, connection_id) REFERENCES snd_files ON DELETE CASCADE,
+  PRIMARY KEY (file_id, connection_id, chunk_number)
+) WITHOUT ROWID;
+
+CREATE TABLE rcv_file_chunks (
+  file_id INTEGER NOT NULL REFERENCES rcv_files ON DELETE CASCADE,
+  chunk_number INTEGER NOT NULL,
+  chunk_agent_msg_id INTEGER NOT NULL,
+  chunk_stored INTEGER NOT NULL DEFAULT 0, -- 0 (received), 1 (appended to file)
+  PRIMARY KEY (file_id, chunk_number)
+) WITHOUT ROWID;
+
+CREATE TABLE connections ( -- all SMP agent connections
+  connection_id INTEGER PRIMARY KEY,
+  agent_conn_id BLOB NOT NULL UNIQUE,
+  conn_level INTEGER NOT NULL DEFAULT 0,
+  via_contact INTEGER REFERENCES contacts (contact_id) ON DELETE SET NULL,
+  conn_status TEXT NOT NULL,
+  conn_type TEXT NOT NULL, -- contact, member, rcv_file, snd_file
+  user_contact_link_id INTEGER REFERENCES user_contact_links ON DELETE CASCADE,
+  contact_id INTEGER REFERENCES contacts ON DELETE CASCADE,
+  group_member_id INTEGER REFERENCES group_members ON DELETE CASCADE,
+  snd_file_id INTEGER,
+  rcv_file_id INTEGER REFERENCES rcv_files (file_id) ON DELETE CASCADE,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+  FOREIGN KEY (snd_file_id, connection_id)
+    REFERENCES snd_files (file_id, connection_id)
+    ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED
+);
+
+CREATE TABLE user_contact_links (
+  user_contact_link_id INTEGER PRIMARY KEY,
+  conn_req_contact BLOB NOT NULL,
+  local_display_name TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+  UNIQUE (user_id, local_display_name)
+);
+
+CREATE TABLE contact_requests (
+  contact_request_id INTEGER PRIMARY KEY,
+  user_contact_link_id INTEGER NOT NULL REFERENCES user_contact_links
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  agent_invitation_id  BLOB NOT NULL,
+  contact_profile_id INTEGER REFERENCES contact_profiles
+    ON DELETE SET NULL
+    DEFERRABLE INITIALLY DEFERRED,
+  local_display_name TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+  FOREIGN KEY (user_id, local_display_name)
+    REFERENCES display_names (user_id, local_display_name)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED,
+  UNIQUE (user_id, local_display_name),
+  UNIQUE (user_id, contact_profile_id)
 );
 
 -- all message events as received or sent, append only
