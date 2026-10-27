@@ -54,10 +54,11 @@
         in pkgs.runCommand "popopx-chat-src" {} ''
           cp -rL ${gitSrc} $out
           chmod -R u+w $out
+          echo "Building source at $(date)" > $out/build-timestamp.txt
           # Remove empty submodule directories and copy actual content  
-          # Force rebuild 2026-10-25 to pick up popopxmq migration fix
+          # Force rebuild 2026-10-27 to use latest popopxmq with SQL.execute_ fix
           rm -rf $out/popopxmq
-          cp -r ${./popopxmq} $out/popopxmq
+          cp -r /Users/elliot/POPOPX/popopxmq $out/popopxmq
           rm -rf $out/aeson
           cp -r ${pkgs.lib.cleanSource ./aeson} $out/aeson
           rm -rf $out/hs-socks
@@ -66,6 +67,7 @@
           cp -r ${pkgs.lib.cleanSource ./direct-sqlcipher} $out/direct-sqlcipher
           rm -rf $out/sqlcipher-simple
           cp -r ${pkgs.lib.cleanSource ./sqlcipher-simple} $out/sqlcipher-simple
+          echo "Source includes experiment 7: $(grep -c 'EXPERIMENT 7' $out/src/Popopx/Chat/Store/SQLite/Migrations/M20220101_initial.hs 2>/dev/null || echo 0)" >> $out/build-timestamp.txt
         '';
         sha256map = import ./scripts/nix/sha256map.nix;
         modules = [
@@ -671,3 +673,6 @@
       }
     );
 }
+# Force rebuild Sun 25 Oct 2026 20:34:03 CST
+          # Force rebuild 1792933838
+# Force rebuild for experiment 7 - Sun 25 Oct 2026 21:23:11 CST
