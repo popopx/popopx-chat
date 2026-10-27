@@ -52,7 +52,7 @@ import Data.Word (Word16)
 import Language.Haskell.TH (Exp, Q, runIO)
 import Network.Socket (HostName)
 import Numeric.Natural
-import qualified Paths_popopx_chat as SC
+import qualified Paths_popupx_chat as SC
 import Popopx.Chat.AppSettings
 import Popopx.Chat.Call
 import Popopx.Chat.Delivery
@@ -97,7 +97,7 @@ import Popopx.Messaging.Parsers (defaultJSON, dropPrefix, enumJSON, parseAll, pa
 import Popopx.Messaging.Protocol (AProtoServerWithAuth, AProtocolType (..), MsgId, NMsgMeta (..), NtfServer, ProtocolType (..), QueueId, SMPMsgMeta (..), SubscriptionMode (..), XFTPServer)
 import Popopx.Messaging.Session (SessionVar)
 import Popopx.Messaging.TMap (TMap)
-import Popopx.Messaging.Transport (TLS, TransportPeer (..), popopxMQVersion)
+import Popopx.Messaging.Transport (TLS, TransportPeer (..), popupxMQVersion)
 import Popopx.Messaging.Transport.Client (SocksProxyWithAuth, TransportHost)
 import Popopx.Messaging.Util (AnyError (..), catchAllErrors, catchOwn', (<$$>))
 import Popopx.RemoteControl.Client
@@ -115,19 +115,19 @@ versionNumber :: String
 versionNumber = showVersion SC.version
 
 versionString :: String -> String
-versionString ver = "PopopX Chat v" <> ver
+versionString ver = "SimpleX Chat v" <> ver
 
 updateStr :: String
-updateStr = "To update run: curl -o- https://raw.githubusercontent.com/popopx-chat/popopx-chat/master/install.sh | bash"
+updateStr = "To update run: curl -o- https://raw.githubusercontent.com/popupx-chat/popupx-chat/master/install.sh | bash"
 
-popopxmqCommitQ :: Q Exp
-popopxmqCommitQ = do
+popupxmqCommitQ :: Q Exp
+popupxmqCommitQ = do
   s <- either (const "") B.unpack . A.parseOnly commitHashP <$> runIO (B.readFile "./cabal.project")
   [|fromString s|]
   where
     commitHashP :: A.Parser ByteString
     commitHashP =
-      A.manyTill' A.anyChar "location: https://github.com/popopx-chat/popopxmq.git"
+      A.manyTill' A.anyChar "location: https://github.com/popupx-chat/popupxmq.git"
         *> A.takeWhile (== ' ')
         *> A.endOfLine
         *> A.takeWhile (== ' ')
@@ -135,11 +135,11 @@ popopxmqCommitQ = do
         *> A.takeWhile (A.notInClass " \r\n")
 
 coreVersionInfo :: String -> CoreVersionInfo
-coreVersionInfo popopxmqCommit =
+coreVersionInfo popupxmqCommit =
   CoreVersionInfo
     { version = versionNumber,
-      popopxmqVersion = popopxMQVersion,
-      popopxmqCommit
+      popupxmqVersion = popupxMQVersion,
+      popupxmqCommit
     }
 
 data ChatConfig = ChatConfig
@@ -452,7 +452,7 @@ data ChatCommand
   | APIGetCallInvitations
   | APICallStatus ContactId WebRTCCallStatus
   | APIUpdateProfile {userId :: UserId, profile :: Profile}
-  | APISetUserDomain {userId :: UserId, popopxDomain :: Maybe (StrJSON "PopopxDomain" PopopxDomain)}
+  | APISetUserDomain {userId :: UserId, popupxDomain :: Maybe (StrJSON "PopopxDomain" PopopxDomain)}
   | APISetContactPrefs {contactId :: ContactId, preferences :: Preferences}
   | APISetContactAlias {contactId :: ContactId, localAlias :: LocalAlias}
   | APISetGroupAlias {groupId :: GroupId, localAlias :: LocalAlias}
@@ -593,7 +593,7 @@ data ChatCommand
   | APISetProfileAddress {userId :: UserId, enable :: Bool}
   | SetProfileAddress Bool
   | APISetAddressSettings {userId :: UserId, pqRatchet :: Maybe Bool, settings :: AddressSettings}
-  | SetAddressSettings {pqRatchet :: Maybe Bool, settings :: AddressSettings}
+  | SetAddressSettings {pqRatchet :: Maybe Bool, settings :: AddressSettings, chatLayout :: Maybe (Maybe ChatLayout)}
   | AcceptContact IncognitoEnabled ContactName
   | RejectContact ContactName Bool
   | ForwardMessage {toChatName :: ChatName, fromContactName :: ContactName, forwardedMsg :: Text}
@@ -664,7 +664,7 @@ data ChatCommand
   | UpdateProfile ContactName (Maybe Text) -- UserId (not used in UI)
   | UpdateProfileImage (Maybe ImageData) -- UserId (not used in UI)
   | UpdateProfileImageFromFile FilePath -- set profile image from a .png/.jpg/.jpeg file
-  | AddBadge BadgeCredential -- attach an issued badge credential (testing; credential from `popopx-chat badge sign`)
+  | AddBadge BadgeCredential -- attach an issued badge credential (testing; credential from `popupx-chat badge sign`)
   | APIRedeemBadgeCode {userId :: UserId, code :: Text} -- redeem a badge code with the configured badge service
   | APIPurchaseBadge {userId :: UserId, echoedInvoiceId :: Maybe Text, payment :: ServicePayment} -- hand over an App Store or Google Play receipt, held until a worker credits it; answers from the record and sends nothing
   | APICreateBadgeInvoice {userId :: UserId} -- the record of a store purchase, created before the store charges; answers the id the store echoes
@@ -673,16 +673,13 @@ data ChatCommand
   -- episode is last because it is free text: it is the value that makes one occurrence of an
   -- alert distinct from the next, and the app returns whatever it was given
   | APIAckBadgeAlert {userId :: UserId, badgePurchaseId :: Int64, alertKind :: BadgeAlertKind, snooze :: Bool, episode :: Text}
-  | APIListBinThereBots {userId :: UserId}
-  | APIAddBinThereBot {userId :: UserId, bot :: BinThereBot}
-  | APIUpdateBinThereBot {userId :: UserId, bot :: BinThereBot}
-  | APIDeleteBinThereBot {userId :: UserId, botId :: Int64}
   | ShowProfileImage
   | SetUserFeature AChatFeature FeatureAllowed -- UserId (not used in UI)
   | SetContactFeature AChatFeature ContactName (Maybe FeatureAllowed)
   | SetGroupFeature AGroupFeatureNoRole GroupName GroupFeatureEnabled
   | SetGroupFeatureRole AGroupFeatureRole GroupName GroupFeatureEnabled (Maybe GroupMemberRole)
   | SetGroupMemberAdmissionReview GroupName (Maybe MemberCriteria)
+  | SetGroupChatLayout GroupName (Maybe ChatLayout)
   | SetUserTimedMessages Bool -- UserId (not used in UI)
   | SetContactTimedMessages ContactName (Maybe TimedMessagesEnabled)
   | SetGroupTimedMessages GroupName (Maybe Int)
@@ -716,6 +713,10 @@ data ChatCommand
   | GetAgentWorkers
   | GetAgentWorkersDetails
   | GetAgentQueuesInfo
+  | APIListBinThereBots {userId :: UserId}
+  | APIAddBinThereBot {userId :: UserId, bot :: BinThereBot}
+  | APIUpdateBinThereBot {userId :: UserId, bot :: BinThereBot}
+  | APIDeleteBinThereBot {userId :: UserId, botId :: Int64}
   | -- The parser will return this command for strings that start from "//".
     -- This command should be processed in preCmdHook
     CustomChatCommand ByteString
@@ -885,10 +886,6 @@ data ChatResponse
   | CRBadgeInvoice {user :: User, invoiceId :: Text}
   | CRBadgeState {user :: User, badgeState :: Maybe BadgeState, storePurchases :: [OpenStorePurchase]}
   | CRBadgeLedger {user :: User, badgeLedger :: [StatementEntry]}
-  | CRBinThereBotsList {user :: User, bots :: [BinThereBot]}
-  | CRBinThereBotAdded {user :: User, bot :: BinThereBot}
-  | CRBinThereBotUpdated {user :: User, bot :: BinThereBot}
-  | CRBinThereBotDeleted {user :: User, botId :: Int64}
   | CRUserAcceptedGroupSent {user :: User, groupInfo :: GroupInfo, hostContact :: Maybe Contact}
   | CRUserDeletedMembers {user :: User, groupInfo :: GroupInfo, members :: [GroupMember], withMessages :: Bool, msgSigned :: Bool}
   | CRGroupsList {user :: User, groups :: [GroupInfo]}
@@ -980,6 +977,10 @@ data ChatResponse
   | CRAgentSubsDetails {agentSubs :: SubscriptionsInfo}
   | CRAgentQueuesInfo {agentQueuesInfo :: AgentQueuesInfo}
   | CRAppSettings {appSettings :: AppSettings}
+  | CRBinThereBotsList {user :: User, bots :: [BinThereBot]}
+  | CRBinThereBotAdded {user :: User, bot :: BinThereBot}
+  | CRBinThereBotUpdated {user :: User, bot :: BinThereBot}
+  | CRBinThereBotDeleted {user :: User, botId :: Int64}
   | CRCustomChatResponse {user_ :: Maybe User, response :: Text}
   deriving (Show)
 
@@ -1474,8 +1475,8 @@ data ChatLogLevel = CLLDebug | CLLInfo | CLLWarning | CLLError | CLLImportant
 
 data CoreVersionInfo = CoreVersionInfo
   { version :: String,
-    popopxmqVersion :: String,
-    popopxmqCommit :: String
+    popupxmqVersion :: String,
+    popupxmqCommit :: String
   }
   deriving (Show)
 
@@ -1496,7 +1497,7 @@ data ChatError
   | ChatErrorRemoteHost {rhKey :: RHKey, remoteHostError :: RemoteHostError}
   deriving (Show, Exception)
 
--- why a resolved PopopX name could not be used (the name itself resolved; an unregistered name is the agent's NAME NOT_FOUND)
+-- why a resolved POPOPX name could not be used (the name itself resolved; an unregistered name is the agent's NAME NOT_FOUND)
 data PopopxDomainError
   = SDENoValidLink -- the name's record has no usable contact/channel link
   | SDEUnknownDomain -- the resolved link's profile has no name, or a different name
@@ -1535,7 +1536,7 @@ data ChatErrorType
   | CEChatNotStopped
   | CEChatStoreChanged
   | CEInvalidConnReq
-  | CEPopopxDomainNotReady {popopxDomain :: PopopxDomain, popopxDomainError :: PopopxDomainError}
+  | CEPopopxDomainNotReady {popupxDomain :: PopopxDomain, popupxDomainError :: PopopxDomainError}
   | CENotResolvedLocally -- a name or link is not a known chat in the local store and online resolution is off (PRMNever)
   | CEUnsupportedConnReq
   | CEInvalidChatMessage {connection :: Connection, msgMeta :: Maybe MsgMetaJSON, messageData :: Text, message :: String}

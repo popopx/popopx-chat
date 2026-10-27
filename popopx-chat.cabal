@@ -179,6 +179,7 @@ library
           Popopx.Chat.Store.Postgres.Migrations.M20261010_invite_member_via_group
           Popopx.Chat.Store.Postgres.Migrations.M20261012_delivery_job_notification
           Popopx.Chat.Store.Postgres.Migrations.M20261016_badge_store_receipts
+          Popopx.Chat.Store.Postgres.Migrations.M20261019_chat_layout
   else
       exposed-modules:
           Popopx.Chat.Archive
@@ -364,6 +365,7 @@ library
           Popopx.Chat.Store.SQLite.Migrations.M20261012_delivery_job_notification
           Popopx.Chat.Store.SQLite.Migrations.M20261016_badge_store_receipts
           Popopx.Chat.Store.SQLite.Migrations.M20261018_autoincrement_ids
+          Popopx.Chat.Store.SQLite.Migrations.M20261019_chat_layout
   other-modules:
       Paths_popopx_chat
   hs-source-dirs:

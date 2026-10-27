@@ -129,10 +129,6 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, showFullLinks, te
   CRApiChat u chat _ -> ttyUser u $ if testView then testViewChat chat else [viewJSON chat]
   CRChatContentTypes cts -> [plain $ "Chat content types: " <> T.intercalate ", " (map (safeDecodeUtf8 . strEncode) cts)]
   CRChatTags u tags -> ttyUser u [viewJSON tags]
-  CRBinThereBotsList u bots -> ttyUser u [viewJSON bots]
-  CRBinThereBotAdded u bot -> ttyUser u [viewJSON bot]
-  CRBinThereBotUpdated u bot -> ttyUser u [viewJSON bot]
-  CRBinThereBotDeleted u botId -> ttyUser u [plain $ "bot deleted: " <> tshow botId]
   CRServerTestResult u srv testFailure info -> ttyUser u $ viewServerTestResult srv testFailure <> maybe [] viewServerInfo info
     where
       viewServerInfo = \case
@@ -742,7 +738,6 @@ viewChatItem chat ci@ChatItem {chatDir, meta = meta@CIMeta {itemForwarded, forwa
       GroupChat g scopeInfo -> case chatDir of
         CIGroupSnd -> case content of
           CISndMsgContent mc -> hideLive meta $ withSndFile to $ sndMsg to context mc
-          CISndGroupInvitation {} -> showSndItemProhibited to
           _ -> showSndItem to
           where
             to = ttyToGroup g scopeInfo
@@ -753,7 +748,6 @@ viewChatItem chat ci@ChatItem {chatDir, meta = meta@CIMeta {itemForwarded, forwa
             CIRcvMsgContent mc -> withRcvFile from $ rcvMsg from context mc
             CIRcvIntegrityError err -> viewRcvIntegrityError from err ts tz meta
             CIRcvMsgError err -> viewRcvMsgError from err ts tz meta
-            CIRcvGroupInvitation {} | isJust m_ -> showRcvItemProhibited from
             CIRcvModerated {} -> receivedWithTime_ ts tz (ttyFromGroup g scopeInfo m_) context meta [plainContent content] False
             CIRcvBlocked {} -> receivedWithTime_ ts tz (ttyFromGroup g scopeInfo m_) context meta [plainContent content] False
             _ -> showRcvItem from
@@ -1090,10 +1084,10 @@ viewConnReqInvitation showFullLinks (CCLink cReq shortLink) =
           ]
         else []
   where
-    cReqStr = strEncode $ popopxChatInvitation cReq
+    cReqStr = strEncode $ popupxChatInvitation cReq
 
-popopxChatInvitation :: ConnReqInvitation -> ConnReqInvitation
-popopxChatInvitation (CRInvitationUri crData e2e) = CRInvitationUri crData {crScheme = popopxChat} e2e
+popupxChatInvitation :: ConnReqInvitation -> ConnReqInvitation
+popupxChatInvitation (CRInvitationUri crData e2e) = CRInvitationUri crData {crScheme = popupxChat} e2e
 
 viewContactNotFound :: ContactName -> Maybe (GroupInfo, GroupMember) -> [StyledString]
 viewContactNotFound cName suspectedMember =
@@ -1159,14 +1153,14 @@ connReqContact_ showFullLinks intro (CCLink cReq shortLink) =
   ]
     <> ["The contact link for old clients: " <> plain cReqStr | showFullLinks, isJust shortLink]
   where
-    cReqStr = strEncode $ popopxChatContact cReq
+    cReqStr = strEncode $ popupxChatContact cReq
 
-popopxChatContact :: ConnReqContact -> ConnReqContact
-popopxChatContact (CRContactUri crData e2e) = CRContactUri crData {crScheme = popopxChat} e2e
+popupxChatContact :: ConnReqContact -> ConnReqContact
+popupxChatContact (CRContactUri crData e2e) = CRContactUri crData {crScheme = popupxChat} e2e
 
-popopxChatContact' :: ConnLinkContact -> ConnLinkContact
-popopxChatContact' = \case
-  CLFull (CRContactUri crData e2e) -> CLFull $ CRContactUri crData {crScheme = popopxChat} e2e
+popupxChatContact' :: ConnLinkContact -> ConnLinkContact
+popupxChatContact' = \case
+  CLFull (CRContactUri crData e2e) -> CLFull $ CRContactUri crData {crScheme = popupxChat} e2e
   l@(CLShort _) -> l
 
 groupPopopxDomain :: GroupInfo -> Maybe PopopxDomain
@@ -1175,7 +1169,7 @@ groupPopopxDomain GroupInfo {groupProfile = GroupProfile {publicGroup}} =
 
 viewDomainVerified :: PopopxNameType -> Maybe PopopxDomain -> Maybe Text -> [StyledString]
 viewDomainVerified nameType domain_ result =
-  let nameStr = maybe "name" (\d -> "PopopX name " <> shortNameInfoStr (PopopxNameInfo nameType d)) domain_
+  let nameStr = maybe "name" (\d -> "POPOPX name " <> shortNameInfoStr (PopopxNameInfo nameType d)) domain_
    in case result of
         Nothing -> [plain nameStr <> " verified"]
         Just reason -> [plain nameStr <> " not verified: " <> plain reason]
@@ -1183,29 +1177,30 @@ viewDomainVerified nameType domain_ result =
 -- §4.7: show a peer's claimed name only with its verification context — "verified" / "verification
 -- failed" when a status is recorded, "unverified" when there is a proof but no status yet, and nothing
 -- at all when there is neither (an unproven, unverifiable claim is not shown).
-popopxDomainLine :: PopopxNameType -> Maybe PopopxDomainClaim -> Maybe Bool -> [StyledString]
-popopxDomainLine _ Nothing _ = []
-popopxDomainLine nameType (Just PopopxDomainClaim {domain, proof}) status = case status of
+popupxDomainLine :: PopopxNameType -> Maybe PopopxDomainClaim -> Maybe Bool -> [StyledString]
+popupxDomainLine _ Nothing _ = []
+popupxDomainLine nameType (Just PopopxDomainClaim {domain, proof}) status = case status of
   Just True -> [line "verified"]
   Just False -> [line "verification failed"]
   Nothing
     | isJust proof -> [line "unverified"]
     | otherwise -> []
   where
-    line s = plain $ "PopopX name: " <> shortNameInfoStr (PopopxNameInfo nameType (unStrJSON domain)) <> " (" <> s <> ")"
+    line s = plain $ "POPOPX name: " <> shortNameInfoStr (PopopxNameInfo nameType (unStrJSON domain)) <> " (" <> s <> ")"
 
 -- TODO [short links] show all settings
 viewAddressSettings :: AddressSettings -> [StyledString]
-viewAddressSettings AddressSettings {businessAddress, autoAccept, autoReply} = case autoAccept of
+viewAddressSettings AddressSettings {businessAddress, autoAccept, chatLayout, autoReply} = case autoAccept of
   Just AutoAccept {acceptIncognito} ->
     ("auto_accept on" <> aaInfo)
-      : maybe [] ((["auto reply:"] <>) . ttyMsgContent) autoReply
+      : viewChatLayout chatLayout
+      <> maybe [] ((["auto reply:"] <>) . ttyMsgContent) autoReply
     where
       aaInfo
         | businessAddress = ", business"
         | acceptIncognito = ", incognito"
         | otherwise = ""
-  _ -> ["auto_accept off"]
+  _ -> "auto_accept off" : viewChatLayout chatLayout
 
 groupLink_ :: Bool -> StyledString -> GroupInfo -> GroupLink -> [StyledString]
 groupLink_ showFullLinks intro g GroupLink {connLinkContact = CCLink cReq shortLink, acceptMemberRole} =
@@ -1213,7 +1208,7 @@ groupLink_ showFullLinks intro g GroupLink {connLinkContact = CCLink cReq shortL
     "",
     plain $ maybe cReqStr strEncode shortLink
   ]
-    <> [plain ("PopopX name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
+    <> [plain ("POPOPX name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
     <> [ "",
          "Anybody can connect to you and join group as " <> showRole acceptMemberRole <> " with: " <> highlight' "/c <group_link_above>",
          "to show it again: " <> highlight ("/show link #" <> viewGroupName g),
@@ -1221,7 +1216,7 @@ groupLink_ showFullLinks intro g GroupLink {connLinkContact = CCLink cReq shortL
        ]
     <> ["The group link for old clients: " <> plain cReqStr | showFullLinks, isJust shortLink]
   where
-    cReqStr = strEncode $ popopxChatContact cReq
+    cReqStr = strEncode $ popupxChatContact cReq
 
 viewGroupLinkDeleted :: GroupInfo -> [StyledString]
 viewGroupLinkDeleted g =
@@ -1294,10 +1289,10 @@ viewGroupLinkRelaysUpdated g groupLink relays =
       [ "group link:",
         plain $ maybe cReqStr strEncode shortLink
       ]
-    <> [plain ("PopopX name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
+    <> [plain ("POPOPX name: " <>  shortNameInfoStr (PopopxNameInfo NTPublicGroup d)) | Just d <- [groupPopopxDomain g]]
   where
     GroupLink {connLinkContact = CCLink cReq shortLink} = groupLink
-    cReqStr = strEncode $ popopxChatContact cReq
+    cReqStr = strEncode $ popupxChatContact cReq
 
 viewGroupCreated :: GroupInfo -> Bool -> [StyledString]
 viewGroupCreated g testView =
@@ -1899,13 +1894,13 @@ dayTime :: UTCTime -> Text
 dayTime = T.pack . formatTime defaultTimeLocale "%Y-%m-%d %H:%M"
 
 viewContactInfo :: Contact -> Maybe ConnectionStats -> Maybe Profile -> [StyledString]
-viewContactInfo ct@Contact {contactId, profile = LocalProfile {localAlias, contactLink, localBadge, contactDomain, contactDomainVerified, description}, activeConn, uiThemes, customData} stats incognitoProfile =
+viewContactInfo ct@Contact {contactId, profile = LocalProfile {localAlias, contactLink, localBadge, contactDomain, contactDomainVerified, description}, activeConn, uiThemes, chatLayout, customData} stats incognitoProfile =
   ["contact ID: " <> sShow contactId]
     <> viewContactBadge localBadge
     <> maybe [] ((bold' "description:" :) . map plain . T.lines) description
     <> maybe [] viewConnectionStats stats
-    <> maybe [] (\l -> ["contact address: " <> plain (strEncode (popopxChatContact' l))]) contactLink
-    <> popopxDomainLine NTContact contactDomain contactDomainVerified
+    <> maybe [] (\l -> ["contact address: " <> plain (strEncode (popupxChatContact' l))]) contactLink
+    <> popupxDomainLine NTContact contactDomain contactDomainVerified
     <> maybe
       ["you've shared main profile with this contact"]
       (\p -> ["you've shared incognito profile with this contact: " <> incognitoProfile' p])
@@ -1915,6 +1910,7 @@ viewContactInfo ct@Contact {contactId, profile = LocalProfile {localAlias, conta
     <> ["quantum resistant end-to-end encryption" | contactPQEnabled ct == CR.PQEncOn]
     <> maybe [] (\ac -> [viewPeerChatVRange (peerChatVRange ac)]) activeConn
     <> viewUITheme uiThemes
+    <> viewChatLayout chatLayout
     <> viewCustomData customData
 
 viewGroupInfo :: GroupInfo -> [StyledString]
@@ -1928,14 +1924,17 @@ viewGroupInfo gInfo@GroupInfo {groupId, businessChat, groupDomainVerified, group
   where
     -- a business presents as a contact (@-name); a public group/channel shows its #-name
     domainLine = case businessChat of
-      Just bc -> popopxDomainLine NTContact (businessDomain bc) groupDomainVerified
-      Nothing -> popopxDomainLine NTPublicGroup (publicGroup >>= publicGroupAccess >>= groupDomainClaim) groupDomainVerified
+      Just bc -> popupxDomainLine NTContact (businessDomain bc) groupDomainVerified
+      Nothing -> popupxDomainLine NTPublicGroup (publicGroup >>= publicGroupAccess >>= groupDomainClaim) groupDomainVerified
     memberCountLine
       | useRelays' gInfo, Just count <- publicMemberCount = "subscribers: " <> sShow count
       | otherwise = "current members: " <> sShow currentMembers
 
 viewUITheme :: Maybe UIThemeEntityOverrides -> [StyledString]
 viewUITheme = maybe [] (\uiThemes -> ["UI themes: " <> viewJSON uiThemes])
+
+viewChatLayout :: Maybe ChatLayout -> [StyledString]
+viewChatLayout = maybe [] (\chatLayout -> ["chat layout: " <> plain (textEncode chatLayout)])
 
 viewCustomData :: Maybe CustomData -> [StyledString]
 viewCustomData = maybe [] (\(CustomData v) -> ["custom data: " <> viewJSON (J.Object v)])
@@ -1948,7 +1947,7 @@ viewGroupMemberInfo GroupInfo {groupId} m@GroupMember {groupMemberId, memberProf
     <> viewContactBadge localBadge
     <> maybe [] ((bold' "description:" :) . map plain . T.lines) description
     <> maybe ["member not connected"] viewConnectionStats stats
-    <> maybe [] (\l -> ["contact address: " <> (plain . strEncode) (popopxChatContact' l)]) contactLink
+    <> maybe [] (\l -> ["contact address: " <> (plain . strEncode) (popupxChatContact' l)]) contactLink
     <> ["alias: " <> plain localAlias | localAlias /= ""]
     <> [viewConnectionVerified mSecurityCode | isJust stats || isJust mSecurityCode]
     <> maybe [] (\ac -> [viewPeerChatVRange (peerChatVRange ac)]) activeConn
@@ -2117,10 +2116,10 @@ countactUserPrefText cup = case cup of
 
 viewGroupUpdated :: GroupInfo -> GroupInfo -> Maybe GroupMember -> Maybe MsgSigStatus -> [StyledString]
 viewGroupUpdated
-  GroupInfo {localDisplayName = n, groupProfile = GroupProfile {fullName, shortDescr, description, image, groupPreferences = gps, memberAdmission = ma, publicGroup = pg}}
-  g'@GroupInfo {localDisplayName = n', groupProfile = GroupProfile {fullName = fullName', shortDescr = shortDescr', description = description', image = image', groupPreferences = gps', memberAdmission = ma', publicGroup = pg'}}
+  GroupInfo {localDisplayName = n, groupProfile = GroupProfile {fullName, shortDescr, description, image, groupPreferences = gps, memberAdmission = ma, chatLayout = layout, publicGroup = pg}}
+  g'@GroupInfo {localDisplayName = n', groupProfile = GroupProfile {fullName = fullName', shortDescr = shortDescr', description = description', image = image', groupPreferences = gps', memberAdmission = ma', chatLayout = layout', publicGroup = pg'}}
   m signed = do
-    let update = groupProfileUpdated <> groupPrefsUpdated <> memberAdmissionUpdated <> publicGroupAccessUpdated
+    let update = groupProfileUpdated <> groupPrefsUpdated <> memberAdmissionUpdated <> chatLayoutUpdated <> publicGroupAccessUpdated
     if null update
       then []
       else memberUpdated <> update
@@ -2145,6 +2144,9 @@ viewGroupUpdated
       memberAdmissionUpdated
         | ma == ma' = []
         | otherwise = ["changed member admission rules"]
+      chatLayoutUpdated
+        | layout == layout' = []
+        | otherwise = ["chat layout " <> maybe "removed" (("changed to: " <>) . plain . textEncode) layout']
       publicGroupAccessUpdated
         | access == access' = []
         | otherwise = ["updated public group access:" <> viewAccess access']
@@ -2159,11 +2161,12 @@ viewGroupUpdated
               <> (if allowEmbedding then " embed=on" else "")
 
 viewGroupProfile :: GroupInfo -> [StyledString]
-viewGroupProfile g@GroupInfo {groupProfile = GroupProfile {shortDescr, description, image, groupPreferences = gps}} =
+viewGroupProfile g@GroupInfo {groupProfile = GroupProfile {shortDescr, description, image, groupPreferences = gps, chatLayout}} =
   [ttyFullGroup g]
     <> maybe [] (\sd -> ["description: " <> plain sd]) shortDescr
     <> maybe [] (const ["has profile image"]) image
     <> maybe [] ((bold' "welcome message:" :) . map plain . T.lines) description
+    <> viewChatLayout chatLayout
     <> (bold' "group preferences:" : map viewPref (if useRelays' g then channelGroupFeatures else regularGroupFeatures))
   where
     viewPref (AGF f) = plain $ groupPreferenceText (pref gps)
@@ -2223,7 +2226,7 @@ viewConnectionUserChanged showFullLinks User {localDisplayName = n} PendingConta
               ]
             else []
       where
-        cReqStr = strEncode $ popopxChatInvitation cReq
+        cReqStr = strEncode $ popupxChatInvitation cReq
 
 viewContactUserChanged :: User -> Contact -> User -> Contact -> [StyledString]
 viewContactUserChanged
@@ -2335,11 +2338,11 @@ viewConnectionPlan ChatConfig {logLevel, testView} _connLink = \case
       _ -> False
     contactDomainLine :: Contact -> [StyledString]
     contactDomainLine Contact {profile = LocalProfile {contactDomain, contactDomainVerified}} =
-      popopxDomainLine NTContact contactDomain contactDomainVerified
+      popupxDomainLine NTContact contactDomain contactDomainVerified
     groupDomainLine :: GroupInfo -> [StyledString]
     groupDomainLine GroupInfo {groupDomainVerified, groupProfile = GroupProfile {publicGroup}} = do
       let domain = publicGroup >>= publicGroupAccess >>= groupDomainClaim
-       in popopxDomainLine NTPublicGroup domain groupDomainVerified
+       in popupxDomainLine NTPublicGroup domain groupDomainVerified
     viewSigVerification = \case
       Just OVVerified -> ["owner signature: verified"]
       Just (OVFailed r) -> ["owner signature: FAILED (" <> plain r <> ")"]
@@ -2676,7 +2679,7 @@ viewCallInvitation ct@Contact {contactId} callType@CallType {media} sharedKey =
   [ ttyContact' ct <> " wants to connect with you via WebRTC " <> callMediaStr callType <> " call " <> encryptedCallText callType,
     "To accept the call, please open the link below in your browser" <> supporedBrowsers callType,
     "",
-    "https://popopx.chat/call#" <> plain queryString
+    "https://popupx.chat/call#" <> plain queryString
   ]
   where
     aesKey = B.unpack . strEncode . C.unKey <$> sharedKey
@@ -2692,7 +2695,7 @@ viewCallOffer ct@Contact {contactId} callType@CallType {media} WebRTCSession {rt
   [ ttyContact' ct <> " accepted your WebRTC " <> callMediaStr callType <> " call " <> encryptedCallText callType,
     "To connect, please open the link below in your browser" <> supporedBrowsers callType,
     "",
-    "https://popopx.chat/call#" <> plain queryString
+    "https://popupx.chat/call#" <> plain queryString
   ]
   where
     aesKey = B.unpack . strEncode . C.unKey <$> sharedKey
@@ -2727,10 +2730,10 @@ supporedBrowsers callType
   | otherwise = ""
 
 viewVersionInfo :: ChatLogLevel -> CoreVersionInfo -> [StyledString]
-viewVersionInfo logLevel CoreVersionInfo {version, popopxmqVersion, popopxmqCommit} =
+viewVersionInfo logLevel CoreVersionInfo {version, popupxmqVersion, popupxmqCommit} =
   map plain $
     if logLevel <= CLLInfo
-      then [versionString version, updateStr, "popopxmq: " <> popopxmqVersion <> parens popopxmqCommit]
+      then [versionString version, updateStr, "popupxmq: " <> popupxmqVersion <> parens popupxmqCommit]
       else [versionString version, updateStr]
   where
 
@@ -2817,7 +2820,7 @@ viewChatError isCmd logLevel testView = \case
       let reason = case domainErr of
             SDENoValidLink -> "has no valid connection link"
             SDEUnknownDomain -> "is not included in the connection link's profile"
-       in [plain $ "PopopX name " <> strEncode domain <> " " <> reason]
+       in [plain $ "POPOPX name " <> strEncode domain <> " " <> reason]
     CENotResolvedLocally -> ["no matching chat found, name resolution is disabled"]
     CEUnsupportedConnReq -> [ "", "Connection link is not supported by the your app version, please ugrade it.", plain updateStr]
     CEInvalidChatMessage Connection {connId} msgMeta_ msg e ->

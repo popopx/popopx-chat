@@ -45,30 +45,10 @@
         # We need this, to specify we want the cabal project.
         # If the stack.yaml was dropped, this would not be necessary.
         projectFileName = "cabal.project";
-        src = let
-          gitSrc = pkgs.haskell-nix.haskellLib.cleanGit {
-            name = "popopx-chat";
-            src = ./.;
-          };
-          # Include submodule contents from local paths
-        in pkgs.runCommand "popopx-chat-src" {} ''
-          cp -rL ${gitSrc} $out
-          chmod -R u+w $out
-          echo "Building source at $(date)" > $out/build-timestamp.txt
-          # Remove empty submodule directories and copy actual content  
-          # Force rebuild 2026-10-27 to use latest popopxmq with SQL.execute_ fix
-          rm -rf $out/popopxmq
-          cp -r /Users/elliot/POPOPX/popopxmq $out/popopxmq
-          rm -rf $out/aeson
-          cp -r ${pkgs.lib.cleanSource ./aeson} $out/aeson
-          rm -rf $out/hs-socks
-          cp -r ${pkgs.lib.cleanSource ./hs-socks} $out/hs-socks
-          rm -rf $out/direct-sqlcipher
-          cp -r ${pkgs.lib.cleanSource ./direct-sqlcipher} $out/direct-sqlcipher
-          rm -rf $out/sqlcipher-simple
-          cp -r ${pkgs.lib.cleanSource ./sqlcipher-simple} $out/sqlcipher-simple
-          echo "Source includes experiment 7: $(grep -c 'EXPERIMENT 7' $out/src/Popopx/Chat/Store/SQLite/Migrations/M20220101_initial.hs 2>/dev/null || echo 0)" >> $out/build-timestamp.txt
-        '';
+        src = pkgs.haskell-nix.haskellLib.cleanGit {
+          name = "popopx-chat";
+          src = ./.;
+        };
         sha256map = import ./scripts/nix/sha256map.nix;
         modules = [
           ({ pkgs, lib, config, ... }:
@@ -145,7 +125,7 @@
         # we need threaded here, otherwise all the queing logic doesn't work properly.
         # for iOS we also use -staticlib, to get one rolled up library.
         # still needs mac2ios patching of the archives.
-        ghcOptions = [ "-staticlib" "-threaded" "-DIOS" "-O1" ];
+        ghcOptions = [ "-staticlib" "-threaded" "-DIOS" ];
         postInstall = iosPostInstall bundleName;
       }; in
       rec {
@@ -581,24 +561,6 @@
               }).popopx-chat.components.library.override (
                 iosOverrides "pkg-ios-aarch64-swift-json"
               );
-              # aarch64-darwin iOS simulator build (to be patched with mac2ios)
-              "aarch64-darwin-ios-simulator:lib:popopx-chat" = (drv' {
-                pkgs' = pkgs;
-                extra-modules = [{
-                  packages.popopx-chat.flags.swift = true;
-                  packages.popopxmq.flags.swift = true;
-                  packages.direct-sqlcipher.flags.commoncrypto = true;
-                  packages.popopxmq.flags.commoncrypto = true;
-                  packages.entropy.flags.DoNotGetEntropy = true;
-                  packages.popopx-chat.flags.client_library = true;
-                  packages.popopxmq.flags.client_library = true;
-                  packages.popopxmq.components.library.libs = pkgs.lib.mkForce [
-                    (pkgs.openssl.override { static = true; })
-                  ];
-                }];
-              }).popopx-chat.components.library.override (
-                iosOverrides "pkg-ios-aarch64-simulator-swift-json"
-              );
 	            # aarch64-darwin build with tagged JSON format (for Mac & Flutter)
               "aarch64-darwin:lib:popopx-chat" = (drv' {
                 pkgs' = pkgs;
@@ -673,6 +635,3 @@
       }
     );
 }
-# Force rebuild Sun 25 Oct 2026 20:34:03 CST
-          # Force rebuild 1792933838
-# Force rebuild for experiment 7 - Sun 25 Oct 2026 21:23:11 CST
