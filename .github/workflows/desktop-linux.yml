@@ -1,14 +1,6 @@
 name: desktop-linux
 
-# A push runs the jobs only when its head commit's message asks for them: see scripts/ci/desktop-linux/README.md.
 on:
-  push:
-    branches:
-      # only f/ branches, so other branches' pull requests don't list skipped runs; elsewhere, run it by hand
-      - "f/*"
-      # a squash merge's message lists the merged commits' subjects, with their tags
-      - "!master"
-      - "!stable"
   workflow_dispatch:
     inputs:
       claude:
@@ -29,8 +21,7 @@ permissions:
   actions: read
 
 concurrency:
-  # a push that asks for no run must not cancel one that does
-  group: desktop-linux-${{ github.ref }}-${{ (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[app-ci]') || contains(github.event.head_commit.message, '[app-ci:desktop]') || contains(github.event.head_commit.message, '[claude-test]') || contains(github.event.head_commit.message, '[claude-test:desktop]')) && 'requested' || github.run_id }}
+  group: desktop-linux-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -43,13 +34,6 @@ env:
 jobs:
   plan:
     name: choose jobs, find earlier builds
-    # the concurrency group repeats this test, as it can't read job outputs
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      contains(github.event.head_commit.message, '[app-ci]') ||
-      contains(github.event.head_commit.message, '[app-ci:desktop]') ||
-      contains(github.event.head_commit.message, '[claude-test]') ||
-      contains(github.event.head_commit.message, '[claude-test:desktop]')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     outputs:
@@ -65,9 +49,9 @@ jobs:
       - name: Choose jobs
         id: jobs
         env:
-          CLAUDE: ${{ inputs.claude || contains(github.event.head_commit.message, '[claude-test]') || contains(github.event.head_commit.message, '[claude-test:desktop]') }}
-          BACKEND: ${{ inputs.backend || contains(github.event.head_commit.message, '[ci-backend]') }}
-          RELEASE: ${{ inputs.release || contains(github.event.head_commit.message, '[ci-release]') }}
+          CLAUDE: ${{ inputs.claude }}
+          BACKEND: ${{ inputs.backend }}
+          RELEASE: ${{ inputs.release }}
         run: |
           echo "claude=$CLAUDE" | tee -a "$GITHUB_OUTPUT"
           echo "backend=$BACKEND" | tee -a "$GITHUB_OUTPUT"
@@ -269,19 +253,19 @@ jobs:
           du -sh "$app"
           LD_LIBRARY_PATH="$app/lib/app/resources" ldd "$app/lib/app/resources/libapp-lib.so"
 
-      # for the Claude job; a tarball keeps the app's file modes, which an artifact drops
+      # a tarball keeps the app's file modes, which an artifact drops
       - name: Pack app
-        if: ${{ !cancelled() && steps.build.outcome == 'success' && needs.plan.outputs.run-claude == 'true' }}
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: tar -czf "$RUNNER_TEMP/desktop-app.tar.gz" -C apps/multiplatform/release/main/app popopx
 
       - name: Upload app
-        if: ${{ !cancelled() && steps.build.outcome == 'success' && needs.plan.outputs.run-claude == 'true' }}
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         uses: actions/upload-artifact@v7
         with:
           name: desktop-app
           path: ${{ runner.temp }}/desktop-app.tar.gz
           compression-level: 0
-          retention-days: 1
+          retention-days: 14
           if-no-files-found: error
 
       - name: Run desktop tests
