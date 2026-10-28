@@ -1911,7 +1911,7 @@ instance StrEncoding AConnectTarget where
       <|> (aConnectTarget <$> strP)
       <|> (ACTarget SCMContact . CTDomain <$> strP)
     where
-      nameStart = "@" <|> "#" <|> "popupx:/name"
+      nameStart = "@" <|> "#" <|> "popopx:/name"
 
 instance ConnectionModeI m => StrEncoding (ConnectTarget m) where
   strEncode t = strEncode $ ACTarget sConnectionMode t

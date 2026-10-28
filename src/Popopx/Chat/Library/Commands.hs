@@ -161,9 +161,9 @@ import Popopx.Messaging.Agent.Store.SQLite.DB (SlowQueryStats (..))
 
 _defaultNtfServers :: [NtfServer]
 _defaultNtfServers =
-  [ -- "ntf://FB-Uop7RTaZZEG0ZLD2CIaTjsPh-Fw0zFAnb7QyA8Ks=@ntf2.popupx.im,5ex3mupcazy3zlky64ab27phjhijpemsiby33qzq3pliejipbtx5xgad.onion"
-    "ntf://KmpZNNXiVZJx_G2T7jRUmDFxWXM3OAnunz3uLT0tqAA=@ntf3.popupx.im,pxculznuryunjdvtvh6s6szmanyadumpbmvevgdpe4wk5c65unyt4yid.onion",
-    "ntf://CJ5o7X6fCxj2FFYRU2KuCo70y4jSqz7td2HYhLnXWbU=@ntf4.popupx.im,wtvuhdj26jwprmomnyfu5wfuq2hjkzfcc72u44vi6gdhrwxldt6xauad.onion"
+  [ -- "ntf://FB-Uop7RTaZZEG0ZLD2CIaTjsPh-Fw0zFAnb7QyA8Ks=@ntf2.popopx.im,5ex3mupcazy3zlky64ab27phjhijpemsiby33qzq3pliejipbtx5xgad.onion"
+    "ntf://KmpZNNXiVZJx_G2T7jRUmDFxWXM3OAnunz3uLT0tqAA=@ntf3.popopx.im,pxculznuryunjdvtvh6s6szmanyadumpbmvevgdpe4wk5c65unyt4yid.onion",
+    "ntf://CJ5o7X6fCxj2FFYRU2KuCo70y4jSqz7td2HYhLnXWbU=@ntf4.popopx.im,wtvuhdj26jwprmomnyfu5wfuq2hjkzfcc72u44vi6gdhrwxldt6xauad.onion"
   ]
 
 maxImageSize :: Integer
@@ -486,7 +486,7 @@ processChatCommand cxt nm = \case
     where
       createPresetContactCards :: DB.Connection -> User -> ExceptT StoreError IO ()
       createPresetContactCards db user = do
-        createContact db cxt user popupxTeamContactProfile
+        createContact db cxt user popopxTeamContactProfile
       chooseServers :: Maybe User -> CM ([UpdatedUserOperatorServers], (NonEmpty (ServerCfg 'PSMP), NonEmpty (ServerCfg 'PXFTP)))
       chooseServers user_ = do
         as <- asks randomAgentServers
@@ -663,7 +663,7 @@ processChatCommand cxt nm = \case
   APIExportArchive cfg -> checkChatStopped $ CRArchiveExported <$> lift (exportArchive cfg)
   ExportArchive -> do
     ts <- liftIO getCurrentTime
-    let filePath = "popupx-chat." <> formatTime defaultTimeLocale "%FT%H%M%SZ" ts <> ".zip"
+    let filePath = "popopx-chat." <> formatTime defaultTimeLocale "%FT%H%M%SZ" ts <> ".zip"
     processChatCommand cxt nm $ APIExportArchive $ ArchiveConfig filePath Nothing Nothing
   APIImportArchive cfg -> checkChatStopped $ do
     fileErrs <- lift $ importArchive cfg
@@ -2690,7 +2690,7 @@ processChatCommand cxt nm = \case
       combineResults _ _ (Left e) = Left e
       createCI :: DB.Connection -> User -> Bool -> UTCTime -> (Contact, SndMessage) -> IO ()
       createCI db user hasLink createdAt (ct, sndMsg) =
-        void $ createNewSndChatItem db user (CDDirectSnd ct) False sndMsg (CISndMsgContent mc) Nothing Nothing Nothing False hasLink (roundDownToSecond createdAt) createdAt
+        void $ createNewSndChatItem db user (CDDirectSnd ct) False sndMsg (CISndMsgContent mc) Nothing Nothing Nothing False hasLink False (roundDownToSecond createdAt) createdAt
   SendMessageQuote cName (AMsgDirection msgDir) quotedMsg msg -> withUser $ \user@User {userId} -> do
     contactId <- withFastStore $ \db -> getContactIdByName db user cName
     quotedItemId <- withFastStore $ \db -> getDirectChatItemIdByText db userId contactId msgDir quotedMsg
@@ -3730,7 +3730,7 @@ processChatCommand cxt nm = \case
     pure $ CRRcvStandaloneFileCreated user ft
   QuitChat -> liftIO exitSuccess
   ShowVersion -> do
-    -- popupxmqCommitQ makes iOS builds crash m(
+    -- popopxmqCommitQ makes iOS builds crash m(
     let versionInfo = coreVersionInfo ""
     chatMigrations <- map upMigration <$> withFastStore' (getCurrentMigrations Nothing)
     agentMigrations <- withAgent getAgentMigrations
@@ -3788,19 +3788,16 @@ processChatCommand cxt nm = \case
   GetAgentSubsDetails -> lift $ CRAgentSubsDetails <$> withAgent' getAgentSubscriptions
   GetAgentQueuesInfo -> lift $ CRAgentQueuesInfo <$> withAgent' getAgentQueuesInfo
   APIListBinThereBots userId -> withUserId' userId $ \user -> do
-    bots <- withFastStore' $ \db -> listBinThereBots db userId
+    bots <- withFastStore' $ \db -> getBinThereBots db
     pure $ CRBinThereBotsList user bots
   APIAddBinThereBot userId bot -> withUserId' userId $ \user -> do
-    botId <- withFastStore' $ \db -> addBinThereBot db userId bot
-    pure $ CRBinThereBotAdded user bot {botId = Just botId}
+    botId <- withFastStore' $ \db -> createBinThereBot db bot
+    pure $ CRBinThereBotAdded user bot {botId}
   APIUpdateBinThereBot userId bot -> withUserId' userId $ \user -> do
-    case botId bot of
-      Just bId -> do
-        withFastStore' $ \db -> updateBinThereBot db userId bId bot
-        pure $ CRBinThereBotUpdated user bot
-      Nothing -> throwCmdError "botId is required for update"
+    withFastStore' $ \db -> updateBinThereBot db bot
+    pure $ CRBinThereBotUpdated user bot
   APIDeleteBinThereBot userId botId -> withUserId' userId $ \user -> do
-    withFastStore' $ \db -> deleteBinThereBot db userId botId
+    withFastStore' $ \db -> deleteBinThereBot db botId
     pure $ CRBinThereBotDeleted user botId
   -- CustomChatCommand is unsupported, it can be processed in preCmdHook
   -- in a modified CLI app or core - the hook should return Either (Either ChatError ChatResponse) ChatCommand,
@@ -3921,7 +3918,7 @@ processChatCommand cxt nm = \case
                 pure (conn', incognitoProfile)
               cReqs =
                 ( CRInvitationUri crData {crScheme = SSPopopx} e2e,
-                  CRInvitationUri crData {crScheme = popupxChat} e2e
+                  CRInvitationUri crData {crScheme = popopxChat} e2e
                 )
     connectViaContact :: User -> Maybe PreparedChatEntity -> IncognitoEnabled -> CreatedLinkContact -> Maybe SharedMsgId -> Maybe (SharedMsgId, MsgContent) -> CM ConnectViaContactResult
     connectViaContact user@User {userId} preparedEntity_ incognito (CCLink cReq@(CRContactUri crData@ConnReqUriData {crClientData} e2e) sLnk) welcomeSharedMsgId msg_ = withInvitationLock "connectViaContact" (strEncode cReq) $ do
@@ -3957,7 +3954,7 @@ processChatCommand cxt nm = \case
               Nothing -> connect' groupLinkId Nothing (groupLinkId $> Nothing)
       where
         cReqHash1 = contactCReqHash $ CRContactUri crData {crScheme = SSPopopx} e2e
-        cReqHash2 = contactCReqHash $ CRContactUri crData {crScheme = popupxChat} e2e
+        cReqHash2 = contactCReqHash $ CRContactUri crData {crScheme = popopxChat} e2e
         -- relay-group joins (only via connectToRelay) carry the target relay member in preparedEntity_;
         -- its memberId binds the join signature so a sibling relay can't replay it
         relayMemberId_ = case preparedEntity_ of
@@ -4570,7 +4567,7 @@ processChatCommand cxt nm = \case
         plan <- contactOrGroupRequestPlan user cReq `catchAllErrors` (pure . CPError)
         pure (ACCL SCMContact $ CCLink cReq Nothing, Nothing, Nothing, plan)
       CTShortContact nl ->
-        (\(l, p) -> (l, popupxName_, Nothing, p)) <$> case ctType of
+        (\(l, p) -> (l, popopxName_, Nothing, p)) <$> case ctType of
           CCTContact ->
             knownLinkPlans >>= \case
               Just r -> pure r
@@ -4617,7 +4614,7 @@ processChatCommand cxt nm = \case
           CCTChannel -> groupShortLinkPlan
           CCTRelay -> throwCmdError "chat relay links are not supported in this version"
         where
-          (nl', popupxName_) = case nl of
+          (nl', popopxName_) = case nl of
             CTLink sl -> (CTLink (serverShortLink sl), Nothing)
             CTName ni -> (nl, Just ni)
           ctType = case nl of
@@ -4743,7 +4740,7 @@ processChatCommand cxt nm = \case
         invCReqSchemas :: ConnReqInvitation -> (ConnReqInvitation, ConnReqInvitation)
         invCReqSchemas (CRInvitationUri crData e2e) =
           ( CRInvitationUri crData {crScheme = SSPopopx} e2e,
-            CRInvitationUri crData {crScheme = popupxChat} e2e
+            CRInvitationUri crData {crScheme = popopxChat} e2e
           )
     invitationEntityPlan :: Maybe ContactShortLinkData -> Maybe OwnerVerification -> ConnectionEntity -> ConnectionPlan
     invitationEntityPlan cld ov = \case
@@ -4816,9 +4813,9 @@ processChatCommand cxt nm = \case
     contactCReqSchemas :: ConnReqContact -> (ConnReqContact, ConnReqContact)
     contactCReqSchemas (CRContactUri crData e2e) =
       ( CRContactUri crData {crScheme = SSPopopx} e2e,
-        CRContactUri crData {crScheme = popupxChat} e2e
+        CRContactUri crData {crScheme = popopxChat} e2e
       )
-    -- This function is needed, as UI uses popupx:/ schema in message view, so that the links can be handled without browser,
+    -- This function is needed, as UI uses popopx:/ schema in message view, so that the links can be handled without browser,
     -- and short links are stored with server hostname schema, so they wouldn't match without it.
     serverShortLink :: ConnShortLink m -> ConnShortLink m
     serverShortLink = \case
@@ -5244,7 +5241,7 @@ verifyEntityDomain user nm nameType PopopxDomainClaim {domain = StrJSON domain, 
             Just (StrJSON oid) -> ownerKey <$> find (\OwnerAuth {ownerId} -> ownerId == oid) owners
       pure $ maybe False (\k -> C.verify' k signature proofPayload) ownerKey_
       where
-        proofPayload = strEncode (Str "popupx_domain_v1", presHeader, domain, ct, srv, key)
+        proofPayload = strEncode (Str "popopx_domain_v1", presHeader, domain, ct, srv, key)
 
 data ConnectViaContactResult
   = CVRConnectedContact Contact
@@ -6627,7 +6624,7 @@ chatCommandP =
       ("/fcancel " <|> "/fc ") *> (CancelFile <$> A.decimal),
       ("/fstatus " <|> "/fs ") *> (FileStatus <$> A.decimal),
       "/_connect contact " *> (APIConnectContactViaAddress <$> A.decimal <*> incognitoOnOffP <* A.space <*> A.decimal),
-      "/popupx" *> (ConnectPopopx <$> incognitoP),
+      "/popopx" *> (ConnectPopopx <$> incognitoP),
       "/_address " *> (APICreateMyAddress <$> A.decimal <*> optional (A.space *> strP) <*> optional (" pq_ratchet=" *> onOffP)),
       ("/address" <|> "/ad") *> (CreateMyAddress <$> optional (" pq_ratchet=" *> onOffP)),
       "/_delete_address " *> (APIDeleteMyAddress <$> A.decimal),

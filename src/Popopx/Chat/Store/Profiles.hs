@@ -86,6 +86,7 @@ module Popopx.Chat.Store.Profiles
     getCommandDataByCorrId,
     setUserUIThemes,
     profileContactLink,
+    BinThereBot (..),
   )
 where
 
@@ -522,7 +523,26 @@ data AutoAccept = AutoAccept
   }
   deriving (Eq, Show)
 
+data BinThereBot = BinThereBot
+  { botId :: Int64,
+    botAddress :: Text,
+    botName :: Maybe Text,
+    botType :: Text,
+    enabled :: Bool,
+    usageCount :: Int,
+    createdAt :: Text,
+    updatedAt :: Text,
+    description :: Maybe Text,
+    iconUrl :: Maybe Text,
+    tokenCount :: Int,
+    pricingUnit :: Maybe Text,
+    pricingAmount :: Int
+  }
+  deriving (Eq, Show)
+
 $(J.deriveJSON defaultJSON ''AutoAccept)
+
+$(J.deriveJSON defaultJSON ''BinThereBot)
 
 $(J.deriveJSON defaultJSON ''AddressSettings)
 

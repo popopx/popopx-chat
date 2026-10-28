@@ -189,7 +189,7 @@ import Popopx.Messaging.Agent.Store.Shared (Migration (..))
 
 schemaMigrations :: [(String, Query, Maybe Query)]
 schemaMigrations =
-  [ ("20220101_initial", m20220101_initial, Nothing)
+  [ ("20220101_initial", m20220101_initial, Nothing),
     -- Testing: only initial migration, all others disabled
     ("20220122_v1_1", m20220122_v1_1, Nothing),
     ("20220205_chat_item_status", m20220205_chat_item_status, Nothing),
@@ -357,7 +357,7 @@ schemaMigrations =
     ("20260723_contact_request_rejection", m20260723_contact_request_rejection, Just down_m20260723_contact_request_rejection),
     ("20260813_auto_accept_group_invitations", m20260813_auto_accept_group_invitations, Just down_m20260813_auto_accept_group_invitations),
     ("20260822_forward_link", m20260822_forward_link, Just down_m20260822_forward_link),
-    ("20260828_file_expiry", m20260828_file_expiry, Just down_m20260828_file_expiry)
+    ("20260828_file_expiry", m20260828_file_expiry, Just down_m20260828_file_expiry),
     -- Temporarily disabled for testing (202609+ migrations):
     ("20260904_file_badges", m20260904_file_badges, Just down_m20260904_file_badges),
     ("20260905_binthere_bots", m20260905_binthere_bots, Just down_m20260905_binthere_bots),
