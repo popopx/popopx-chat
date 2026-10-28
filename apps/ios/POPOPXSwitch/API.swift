@@ -290,7 +290,16 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
             if let salt = kcDatabaseSalt.get() {
                 logger.debug("chatMigrateInit: deriving key from stored passphrase")
                 if let derived = deriveKey(from: storedKey, salt: Data(base64Encoded: salt)) {
-                    dbKey = derived.key
+                    // Convert base64-derived key to hex format for SQLCipher raw key mode
+                    // SQLCipher expects: PRAGMA key = "x'hex_encoded_key';"
+                    if let keyData = Data(base64Encoded: derived.key) {
+                        dbKey = "x'\(keyData.map { String(format: "%02hhx", $0) }.joined())"
+                        logger.debug("chatMigrateInit: converted derived key to hex format (\(keyData.count) bytes)")
+                    } else {
+                        logger.error("chatMigrateInit: failed to decode derived key from base64")
+                        chatControllerLock.sync { finishInitializing() }
+                        return (false, .errorNotADatabase(dbFile: dbPath))
+                    }
                 } else {
                     logger.error("chatMigrateInit: PBKDF2 derivation failed, cannot open encrypted database")
                     chatControllerLock.sync { finishInitializing() }

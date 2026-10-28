@@ -813,7 +813,23 @@ private struct PassphraseConfirmationView: View {
 
     private func verifyDatabasePassphrase(_ dbKey: String) async {
         do {
-            try await testStorageEncryption(key: dbKey)
+            // If salt exists, derive the key first
+            var testKey = dbKey
+            if let salt = kcDatabaseSalt.get() {
+                if let derived = deriveKey(from: dbKey, salt: Data(base64Encoded: salt)) {
+                    // Convert base64-derived key to hex format for SQLCipher
+                    if let keyData = Data(base64Encoded: derived.key) {
+                        testKey = "x'\(keyData.map { String(format: "%02hhx", $0) }.joined())"
+                    } else {
+                        alert = .error(title: LocalizedStringKey(NSLocalizedString("Error verifying passphrase:", comment: "")), error: "Failed to decode derived key")
+                        return
+                    }
+                } else {
+                    alert = .error(title: LocalizedStringKey(NSLocalizedString("Error verifying passphrase:", comment: "")), error: "Key derivation failed")
+                    return
+                }
+            }
+            try await testStorageEncryption(key: testKey)
             await MainActor.run {
                 migrationState = .uploadConfirmation
             }

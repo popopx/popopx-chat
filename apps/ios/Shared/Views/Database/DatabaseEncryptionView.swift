@@ -204,8 +204,30 @@ struct DatabaseEncryptionView: View {
                     throw ChatError.errorDatabase(databaseError: .errorExport(sqliteError: .errorNotADatabase))
                 }
 
-                // Use the derived key for encryption
-                try await apiStorageEncryption(currentKey: currentKey, newKey: derived.key)
+                // Convert base64-derived key to hex format for SQLCipher raw key mode
+                // SQLCipher expects: PRAGMA key = "x'hex_encoded_key';"
+                guard let keyData = Data(base64Encoded: derived.key) else {
+                    throw ChatError.errorDatabase(databaseError: .errorExport(sqliteError: .errorNotADatabase))
+                }
+                let hexKey = "x'\(keyData.map { String(format: "%02hhx", $0) }.joined())"
+                
+                // Also derive currentKey if salt exists (for re-encryption scenarios)
+                var hexCurrentKey = currentKey
+                if !currentKey.isEmpty, let existingSalt = kcDatabaseSalt.get() {
+                    logger.debug("encryptDatabaseAsync: deriving current key with existing salt")
+                    if let currentDerived = deriveKey(from: currentKey, salt: Data(base64Encoded: existingSalt)) {
+                        if let currentKeyData = Data(base64Encoded: currentDerived.key) {
+                            hexCurrentKey = "x'\(currentKeyData.map { String(format: "%02hhx", $0) }.joined())"
+                            logger.debug("encryptDatabaseAsync: converted current key to hex format (\(currentKeyData.count) bytes)")
+                        }
+                    } else {
+                        logger.error("encryptDatabaseAsync: failed to derive current key")
+                        throw ChatError.errorDatabase(databaseError: .errorExport(sqliteError: .errorNotADatabase))
+                    }
+                }
+                
+                // Use the derived key in hex format for encryption
+                try await apiStorageEncryption(currentKey: hexCurrentKey, newKey: hexKey)
                 if currentKey != newKey {
                     shouldDeleteDatabaseBackupsDefault.set(true)
                 }
