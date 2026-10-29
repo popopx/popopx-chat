@@ -1673,7 +1673,7 @@ func apiSendCallAnswer(_ contact: Contact, _ rtcSession: String, _ rtcIceCandida
 }
 
 func apiSendCallExtraInfo(_ contact: Contact, _ rtcIceCandidates: String) async throws {
-    let extraInfo = WebRTCExtraInfo(rtcIceCandidates: rtcIceCandidates)
+    let extraInfo = WebRTCExtraInfo(rtcSession: nil, rtcIceCandidates: rtcIceCandidates)
     try await sendCommandOkResp(.apiSendCallExtraInfo(contact: contact, extraInfo: extraInfo))
 }
 
