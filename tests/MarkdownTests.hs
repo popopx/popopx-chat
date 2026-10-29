@@ -16,7 +16,6 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Text.Encoding (encodeUtf8)
 import Popopx.Chat.Markdown
-import Popopx.Chat.Types (BoolDef (..))
 import Popopx.Messaging.Agent.Protocol (PopopxDomain (..), PopopxNameInfo (..), PopopxNameType (..), PopopxTLD (..))
 import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Util ((<$$>))
@@ -77,10 +76,10 @@ s <<== ft = T.concat (map markdownText ft) `shouldBe` s
 s <<==>> ft = (s ==>> ft) >> (s <<== ft)
 
 boldF :: Format
-boldF = Bold $ BoolDef True
+boldF = Bold
 
 bold2F :: Format
-bold2F = Bold $ BoolDef False
+bold2F = Bold
 
 bold :: Text -> Markdown
 bold = markdown boldF

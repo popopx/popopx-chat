@@ -90,9 +90,6 @@ func apiJoinGroup(_ groupId: Int64) async throws -> JoinGroupResult? {
     case let .result(.userAcceptedGroupSent(_, groupInfo, _), _): return .joined(groupInfo: groupInfo)
     case .error(.errorAgent(.SMP(_, .AUTH)), _): return .invitationRemoved
     case .error(.errorStore(.groupNotFound), _): return .groupNotFound
-    case .error(.invalidJSON(let json), _):
-        if let data = json, let str = String(data: data, encoding: .utf8), str.contains("groupNotFound") { return .groupNotFound }
-        if let r { throw r.unexpected } else { return nil }
     default: if let r { throw r.unexpected } else { return nil }
     }
 }
@@ -198,9 +195,6 @@ func apiGetGroupLink(_ groupId: Int64) throws -> GroupLink? {
         return groupLink
     case .error(.errorStore(storeError: .groupLinkNotFound), _):
         return nil
-    case .error(.invalidJSON(let json), _):
-        if let data = json, let str = String(data: data, encoding: .utf8), str.contains("groupLinkNotFound") { return nil }
-        throw r.unexpected
     default: throw r.unexpected
     }
 }

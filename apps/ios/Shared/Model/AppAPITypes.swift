@@ -106,12 +106,14 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
     case apiSetServerOperators(operators: [ServerOperator])
     case apiGetUserServers(userId: Int64)
     case apiSetUserServers(userId: Int64, userServers: [UserOperatorServers])
-    case apiUpdateRemoteConfig(json: String)
     case apiValidateServers(userId: Int64, userServers: [UserOperatorServers])
     case apiGetBinThereBots(userId: Int64, botType: String)
     case apiInsertBinThereBot(userId: Int64, address: String, name: String?, botType: String)
     case apiReportBinThereBotUse(userId: Int64, botId: Int64)
     case apiSyncBotDirectory(userId: Int64, json: String)
+    case apiGetComputeBalance(userId: Int64)
+    case apiRecordComputePurchase(userId: Int64, purchase: ComputePurchaseFFI)
+    case apiGetComputePurchases(userId: Int64)
     case apiGetUsageConditions
     case apiSetConditionsNotified(conditionsId: Int64)
     case apiAcceptConditions(conditionsId: Int64, operatorIds: [Int64])
@@ -325,12 +327,14 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
             case let .apiSetServerOperators(operators): return "/_operators \(encodeJSON(operators))"
             case let .apiGetUserServers(userId): return "/_servers \(userId)"
             case let .apiSetUserServers(userId, userServers): return "/_servers \(userId) \(encodeJSON(userServers))"
-            case let .apiUpdateRemoteConfig(json): return "/_remote_config \(json)"
             case let .apiValidateServers(userId, userServers): return "/_validate_servers \(userId) \(encodeJSON(userServers))"
             case let .apiGetBinThereBots(userId, botType): return "/_binthere_bots \(userId) \(botType)"
             case let .apiInsertBinThereBot(userId, address, name, botType): return "/_binthere_bot_add \(userId) \(address) \(name ?? "") \(botType)"
             case let .apiReportBinThereBotUse(userId, botId): return "/_binthere_bot_use \(userId) \(botId)"
             case let .apiSyncBotDirectory(userId, json): return "/_bot_directory_sync \(userId) \(json)"
+            case let .apiGetComputeBalance(userId): return "/_compute_balance \(userId)"
+            case let .apiRecordComputePurchase(userId, purchase): return "/_compute_purchase_record \(userId) \(encodeJSON(purchase))"
+            case let .apiGetComputePurchases(userId): return "/_compute_purchases \(userId)"
             case .apiGetUsageConditions: return "/_conditions"
             case let .apiSetConditionsNotified(conditionsId): return "/_conditions_notified \(conditionsId)"
             case let .apiAcceptConditions(conditionsId, operatorIds): return "/_accept_conditions \(conditionsId) \(joinedIds(operatorIds))"
@@ -531,7 +535,6 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
             case .apiSetServerOperators: return "apiSetServerOperators"
             case .apiGetUserServers: return "apiGetUserServers"
             case .apiSetUserServers: return "apiSetUserServers"
-            case .apiUpdateRemoteConfig: return "apiUpdateRemoteConfig"
             case .apiValidateServers: return "apiValidateServers"
             case .apiGetUsageConditions: return "apiGetUsageConditions"
             case .apiSetConditionsNotified: return "apiSetConditionsNotified"
@@ -627,6 +630,9 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
             case .apiInsertBinThereBot: return "apiInsertBinThereBot"
             case .apiReportBinThereBotUse: return "apiReportBinThereBotUse"
             case .apiSyncBotDirectory: return "apiSyncBotDirectory"
+            case .apiGetComputeBalance: return "apiGetComputeBalance"
+            case .apiRecordComputePurchase: return "apiRecordComputePurchase"
+            case .apiGetComputePurchases: return "apiGetComputePurchases"
             }
         }
     }
@@ -745,6 +751,9 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
     case serverOperatorConditions(conditions: ServerOperatorConditions)
     case userServers(user: UserRef, userServers: [UserOperatorServers])
     case binThereBots(user: UserRef, bots: [BinThereBotInfo])
+    case computeBalance(user: UserRef, computeBalance: ComputeBalanceFFI)
+    case computePurchaseRecorded(user: UserRef, computeBalance: ComputeBalanceFFI)
+    case computePurchases(user: UserRef, purchases: [ComputePurchaseFFI])
     case userServersValidation(user: UserRef, serverErrors: [UserServersError], serverWarnings: [UserServersWarning])
     case usageConditions(usageConditions: UsageConditions, conditionsText: String, acceptedConditions: UsageConditions?)
     case chatItemTTL(user: UserRef, chatItemTTL: Int64?)
@@ -788,6 +797,9 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
         case .serverOperatorConditions: "serverOperatorConditions"
         case .userServers: "userServers"
         case .binThereBots: "binThereBots"
+        case .computeBalance: "computeBalance"
+        case .computePurchaseRecorded: "computePurchaseRecorded"
+        case .computePurchases: "computePurchases"
         case .userServersValidation: "userServersValidation"
         case .usageConditions: "usageConditions"
         case .chatItemTTL: "chatItemTTL"
@@ -832,6 +844,9 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
         case let .serverOperatorConditions(conditions): return "conditions: \(String(describing: conditions))"
         case let .userServers(u, userServers): return withUser(u, "userServers: \(String(describing: userServers))")
         case let .binThereBots(u, bots): return withUser(u, "binThereBots: \(String(describing: bots))")
+        case let .computeBalance(u, bal): return withUser(u, "computeBalance: \(String(describing: bal))")
+        case let .computePurchaseRecorded(u, bal): return withUser(u, "computePurchaseRecorded: \(String(describing: bal))")
+        case let .computePurchases(u, purchases): return withUser(u, "computePurchases: \(String(describing: purchases))")
         case let .userServersValidation(u, serverErrors, serverWarnings): return withUser(u, "serverErrors: \(String(describing: serverErrors))\nserverWarnings: \(String(describing: serverWarnings))")
         case let .usageConditions(usageConditions, _, acceptedConditions): return "usageConditions: \(String(describing: usageConditions))\nacceptedConditions: \(String(describing: acceptedConditions))"
         case let .chatItemTTL(u, chatItemTTL): return withUser(u, String(describing: chatItemTTL))
@@ -956,6 +971,24 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
                   let user: UserRef = try? decodeObject(userObj) else { return nil }
             let bots: [BinThereBotInfo] = (jVal["bots"] as? [Any])?.compactMap { try? decodeObject($0) } ?? []
             return .binThereBots(user: user, bots: bots)
+        } else if type == "computeBalance" {
+            guard let jVal = json["computeBalance"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let bal: ComputeBalanceFFI = (jVal["computeBalance"] as? NSDictionary).flatMap { try? decodeObject($0) } else { return nil }
+            return .computeBalance(user: user, computeBalance: bal)
+        } else if type == "computePurchaseRecorded" {
+            guard let jVal = json["computePurchaseRecorded"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let bal: ComputeBalanceFFI = (jVal["computeBalance"] as? NSDictionary).flatMap { try? decodeObject($0) } else { return nil }
+            return .computePurchaseRecorded(user: user, computeBalance: bal)
+        } else if type == "computePurchases" {
+            guard let jVal = json["computePurchases"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            let purchases: [ComputePurchaseFFI] = (jVal["purchases"] as? [Any])?.compactMap { try? decodeObject($0) } ?? []
+            return .computePurchases(user: user, purchases: purchases)
         } else if type == "userServersValidation" {
             guard let jVal = json["userServersValidation"] as? NSDictionary,
                   let userObj = jVal["user"],
@@ -2268,12 +2301,20 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
     case remoteCtrlFound(remoteCtrl: RemoteCtrlInfo, ctrlAppInfo_: CtrlAppInfo?, appVersion: String, compatible: Bool)
     case remoteCtrlSessionCode(remoteCtrl_: RemoteCtrlInfo?, sessionCode: String)
     case remoteCtrlConnected(remoteCtrl: RemoteCtrlInfo)
-    case remoteCtrlStopped(rcsState: RemoteCtrlSessionState, rcStopReason: RemoteCtrlStopReason)
+    case remoteCtrlStopped(remoteCtrl_: RemoteCtrlInfo?, rcsState: RemoteCtrlSessionState, rcStopReason: RemoteCtrlStopReason)
     // pq
     case contactPQEnabled(user: UserRef, contact: Contact, pqEnabled: Bool)
     // badges
     case badgeChanged(user: User, badgeState: BadgeState?)
     case badgeAlert(user: UserRef, badgeAlert: BadgeAlert)
+    case storePurchaseCredited(user: UserRef, invoiceId: String)
+    case storePurchaseRefused(user: UserRef, invoiceId: String, refusal: BadgeIssueFailure)
+    // remote host events
+    case remoteHostSessionCode(remoteHost_: RemoteHostInfo?, sessionCode: String)
+    case newRemoteHost(remoteHost: RemoteHostInfo)
+    case remoteHostConnected(remoteHost: RemoteHostInfo, compression: Bool)
+    case remoteHostStopped(remoteHostId_: Int64?, rhsState: RemoteHostSessionState, rhStopReason: RemoteHostStopReason)
+    case duplicateGroupMessage(user: UserRef, member: GroupMember)
     // additional events to match Haskell ChatEvent
     case contactAnotherClient(user: UserRef, contact: Contact)
     case connectionsDiff(userIds: DatabaseDiff, connIds: DatabaseDiff)
@@ -2384,6 +2425,13 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
         case .contactPQEnabled: "contactPQEnabled"
         case .badgeChanged: "badgeChanged"
         case .badgeAlert: "badgeAlert"
+        case .storePurchaseCredited: "storePurchaseCredited"
+        case .storePurchaseRefused: "storePurchaseRefused"
+        case .remoteHostSessionCode: "remoteHostSessionCode"
+        case .newRemoteHost: "newRemoteHost"
+        case .remoteHostConnected: "remoteHostConnected"
+        case .remoteHostStopped: "remoteHostStopped"
+        case .duplicateGroupMessage: "duplicateGroupMessage"
         case .contactAnotherClient: "contactAnotherClient"
         case .connectionsDiff: "connectionsDiff"
         case .subscriptionEnd: "subscriptionEnd"
@@ -2497,10 +2545,17 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
         case let .remoteCtrlFound(remoteCtrl, ctrlAppInfo_, appVersion, compatible): return "remoteCtrl:\n\(String(describing: remoteCtrl))\nctrlAppInfo_:\n\(String(describing: ctrlAppInfo_))\nappVersion: \(appVersion)\ncompatible: \(compatible)"
         case let .remoteCtrlSessionCode(remoteCtrl_, sessionCode): return "remoteCtrl_:\n\(String(describing: remoteCtrl_))\nsessionCode: \(sessionCode)"
         case let .remoteCtrlConnected(remoteCtrl): return String(describing: remoteCtrl)
-        case let .remoteCtrlStopped(rcsState, rcStopReason): return "rcsState: \(String(describing: rcsState))\nrcStopReason: \(String(describing: rcStopReason))"
+        case let .remoteCtrlStopped(remoteCtrl_, rcsState, rcStopReason): return "remoteCtrl_: \(String(describing: remoteCtrl_))\nrcsState: \(String(describing: rcsState))\nrcStopReason: \(String(describing: rcStopReason))"
         case let .contactPQEnabled(u, contact, pqEnabled): return withUser(u, "contact: \(String(describing: contact))\npqEnabled: \(pqEnabled)")
         case let .badgeChanged(u, badgeState): return withUser(u, String(describing: badgeState))
         case let .badgeAlert(u, badgeAlert): return withUser(u, String(describing: badgeAlert))
+        case let .storePurchaseCredited(u, invoiceId): return withUser(u, "invoiceId: \(invoiceId)")
+        case let .storePurchaseRefused(u, invoiceId, refusal): return withUser(u, "invoiceId: \(invoiceId)\nrefusal: \(String(describing: refusal))")
+        case let .remoteHostSessionCode(remoteHost_, sessionCode): return "remoteHost_: \(String(describing: remoteHost_))\nsessionCode: \(sessionCode)"
+        case let .newRemoteHost(remoteHost): return "remoteHost: \(String(describing: remoteHost))"
+        case let .remoteHostConnected(remoteHost, compression): return "remoteHost: \(String(describing: remoteHost))\ncompression: \(compression)"
+        case let .remoteHostStopped(remoteHostId_, rhsState, rhStopReason): return "remoteHostId_: \(String(describing: remoteHostId_))\nrhsState: \(String(describing: rhsState))\nrhStopReason: \(String(describing: rhStopReason))"
+        case let .duplicateGroupMessage(u, member): return withUser(u, "member: \(String(describing: member))")
         case let .contactAnotherClient(u, contact): return withUser(u, String(describing: contact))
         case let .connectionsDiff(userIds, connIds): return "userIds: \(String(describing: userIds))\nconnIds: \(String(describing: connIds))"
         case let .subscriptionEnd(u, connectionEntity): return withUser(u, String(describing: connectionEntity))
@@ -3136,7 +3191,8 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
                   let rcsState: RemoteCtrlSessionState = try? decodeObject(rcsObj),
                   let rcrObj = data["rcStopReason"],
                   let rcStopReason: RemoteCtrlStopReason = try? decodeObject(rcrObj) else { return nil }
-            return .remoteCtrlStopped(rcsState: rcsState, rcStopReason: rcStopReason)
+            let remoteCtrl: RemoteCtrlInfo? = (data["remoteCtrl_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .remoteCtrlStopped(remoteCtrl_: remoteCtrl, rcsState: rcsState, rcStopReason: rcStopReason)
         case "contactPQEnabled":
             guard let userObj = data["user"],
                   let user: UserRef = try? decodeObject(userObj),
@@ -3328,6 +3384,43 @@ enum ChatEvent: ChatAPIResult, @unchecked Sendable {
             guard let teObj = data["terminalEvent"],
                   let terminalEvent: TerminalEvent = try? decodeObject(teObj) else { return nil }
             return .terminalEvent(terminalEvent: terminalEvent)
+        case "storePurchaseCredited":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let invoiceId = data["invoiceId"] as? String else { return nil }
+            return .storePurchaseCredited(user: user, invoiceId: invoiceId)
+        case "storePurchaseRefused":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let invoiceId = data["invoiceId"] as? String else { return nil }
+            let refusal: BadgeIssueFailure? = (data["refusal"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .storePurchaseRefused(user: user, invoiceId: invoiceId, refusal: refusal ?? .invalidCredential)
+        case "remoteHostSessionCode":
+            guard let sessionCode = data["sessionCode"] as? String else { return nil }
+            let remoteHost: RemoteHostInfo? = (data["remoteHost_"] as? NSDictionary).flatMap { try? decodeObject($0) }
+            return .remoteHostSessionCode(remoteHost_: remoteHost, sessionCode: sessionCode)
+        case "newRemoteHost":
+            guard let rhObj = data["remoteHost"],
+                  let remoteHost: RemoteHostInfo = try? decodeObject(rhObj) else { return nil }
+            return .newRemoteHost(remoteHost: remoteHost)
+        case "remoteHostConnected":
+            guard let rhObj = data["remoteHost"],
+                  let remoteHost: RemoteHostInfo = try? decodeObject(rhObj),
+                  let compression = data["compression"] as? Bool else { return nil }
+            return .remoteHostConnected(remoteHost: remoteHost, compression: compression)
+        case "remoteHostStopped":
+            guard let stateObj = data["rhsState"],
+                  let rhsState: RemoteHostSessionState = try? decodeObject(stateObj),
+                  let reasonObj = data["rhStopReason"],
+                  let rhStopReason: RemoteHostStopReason = try? decodeObject(reasonObj) else { return nil }
+            let remoteHostId: Int64? = data["remoteHostId_"] as? Int64
+            return .remoteHostStopped(remoteHostId_: remoteHostId, rhsState: rhsState, rhStopReason: rhStopReason)
+        case "duplicateGroupMessage":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let memberObj = data["member"],
+                  let member: GroupMember = try? decodeObject(memberObj) else { return nil }
+            return .duplicateGroupMessage(user: user, member: member)
         default:
             return nil
         }
@@ -3573,6 +3666,39 @@ enum RemoteCtrlSessionState: Decodable {
     case connecting
     case pendingConfirmation(sessionCode: String)
     case connected(sessionCode: String)
+
+    private enum CodingKeys: String, CodingKey { case _owsf, starting, searching, connecting, pendingConfirmation, connected }
+    private enum DataKeys: String, CodingKey { case sessionCode }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if c.contains(._owsf) {
+            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            switch key?.stringValue {
+            case "starting": self = .starting
+            case "searching": self = .searching
+            case "connecting": self = .connecting
+            case "pendingConfirmation":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .pendingConfirmation(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+            case "connected":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .connected(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+            default: self = .starting
+            }
+        } else if c.contains(.starting) { self = .starting
+        } else if c.contains(.searching) { self = .searching
+        } else if c.contains(.connecting) { self = .connecting
+        } else if c.contains(.pendingConfirmation) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .pendingConfirmation)
+            self = .pendingConfirmation(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+        } else if c.contains(.connected) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .connected)
+            self = .connected(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+        } else {
+            self = .starting
+        }
+    }
 }
 
 enum RemoteCtrlStopReason: Decodable {
@@ -3580,6 +3706,217 @@ enum RemoteCtrlStopReason: Decodable {
     case connectionFailed(chatError: ChatError)
     case setupFailed(chatError: ChatError)
     case disconnected
+
+    private enum CodingKeys: String, CodingKey { case _owsf, discoveryFailed, connectionFailed, setupFailed, disconnected }
+    private enum DataKeys: String, CodingKey { case chatError }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if c.contains(._owsf) {
+            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            switch key?.stringValue {
+            case "discoveryFailed":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .discoveryFailed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+            case "connectionFailed":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .connectionFailed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+            case "setupFailed":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .setupFailed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+            default: self = .disconnected
+            }
+        } else if c.contains(.discoveryFailed) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .discoveryFailed)
+            self = .discoveryFailed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+        } else if c.contains(.connectionFailed) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .connectionFailed)
+            self = .connectionFailed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+        } else if c.contains(.setupFailed) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .setupFailed)
+            self = .setupFailed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+        } else {
+            self = .disconnected
+        }
+    }
+}
+
+enum RHKey: Decodable, Hashable {
+    case rhNew
+    case rhId(remoteHostId: Int64)
+
+    private enum CodingKeys: String, CodingKey { case _owsf, rhNew, rhId }
+    private enum DataKeys: String, CodingKey { case remoteHostId }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if c.contains(._owsf) {
+            if let allKeys = try? c.allKeys.first(where: { $0.stringValue != "_owsf" }) {
+                switch allKeys.stringValue {
+                case "rhNew": self = .rhNew
+                case "rhId":
+                    let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: allKeys)
+                    self = .rhId(remoteHostId: try nested.decode(Int64.self, forKey: .remoteHostId))
+                default: self = .rhNew
+                }
+            } else { self = .rhNew }
+        } else if c.contains(.rhNew) {
+            self = .rhNew
+        } else if c.contains(.rhId) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .rhId)
+            self = .rhId(remoteHostId: try nested.decode(Int64.self, forKey: .remoteHostId))
+        } else {
+            self = .rhNew
+        }
+    }
+}
+
+struct RemoteHostInfo: Decodable {
+    var remoteHostId: Int64
+    var hostDeviceName: String
+    var sessionState: RemoteHostSessionState?
+}
+
+enum RemoteHostSessionState: Decodable {
+    case starting
+    case connecting(invitation: String)
+    case pendingConfirmation(sessionCode: String)
+    case confirmed(sessionCode: String)
+    case connected(sessionCode: String)
+
+    private enum CodingKeys: String, CodingKey { case _owsf, starting, connecting, pendingConfirmation, confirmed, connected }
+    private enum DataKeys: String, CodingKey { case invitation, sessionCode }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if c.contains(._owsf) {
+            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            switch key?.stringValue {
+            case "starting": self = .starting
+            case "connecting":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .connecting(invitation: try nested.decode(String.self, forKey: .invitation))
+            case "pendingConfirmation":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .pendingConfirmation(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+            case "confirmed":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .confirmed(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+            case "connected":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .connected(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+            default: self = .starting
+            }
+        } else if c.contains(.starting) {
+            self = .starting
+        } else if c.contains(.connecting) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .connecting)
+            self = .connecting(invitation: try nested.decode(String.self, forKey: .invitation))
+        } else if c.contains(.pendingConfirmation) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .pendingConfirmation)
+            self = .pendingConfirmation(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+        } else if c.contains(.confirmed) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .confirmed)
+            self = .confirmed(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+        } else if c.contains(.connected) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .connected)
+            self = .connected(sessionCode: try nested.decode(String.self, forKey: .sessionCode))
+        } else {
+            self = .starting
+        }
+    }
+}
+
+enum RemoteHostError: Decodable, Hashable {
+    case missing
+    case inactive
+    case busy
+    case timeout
+    case badState
+    case badVersion(appVersion: String)
+    case localCommand
+    case disconnected(reason: String)
+    case protocolError(protocolErr: ProtocolErrorType)
+
+    private enum CodingKeys: String, CodingKey {
+        case _owsf, missing, inactive, busy, timeout, badState, badVersion, localCommand, disconnected, protocolError
+    }
+    private enum DataKeys: String, CodingKey { case appVersion, reason, protocolErr }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if c.contains(._owsf) {
+            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            switch key?.stringValue {
+            case "missing": self = .missing
+            case "inactive": self = .inactive
+            case "busy": self = .busy
+            case "timeout": self = .timeout
+            case "badState": self = .badState
+            case "badVersion":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .badVersion(appVersion: try nested.decode(String.self, forKey: .appVersion))
+            case "localCommand": self = .localCommand
+            case "disconnected":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .disconnected(reason: try nested.decode(String.self, forKey: .reason))
+            case "protocolError":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .protocolError(protocolErr: try nested.decode(ProtocolErrorType.self, forKey: .protocolErr))
+            default: self = .missing
+            }
+        } else if c.contains(.missing) { self = .missing
+        } else if c.contains(.inactive) { self = .inactive
+        } else if c.contains(.busy) { self = .busy
+        } else if c.contains(.timeout) { self = .timeout
+        } else if c.contains(.badState) { self = .badState
+        } else if c.contains(.badVersion) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .badVersion)
+            self = .badVersion(appVersion: try nested.decode(String.self, forKey: .appVersion))
+        } else if c.contains(.localCommand) { self = .localCommand
+        } else if c.contains(.disconnected) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .disconnected)
+            self = .disconnected(reason: try nested.decode(String.self, forKey: .reason))
+        } else if c.contains(.protocolError) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .protocolError)
+            self = .protocolError(protocolErr: try nested.decode(ProtocolErrorType.self, forKey: .protocolErr))
+        } else {
+            self = .missing
+        }
+    }
+}
+
+enum RemoteHostStopReason: Decodable {
+    case connectionFailed(chatError: ChatError)
+    case crashed(chatError: ChatError)
+    case disconnected
+
+    private enum CodingKeys: String, CodingKey { case _owsf, connectionFailed, crashed, disconnected }
+    private enum DataKeys: String, CodingKey { case chatError }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if c.contains(._owsf) {
+            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            switch key?.stringValue {
+            case "connectionFailed":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .connectionFailed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+            case "crashed":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .crashed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+            default: self = .disconnected
+            }
+        } else if c.contains(.connectionFailed) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .connectionFailed)
+            self = .connectionFailed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+        } else if c.contains(.crashed) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .crashed)
+            self = .crashed(chatError: try nested.decode(ChatError.self, forKey: .chatError))
+        } else {
+            self = .disconnected
+        }
+    }
 }
 
 struct CtrlAppInfo: Decodable {
@@ -3699,11 +4036,11 @@ private func parseServerRoles(_ dict: NSDictionary) -> ServerRoles {
 private func parseConditionsAcceptance(_ dict: NSDictionary) -> ConditionsAcceptance {
     let inner = dict["_owsf"] as? NSDictionary ?? dict
     if let jAccepted = inner["accepted"] as? NSDictionary {
-        let acceptedAt = jAccepted["acceptedAt"] as? Date
+        let acceptedAt = parseISODate(jAccepted["acceptedAt"])
         let autoAccepted = jAccepted["autoAccepted"] as? Bool ?? false
         return .accepted(acceptedAt: acceptedAt, autoAccepted: autoAccepted)
     } else if let jRequired = inner["required"] as? NSDictionary {
-        let deadline = jRequired["deadline"] as? Date
+        let deadline = parseISODate(jRequired["deadline"])
         return .required(deadline: deadline)
     }
     return .required(deadline: nil)
@@ -3750,7 +4087,7 @@ private func parseUsageConditionsAction(_ dict: NSDictionary) -> UsageConditions
         } else {
             ops = []
         }
-        let deadline = jReview["deadline"] as? Date
+        let deadline = parseISODate(jReview["deadline"])
         let showNotice = jReview["showNotice"] as? Bool ?? false
         return .review(operators: ops, deadline: deadline, showNotice: showNotice)
     } else if let jAccepted = inner["accepted"] as? NSDictionary {
@@ -3787,12 +4124,7 @@ func parseServerOperatorConditions(_ json: NSDictionary) -> ServerOperatorCondit
        let conditionsId = jCurrent["conditionsId"] as? Int64,
        let conditionsCommit = jCurrent["conditionsCommit"] as? String {
         let createdAt = parseISODate(jCurrent["createdAt"]) ?? .now
-        let notifiedAt: Date?
-        if let notifiedAtStr = jCurrent["notifiedAt"] as? String {
-            notifiedAt = parseISODate(notifiedAtStr)
-        } else {
-            notifiedAt = jCurrent["notifiedAt"] as? Date
-        }
+        let notifiedAt = parseISODate(jCurrent["notifiedAt"])
         currentConditions = UsageConditions(
             conditionsId: conditionsId,
             conditionsCommit: conditionsCommit,
@@ -3844,14 +4176,7 @@ private func parseUserServer(_ jServer: NSDictionary) -> UserServer? {
         )
     }
     
-    let createdAt: Date
-    if let dateStr = jServer["createdAt"] as? String {
-        createdAt = parseISODate(dateStr) ?? .now
-    } else if let date = jServer["createdAt"] as? Date {
-        createdAt = date
-    } else {
-        createdAt = .now
-    }
+    let createdAt = parseISODate(jServer["createdAt"]) ?? .now
     return UserServer(
         serverId: serverId,
         server: server,
@@ -3878,14 +4203,7 @@ private func parseUserChatRelay(_ jRelay: NSDictionary) -> UserChatRelay? {
     } else {
         name = ""
     }
-    let createdAt: Date
-    if let dateStr = jRelay["createdAt"] as? String {
-        createdAt = parseISODate(dateStr) ?? .now
-    } else if let date = jRelay["createdAt"] as? Date {
-        createdAt = date
-    } else {
-        createdAt = .now
-    }
+    let createdAt = parseISODate(jRelay["createdAt"]) ?? .now
     return UserChatRelay(
         chatRelayId: chatRelayId,
         address: address,
@@ -4270,6 +4588,42 @@ struct BotDirectoryEntry: Identifiable, Equatable, Codable {
         case tokenCount = "token_count"
         case pricingUnit = "pricing_unit"
         case pricingAmount = "pricing_amount"
+    }
+}
+
+// MARK: - Compute Purchase FFI types
+
+struct ComputePurchaseFFI: Codable, Equatable {
+    var transactionId: String
+    var productId: String
+    var purchaseType: String
+    var tokenAmount: Double
+    var priceUsd: Double
+    var status: String
+    var metadata: String?
+    var createdAt: String
+
+    enum CodingKeys: String, CodingKey {
+        case transactionId = "transaction_id"
+        case productId = "product_id"
+        case purchaseType = "purchase_type"
+        case tokenAmount = "token_amount"
+        case priceUsd = "price_usd"
+        case status
+        case metadata
+        case createdAt = "created_at"
+    }
+}
+
+struct ComputeBalanceFFI: Codable, Equatable {
+    var userId: Int64
+    var balance: Double
+    var updatedAt: String
+
+    enum CodingKeys: String, CodingKey {
+        case userId = "user_id"
+        case balance
+        case updatedAt = "updated_at"
     }
 }
 

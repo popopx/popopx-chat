@@ -71,7 +71,7 @@ usageConditionsText =
       in [|stripFrontMatter $(lift (safeDecodeUtf8 s))|]
    )
 
-data OperatorTag = OTPopopx | OTFlux
+data OperatorTag = OTPopopx
   deriving (Eq, Ord, Show)
 
 instance FromField OperatorTag where fromField = fromTextField_ textDecode
@@ -88,11 +88,9 @@ instance ToJSON OperatorTag where
 instance TextEncoding OperatorTag where
   textDecode = \case
     "popopx" -> Just OTPopopx
-    "flux" -> Just OTFlux
     _ -> Nothing
   textEncode = \case
     OTPopopx -> "popopx"
-    OTFlux -> "flux"
 
 data UsageConditions = UsageConditions
   { conditionsId :: Int64,

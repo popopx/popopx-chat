@@ -196,6 +196,13 @@ chatResponseToView hu cfg@ChatConfig {logLevel, showReactions, showFullLinks, te
   CRBadgeInvoice u invoiceId -> ttyUser u ["badge invoice: " <> plain invoiceId]
   CRBadgeState u st storePurchases -> ttyUser u $ viewUserBadgeState st <> map viewOpenStorePurchase storePurchases
   CRBadgeLedger u entries -> ttyUser u $ viewBadgeLedger entries
+  CRBinThereBotsList u bots -> ttyUser u $ map (\b -> "bot: " <> plain (show b)) bots
+  CRBinThereBotAdded u bot -> ttyUser u ["bot added: " <> plain (show bot)]
+  CRBinThereBotUpdated u bot -> ttyUser u ["bot updated: " <> plain (show bot)]
+  CRBinThereBotDeleted u botId -> ttyUser u ["bot deleted: " <> plain (show botId)]
+  CRComputeBalance u bal -> ttyUser u ["compute balance: " <> plain (show bal)]
+  CRComputePurchaseRecorded u bal -> ttyUser u ["purchase recorded, balance: " <> plain (show bal)]
+  CRComputePurchases u ps -> ttyUser u $ map (\p -> "purchase: " <> plain (show p)) ps
   CRGroupCreated u g -> ttyUser u $ viewGroupCreated g testView
   CRPublicGroupCreated u g _groupLink _relays -> ttyUser u $ viewGroupCreated g testView
   CRPublicGroupCreationFailed u results -> ttyUser u $ viewPublicGroupCreationFailed results
@@ -2178,7 +2185,7 @@ viewGroupDescription GroupInfo {groupProfile = GroupProfile {description}} =
   maybe ["No welcome message!"] ((bold' "Welcome message:" :) . map plain . T.lines) description
 
 bold' :: String -> StyledString
-bold' = styled (Bold $ BoolDef False)
+bold' = styled Bold
 
 viewContactAliasUpdated :: Contact -> [StyledString]
 viewContactAliasUpdated ct@Contact {profile = LocalProfile {localAlias}}

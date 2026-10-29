@@ -110,6 +110,42 @@ extension ChatAPIResult {
     }
 }
 
+// Recursively transforms _owsf-tagged JSON into standard single-field format
+// that Swift's auto-synthesized Decodable can handle.
+// - {"_owsf": true, "caseName": {data}} → {"caseName": preprocess(data)}
+// - {"_owsf": "caseName", field1: v1, ...} → {"caseName": {field1: v1, ...}}
+private func preprocessOWSF(_ data: Data) -> Data {
+    guard let obj = try? JSONSerialization.jsonObject(with: data) else { return data }
+    let preprocessed = transformOWSF(obj)
+    return (try? JSONSerialization.data(withJSONObject: preprocessed)) ?? data
+}
+
+private func transformOWSF(_ value: Any) -> Any {
+    guard let dict = value as? NSDictionary else {
+        if let arr = value as? [Any] {
+            return arr.map { transformOWSF($0) }
+        }
+        return value
+    }
+    var result = NSMutableDictionary()
+    for (key, val) in dict {
+        guard let k = key as? String else { continue }
+        if k == "_owsf" { continue }
+        result[k] = transformOWSF(val)
+    }
+    if let owsf = dict["_owsf"] as? String {
+        var inner = NSMutableDictionary()
+        for (key, val) in result {
+            guard let k = key as? String else { continue }
+            inner[k] = val
+        }
+        var wrapped = NSMutableDictionary()
+        wrapped[owsf] = inner
+        return wrapped
+    }
+    return result
+}
+
 // Spec: spec/api.md#decodeAPIResult
 public func decodeAPIResult<R: ChatAPIResult>(_ d: Data) -> APIResult<R> {
     let debugFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("debug_log.txt")
@@ -123,8 +159,9 @@ public func decodeAPIResult<R: ChatAPIResult>(_ d: Data) -> APIResult<R> {
             }
         }
     }
+    let preprocessed = preprocessOWSF(d)
     do {
-        return try withLargeStack { try jsonDecoder.decode(APIResult<R>.self, from: d) }
+        return try withLargeStack { try jsonDecoder.decode(APIResult<R>.self, from: preprocessed) }
     } catch {
         if let debugFile { try? "decodeAPIResult: standard decoding failed: \(error)\n".appendToURL(debugFile) }
     }
@@ -836,6 +873,7 @@ public enum ChatError: Decodable, Hashable, Error {
     case errorStore(storeError: StoreError)
     case errorDatabase(databaseError: DatabaseError)
     case errorRemoteCtrl(remoteCtrlError: RemoteCtrlError)
+    case errorRemoteHost(rhKey: RHKey, remoteHostError: RemoteHostError)
     case invalidJSON(json: Data?) // additional case used to pass errors that failed to parse
     case unexpectedResult(type: String) // additional case used to pass unexpected responses
     
@@ -846,6 +884,7 @@ public enum ChatError: Decodable, Hashable, Error {
         case .errorStore: "store"
         case .errorDatabase: "database"
         case .errorRemoteCtrl: "remoteCtrl"
+        case .errorRemoteHost: "remoteHost"
         case .invalidJSON: "invalid"
         case let .unexpectedResult(type): "! \(type)"
         }

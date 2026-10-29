@@ -278,47 +278,18 @@ class MembershipCardAPI: ObservableObject {
             return .failure(NSLocalizedString("Invalid code format. Please check and try again.", comment: ""))
         }
 
-        guard let url = URL(string: "https://api.popopxchat.com/api/v1/membership/redeem") else {
-            return .failure(NSLocalizedString("Server configuration error.", comment: ""))
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let body: [String: String] = [
-            "code": trimmed,
-            "device_id": EntitlementStore.shared.deviceId
-        ]
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body)
-        } catch {
-            return .failure(NSLocalizedString("Failed to prepare request. Please try again.", comment: ""))
+        guard let user = ChatModel.shared.currentUser else {
+            return .failure(NSLocalizedString("Please complete setup first.", comment: ""))
         }
 
         do {
-            let (data, response) = try await PinnedURLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse else {
-                return .failure(NSLocalizedString("Network error. Please try again.", comment: ""))
+            guard let redeemed = try await apiRedeemBadgeCode(user.userId, trimmed) else {
+                return .failure(NSLocalizedString("Redemption code not found.", comment: ""))
             }
-
-            if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                switch httpResponse.statusCode {
-                case 200:
-                    let message = json["message"] as? String ?? NSLocalizedString("Membership activated successfully!", comment: "")
-                    return .success(message)
-                case 400:
-                    let error = json["error"] as? String ?? NSLocalizedString("Invalid redemption code.", comment: "")
-                    return .failure(error)
-                case 409:
-                    return .failure(NSLocalizedString("This code has already been redeemed.", comment: ""))
-                case 404:
-                    return .failure(NSLocalizedString("Redemption code not found.", comment: ""))
-                default:
-                    return .failure(NSLocalizedString("Server error. Please try again later.", comment: ""))
-                }
+            if let badgeState = redeemed.badgeState, !badgeState.shown {
+                return .failure(NSLocalizedString("This code has already been redeemed.", comment: ""))
             }
-            return .failure(NSLocalizedString("Unexpected server response.", comment: ""))
+            return .success(NSLocalizedString("Membership activated successfully!", comment: ""))
         } catch {
             return .failure(NSLocalizedString("Network error. Please check your connection.", comment: ""))
         }

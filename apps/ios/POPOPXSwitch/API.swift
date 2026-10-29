@@ -941,30 +941,20 @@ func decodeProperty<T: Decodable>(_ obj: Any, _ prop: NSString) -> T? {
 @inline(__always)
 func getOWSF(_ obj: NSDictionary, _ prop: NSString) -> (type: String, object: NSDictionary)? {
     guard let j = obj[prop] as? NSDictionary else {
-        print("getOWSF: no '\(prop)' key in obj, keys=\(obj.allKeys)")
         return nil
     }
-    print("getOWSF: found '\(prop)', j keys=\(j.allKeys)")
-    // Check for _owsf tag (boolean true indicates single-field encoding)
     if let owsfValue = j["_owsf"] as? Bool, owsfValue {
-        // _owsf is true, find the actual data key (not _owsf)
         let dataKeys = j.allKeys.filter { ($0 as? String) != "_owsf" }
         if let dataKey = dataKeys.first as? String, let dataObj = j[dataKey] as? NSDictionary {
-            print("getOWSF: _owsf=true, data key='\(dataKey)'")
             return (dataKey, dataObj)
         }
     }
-    // Fallback: check for _owsf as string tag
     if let owsfValue = j["_owsf"] as? String {
-        print("getOWSF: found _owsf='\(owsfValue)'")
         return (owsfValue, j)
     }
-    // Fallback: single key without _owsf tag
     if j.count == 1, let firstKey = j.allKeys.first as? String {
-        print("getOWSF: fallback single key='\(firstKey)'")
         return (firstKey, j)
     }
-    print("getOWSF: no match, returning nil")
     return nil
 }
 
@@ -1012,17 +1002,18 @@ public enum DBMigrationResult: Equatable {
     case errorSQL(dbFile: String, migrationSQLError: String)
     case errorKeychain
     case errorKeyGeneration
+    case errorAgent(agentError: AgentErrorType)
     case unknown(json: String)
 }
 
 extension DBMigrationResult: Decodable {
     private enum CodingKeys: String, CodingKey {
         case _owsf, ok, invalidConfirmation, errorNotADatabase,
-             errorMigration, errorSQL, errorKeychain, errorKeyGeneration
+             errorMigration, errorSQL, errorKeychain, errorKeyGeneration, errorAgent
     }
 
     private enum DBMDataKeys: String, CodingKey {
-        case dbFile, migrationError, migrationSQLError
+        case dbFile, migrationError, migrationSQLError, agentError
     }
 
     public init(from decoder: Decoder) throws {
@@ -1063,6 +1054,10 @@ extension DBMigrationResult: Decodable {
                 self = .errorKeychain
             case "errorKeyGeneration":
                 self = .errorKeyGeneration
+            case "errorAgent":
+                let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: CodingKeys(stringValue: key)!)
+                let agentError = try nested.decode(AgentErrorType.self, forKey: .agentError)
+                self = .errorAgent(agentError: agentError)
             default:
                 self = .unknown(json: key)
             }
@@ -1090,6 +1085,10 @@ extension DBMigrationResult: Decodable {
                 self = .errorKeychain
             } else if container.contains(.errorKeyGeneration) {
                 self = .errorKeyGeneration
+            } else if container.contains(.errorAgent) {
+                let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: .errorAgent)
+                let agentError = try nested.decode(AgentErrorType.self, forKey: .agentError)
+                self = .errorAgent(agentError: agentError)
             } else {
                 throw DecodingError.dataCorrupted(
                     DecodingError.Context(codingPath: decoder.codingPath,

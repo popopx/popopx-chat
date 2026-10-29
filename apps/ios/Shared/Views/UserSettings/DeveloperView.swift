@@ -65,39 +65,6 @@ struct DeveloperView: View {
                             .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
                     }
                 }
-                Section {
-                    settingsRow("server.rack", color: theme.colors.secondary) {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(NSLocalizedString("settings_compute_store_url", comment: "Compute store URL label")).font(.subheadline)
-                            #if DEBUG
-                            TextField("https://api.example.com", text: Binding(
-                                get: { EntitlementStore.shared.storeBaseURL },
-                                set: { newURL in
-                                    if newURL.hasPrefix("https://") {
-                                        EntitlementStore.shared.storeBaseURL = newURL
-                                    }
-                                }
-                            ))
-                            .font(.footnote)
-                            .foregroundColor(theme.colors.secondary)
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
-                            .keyboardType(.URL)
-                            #else
-                            Text(EntitlementStore.shared.storeBaseURL)
-                                .font(.footnote)
-                                .foregroundColor(theme.colors.secondary)
-                            #endif
-                        }
-                    }
-                } header: {
-                    Text(NSLocalizedString("dev_compute_store_header", comment: "Compute Store section header"))
-                        .font(isInDarkTheme() ? darkThemeHeaderFont() : .body)
-                        .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.secondary)
-                } footer: {
-                    Text(NSLocalizedString("dev_compute_store_footer", comment: "Compute Store configuration description"))
-                        .foregroundColor(theme.colors.secondary)
-                }
 
                 Section(NSLocalizedString("dev_deprecated_options_section", comment: "Deprecated options section header")) {
                     settingsRow("link", color: theme.colors.secondary) {

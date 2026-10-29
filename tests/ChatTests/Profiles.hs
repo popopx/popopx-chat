@@ -1123,7 +1123,7 @@ testUserBadgeLinkDataOtherLink ps = do
       alice ##> "/_connect 1"
       (shortLink, _) <- getInvitations alice
       Right otherProof <- badgeProof pk cred (PHLink "other link key")
-      setTestInvLinkData alice $ ContactShortLinkData aliceProfile {badge = Just otherProof} Nothing False Nothing
+      setTestInvLinkData alice $ ContactShortLinkData aliceProfile {badge = Just otherProof} Nothing False Nothing Nothing
       bob ##> ("/_connect plan 1 " <> shortLink)
       bob <## "invitation link: ok to connect"
       sLinkData <- getTermLine bob
@@ -1137,7 +1137,7 @@ testUserBadgeLinkDataNoProof =
       alice ##> "/_connect 1"
       (shortLink, _) <- getInvitations alice
       let shownBadge = ShownBadge BadgeInfo {badgeType = BTSupporter, badgeExpiry = futureDate, badgeExtra = ""} BSActive
-      setTestInvLinkData alice $ ContactShortLinkData aliceProfile Nothing False (Just shownBadge)
+      setTestInvLinkData alice $ ContactShortLinkData aliceProfile Nothing False Nothing (Just shownBadge)
       bob ##> ("/_connect plan 1 " <> shortLink)
       bob <## "invitation link: ok to connect"
       sLinkData <- getTermLine bob
@@ -3833,7 +3833,7 @@ testSetUITheme =
     alice ##> "/i #team"
     groupInfo alice
   where
-    theme cm = T.unpack $ encodeJSON UIThemeEntityOverrides {light = Nothing, dark = Just $ UIThemeEntityOverride cm Nothing defaultUIColors}
+    theme cm = T.unpack $ encodeJSON UIThemeEntityOverrides {light = Nothing, dark = Just $ UIThemeEntityOverride cm Nothing defaultUIColors, chatLayout = Nothing}
     userInfo a name = do
       a <## ("user profile: " <> name)
       a <## "use /p <name> [<bio>] to change it"

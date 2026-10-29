@@ -194,7 +194,7 @@ testProfile :: Profile
 testProfile = Profile {displayName = "alice", fullName = "Alice", shortDescr = Nothing, description = Nothing, image = Just (ImageData "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII="), peerType = Nothing, contactLink = Nothing, preferences = testChatPreferences, badge = Nothing, contactDomain = Nothing}
 
 testGroupProfile :: GroupProfile
-testGroupProfile = GroupProfile {displayName = "team", fullName = "Team", description = Nothing, shortDescr = Nothing, image = Nothing, publicGroup = Nothing, groupPreferences = testGroupPreferences, memberAdmission = Nothing}
+testGroupProfile = GroupProfile {displayName = "team", fullName = "Team", description = Nothing, shortDescr = Nothing, image = Nothing, publicGroup = Nothing, groupPreferences = testGroupPreferences, memberAdmission = Nothing, chatLayout = Nothing}
 
 shortLinkDataTests :: Spec
 shortLinkDataTests = describe "Short link data encoding/decoding" $ do

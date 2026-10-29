@@ -692,7 +692,7 @@ func processReceivedMsg(_ res: ChatEvent) async {
         // TODO [BLOCKED: verify if remoteCtrlConnected is truly redundant after upstream changes — keeping defensive handling]
         let state = UIRemoteCtrlSessionState.connected(remoteCtrl: remoteCtrl, sessionCode: m.remoteCtrlSession?.sessionCode ?? "")
         m.remoteCtrlSession = m.remoteCtrlSession?.updateState(state)
-    case let .remoteCtrlStopped(_, rcStopReason):
+    case let .remoteCtrlStopped(_, _, rcStopReason):
         // This delay is needed to cancel the session that fails on network failure,
         // e.g. when user did not grant permission to access local network yet.
         if let sess = m.remoteCtrlSession {

@@ -7,30 +7,12 @@ import os
 
 final class PinnedSessionDelegate: NSObject, URLSessionDelegate {
 
-    // SPKI SHA-256 pins for api.popopxchat.com
-    // Format: "sha256/<base64-encoded SHA-256 hash of SubjectPublicKeyInfo DER>"
-    //
-    // To extract the leaf cert pin from the production server:
-    //   openssl s_client -connect api.popopxchat.com:443 -servername api.popopxchat.com 2>/dev/null \
-    //     | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der \
-    //     | openssl dgst -sha256 -binary | openssl enc -base64
-    //
-    // Leaf + intermediate pins provide strong pinning. Root CA pins are backup
-    // to survive certificate renewals (any Let's Encrypt cert will pass via root pin).
-    private let pinnedHashes: Set<String> = [
-        // Production: leaf certificate for api.popopxchat.com
-        "sha256/ySPaw1wCX6m4jRIi9vyzZSJolgJ2U2mGXEapmi2pb/o=",
-        // Production: Let's Encrypt YR1 intermediate
-        "sha256/LoMHBotttiDko50Gi13uXW71eIy7LAttI+rYT8wXF4w=",
-        // Backup: ISRG Root YR (cross-signed by ISRG Root X1)
-        "sha256/fk6IOKit1ild5647BH06ujSIq5XbCgqlbYl6ANhhi88=",
-        // Backup: ISRG Root X1 (Let's Encrypt primary root)
-        "sha256/C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=",
-        // Backup: ISRG Root X2 (Let's Encrypt ECDSA root)
-        "sha256/diGVwiVYbubAI3RW4hB9xU8e/CH2GnkuvVFZE8zmgzI=",
-    ]
+    // Certificate pins are no longer needed — all api.popopxchat.com calls have been
+    // eliminated. PinnedURLSession is retained for SMS bridge (Twilio/Nexmo) which uses
+    // default SSL validation via .performDefaultHandling for non-pinned hosts.
+    private let pinnedHashes: Set<String> = []
 
-    private let pinnedHost = "api.popopxchat.com"
+    private let pinnedHost = ""
 
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge,
                     completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
@@ -172,7 +154,9 @@ enum PinnedURLSession {
 // PINNED (using PinnedURLSession.shared):
 // ✅ Shared/Customization/Helpers/ServerAPI.swift:62
 // ✅ Shared/Customization/Bridge/SMSBridgeView.swift:221, 286
-// ✅ Shared/Model/Monetization.swift:523, 606, 767, 796, 880, 959
+//
+// NOTE: All monetization-related api.popopxchat.com calls have been eliminated.
+// ServerAPI.swift still uses api.popopxchat.com for AI chat, compliance, and MPC features.
 //
 // GAP — Tor-Only Sessions (indirectly protected by Tor circuit integrity):
 // ⚠️ BitchatMesh/Sources/BitchatMesh/Services/TorManagerStub.swift:181
@@ -184,14 +168,14 @@ enum PinnedURLSession {
 //    - TorURLSession._session (Tor-proxied)
 //    - TorURLSession.directSession (direct fallback)
 //    - These route through Tor or are explicitly direct when Tor is disabled
-//    - RECOMMENDATION: Medium priority — if api.popopxchat.com traffic goes here,
+//    - RECOMMENDATION: Medium priority — if sensitive traffic goes here,
 //      add certificate pinning delegate to both sessions
 //
 // GAP — Nostr WebSocket Sessions (external relay infrastructure):
 // ⚠️ BitchatMesh/Sources/BitchatMesh/Nostr/NostrRelayManager.swift:46-58
 //    - URLSessionAdapter wraps URLSession for Nostr WebSocket connections
 //    - Session comes from TorURLSession.shared.session (line 113)
-//    - Connects to arbitrary Nostr relays (not api.popopxchat.com)
+//    - Connects to arbitrary Nostr relays (third-party infrastructure)
 //    - RECOMMENDATION: Not applicable — these connect to third-party relays,
 //      not our pinned host. Domain validation happens at application layer.
 //
@@ -202,8 +186,7 @@ enum PinnedURLSession {
 //      but could add separate pin set for raw.githubusercontent.com if desired
 //
 // SUMMARY:
-// - All direct api.popopxchat.com HTTP calls use PinnedURLSession.shared ✅
+// - Monetization: all local (StoreKit + FFI), no api.popopxchat.com calls
+// - ServerAPI: still uses api.popopxchat.com for AI/compliance/MPC (uses PinnedURLSession)
 // - Tor-wrapped sessions inherit Tor circuit protection but lack explicit pinning
 // - Nostr relay connections are intentionally unpinable (third-party infrastructure)
-// - If future code routes api.popopxchat.com traffic through TorURLSession,
-//   migrate it to use a pinned delegate or PinnedURLSession instead

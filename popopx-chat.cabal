@@ -86,6 +86,7 @@ library
       Popopx.Chat.Store.AppSettings
       Popopx.Chat.Store.Badges
       Popopx.Chat.Store.BinThere
+      Popopx.Chat.Store.Compute
       Popopx.Chat.Store.Connections
       Popopx.Chat.Store.ContactRequest
       Popopx.Chat.Store.Delivery
@@ -180,6 +181,7 @@ library
           Popopx.Chat.Store.Postgres.Migrations.M20261012_delivery_job_notification
           Popopx.Chat.Store.Postgres.Migrations.M20261016_badge_store_receipts
           Popopx.Chat.Store.Postgres.Migrations.M20261019_chat_layout
+          Popopx.Chat.Store.Postgres.Migrations.M20261029_compute_purchases
   else
       exposed-modules:
           Popopx.Chat.Archive
@@ -366,6 +368,7 @@ library
           Popopx.Chat.Store.SQLite.Migrations.M20261016_badge_store_receipts
           Popopx.Chat.Store.SQLite.Migrations.M20261018_autoincrement_ids
           Popopx.Chat.Store.SQLite.Migrations.M20261019_chat_layout
+          Popopx.Chat.Store.SQLite.Migrations.M20261029_compute_purchases
   other-modules:
       Paths_popopx_chat
   hs-source-dirs:

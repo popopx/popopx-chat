@@ -16,6 +16,10 @@ module Popopx.Chat.Store
     AddressSettings (..),
     AutoAccept (..),
     BinThereBot (..),
+    ComputePurchase (..),
+    ComputeBalance (..),
+    PurchaseType (..),
+    PurchaseStatus (..),
     createChatStore,
     migrations, -- used in tests
     withTransaction,
@@ -26,10 +30,15 @@ module Popopx.Chat.Store
     updateBinThereBot,
     deleteBinThereBot,
     incrementBotUsage,
+    getComputeBalance,
+    setComputeBalance,
+    recordComputePurchase,
+    getComputePurchases,
   )
 where
 
 import Popopx.Chat.Store.BinThere
+import Popopx.Chat.Store.Compute
 import Popopx.Chat.Store.Profiles
 import Popopx.Chat.Store.Shared
 import Popopx.Messaging.Agent.Store.Common (DBStore (..), withTransaction)

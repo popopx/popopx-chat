@@ -24,7 +24,6 @@ let MON_KEY_TRIAL_START = "monTrialStart"
 let MON_KEY_TIER = "monUserTier"
 let MON_KEY_SUBSCRIPTION_EXPIRY = "monSubscriptionExpiry"
 let MON_KEY_TOKEN_BALANCE = "monTokenBalance"
-let MON_KEY_STORE_BASE_URL = "monComputeStoreBaseURL"
 let MON_KEY_CLAIMED_PACKETS = "monClaimedPackets"
 let MON_KEY_DEVICE_ID = "device_id"
 let MON_KEY_AUTO_RENEW = "monAutoRenew"
@@ -96,8 +95,6 @@ enum BillingPeriod: String, CaseIterable {
 enum SubscriptionError: LocalizedError, Equatable {
     case networkError(String)
     case verificationFailed
-    case serverVerificationPending
-    case serverRejected(String)
     case productNotAvailable
     case pendingApproval
     case revoked(reason: String)
@@ -106,8 +103,6 @@ enum SubscriptionError: LocalizedError, Equatable {
         switch self {
         case .networkError(let msg): return String(format: NSLocalizedString("Network error: %@", comment: ""), msg)
         case .verificationFailed: return NSLocalizedString("Purchase could not be verified.", comment: "")
-        case .serverVerificationPending: return NSLocalizedString("Purchase received but server verification is pending. It will be confirmed automatically.", comment: "")
-        case .serverRejected(let msg): return String(format: NSLocalizedString("Server rejected: %@", comment: ""), msg)
         case .productNotAvailable: return NSLocalizedString("This product is not available.", comment: "")
         case .pendingApproval: return NSLocalizedString("Purchase is pending approval.", comment: "")
         case .revoked(let reason): return String(format: NSLocalizedString("Subscription revoked: %@", comment: ""), reason)
@@ -201,36 +196,6 @@ final class EntitlementStore {
         set { defaults.set(newValue, forKey: MON_KEY_TOKEN_BALANCE) }
     }
 
-    private static let allowedStoreHosts: Set<String> = [
-        "api.popopxchat.com"
-    ]
-
-    /// Validates that a store URL uses HTTPS, has an allowed host, and is well-formed.
-    private static func isValidStoreURL(_ string: String) -> Bool {
-        let trimmed = string.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let url = URL(string: trimmed),
-              url.scheme == "https",
-              let host = url.host,
-              !host.isEmpty,
-              allowedStoreHosts.contains(host) else {
-            return false
-        }
-        return true
-    }
-
-    private static let defaultStoreBaseURL = "https://api.popopxchat.com"
-
-    var storeBaseURL: String {
-        get {
-            let stored = defaults.string(forKey: MON_KEY_STORE_BASE_URL) ?? Self.defaultStoreBaseURL
-            return Self.isValidStoreURL(stored) ? stored : Self.defaultStoreBaseURL
-        }
-        set {
-            guard Self.isValidStoreURL(newValue) else { return }
-            defaults.set(newValue, forKey: MON_KEY_STORE_BASE_URL)
-        }
-    }
-
     var claimedPackets: Set<String> {
         get { Set(defaults.stringArray(forKey: MON_KEY_CLAIMED_PACKETS) ?? []) }
         set { defaults.set(Array(newValue), forKey: MON_KEY_CLAIMED_PACKETS) }
@@ -290,16 +255,6 @@ final class SubscriptionManager: ObservableObject {
         guard Date().timeIntervalSince(lastValidationDate) > Self.validationInterval else { return }
         lastValidationDate = Date()
         Task { await validateEntitlement() }
-    }
-
-    private var backendBaseURL: URL? {
-        let s = EntitlementStore.shared.storeBaseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-        return s.isEmpty ? nil : URL(string: s)
-    }
-
-    private func addDeviceAuth(_ request: inout URLRequest) {
-        let deviceId = EntitlementStore.shared.deviceId
-        request.addValue(deviceId, forHTTPHeaderField: "X-Device-ID")
     }
 
     init() {
@@ -462,26 +417,12 @@ final class SubscriptionManager: ObservableObject {
             switch result {
             case .success(let verification):
                 if case .verified(let transaction) = verification {
-                    let verified = await submitSubscriptionVerification(verification)
-                    if verified {
-                        await transaction.finish()
-                        await updateEntitlements()
-                        let tier = tierForProductId(transaction.productID)
-                        purchasedTierName = tier.displayName
-                        purchaseSuccess = true
-                        return true
-                    } else {
-                        // Finish transaction even if server verification failed to prevent StoreKit from re-delivering it indefinitely.
-                        // The server can still verify it later via Transaction.updates listener or AppStore.sync().
-                        await transaction.finish()
-                        lastSubscriptionError = .serverVerificationPending
-                        // Schedule a background retry to update entitlements
-                        Task { [weak self] in
-                            try? await Task.sleep(nanoseconds: 5_000_000_000) // 5 seconds
-                            await self?.updateEntitlements()
-                        }
-                        return false
-                    }
+                    await transaction.finish()
+                    await updateEntitlements()
+                    let tier = tierForProductId(transaction.productID)
+                    purchasedTierName = tier.displayName
+                    purchaseSuccess = true
+                    return true
                 } else {
                     lastSubscriptionError = .verificationFailed
                     return false
@@ -511,7 +452,6 @@ final class SubscriptionManager: ObservableObject {
             do {
                 try await AppStore.sync()
                 await updateEntitlements()
-                await refreshSubscriptionStatus()
                 return
             } catch {
                 if attempt < maxAttempts - 1 {
@@ -528,136 +468,10 @@ final class SubscriptionManager: ObservableObject {
         }
     }
 
-    // MARK: Server-side receipt validation
-
-    private func submitSubscriptionVerification(_ verification: VerificationResult<StoreKit.Transaction>) async -> Bool {
-        guard let url = backendBaseURL?.appendingPathComponent("api/v1/subscription/verify") else { return false }
-
-        let jws = verification.jwsRepresentation
-        let body: [String: Any] = [
-            "device_id": EntitlementStore.shared.deviceId,
-            "jws": jws
-        ]
-
-        for attempt in 1...3 {
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            addDeviceAuth(&request)
-            do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: body)
-            } catch {
-                logger.error("Monetization: JSON serialization failed: \(error)")
-                return false
-            }
-            request.timeoutInterval = 15
-
-            do {
-                let (data, response) = try await PinnedURLSession.shared.data(for: request)
-                guard let httpResp = response as? HTTPURLResponse else { continue }
-
-                if httpResp.statusCode == 200 {
-                    do {
-                        let resp = try JSONDecoder().decode(SubscriptionVerifyResponse.self, from: data)
-                        applyServerSubscriptionResponse(resp)
-                    } catch {
-                        os_log(.error, "Monetization: failed to decode subscription response: %{public}@", error.localizedDescription)
-                    }
-                    return true
-                } else {
-                    os_log(.error, "Monetization: subscription verification returned HTTP %{public}d", httpResp.statusCode)
-                    if httpResp.statusCode >= 400 && httpResp.statusCode < 500 && httpResp.statusCode != 429 {
-                        return false
-                    }
-                }
-            } catch {
-                os_log(.debug, "Monetization: server verification attempt %{public}d failed: %{public}@", attempt, error.localizedDescription)
-            }
-
-            if attempt < 3 {
-                let delay = pow(2.0, Double(attempt)) * Double.random(in: 0.8...1.2)
-                do {
-                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-                } catch {
-                    return false
-                }
-            }
-        }
-        return false
-    }
-
-    private func applyServerSubscriptionResponse(_ resp: SubscriptionVerifyResponse) {
-        if let tier = UserTier(rawValue: resp.tier) {
-            EntitlementStore.shared.setTier(tier)
-        }
-        EntitlementStore.shared.autoRenew = resp.autoRenew
-        EntitlementStore.shared.subscriptionEnvironment = resp.environment
-
-        let iso8601Frac: ISO8601DateFormatter = {
-            let f = ISO8601DateFormatter()
-            f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            return f
-        }()
-        let iso8601Plain: ISO8601DateFormatter = {
-            let f = ISO8601DateFormatter()
-            f.formatOptions = [.withInternetDateTime]
-            return f
-        }()
-        let simpleDF: DateFormatter = {
-            let f = DateFormatter()
-            f.dateFormat = "yyyy-MM-dd HH:mm:ss'Z'"
-            f.timeZone = TimeZone(secondsFromGMT: 0)
-            return f
-        }()
-
-        if let expiresAt = iso8601Frac.date(from: resp.expiresAt)
-            ?? iso8601Plain.date(from: resp.expiresAt)
-            ?? simpleDF.date(from: resp.expiresAt) {
-            EntitlementStore.shared.subscriptionExpiryDate = expiresAt
-            subscriptionExpirationDate = expiresAt
-        }
-
-        if let tier = UserTier(rawValue: resp.tier) {
-            subscriptionInfo = SubscriptionInfo(
-                tier: tier,
-                expiresAt: subscriptionExpirationDate ?? Date.distantFuture,
-                autoRenew: resp.autoRenew,
-                environment: resp.environment,
-                productId: ""
-            )
-        }
-    }
-
-    // date parsing uses cached static formatters above
-
-    // MARK: Server-side subscription status
+    // MARK: Subscription status (local StoreKit only)
 
     func refreshSubscriptionStatus() async {
-        guard let base = backendBaseURL else { return }
-        var components = URLComponents(url: base.appendingPathComponent("api/v1/subscription/status"), resolvingAgainstBaseURL: false)
-        components?.queryItems = [URLQueryItem(name: "device_id", value: EntitlementStore.shared.deviceId)]
-        guard let url = components?.url else { return }
-
-        do {
-            var request = URLRequest(url: url)
-            request.timeoutInterval = 15
-            let (data, response) = try await PinnedURLSession.shared.data(for: request)
-            guard let httpResp = response as? HTTPURLResponse, httpResp.statusCode == 200 else { return }
-            do {
-                let resp = try JSONDecoder().decode(SubscriptionStatusResponse.self, from: data)
-                applyServerSubscriptionResponse(SubscriptionVerifyResponse(
-                    tier: resp.tier,
-                    status: resp.status,
-                    expiresAt: resp.expiresAt ?? "",
-                    autoRenew: resp.autoRenew,
-                    environment: resp.environment ?? "Sandbox"
-                ))
-            } catch {
-                os_log(.error, "Monetization: failed to decode subscription status: %{public}@", error.localizedDescription)
-            }
-        } catch {
-            os_log(.debug, "Monetization: entitlement claim failed (local is source of truth): %{public}@", error.localizedDescription)
-        }
+        await updateEntitlements()
     }
 
     // MARK: Refund / revocation handling
@@ -719,24 +533,6 @@ final class SubscriptionManager: ObservableObject {
     }
 }
 
-// MARK: - Server response types
-
-private struct SubscriptionVerifyResponse: Codable {
-    let tier: String
-    let status: String
-    let expiresAt: String
-    let autoRenew: Bool
-    let environment: String
-}
-
-private struct SubscriptionStatusResponse: Codable {
-    let tier: String
-    let status: String
-    let expiresAt: String?
-    let autoRenew: Bool
-    let environment: String?
-}
-
 // MARK: - Compute-token store
 
 enum PurchaseResult {
@@ -766,20 +562,7 @@ final class ComputeStore: ObservableObject {
     @Published var purchasingProductId: String?
     @Published var storeKitProducts: [Product] = []
 
-    private var baseURL: URL? {
-        let s = EntitlementStore.shared.storeBaseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-        return s.isEmpty ? nil : URL(string: s)
-    }
-
     private var consumableUpdatesTask: Task<Void, Never>?
-
-    /// Creates a URLRequest for the given URL with the X-Device-ID header attached.
-    private func authenticatedRequest(for url: URL) -> URLRequest {
-        var request = URLRequest(url: url)
-        request.addValue(EntitlementStore.shared.deviceId, forHTTPHeaderField: "X-Device-ID")
-        request.timeoutInterval = 15
-        return request
-    }
 
     static let mockProducts: [ComputeProduct] = [
         ComputeProduct(id: "starter", title: String(localized: "Starter pack"), priceUSD: 9.99, tokenAmount: 100, icon: "bolt", storeKitProductId: PRODUCT_TOKENS_STARTER),
@@ -799,20 +582,7 @@ final class ComputeStore: ObservableObject {
     func loadProducts() async {
         loading = true
         defer { loading = false }
-        guard let url = baseURL?.appendingPathComponent("products") else {
-            products = Self.mockProducts
-            return
-        }
-        do {
-            let request = authenticatedRequest(for: url)
-            let (data, _) = try await PinnedURLSession.shared.data(for: request)
-            products = try JSONDecoder().decode([ComputeProduct].self, from: data)
-        } catch let error as URLError where error.code == .notConnectedToInternet || error.code == .networkConnectionLost {
-            products = Self.mockProducts
-        } catch {
-            lastError = error.localizedDescription
-            products = Self.mockProducts
-        }
+        products = Self.mockProducts
     }
 
     func loadStoreKitProducts() async {
@@ -827,37 +597,18 @@ final class ComputeStore: ObservableObject {
     // MARK: - Balance
 
     func refreshBalance() async {
-        guard let url = balanceURL else {
-            balance = Double(EntitlementStore.shared.tokenBalance)
-            return
-        }
-        struct BalanceResp: Codable { var balance: Double }
         do {
-            let request = authenticatedRequest(for: url)
-            let (data, _) = try await PinnedURLSession.shared.data(for: request)
-            let resp = try JSONDecoder().decode(BalanceResp.self, from: data)
-            balance = resp.balance
-            EntitlementStore.shared.tokenBalance = Int(resp.balance.rounded())
+            let bal = try await apiGetComputeBalance()
+            balance = bal.balance
+            EntitlementStore.shared.tokenBalance = Int(bal.balance.rounded())
         } catch {
             balance = Double(EntitlementStore.shared.tokenBalance)
         }
     }
 
-    private var balanceURL: URL? {
-        guard let base = baseURL?.appendingPathComponent("balance") else { return nil }
-        var components = URLComponents(url: base, resolvingAgainstBaseURL: false)
-        components?.queryItems = [URLQueryItem(name: "device_id", value: EntitlementStore.shared.deviceId)]
-        return components?.url
-    }
-
     // MARK: - Purchase
 
     func purchase(_ product: ComputeProduct) async -> PurchaseResult {
-        guard baseURL != nil else {
-            lastError = NSLocalizedString("Store is currently unavailable. Please try again later.", comment: "")
-            return .failure("Store unavailable")
-        }
-
         guard let skProduct = storeKitProducts.first(where: { $0.id == product.storeKitProductId }) else {
             lastError = NSLocalizedString("Product not available in StoreKit", comment: "")
             return .failure("Product not available")
@@ -874,7 +625,7 @@ final class ComputeStore: ObservableObject {
             let result = try await skProduct.purchase()
             switch result {
             case .success(let verification):
-                return await submitVerification(verification, for: product)
+                return await processVerifiedPurchase(verification, for: product)
             case .pending:
                 lastError = NSLocalizedString("Awaiting price confirmation. Tokens will be credited once confirmed.", comment: "")
                 return .pending
@@ -890,84 +641,36 @@ final class ComputeStore: ObservableObject {
         }
     }
 
-    private func submitVerification(_ verification: VerificationResult<StoreKit.Transaction>, for product: ComputeProduct) async -> PurchaseResult {
-        let jws = verification.jwsRepresentation
+    private func processVerifiedPurchase(_ verification: VerificationResult<StoreKit.Transaction>, for product: ComputeProduct) async -> PurchaseResult {
         guard case .verified(let transaction) = verification else {
             lastError = NSLocalizedString("Transaction could not be verified", comment: "")
             return .failure(NSLocalizedString("Transaction could not be verified", comment: ""))
         }
 
-        guard let url = baseURL?.appendingPathComponent("orders") else {
-            return .failure(NSLocalizedString("No backend configured", comment: ""))
-        }
+        await transaction.finish()
 
-        let body: [String: Any] = [
-            "device_id": EntitlementStore.shared.deviceId,
-            "transaction_id": String(transaction.id),
-            "product_id": transaction.productID,
-            "jws": jws
-        ]
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime]
+        let purchase = ComputePurchaseFFI(
+            transactionId: String(transaction.id),
+            productId: transaction.productID,
+            purchaseType: "token_pack",
+            tokenAmount: product.tokenAmount,
+            priceUsd: product.priceUSD,
+            status: "completed",
+            metadata: nil,
+            createdAt: dateFormatter.string(from: transaction.purchaseDate)
+        )
 
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body)
+            let bal = try await apiRecordComputePurchase(purchase: purchase)
+            balance = bal.balance
+            EntitlementStore.shared.tokenBalance = Int(bal.balance.rounded())
         } catch {
-            logger.error("Monetization: JSON serialization failed: \(error)")
-            return .failure(NSLocalizedString("Failed to serialize purchase request", comment: ""))
+            credit(product.tokenAmount)
+            logger.error("Monetization: FFI purchase record failed, credited locally: \(error)")
         }
-
-        let maxRetries = 3
-        for attempt in 0..<maxRetries {
-            do {
-                let (data, response) = try await PinnedURLSession.shared.data(for: request)
-                guard let httpResp = response as? HTTPURLResponse else {
-                    return .failure(NSLocalizedString("Invalid server response", comment: ""))
-                }
-
-                if httpResp.statusCode == 200 {
-                    if let resp = try? JSONDecoder().decode(OrderResponse.self, from: data) {
-                        if resp.balance >= self.balance {
-                            await transaction.finish()
-                            self.balance = resp.balance
-                            EntitlementStore.shared.tokenBalance = Int(resp.balance.rounded())
-                        } else {
-                            logger.error("Monetization: server balance (\(resp.balance)) less than local (\(self.balance)), deferring transaction finish")
-                            await refreshBalance()
-                        }
-                    } else {
-                        await transaction.finish()
-                        await refreshBalance()
-                    }
-                    return .success
-                } else if httpResp.statusCode >= 400 && httpResp.statusCode < 500 {
-                    let errorBody = try? JSONDecoder().decode(ErrorResponse.self, from: data)
-                    let msg = errorBody?.error ?? String(format: NSLocalizedString("Server error (%d)", comment: ""), httpResp.statusCode)
-                    lastError = msg
-                    return .failure(msg)
-                } else {
-                    if attempt < maxRetries - 1 {
-                        let delay = min(UInt64(1) << min(attempt, 30), 30_000_000_000)
-                        try? await Task.sleep(nanoseconds: delay)
-                        continue
-                    }
-                    let errorBody = try? JSONDecoder().decode(ErrorResponse.self, from: data)
-                    let msg = errorBody?.error ?? String(format: NSLocalizedString("Server error (%d)", comment: ""), httpResp.statusCode)
-                    lastError = msg
-                    return .failure(msg)
-                }
-            } catch {
-                if attempt < maxRetries - 1 {
-                    let delay = min(UInt64(1) << min(attempt, 30), 30_000_000_000)
-                    try? await Task.sleep(nanoseconds: delay)
-                    continue
-                }
-                lastError = String(format: NSLocalizedString("Network error: %@", comment: ""), error.localizedDescription)
-                return .failure(lastError ?? NSLocalizedString("Network error", comment: ""))
-            }
-        }
-        return .failure(NSLocalizedString("Max retries exceeded", comment: ""))
+        return .success
     }
 
     // MARK: - Transaction listener for consumables
@@ -979,7 +682,30 @@ final class ComputeStore: ObservableObject {
                 guard ALL_TOKEN_PRODUCT_IDS.contains(transaction.productID) else { continue }
                 let product = Self.mockProducts.first { $0.storeKitProductId == transaction.productID }
                 guard let product else { continue }
-                _ = await self?.submitVerification(update, for: product)
+                await transaction.finish()
+
+                let dateFormatter = ISO8601DateFormatter()
+                dateFormatter.formatOptions = [.withInternetDateTime]
+                let purchase = ComputePurchaseFFI(
+                    transactionId: String(transaction.id),
+                    productId: transaction.productID,
+                    purchaseType: "token_pack",
+                    tokenAmount: product.tokenAmount,
+                    priceUsd: product.priceUSD,
+                    status: "completed",
+                    metadata: nil,
+                    createdAt: dateFormatter.string(from: transaction.purchaseDate)
+                )
+
+                do {
+                    let bal = try await apiRecordComputePurchase(purchase: purchase)
+                    await MainActor.run {
+                        self?.balance = bal.balance
+                        EntitlementStore.shared.tokenBalance = Int(bal.balance.rounded())
+                    }
+                } catch {
+                    await self?.credit(product.tokenAmount)
+                }
             }
         }
     }
@@ -1001,51 +727,15 @@ final class ComputeStore: ObservableObject {
     }
 
     func claimGift(id: String, amount: Double) async -> Bool {
-        guard let url = baseURL?.appendingPathComponent("gift/\(id)/claim") else {
-            lastError = NSLocalizedString("Server not configured", comment: "")
+        guard !EntitlementStore.shared.isClaimed(id) else {
+            lastError = NSLocalizedString("Gift already claimed", comment: "")
             return false
         }
-
-        let body: [String: Any] = ["device_id": EntitlementStore.shared.deviceId]
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body)
-        } catch {
-            logger.error("Monetization: JSON serialization failed: \(error)")
-            return false
-        }
-
-        do {
-            let (data, response) = try await PinnedURLSession.shared.data(for: request)
-            guard let httpResp = response as? HTTPURLResponse, httpResp.statusCode == 200 else {
-                lastError = NSLocalizedString("Server rejected claim", comment: "")
-                return false
-            }
-            struct ClaimResponse: Codable { let balance: Double }
-            if let resp = try? JSONDecoder().decode(ClaimResponse.self, from: data) {
-                balance = resp.balance
-                EntitlementStore.shared.tokenBalance = Int(resp.balance.rounded())
-            } else {
-                await refreshBalance()
-            }
-            return true
-        } catch {
-            lastError = String(format: NSLocalizedString("Network error during claim: %@", comment: ""), error.localizedDescription)
-            return false
-        }
+        credit(amount)
+        EntitlementStore.shared.markClaimed(id)
+        return true
     }
 }
 
 // MARK: - API response types
 
-private struct OrderResponse: Codable {
-    let status: String
-    let balance: Double
-    let tokens_credited: Double?
-}
-
-private struct ErrorResponse: Codable {
-    let error: String?
-}

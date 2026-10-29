@@ -63,7 +63,7 @@ import Popopx.Chat.Protocol
 import Popopx.Chat.Remote.AppVersion
 import Popopx.Chat.Remote.Types
 import Popopx.Chat.Stats (PresentedServersSummary)
-import Popopx.Chat.Store (AddressSettings, BinThereBot (..), ChatLockEntity, GroupLinkInfo, StoreError (..), UserContactLink, UserMsgReceiptSettings)
+import Popopx.Chat.Store (AddressSettings, BinThereBot (..), ChatLockEntity, ComputeBalance (..), ComputePurchase (..), GroupLinkInfo, StoreError (..), UserContactLink, UserMsgReceiptSettings)
 import Popopx.Chat.Types
 import Popopx.Chat.Types.Preferences
 import Popopx.Chat.Types.Shared
@@ -717,6 +717,9 @@ data ChatCommand
   | APIAddBinThereBot {userId :: UserId, bot :: BinThereBot}
   | APIUpdateBinThereBot {userId :: UserId, bot :: BinThereBot}
   | APIDeleteBinThereBot {userId :: UserId, botId :: Int64}
+  | APIGetComputeBalance {userId :: UserId}
+  | APIRecordComputePurchase {userId :: UserId, purchase :: ComputePurchase}
+  | APIGetComputePurchases {userId :: UserId}
   | -- The parser will return this command for strings that start from "//".
     -- This command should be processed in preCmdHook
     CustomChatCommand ByteString
@@ -981,6 +984,9 @@ data ChatResponse
   | CRBinThereBotAdded {user :: User, bot :: BinThereBot}
   | CRBinThereBotUpdated {user :: User, bot :: BinThereBot}
   | CRBinThereBotDeleted {user :: User, botId :: Int64}
+  | CRComputeBalance {user :: User, computeBalance :: ComputeBalance}
+  | CRComputePurchaseRecorded {user :: User, computeBalance :: ComputeBalance}
+  | CRComputePurchases {user :: User, purchases :: [ComputePurchase]}
   | CRCustomChatResponse {user_ :: Maybe User, response :: Text}
   deriving (Show)
 

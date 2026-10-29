@@ -1232,24 +1232,20 @@ testOperators =
       alice <##. "Current conditions: 2."
       alice ##> "/_operators"
       alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: required"
-      alice <## "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: required"
-      alice <##. "The new conditions will be accepted for PopopX Chat Ltd, InFlux Technologies Limited at "
+      alice <##. "The new conditions will be accepted for PopopX Chat Ltd at "
       -- set conditions notified
       alice ##> "/_conditions_notified 2"
       alice <## "ok"
       alice ##> "/_operators"
       alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: required"
-      alice <## "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: required"
       alice ##> "/_conditions"
       alice <##. "Current conditions: 2 (notified)."
       -- accept conditions
-      alice ##> "/_accept_conditions 2 1,2"
+      alice ##> "/_accept_conditions 2 1"
       alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: accepted ("
-      alice <##. "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP enabled, conditions: accepted ("
       -- update operators
-      alice ##> "/operators 2:on:smp=proxy:xftp=off"
+      alice ##> "/operators 1:on:smp=proxy:xftp=off"
       alice <##. "1 (popopx). PopopX Chat (PopopX Chat Ltd), domains: popopx.im, servers: enabled, conditions: accepted ("
-      alice <##. "2 (flux). Flux (InFlux Technologies Limited), domains: popopxonflux.com, servers: SMP enabled proxy, XFTP disabled (servers known), conditions: accepted ("
   where
     opts' = testOpts {coreOptions = testCoreOpts {smpServers = [], xftpServers = []}}
 

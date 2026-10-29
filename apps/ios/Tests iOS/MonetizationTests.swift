@@ -280,9 +280,6 @@ final class MonetizationTests: XCTestCase {
         let verificationFailed = SubscriptionError.verificationFailed
         XCTAssertNotNil(verificationFailed.errorDescription)
 
-        let serverRejected = SubscriptionError.serverRejected("invalid JWS")
-        XCTAssertTrue(serverRejected.errorDescription!.contains("invalid JWS"))
-
         let pending = SubscriptionError.pendingApproval
         XCTAssertNotNil(pending.errorDescription)
 

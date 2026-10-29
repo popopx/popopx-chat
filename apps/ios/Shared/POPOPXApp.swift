@@ -134,9 +134,6 @@ struct POPOPXApp: App {
                 .task {
                     await ComputeStore.shared.loadProducts()
                     await ComputeStore.shared.loadStoreKitProducts()
-                    if ComplianceManager.shared.consentRecords.first(where: { $0.id == "1" })?.granted == true {
-                        await ServerAPI.shared.registerDevice()
-                    }
                 }
                 .overlay {
                     if showNeonSplash {

@@ -356,13 +356,6 @@ func apiGetActiveUser(ctrl: chat_ctrl? = nil) throws -> User? {
     case .error(.error(.noActiveUser), _):
         logger.debug("apiGetActiveUser: No active user found in database")
         return nil
-    case .error(.invalidJSON(let json), _):
-        if let data = json, let str = String(data: data, encoding: .utf8), str.contains("noActiveUser") {
-            logger.debug("apiGetActiveUser: No active user (invalidJSON fallback)")
-            return nil
-        }
-        logger.error("apiGetActiveUser: Unexpected response: \(String(describing: r))")
-        throw r.unexpected
     default:
         logger.error("apiGetActiveUser: Unexpected response: \(String(describing: r))")
         throw r.unexpected
@@ -930,6 +923,41 @@ func apiSyncBotDirectory(json: String) async throws {
     throw r.unexpected
 }
 
+// MARK: - Compute Purchase API
+
+func apiGetComputeBalance() async throws -> ComputeBalanceFFI {
+    let userId = try await currentUserId("apiGetComputeBalance")
+    let r: ChatResponse0 = try await chatSendCmd(.apiGetComputeBalance(userId: userId))
+    if case let .computeBalance(_, bal) = r {
+        logger.debug("apiGetComputeBalance: balance=\(bal.balance)")
+        return bal
+    }
+    logger.error("apiGetComputeBalance error: \(String(describing: r))")
+    throw r.unexpected
+}
+
+func apiRecordComputePurchase(purchase: ComputePurchaseFFI) async throws -> ComputeBalanceFFI {
+    let userId = try await currentUserId("apiRecordComputePurchase")
+    let r: ChatResponse0 = try await chatSendCmd(.apiRecordComputePurchase(userId: userId, purchase: purchase))
+    if case let .computePurchaseRecorded(_, bal) = r {
+        logger.debug("apiRecordComputePurchase: new balance=\(bal.balance)")
+        return bal
+    }
+    logger.error("apiRecordComputePurchase error: \(String(describing: r))")
+    throw r.unexpected
+}
+
+func apiGetComputePurchases() async throws -> [ComputePurchaseFFI] {
+    let userId = try await currentUserId("apiGetComputePurchases")
+    let r: ChatResponse0 = try await chatSendCmd(.apiGetComputePurchases(userId: userId))
+    if case let .computePurchases(_, purchases) = r {
+        logger.debug("apiGetComputePurchases: loaded \(purchases.count) purchases")
+        return purchases
+    }
+    logger.error("apiGetComputePurchases error: \(String(describing: r))")
+    throw r.unexpected
+}
+
 // Database lock retry with 2s delays — separate from chatApiSendCmdWithRetry network retry.
 // Uses 2s delays to allow database write operations to complete before retrying.
 func setUserServers(userServers: [UserOperatorServers]) async throws {
@@ -1268,9 +1296,6 @@ func apiUpdateProfile(profile: Profile) async throws -> (Profile, [Contact])? {
     case .result(.userProfileNoChange, _): return (profile, [])
     case let .result(.userProfileUpdated(_, _, toProfile, updateSummary), _): return (toProfile, updateSummary.changedContacts)
     case .error(.errorStore(.duplicateName), _), .error(.error(.userExists), _): return nil;
-    case .error(.invalidJSON(let json), _):
-        if let data = json, let str = String(data: data, encoding: .utf8), str.contains("duplicateName") { return nil }
-        fallthrough
     default:
         await MainActor.run {
             showErrorAlert(r.unexpected, NSLocalizedString("Error saving profile", comment: "alert title"))
@@ -1385,11 +1410,6 @@ private func userAddressResponse(_ r: APIResult<ChatResponse1>) throws -> UserCo
             logger.debug("userAddressResponse: userContactLinkNotFound, returning nil")
             return nil
         }
-        if case let .invalidJSON(json) = e,
-           let data = json, let str = String(data: data, encoding: .utf8), str.contains("userContactLinkNotFound") {
-            logger.debug("userAddressResponse: userContactLinkNotFound (invalidJSON fallback), returning nil")
-            return nil
-        }
         logger.warning("userAddressResponse: ERROR - \(e)")
         throw r.unexpected
     default:
@@ -1411,9 +1431,6 @@ func apiSetUserAddressSettings(_ settings: AddressSettings) async throws -> User
     switch r {
     case let .result(.userContactLinkUpdated(_, contactLink), _): return contactLink
     case .error(.errorStore(storeError: .userContactLinkNotFound), _): return nil
-    case .error(.invalidJSON(let json), _):
-        if let data = json, let str = String(data: data, encoding: .utf8), str.contains("userContactLinkNotFound") { return nil }
-        if let r { throw r.unexpected } else { return nil }
     default: if let r { throw r.unexpected } else { return nil }
     }
 }

@@ -88,6 +88,7 @@ import Popopx.Chat.Store
 import Popopx.Chat.Store.AppSettings
 import Popopx.Chat.Store.Badges
 import Popopx.Chat.Store.BinThere
+import Popopx.Chat.Store.Compute
 import Popopx.Chat.Store.ContactRequest
 import Popopx.Chat.Store.Connections
 import Popopx.Chat.Store.Delivery
@@ -3799,6 +3800,25 @@ processChatCommand cxt nm = \case
   APIDeleteBinThereBot userId botId -> withUserId' userId $ \user -> do
     withFastStore' $ \db -> deleteBinThereBot db botId
     pure $ CRBinThereBotDeleted user botId
+  APIGetComputeBalance userId -> withUserId' userId $ \user -> do
+    mb <- withFastStore' $ \db -> getComputeBalance db userId
+    case mb of
+      Just b -> pure $ CRComputeBalance user b
+      Nothing -> pure $ CRComputeBalance user ComputeBalance {userId, balance = 0, updatedAt = ""}
+  APIRecordComputePurchase userId purchase -> withUserId' userId $ \user -> do
+    newBal <- withFastStore' $ \db -> do
+      _ <- recordComputePurchase db purchase
+      mb <- getComputeBalance db userId
+      now <- liftIO getCurrentTime
+      let nowText = T.pack $ formatTime defaultTimeLocale "%Y-%m-%dT%H:%M:%SZ" now
+      let currentBalance = case mb of Just ComputeBalance{balance = b} -> b; Nothing -> 0
+      let newBalance = currentBalance + tokenAmount purchase
+      setComputeBalance db userId newBalance nowText
+      pure newBalance
+    pure $ CRComputePurchaseRecorded user ComputeBalance {userId, balance = newBal, updatedAt = ""}
+  APIGetComputePurchases userId -> withUserId' userId $ \user -> do
+    purchases <- withFastStore' $ \db -> getComputePurchases db userId
+    pure $ CRComputePurchases user purchases
   -- CustomChatCommand is unsupported, it can be processed in preCmdHook
   -- in a modified CLI app or core - the hook should return Either (Either ChatError ChatResponse) ChatCommand,
   -- where Left means command result, and Right – some other command to be processed by this function.
@@ -6708,6 +6728,9 @@ chatCommandP =
       "/_add_binthere_bot " *> (APIAddBinThereBot <$> A.decimal <* A.space <*> jsonP),
       "/_update_binthere_bot " *> (APIUpdateBinThereBot <$> A.decimal <* A.space <*> jsonP),
       "/_delete_binthere_bot " *> (APIDeleteBinThereBot <$> A.decimal <* A.space <*> A.decimal),
+      "/_compute_balance " *> (APIGetComputeBalance <$> A.decimal),
+      "/_compute_purchase_record " *> (APIRecordComputePurchase <$> A.decimal <* A.space <*> jsonP),
+      "/_compute_purchases " *> (APIGetComputePurchases <$> A.decimal),
       "//" *> (CustomChatCommand <$> A.takeByteString)
     ]
   where
