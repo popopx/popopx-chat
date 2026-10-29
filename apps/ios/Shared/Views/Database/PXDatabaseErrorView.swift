@@ -201,6 +201,9 @@ struct DatabaseErrorView: View {
         case let .unknown(json):
             titleText(NSLocalizedString("dberr_title", comment: "database error title"))
             errorView(Text(String(format: NSLocalizedString("Unknown database error: %@", comment: "unknown database error with details"), json)))
+        case .errorAgent:
+            titleText(NSLocalizedString("dberr_title", comment: "database error title"))
+            errorView(Text(NSLocalizedString("Agent error during database migration", comment: "agent error description")))
         case .ok:
             EmptyView()
         }
@@ -371,6 +374,7 @@ struct DatabaseErrorView: View {
                         message: Text(verbatim: error)
                     ))
                 case .errorMigration: ()
+                case .errorAgent: ()
                 case .ok: ()
                 }
             }

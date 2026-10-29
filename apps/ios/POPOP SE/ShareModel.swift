@@ -311,6 +311,11 @@ class ShareModel: ObservableObject {
                 title: LocalizedStringKey(NSLocalizedString("se_db_error", comment: "database error title")),
                 message: LocalizedStringKey(String(format: NSLocalizedString("se_db_unknown_error_msg", comment: "unknown database error message"), json))
             )
+        case .errorAgent:
+            ErrorAlert(
+                title: LocalizedStringKey(NSLocalizedString("se_db_error", comment: "database error title")),
+                message: LocalizedStringKey(NSLocalizedString("Agent error during database migration", comment: "agent error message"))
+            )
         case .ok: nil
         }
     }

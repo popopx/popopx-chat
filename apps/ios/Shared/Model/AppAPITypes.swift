@@ -975,13 +975,15 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
             guard let jVal = json["computeBalance"] as? NSDictionary,
                   let userObj = jVal["user"],
                   let user: UserRef = try? decodeObject(userObj),
-                  let bal: ComputeBalanceFFI = (jVal["computeBalance"] as? NSDictionary).flatMap { try? decodeObject($0) } else { return nil }
+                  let balDict = jVal["computeBalance"] as? NSDictionary,
+                  let bal: ComputeBalanceFFI = try? decodeObject(balDict) else { return nil }
             return .computeBalance(user: user, computeBalance: bal)
         } else if type == "computePurchaseRecorded" {
             guard let jVal = json["computePurchaseRecorded"] as? NSDictionary,
                   let userObj = jVal["user"],
                   let user: UserRef = try? decodeObject(userObj),
-                  let bal: ComputeBalanceFFI = (jVal["computeBalance"] as? NSDictionary).flatMap { try? decodeObject($0) } else { return nil }
+                  let balDict = jVal["computeBalance"] as? NSDictionary,
+                  let bal: ComputeBalanceFFI = try? decodeObject(balDict) else { return nil }
             return .computePurchaseRecorded(user: user, computeBalance: bal)
         } else if type == "computePurchases" {
             guard let jVal = json["computePurchases"] as? NSDictionary,
@@ -3741,14 +3743,14 @@ enum RemoteCtrlStopReason: Decodable {
     }
 }
 
-enum RHKey: Decodable, Hashable {
+public enum RHKey: Decodable, Hashable {
     case rhNew
     case rhId(remoteHostId: Int64)
 
     private enum CodingKeys: String, CodingKey { case _owsf, rhNew, rhId }
     private enum DataKeys: String, CodingKey { case remoteHostId }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
             if let allKeys = try? c.allKeys.first(where: { $0.stringValue != "_owsf" }) {
@@ -3827,7 +3829,7 @@ enum RemoteHostSessionState: Decodable {
     }
 }
 
-enum RemoteHostError: Decodable, Hashable {
+public enum RemoteHostError: Decodable, Hashable {
     case missing
     case inactive
     case busy
@@ -3843,7 +3845,7 @@ enum RemoteHostError: Decodable, Hashable {
     }
     private enum DataKeys: String, CodingKey { case appVersion, reason, protocolErr }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
             let key = try c.allKeys.first { $0.stringValue != "_owsf" }

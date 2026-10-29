@@ -956,6 +956,7 @@ private func showErrorOnMigrationIfNeeded(_ status: DBMigrationResult, _ alert: 
         alert.wrappedValue = .unknownError(message: error)
     case .errorMigration: ()
     case .errorKeyGeneration: ()
+    case .errorAgent: ()
     case .ok: ()
     }
 }

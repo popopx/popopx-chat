@@ -867,6 +867,95 @@ private func encodeCJSON<T: Encodable>(_ value: T) -> [CChar] {
 }
 
 // Spec: spec/api.md#ChatError
+public enum RHKey: Decodable, Hashable {
+    case rhNew
+    case rhId(remoteHostId: Int64)
+
+    private enum CodingKeys: String, CodingKey { case _owsf, rhNew, rhId }
+    private enum DataKeys: String, CodingKey { case remoteHostId }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if c.contains(._owsf) {
+            if let allKeys = try? c.allKeys.first(where: { $0.stringValue != "_owsf" }) {
+                switch allKeys.stringValue {
+                case "rhNew": self = .rhNew
+                case "rhId":
+                    let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: allKeys)
+                    self = .rhId(remoteHostId: try nested.decode(Int64.self, forKey: .remoteHostId))
+                default: self = .rhNew
+                }
+            } else { self = .rhNew }
+        } else if c.contains(.rhNew) {
+            self = .rhNew
+        } else if c.contains(.rhId) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .rhId)
+            self = .rhId(remoteHostId: try nested.decode(Int64.self, forKey: .remoteHostId))
+        } else {
+            self = .rhNew
+        }
+    }
+}
+
+public enum RemoteHostError: Decodable, Hashable {
+    case missing
+    case inactive
+    case busy
+    case timeout
+    case badState
+    case badVersion(appVersion: String)
+    case localCommand
+    case disconnected(reason: String)
+    case protocolError(protocolErr: ProtocolErrorType)
+
+    private enum CodingKeys: String, CodingKey {
+        case _owsf, missing, inactive, busy, timeout, badState, badVersion, localCommand, disconnected, protocolError
+    }
+    private enum DataKeys: String, CodingKey { case appVersion, reason, protocolErr }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if c.contains(._owsf) {
+            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            switch key?.stringValue {
+            case "missing": self = .missing
+            case "inactive": self = .inactive
+            case "busy": self = .busy
+            case "timeout": self = .timeout
+            case "badState": self = .badState
+            case "badVersion":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .badVersion(appVersion: try nested.decode(String.self, forKey: .appVersion))
+            case "localCommand": self = .localCommand
+            case "disconnected":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .disconnected(reason: try nested.decode(String.self, forKey: .reason))
+            case "protocolError":
+                let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
+                self = .protocolError(protocolErr: try nested.decode(ProtocolErrorType.self, forKey: .protocolErr))
+            default: self = .missing
+            }
+        } else if c.contains(.missing) { self = .missing
+        } else if c.contains(.inactive) { self = .inactive
+        } else if c.contains(.busy) { self = .busy
+        } else if c.contains(.timeout) { self = .timeout
+        } else if c.contains(.badState) { self = .badState
+        } else if c.contains(.badVersion) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .badVersion)
+            self = .badVersion(appVersion: try nested.decode(String.self, forKey: .appVersion))
+        } else if c.contains(.localCommand) { self = .localCommand
+        } else if c.contains(.disconnected) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .disconnected)
+            self = .disconnected(reason: try nested.decode(String.self, forKey: .reason))
+        } else if c.contains(.protocolError) {
+            let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: .protocolError)
+            self = .protocolError(protocolErr: try nested.decode(ProtocolErrorType.self, forKey: .protocolErr))
+        } else {
+            self = .missing
+        }
+    }
+}
+
 public enum ChatError: Decodable, Hashable, Error {
     case error(errorType: ChatErrorType)
     case errorAgent(agentError: AgentErrorType)

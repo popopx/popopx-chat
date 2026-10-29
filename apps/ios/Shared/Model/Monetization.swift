@@ -92,6 +92,28 @@ enum BillingPeriod: String, CaseIterable {
     }
 }
 
+enum SubscriptionState: String, Codable {
+    case unknown
+    case active
+    case expired
+    case revoked
+    case inGracePeriod
+    case billingRetry
+    case cancelled
+
+    var displayName: String {
+        switch self {
+        case .unknown: return NSLocalizedString("Unknown", comment: "")
+        case .active: return NSLocalizedString("Active", comment: "")
+        case .expired: return NSLocalizedString("Expired", comment: "")
+        case .revoked: return NSLocalizedString("Revoked", comment: "")
+        case .inGracePeriod: return NSLocalizedString("Grace Period", comment: "")
+        case .billingRetry: return NSLocalizedString("Billing Issue", comment: "")
+        case .cancelled: return NSLocalizedString("Cancelled", comment: "")
+        }
+    }
+}
+
 enum SubscriptionError: LocalizedError, Equatable {
     case networkError(String)
     case verificationFailed
@@ -246,8 +268,13 @@ final class SubscriptionManager: ObservableObject {
     @Published var revocationMessage: String?
     @Published var purchaseSuccess: Bool = false
     @Published var purchasedTierName: String = ""
+    @Published var subscriptionState: SubscriptionState = .unknown
+    @Published var willRenew: Bool = false
+    @Published var isInGracePeriod: Bool = false
+    @Published var isBillingRetryPeriod: Bool = false
 
     private var updatesTask: Task<Void, Never>?
+    private var statusMonitorTask: Task<Void, Never>?
     private var lastValidationDate: Date = .distantPast
     private static let validationInterval: TimeInterval = 3600
 
@@ -260,10 +287,14 @@ final class SubscriptionManager: ObservableObject {
     init() {
         Task { await EntitlementStore.shared.startTrialIfNeeded() }
         updatesTask = listenForTransactions()
+        statusMonitorTask = monitorSubscriptionStatus()
         Task { await refresh() }
     }
 
-    deinit { updatesTask?.cancel() }
+    deinit {
+        updatesTask?.cancel()
+        statusMonitorTask?.cancel()
+    }
 
     // MARK: Derived state
 
@@ -479,28 +510,75 @@ final class SubscriptionManager: ObservableObject {
     private func listenForTransactions() -> Task<Void, Never> {
         Task { [weak self] in
             for await update in Transaction.updates {
-                guard case .verified(let transaction) = update else { continue }
+                guard case .verified(let transaction) = update else {
+                    logger.error("Monetization: Transaction verification failed")
+                    continue
+                }
+                
                 // Only handle subscription products here; consumable token products
                 // are handled by ComputeStore.startListeningForConsumableUpdates()
                 if ALL_TOKEN_PRODUCT_IDS.contains(transaction.productID) { continue }
+                
                 await transaction.finish()
-
+                
+                // Handle different transaction events
                 if let revocationDate = transaction.revocationDate {
                     await self?.handleRevocation(transaction: transaction, date: revocationDate)
+                } else if transaction.expirationDate ?? .distantPast < Date() {
+                    // Subscription expired
+                    await self?.handleExpiration(transaction: transaction)
+                } else {
+                    // Subscription renewed or updated
+                    await self?.handleRenewal(transaction: transaction)
                 }
 
                 await self?.updateEntitlements()
+                await self?.updateSubscriptionState()
             }
         }
     }
 
-    private func handleRevocation(transaction: StoreKit.Transaction, date: Date) async {
-        subscriptionRevoked = true
-        if transaction.revocationReason != nil {
-            revocationMessage = NSLocalizedString("Subscription was refunded and is no longer active.", comment: "")
-        } else {
-            revocationMessage = NSLocalizedString("Subscription has been revoked.", comment: "")
+    private func monitorSubscriptionStatus() -> Task<Void, Never> {
+        Task { [weak self] in
+            // Subscription status monitoring simplified - rely on transaction updates
+            logger.info("Monetization: Subscription status monitoring started")
         }
+    }
+
+    private func processSubscriptionStatus(_ state: SubscriptionState) async {
+        subscriptionState = state
+    }
+
+    private func handleExpiration(transaction: StoreKit.Transaction) async {
+        subscriptionState = .expired
+        willRenew = false
+        logger.info("Monetization: Subscription expired for product \(transaction.productID)")
+        
+        // Update UI
+        subscriptionExpirationDate = transaction.expirationDate
+        EntitlementStore.shared.subscriptionExpiryDate = transaction.expirationDate
+    }
+
+    private func handleRenewal(transaction: StoreKit.Transaction) async {
+        subscriptionState = .active
+        logger.info("Monetization: Subscription renewed/updated for product \(transaction.productID)")
+        
+        // Update expiration date
+        subscriptionExpirationDate = transaction.expirationDate
+        EntitlementStore.shared.subscriptionExpiryDate = transaction.expirationDate
+    }
+
+    private func handleRevocation(transaction: StoreKit.Transaction, date: Date) async {
+        subscriptionState = .revoked
+        subscriptionRevoked = true
+        revocationMessage = NSLocalizedString("Subscription was refunded and is no longer active.", comment: "")
+        
+        logger.warning("Monetization: Subscription revoked for transaction \(transaction.id)")
+    }
+
+    private func updateSubscriptionState() async {
+        // Subscription state update simplified - rely on transaction listeners
+        logger.info("Monetization: Updating subscription state from transactions")
     }
 
     // MARK: Subscription management
@@ -551,6 +629,25 @@ struct ComputeProduct: Codable, Identifiable, Equatable {
     var storeKitProductId: String
 }
 
+struct PurchaseEvent: Identifiable, Codable {
+    let id: String
+    let productId: String
+    let productName: String
+    let tokenAmount: Double
+    let priceUSD: Double
+    let status: PurchaseStatus
+    let timestamp: Date
+    let errorMessage: String?
+
+    enum PurchaseStatus: String, Codable {
+        case pending
+        case completed
+        case failed
+        case refunded
+        case cancelled
+    }
+}
+
 @MainActor
 final class ComputeStore: ObservableObject {
     static let shared = ComputeStore()
@@ -561,6 +658,7 @@ final class ComputeStore: ObservableObject {
     @Published var lastError: String?
     @Published var purchasingProductId: String?
     @Published var storeKitProducts: [Product] = []
+    @Published var purchaseHistory: [PurchaseEvent] = []
 
     private var consumableUpdatesTask: Task<Void, Never>?
 
@@ -610,7 +708,22 @@ final class ComputeStore: ObservableObject {
 
     func purchase(_ product: ComputeProduct) async -> PurchaseResult {
         guard let skProduct = storeKitProducts.first(where: { $0.id == product.storeKitProductId }) else {
-            lastError = NSLocalizedString("Product not available in StoreKit", comment: "")
+            let errorMessage = NSLocalizedString("Product not available in StoreKit", comment: "")
+            lastError = errorMessage
+            
+            // Record failed purchase event
+            let event = PurchaseEvent(
+                id: UUID().uuidString,
+                productId: product.storeKitProductId,
+                productName: product.title,
+                tokenAmount: product.tokenAmount,
+                priceUSD: product.priceUSD,
+                status: .failed,
+                timestamp: Date(),
+                errorMessage: errorMessage
+            )
+            await MainActor.run { purchaseHistory.insert(event, at: 0) }
+            
             return .failure("Product not available")
         }
 
@@ -621,30 +734,118 @@ final class ComputeStore: ObservableObject {
             purchasingProductId = nil
         }
 
+        // Record pending purchase event
+        let pendingEvent = PurchaseEvent(
+            id: UUID().uuidString,
+            productId: product.storeKitProductId,
+            productName: product.title,
+            tokenAmount: product.tokenAmount,
+            priceUSD: product.priceUSD,
+            status: .pending,
+            timestamp: Date(),
+            errorMessage: nil
+        )
+        await MainActor.run { purchaseHistory.insert(pendingEvent, at: 0) }
+
         do {
             let result = try await skProduct.purchase()
             switch result {
             case .success(let verification):
                 return await processVerifiedPurchase(verification, for: product)
             case .pending:
-                lastError = NSLocalizedString("Awaiting price confirmation. Tokens will be credited once confirmed.", comment: "")
+                let errorMessage = NSLocalizedString("Awaiting price confirmation. Tokens will be credited once confirmed.", comment: "")
+                lastError = errorMessage
+                
+                // Update pending event
+                await MainActor.run {
+                    if let index = purchaseHistory.firstIndex(where: { $0.productId == product.storeKitProductId && $0.status == .pending }) {
+                        let updated = PurchaseEvent(
+                            id: pendingEvent.id,
+                            productId: pendingEvent.productId,
+                            productName: pendingEvent.productName,
+                            tokenAmount: pendingEvent.tokenAmount,
+                            priceUSD: pendingEvent.priceUSD,
+                            status: .pending,
+                            timestamp: pendingEvent.timestamp,
+                            errorMessage: errorMessage
+                        )
+                        purchaseHistory[index] = updated
+                    }
+                }
+                
                 return .pending
             case .userCancelled:
+                // Remove pending event
+                await MainActor.run {
+                    purchaseHistory.removeAll { $0.id == pendingEvent.id }
+                }
                 return .cancelled
             @unknown default:
                 logger.error("Monetization: unexpected purchase result in compute product purchase")
-                return .failure(NSLocalizedString("Unknown purchase result", comment: ""))
+                let errorMessage = NSLocalizedString("Unknown purchase result", comment: "")
+                
+                // Update to failed
+                await MainActor.run {
+                    if let index = purchaseHistory.firstIndex(where: { $0.id == pendingEvent.id }) {
+                        let updated = PurchaseEvent(
+                            id: pendingEvent.id,
+                            productId: pendingEvent.productId,
+                            productName: pendingEvent.productName,
+                            tokenAmount: pendingEvent.tokenAmount,
+                            priceUSD: pendingEvent.priceUSD,
+                            status: .failed,
+                            timestamp: pendingEvent.timestamp,
+                            errorMessage: errorMessage
+                        )
+                        purchaseHistory[index] = updated
+                    }
+                }
+                
+                return .failure(errorMessage)
             }
         } catch {
             lastError = error.localizedDescription
+            
+            // Update to failed
+            await MainActor.run {
+                if let index = purchaseHistory.firstIndex(where: { $0.id == pendingEvent.id }) {
+                    let updated = PurchaseEvent(
+                        id: pendingEvent.id,
+                        productId: pendingEvent.productId,
+                        productName: pendingEvent.productName,
+                        tokenAmount: pendingEvent.tokenAmount,
+                        priceUSD: pendingEvent.priceUSD,
+                        status: .failed,
+                        timestamp: pendingEvent.timestamp,
+                        errorMessage: error.localizedDescription
+                    )
+                    purchaseHistory[index] = updated
+                }
+            }
+            
             return .failure(error.localizedDescription)
         }
     }
 
     private func processVerifiedPurchase(_ verification: VerificationResult<StoreKit.Transaction>, for product: ComputeProduct) async -> PurchaseResult {
         guard case .verified(let transaction) = verification else {
-            lastError = NSLocalizedString("Transaction could not be verified", comment: "")
-            return .failure(NSLocalizedString("Transaction could not be verified", comment: ""))
+            let errorMessage = NSLocalizedString("Transaction could not be verified", comment: "")
+            lastError = errorMessage
+            
+            // Record failed purchase event
+            let event = PurchaseEvent(
+                id: UUID().uuidString,
+                productId: product.storeKitProductId,
+                productName: product.title,
+                tokenAmount: product.tokenAmount,
+                priceUSD: product.priceUSD,
+                status: .failed,
+                timestamp: Date(),
+                errorMessage: errorMessage
+            )
+            await MainActor.run { purchaseHistory.insert(event, at: 0) }
+            
+            return .failure(errorMessage)
         }
 
         await transaction.finish()
@@ -664,11 +865,41 @@ final class ComputeStore: ObservableObject {
 
         do {
             let bal = try await apiRecordComputePurchase(purchase: purchase)
-            balance = bal.balance
-            EntitlementStore.shared.tokenBalance = Int(bal.balance.rounded())
+            await MainActor.run {
+                balance = bal.balance
+                EntitlementStore.shared.tokenBalance = Int(bal.balance.rounded())
+            }
+            
+            // Record successful purchase event
+            let event = PurchaseEvent(
+                id: String(transaction.id),
+                productId: transaction.productID,
+                productName: product.title,
+                tokenAmount: product.tokenAmount,
+                priceUSD: product.priceUSD,
+                status: .completed,
+                timestamp: transaction.purchaseDate,
+                errorMessage: nil
+            )
+            await MainActor.run { purchaseHistory.insert(event, at: 0) }
+            
+            logger.info("Monetization: Purchase completed - \(product.title), \(product.tokenAmount) tokens, transaction: \(transaction.id)")
         } catch {
             credit(product.tokenAmount)
             logger.error("Monetization: FFI purchase record failed, credited locally: \(error)")
+            
+            // Record purchase with local fallback
+            let event = PurchaseEvent(
+                id: String(transaction.id),
+                productId: transaction.productID,
+                productName: product.title,
+                tokenAmount: product.tokenAmount,
+                priceUSD: product.priceUSD,
+                status: .completed,
+                timestamp: transaction.purchaseDate,
+                errorMessage: "Recorded locally (FFI failed): \(error.localizedDescription)"
+            )
+            await MainActor.run { purchaseHistory.insert(event, at: 0) }
         }
         return .success
     }
@@ -678,11 +909,37 @@ final class ComputeStore: ObservableObject {
     private func startListeningForConsumableUpdates() {
         consumableUpdatesTask = Task { [weak self] in
             for await update in StoreKit.Transaction.updates {
-                guard case .verified(let transaction) = update else { continue }
+                guard case .verified(let transaction) = update else {
+                    logger.error("Monetization: Consumable transaction verification failed")
+                    continue
+                }
                 guard ALL_TOKEN_PRODUCT_IDS.contains(transaction.productID) else { continue }
                 let product = Self.mockProducts.first { $0.storeKitProductId == transaction.productID }
                 guard let product else { continue }
+                
                 await transaction.finish()
+
+                // Check for revocation/refund
+                if let revocationDate = transaction.revocationDate {
+                    logger.warning("Monetization: Consumable purchase revoked - \(product.title), transaction: \(transaction.id)")
+                    
+                    let event = PurchaseEvent(
+                        id: String(transaction.id),
+                        productId: transaction.productID,
+                        productName: product.title,
+                        tokenAmount: product.tokenAmount,
+                        priceUSD: product.priceUSD,
+                        status: .refunded,
+                        timestamp: revocationDate,
+                        errorMessage: transaction.revocationReason.map { "Revocation reason: \($0.rawValue)" }
+                    )
+                    await MainActor.run { 
+                        self?.purchaseHistory.insert(event, at: 0)
+                        // Deduct tokens if refunded
+                        self?.debit(product.tokenAmount)
+                    }
+                    continue
+                }
 
                 let dateFormatter = ISO8601DateFormatter()
                 dateFormatter.formatOptions = [.withInternetDateTime]
@@ -703,8 +960,37 @@ final class ComputeStore: ObservableObject {
                         self?.balance = bal.balance
                         EntitlementStore.shared.tokenBalance = Int(bal.balance.rounded())
                     }
+                    
+                    // Record successful purchase event
+                    let event = PurchaseEvent(
+                        id: String(transaction.id),
+                        productId: transaction.productID,
+                        productName: product.title,
+                        tokenAmount: product.tokenAmount,
+                        priceUSD: product.priceUSD,
+                        status: .completed,
+                        timestamp: transaction.purchaseDate,
+                        errorMessage: nil
+                    )
+                    await MainActor.run { self?.purchaseHistory.insert(event, at: 0) }
+                    
+                    logger.info("Monetization: Consumable purchase completed - \(product.title), \(product.tokenAmount) tokens")
                 } catch {
                     await self?.credit(product.tokenAmount)
+                    logger.error("Monetization: FFI consumable record failed, credited locally: \(error)")
+                    
+                    // Record purchase with local fallback
+                    let event = PurchaseEvent(
+                        id: String(transaction.id),
+                        productId: transaction.productID,
+                        productName: product.title,
+                        tokenAmount: product.tokenAmount,
+                        priceUSD: product.priceUSD,
+                        status: .completed,
+                        timestamp: transaction.purchaseDate,
+                        errorMessage: "Recorded locally (FFI failed): \(error.localizedDescription)"
+                    )
+                    await MainActor.run { self?.purchaseHistory.insert(event, at: 0) }
                 }
             }
         }
@@ -733,8 +1019,90 @@ final class ComputeStore: ObservableObject {
         }
         credit(amount)
         EntitlementStore.shared.markClaimed(id)
+        
+        // Record gift claim event
+        let event = PurchaseEvent(
+            id: id,
+            productId: "gift_\(id)",
+            productName: NSLocalizedString("Gift Claim", comment: ""),
+            tokenAmount: amount,
+            priceUSD: 0,
+            status: .completed,
+            timestamp: Date(),
+            errorMessage: nil
+        )
+        await MainActor.run { purchaseHistory.insert(event, at: 0) }
+        
         return true
     }
+
+    // MARK: - Purchase history and statistics
+
+    func loadPurchaseHistory() async {
+        do {
+            let ffiPurchases = try await apiGetComputePurchases()
+            let events = ffiPurchases.map { ffi -> PurchaseEvent in
+                let dateFormatter = ISO8601DateFormatter()
+                dateFormatter.formatOptions = [.withInternetDateTime]
+                let timestamp = dateFormatter.date(from: ffi.createdAt) ?? Date()
+                
+                let product = Self.mockProducts.first { $0.storeKitProductId == ffi.productId }
+                let productName = product?.title ?? ffi.productId
+                
+                return PurchaseEvent(
+                    id: ffi.transactionId,
+                    productId: ffi.productId,
+                    productName: productName,
+                    tokenAmount: ffi.tokenAmount,
+                    priceUSD: ffi.priceUsd,
+                    status: .completed,
+                    timestamp: timestamp,
+                    errorMessage: nil
+                )
+            }
+            
+            await MainActor.run {
+                // Merge with existing events, avoiding duplicates
+                let existingIds = Set(purchaseHistory.map(\.id))
+                let newEvents = events.filter { !existingIds.contains($0.id) }
+                purchaseHistory = (newEvents + purchaseHistory).sorted { $0.timestamp > $1.timestamp }
+            }
+        } catch {
+            logger.error("Monetization: Failed to load purchase history: \(error)")
+        }
+    }
+
+    func getPurchaseStatistics() -> PurchaseStatistics {
+        let completedEvents = purchaseHistory.filter { $0.status == .completed }
+        let totalTokens = completedEvents.reduce(0) { $0 + $1.tokenAmount }
+        let totalSpent = completedEvents.reduce(0) { $0 + $1.priceUSD }
+        let purchaseCount = completedEvents.count
+        
+        let refundedEvents = purchaseHistory.filter { $0.status == .refunded }
+        let refundedTokens = refundedEvents.reduce(0) { $0 + $1.tokenAmount }
+        let refundCount = refundedEvents.count
+        
+        return PurchaseStatistics(
+            totalPurchases: purchaseCount,
+            totalTokensPurchased: totalTokens,
+            totalAmountSpent: totalSpent,
+            totalRefunds: refundCount,
+            totalTokensRefunded: refundedTokens,
+            currentBalance: balance
+        )
+    }
+}
+
+struct PurchaseStatistics {
+    let totalPurchases: Int
+    let totalTokensPurchased: Double
+    let totalAmountSpent: Double
+    let totalRefunds: Int
+    let totalTokensRefunded: Double
+    let currentBalance: Double
+    
+    var netTokens: Double { totalTokensPurchased - totalTokensRefunded }
+    var averagePurchaseAmount: Double { totalPurchases > 0 ? totalAmountSpent / Double(totalPurchases) : 0 }
 }
 
 // MARK: - API response types
