@@ -14,32 +14,6 @@
 typedef void* chat_ctrl;
 extern char *chat_migrate_init_key(char *path, char *key, int keepKey, char *confirm, int backgroundMode, chat_ctrl *ctrl);
 
-// Wrapper function that converts byte array key to string for chat_migrate_init_key
-// This allows Swift to pass raw key bytes without converting to CString (security improvement)
-char *chat_migrate_init_key_bytes(char *path, unsigned char *key, int keyLen, int keepKey, char *confirm, int backgroundMode, chat_ctrl *ctrl) {
-    if (!key || keyLen <= 0) {
-        return NULL;
-    }
-    
-    // Allocate buffer for null-terminated string
-    char *keyStr = (char *)malloc(keyLen + 1);
-    if (!keyStr) {
-        return NULL;
-    }
-    
-    // Copy bytes and null-terminate
-    memcpy(keyStr, key, keyLen);
-    keyStr[keyLen] = '\0';
-    
-    // Call the original function
-    char *result = chat_migrate_init_key(path, keyStr, keepKey, confirm, backgroundMode, ctrl);
-    
-    // Free temporary buffer
-    free(keyStr);
-    
-    return result;
-}
-
 #if defined(__x86_64__) && TARGET_IPHONE_SIMULATOR
 
 #import <dirent.h>

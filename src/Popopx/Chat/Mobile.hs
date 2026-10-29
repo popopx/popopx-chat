@@ -19,7 +19,6 @@ import Data.Aeson (ToJSON (..))
 import qualified Data.Aeson as J
 import qualified Data.Aeson.TH as JQ
 import Data.Bifunctor (first)
-import qualified Data.ByteArray as BA
 import qualified Data.ByteString.Base64.URL as U
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as B
@@ -118,8 +117,6 @@ foreign export ccall "chat_migrate_init" cChatMigrateInit :: CString -> CString 
 
 foreign export ccall "chat_migrate_init_key" cChatMigrateInitKey :: CString -> CString -> CInt -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
 
-foreign export ccall "chat_migrate_init_key_bytes" cChatMigrateInitKeyBytes :: CString -> Ptr Word8 -> CInt -> CInt -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
-
 foreign export ccall "chat_migrate_init_queue" cChatMigrateInitQueue :: CString -> CString -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
 
 foreign export ccall "chat_close_store" cChatCloseStore :: StablePtr ChatController -> IO CString
@@ -195,26 +192,6 @@ cChatMigrateInit_ fp key keepKey conf background queueSize ctrl =
         confirm <- peekCAString conf
         r <-
           chatMigrateInitKey chatDbOpts keepKey confirm background queueSize >>= \case
-            Right cc -> (newStablePtr cc >>= poke ctrl) $> DBMOk
-            Left e -> pure e
-        newCStringFromLazyBS $ J.encode r
-    )
-    (\e -> newCStringFromLazyBS $ J.encode $ DBMErrorSQL "" (show e))
-
-cChatMigrateInitKeyBytes :: CString -> Ptr Word8 -> CInt -> CInt -> CString -> CInt -> Ptr (StablePtr ChatController) -> IO CJSONString
-cChatMigrateInitKeyBytes fp keyPtr keyLen keepKey conf background ctrl =
-  catchAll
-    ( do
-        setLocaleEncoding utf8
-        setFileSystemEncoding utf8
-        setForeignEncoding utf8
-
-        dbFilePrefix <- peekCString fp
-        keyBytes <- BA.convert <$> B.packCStringLen (castPtr keyPtr, fromIntegral keyLen)
-        let chatDbOpts = ChatDbOpts {dbFilePrefix, dbKey = keyBytes, trackQueries = DB.TQSlow 5000, vacuumOnMigration = True}
-        confirm <- peekCAString conf
-        r <-
-          chatMigrateInitKey chatDbOpts (keepKey /= 0) confirm (background /= 0) mobileQueueSize >>= \case
             Right cc -> (newStablePtr cc >>= poke ctrl) $> DBMOk
             Left e -> pure e
         newCStringFromLazyBS $ J.encode r
