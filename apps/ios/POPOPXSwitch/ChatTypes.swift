@@ -312,6 +312,7 @@ public enum ChatPeerType: Hashable {
     case human
     case bot
     case business
+    case agent
     case unknown(String)
 
     public var text: String {
@@ -319,6 +320,7 @@ public enum ChatPeerType: Hashable {
         case .human: "human"
         case .bot: "bot"
         case .business: "business"
+        case .agent: "agent"
         case let .unknown(s): s
         }
     }
@@ -330,6 +332,7 @@ extension ChatPeerType: Codable {
         case "human": self = .human
         case "bot": self = .bot
         case "business": self = .business
+        case "agent": self = .agent
         case let s: self = .unknown(s)
         }
     }
@@ -1020,6 +1023,18 @@ public enum CustomTimeUnit: Hashable {
         case .month: return "\(value)mth"
         }
     }
+
+    public static func toShortTextString(seconds: Int) -> String {
+        let (unit, value) = toTimeUnit(seconds: seconds)
+        switch unit {
+        case .second: return "\(value)s"
+        case .minute: return "\(value)m"
+        case .hour: return "\(value)h"
+        case .day: return "\(value)d"
+        case .week: return "\(value)w"
+        case .month: return "\(value)mth"
+        }
+    }
 }
 
 
@@ -1033,6 +1048,13 @@ public func shortTimeText(_ seconds: Int?) -> LocalizedStringKey {
     guard let seconds = seconds else { return "off" }
     if seconds == 0 { return "0s" }
     return CustomTimeUnit.toShortText(seconds: seconds)
+}
+
+/// String-returning variant for use with AttributedString
+public func shortTimeTextString(_ seconds: Int?) -> String {
+    guard let seconds = seconds else { return "off" }
+    if seconds == 0 { return "0s" }
+    return CustomTimeUnit.toShortTextString(seconds: seconds)
 }
 
 public struct ContactUserPreferences: Decodable, Hashable {
@@ -4203,7 +4225,7 @@ public struct ChatItem: Identifiable, Decodable, Hashable {
 
     public var viewId: String { "\(meta.itemId) \(viewTimestamp.timeIntervalSince1970)" }
 
-    public var timestampText: Text { meta.timestampText }
+    public var timestampText: AttributedString { meta.timestampText }
 
     public var text: String { text(isChannel: false) }
 
@@ -4668,7 +4690,7 @@ public struct CIMeta: Decodable, Hashable {
     public var forwardedByMember: Int64?
     public var showGroupAsSender: Bool
 
-    public var timestampText: Text { Text(formatTimestampMeta(itemTs)) }
+    public var timestampText: AttributedString { AttributedString(formatTimestampMeta(itemTs)) }
     public var recent: Bool { updatedAt + 10 > .now }
     public var isLive: Bool { itemLive == true }
     public var disappearing: Bool { !isRcvNew && itemTimed?.deleteAt != nil }
@@ -4809,22 +4831,22 @@ public enum CIStatus: Decodable, Hashable {
         }
     }
 
-    public func statusIcon(_ metaColor: Color, _ paleMetaColor: Color, _ primaryColor: Color = .accentColor) -> (Image, Color)? {
+    public func statusIcon(_ metaColor: Color, _ paleMetaColor: Color, _ primaryColor: Color = .accentColor) -> (String, Bool, Color)? {
         switch self {
         case .sndNew: nil
         case let .sndSent(sndProgress):
-            (Image("checkmark.wide"),  sndProgress == .partial ? paleMetaColor : metaColor)
+            ("checkmark.wide", false, sndProgress == .partial ? paleMetaColor : metaColor)
         case let .sndRcvd(msgRcptStatus, sndProgress):
             switch msgRcptStatus {
-            case .ok: (Image("checkmark.2"), sndProgress == .partial ? paleMetaColor : metaColor)
-            case .badMsgHash: (Image("checkmark.2"), .red)
+            case .ok: ("checkmark.2", false, sndProgress == .partial ? paleMetaColor : metaColor)
+            case .badMsgHash: ("checkmark.2", false, .red)
             }
-        case .sndErrorAuth: (Image(systemName: "multiply"), .red)
-        case .sndError: (Image(systemName: "multiply"), .red)
-        case .sndWarning: (Image(systemName: "exclamationmark.triangle.fill"), .orange)
-        case .rcvNew: (Image(systemName: "circlebadge.fill"), primaryColor)
+        case .sndErrorAuth: ("multiply", true, .red)
+        case .sndError: ("multiply", true, .red)
+        case .sndWarning: ("exclamationmark.triangle.fill", true, .orange)
+        case .rcvNew: ("circlebadge.fill", true, primaryColor)
         case .rcvRead: nil
-        case .invalid: (Image(systemName: "questionmark"), metaColor)
+        case .invalid: ("questionmark", true, metaColor)
         }
     }
 
@@ -4937,20 +4959,20 @@ public enum GroupSndStatus: Decodable, Hashable {
     case warning(agentError: SndError)
     case invalid(text: String)
 
-    public func statusIcon(_ metaColor: Color, _ primaryColor: Color = .accentColor) -> (Image, Color) {
+    public func statusIcon(_ metaColor: Color, _ primaryColor: Color = .accentColor) -> (String, Bool, Color) {
         switch self {
-        case .new: (Image(systemName: "ellipsis"), metaColor)
-        case .forwarded: (Image(systemName: "chevron.forward.2"), metaColor)
-        case .inactive: (Image(systemName: "person.badge.minus"), metaColor)
-        case .sent: (Image("checkmark.wide"), metaColor)
+        case .new: ("ellipsis", true, metaColor)
+        case .forwarded: ("chevron.forward.2", true, metaColor)
+        case .inactive: ("person.badge.minus", true, metaColor)
+        case .sent: ("checkmark.wide", false, metaColor)
         case let .rcvd(msgRcptStatus):
             switch msgRcptStatus {
-            case .ok: (Image("checkmark.2"), metaColor)
-            case .badMsgHash: (Image("checkmark.2"), .red)
+            case .ok: ("checkmark.2", false, metaColor)
+            case .badMsgHash: ("checkmark.2", false, .red)
             }
-        case .error: (Image(systemName: "multiply"), .red)
-        case .warning: (Image(systemName: "exclamationmark.triangle.fill"), .orange)
-        case .invalid: (Image(systemName: "questionmark"), metaColor)
+        case .error: ("multiply", true, .red)
+        case .warning: ("exclamationmark.triangle.fill", true, .orange)
+        case .invalid: ("questionmark", true, metaColor)
         }
     }
 
@@ -6825,4 +6847,40 @@ public struct MemberDeliveryStatus: Decodable, Hashable {
     public var groupMemberId: Int64
     public var memberDeliveryStatus: GroupSndStatus
     public var sentViaProxy: Bool?
+}
+
+// Chat layout mode for terminal/classic view switching
+public enum ChatLayout: Hashable {
+    case classic
+    case terminal
+    case unknown(String)
+}
+
+extension ChatLayout: RawRepresentable {
+    public init(rawValue: String) {
+        switch rawValue {
+        case "classic": self = .classic
+        case "terminal": self = .terminal
+        default: self = .unknown(rawValue)
+        }
+    }
+
+    public var rawValue: String {
+        switch self {
+        case .classic: "classic"
+        case .terminal: "terminal"
+        case let .unknown(s): s
+        }
+    }
+}
+
+extension ChatLayout: Codable {
+    public init(from decoder: Decoder) throws {
+        self = try ChatLayout(rawValue: decoder.singleValueContainer().decode(String.self))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.singleValueContainer()
+        try c.encode(rawValue)
+    }
 }
