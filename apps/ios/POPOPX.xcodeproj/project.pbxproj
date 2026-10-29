@@ -167,8 +167,6 @@
 		644EFFE42937BE9700525D5B /* PXMarkedDeletedItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644EFFE32937BE9700525D5B /* PXMarkedDeletedItemView.swift */; };
 		6454036F2822A9750090DDFF /* PXComposeFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6454036E2822A9750090DDFF /* PXComposeFileView.swift */; };
 		646BB38C283BEEB9001CE359 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646BB38B283BEEB9001CE359 /* LocalAuthentication.framework */; };
-		SEC000010000000000000001 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = SEC0000000000000000000001 /* Security.framework */; };
-		CF0000010000000000000001 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0000000000000000000001 /* CoreFoundation.framework */; };
 		646BB38E283FDB6D001CE359 /* LocalAuthenticationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646BB38D283FDB6D001CE359 /* LocalAuthenticationUtils.swift */; };
 		647B15E82F4C8D2500EB431E /* PXAddChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647B15E72F4C8D2500EB431E /* PXAddChannelView.swift */; };
 		647B15EA2F4C8D5100EB431E /* PXChatRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647B15E92F4C8D5100EB431E /* PXChatRelayView.swift */; };
@@ -354,6 +352,7 @@
 		CEE723F02C3D25C70009AE93 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE723EF2C3D25C70009AE93 /* ShareView.swift */; };
 		CEE723F22C3D25ED0009AE93 /* ShareModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE723F12C3D25ED0009AE93 /* ShareModel.swift */; };
 		CEFB2EDF2CA1BCC7004B1ECE /* PXSheetRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFB2EDE2CA1BCC7004B1ECE /* PXSheetRepresentable.swift */; };
+		CF0000010000000000000001 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0000000000000000000001 /* CoreFoundation.framework */; };
 		CLT0000000000000000002 /* ChatListTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CLT0000000000000000001 /* ChatListTypes.swift */; };
 		CP0000010000000000000001 /* ComplianceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CP0000020000000000000001 /* ComplianceManager.swift */; };
 		CP0000010000000000000002 /* ComplianceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CP0000020000000000000002 /* ComplianceSettingsView.swift */; };
@@ -497,6 +496,7 @@
 		QS0000010000000000000004 /* DataHexExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = QS0000020000000000000004 /* DataHexExtension.swift */; };
 		RAM000001000000000000001 /* RadialActionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = RAM0000020000000000000002 /* RadialActionMenu.swift */; };
 		SD0000010000000000000001 /* ScreenshotDefense.swift in Sources */ = {isa = PBXBuildFile; fileRef = SD0000010000000000000002 /* ScreenshotDefense.swift */; };
+		SEC000010000000000000001 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = SEC0000000000000000000001 /* Security.framework */; };
 		SP0000010000000000000001 /* SwipeToPopModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = SP0000020000000000000001 /* SwipeToPopModifier.swift */; };
 		SP0000010000000000000002 /* ChatPopOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = SP0000020000000000000002 /* ChatPopOverlay.swift */; };
 		TBH000001000000000000001 /* TacticalHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = TBH000001000000000000002 /* TacticalHeaderComponent.swift */; };
@@ -776,8 +776,6 @@
 		644EFFE32937BE9700525D5B /* PXMarkedDeletedItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMarkedDeletedItemView.swift; sourceTree = "<group>"; };
 		6454036E2822A9750090DDFF /* PXComposeFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComposeFileView.swift; sourceTree = "<group>"; };
 		646BB38B283BEEB9001CE359 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk/System/Library/Frameworks/LocalAuthentication.framework; sourceTree = DEVELOPER_DIR; };
-		SEC0000000000000000000001 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		CF0000000000000000000001 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		646BB38D283FDB6D001CE359 /* LocalAuthenticationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthenticationUtils.swift; sourceTree = "<group>"; };
 		647B15E72F4C8D2500EB431E /* PXAddChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAddChannelView.swift; sourceTree = "<group>"; };
 		647B15E92F4C8D5100EB431E /* PXChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXChatRelayView.swift; sourceTree = "<group>"; };
@@ -950,6 +948,7 @@
 		CEE723EF2C3D25C70009AE93 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		CEE723F12C3D25ED0009AE93 /* ShareModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareModel.swift; sourceTree = "<group>"; };
 		CEFB2EDE2CA1BCC7004B1ECE /* PXSheetRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSheetRepresentable.swift; sourceTree = "<group>"; };
+		CF0000000000000000000001 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		CLT0000000000000000001 /* ChatListTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTypes.swift; sourceTree = "<group>"; };
 		CP0000020000000000000001 /* ComplianceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplianceManager.swift; sourceTree = "<group>"; };
 		CP0000020000000000000002 /* ComplianceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplianceSettingsView.swift; sourceTree = "<group>"; };
@@ -1148,6 +1147,7 @@
 		QS0000020000000000000004 /* DataHexExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHexExtension.swift; sourceTree = "<group>"; };
 		RAM0000020000000000000002 /* RadialActionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialActionMenu.swift; sourceTree = "<group>"; };
 		SD0000010000000000000002 /* ScreenshotDefense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotDefense.swift; sourceTree = "<group>"; };
+		SEC0000000000000000000001 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		SP0000020000000000000001 /* SwipeToPopModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeToPopModifier.swift; sourceTree = "<group>"; };
 		SP0000020000000000000002 /* ChatPopOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPopOverlay.swift; sourceTree = "<group>"; };
 		TBH000001000000000000002 /* TacticalHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TacticalHeaderComponent.swift; sourceTree = "<group>"; };
@@ -3323,7 +3323,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3338,7 +3338,7 @@
 				);
 				LLVM_LTO = NO;
 				MARKETING_VERSION = 1.1.0;
-				OTHER_LDFLAGS = "-Wl,-export_dynamic,-lcurl";
+				OTHER_LDFLAGS = "-Wl,-export_dynamic,-lcurl,-lsqlcipher";
 				PRODUCT_BUNDLE_IDENTIFIER = com.popopxchat.popopx;
 				PRODUCT_NAME = POPOPX;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3392,7 +3392,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3407,7 +3407,7 @@
 				);
 				LLVM_LTO = YES;
 				MARKETING_VERSION = 1.1.0;
-				OTHER_LDFLAGS = "-Wl,-stack_size,0x1000000,-export_dynamic,-lcurl";
+				OTHER_LDFLAGS = "-Wl,-stack_size,0x1000000,-export_dynamic,-lcurl,-lsqlcipher";
 				PRODUCT_BUNDLE_IDENTIFIER = com.popopxchat.popopx;
 				PRODUCT_NAME = POPOPX;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3427,7 +3427,7 @@
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = PDBA6XRBQT;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.1.0;
 				OTHER_LDFLAGS = "-Wl,-undefined,dynamic_lookup";
 				PRODUCT_BUNDLE_IDENTIFIER = com.popopxchat.popopx.tests;
@@ -3448,7 +3448,7 @@
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = PDBA6XRBQT;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.1.0;
 				OTHER_LDFLAGS = "-Wl,-undefined,dynamic_lookup";
 				PRODUCT_BUNDLE_IDENTIFIER = com.popopxchat.popopx.tests;
@@ -3480,7 +3480,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "POPOPX NSE";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 POPOPX. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3518,7 +3518,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "POPOPX NSE";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 POPOPX. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3561,7 +3561,7 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 POPOPX. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3578,7 +3578,7 @@
 				LLVM_LTO = NO;
 				MARKETING_VERSION = 1.1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
-				OTHER_LDFLAGS = "-lc++";
+				OTHER_LDFLAGS = "-lc++ -lsqlcipher";
 				PRODUCT_BUNDLE_IDENTIFIER = com.popopxchat.popopx.Switch;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
@@ -3619,7 +3619,7 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 POPOPX. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3636,7 +3636,7 @@
 				LLVM_LTO = YES;
 				MARKETING_VERSION = 1.1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
-				OTHER_LDFLAGS = "-lc++";
+				OTHER_LDFLAGS = "-lc++ -lsqlcipher";
 				PRODUCT_BUNDLE_IDENTIFIER = com.popopxchat.popopx.Switch;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
@@ -3671,7 +3671,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "POPOPX SE";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 POPOPX. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3708,7 +3708,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "POPOPX SE";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 POPOPX. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
