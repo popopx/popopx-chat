@@ -17,6 +17,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5CE2BA672845308900EC33A6"
                BuildableName = "POPOPXSwitch.framework"
+               BlueprintName = "POPOPXSwitch"
                ReferencedContainer = "container:POPOPX.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -52,6 +53,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5CE2BA672845308900EC33A6"
             BuildableName = "POPOPXSwitch.framework"
+            BlueprintName = "POPOPXSwitch"
             ReferencedContainer = "container:POPOPX.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

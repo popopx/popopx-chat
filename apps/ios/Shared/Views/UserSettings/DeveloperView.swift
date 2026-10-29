@@ -41,7 +41,9 @@ struct DeveloperView: View {
                 } header: {
                     Text("")
                 } footer: {
-                    ((developerTools ? Text(NSLocalizedString("dev_show_label", comment: "Show toggle label")) : Text(NSLocalizedString("dev_hide_label", comment: "Hide toggle label"))) + textSpace + Text(NSLocalizedString("settings_show_hide_db_ids", comment: "Developer options description")))
+                    Text(developerTools
+                        ? "\(NSLocalizedString("dev_show_label", comment: "Show toggle label")) \(NSLocalizedString("settings_show_hide_db_ids", comment: "Developer options description"))"
+                        : "\(NSLocalizedString("dev_hide_label", comment: "Hide toggle label")) \(NSLocalizedString("settings_show_hide_db_ids", comment: "Developer options description"))")
                         .foregroundColor(theme.colors.secondary)
                 }
                 

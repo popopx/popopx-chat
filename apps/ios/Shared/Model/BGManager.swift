@@ -84,10 +84,10 @@ class BGManager: @unchecked Sendable {
         logger.debug("BGManager.schedule")
         let request = BGAppRefreshTaskRequest(identifier: receiveTaskId)
         request.earliestBeginDate = Date(timeIntervalSinceNow: interval ?? runInterval)
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            logger.error("BGManager.schedule error: \(error.localizedDescription)")
+        BGTaskScheduler.shared.submitTaskRequest(request) { error in
+            if let error {
+                logger.error("BGManager.schedule error: \(error.localizedDescription)")
+            }
         }
     }
 

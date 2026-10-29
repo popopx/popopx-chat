@@ -581,8 +581,9 @@ struct ChatItemInfoView: View {
                     .accessibilityHidden(true)
             }
             let pxStatusGroup = Group {
-                let (image, statusColor) = status.statusIcon(theme.colors.secondary, theme.colors.primary)
-                image.foregroundColor(statusColor)
+                let (imageName, isSystem, statusColor) = status.statusIcon(theme.colors.secondary, theme.colors.primary)
+                (isSystem ? Image(systemName: imageName) : Image(imageName))
+                    .foregroundColor(statusColor)
                     .accessibilityHidden(true)
             }
 

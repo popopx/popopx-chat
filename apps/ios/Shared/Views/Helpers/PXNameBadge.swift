@@ -124,6 +124,18 @@ func badgeImageName(_ t: BadgeType) -> String {
     }
 }
 
+// POPOPX: helper to build a verified name with shield icon for NameWithBadge.
+// The shield gets shieldColor; the name gets nameColor and nameFont.
+func pxVerifiedNameText(displayName: String, shieldColor: Color, nameColor: Color, nameFont: Font? = nil) -> Text {
+    var pxShield = AttributedString("\(Image(systemName: "checkmark.shield")) ")
+    pxShield.foregroundColor = shieldColor
+    var pxName = AttributedString(displayName)
+    pxName.foregroundColor = nameColor
+    if let nameFont { pxName.font = nameFont }
+    pxShield += pxName
+    return Text(pxShield)
+}
+
 // The badge as an inline attachment for a UIKit label, for the custom alert where the name is a UILabel
 // and the SwiftUI NameBadge can't be used. Sized to the font's cap height with its bottom on the baseline,
 // preceded by a space for the gap to the name. Returns nil for a nil/long-expired badge. Mirrors NameBadge's glyph.

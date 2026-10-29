@@ -798,9 +798,14 @@ public func decodeJSON<T: Decodable>(_ json: String) -> T? {
         do {
             return try jsonDecoder.decode(T.self, from: data)
         } catch let DecodingError.typeMismatch(type, context) {
-            logger.debug("decodeJSON type mismatch: expected \(type), path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
+            let preview = json.prefix(100)
+            logger.debug("decodeJSON type mismatch: expected \(type), path: \(context.codingPath.map { $0.stringValue }.joined(separator: ".")), input: \(preview)")
+        } catch let DecodingError.dataCorrupted(context) {
+            let preview = json.prefix(100)
+            logger.debug("decodeJSON data corrupted: \(context.debugDescription), input: \(preview)")
         } catch {
-            logger.debug("decodeJSON failed: \(error)")
+            let preview = json.prefix(100)
+            logger.debug("decodeJSON failed: \(error), input: \(preview)")
         }
     }
     return nil

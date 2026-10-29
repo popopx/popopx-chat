@@ -173,7 +173,9 @@ struct MsgContentView: View {
             if pxMeta.isLive {
                 pxAttrStr.append(typingIndicator(pxMeta.recent))
             }
-            pxText = Text(AttributedString(pxAttrStr)) + reserveSpaceForMeta(pxMeta)
+            var pxCombined = AttributedString(pxAttrStr)
+            pxCombined += reserveSpaceForMeta(pxMeta)
+            pxText = Text(pxCombined)
         } else {
             pxText = Text(AttributedString(pxAttrStr))
         }
@@ -188,8 +190,10 @@ struct MsgContentView: View {
     }
 
     @inline(__always)
-    private func reserveSpaceForMeta(_ pxMeta: CIMeta) -> Text {
-        (rightToLeft ? textNewLine : Text(verbatim: "   ")) + pxBuildMetaText(pxMeta, chatTTL: chat.chatInfo.timedMessagesTTL, encrypted: nil, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
+    private func reserveSpaceForMeta(_ pxMeta: CIMeta) -> AttributedString {
+        var pxResult = rightToLeft ? AttributedString("\n") : AttributedString("   ")
+        pxResult += pxBuildMetaText(pxMeta, chatTTL: chat.chatInfo.timedMessagesTTL, encrypted: nil, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
+        return pxResult
     }
 }
 

@@ -135,29 +135,34 @@ struct ContextItemView: View {
     private func contextMsgPreview(_ contextItem: ChatItem) -> some View {
         let pxTextResult = messageText(contextItem.text, contextItem.formattedText, sender: nil, preview: true, mentions: contextItem.mentions, userMemberId: nil, showSecrets: nil, backgroundColor: UIColor(pxContextBackground), stripLink: contextItem.content.msgContent?.chatLinkStr)
         let pxAttachment = pxBuildAttachmentText(contextItem)
-        let t = pxAttachment + Text(AttributedString(pxTextResult.string))
+        let t = Text(pxAttachment + AttributedString(pxTextResult.string))
         return t.if(pxTextResult.hasSecrets, transform: hiddenSecretsView)
     }
 
     // MARK: - POPOPX Helper
 
-    private func pxBuildAttachmentText(_ contextItem: ChatItem) -> Text {
+    private func pxBuildAttachmentText(_ contextItem: ChatItem) -> AttributedString {
         let isFileLoaded = if let fileSource = getLoadedFileSource(contextItem.file) {
             FileManager.default.fileExists(atPath: getAppFilePath(fileSource.filePath).path)
         } else { false }
         switch contextItem.content.msgContent {
-        case .file: return isFileLoaded ? pxImageText("doc.fill") : Text("")
+        case .file: return isFileLoaded ? pxImageText("doc.fill") : AttributedString()
         case .image: return pxImageText("photo")
-        case .voice: return isFileLoaded ? pxImageText("play.fill") : Text("")
+        case .voice: return isFileLoaded ? pxImageText("play.fill") : AttributedString()
         case let .chat(_, chatLink, _):
             let pxHasText = contextItem.text != chatLink.connLinkStr
-            return pxImageText(chatLink.smallIconName) + Text(chatLink.displayName) + Text(verbatim: pxHasText ? " - " : "")
-        default: return Text("")
+            var r = pxImageText(chatLink.smallIconName)
+            r += AttributedString(chatLink.displayName)
+            if pxHasText { r += AttributedString(" - ") }
+            return r
+        default: return AttributedString()
         }
     }
 
-    private func pxImageText(_ s: String) -> Text {
-        Text(Image(systemName: s)).foregroundColor(theme.colors.onSurface) + textSpace
+    private func pxImageText(_ s: String) -> AttributedString {
+        var r = AttributedString("\(Image(systemName: s)) ")
+        r.foregroundColor = theme.colors.onSurface
+        return r
     }
 }
 

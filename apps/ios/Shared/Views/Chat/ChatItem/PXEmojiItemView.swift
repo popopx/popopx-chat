@@ -58,13 +58,10 @@ func emojiText(_ text: String) -> Text {
     return Text(s).font(s.count < PXEmojiItemConfig.largeThreshold + 1 ? largeEmojiFont : mediumEmojiFont)
 }
 
-struct EmojiItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group{
-            EmojiItemView(chat: Chat.sampleData, chatItem: ChatItem.getSample(1, .directSnd, .now, "🙂", .sndSent(sndProgress: .complete)))
-            EmojiItemView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directRcv, .now, "👍"))
-        }
-        .previewLayout(.fixed(width: 360, height: 70))
+#Preview(traits: .fixedLayout(width: 360, height: 70)) {
+    Group{
+        EmojiItemView(chat: Chat.sampleData, chatItem: ChatItem.getSample(1, .directSnd, .now, "🙂", .sndSent(sndProgress: .complete)))
+        EmojiItemView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directRcv, .now, "👍"))
     }
 }
 

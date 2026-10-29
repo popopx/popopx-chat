@@ -279,7 +279,6 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
             // This ensures the key is persisted even if FFI fails with ErrorCorrupt
             logger.info("chatMigrateInit: writing key to Keychain before FFI call")
             _ = kcDatabasePassword.remove()
-            _ = kcDatabaseSalt.remove()
             guard kcDatabasePassword.set(dbKey) else {
                 logger.error("chatMigrateInit: CRITICAL - failed to write key to Keychain before FFI call")
                 chatControllerLock.sync { finishInitializing() }
@@ -287,19 +286,11 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
             }
             logger.info("chatMigrateInit: key successfully written to Keychain")
         } else if let storedKey = kcDatabasePassword.getWithRetry() {
+            // Restore key derivation for backward compatibility with existing databases
             if let salt = kcDatabaseSalt.get() {
                 logger.debug("chatMigrateInit: deriving key from stored passphrase")
                 if let derived = deriveKey(from: storedKey, salt: Data(base64Encoded: salt)) {
-                    // Convert base64-derived key to hex format for SQLCipher raw key mode
-                    // SQLCipher expects: PRAGMA key = "x'hex_encoded_key';"
-                    if let keyData = Data(base64Encoded: derived.key) {
-                        dbKey = "x'\(keyData.map { String(format: "%02hhx", $0) }.joined())"
-                        logger.debug("chatMigrateInit: converted derived key to hex format (\(keyData.count) bytes)")
-                    } else {
-                        logger.error("chatMigrateInit: failed to decode derived key from base64")
-                        chatControllerLock.sync { finishInitializing() }
-                        return (false, .errorNotADatabase(dbFile: dbPath))
-                    }
+                    dbKey = derived.key
                 } else {
                     logger.error("chatMigrateInit: PBKDF2 derivation failed, cannot open encrypted database")
                     chatControllerLock.sync { finishInitializing() }
@@ -340,29 +331,18 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
     logger.info("chatMigrateInit: preparing FFI call - dbPath=.../\(URL(fileURLWithPath: dbPath).lastPathComponent), confirm=\(confirm.rawValue), keyLength=\(dbKey.count), dbExists=\(hasDB)")
     logger.debug("chatMigrateInit DB path: .../\(URL(fileURLWithPath: dbPath).lastPathComponent), confirm: \(confirm.rawValue)")
     guard var cPath = dbPath.cString(using: .utf8),
+          var cKey = dbKey.cString(using: .utf8),
           var cConfirm = confirm.rawValue.cString(using: .utf8) else {
         logger.error("chatMigrateInit: string encoding failed")
         chatControllerLock.sync { finishInitializing() }
         return (false, .errorNotADatabase(dbFile: dbPath))
     }
     var newController: chat_ctrl? = nil
-    // Use SecureData for key bytes to avoid CString conversion
-    guard let keyData = SecureData(string: dbKey) else {
-        logger.error("chatMigrateInit: failed to create SecureData for key")
-        zeroize(&cPath); zeroize(&cConfirm)
-        chatControllerLock.sync { finishInitializing() }
-        return (false, .errorNotADatabase(dbFile: dbPath))
-    }
-    logger.info("chatMigrateInit: calling FFI chat_migrate_init_key_bytes with keyLength=\(keyData.count)")
-    let cjson: UnsafeMutablePointer<CChar>? = keyData.withUnsafeBytes { keyPtr in
-        let keyLen = Int32(keyPtr.count)
-        return keyPtr.baseAddress?.withMemoryRebound(to: UInt8.self, capacity: Int(keyLen)) { keyBytes in
-            chat_migrate_init_key_bytes(&cPath, UnsafeMutablePointer(mutating: keyBytes), keyLen, 1, &cConfirm, backgroundMode ? 1 : 0, &newController)
-        }
-    }
+    logger.info("chatMigrateInit: calling FFI chat_migrate_init_key with keyLength=\(dbKey.count)")
+    let cjson = chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, backgroundMode ? 1 : 0, &newController)
     zeroize(&cPath); zeroize(&cConfirm)
     guard let cjson else {
-        logger.error("chatMigrateInit: chat_migrate_init_key_bytes returned null, dbPath=\(dbPath, privacy: .private), keyEmpty=\(dbKey.isEmpty, privacy: .private), background=\(backgroundMode, privacy: .private)")
+        logger.error("chatMigrateInit: chat_migrate_init_key returned null, dbPath=\(dbPath, privacy: .private), keyEmpty=\(dbKey.isEmpty, privacy: .private), background=\(backgroundMode, privacy: .private)")
         chatControllerLock.sync { finishInitializing() }
         return (false, .errorNotADatabase(dbFile: dbPath))
     }
@@ -387,22 +367,13 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                 dbKey = freshKey
                 initialRandomDBPassphraseGroupDefault.set(true)
                 guard var cPath2 = dbPath.cString(using: .utf8),
+                      var cKey2 = dbKey.cString(using: .utf8),
                       var cConfirm2 = confirm.rawValue.cString(using: .utf8) else {
                     logger.error("chatMigrateInit: retry string encoding failed")
                     chatControllerLock.sync { finishInitializing() }
                     return (false, .errorNotADatabase(dbFile: dbPath))
                 }
-                guard let retryKeyData = SecureData(string: dbKey) else {
-                    logger.error("chatMigrateInit: retry failed to create SecureData for key")
-                    chatControllerLock.sync { finishInitializing() }
-                    return (false, .errorNotADatabase(dbFile: dbPath))
-                }
-                let cjson2: UnsafeMutablePointer<CChar>? = retryKeyData.withUnsafeBytes { keyPtr in
-                    let keyLen = Int32(keyPtr.count)
-                    return keyPtr.baseAddress?.withMemoryRebound(to: UInt8.self, capacity: Int(keyLen)) { keyBytes in
-                        chat_migrate_init_key_bytes(&cPath2, UnsafeMutablePointer(mutating: keyBytes), keyLen, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
-                    }
-                }
+                let cjson2 = chat_migrate_init_key(&cPath2, &cKey2, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
                 zeroize(&cPath2); zeroize(&cConfirm2)
                 guard let cjson2 else {
                     logger.error("chatMigrateInit: retry FFI call also returned null")
@@ -424,7 +395,6 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                     // Remove corrupt DB backups now that retry succeeded
                     cleanupCorruptDBBackups(dbPath, timestamp: corruptDBTimestamp)
                     _ = kcDatabasePassword.remove()
-                    _ = kcDatabaseSalt.remove()
                     let keychainWriteFailed = useKeychain && !kcDatabasePassword.set(dbKey)
                     dbKey = ""
                     if keychainWriteFailed {
@@ -469,7 +439,6 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                 // FIX: Write key to Keychain immediately, before retry FFI call
                 logger.info("chatMigrateInit: writing fresh key to Keychain before retry")
                 _ = kcDatabasePassword.remove()
-                _ = kcDatabaseSalt.remove()
                 guard kcDatabasePassword.set(dbKey) else {
                     logger.error("chatMigrateInit: CRITICAL - failed to write fresh key to Keychain before retry")
                     // Clean up corrupt files even if keychain write failed
@@ -480,22 +449,13 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                 }
                 logger.info("chatMigrateInit: fresh key successfully written to Keychain")
                 guard var cPath2 = dbPath.cString(using: .utf8),
+                      var cKey2 = dbKey.cString(using: .utf8),
                       var cConfirm2 = confirm.rawValue.cString(using: .utf8) else {
                     logger.error("chatMigrateInit: retry string encoding failed")
                     chatControllerLock.sync { finishInitializing() }
                     return (false, .errorSQL(dbFile: dbPath, migrationSQLError: "Retry string encoding failed"))
                 }
-                guard let retryKeyData2 = SecureData(string: dbKey) else {
-                    logger.error("chatMigrateInit: errorSQL retry failed to create SecureData for key")
-                    chatControllerLock.sync { finishInitializing() }
-                    return (false, .errorSQL(dbFile: dbPath, migrationSQLError: "Retry SecureData creation failed"))
-                }
-                let cjson2: UnsafeMutablePointer<CChar>? = retryKeyData2.withUnsafeBytes { keyPtr in
-                    let keyLen = Int32(keyPtr.count)
-                    return keyPtr.baseAddress?.withMemoryRebound(to: UInt8.self, capacity: Int(keyLen)) { keyBytes in
-                        chat_migrate_init_key_bytes(&cPath2, UnsafeMutablePointer(mutating: keyBytes), keyLen, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
-                    }
-                }
+                let cjson2 = chat_migrate_init_key(&cPath2, &cKey2, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
                 zeroize(&cPath2); zeroize(&cConfirm2)
                 if let cjson2 {
                     let dbRes2 = dbMigrationResult(dataFromCString(cjson2))

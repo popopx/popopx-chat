@@ -406,9 +406,20 @@ struct ChatInfoView: View {
             // the shield is smaller (.title2) than the name (.largeTitle), so on the shared baseline it
             // sits low; raise it by half the cap-height difference to center it with the capitals
             let shieldRaise = (UIFont.preferredFont(forTextStyle: .largeTitle).capHeight - UIFont.preferredFont(forTextStyle: .title2).capHeight) / 2
-            let nameText = contact.verified
-                ? Text(Image(systemName: "checkmark.shield")).foregroundColor(theme.colors.secondary).font(.title2).baselineOffset(shieldRaise) + textSpace + Text(displayName).font(isInDarkTheme() ? QuantumFonts.sectionHeader : .largeTitle).foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
-                : Text(displayName).font(isInDarkTheme() ? QuantumFonts.sectionHeader : .largeTitle).foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
+            let nameFont = isInDarkTheme() ? QuantumFonts.sectionHeader : .largeTitle
+            let nameColor = isInDarkTheme() ? darkThemeAccentColor() : .primary
+            let nameText: Text = contact.verified
+                ? {
+                    var pxShield = AttributedString("\(Image(systemName: "checkmark.shield")) ")
+                    pxShield.foregroundColor = theme.colors.secondary
+                    pxShield.font = .title2
+                    pxShield.baselineOffset = shieldRaise
+                    var pxName = AttributedString(displayName)
+                    pxName.font = nameFont
+                    pxName.foregroundColor = nameColor
+                    return Text(pxShield + pxName)
+                }()
+                : Text(displayName).font(nameFont).foregroundColor(nameColor)
             NameWithBadge(nameText, badge, .largeTitle) { if let badge { showBadgeInfoAlert(displayName, badge) } }
                 .multilineTextAlignment(.center)
                 .lineLimit(2)

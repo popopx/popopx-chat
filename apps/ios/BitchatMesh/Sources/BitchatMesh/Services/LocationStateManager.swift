@@ -7,6 +7,7 @@ import Combine
 
 #if os(iOS) || os(macOS)
 import CoreLocation
+import MapKit
 
 protocol LocationStateManaging: AnyObject {
     var delegate: CLLocationManagerDelegate? { get set }
@@ -66,18 +67,43 @@ private final class CLLocationManagerAdapter: NSObject, LocationStateManaging {
     }
 }
 
-private final class CLGeocoderAdapter: LocationStateGeocoding {
-    private let base = CLGeocoder()
+private final class MKReverseGeocodingRequestAdapter: LocationStateGeocoding {
+    private var currentGeocoder: CLGeocoder?
 
     func cancelGeocode() {
-        base.cancelGeocode()
+        currentGeocoder?.cancelGeocode()
+        currentGeocoder = nil
     }
 
     func reverseGeocodeLocation(
         _ location: CLLocation,
         completionHandler: @escaping ([CLPlacemark]?, Error?) -> Void
     ) {
-        base.reverseGeocodeLocation(location, completionHandler: completionHandler)
+        let geocoder = CLGeocoder()
+        currentGeocoder = geocoder
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            completionHandler(placemarks, error)
+        }
+    }
+}
+
+private final class CLGeocoderAdapter: LocationStateGeocoding {
+    private var currentGeocoder: CLGeocoder?
+
+    func cancelGeocode() {
+        currentGeocoder?.cancelGeocode()
+        currentGeocoder = nil
+    }
+
+    func reverseGeocodeLocation(
+        _ location: CLLocation,
+        completionHandler: @escaping ([CLPlacemark]?, Error?) -> Void
+    ) {
+        let geocoder = CLGeocoder()
+        currentGeocoder = geocoder
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            completionHandler(placemarks, error)
+        }
     }
 }
 

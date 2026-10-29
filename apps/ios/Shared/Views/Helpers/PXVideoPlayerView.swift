@@ -97,7 +97,7 @@ struct VideoPlayerView: UIViewRepresentable {
     /// POPOPX: attach end-of-item loop observer
     private func pxAttachLoopObserver(controller: AVPlayerViewController, context: UIViewRepresentableContext<VideoPlayerView>) {
         context.coordinator.timeObserver = NotificationCenter.default.addObserver(
-            forName: .AVPlayerItemDidPlayToEndTime,
+            forName: AVPlayerItem.didPlayToEndTimeNotification,
             object: player.currentItem,
             queue: .main
         ) { [weak player] _ in

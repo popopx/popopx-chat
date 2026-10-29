@@ -261,22 +261,17 @@ struct GroupMentionsView: View {
             MemberProfileImage(member, size: PXMentionMetrics.pxMemberAvatarSize)
                 .padding(.trailing, PXMentionMetrics.pxAvatarTrailingPad)
             VStack(alignment: .leading) {
-                let pxNameText = Text(member.localAliasAndFullName).foregroundColor(member.memberIncognito ? QuantumColors.accent : theme.colors.onBackground)
-                (member.verified ? pxVerifiedShield() + pxNameText : pxNameText)
+                let nameColor = member.memberIncognito ? QuantumColors.accent : theme.colors.onBackground
+                let nameText = member.verified
+                    ? pxVerifiedNameText(displayName: member.localAliasAndFullName, shieldColor: theme.colors.secondary, nameColor: nameColor)
+                    : Text(member.localAliasAndFullName).foregroundColor(nameColor)
+                nameText
                     .lineLimit(1)
             }
             Spacer()
             if mentioned {
                 Image(systemName: "checkmark")
             }
-        }
-
-        func pxVerifiedShield() -> Text {
-            (Text(Image(systemName: "checkmark.shield")) + textSpace)
-                .kerning(-2)
-                .font(.caption)
-                .baselineOffset(2)
-                .foregroundColor(theme.colors.secondary)
         }
     }
 

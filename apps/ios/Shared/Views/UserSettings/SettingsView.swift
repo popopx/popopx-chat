@@ -144,7 +144,7 @@ let appDefaults: [String: Any] = [
     DEFAULT_MARKDOWN_FILE_TEXT_VIEW: false,
     ANDROID_DEFAULT_CALL_ON_LOCK_SCREEN: AppSettingsLockScreenCalls.show.rawValue,
 
-    DEFAULT_THEME_OVERRIDES: "{}",
+    DEFAULT_THEME_OVERRIDES: "[]",
     DEFAULT_CURRENT_THEME: DefaultTheme.SYSTEM_THEME_NAME,
     DEFAULT_SYSTEM_DARK_THEME: DefaultTheme.DARK.themeName,
     DEFAULT_CURRENT_THEME_IDS: "{}"

@@ -44,13 +44,10 @@ struct DeletedItemView: View {
     }
 }
 
-struct DeletedItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            DeletedItemView(chat: Chat.sampleData, chatItem: ChatItem.getDeletedContentSample())
-            DeletedItemView(chat: Chat.sampleData, chatItem: ChatItem.getDeletedContentSample(dir: .groupRcv(groupMember: GroupMember.sampleData)))
-        }
-        .previewLayout(.fixed(width: 360, height: 200))
+#Preview(traits: .fixedLayout(width: 360, height: 200)) {
+    Group {
+        DeletedItemView(chat: Chat.sampleData, chatItem: ChatItem.getDeletedContentSample())
+        DeletedItemView(chat: Chat.sampleData, chatItem: ChatItem.getDeletedContentSample(dir: .groupRcv(groupMember: GroupMember.sampleData)))
     }
 }
 

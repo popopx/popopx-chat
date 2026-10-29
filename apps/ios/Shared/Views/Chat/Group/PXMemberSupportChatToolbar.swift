@@ -27,23 +27,17 @@ struct MemberSupportChatToolbar: View {
         return HStack {
             MemberProfileImage(groupMember, size: imageSize)
                 .padding(.trailing, Self.pxImagePadding)
-            let t = Text(groupMember.chatViewName)
-                .font(darkThemeHeaderFont())
-                .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.onBackground)
-            NameWithBadge((groupMember.verified ? memberVerifiedShield + t : t), groupMember.nameBadge, .headline)
+            let nameColor = isInDarkTheme() ? darkThemeAccentColor() : theme.colors.onBackground
+            let nameFont = darkThemeHeaderFont()
+            let nameText = groupMember.verified
+                ? pxVerifiedNameText(displayName: groupMember.chatViewName, shieldColor: theme.colors.secondary, nameColor: nameColor, nameFont: nameFont)
+                : Text(groupMember.chatViewName).font(nameFont).foregroundColor(nameColor)
+            NameWithBadge(nameText, groupMember.nameBadge, .headline)
                 .lineLimit(1)
         }
         .foregroundColor(theme.colors.onBackground)
         .frame(width: Self.pxToolbarWidth)
         .popopxBranded()
-    }
-
-    private var memberVerifiedShield: Text {
-        (Text(Image(systemName: Self.pxShieldSymbol)) + textSpace)
-            .font(.caption)
-            .foregroundColor(theme.colors.secondary)
-            .baselineOffset(1)
-            .kerning(-2)
     }
 }
 

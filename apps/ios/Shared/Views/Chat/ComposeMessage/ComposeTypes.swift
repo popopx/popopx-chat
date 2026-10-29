@@ -347,7 +347,7 @@ enum UploadContent: Equatable {
     }
 
     static func loadVideoFromURL(url: URL) async -> UploadContent? {
-        let asset = AVAsset(url: url)
+        let asset = AVURLAsset(url: url)
         if let (image, duration) = await asset.generatePreview() {
             return .video(image: image, url: url, duration: duration)
         }

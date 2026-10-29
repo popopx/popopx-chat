@@ -126,18 +126,22 @@ private func isBidiControl(_ s: Unicode.Scalar) -> Bool {
     [0x061C, 0x200E, 0x200F].contains(s.value) || (0x202A...0x202E).contains(s.value) || (0x2066...0x2069).contains(s.value)
 }
 
-private func withInvisibleCharMarkers(_ line: String) -> Text {
-    var text = Text(verbatim: "")
+private func withInvisibleCharMarkers(_ line: String) -> AttributedString {
+    var text = AttributedString()
     var plain = ""
     for s in line.unicodeScalars {
         if s.properties.generalCategory == .format {
-            text = text + Text(verbatim: plain) + Text(verbatim: unicodeMarker(s)).foregroundColor(.orange)
+            text += AttributedString(plain)
+            var marker = AttributedString(unicodeMarker(s))
+            marker.foregroundColor = .orange
+            text += marker
             plain = ""
         } else {
             plain.unicodeScalars.append(s)
         }
     }
-    return text + Text(verbatim: plain)
+    text += AttributedString(plain)
+    return text
 }
 
 private func openMarkdownFileLink(_ url: URL) {
@@ -183,7 +187,7 @@ struct PXMarkdownFileView: View {
                     ScrollView {
                         LazyVStack(alignment: .leading, spacing: 0) {
                             ForEach(lines.indices, id: \.self) { i in
-                                withInvisibleCharMarkers(lines[i])
+                                Text(withInvisibleCharMarkers(lines[i]))
                                     .font(.system(.body, design: .monospaced))
                                     .textSelection(.enabled)
                             }

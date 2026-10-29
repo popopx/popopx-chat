@@ -15,7 +15,6 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)com.popopxchat.popopx</string>
-		<string>$(AppIdentifierPrefix)group.com.popopxchat.popopx</string>
 	</array>
 </dict>
 </plist>

@@ -401,11 +401,11 @@ struct PXNetworkConfig: View {
     }
 
     private func sessionModeInfo(_ mode: TransportSessionMode) -> Text {
-        let userMode = Text(NSLocalizedString("net_session_user_mode", comment: "Separate TCP connection per chat profile"))
+        let userModeStr = NSLocalizedString("net_session_user_mode", comment: "Separate TCP connection per chat profile")
         return switch mode {
-        case .user: userMode
-        case .session: userMode + textNewLine + Text(NSLocalizedString("net_session_new_socks", comment: "New SOCKS credentials on app start"))
-        case .server: userMode + textNewLine + Text(NSLocalizedString("net_session_socks_per_server", comment: "New SOCKS credentials per server"))
+        case .user: Text(userModeStr)
+        case .session: Text("\(userModeStr)\n\(NSLocalizedString("net_session_new_socks", comment: "New SOCKS credentials on app start"))")
+        case .server: Text("\(userModeStr)\n\(NSLocalizedString("net_session_socks_per_server", comment: "New SOCKS credentials per server"))")
         case .entity: Text(NSLocalizedString("net_session_entity_mode", comment: "Separate TCP connection per contact with battery warning"))
         }
     }

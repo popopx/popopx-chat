@@ -121,36 +121,33 @@ struct CIVoiceView: View {
     }
 }
 
-struct CIVoiceView_Previews: PreviewProvider {
-    static var previews: some View {
-        let im = ItemsModel.shared
-        let sentVoiceMessage: ChatItem = ChatItem(
-            chatDir: .directSnd,
-            meta: CIMeta.getSample(1, .now, "", .sndSent(sndProgress: .complete), itemEdited: true),
-            content: .sndMsgContent(msgContent: .voice(text: "", duration: 30)),
-            quotedItem: nil,
-            file: CIFile.getSample(fileStatus: .sndComplete)
+#Preview(traits: .fixedLayout(width: 360, height: 360)) {
+    let im = ItemsModel.shared
+    let sentVoiceMessage: ChatItem = ChatItem(
+        chatDir: .directSnd,
+        meta: CIMeta.getSample(1, .now, "", .sndSent(sndProgress: .complete), itemEdited: true),
+        content: .sndMsgContent(msgContent: .voice(text: "", duration: 30)),
+        quotedItem: nil,
+        file: CIFile.getSample(fileStatus: .sndComplete)
+    )
+    let voiceMessageWtFile = ChatItem(
+        chatDir: .directRcv,
+        meta: CIMeta.getSample(1, .now, "", .rcvRead),
+        content: .rcvMsgContent(msgContent: .voice(text: "", duration: 30)),
+        quotedItem: nil,
+        file: nil
+    )
+    Group {
+        CIVoiceView(
+            chat: Chat.sampleData,
+            chatItem: ChatItem.getVoiceMsgContentSample(),
+            recordingFile: CIFile.getSample(fileName: "voice.m4a", fileSize: 65536, fileStatus: .rcvComplete),
+            duration: 30,
+            allowMenu: Binding.constant(true)
         )
-        let voiceMessageWtFile = ChatItem(
-            chatDir: .directRcv,
-            meta: CIMeta.getSample(1, .now, "", .rcvRead),
-            content: .rcvMsgContent(msgContent: .voice(text: "", duration: 30)),
-            quotedItem: nil,
-            file: nil
-        )
-        Group {
-            CIVoiceView(
-                chat: Chat.sampleData,
-                chatItem: ChatItem.getVoiceMsgContentSample(),
-                recordingFile: CIFile.getSample(fileName: "voice.m4a", fileSize: 65536, fileStatus: .rcvComplete),
-                duration: 30,
-                allowMenu: Binding.constant(true)
-            )
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: sentVoiceMessage, scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil), allowMenu: .constant(true))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getVoiceMsgContentSample(), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil), allowMenu: .constant(true))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getVoiceMsgContentSample(fileStatus: .rcvTransfer(rcvProgress: 7, rcvTotal: 10)), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil), allowMenu: .constant(true))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: voiceMessageWtFile, scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil), allowMenu: .constant(true))
-        }
-        .previewLayout(.fixed(width: 360, height: 360))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: sentVoiceMessage, scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil), allowMenu: .constant(true))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getVoiceMsgContentSample(), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil), allowMenu: .constant(true))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getVoiceMsgContentSample(fileStatus: .rcvTransfer(rcvProgress: 7, rcvTotal: 10)), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil), allowMenu: .constant(true))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: voiceMessageWtFile, scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil), allowMenu: .constant(true))
     }
 }

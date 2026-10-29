@@ -198,36 +198,8 @@ struct DatabaseEncryptionView: View {
                     try apiSaveAppSettings(settings: AppSettings.current.prepareForExport())
                 }
 
-                // Derive key from passphrase using PBKDF2
-                let salt = generateRandomSalt()
-                guard let derived = deriveKey(from: newKey, salt: salt) else {
-                    throw ChatError.errorDatabase(databaseError: .errorExport(sqliteError: .errorNotADatabase))
-                }
-
-                // Convert base64-derived key to hex format for SQLCipher raw key mode
-                // SQLCipher expects: PRAGMA key = "x'hex_encoded_key';"
-                guard let keyData = Data(base64Encoded: derived.key) else {
-                    throw ChatError.errorDatabase(databaseError: .errorExport(sqliteError: .errorNotADatabase))
-                }
-                let hexKey = "x'\(keyData.map { String(format: "%02hhx", $0) }.joined())"
-                
-                // Also derive currentKey if salt exists (for re-encryption scenarios)
-                var hexCurrentKey = currentKey
-                if !currentKey.isEmpty, let existingSalt = kcDatabaseSalt.get() {
-                    logger.debug("encryptDatabaseAsync: deriving current key with existing salt")
-                    if let currentDerived = deriveKey(from: currentKey, salt: Data(base64Encoded: existingSalt)) {
-                        if let currentKeyData = Data(base64Encoded: currentDerived.key) {
-                            hexCurrentKey = "x'\(currentKeyData.map { String(format: "%02hhx", $0) }.joined())"
-                            logger.debug("encryptDatabaseAsync: converted current key to hex format (\(currentKeyData.count) bytes)")
-                        }
-                    } else {
-                        logger.error("encryptDatabaseAsync: failed to derive current key")
-                        throw ChatError.errorDatabase(databaseError: .errorExport(sqliteError: .errorNotADatabase))
-                    }
-                }
-                
-                // Use the derived key in hex format for encryption
-                try await apiStorageEncryption(currentKey: hexCurrentKey, newKey: hexKey)
+                // Upstream-compatible: pass passphrase directly (no Swift-side derivation)
+                try await apiStorageEncryption(currentKey: currentKey, newKey: newKey)
                 if currentKey != newKey {
                     shouldDeleteDatabaseBackupsDefault.set(true)
                 }
@@ -241,23 +213,13 @@ struct DatabaseEncryptionView: View {
                 }
 
                 if useKeychain {
-                    guard kcDatabaseSalt.set(derived.salt) else {
-                        await pxResetFormAfterEncryption()
-                        await pxOperationEnded(.error(title: LocalizedStringKey(NSLocalizedString("Keychain error", comment: "")), error: LocalizedStringKey(NSLocalizedString("Error saving salt to keychain", comment: ""))))
-                        return false
-                    }
                     guard kcDatabasePassword.set(newKey) else {
-                        _ = kcDatabaseSalt.remove()
                         await pxResetFormAfterEncryption()
                         await pxOperationEnded(.error(title: LocalizedStringKey(NSLocalizedString("Keychain error", comment: "")), error: LocalizedStringKey(NSLocalizedString("Error saving passphrase to keychain", comment: ""))))
                         return false
                     }
                     await pxResetFormAfterEncryption(true)
                     await pxOperationEnded(.databaseEncrypted)
-
-                    if UserDefaults.standard.bool(forKey: "databaseKeyRotationNeeded") {
-                        completeKeyRotation(newPassphrase: newKey, salt: derived.salt)
-                    }
                 } else {
                     if migration {
                         removePassphraseFromKeyChain()
@@ -324,7 +286,7 @@ struct DatabaseEncryptionView: View {
         case .keychainRemoveKey:
             return Alert(
                 title: Text(NSLocalizedString("Remove passphrase from keychain?", comment: "")),
-                message: Text(NSLocalizedString("Instant push notifications will be hidden!\n", comment: "")) + pxStoreSecurelyDanger(),
+                message: Text(NSLocalizedString("Instant push notifications will be hidden!\n", comment: "") + NSLocalizedString("Please store passphrase securely, you will NOT be able to access chat if you lose it.", comment: "")),
                 primaryButton: .destructive(Text(NSLocalizedString("Remove", comment: ""))) {
                     removePassphraseFromKeyChain()
                 },
@@ -335,28 +297,28 @@ struct DatabaseEncryptionView: View {
         case .encryptDatabaseSaved:
             return Alert(
                 title: Text(NSLocalizedString("Encrypt database?", comment: "")),
-                message: Text(NSLocalizedString("Database will be encrypted and the passphrase stored in the keychain.\n", comment: "")) + pxStoreSecurelySaved(),
+                message: Text(NSLocalizedString("Database will be encrypted and the passphrase stored in the keychain.\n", comment: "") + NSLocalizedString("Please store passphrase securely, you will NOT be able to change it if you lose it.", comment: "")),
                 primaryButton: .default(Text(NSLocalizedString("Encrypt", comment: "")))  { encryptDatabase() },
                 secondaryButton: .cancel()
             )
         case .encryptDatabase:
             return Alert(
                 title: Text(NSLocalizedString("Encrypt database?", comment: "")),
-                message: Text(NSLocalizedString("Database will be encrypted.\n", comment: "")) + pxStoreSecurelyDanger(),
+                message: Text(NSLocalizedString("Database will be encrypted.\n", comment: "") + NSLocalizedString("Please store passphrase securely, you will NOT be able to access chat if you lose it.", comment: "")),
                 primaryButton: .destructive(Text(NSLocalizedString("Encrypt", comment: ""))) { encryptDatabase() },
                 secondaryButton: .cancel()
             )
         case .changeDatabaseKeySaved:
             return Alert(
                 title: Text(NSLocalizedString("Change database passphrase?", comment: "")),
-                message: Text(NSLocalizedString("Database encryption passphrase will be updated and stored in the keychain.\n", comment: "")) + pxStoreSecurelySaved(),
+                message: Text(NSLocalizedString("Database encryption passphrase will be updated and stored in the keychain.\n", comment: "") + NSLocalizedString("Please store passphrase securely, you will NOT be able to change it if you lose it.", comment: "")),
                 primaryButton: .default(Text(NSLocalizedString("Update", comment: ""))) { encryptDatabase() },
                 secondaryButton: .cancel()
             )
         case .changeDatabaseKey:
             return Alert(
                 title: Text(NSLocalizedString("Change database passphrase?", comment: "")),
-                message: Text(NSLocalizedString("Database encryption passphrase will be updated.\n", comment: "")) + pxStoreSecurelyDanger(),
+                message: Text(NSLocalizedString("Database encryption passphrase will be updated.\n", comment: "") + NSLocalizedString("Please store passphrase securely, you will NOT be able to access chat if you lose it.", comment: "")),
                 primaryButton: .destructive(Text(NSLocalizedString("Update", comment: ""))) { encryptDatabase() },
                 secondaryButton: .cancel()
             )
@@ -380,14 +342,6 @@ struct DatabaseEncryptionView: View {
         } else {
             alert = .error(title: LocalizedStringKey(NSLocalizedString("Keychain error", comment: "")), error: LocalizedStringKey(NSLocalizedString("Failed to remove passphrase", comment: "")))
         }
-    }
-
-    private func pxStoreSecurelySaved() -> Text {
-        Text(NSLocalizedString("Please store passphrase securely, you will NOT be able to change it if you lose it.", comment: ""))
-    }
-
-    private func pxStoreSecurelyDanger() -> Text {
-        Text(NSLocalizedString("Please store passphrase securely, you will NOT be able to access chat if you lose it.", comment: ""))
     }
 
     private func pxOperationEnded(_ dbAlert: DatabaseEncryptionAlert) async {

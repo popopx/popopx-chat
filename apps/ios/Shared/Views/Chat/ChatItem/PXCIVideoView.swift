@@ -662,7 +662,7 @@ struct PXVideoPlayer: View {
                     }
                     played = status == .playing
                 }
-                fullScreenTimeObserver = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { _ in
+                fullScreenTimeObserver = NotificationCenter.default.addObserver(forName: AVPlayerItem.didPlayToEndTimeNotification, object: player.currentItem, queue: .main) { _ in
                     player.seek(to: CMTime.zero)
                     player.play()
                 }

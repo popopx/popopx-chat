@@ -94,15 +94,12 @@ struct ChatInfoImage: View {
     }
 }
 
-struct ChatInfoImage_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatInfoImage(
-            chat: Chat(chatInfo: ChatInfo.sampleData.direct, chatItems: []),
-            size: PXChatInfoImageConfig.previewSize,
-            color: PXChatInfoImageConfig.defaultPreviewColor
-        )
-        .previewLayout(.fixed(width: PXChatInfoImageConfig.previewSize, height: PXChatInfoImageConfig.previewSize))
-    }
+#Preview(traits: .fixedLayout(width: 63, height: 63)) {
+    ChatInfoImage(
+        chat: Chat(chatInfo: ChatInfo.sampleData.direct, chatItems: []),
+        size: PXChatInfoImageConfig.previewSize,
+        color: PXChatInfoImageConfig.defaultPreviewColor
+    )
 }
 
 // MARK: - POPOPX

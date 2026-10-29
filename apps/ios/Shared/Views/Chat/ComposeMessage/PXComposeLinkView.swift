@@ -169,8 +169,7 @@ struct ComposeLinkView: View {
     }
 }
 
-struct SmallLinkPreview_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview(traits: .fixedLayout(width: 360, height: 200)) {
         let preview = LinkPreview(
             uri: "https://duckduckgo.com",
             title: "Privacy, simplified.",
@@ -179,11 +178,8 @@ struct SmallLinkPreview_Previews: PreviewProvider {
         )
         Group {
             ComposeLinkView(linkPreview: preview, cancelPreview: {}, cancelEnabled: true)
-                .previewLayout(.fixed(width: 360, height: 200))
             ComposeLinkView(linkPreview: nil, cancelPreview: {}, cancelEnabled: true)
-                .previewLayout(.fixed(width: 360, height: 200))
         }
-    }
 }
 
 // MARK: - POPOPX

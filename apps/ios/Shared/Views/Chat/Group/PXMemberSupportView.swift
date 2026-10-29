@@ -212,8 +212,10 @@ struct PXMemberSupport: View {
 
         @ViewBuilder private func pxMemberInfoStack(_ member: GroupMember) -> some View {
             VStack(alignment: .leading) {
-                let t = Text(member.chatViewName).foregroundColor(theme.colors.onBackground)
-                NameWithBadge((member.verified ? pxVerifiedShield + t : t), member.nameBadge)
+                let nameText = member.verified
+                    ? pxVerifiedNameText(displayName: member.chatViewName, shieldColor: isInDarkTheme() ? theme.colors.secondary.opacity(0.9) : theme.colors.secondary, nameColor: theme.colors.onBackground)
+                    : Text(member.chatViewName).foregroundColor(theme.colors.onBackground)
+                NameWithBadge(nameText, member.nameBadge)
                     .lineLimit(1)
                 Text(pxMemberStatus(member))
                     .lineLimit(1)
@@ -252,14 +254,6 @@ struct PXMemberSupport: View {
         }
 
         /// POPOPX: verified shield icon with styling
-        private var pxVerifiedShield: Text {
-            (Text(Image(systemName: "checkmark.shield")) + textSpace)
-                .font(.caption)
-                .baselineOffset(2)
-                .kerning(-2)
-                .foregroundColor(isInDarkTheme() ? theme.colors.secondary.opacity(0.9) : theme.colors.secondary)
-        }
-
         struct SupportChatUnreadIndicator: View {
             @EnvironmentObject var theme: AppTheme
             @Environment(\.dynamicTypeSize) private var userFont: DynamicTypeSize

@@ -44,7 +44,11 @@ struct CIFileView: View {
         } else {
             // reserve exact space for the overlaid meta (timestamp + all icons), rendered transparently - matches MsgContentView
             let encrypted: Bool? = if let fileSource = file?.fileSource { fileSource.cryptoArgs != nil } else { nil }
-            let metaReserve = Text(verbatim: "   ") + pxBuildMetaText(meta, chatTTL: chat.chatInfo.timedMessagesTTL, encrypted: encrypted, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp, signedFileVerified: file?.loaded, showSignature: showSignature, showFileEncryption: showFileEncryption)
+            let metaReserve: AttributedString = {
+                var pxResult = AttributedString("   ")
+                pxResult += pxBuildMetaText(meta, chatTTL: chat.chatInfo.timedMessagesTTL, encrypted: encrypted, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp, signedFileVerified: file?.loaded, showSignature: showSignature, showFileEncryption: showFileEncryption)
+                return pxResult
+            }()
             HStack(alignment: .bottom, spacing: 6) {
                 fileIndicator()
                     .padding(.top, pxFileIndicatorTopPadding)
@@ -56,14 +60,19 @@ struct CIFileView: View {
                             .lineLimit(1)
                             .multilineTextAlignment(.leading)
                             .foregroundColor(theme.colors.onBackground)
-                        (Text(prettyFileSize) + metaReserve)
+                        Text({
+                            var pxResult = AttributedString(prettyFileSize)
+                            pxResult += metaReserve
+                            return pxResult
+                        }())
                             .font(.caption)
                             .lineLimit(1)
                             .multilineTextAlignment(.leading)
                             .foregroundColor(theme.colors.secondary)
                     }
                 } else {
-                    metaReserve.font(.caption)
+                    Text(metaReserve)
+                        .font(.caption)
                 }
             }
             .padding(.top, pxFileHStackTopPadding)
@@ -333,38 +342,35 @@ func showFileErrorAlert(_ err: FileError, _ file: CIFile? = nil, temporary: Bool
     }
 }
 
-struct CIFileView_Previews: PreviewProvider {
-    static var previews: some View {
-        let im = ItemsModel.shared
-        let sentFile: ChatItem = ChatItem(
-            chatDir: .directSnd,
-            meta: CIMeta.getSample(1, .now, "", .sndSent(sndProgress: .complete), itemEdited: true),
-            content: .sndMsgContent(msgContent: .file("")),
-            quotedItem: nil,
-            file: CIFile.getSample(fileStatus: .sndComplete)
-        )
-        let fileChatItemWtFile = ChatItem(
-            chatDir: .directRcv,
-            meta: CIMeta.getSample(1, .now, "", .rcvRead),
-            content: .rcvMsgContent(msgContent: .file("")),
-            quotedItem: nil,
-            file: nil
-        )
-        Group {
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: sentFile, scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileName: "some_long_file_name_here", fileStatus: .rcvInvitation), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileStatus: .rcvAccepted), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileStatus: .rcvTransfer(rcvProgress: 7, rcvTotal: 10)), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileStatus: .rcvCancelled), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileSize: 1_000_000_000, fileStatus: .rcvInvitation), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(text: "Hello there", fileStatus: .rcvInvitation), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", fileStatus: .rcvInvitation), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: fileChatItemWtFile, scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-        }
-        .environment(\.revealed, false)
-        .previewLayout(.fixed(width: 360, height: 360))
+#Preview(traits: .fixedLayout(width: 360, height: 360)) {
+    let im = ItemsModel.shared
+    let sentFile: ChatItem = ChatItem(
+        chatDir: .directSnd,
+        meta: CIMeta.getSample(1, .now, "", .sndSent(sndProgress: .complete), itemEdited: true),
+        content: .sndMsgContent(msgContent: .file("")),
+        quotedItem: nil,
+        file: CIFile.getSample(fileStatus: .sndComplete)
+    )
+    let fileChatItemWtFile = ChatItem(
+        chatDir: .directRcv,
+        meta: CIMeta.getSample(1, .now, "", .rcvRead),
+        content: .rcvMsgContent(msgContent: .file("")),
+        quotedItem: nil,
+        file: nil
+    )
+    Group {
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: sentFile, scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileName: "some_long_file_name_here", fileStatus: .rcvInvitation), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileStatus: .rcvAccepted), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileStatus: .rcvTransfer(rcvProgress: 7, rcvTotal: 10)), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileStatus: .rcvCancelled), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(fileSize: 1_000_000_000, fileStatus: .rcvInvitation), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(text: "Hello there", fileStatus: .rcvInvitation), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getFileMsgContentSample(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", fileStatus: .rcvInvitation), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: fileChatItemWtFile, scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
     }
+    .environment(\.revealed, false)
 }
 
 // MARK: - POPOPX

@@ -19,16 +19,16 @@ struct UserAddressLearnMore: View {
         VStack {
             List {
                 VStack(alignment: .leading, spacing: 12) {
-                    (Text(Image(systemName: "envelope")).foregroundColor(.secondary) + textSpace + Text(NSLocalizedString("share_address_publicly", comment: "Bold header for sharing address publicly")).bold().font(QuantumFonts.sectionHeader).foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary))
+                    Text("\(Image(systemName: "envelope")) \(NSLocalizedString("share_address_publicly", comment: "Bold header for sharing address publicly"))").bold().font(QuantumFonts.sectionHeader).foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
                     Text(NSLocalizedString("address_wont_lose_contacts", comment: "Hint that deleting address won't lose contacts"))
 
-                    (Text(Image(systemName: "link.badge.plus")).foregroundColor(.secondary) + textSpace + Text(NSLocalizedString("share_onetime_link_friend", comment: "Bold header for 1-time link sharing")).font(QuantumFonts.sectionHeader).bold().foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary))
+                    Text("\(Image(systemName: "link.badge.plus")) \(NSLocalizedString("share_onetime_link_friend", comment: "Bold header for 1-time link sharing"))").font(QuantumFonts.sectionHeader).bold().foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
                         .padding(.top)
                     Text(NSLocalizedString("onetime_link_usage_hint", comment: "Explanation of 1-time link usage"))
                     Text(NSLocalizedString("set_connection_name_hint", comment: "Hint about setting connection name"))
 
                     if !showCreateAddressButton {
-                        (Text(Image(systemName: "shield")).foregroundColor(.secondary) + textSpace + Text(NSLocalizedString("connection_security", comment: "Bold header for connection security")).font(QuantumFonts.sectionHeader).bold().foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary))
+                        Text("\(Image(systemName: "shield")) \(NSLocalizedString("connection_security", comment: "Bold header for connection security"))").font(QuantumFonts.sectionHeader).bold().foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
                             .padding(.top)
                         Text(NSLocalizedString("address_links_safe_share", comment: "Reassurance that addresses are safe to share"))
                         Text(NSLocalizedString("compare_security_codes", comment: "Suggestion to compare security codes"))

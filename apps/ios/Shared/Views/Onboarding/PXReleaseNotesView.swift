@@ -44,10 +44,31 @@ private struct FeatureView {
     let view: () -> any View
 }
 
-let isInUS = {
-    let code = SKStorefront().countryCode
+// POPOPX: SKPaymentQueue deprecated in iOS 27.0 SDK; Storefront.current is async
+// so we cache the country code with a safe default (true = US storefront assumed)
+// and resolve it asynchronously on first access.
+private let _rnStorefrontLock = NSLock()
+private var _rnStorefrontCountryCode: String? = nil
+
+private func _updateRnStorefrontCountryCode(_ code: String) {
+    _rnStorefrontLock.lock()
+    _rnStorefrontCountryCode = code
+    _rnStorefrontLock.unlock()
+}
+
+var isInUS: Bool {
+    _rnStorefrontLock.lock()
+    if _rnStorefrontCountryCode == nil {
+        _rnStorefrontCountryCode = ""
+        Task {
+            let code = await Storefront.current?.countryCode ?? ""
+            _updateRnStorefrontCountryCode(code)
+        }
+    }
+    let code = _rnStorefrontCountryCode ?? ""
+    _rnStorefrontLock.unlock()
     return code == "USA" || code == ""
-}()
+}
 
 private let versionDescriptions: [VersionDescription] = [
     VersionDescription(

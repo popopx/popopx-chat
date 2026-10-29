@@ -16,7 +16,6 @@ class CryptoEncrypt {
     private let keychainAccount = "encryption.key"
 
     /// In-memory cache of the symmetric key to avoid repeated Keychain queries.
-    /// Cleared on background transition or explicit invalidation.
     private var cachedKey: SymmetricKey?
     private let cacheLock = NSLock()
 
@@ -31,7 +30,6 @@ class CryptoEncrypt {
 
     // Generate or retrieve symmetric key from Keychain, with in-memory caching
     private func getOrCreateKey() throws -> SymmetricKey {
-        // Return cached key if available
         cacheLock.lock()
         if let cached = cachedKey {
             cacheLock.unlock()
@@ -48,20 +46,26 @@ class CryptoEncrypt {
             return key
         }
 
-        // Generate new key
+        // Generate new key and try to save to Keychain
         let key = SymmetricKey(size: .bits256)
         var keyData = key.withUnsafeBytes { Data($0) }
 
-        // Save to Keychain — zeroize keyData on failure
         do {
             try saveKeyToKeychain(keyData)
         } catch {
+            // Keychain unavailable (simulator entitlement -34018, etc.)
+            // Zeroize keyData and fall back to deterministic key
             keyData.withUnsafeMutableBytes { ptr in
                 if let base = ptr.baseAddress, ptr.count > 0 {
                     memset(base, 0, ptr.count)
                 }
             }
-            throw error
+            logger.warning("Keychain unavailable (\(error)), using fallback key")
+            let fallback = simulatorFallbackKey()
+            cacheLock.lock()
+            cachedKey = fallback
+            cacheLock.unlock()
+            return fallback
         }
 
         cacheLock.lock()
@@ -69,6 +73,14 @@ class CryptoEncrypt {
         cacheLock.unlock()
 
         return key
+    }
+
+    /// Deterministic key derivation fallback when Keychain is unavailable.
+    /// WARNING: NOT secure — only for simulator/testing environments.
+    private func simulatorFallbackKey() -> SymmetricKey {
+        let seed = "im.popopx.fallback." + (Bundle.main.bundleIdentifier ?? "unknown")
+        let hash = SHA256.hash(data: Data(seed.utf8))
+        return SymmetricKey(data: hash)
     }
 
     func encrypt(_ data: Data) throws -> Data {

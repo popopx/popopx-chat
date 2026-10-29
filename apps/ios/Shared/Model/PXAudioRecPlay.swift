@@ -97,14 +97,9 @@ class AudioRecorder {
 
             interruptionObserver = NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: av, queue: .main) { [weak self] notification in
                 Task { @MainActor in
-                    guard let self else { return }
-                    guard let userInfo = notification.userInfo,
-                          let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-                          let type = AVAudioSession.InterruptionType(rawValue: typeValue) else { return }
-                    if type == .began {
-                        self.stop()
-                        self.onFinishRecording?()
-                    }
+                    guard let self, self.audioRecorder != nil else { return }
+                    self.stop()
+                    self.onFinishRecording?()
                 }
             }
 
@@ -267,12 +262,7 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
         interruptionObserver = NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: AVAudioSession.sharedInstance(), queue: .main) { [weak self] notification in
             Task { @MainActor in
                 guard let self else { return }
-                guard let userInfo = notification.userInfo,
-                      let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-                      let type = AVAudioSession.InterruptionType(rawValue: typeValue) else { return }
-                if type == .began {
-                    self.pause()
-                }
+                self.pause()
             }
         }
 

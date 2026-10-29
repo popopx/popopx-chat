@@ -290,9 +290,9 @@ struct AppInfoView: View {
     }
 }
 
-let textSpace = Text(verbatim: " ")
+let textSpace = AttributedString(" ")
 
-let textNewLine = Text(verbatim: "\n")
+let textNewLine = AttributedString("\n")
 
 struct AppInfoView_Previews: PreviewProvider {
     static var previews: some View {

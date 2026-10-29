@@ -273,19 +273,17 @@ struct ContactListNavLink: View {
     }
 
     private func previewTitle(_ contact: Contact, titleColor: Color) -> some View {
-        let t = Text(chat.chatInfo.chatViewName).foregroundColor(titleColor)
-        return NameWithBadge(
-            contact.verified == true ? verifiedIcon + t : t,
-            chat.chatInfo.nameBadge
-        )
-        .lineLimit(1)
-    }
-
-    private var verifiedIcon: Text {
-        (Text(Image(systemName: "checkmark.shield")) + textSpace)
-            .foregroundColor(.secondary)
-            .baselineOffset(1)
-            .kerning(-2)
+        if contact.verified == true {
+            var pxShield = AttributedString("\(Image(systemName: "checkmark.shield")) ")
+            pxShield.foregroundColor = .secondary
+            pxShield += AttributedString(chat.chatInfo.chatViewName)
+            pxShield.foregroundColor = titleColor
+            return NameWithBadge(Text(pxShield), chat.chatInfo.nameBadge)
+                .lineLimit(1)
+        } else {
+            return NameWithBadge(Text(chat.chatInfo.chatViewName).foregroundColor(titleColor), chat.chatInfo.nameBadge)
+                .lineLimit(1)
+        }
     }
 
     func contactCardNavLink(_ contact: Contact) -> some View {

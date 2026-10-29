@@ -576,7 +576,7 @@ struct PXGroupMemberDetail: View {
             let nameFont: Font = darkTheme ? QuantumFonts.sectionHeader : .largeTitle
             let nameColor: Color = darkTheme ? darkThemeAccentColor() : .primary
             let nameText = mem.verified
-                ? Text(Image(systemName: "checkmark.shield")).foregroundColor(shieldColor).font(.title2) + textSpace + Text(displayName).font(nameFont).foregroundColor(nameColor)
+                ? pxVerifiedNameText(displayName: displayName, shieldColor: shieldColor, nameColor: nameColor, nameFont: nameFont)
                 : Text(displayName).font(nameFont).foregroundColor(nameColor)
             NameWithBadge(nameText, badge, .largeTitle) { if let badge { showBadgeInfoAlert(displayName, badge) } }
                 .multilineTextAlignment(.center)

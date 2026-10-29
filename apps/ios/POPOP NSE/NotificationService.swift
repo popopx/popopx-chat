@@ -1185,9 +1185,31 @@ func chatRecvMsg() async -> APIResult<NSEChatEvent>? {
     }
 }
 
+// POPOPX: SKStorefront deprecated in iOS 27.0 SDK; Storefront.current is async
+// so we cache the country code with a safe default (false = CallKit enabled)
+// and resolve it asynchronously on first access.
 private enum StorefrontInfo {
+    private static let lock = NSLock()
+    private static var _countryCode: String? = nil
+
+    private static func updateCountryCode(_ code: String) {
+        lock.lock()
+        _countryCode = code
+        lock.unlock()
+    }
+
     static let isInChina: Bool = {
-        SKStorefront().countryCode == "CHN"
+        lock.lock()
+        if _countryCode == nil {
+            _countryCode = ""
+            Task {
+                let code = await Storefront.current?.countryCode ?? ""
+                StorefrontInfo.updateCountryCode(code)
+            }
+        }
+        let code = _countryCode ?? ""
+        lock.unlock()
+        return code == "CHN"
     }()
 }
 

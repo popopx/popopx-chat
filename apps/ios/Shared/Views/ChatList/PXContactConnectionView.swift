@@ -99,11 +99,8 @@ struct ContactConnectionView: View {
     }
 }
 
-struct ContactConnectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContactConnectionView(chat: Chat(chatInfo: ChatInfo.sampleData.contactConnection))
-            .previewLayout(.fixed(width: 360, height: 80))
-    }
+#Preview(traits: .fixedLayout(width: 360, height: 80)) {
+    ContactConnectionView(chat: Chat(chatInfo: ChatInfo.sampleData.contactConnection))
 }
 
 // MARK: - POPOPX

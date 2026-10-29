@@ -60,13 +60,10 @@ struct ChannelMembersView: View {
 
     @ViewBuilder private func memberRow(_ gMember: GMember, user: Bool, showRole: Bool) -> some View {
         let member = gMember.wrapped
-        let nameText = Text(member.chatViewName)
-            .foregroundColor(member.memberIncognito ? QuantumColors.accent : theme.colors.onBackground)
+        let nameColor = member.memberIncognito ? QuantumColors.accent : theme.colors.onBackground
         let displayName = member.verified
-            ? (Text(Image(systemName: "checkmark.shield")) + textSpace)
-                .font(.caption).baselineOffset(2).kerning(-2)
-                .foregroundColor(theme.colors.secondary) + nameText
-            : nameText
+            ? pxVerifiedNameText(displayName: member.chatViewName, shieldColor: theme.colors.secondary, nameColor: nameColor)
+            : Text(member.chatViewName).foregroundColor(nameColor)
         let row = HStack {
             MemberProfileImage(member, size: 38)
                 .padding(.trailing, 2)

@@ -289,20 +289,20 @@ struct ConnectDesktopView: View {
     }
 
     private func ctrlDeviceNameText(_ session: RemoteCtrlSession, _ rc: RemoteCtrlInfo?) -> Text {
-        var t = Text(rc?.deviceViewName ?? session.ctrlAppInfo?.deviceName ?? "")
-        if (rc == nil) {
-            t = t + textSpace + Text(NSLocalizedString("connect_device_new", comment: "")).italic()
+        let deviceName = rc?.deviceViewName ?? session.ctrlAppInfo?.deviceName ?? ""
+        if rc == nil {
+            return Text("\(deviceName) \(NSLocalizedString("connect_device_new", comment: ""))").italic()
         }
-        return t
+        return Text(deviceName)
     }
 
     private func ctrlDeviceVersionText(_ session: RemoteCtrlSession) -> Text {
         let v = session.ctrlAppInfo?.appVersionRange.maxVersion
-        var t = Text(verbatim: "v\(v ?? "")")
+        let versionStr = "v\(v ?? "")"
         if v != session.appVersion {
-            t = t + textSpace + Text(String(format: NSLocalizedString("connect_this_device_version", comment: ""), session.appVersion)).italic()
+            return Text("\(versionStr) \(String(format: NSLocalizedString("connect_this_device_version", comment: ""), session.appVersion))").italic()
         }
-        return t
+        return Text(verbatim: versionStr)
     }
 
     private func activeSessionView(_ session: RemoteCtrlSession, _ rc: RemoteCtrlInfo) -> some View {

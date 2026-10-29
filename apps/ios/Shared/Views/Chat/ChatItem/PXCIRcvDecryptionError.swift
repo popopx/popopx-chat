@@ -51,21 +51,21 @@ private struct PXCIRcvDecryptionErrorViewModel {
     }
 
     func failureMessage(_ theme: AppTheme) -> Text {
-        var message: Text
-        let why = Text(decryptErrorReason)
+        let why = NSLocalizedString("decrypt_error_reason", comment: "decryption error explanation - old database backup")
+        var message: AttributedString
         switch msgDecryptError {
         case .ratchetHeader:
-            message = Text(String(format: NSLocalizedString("decrypt_messages_failed_fmt", comment: "number of messages that failed to decrypt"), msgCount)) + textNewLine + why
+            message = AttributedString(String(format: NSLocalizedString("decrypt_messages_failed_fmt", comment: "number of messages that failed to decrypt"), msgCount) + "\n" + why)
         case .tooManySkipped:
-            message = Text(String(format: NSLocalizedString("decrypt_messages_skipped_fmt", comment: "number of messages that were skipped"), msgCount)) + textNewLine + why
+            message = AttributedString(String(format: NSLocalizedString("decrypt_messages_skipped_fmt", comment: "number of messages that were skipped"), msgCount) + "\n" + why)
         case .ratchetEarlier:
-            message = Text(String(format: NSLocalizedString("decrypt_messages_failed_fmt", comment: "number of messages that failed to decrypt"), msgCount)) + textNewLine + why
+            message = AttributedString(String(format: NSLocalizedString("decrypt_messages_failed_fmt", comment: "number of messages that failed to decrypt"), msgCount) + "\n" + why)
         case .other:
-            message = Text(String(format: NSLocalizedString("decrypt_messages_failed_fmt", comment: "number of messages that failed to decrypt"), msgCount)) + textNewLine + why
+            message = AttributedString(String(format: NSLocalizedString("decrypt_messages_failed_fmt", comment: "number of messages that failed to decrypt"), msgCount) + "\n" + why)
         case .ratchetSync:
-            message = Text(NSLocalizedString("decrypt_renegotiation_failed", comment: "encryption re-negotiation failed message"))
+            message = AttributedString(NSLocalizedString("decrypt_renegotiation_failed", comment: "encryption re-negotiation failed message"))
         }
-        return message
+        return Text(message)
     }
 }
 
@@ -193,17 +193,18 @@ struct PXDecryptionError: View {
                         .foregroundColor(theme.colors.error)
                         .italic()
                 }
-                (
-                    Text(Image(systemName: "exclamationmark.arrow.triangle.2.circlepath"))
-                        .foregroundColor(syncSupported ? theme.colors.primary : theme.colors.secondary)
-                        .font(.callout)
-                    + textSpace
-                    + Text(NSLocalizedString("decrypt_fix_connection", comment: "fix connection button label in decryption error"))
-                        .foregroundColor(syncSupported ? theme.colors.primary : theme.colors.secondary)
-                        .font(.callout)
-                    + Text(verbatim: PXCIRcvDecryptionErrorConfig.metaTrailingSpace)
-                    + pxBuildMetaText(chatItem.meta, chatTTL: nil, encrypted: nil, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
-                )
+                Text({
+                    var pxResult = pxStatusIconAttributed("exclamationmark.arrow.triangle.2.circlepath", syncSupported ? theme.colors.primary : theme.colors.secondary)
+                    pxResult.font = .callout
+                    pxResult += AttributedString(" ")
+                    var pxLabel = AttributedString(NSLocalizedString("decrypt_fix_connection", comment: "fix connection button label in decryption error"))
+                    pxLabel.foregroundColor = syncSupported ? theme.colors.primary : theme.colors.secondary
+                    pxLabel.font = .callout
+                    pxResult += pxLabel
+                    pxResult += AttributedString(PXCIRcvDecryptionErrorConfig.metaTrailingSpace)
+                    pxResult += pxBuildMetaText(chatItem.meta, chatTTL: nil, encrypted: nil, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
+                    return pxResult
+                }())
             }
             .padding(.horizontal, PXCIRcvDecryptionErrorConfig.horizontalPadding)
             CIMetaView(chat: chat, chatItem: chatItem, metaColor: theme.colors.secondary)
@@ -221,8 +222,11 @@ struct PXDecryptionError: View {
                 Text(chatItem.content.text)
                     .foregroundColor(theme.colors.error)
                     .italic()
-                + Text(verbatim: PXCIRcvDecryptionErrorConfig.metaTrailingSpace)
-                + pxBuildMetaText(chatItem.meta, chatTTL: nil, encrypted: nil, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
+                Text({
+                    var pxResult = AttributedString(PXCIRcvDecryptionErrorConfig.metaTrailingSpace)
+                    pxResult += pxBuildMetaText(chatItem.meta, chatTTL: nil, encrypted: nil, colorMode: .transparent, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
+                    return pxResult
+                }())
             }
             .padding(.horizontal, PXCIRcvDecryptionErrorConfig.horizontalPadding)
             CIMetaView(chat: chat, chatItem: chatItem, metaColor: theme.colors.secondary)

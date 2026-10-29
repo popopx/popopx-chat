@@ -17,6 +17,17 @@ import AVFoundation
 import POPOPXSwitch
 import WebRTC
 
+// MARK: - Storefront country code cache (thread-safe, async-resolved)
+
+private let _storefrontLock = NSLock()
+private var _storefrontCountryCode: String? = nil
+
+private func _updateStorefrontCountryCode(_ code: String) {
+    _storefrontLock.lock()
+    _storefrontCountryCode = code
+    _storefrontLock.unlock()
+}
+
 // MARK: - POPOPX Call Timing Constants
 
 // POPOPX: all magic numbers for call lifecycle timing extracted to named constants
@@ -53,7 +64,22 @@ private enum PXCallAudioConfig {
 @MainActor
 class CallController: NSObject, @preconcurrency CXProviderDelegate, @preconcurrency PKPushRegistryDelegate, ObservableObject {
     static let shared = CallController()
-    nonisolated static let isInChina: Bool = SKStorefront().countryCode == "CHN"
+    // POPOPX: SKPaymentQueue deprecated in iOS 27.0 SDK; Storefront.current is async
+    // so we cache the country code with a safe default (false = CallKit enabled)
+    // and resolve it asynchronously on first access.
+    nonisolated static let isInChina: Bool = {
+        _storefrontLock.lock()
+        if _storefrontCountryCode == nil {
+            _storefrontCountryCode = ""
+            Task {
+                let code = await Storefront.current?.countryCode ?? ""
+                _updateStorefrontCountryCode(code)
+            }
+        }
+        let code = _storefrontCountryCode ?? ""
+        _storefrontLock.unlock()
+        return code == "CHN"
+    }()
     nonisolated static func useCallKit() -> Bool { !isInChina && callKitEnabledGroupDefault.get() }
 
     /// CallKit provider configured with video support and POPOPX icon

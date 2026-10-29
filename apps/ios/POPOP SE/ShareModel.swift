@@ -540,7 +540,7 @@ fileprivate func getSharedContent(_ ip: NSItemProvider, _ senderProfile: LocalPr
                     )
                 }
                 if let trancodedUrl = await transcodeVideo(from: url),
-                   let (image, duration) = await AVAsset(url: trancodedUrl).generatePreview(),
+                   let (image, duration) = await AVURLAsset(url: trancodedUrl).generatePreview(),
                    let preview = await resizeImageToStrSize(image, maxDataSize: MAX_DATA_SIZE),
                    let cryptoFile = moveTempFileFromURL(trancodedUrl) {
                     do { try FileManager.default.removeItem(at: trancodedUrl) }
@@ -577,16 +577,24 @@ fileprivate func getSharedContent(_ ip: NSItemProvider, _ senderProfile: LocalPr
         // Prepare Link message
         case .url:
             do {
-                let item = try await ip.loadItem(forTypeIdentifier: type.identifier)
-                if let url = item as? URL {
-                    let content: SharedContent
-                    if privacyLinkPreviewsGroupDefault.get() && !privacyLinkPreviewsShowAlertGroupDefault.get(), let linkPreview = await getLinkPreview(for: url) {
-                        content = .url(preview: linkPreview)
-                    } else {
-                        content = .text(string: url.absoluteString)
+                let url = try await withCheckedThrowingContinuation { (cont: CheckedContinuation<URL, Error>) in
+                    ip.loadObject(ofClass: NSURL.self) { obj, error in
+                        if let error = error {
+                            cont.resume(throwing: error)
+                        } else if let url = obj as? URL {
+                            cont.resume(returning: url)
+                        } else {
+                            cont.resume(throwing: NSError(domain: "ShareModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to load URL"]))
+                        }
                     }
-                    return .success(content)
                 }
+                let content: SharedContent
+                if privacyLinkPreviewsGroupDefault.get() && !privacyLinkPreviewsShowAlertGroupDefault.get(), let linkPreview = await getLinkPreview(for: url) {
+                    content = .url(preview: linkPreview)
+                } else {
+                    content = .text(string: url.absoluteString)
+                }
+                return .success(content)
             } catch {
                 logger.error("getSharedContent: failed to load URL: \(error)")
             }
@@ -595,10 +603,18 @@ fileprivate func getSharedContent(_ ip: NSItemProvider, _ senderProfile: LocalPr
         // Prepare Text message
         case .text:
             do {
-                let item = try await ip.loadItem(forTypeIdentifier: type.identifier)
-                if let text = item as? String {
-                    return .success(.text(string: text))
+                let text = try await withCheckedThrowingContinuation { (cont: CheckedContinuation<String, Error>) in
+                    ip.loadObject(ofClass: NSString.self) { obj, error in
+                        if let error = error {
+                            cont.resume(throwing: error)
+                        } else if let text = obj as? String {
+                            cont.resume(returning: text)
+                        } else {
+                            cont.resume(throwing: NSError(domain: "ShareModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to load text"]))
+                        }
+                    }
                 }
+                return .success(.text(string: text))
             } catch {
                 logger.error("getSharedContent: failed to load text: \(error)")
             }
@@ -643,7 +659,18 @@ fileprivate func getSharedContent(_ ip: NSItemProvider, _ senderProfile: LocalPr
         /// Fallback to loading image directly from `ItemProvider`
         /// in case loading from disk is not possible. Required for sharing screenshots.
         do {
-            return try await ip.loadItem(forTypeIdentifier: UTType.image.identifier) as? UIImage
+            let image = try await withCheckedThrowingContinuation { (cont: CheckedContinuation<UIImage, Error>) in
+                ip.loadObject(ofClass: UIImage.self) { obj, error in
+                    if let error = error {
+                        cont.resume(throwing: error)
+                    } else if let image = obj as? UIImage {
+                        cont.resume(returning: image)
+                    } else {
+                        cont.resume(throwing: NSError(domain: "ShareModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to load image"]))
+                    }
+                }
+            }
+            return image
         } catch {
             logger.error("getSharedContent: failed to load image fallback: \(error)")
             return nil

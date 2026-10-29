@@ -1978,23 +1978,9 @@ func initializeChat(start: Bool, confirmStart: Bool = false, dbKey: String? = ni
             logger.debug("initializeChat: no user, onboarding complete, but no database - resetting to step1")
             advanceOnboarding(to: .step1_WelcomeIdentity)
         } else {
-            // DB exists but no active user - check if there are any users at all
-            do {
-                let users = try listUsers()
-                if users.isEmpty {
-                    // Database is empty (fresh install or all users deleted) - reset onboarding
-                    logger.debug("initializeChat: no user, onboarding complete, database exists but empty - resetting to step1")
-                    advanceOnboarding(to: .step1_WelcomeIdentity)
-                } else {
-                    // There are users but none is active - this shouldn't happen normally
-                    // Keep onboarding stage, user selection will be handled elsewhere
-                    logger.debug("initializeChat: no active user but \(users.count) users exist, keeping onboarding stage")
-                }
-            } catch {
-                // Failed to list users - database might be corrupted or key wrong
-                logger.error("initializeChat: failed to list users: \(error), resetting to step1")
-                advanceOnboarding(to: .step1_WelcomeIdentity)
-            }
+            // DB exists but user not loaded yet - this is normal during initialization
+            // Don't reset onboarding, user will be loaded shortly
+            logger.debug("initializeChat: no user yet but database exists, keeping onboarding stage")
         }
         privacyDeliveryReceiptsSet.set(true)
     } else if confirmStart {

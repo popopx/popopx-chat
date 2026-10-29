@@ -132,7 +132,7 @@ struct CIChatFeatureView: View {
         if let param = f.param {
             HStack(spacing: 2) {
                 pxIcon
-                chatEventText(Text(param), theme.colors.secondary).lineLimit(1)
+                Text(chatEventText(AttributedString(param), theme.colors.secondary)).lineLimit(1)
             }
         } else {
             pxIcon
@@ -146,7 +146,7 @@ struct CIChatFeatureView: View {
     @ViewBuilder private var pxFullFeatureDisplay: some View {
         HStack(alignment: .bottom, spacing: PXFeatureViewConfig.pxFullBottomAlignSpacing) {
             pxFeatureIcon
-            chatEventText(chatItem, theme.colors.secondary)
+            Text(chatEventText(chatItem, theme.colors.secondary))
         }
         .padding(.horizontal, PXFeatureViewConfig.pxFullVPadding)
         .padding(.vertical, PXFeatureViewConfig.pxFullHSpacing)

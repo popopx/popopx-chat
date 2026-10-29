@@ -833,7 +833,7 @@ struct MigrateToDevice: View {
             AlertManager.shared.showAlert(
                 Alert(
                     title: Text(LocalizedStringKey(NSLocalizedString("migration_error_migrating_settings", comment: "Error migrating settings"))),
-                    message: Text(NSLocalizedString("Some app settings were not migrated.", comment: "settings migration error")) + textNewLine + Text(verbatim: responseError(error)))
+                    message: Text("\(NSLocalizedString("Some app settings were not migrated.", comment: "settings migration error"))\n\(responseError(error))"))
             )
         }
         hideView()

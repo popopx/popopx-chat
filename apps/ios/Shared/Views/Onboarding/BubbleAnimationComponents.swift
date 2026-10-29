@@ -545,11 +545,12 @@ struct GravitationalCollapseWithEnclave: View {
                     }
                 }
             }
-        }
-        .onAppear {
-            // Capture screen height from GeometryReader context
-            screenHeight = UIScreen.main.bounds.height
-            startCollapse()
+            .onAppear {
+                // Capture screen height from GeometryReader context
+                // UIScreen.main is deprecated in iOS 27.0; use geometry size instead
+                screenHeight = geo.size.height
+                startCollapse()
+            }
         }
         .onDisappear {
             collapseWorkItems.forEach { $0.cancel() }

@@ -72,7 +72,7 @@ struct StorageView: View {
             .font(PXStorageStyling.sectionHeaderFont())
             .foregroundColor(PXStorageStyling.sectionHeaderColor())
         ForEach(Array(pxContents), id: \.key) { (pxKey, pxValue) in
-            let pxSizeText = Text(pxKey).bold() + Text(verbatim: "   ") + Text(ByteCountFormatter.string(fromByteCount: pxValue, countStyle: .binary))
+            let pxSizeText = Text("\(pxKey)   \(ByteCountFormatter.string(fromByteCount: pxValue, countStyle: .binary))").bold()
             if pxDir.appendingPathComponent(pxKey).path == getTempFilesDirectory().path {
                 let pxStopped = m.chatRunning == false
                 HStack {

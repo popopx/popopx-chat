@@ -273,7 +273,7 @@ struct DatabaseView: View {
             if let fileURL = importedArchivePath {
                 return Alert(
                     title: Text(NSLocalizedString("Import chat database?", comment: "")),
-                    message: Text(NSLocalizedString("Your current chat database will be DELETED and REPLACED with the imported one.", comment: "")) + Text(LocalizedStringKey(" ")) + Text(NSLocalizedString("This action cannot be undone - your profile, contacts, messages and files will be irreversibly lost.", comment: "")),
+                    message: Text("\(NSLocalizedString("Your current chat database will be DELETED and REPLACED with the imported one.", comment: "")) \(NSLocalizedString("This action cannot be undone - your profile, contacts, messages and files will be irreversibly lost.", comment: ""))"),
                     primaryButton: .destructive(Text(NSLocalizedString("Import", comment: ""))) {
                         stopChatRunBlockStartChat(m.chatRunning == false, $progressIndicator) {
                             await DatabaseView.importArchive(fileURL, $progressIndicator, $alert, false)
@@ -293,7 +293,7 @@ struct DatabaseView: View {
         case let .archiveExportedWithErrors(archivePath, errs):
             return Alert(
                 title: Text(NSLocalizedString("Chat database exported", comment: "")),
-                message: Text(NSLocalizedString("You may save the exported archive.", comment: "")) + textNewLine + Text(NSLocalizedString("Some file(s) were not exported:", comment: "")) + Text(archiveErrorsText(errs)),
+                message: Text("\(NSLocalizedString("You may save the exported archive.", comment: ""))\n\(NSLocalizedString("Some file(s) were not exported:", comment: ""))\(archiveErrorsText(errs))"),
                 dismissButton: .default(Text(NSLocalizedString("Continue", comment: ""))) {
                     showShareSheet(items: [archivePath])
                 }

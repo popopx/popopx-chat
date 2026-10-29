@@ -545,7 +545,7 @@ struct MigrateFromDevice: View {
         case let .archiveExportedWithErrors(archivePath, errs):
             return Alert(
                 title: Text(NSLocalizedString("chat_database_exported", comment: "")),
-                message: Text(NSLocalizedString("chat_database_exported_msg", comment: "")) + textNewLine + Text(NSLocalizedString("some_files_not_exported", comment: "")) + Text(archiveErrorsText(errs)),
+                message: Text("\(NSLocalizedString("chat_database_exported_msg", comment: ""))\n\(NSLocalizedString("some_files_not_exported", comment: ""))\(archiveErrorsText(errs))"),
                 dismissButton: .default(Text(LocalizedStringKey("Continue"))) {
                     Task { await uploadArchive(path: archivePath) }
                 }
@@ -813,23 +813,8 @@ private struct PassphraseConfirmationView: View {
 
     private func verifyDatabasePassphrase(_ dbKey: String) async {
         do {
-            // If salt exists, derive the key first
-            var testKey = dbKey
-            if let salt = kcDatabaseSalt.get() {
-                if let derived = deriveKey(from: dbKey, salt: Data(base64Encoded: salt)) {
-                    // Convert base64-derived key to hex format for SQLCipher
-                    if let keyData = Data(base64Encoded: derived.key) {
-                        testKey = "x'\(keyData.map { String(format: "%02hhx", $0) }.joined())"
-                    } else {
-                        alert = .error(title: LocalizedStringKey(NSLocalizedString("Error verifying passphrase:", comment: "")), error: "Failed to decode derived key")
-                        return
-                    }
-                } else {
-                    alert = .error(title: LocalizedStringKey(NSLocalizedString("Error verifying passphrase:", comment: "")), error: "Key derivation failed")
-                    return
-                }
-            }
-            try await testStorageEncryption(key: testKey)
+            // Upstream-compatible: pass passphrase directly (no Swift-side derivation)
+            try await testStorageEncryption(key: dbKey)
             await MainActor.run {
                 migrationState = .uploadConfirmation
             }
