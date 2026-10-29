@@ -30,9 +30,7 @@ struct IntegrityErrorItemView: View {
             case .msgBadHash:
                 AlertManager.shared.showAlert(Alert(
                     title: Text(NSLocalizedString("bad_message_hash", comment: "Alert title for bad hash")),
-                    message: Text(NSLocalizedString("hash_mismatch_description", comment: "Description of hash mismatch")) + textNewLine +
-                        Text(decryptErrorReason) + textNewLine +
-                        Text(NSLocalizedString("report_to_developers", comment: "Request to report to developers"))
+                    message: Text(verbatim: "\(NSLocalizedString("hash_mismatch_description", comment: "Description of hash mismatch"))\n\(decryptErrorReason)\n\(NSLocalizedString("report_to_developers", comment: "Request to report to developers"))")
                 ))
             case .msgBadId: msgBadIdAlert()
             case .msgDuplicate: msgBadIdAlert()
@@ -44,8 +42,7 @@ struct IntegrityErrorItemView: View {
     private func msgBadIdAlert() {
         AlertManager.shared.showAlert(Alert(
             title: Text(NSLocalizedString("bad_message_id", comment: "Alert title for bad message ID")),
-            message: Text(NSLocalizedString("message_id_incorrect", comment: "Description of incorrect message ID")) + textNewLine +
-                Text(NSLocalizedString("report_to_developers", comment: "Request to report to developers"))
+            message: Text("\(NSLocalizedString("message_id_incorrect", comment: "Description of incorrect message ID"))\n\(NSLocalizedString("report_to_developers", comment: "Request to report to developers"))")
         ))
     }
 }

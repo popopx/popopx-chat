@@ -715,7 +715,7 @@ struct ChatListNavLink: View {
         let label: LocalizedStringKey = groupInfo.useRelays ? LocalizedStringKey(NSLocalizedString("chat_delete_channel_confirm", comment: "Delete channel?")) : groupInfo.businessChat == nil ? LocalizedStringKey(NSLocalizedString("chat_delete_group_confirm", comment: "Delete group?")) : LocalizedStringKey(NSLocalizedString("chat_delete_chat_confirm", comment: "Delete chat?"))
         return Alert(
             title: Text(label),
-            message: deleteGroupAlertMessage(groupInfo),
+            message: Text(deleteGroupAlertMessage(groupInfo)),
             primaryButton: .destructive(Text(LocalizedStringKey(NSLocalizedString("chat_delete", comment: "Delete")))) {
                 Task { await deleteChat(chat) }
             },
@@ -917,25 +917,27 @@ func getErrorAlert(_ error: Error, _ title: LocalizedStringKey) -> ErrorAlert {
     }
 }
 
-struct ChatListNavLink_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview(traits: .fixedLayout(width: 360, height: 82)) {
+    struct PreviewWrapper: View {
         @State var chatId: String? = "@1"
-        return Group {
-            ChatListNavLink(chat: Chat(
-                chatInfo: ChatInfo.sampleData.direct,
-                chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello")]
-            ), parentSheet: .constant(nil))
-            ChatListNavLink(chat: Chat(
-                chatInfo: ChatInfo.sampleData.direct,
-                chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello")]
-            ), parentSheet: .constant(nil))
-            ChatListNavLink(chat: Chat(
-                chatInfo: ChatInfo.sampleData.contactRequest,
-                chatItems: []
-            ), parentSheet: .constant(nil))
+        var body: some View {
+            Group {
+                ChatListNavLink(chat: Chat(
+                    chatInfo: ChatInfo.sampleData.direct,
+                    chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello")]
+                ), parentSheet: .constant(nil))
+                ChatListNavLink(chat: Chat(
+                    chatInfo: ChatInfo.sampleData.direct,
+                    chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello")]
+                ), parentSheet: .constant(nil))
+                ChatListNavLink(chat: Chat(
+                    chatInfo: ChatInfo.sampleData.contactRequest,
+                    chatItems: []
+                ), parentSheet: .constant(nil))
+            }
         }
-        .previewLayout(.fixed(width: 360, height: 82))
     }
+    return PreviewWrapper()
 }
 
 // MARK: - POPOPX

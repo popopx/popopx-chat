@@ -204,7 +204,7 @@ struct OneHandUICard: View {
         let stateKey = descriptor.pxIsActive
             ? NSLocalizedString("selected_state", comment: "Accessibility label for selected state")
             : NSLocalizedString("not_selected_state", comment: "Accessibility label for not selected state")
-        return Text(stateKey) + Text(" ") + Text(descriptor.pxTitle)
+        return Text(verbatim: "\(stateKey) \(descriptor.pxTitle)")
     }
 }
 

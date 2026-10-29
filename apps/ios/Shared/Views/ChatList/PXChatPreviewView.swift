@@ -350,9 +350,15 @@ struct PXChatPreview: View {
                 : !contact.sndReady
                 ? theme.colors.secondary
                 : nil
-            NameWithBadge((contact.verified == true ? verifiedIcon + t : t).foregroundColor(color), chat.chatInfo.nameBadge, .title3)
-                .lineLimit(1)
-                .frame(alignment: .topLeading)
+            if contact.verified == true {
+                NameWithBadge(Text("\(Image(systemName: "checkmark.shield")) \(chat.chatInfo.chatViewName)").font(.title3).fontWeight(.bold).foregroundColor(color), chat.chatInfo.nameBadge, .title3)
+                    .lineLimit(1)
+                    .frame(alignment: .topLeading)
+            } else {
+                NameWithBadge(t.foregroundColor(color), chat.chatInfo.nameBadge, .title3)
+                    .lineLimit(1)
+                    .frame(alignment: .topLeading)
+            }
         case let .group(groupInfo, _):
             let color = if deleting {
                 theme.colors.secondary
@@ -372,18 +378,11 @@ struct PXChatPreview: View {
         t.lineLimit(1).frame(alignment: .topLeading)
     }
 
-    private var verifiedIcon: Text {
-        (Text(Image(systemName: "checkmark.shield")) + textSpace)
-            .foregroundColor(theme.colors.secondary)
-            .baselineOffset(1)
-            .kerning(-2)
-    }
-
-    private func chatPreviewLayout(_ text: Text?, draft: Bool = false, hasFilePreview: Bool = false, hasSecrets: Bool) -> some View {
+    private func chatPreviewLayout(_ text: AttributedString?, draft: Bool = false, hasFilePreview: Bool = false, hasSecrets: Bool) -> some View {
         ZStack(alignment: .topTrailing) {
             let s = chat.chatStats
             let mentionWidth: CGFloat = if s.unreadMentions > 0 && s.unreadCount > 1 { dynamicSize(userFont).unreadCorner } else { 0 }
-            let t = text
+            let t = Text(text ?? AttributedString())
                 .lineLimit(userFont <= .xxxLarge ? 2 : 1)
                 .multilineTextAlignment(.leading)
                 .if(hasSecrets, transform: hiddenSecretsView)
@@ -452,32 +451,34 @@ struct PXChatPreview: View {
         }
     }
 
-    private func messageDraft(_ draft: ComposeState) -> (Text, Bool) {
+    private func messageDraft(_ draft: ComposeState) -> (AttributedString, Bool) {
         let msg = draft.message
         let r = markdownText(msg, preview: true, mentions: draft.mentions, backgroundColor: theme.colors.background)
         return (image("rectangle.and.pencil.and.ellipsis", color: theme.colors.primary)
                     + attachment()
-                    + Text(AttributedString(r.string)),
+                    + AttributedString(r.string),
                 r.hasSecrets)
 
-        func image(_ s: String, color: Color = Color(uiColor: .tertiaryLabel)) -> Text {
-            Text(Image(systemName: s)).foregroundColor(color) + textSpace
+        func image(_ s: String, color: Color = Color(uiColor: .tertiaryLabel)) -> AttributedString {
+            var r = AttributedString("\(Image(systemName: s)) ")
+            r.foregroundColor = color
+            return r
         }
 
-        func attachment() -> Text {
+        func attachment() -> AttributedString {
             switch draft.preview {
-            case let .filePreview(fileName, _): return image("doc.fill") + Text(fileName) + textSpace
+            case let .filePreview(fileName, _): return image("doc.fill") + AttributedString(fileName) + AttributedString(" ")
             case .mediaPreviews: return image("photo")
-            case let .voicePreview(_, duration): return image("play.fill") + Text(durationText(duration))
-            default: return Text("")
+            case let .voicePreview(_, duration): return image("play.fill") + AttributedString(durationText(duration))
+            default: return AttributedString()
             }
         }
     }
 
-    func chatItemPreview(_ cItem: ChatItem) -> (Text, Bool) {
+    func chatItemPreview(_ cItem: ChatItem) -> (AttributedString, Bool) {
         let (itemText, itemFormattedText) = chatItemPreviewText(cItem)
         let r = messageText(itemText, itemFormattedText, sender: cItem.meta.showGroupAsSender ? nil : cItem.memberDisplayName, preview: true, mentions: cItem.mentions, userMemberId: chat.chatInfo.groupInfo?.membership.memberId, showSecrets: nil, backgroundColor: UIColor(theme.colors.background), prefix: prefix())
-        return (Text(AttributedString(r.string)), r.hasSecrets)
+        return (AttributedString(r.string), r.hasSecrets)
 
         func chatItemPreviewText(_ ci: ChatItem) -> (String, [FormattedText]?) {
             if ci.meta.itemDeleted != nil {
@@ -645,7 +646,7 @@ struct PXChatPreview: View {
 
     private func groupInvitationPreviewText(_ groupInfo: GroupInfo) -> Text {
         groupInfo.membership.memberIncognito
-        ? Text(NSLocalizedString("join_as_display_name", comment: "Join group with display name")) + Text(" \(groupInfo.membership.memberProfile.displayName)")
+        ? Text("\(NSLocalizedString("join_as_display_name", comment: "Join group with display name")) \(groupInfo.membership.memberProfile.displayName)")
         : Text(NSLocalizedString("invited_to_group", comment: "Group invitation preview"))
     }
 
@@ -656,17 +657,19 @@ struct PXChatPreview: View {
             .padding(.bottom, 4)
     }
 
-    private func itemStatusMark(_ cItem: ChatItem) -> Text {
+    private func itemStatusMark(_ cItem: ChatItem) -> AttributedString {
         switch cItem.meta.itemStatus {
         case .sndErrorAuth, .sndError:
-            return Text(Image(systemName: "multiply"))
-                .font(.caption)
-                .foregroundColor(QuantumColors.error) + textSpace
+            var r = AttributedString("\(Image(systemName: "multiply")) ")
+            r.font = .caption
+            r.foregroundColor = QuantumColors.error
+            return r
         case .sndWarning:
-            return Text(Image(systemName: "exclamationmark.triangle.fill"))
-                .font(.caption)
-                .foregroundColor(QuantumColors.warning) + textSpace
-        default: return Text("")
+            var r = AttributedString("\(Image(systemName: "exclamationmark.triangle.fill")) ")
+            r.font = .caption
+            r.foregroundColor = QuantumColors.warning
+            return r
+        default: return AttributedString()
         }
     }
 
@@ -761,38 +764,35 @@ private struct ActiveContentPreview: @preconcurrency Equatable {
     }
 }
 
-struct PXChatPreview_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            PXChatPreview(chat: Chat(
-                chatInfo: ChatInfo.sampleData.direct,
-                chatItems: []
-            ), progressByTimeout: Binding.constant(false))
-            PXChatPreview(chat: Chat(
-                chatInfo: ChatInfo.sampleData.direct,
-                chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete))]
-            ), progressByTimeout: Binding.constant(false))
-            PXChatPreview(chat: Chat(
-                chatInfo: ChatInfo.sampleData.direct,
-                chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete))],
-                chatStats: ChatStats(unreadCount: 11, minUnreadItemId: 0)
-            ), progressByTimeout: Binding.constant(false))
-            PXChatPreview(chat: Chat(
-                chatInfo: ChatInfo.sampleData.direct,
-                chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete), itemDeleted: .deleted(deletedTs: .now))]
-            ), progressByTimeout: Binding.constant(false))
-            PXChatPreview(chat: Chat(
-                chatInfo: ChatInfo.sampleData.direct,
-                chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete))],
-                chatStats: ChatStats(unreadCount: 3, minUnreadItemId: 0)
-            ), progressByTimeout: Binding.constant(false))
-            PXChatPreview(chat: Chat(
-                chatInfo: ChatInfo.sampleData.group,
-                chatItems: [ChatItem.getSample(1, .directSnd, .now, "Lorem ipsum dolor sit amet, d. consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")],
-                chatStats: ChatStats(unreadCount: 11, minUnreadItemId: 0)
-            ), progressByTimeout: Binding.constant(false))
-        }
-        .previewLayout(.fixed(width: 360, height: 78))
+#Preview(traits: .fixedLayout(width: 360, height: 78)) {
+    Group {
+        PXChatPreview(chat: Chat(
+            chatInfo: ChatInfo.sampleData.direct,
+            chatItems: []
+        ), progressByTimeout: Binding.constant(false))
+        PXChatPreview(chat: Chat(
+            chatInfo: ChatInfo.sampleData.direct,
+            chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete))]
+        ), progressByTimeout: Binding.constant(false))
+        PXChatPreview(chat: Chat(
+            chatInfo: ChatInfo.sampleData.direct,
+            chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete))],
+            chatStats: ChatStats(unreadCount: 11, minUnreadItemId: 0)
+        ), progressByTimeout: Binding.constant(false))
+        PXChatPreview(chat: Chat(
+            chatInfo: ChatInfo.sampleData.direct,
+            chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete), itemDeleted: .deleted(deletedTs: .now))]
+        ), progressByTimeout: Binding.constant(false))
+        PXChatPreview(chat: Chat(
+            chatInfo: ChatInfo.sampleData.direct,
+            chatItems: [ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete))],
+            chatStats: ChatStats(unreadCount: 3, minUnreadItemId: 0)
+        ), progressByTimeout: Binding.constant(false))
+        PXChatPreview(chat: Chat(
+            chatInfo: ChatInfo.sampleData.group,
+            chatItems: [ChatItem.getSample(1, .directSnd, .now, "Lorem ipsum dolor sit amet, d. consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")],
+            chatStats: ChatStats(unreadCount: 11, minUnreadItemId: 0)
+        ), progressByTimeout: Binding.constant(false))
     }
 }
 

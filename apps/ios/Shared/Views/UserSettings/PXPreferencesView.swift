@@ -125,11 +125,13 @@ struct PreferencesView: View {
             }
         }
         footer: {
-            let featureFooterText = pxFeatureFooter(for: .timedMessages, allowFeature: allowFeature)
+            let featureDescription = ChatFeature.timedMessages.allowDescription(allowFeature.wrappedValue)
             if allow.wrappedValue && ttl.wrappedValue != nil {
-                featureFooterText + textNewLine + Text(NSLocalizedString("preferences_time_disappear_new_contacts", comment: "Time to disappear set for new contacts notice"))
+                Text(verbatim: "\(featureDescription)\n\(NSLocalizedString("preferences_time_disappear_new_contacts", comment: "Time to disappear set for new contacts notice"))")
+                    .foregroundColor(theme.colors.secondary)
             } else {
-                featureFooterText
+                Text(featureDescription)
+                    .foregroundColor(theme.colors.secondary)
             }
         }
     }

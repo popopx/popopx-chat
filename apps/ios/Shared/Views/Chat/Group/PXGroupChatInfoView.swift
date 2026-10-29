@@ -867,7 +867,7 @@ struct GroupChatInfoView: View {
     private func deleteGroupAlert(titleLabel: LocalizedStringKey) -> Alert {
         return Alert(
             title: Text(titleLabel),
-            message: Text(chat.chatInfo.displayName + "\n\n") + deleteGroupAlertMessage(groupInfo),
+            message: Text("\(chat.chatInfo.displayName)\n\n\(deleteGroupAlertMessage(groupInfo))"),
             primaryButton: .destructive(Text(NSLocalizedString("group_delete_action", comment: "delete confirmation button"))) {
                 Task {
                     do {

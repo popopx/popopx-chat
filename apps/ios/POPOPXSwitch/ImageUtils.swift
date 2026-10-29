@@ -48,7 +48,9 @@ public func getLoadedImage(_ file: CIFile?, smallView: Bool = false) -> UIImage?
                 }
             }
 
-            let maxPixelSize = UIScreen.main.bounds.width * UIScreen.main.scale * 2
+            let scale = UITraitCollection.current.displayScale
+            let screenWidth: CGFloat = 390
+            let maxPixelSize = screenWidth * scale * 2
             let options = [kCGImageSourceCreateThumbnailFromImageAlways: true,
                            kCGImageSourceShouldCacheImmediately: true,
                            kCGImageSourceThumbnailMaxPixelSize: maxPixelSize] as CFDictionary
@@ -372,7 +374,7 @@ public func makeVideoQualityLower(_ input: URL, outputUrl: URL) async -> Bool {
     s.metadataItemFilter = AVMetadataItemFilter.forSharing()
     do {
         try await s.export(to: outputUrl, as: .mp4)
-        return s.status == .completed
+        return true
     } catch {
         logger.error("Failed to export video with error: \(error)")
         return false

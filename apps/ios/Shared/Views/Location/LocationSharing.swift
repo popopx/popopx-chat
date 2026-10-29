@@ -121,10 +121,10 @@ struct LocationPickerView: View {
         Task {
             do {
                 let location = CLLocation(latitude: c.latitude, longitude: c.longitude)
-                let geocoder = CLGeocoder()
-                let placemarks = try await geocoder.reverseGeocodeLocation(location)
-                if let p = placemarks.first {
-                    let parts = [p.name, p.locality, p.administrativeArea].compactMap { $0 }
+                guard let request = MKReverseGeocodingRequest(location: location) else { return }
+                let mapItems = try await request.mapItems
+                if let item = mapItems.first {
+                    let parts = [item.name, item.address?.shortAddress].compactMap { $0 }
                     self.placeName = parts.first ?? ""
                 }
             } catch {

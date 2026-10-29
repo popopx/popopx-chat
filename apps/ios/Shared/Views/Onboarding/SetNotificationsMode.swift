@@ -244,7 +244,7 @@ struct NotificationsInfoView: View {
 
     private func pxInfoModeBlock(_ mode: NotificationsMode) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            (Text(Image(systemName: mode.icon)) + textSpace + Text(mode.label))
+            Label(mode.label, systemImage: mode.icon)
                 .font(.headline)
                 .foregroundColor(.secondary)
             Text(ntfModeDescription(mode))

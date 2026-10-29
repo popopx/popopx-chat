@@ -567,7 +567,7 @@ struct ActiveCallOverlay: View {
                 HStack {
                     Text(call.encryptionStatus)
                     if let connInfo = call.connectionInfo {
-                        Text(verbatim: "(") + Text(connInfo.text) + Text(verbatim: ")")
+                        Text(verbatim: "(\(connInfo.text))")
                     }
                 }
             }
@@ -599,7 +599,7 @@ struct ActiveCallOverlay: View {
                 HStack {
                     Text(call.encryptionStatus)
                     if let connInfo = call.connectionInfo {
-                        Text(verbatim: "(") + Text(connInfo.text) + Text(verbatim: ")")
+                        Text(verbatim: "(\(connInfo.text))")
                     }
                 }
             }

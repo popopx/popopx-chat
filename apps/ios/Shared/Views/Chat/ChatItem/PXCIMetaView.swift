@@ -238,19 +238,16 @@ private func pxColoredAttributed(_ pxText: AttributedString, _ pxColor: Color?) 
     return pxText
 }
 
-struct CIMetaView_Previews: PreviewProvider {
-    static let metaColor = Color.secondary
-    static var previews: some View {
-        Group {
-            CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndSent(sndProgress: .complete)), metaColor: metaColor)
-            CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndSent(sndProgress: .partial)), metaColor: metaColor)
-            CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndRcvd(msgRcptStatus: .ok, sndProgress: .complete)), metaColor: metaColor)
-            CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndRcvd(msgRcptStatus: .ok, sndProgress: .partial)), metaColor: metaColor)
-            CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndRcvd(msgRcptStatus: .badMsgHash, sndProgress: .complete)), metaColor: metaColor)
-            CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndSent(sndProgress: .complete), itemEdited: true), metaColor: metaColor)
-            CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getDeletedContentSample(), metaColor: metaColor)
-        }
-        .previewLayout(.fixed(width: 360, height: 100))
+#Preview(traits: .fixedLayout(width: 360, height: 100)) {
+    let metaColor = Color.secondary
+    Group {
+        CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndSent(sndProgress: .complete)), metaColor: metaColor)
+        CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndSent(sndProgress: .partial)), metaColor: metaColor)
+        CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndRcvd(msgRcptStatus: .ok, sndProgress: .complete)), metaColor: metaColor)
+        CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndRcvd(msgRcptStatus: .ok, sndProgress: .partial)), metaColor: metaColor)
+        CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndRcvd(msgRcptStatus: .badMsgHash, sndProgress: .complete)), metaColor: metaColor)
+        CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getSample(2, .directSnd, .now, "https://popopxchat.com", .sndSent(sndProgress: .complete), itemEdited: true), metaColor: metaColor)
+        CIMetaView(chat: Chat.sampleData, chatItem: ChatItem.getDeletedContentSample(), metaColor: metaColor)
     }
 }
 

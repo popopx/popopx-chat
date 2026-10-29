@@ -89,19 +89,19 @@ func removeMember(_ groupInfo: GroupInfo, _ mem: GroupMember, withMessages: Bool
     }
 }
 
-func deleteGroupAlertMessage(_ groupInfo: GroupInfo) -> Text {
+func deleteGroupAlertMessage(_ groupInfo: GroupInfo) -> String {
     groupInfo.useRelays ? (
         groupInfo.membership.memberCurrent
-            ? Text(NSLocalizedString("group_channel_delete_all", comment: "Channel deletion warning for all subscribers"))
-            : Text(NSLocalizedString("group_channel_delete_you", comment: "Channel deletion warning for current user"))
+            ? NSLocalizedString("group_channel_delete_all", comment: "Channel deletion warning for all subscribers")
+            : NSLocalizedString("group_channel_delete_you", comment: "Channel deletion warning for current user")
     ) : groupInfo.businessChat == nil ? (
         groupInfo.membership.memberCurrent
-            ? Text(NSLocalizedString("group_group_delete_all", comment: "Group deletion warning for all members"))
-            : Text(NSLocalizedString("group_group_delete_you", comment: "Group deletion warning for current user"))
+            ? NSLocalizedString("group_group_delete_all", comment: "Group deletion warning for all members")
+            : NSLocalizedString("group_group_delete_you", comment: "Group deletion warning for current user")
     ) : (
         groupInfo.membership.memberCurrent
-            ? Text(NSLocalizedString("group_chat_delete_all", comment: "Chat deletion warning for all members"))
-            : Text(NSLocalizedString("group_chat_delete_you", comment: "Chat deletion warning for current user"))
+            ? NSLocalizedString("group_chat_delete_all", comment: "Chat deletion warning for all members")
+            : NSLocalizedString("group_chat_delete_you", comment: "Chat deletion warning for current user")
     )
 }
 

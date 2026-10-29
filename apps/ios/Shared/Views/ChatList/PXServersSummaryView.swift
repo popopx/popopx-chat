@@ -579,7 +579,7 @@ struct SMPStatsView: View {
         } header: {
             Text(NSLocalizedString("Statistics", comment: ""))
         } footer: {
-            Text(String.localizedStringWithFormat(NSLocalizedString("Starting from %@.", comment: ""), localTimestamp(statsStartedAt))) + textNewLine + Text(NSLocalizedString("All data is kept private on your device.", comment: ""))
+            Text("\(String.localizedStringWithFormat(NSLocalizedString("Starting from %@.", comment: ""), localTimestamp(statsStartedAt)))\n\(NSLocalizedString("All data is kept private on your device.", comment: ""))")
         }
     }
 }
@@ -640,13 +640,18 @@ struct DetailedSMPStatsView: View {
 
 private func infoRowTwoValues(_ title: LocalizedStringKey, _ title2: LocalizedStringKey, _ value: Int, _ value2: Int) -> some View {
     HStack {
-        Text(title) + Text(verbatim: " / ").font(.caption2) + Text(title2).font(.caption2)
+        HStack(spacing: 0) {
+            Text(title)
+            Text(verbatim: " / ")
+            Text(title2)
+        }
+        .font(.caption2)
         Spacer()
         Group {
             if value == 0 && value2 == 0 {
                 Text(verbatim: "-")
             } else {
-                Text(numOrDash(value)) + Text(verbatim: " / ").font(.caption2) + Text(numOrDash(value2)).font(.caption2)
+                Text(verbatim: "\(numOrDash(value)) / \(numOrDash(value2))").font(.caption2)
             }
         }
         .foregroundStyle(.secondary)
@@ -695,7 +700,7 @@ struct XFTPStatsView: View {
         } header: {
             Text(NSLocalizedString("Statistics", comment: ""))
         } footer: {
-            Text(String.localizedStringWithFormat(NSLocalizedString("Starting from %@.", comment: ""), localTimestamp(statsStartedAt))) + textNewLine + Text(NSLocalizedString("All data is kept private on your device.", comment: ""))
+            Text("\(String.localizedStringWithFormat(NSLocalizedString("Starting from %@.", comment: ""), localTimestamp(statsStartedAt)))\n\(NSLocalizedString("All data is kept private on your device.", comment: ""))")
         }
     }
 }

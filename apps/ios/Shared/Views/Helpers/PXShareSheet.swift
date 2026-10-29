@@ -23,7 +23,7 @@ private enum PXAlertConfig {
     static let pxContainerWidth: CGFloat = 270
     static let pxButtonMinHeight: CGFloat = 44
     static let pxProfileImageDimension: CGFloat = 103
-    static let pxDisplayScaleFallback: CGFloat = UIScreen.main.scale
+    static let pxDisplayScaleFallback: CGFloat = UITraitCollection.current.displayScale
     static let pxContentInset: CGFloat = 20
 }
 
