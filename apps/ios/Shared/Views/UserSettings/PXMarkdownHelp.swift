@@ -23,15 +23,35 @@ struct MarkdownHelp: View {
                 .font(isInDarkTheme() ? .subheadline : .body)
                 .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : .primary)
                 .padding(.bottom, pxIntroBottomPadding)
-            mdFormat("*bold*", Text(NSLocalizedString("markdown_bold", comment: "")).bold())
-            mdFormat("_italic_", Text(NSLocalizedString("markdown_italic", comment: "")).italic())
-            mdFormat("~strike~", Text(NSLocalizedString("markdown_strike", comment: "")).strikethrough())
-            mdFormat("`a + b`", Text("`a + b`").font(.body))
-            mdFormat("!1 colored!", Text(NSLocalizedString("markdown_colored", comment: "")).foregroundColor(QuantumColors.error) + Text(verbatim: " (") + color("1", QuantumColors.error) + color("2", QuantumColors.success) + color("3", .blue) + color("4", .yellow) + color("5", .cyan) + Text("6").foregroundColor(.purple) + Text(verbatim: ")"))
+            mdFormat("*bold*", { var a = AttributedString(NSLocalizedString("markdown_bold", comment: "")); a.font = .body.bold(); return a }())
+            mdFormat("_italic_", { var a = AttributedString(NSLocalizedString("markdown_italic", comment: "")); a.font = .body.italic(); return a }())
+            mdFormat("~strike~", { var a = AttributedString(NSLocalizedString("markdown_strike", comment: "")); a.strikethroughStyle = .single; return a }())
+            mdFormat("`a + b`", { var a = AttributedString("`a + b`"); a.font = .body; return a }())
+            mdFormat("!1 colored!", {
+                var r = AttributedString(NSLocalizedString("markdown_colored", comment: ""))
+                r.foregroundColor = QuantumColors.error
+                r += AttributedString(" (")
+                for (s, c) in [("1", QuantumColors.error), ("2", QuantumColors.success), ("3", Color.blue), ("4", Color.yellow), ("5", Color.cyan)] {
+                    var part = AttributedString(s)
+                    part.foregroundColor = c
+                    r += part
+                    r += AttributedString(", ")
+                }
+                var six = AttributedString("6")
+                six.foregroundColor = .purple
+                r += six
+                r += AttributedString(")")
+                return r
+            }())
             (
-                mdFormat("#secret#", Text(NSLocalizedString("markdown_secret", comment: ""))
-                    .foregroundColor(.clear)
-                    .underline(color: theme.colors.onBackground) + Text(NSLocalizedString("markdown_can_be_copied", comment: "Hint that secret text can be copied")))
+                mdFormat("#secret#", {
+                    var a = AttributedString("\(NSLocalizedString("markdown_secret", comment: ""))\(NSLocalizedString("markdown_can_be_copied", comment: "Hint that secret text can be copied"))")
+                    a.foregroundColor = .clear
+                    let pxNsAttr = NSMutableAttributedString(string: String(a.characters))
+                    pxNsAttr.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: pxNsAttr.length))
+                    pxNsAttr.addAttribute(.underlineColor, value: UIColor(theme.colors.onBackground), range: NSRange(location: 0, length: pxNsAttr.length))
+                    return AttributedString(pxNsAttr)
+                }())
             )
             .textSelection(.enabled)
         }
@@ -49,15 +69,11 @@ extension MarkdownHelp {
 
 private let pxFormatLabelWidth: CGFloat = 120
 
-private func mdFormat(_ format: LocalizedStringKey, _ example: Text) -> some View {
+private func mdFormat(_ format: LocalizedStringKey, _ example: AttributedString) -> some View {
     HStack {
         Text(format).frame(width: pxFormatLabelWidth, alignment: .leading)
-        example
+        Text(example)
     }
-}
-
-private func color(_ s: String, _ c: Color) -> Text {
-    Text(s).foregroundColor(c) + Text(verbatim: ", ")
 }
 
 struct MarkdownHelp_Previews: PreviewProvider {

@@ -300,7 +300,7 @@ struct ChatItemContentView<Content: View>: View {
     }
 
     private func pxEventView() -> some View {
-        CIEventView(eventText: pxEventTextWithTheme())
+        CIEventView(eventText: Text(pxEventTextWithTheme()))
     }
 
     private func pxPendingReviewText() -> Text {
@@ -311,13 +311,13 @@ struct ChatItemContentView<Content: View>: View {
     }
 
     // MARK: - POPOPX enhanced event text -- guard-first for readability
-    private func pxEventTextWithTheme() -> Text {
+    private func pxEventTextWithTheme() -> AttributedString {
         pxBuildEventText(theme.colors.secondary)
     }
 
-    private func pxBuildEventText(_ secondaryColor: Color) -> Text {
+    private func pxBuildEventText(_ secondaryColor: Color) -> AttributedString {
         // POPOPX: check merged text first (unrevealed grouped events)
-        let mergedFallback: Text? = {
+        let mergedFallback: AttributedString? = {
             guard !revealed else { return nil }
             return pxMergedGroupEventText
         }()
@@ -328,18 +328,17 @@ struct ChatItemContentView<Content: View>: View {
         guard let memberName = chatItem.memberDisplayName else {
             return pxStyleChatItemEventText(chatItem, secondaryColor, isChannel: chat.chatInfo.isChannel)
         }
-        return Text(memberName + " ")
-                .fontWeight(.light)
-                .font(.caption)
-                .foregroundColor(secondaryColor)
-                + pxStyleChatItemEventText(chatItem, secondaryColor, isChannel: chat.chatInfo.isChannel)
+        var pxPrefix = AttributedString("\(memberName) ")
+        pxPrefix.font = .caption.weight(.light)
+        pxPrefix.foregroundColor = secondaryColor
+        return pxPrefix + pxStyleChatItemEventText(chatItem, secondaryColor, isChannel: chat.chatInfo.isChannel)
     }
 
     private func pxFeatureView(_ feature: Feature, _ iconColor: Color) -> some View {
         CIChatFeatureView(chat: chat, im: im, chatItem: chatItem, feature: feature, iconColor: iconColor)
     }
 
-    private var pxMergedGroupEventText: Text? {
+    private var pxMergedGroupEventText: AttributedString? {
         let (count, ns) = chatModel.getConnectedMemberNames(chatItem)
         let members: LocalizedStringKey =
             switch ns.count {
@@ -355,12 +354,12 @@ struct ChatItemContentView<Content: View>: View {
             nil
         } else if ns.count == 0 {
             chat.chatInfo.isChannel
-                ? Text(String(format: NSLocalizedString(PXChatItemLocalization.channelEventsFormat, comment: "Channel event count"), count))
-                : Text(String(format: NSLocalizedString(PXChatItemLocalization.groupEventsFormat, comment: "Group event count"), count))
+                ? AttributedString(String(format: NSLocalizedString(PXChatItemLocalization.channelEventsFormat, comment: "Channel event count"), count))
+                : AttributedString(String(format: NSLocalizedString(PXChatItemLocalization.groupEventsFormat, comment: "Group event count"), count))
         } else if count > ns.count {
-            Text(members) + textSpace + Text(String(format: NSLocalizedString(PXChatItemLocalization.otherEventsFormat, comment: "Other events count"), count - ns.count))
+            AttributedString("\(members) \(String(format: NSLocalizedString(PXChatItemLocalization.otherEventsFormat, comment: "Other events count"), count - ns.count))")
         } else {
-            Text(members)
+            AttributedString(String(describing: members))
         }
     }
 
@@ -396,133 +395,127 @@ struct ChatItemContentView<Content: View>: View {
 
     // MARK: - POPOPX event text styling helpers
 
-    private func pxStyleEventText(_ text: Text, _ color: Color) -> Text {
-        text
-            .fontWeight(.light)
-            .font(.caption)
-            .foregroundColor(color)
+    private func pxStyleEventText(_ text: AttributedString, _ color: Color) -> AttributedString {
+        var pxResult = text
+        pxResult.font = .caption.weight(.light)
+        pxResult.foregroundColor = color
+        return pxResult
     }
 
-    private func pxStyleChatItemEventText(_ ci: ChatItem, _ color: Color, isChannel: Bool) -> Text {
-        pxStyleEventText("\(ci.content.text(isChannel: isChannel))", ci.timestampText, color)
+    private func pxStyleChatItemEventText(_ ci: ChatItem, _ color: Color, isChannel: Bool) -> AttributedString {
+        pxStyleEventText(AttributedString(String(describing: ci.content.text(isChannel: isChannel))) + textSpace + ci.timestampText, color)
     }
 
-    private func pxStyleEventText(_ eventText: LocalizedStringKey, _ ts: Text, _ color: Color) -> Text {
-        pxStyleEventText(Text(eventText) + textSpace + ts, color)
+    private func pxStyleEventText(_ eventText: LocalizedStringKey, _ ts: AttributedString, _ color: Color) -> AttributedString {
+        pxStyleEventText(AttributedString(String(describing: eventText)) + textSpace + ts, color)
     }
 }
 
 // MARK: - POPOPX free functions (renamed for differentiation)
 
-func chatEventText(_ text: Text, _ secondaryColor: Color) -> Text {
-    text
-        .font(.caption)
-        .foregroundColor(secondaryColor)
-        .fontWeight(.light)
+func chatEventText(_ text: AttributedString, _ secondaryColor: Color) -> AttributedString {
+    var pxResult = text
+    pxResult.font = .caption.weight(.light)
+    pxResult.foregroundColor = secondaryColor
+    return pxResult
 }
 
-func chatEventText(_ eventText: LocalizedStringKey, _ ts: Text, _ secondaryColor: Color) -> Text {
-    chatEventText(Text(eventText) + textSpace + ts, secondaryColor)
+func chatEventText(_ eventText: LocalizedStringKey, _ ts: AttributedString, _ secondaryColor: Color) -> AttributedString {
+    chatEventText(AttributedString(String(describing: eventText)) + textSpace + ts, secondaryColor)
 }
 
-func chatEventText(_ ci: ChatItem, _ secondaryColor: Color, isChannel: Bool = false) -> Text {
-    chatEventText("\(ci.content.text(isChannel: isChannel))", ci.timestampText, secondaryColor)
+func chatEventText(_ ci: ChatItem, _ secondaryColor: Color, isChannel: Bool = false) -> AttributedString {
+    chatEventText(AttributedString(String(describing: ci.content.text(isChannel: isChannel))) + textSpace + ci.timestampText, secondaryColor)
 }
 
-struct PXChatItem_Previews: PreviewProvider {
-    static var previews: some View {
-        let im = ItemsModel.shared
-        Group{
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "hello"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(2, .directRcv, .now, "hello there too"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "🙂"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(2, .directRcv, .now, "🙂🙂🙂🙂🙂"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(2, .directRcv, .now, "🙂🙂🙂🙂🙂🙂"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getDeletedContentSample(), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete), itemDeleted: .deleted(deletedTs: .now)), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "🙂", .sndSent(sndProgress: .complete), itemLive: true), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil)).environment(\.revealed, true)
-            PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete), itemLive: true), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil)).environment(\.revealed, true)
-        }
-        .environment(\.revealed, false)
-        .previewLayout(.fixed(width: 360, height: 70))
-        .environmentObject(Chat.sampleData)
+#Preview(traits: .fixedLayout(width: 360, height: 70)) {
+    let im = ItemsModel.shared
+    Group{
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "hello"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(2, .directRcv, .now, "hello there too"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "🙂"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(2, .directRcv, .now, "🙂🙂🙂🙂🙂"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(2, .directRcv, .now, "🙂🙂🙂🙂🙂🙂"), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getDeletedContentSample(), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete), itemDeleted: .deleted(deletedTs: .now)), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil))
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "🙂", .sndSent(sndProgress: .complete), itemLive: true), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil)).environment(\.revealed, true)
+        PXChatItem(chat: Chat.sampleData, im: im, chatItem: ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete), itemLive: true), scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil)).environment(\.revealed, true)
     }
+    .environment(\.revealed, false)
+    .environmentObject(Chat.sampleData)
 }
 
-struct PXChatItem_NonMsgContentDeleted_Previews: PreviewProvider {
-    static var previews: some View {
-        let im = ItemsModel.shared
-        let ciFeatureContent = CIContent.rcvChatFeature(feature: .fullDelete, enabled: FeatureEnabled(forUser: false, forContact: false), param: nil)
-        Group{
-            PXChatItem(
-                chat: Chat.sampleData,
-                im: im,
-                chatItem: ChatItem(
-                    chatDir: .directRcv,
-                    meta: CIMeta.getSample(1, .now, "1 skipped message", .rcvRead, itemDeleted: .deleted(deletedTs: .now)),
-                    content: .rcvIntegrityError(msgError: .msgSkipped(fromMsgId: 1, toMsgId: 2)),
-                    quotedItem: nil,
-                    file: nil
-                ),
-                scrollToItem: { _ in },
-                scrollToItemId: Binding.constant(nil)
-            )
-            PXChatItem(
-                chat: Chat.sampleData,
-                im: im,
-                chatItem: ChatItem(
-                    chatDir: .directRcv,
-                    meta: CIMeta.getSample(1, .now, "1 skipped message", .rcvRead),
-                    content: .rcvDecryptionError(msgDecryptError: .ratchetHeader, msgCount: 2),
-                    quotedItem: nil,
-                    file: nil
-                ),
-                scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil)
-            )
-            PXChatItem(
-                chat: Chat.sampleData,
-                im: im,
-                chatItem: ChatItem(
-                    chatDir: .directRcv,
-                    meta: CIMeta.getSample(1, .now, "received invitation to join group team as admin", .rcvRead, itemDeleted: .deleted(deletedTs: .now)),
-                    content: .rcvGroupInvitation(groupInvitation: CIGroupInvitation.getSample(status: .pending), memberRole: .admin),
-                    quotedItem: nil,
-                    file: nil
-                ),
-                scrollToItem: { _ in },
-                scrollToItemId: Binding.constant(nil)
-            )
-            PXChatItem(
-                chat: Chat.sampleData,
-                im: im,
-                chatItem: ChatItem(
-                    chatDir: .directRcv,
-                    meta: CIMeta.getSample(1, .now, "group event text", .rcvRead, itemDeleted: .deleted(deletedTs: .now)),
-                    content: .rcvGroupEvent(rcvGroupEvent: .memberAdded(groupMemberId: 1, profile: Profile.sampleData)),
-                    quotedItem: nil,
-                    file: nil
-                ),
-                scrollToItem: { _ in },
-                scrollToItemId: Binding.constant(nil)
-            )
-            PXChatItem(
-                chat: Chat.sampleData,
-                im: im,
-                chatItem: ChatItem(
-                    chatDir: .directRcv,
-                    meta: CIMeta.getSample(1, .now, ciFeatureContent.text, .rcvRead, itemDeleted: .deleted(deletedTs: .now)),
-                    content: ciFeatureContent,
-                    quotedItem: nil,
-                    file: nil
-                ),
-                scrollToItem: { _ in },
-                scrollToItemId: Binding.constant(nil)
-            )
-        }
-        .environment(\.revealed, true)
-        .previewLayout(.fixed(width: 360, height: 70))
-        .environmentObject(Chat.sampleData)
+#Preview("NonMsgContentDeleted", traits: .fixedLayout(width: 360, height: 70)) {
+    let im = ItemsModel.shared
+    let ciFeatureContent = CIContent.rcvChatFeature(feature: .fullDelete, enabled: FeatureEnabled(forUser: false, forContact: false), param: nil)
+    Group{
+        PXChatItem(
+            chat: Chat.sampleData,
+            im: im,
+            chatItem: ChatItem(
+                chatDir: .directRcv,
+                meta: CIMeta.getSample(1, .now, "1 skipped message", .rcvRead, itemDeleted: .deleted(deletedTs: .now)),
+                content: .rcvIntegrityError(msgError: .msgSkipped(fromMsgId: 1, toMsgId: 2)),
+                quotedItem: nil,
+                file: nil
+            ),
+            scrollToItem: { _ in },
+            scrollToItemId: Binding.constant(nil)
+        )
+        PXChatItem(
+            chat: Chat.sampleData,
+            im: im,
+            chatItem: ChatItem(
+                chatDir: .directRcv,
+                meta: CIMeta.getSample(1, .now, "1 skipped message", .rcvRead),
+                content: .rcvDecryptionError(msgDecryptError: .ratchetHeader, msgCount: 2),
+                quotedItem: nil,
+                file: nil
+            ),
+            scrollToItem: { _ in }, scrollToItemId: Binding.constant(nil)
+        )
+        PXChatItem(
+            chat: Chat.sampleData,
+            im: im,
+            chatItem: ChatItem(
+                chatDir: .directRcv,
+                meta: CIMeta.getSample(1, .now, "received invitation to join group team as admin", .rcvRead, itemDeleted: .deleted(deletedTs: .now)),
+                content: .rcvGroupInvitation(groupInvitation: CIGroupInvitation.getSample(status: .pending), memberRole: .admin),
+                quotedItem: nil,
+                file: nil
+            ),
+            scrollToItem: { _ in },
+            scrollToItemId: Binding.constant(nil)
+        )
+        PXChatItem(
+            chat: Chat.sampleData,
+            im: im,
+            chatItem: ChatItem(
+                chatDir: .directRcv,
+                meta: CIMeta.getSample(1, .now, "group event text", .rcvRead, itemDeleted: .deleted(deletedTs: .now)),
+                content: .rcvGroupEvent(rcvGroupEvent: .memberAdded(groupMemberId: 1, profile: Profile.sampleData)),
+                quotedItem: nil,
+                file: nil
+            ),
+            scrollToItem: { _ in },
+            scrollToItemId: Binding.constant(nil)
+        )
+        PXChatItem(
+            chat: Chat.sampleData,
+            im: im,
+            chatItem: ChatItem(
+                chatDir: .directRcv,
+                meta: CIMeta.getSample(1, .now, ciFeatureContent.text, .rcvRead, itemDeleted: .deleted(deletedTs: .now)),
+                content: ciFeatureContent,
+                quotedItem: nil,
+                file: nil
+            ),
+            scrollToItem: { _ in },
+            scrollToItemId: Binding.constant(nil)
+        )
     }
+    .environment(\.revealed, true)
+    .environmentObject(Chat.sampleData)
 }
 
 // MARK: - POPOPX

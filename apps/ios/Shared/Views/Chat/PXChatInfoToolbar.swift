@@ -143,40 +143,68 @@ struct ChatInfoToolbar: View {
 
     @ViewBuilder
     private var pxNameSection: some View {
-        let t = Text(pxVM.displayName)
-            .foregroundColor(isInDarkTheme() ? darkThemeAccentColor() : theme.colors.onBackground)
-            .font(darkThemeHeaderFont())
-        NameWithBadge((pxVM.isContactVerified ? contactVerifiedShield + t : t), pxVM.cInfo.nameBadge, .headline)
-            .lineLimit(1)
-            .if(pxVM.showsFullName) { v in
-                VStack(spacing: 0) {
-                    v
-                    Text(pxVM.fullName)
-                        .font(.subheadline)
-                        .lineLimit(1)
-                        .padding(.top, PXChatInfoToolbarConfig.fullNameTopPadding)
-                }
-            }
-            .if(pxVM.showsSubscriberCount) { v in
-                VStack(spacing: 0) {
-                    v
-                    if let count = pxVM.channelSubscriberCount {
-                        Text(subscriberCountStr(count))
-                            .foregroundColor(theme.colors.secondary)
-                            .font(.caption)
+        let nameColor = isInDarkTheme() ? darkThemeAccentColor() : theme.colors.onBackground
+        let nameFont = darkThemeHeaderFont()
+        if pxVM.isContactVerified {
+            NameWithBadge(Text(pxVerifiedNameAttributedString(nameColor: nameColor, nameFont: nameFont)), pxVM.cInfo.nameBadge, .headline)
+                .lineLimit(1)
+                .if(pxVM.showsFullName) { v in
+                    VStack(spacing: 0) {
+                        v
+                        Text(pxVM.fullName)
+                            .font(.subheadline)
                             .lineLimit(1)
-                            .padding(.top, PXChatInfoToolbarConfig.subscriberTopPadding)
+                            .padding(.top, PXChatInfoToolbarConfig.fullNameTopPadding)
                     }
                 }
-            }
+                .if(pxVM.showsSubscriberCount) { v in
+                    VStack(spacing: 0) {
+                        v
+                        if let count = pxVM.channelSubscriberCount {
+                            Text(subscriberCountStr(count))
+                                .foregroundColor(theme.colors.secondary)
+                                .font(.caption)
+                                .lineLimit(1)
+                                .padding(.top, PXChatInfoToolbarConfig.subscriberTopPadding)
+                        }
+                    }
+                }
+        } else {
+            NameWithBadge(Text(pxVM.displayName).foregroundColor(nameColor).font(nameFont), pxVM.cInfo.nameBadge, .headline)
+                .lineLimit(1)
+                .if(pxVM.showsFullName) { v in
+                    VStack(spacing: 0) {
+                        v
+                        Text(pxVM.fullName)
+                            .font(.subheadline)
+                            .lineLimit(1)
+                            .padding(.top, PXChatInfoToolbarConfig.fullNameTopPadding)
+                    }
+                }
+                .if(pxVM.showsSubscriberCount) { v in
+                    VStack(spacing: 0) {
+                        v
+                        if let count = pxVM.channelSubscriberCount {
+                            Text(subscriberCountStr(count))
+                                .foregroundColor(theme.colors.secondary)
+                                .font(.caption)
+                                .lineLimit(1)
+                                .padding(.top, PXChatInfoToolbarConfig.subscriberTopPadding)
+                        }
+                    }
+                }
+        }
     }
 
-    private var contactVerifiedShield: Text {
-        (Text(Image(systemName: "checkmark.shield")) + textSpace)
-            .foregroundColor(theme.colors.secondary)
-            .font(.caption)
-            .baselineOffset(1)
-            .kerning(-2)
+    private func pxVerifiedNameAttributedString(nameColor: Color, nameFont: Font) -> AttributedString {
+        var pxName = AttributedString("\(Image(systemName: "checkmark.shield")) ")
+        pxName.foregroundColor = theme.colors.secondary
+        pxName.font = .caption
+        var pxDisplayName = AttributedString(pxVM.displayName)
+        pxDisplayName.foregroundColor = nameColor
+        pxDisplayName.font = nameFont
+        pxName += pxDisplayName
+        return pxName
     }
 
     private var pxAccessibilityLabel: String {

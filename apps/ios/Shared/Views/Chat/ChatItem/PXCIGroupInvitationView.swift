@@ -124,13 +124,17 @@ struct CIGroupInvitationView: View {
         VStack(alignment: .leading, spacing: 2) {
             pxInvitationLabel()
                 .overlay(DetermineWidth())
-            (
+            HStack(alignment: .firstTextBaseline, spacing: 0) {
                 Text(chatIncognito ? NSLocalizedString("chat_incognito_tap_join", comment: "Tap to join incognito") : NSLocalizedString("chat_tap_join", comment: "Tap to join"))
                     .foregroundColor(inProgress ? theme.colors.secondary : chatIncognito ? QuantumColors.accent : theme.colors.primary)
                     .font(.callout)
-                + Text(verbatim: PXGroupInviteLayout.metaSeparator)
-                + pxBuildMetaText(chatItem.meta, chatTTL: nil, encrypted: nil, colorMode: .transparent, showStatus: false, showEdited: false, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
-            )
+                let pxMetaText: AttributedString = {
+                    var pxResult = AttributedString(PXGroupInviteLayout.metaSeparator)
+                    pxResult += pxBuildMetaText(chatItem.meta, chatTTL: nil, encrypted: nil, colorMode: .transparent, showStatus: false, showEdited: false, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
+                    return pxResult
+                }()
+                Text(pxMetaText)
+            }
             .overlay(DetermineWidth())
         }
     }
@@ -138,11 +142,15 @@ struct CIGroupInvitationView: View {
     // POPOPX: passive-mode content (already accepted/sent)
     @ViewBuilder
     private func pxPassiveContent() -> some View {
-        (
+        HStack(alignment: .firstTextBaseline, spacing: 0) {
             pxInvitationLabel()
-            + Text(verbatim: PXGroupInviteLayout.metaSeparator)
-            + pxBuildMetaText(chatItem.meta, chatTTL: nil, encrypted: nil, colorMode: .transparent, showStatus: false, showEdited: false, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
-        )
+            let pxMetaText: AttributedString = {
+                var pxResult = AttributedString(PXGroupInviteLayout.metaSeparator)
+                pxResult += pxBuildMetaText(chatItem.meta, chatTTL: nil, encrypted: nil, colorMode: .transparent, showStatus: false, showEdited: false, showViaProxy: showSentViaProxy, showTimesamp: showTimestamp)
+                return pxResult
+            }()
+            Text(pxMetaText)
+        }
         .opacity(PXGroupInviteLayout.textOpacity)
         .overlay(DetermineWidth())
     }

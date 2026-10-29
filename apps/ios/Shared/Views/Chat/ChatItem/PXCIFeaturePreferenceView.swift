@@ -82,32 +82,34 @@ struct CIFeaturePreferenceView: View {
         let vm = PXFeaturePrefViewModel(chat: chat, feature: feature, allowed: allowed)
         if let ct = vm.contactNeedingFeaturePrompt {
             let setParam = vm.shouldSetTimedParam(for: ct)
-            featurePreferenceView(acceptText: setParam ? "Set 1 day" : "Accept")
+            Text(featurePreferenceView(acceptText: setParam ? "Set 1 day" : "Accept"))
                 .simultaneousGesture(TapGesture().onEnded {
                     allowFeatureToContact(ct, feature, param: setParam ? PXFeaturePrefConfig.timedMessagesDefaultTTL : nil)
                 })
                 .accessibilityLabel(Text(setParam ? NSLocalizedString("a11y_set_timed_messages_1_day", comment: "") : NSLocalizedString("a11y_accept_feature", comment: "")))
         } else {
-            featurePreferenceView()
+            Text(featurePreferenceView())
         }
     }
 
-    private func featurePreferenceView(acceptText: LocalizedStringKey? = nil) -> Text {
+    private func featurePreferenceView(acceptText: LocalizedStringKey? = nil) -> AttributedString {
         let pxPrefLabel = CIContent.preferenceText(feature, allowed, param)
-        var r = Text(pxPrefLabel + PXFeaturePrefConfig.textSpacer)
-            .fontWeight(.light)
-            .foregroundColor(theme.colors.secondary)
+        var r = AttributedString("\(pxPrefLabel)\(PXFeaturePrefConfig.textSpacer)")
+        r.font = .caption.weight(.light)
+        r.foregroundColor = theme.colors.secondary
         if let acceptText {
-            r = r
-            + Text(acceptText)
-                .fontWeight(.medium)
-                .foregroundColor(theme.colors.primary)
-            + Text(verbatim: PXFeaturePrefConfig.textSpacer)
+            var pxAccept = AttributedString(String(describing: acceptText))
+            pxAccept.font = .caption.weight(.medium)
+            pxAccept.foregroundColor = theme.colors.primary
+            r += pxAccept
+            r += AttributedString(PXFeaturePrefConfig.textSpacer)
         }
-        r = r + chatItem.timestampText
-            .fontWeight(.light)
-            .foregroundColor(theme.colors.secondary)
-        return r.font(.caption)
+        var pxTs = chatItem.timestampText
+        pxTs.font = .caption.weight(.light)
+        pxTs.foregroundColor = theme.colors.secondary
+        r += pxTs
+        r.font = .caption
+        return r
     }
 }
 

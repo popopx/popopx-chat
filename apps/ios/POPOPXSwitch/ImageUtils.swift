@@ -366,17 +366,17 @@ private func dropPrefix(_ s: String, _ prefix: String) -> String {
 
 public func makeVideoQualityLower(_ input: URL, outputUrl: URL) async -> Bool {
     let asset: AVURLAsset = AVURLAsset(url: input, options: nil)
-    if let s = AVAssetExportSession(asset: asset, presetName: AVAssetExportPreset640x480) {
-        s.outputURL = outputUrl
-        s.outputFileType = .mp4
-        s.metadataItemFilter = AVMetadataItemFilter.forSharing()
-        await s.export()
-        if let err = s.error {
-            logger.error("Failed to export video with error: \(err)")
-        }
-        return s.status == .completed
+    guard let s = AVAssetExportSession(asset: asset, presetName: AVAssetExportPreset640x480) else {
+        return false
     }
-    return false
+    s.metadataItemFilter = AVMetadataItemFilter.forSharing()
+    do {
+        try await s.export(to: outputUrl, as: .mp4)
+        return s.status == .completed
+    } catch {
+        logger.error("Failed to export video with error: \(error)")
+        return false
+    }
 }
 
 extension AVAsset {
@@ -384,8 +384,20 @@ extension AVAsset {
         let generator = AVAssetImageGenerator(asset: self)
         generator.appliesPreferredTrackTransform = true
         generator.maximumSize = CGSize(width: 1024, height: 1024)
-        var actualTime = CMTimeMake(value: 0, timescale: 0)
-        if let image = try? generator.copyCGImage(at: CMTimeMakeWithSeconds(0.0, preferredTimescale: 1), actualTime: &actualTime) {
+        let time = CMTimeMakeWithSeconds(0.0, preferredTimescale: 1)
+
+        let image: CGImage? = await withCheckedContinuation { continuation in
+            generator.generateCGImageAsynchronously(for: time) { cgImage, _, error in
+                if let error {
+                    logger.error("generatePreview error: \(error)")
+                    continuation.resume(returning: nil)
+                } else {
+                    continuation.resume(returning: cgImage)
+                }
+            }
+        }
+
+        if let image {
             let duration = try? await load(.duration)
             return (UIImage(cgImage: image), Int(duration?.seconds ?? 0))
         }

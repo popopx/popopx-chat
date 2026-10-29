@@ -910,17 +910,17 @@ struct ProfilePreview: View {
         HStack {
             ProfileImage(imageStr: profileOf.image, size: 44, color: color, showTierBadge: true)
                 .padding(.trailing, 6)
-            NameWithBadge(profileName(profileOf), badge, .title2)
+            NameWithBadge(Text(profileName(profileOf)), badge, .title2)
                 .lineLimit(1)
         }
     }
 }
 
-func profileName(_ profileOf: NamedChat) -> Text {
-    var t = Text(profileOf.displayName).fontWeight(.semibold).font(.title2)
+func profileName(_ profileOf: NamedChat) -> AttributedString {
+    var t = AttributedString(profileOf.displayName)
+    t.font = .title2.weight(.semibold)
     if profileOf.fullName != "" && profileOf.fullName != profileOf.displayName {
-        t = t + Text(verbatim: " (" + profileOf.fullName + ")")
-//                        .font(.callout)
+        t += AttributedString(" (\(profileOf.fullName))")
         }
     return t
 }

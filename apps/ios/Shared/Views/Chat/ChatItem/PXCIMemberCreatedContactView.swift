@@ -18,8 +18,8 @@ private enum PXMemberCreatedContactConfig {
     static let bottomPadding: CGFloat = 8
     static let hStackSpacing: CGFloat = 0
     static let featureFlagKey: String = "PX_FEATURE_ENABLED"
-    static let openButtonWeight: Font.Weight = .medium
-    static let timestampWeight: Font.Weight = .light
+    static let openButtonWeight: Font.Weight = Font.Weight.medium
+    static let timestampWeight: Font.Weight = Font.Weight.light
     static let bodyFont: Font = .caption
     static let lightThemeTextOpacity: Double = 0.95
 }
@@ -61,36 +61,40 @@ struct CIMemberCreatedContactView: View {
     private func memberCreatedContactView(openText: LocalizedStringKey? = nil) -> some View {
         var r = pxBuildEventText()
         if let openText {
-            r = r
-            + Text(openText)
-                .fontWeight(PXMemberCreatedContactConfig.openButtonWeight)
-                .foregroundColor(theme.colors.primary)
-            + Text(verbatim: "  ")
+            var pxOpen = AttributedString(String(describing: openText))
+            pxOpen.font = Font.caption.weight(PXMemberCreatedContactConfig.openButtonWeight)
+            pxOpen.foregroundColor = theme.colors.primary
+            r += pxOpen
+            r += AttributedString("  ")
         }
-        r = r + chatItem.timestampText
-            .fontWeight(PXMemberCreatedContactConfig.timestampWeight)
-            .foregroundColor(theme.colors.secondary)
-        return r.font(PXMemberCreatedContactConfig.bodyFont)
+        var pxTs: AttributedString = chatItem.timestampText
+        pxTs.font = Font.caption.weight(PXMemberCreatedContactConfig.timestampWeight)
+        pxTs.foregroundColor = theme.colors.secondary
+        r += pxTs
+        r.font = PXMemberCreatedContactConfig.bodyFont
+        return Text(r)
             .opacity(isInDarkTheme() ? 1.0 : PXMemberCreatedContactConfig.lightThemeTextOpacity)
     }
 
     // MARK: - POPOPX
-    private func pxBuildEventText() -> Text {
+    private func pxBuildEventText() -> AttributedString {
         guard let pxMemberName = chatItem.memberDisplayName else {
             if pxMemberContactFeatureEnabled {
                 logger.debug("PX: [pxBuildEventText] no member display name")
             }
-            return Text(chatItem.content.text + "  ")
-                .fontWeight(PXMemberCreatedContactConfig.timestampWeight)
-                .foregroundColor(theme.colors.secondary)
+            var r = AttributedString("\(chatItem.content.text)  ")
+            r.font = Font.caption.weight(PXMemberCreatedContactConfig.timestampWeight)
+            r.foregroundColor = theme.colors.secondary
+            return r
         }
         logger.debug("PX: [pxBuildEventText] member=\(pxMemberName)")
-        return Text(pxMemberName + " " + chatItem.content.text + "  ")
-            .fontWeight(PXMemberCreatedContactConfig.timestampWeight)
-            .foregroundColor(theme.colors.secondary)
+        var r = AttributedString("\(pxMemberName) \(chatItem.content.text)  ")
+        r.font = Font.caption.weight(PXMemberCreatedContactConfig.timestampWeight)
+        r.foregroundColor = theme.colors.secondary
+        return r
     }
 
-    private func eventText() -> Text {
+    private func eventText() -> AttributedString {
         pxBuildEventText()
     }
 }

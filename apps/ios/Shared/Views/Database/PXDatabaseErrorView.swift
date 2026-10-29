@@ -266,9 +266,19 @@ struct DatabaseErrorView: View {
     }
 
     private func migrationsText(_ ms: [String]) -> some View {
-        (Text(NSLocalizedString("dberr_migrations_label", comment: "database migrations list header")).font(.subheadline) + textNewLine + Text(verbatim: ms.joined(separator: "\n")).font(.caption))
+        Text(pxBuildMigrationsAttributedString(ms))
             .multilineTextAlignment(.center)
             .padding(.horizontal, PXDatabaseErrorConfig.horizontalPadding)
+    }
+
+    private func pxBuildMigrationsAttributedString(_ ms: [String]) -> AttributedString {
+        var pxResult = AttributedString(NSLocalizedString("dberr_migrations_label", comment: "database migrations list header"))
+        pxResult.font = .subheadline
+        pxResult += textNewLine
+        var pxMigrations = AttributedString(ms.joined(separator: "\n"))
+        pxMigrations.font = .caption
+        pxResult += pxMigrations
+        return pxResult
     }
 
     private func databaseKeyField(onSubmit: @escaping () -> Void) -> some View {

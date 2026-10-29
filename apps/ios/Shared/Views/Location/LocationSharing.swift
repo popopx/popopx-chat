@@ -118,10 +118,17 @@ struct LocationPickerView: View {
     }
 
     private func reverseGeocode(_ c: CLLocationCoordinate2D) {
-        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: c.latitude, longitude: c.longitude)) { places, _ in
-            if let p = places?.first {
-                let parts = [p.name, p.locality, p.administrativeArea].compactMap { $0 }
-                placeName = parts.first ?? ""
+        Task {
+            do {
+                let location = CLLocation(latitude: c.latitude, longitude: c.longitude)
+                let geocoder = CLGeocoder()
+                let placemarks = try await geocoder.reverseGeocodeLocation(location)
+                if let p = placemarks.first {
+                    let parts = [p.name, p.locality, p.administrativeArea].compactMap { $0 }
+                    self.placeName = parts.first ?? ""
+                }
+            } catch {
+                logger.debug("reverseGeocode error: \(error.localizedDescription)")
             }
         }
     }

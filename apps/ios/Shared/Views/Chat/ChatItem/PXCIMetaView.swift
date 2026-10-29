@@ -48,13 +48,11 @@ struct CIMetaView: View {
         Group {
         if chatItem.isDeletedContent {
             // Deleted items only show a timestamp in the meta row
-            chatItem.timestampText
-                .foregroundColor(metaColor)
-                .font(.caption)
+            Text(pxDeletedTimestampText())
                 .lineLimit(1)
         } else {
             ZStack {
-                pxBuildMetaText(
+                Text(pxBuildMetaText(
                     chatItem.meta,
                     chatTTL: chat.chatInfo.timedMessagesTTL,
                     encrypted: chatItem.encryptedFile,
@@ -68,11 +66,11 @@ struct CIMetaView: View {
                     signedFileVerified: chatItem.file?.loaded,
                     showSignature: showSignature,
                     showFileEncryption: showFileEncryption
-                )
+                ))
                 .lineLimit(1)
                 .invertedForegroundStyle(enabled: pxInvertMaterial)
                 if pxInvertMaterial {
-                    pxBuildMetaText(
+                    Text(pxBuildMetaText(
                         chatItem.meta,
                         chatTTL: chat.chatInfo.timedMessagesTTL,
                         encrypted: chatItem.encryptedFile,
@@ -85,13 +83,20 @@ struct CIMetaView: View {
                         signedFileVerified: chatItem.file?.loaded,
                         showSignature: showSignature,
                         showFileEncryption: showFileEncryption
-                    )
+                    ))
                     .lineLimit(1)
                 }
             }
         }
         }
         .popopxBranded()
+    }
+
+    private func pxDeletedTimestampText() -> AttributedString {
+        var pxTs = chatItem.timestampText
+        pxTs.foregroundColor = metaColor
+        pxTs.font = .caption
+        return pxTs
     }
 }
 
@@ -111,15 +116,13 @@ enum MetaColorMode {
         }
     }
 
-    func statusSpacer(_ pxSent: Bool) -> Text {
+    func statusSpacer(_ pxSent: Bool) -> AttributedString {
         switch self {
         case .normal, .transparent:
-            Text(
-                pxSent
-                ? Image("checkmark.wide")
-                : Image(systemName: "circlebadge.fill")
-            ).foregroundColor(.clear)
-        case .invertedMaterial: textSpace.kerning(PXCIMetaConfig.pxInvertedKerning)
+            return pxStatusIconAttributed(pxSent ? "checkmark.wide" : "circlebadge.fill", systemImage: !pxSent, .clear)
+        case .invertedMaterial:
+            let pxNsSpace = NSAttributedString(string: " ", attributes: [.kern: PXCIMetaConfig.pxInvertedKerning])
+            return AttributedString(pxNsSpace)
         }
     }
 }
@@ -141,84 +144,98 @@ func pxBuildMetaText(
     signedFileVerified pxSignedFileVerified: Bool? = nil,
     showSignature pxShowSignature: Bool = true,
     showFileEncryption pxShowFileEncryption: Bool = true
-) -> Text {
-    var pxResult = Text("")
-    var pxSpace: Text? = nil
+) -> AttributedString {
+    var pxResult = AttributedString()
+    var pxSpace: AttributedString? = nil
     let pxAppendSpace = {
         if let pxSp = pxSpace {
-            pxResult = pxResult + pxSp
+            pxResult += pxSp
             pxSpace = nil
         }
     }
     let pxResolved = pxColorMode.resolve(pxColor)
     if pxShowEdited, pxMeta.itemEdited {
-        pxResult = pxResult + pxStatusIcon("pencil", pxResolved)
+        pxResult += pxStatusIconAttributed("pencil", pxResolved)
     }
     if pxMeta.disappearing {
-        pxResult = pxResult + pxStatusIcon("timer", pxResolved).font(.system(size: PXCIMetaConfig.pxTimerIconFontSize))
+        pxResult += pxStatusIconAttributed("timer", pxResolved)
         let pxTtl = pxMeta.itemTimed?.ttl
         if pxTtl != pxChatTTL {
-            pxResult = pxResult + pxColored(Text(shortTimeText(pxTtl)), pxResolved)
+            pxResult += pxColoredAttributed(AttributedString(shortTimeTextString(pxTtl)), pxResolved)
         }
-        pxSpace = textSpace
+        pxSpace = AttributedString(" ")
     }
     if pxShowViaProxy, pxMeta.sentViaProxy == true {
         pxAppendSpace()
-        pxResult = pxResult + pxStatusIcon("arrow.forward", pxResolved?.opacity(PXCIMetaConfig.pxProxyIconOpacity)).font(.caption2)
+        pxResult += pxStatusIconAttributed("arrow.forward", pxResolved?.opacity(PXCIMetaConfig.pxProxyIconOpacity))
     }
     if pxShowStatus {
         pxAppendSpace()
-        if let (pxImage, pxStatusColor) = pxMeta.itemStatus.statusIcon(pxColor, pxPaleColor ?? pxColor, pxPrimaryColor) {
+        if let (pxImageName, pxIsSystem, pxStatusColor) = pxMeta.itemStatus.statusIcon(pxColor, pxPaleColor ?? pxColor, pxPrimaryColor) {
             let pxMetaColor = if pxOnlyOverrides && pxStatusColor == pxColor {
                 Color.clear
             } else {
                 pxColorMode.resolve(pxStatusColor)
             }
-            pxResult = pxResult + pxColored(Text(pxImage), pxMetaColor)
+            pxResult += pxColoredAttributed(pxStatusIconAttributed(pxImageName, systemImage: pxIsSystem, pxMetaColor), pxMetaColor)
         } else if !pxMeta.disappearing {
-            pxResult = pxResult + pxColorMode.statusSpacer(pxMeta.itemStatus.sent)
+            pxResult += pxColorMode.statusSpacer(pxMeta.itemStatus.sent)
         }
-        pxSpace = textSpace
+        pxSpace = AttributedString(" ")
     }
     if let pxCrypto = pxEncrypted, pxShowFileEncryption {
         pxAppendSpace()
-        pxResult = pxResult + pxStatusIcon(pxCrypto ? "lock" : "lock.open", pxResolved)
-        pxSpace = textSpace
+        pxResult += pxStatusIconAttributed(pxCrypto ? "lock" : "lock.open", pxResolved)
+        pxSpace = AttributedString(" ")
     }
     // TODO [BLOCKED: msgVerified field not exposed in upstream FFI]
     // if pxShowSignature, pxMeta.msgVerified?.verified == true && pxSignedFileVerified != false {
     //     pxAppendSpace()
-    //     pxResult = pxResult + pxColored(Text(Image(systemName: "checkmark.seal")), pxResolved)
-    //     pxSpace = textSpace
+    //     pxResult += pxColoredAttributed(pxStatusIconAttributed("checkmark.seal", pxResolved), pxResolved)
+    //     pxSpace = AttributedString(" ")
     // } else if pxMeta.msgVerified == .sigMissing {
     //     pxAppendSpace()
-    //     pxResult = pxResult + pxColored(Text(Image(systemName: "xmark.seal")), pxColorMode.resolve(QuantumColors.error))
-    //     pxSpace = textSpace
+    //     pxResult += pxColoredAttributed(pxStatusIconAttributed("xmark.seal", pxColorMode.resolve(QuantumColors.error)), pxColorMode.resolve(QuantumColors.error))
+    //     pxSpace = AttributedString(" ")
     // }
     if pxShowTimestamp {
         pxAppendSpace()
-        pxResult = pxResult + pxColored(pxMeta.timestampText, pxResolved)
+        pxResult += pxColoredAttributed(pxMeta.timestampText, pxResolved)
     }
-    return pxResult.font(.caption)
+    pxResult.font = .caption
+    return pxResult
 }
 
-@inline(__always)
-private func pxStatusIcon(_ pxIcon: String, _ pxColor: Color?) -> Text {
-    let pxText = Text(Image(systemName: pxIcon))
+/// Creates an AttributedString containing an inline SF Symbol or asset catalog image
+func pxStatusIconAttributed(_ pxIcon: String, systemImage: Bool = true, _ pxColor: Color?) -> AttributedString {
+    let pxConfig = UIImage.SymbolConfiguration(pointSize: 10, weight: .regular)
+    var pxImage: UIImage
+    if systemImage {
+        pxImage = UIImage(systemName: pxIcon, withConfiguration: pxConfig) ?? UIImage(systemName: pxIcon)!
+    } else {
+        pxImage = UIImage(named: pxIcon) ?? UIImage(systemName: pxIcon)!
+    }
     if let pxColor {
-        return pxText.foregroundColor(pxColor)
+        let pxUiColor = UIColor(pxColor)
+        pxImage = pxImage.withTintColor(pxUiColor, renderingMode: .alwaysOriginal)
+    }
+    let pxAttachment = NSTextAttachment()
+    pxAttachment.image = pxImage
+    let pxImageHeight = pxImage.size.height
+    pxAttachment.bounds = CGRect(x: 0, y: (UIFont.preferredFont(forTextStyle: .caption2).capHeight - pxImageHeight) / 2, width: pxImage.size.width, height: pxImageHeight)
+    let pxNsAttr = NSAttributedString(attachment: pxAttachment)
+    return AttributedString(pxNsAttr)
+}
+
+/// Applies foregroundColor to an AttributedString if color is non-nil
+@inline(__always)
+private func pxColoredAttributed(_ pxText: AttributedString, _ pxColor: Color?) -> AttributedString {
+    if let pxColor {
+        var pxResult = pxText
+        pxResult.foregroundColor = pxColor
+        return pxResult
     }
     return pxText
-}
-
-// Applying `foregroundColor(nil)` breaks `.invertedForegroundStyle` modifier
-@inline(__always)
-private func pxColored(_ pxText: Text, _ pxColor: Color?) -> Text {
-    if let pxColor {
-        pxText.foregroundColor(pxColor)
-    } else {
-        pxText
-    }
 }
 
 struct CIMetaView_Previews: PreviewProvider {

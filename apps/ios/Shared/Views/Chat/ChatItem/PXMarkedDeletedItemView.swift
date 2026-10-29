@@ -22,15 +22,22 @@ struct MarkedDeletedItemView: View {
     var chatItem: ChatItem
 
     var body: some View {
-        (Text(mergedMarkedDeletedText).italic() + textSpace + chatItem.timestampText)
-        .font(.caption)
-        .foregroundColor(theme.colors.secondary)
+        Text(pxBuildMarkedDeletedText())
         .padding(.horizontal, 14)
         .padding(.vertical, 8)
         .background { chatItemFrameColor(chatItem, theme).modifier(ChatTailPadding()) }
         .textSelection(.disabled)
         .fixedSize(horizontal: false, vertical: true)
         .popopxBranded()
+    }
+
+    private func pxBuildMarkedDeletedText() -> AttributedString {
+        var pxResult = AttributedString(String(describing: mergedMarkedDeletedText))
+        pxResult += textSpace
+        pxResult += chatItem.timestampText
+        pxResult.font = .caption.italic()
+        pxResult.foregroundColor = theme.colors.secondary
+        return pxResult
     }
 
     var mergedMarkedDeletedText: LocalizedStringKey {
@@ -93,16 +100,13 @@ struct MarkedDeletedItemView: View {
     }
 }
 
-struct MarkedDeletedItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            MarkedDeletedItemView(
-                chat: Chat.sampleData,
-                im: ItemsModel.shared,
-                chatItem: ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete), itemDeleted: .deleted(deletedTs: .now))
-            ).environment(\.revealed, true)
-        }
-        .previewLayout(.fixed(width: 360, height: 200))
+#Preview(traits: .fixedLayout(width: 360, height: 200)) {
+    Group {
+        MarkedDeletedItemView(
+            chat: Chat.sampleData,
+            im: ItemsModel.shared,
+            chatItem: ChatItem.getSample(1, .directSnd, .now, "hello", .sndSent(sndProgress: .complete), itemDeleted: .deleted(deletedTs: .now))
+        ).environment(\.revealed, true)
     }
 }
 

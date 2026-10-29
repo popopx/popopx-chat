@@ -536,10 +536,13 @@ struct GroupChatInfoView: View {
                     .padding(.trailing, 2)
                 // TODO [BLOCKED: upstream doesn't provide per-member server connection status]
                 VStack(alignment: .leading) {
-                    let t = Text(member.chatViewName).foregroundColor(member.memberIncognito ? QuantumColors.accent : theme.colors.onBackground)
-                    NameWithBadge((member.verified ? memberVerifiedShield + t : t), member.nameBadge)
+                    let nameColor = member.memberIncognito ? QuantumColors.accent : theme.colors.onBackground
+                    let nameText = member.verified
+                        ? pxVerifiedNameText(displayName: member.chatViewName, shieldColor: theme.colors.secondary, nameColor: nameColor)
+                        : Text(member.chatViewName).foregroundColor(nameColor)
+                    NameWithBadge(nameText, member.nameBadge)
                         .lineLimit(1)
-                    (user ? Text ("you: ") + Text(member.memberStatus.shortText) : Text(memberConnStatus(member)))
+                    (user ? Text(verbatim: "you: \(member.memberStatus.shortText)") : Text(memberConnStatus(member)))
                         .lineLimit(1)
                         .font(.caption)
                         .foregroundColor(theme.colors.secondary)
@@ -660,14 +663,6 @@ struct GroupChatInfoView: View {
                         .foregroundColor(theme.colors.error)
                 }
             }
-        }
-
-        private var memberVerifiedShield: Text {
-            (Text(Image(systemName: "checkmark.shield")) + textSpace)
-                .font(.caption)
-                .baselineOffset(2)
-                .kerning(-2)
-                .foregroundColor(theme.colors.secondary)
         }
     }
 
@@ -894,7 +889,7 @@ struct GroupChatInfoView: View {
     private func clearChatAlert() -> Alert {
         Alert(
             title: Text(NSLocalizedString("group_clear_conversation_question", comment: "clear conversation alert title")),
-            message: Text(chat.chatInfo.displayName + "\n\n") + Text(NSLocalizedString("group_clear_chat_message", comment: "clear chat alert warning message")),
+            message: Text(verbatim: "\(chat.chatInfo.displayName)\n\n\(NSLocalizedString("group_clear_chat_message", comment: "clear chat alert warning message"))"),
             primaryButton: .destructive(Text(NSLocalizedString("group_clear_action", comment: "clear confirmation button"))) {
                 Task {
                     await clearChat(chat)
@@ -908,7 +903,7 @@ struct GroupChatInfoView: View {
     private func leaveGroupAlert(titleLabel: LocalizedStringKey, messageLabel: LocalizedStringKey) -> Alert {
         return Alert(
             title: Text(titleLabel),
-            message: Text(chat.chatInfo.displayName + "\n\n") + Text(messageLabel),
+            message: Text(verbatim: "\(chat.chatInfo.displayName)\n\n\(messageLabel)"),
             primaryButton: .destructive(Text(NSLocalizedString("group_leave_action", comment: "leave confirmation button"))) {
                 Task {
                     await leaveGroup(chat.chatInfo.apiId)

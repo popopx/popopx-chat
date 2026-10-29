@@ -111,18 +111,24 @@ struct CIChatLinkHeader: View {
         if pxViewModel.pxHasExistingText {
             t
         } else {
-            t
-            + Text(verbatim: PXCIChatLinkConfig.metaSpacing)
-            + pxBuildMetaText(
-                chatItem.meta,
-                chatTTL: nil,
-                encrypted: nil,
-                colorMode: .transparent,
-                showStatus: false,
-                showEdited: false,
-                showViaProxy: showSentViaProxy,
-                showTimesamp: showTimestamp
-            )
+            HStack(alignment: .firstTextBaseline, spacing: 0) {
+                t
+                let pxMetaText: AttributedString = {
+                    var pxResult = AttributedString(PXCIChatLinkConfig.metaSpacing)
+                    pxResult += pxBuildMetaText(
+                        chatItem.meta,
+                        chatTTL: nil,
+                        encrypted: nil,
+                        colorMode: .transparent,
+                        showStatus: false,
+                        showEdited: false,
+                        showViaProxy: showSentViaProxy,
+                        showTimesamp: showTimestamp
+                    )
+                    return pxResult
+                }()
+                Text(pxMetaText)
+            }
         }
     }
 
