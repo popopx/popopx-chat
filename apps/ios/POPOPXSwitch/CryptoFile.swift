@@ -31,7 +31,10 @@ public func writeCryptoFile(path: String, data: Data) throws -> CryptoFileArgs {
     guard let cSize = Int32(exactly: data.count) else {
         throw RuntimeError("writeCryptoFile: data too large (\(data.count) bytes exceeds Int32 limit)")
     }
-    guard let cjson = chat_write_file(ctrl, &cPath, ptr, cSize) else {
+    let cjson: UnsafeMutablePointer<CChar>? = isOnFFIQueue()
+        ? chat_write_file(ctrl, &cPath, ptr, cSize)
+        : ffiQueue.sync { chat_write_file(ctrl, &cPath, ptr, cSize) }
+    guard let cjson else {
         throw RuntimeError("chat_write_file returned null")
     }
     guard let d = dataFromCString(cjson) else {
@@ -50,7 +53,10 @@ public func readCryptoFile(path: String, cryptoArgs: CryptoFileArgs) throws -> D
     guard var cPath = path.cString(using: .utf8) else { throw RuntimeError("readCryptoFile: invalid path encoding") }
     guard var cKey = cryptoArgs.fileKey.cString(using: .utf8) else { throw RuntimeError("readCryptoFile: invalid key encoding") }
     guard var cNonce = cryptoArgs.fileNonce.cString(using: .utf8) else { throw RuntimeError("readCryptoFile: invalid nonce encoding") }
-    guard let ptr = chat_read_file(&cPath, &cKey, &cNonce) else {
+    let ptr: UnsafeMutablePointer<CChar>? = isOnFFIQueue()
+        ? chat_read_file(&cPath, &cKey, &cNonce)
+        : ffiQueue.sync { chat_read_file(&cPath, &cKey, &cNonce) }
+    guard let ptr else {
         throw RuntimeError("chat_read_file returned null")
     }
     let status = UInt8(ptr.pointee)
@@ -95,7 +101,10 @@ public func encryptCryptoFile(fromPath: String, toPath: String) throws -> Crypto
     guard let ctrl = getChatCtrl() else {
         throw RuntimeError("chat controller not initialized")
     }
-    guard let cjson = chat_encrypt_file(ctrl, &cFromPath, &cToPath) else {
+    let cjson: UnsafeMutablePointer<CChar>? = isOnFFIQueue()
+        ? chat_encrypt_file(ctrl, &cFromPath, &cToPath)
+        : ffiQueue.sync { chat_encrypt_file(ctrl, &cFromPath, &cToPath) }
+    guard let cjson else {
         throw RuntimeError("chat_encrypt_file returned null")
     }
     guard let d = dataFromCString(cjson) else {
@@ -136,7 +145,10 @@ public func decryptCryptoFile(fromPath: String, cryptoArgs: CryptoFileArgs, toPa
     guard var cKey = cryptoArgs.fileKey.cString(using: .utf8) else { throw CryptoFileError.invalidEncoding("fileKey") }
     guard var cNonce = cryptoArgs.fileNonce.cString(using: .utf8) else { throw CryptoFileError.invalidEncoding("fileNonce") }
     guard var cToPath = toPath.cString(using: .utf8) else { throw CryptoFileError.invalidEncoding("toPath") }
-    guard let cErr = chat_decrypt_file(&cFromPath, &cKey, &cNonce, &cToPath) else {
+    let cErr: UnsafeMutablePointer<CChar>? = isOnFFIQueue()
+        ? chat_decrypt_file(&cFromPath, &cKey, &cNonce, &cToPath)
+        : ffiQueue.sync { chat_decrypt_file(&cFromPath, &cKey, &cNonce, &cToPath) }
+    guard let cErr else {
         throw CryptoFileError.ffiNull
     }
     let err = fromCString(cErr)

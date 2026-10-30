@@ -31,8 +31,8 @@ void haskell_init_nse(void) {
     char *argv[] = {
         "popopx",
         "+RTS", // requires `hs_init_with_rtsopts`
-        "-A256k", // chunk size for new allocations
-        "-H512k", // initial heap size
+        "-A512k", // chunk size for new allocations
+        "-H2m", // initial heap size (bumped from 512k to prevent GHC heap exhaustion)
         "-F0.5", // heap growth triggering GC
         "-Fd0.3", // memory return
         "-c", // compacting garbage collector

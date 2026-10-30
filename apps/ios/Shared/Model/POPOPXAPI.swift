@@ -90,14 +90,7 @@ func beginBGTask(_ handler: (() -> Void)? = nil) -> (() -> Void) {
 let msgDelay: Double = 7.5
 let maxTaskDuration: Double = 15
 
-/// Dedicated serial queue for synchronous FFI calls.
-/// Prevents blocking the GCD cooperative thread pool which can cause thread explosion and priority inversions.
-private let ffiQueueKey = DispatchSpecificKey<Void>()
-let ffiQueue: DispatchQueue = {
-    let q = DispatchQueue(label: "chat.popopx.ffi", qos: .userInitiated)
-    q.setSpecific(key: ffiQueueKey, value: ())
-    return q
-}()
+// ffiQueue and isOnFFIQueue() are now defined in POPOPXSwitch/API.swift and imported via @preconcurrency import POPOPXSwitch
 
 /// Separate queue for FFI receive (chat_recv_msg_wait).
 /// Prevents the blocking recv call (up to 15s) from starving send commands on the same serial queue.
@@ -148,7 +141,7 @@ func chatApiSendCmdSync<R: ChatAPIResult>(_ cmd: ChatCommand, bgTask: Bool = tru
     }
     // Avoid deadlock: if already on ffiQueue (e.g. called from chatApiSendCmd's ffiQueue.async),
     // execute directly instead of calling ffiQueue.sync which would deadlock on a serial queue.
-    if DispatchQueue.getSpecific(key: ffiQueueKey) != nil {
+    if isOnFFIQueue() {
         return doWork()
     } else {
         return ffiQueue.sync { doWork() }
@@ -450,7 +443,15 @@ func apiDeleteUser(_ userId: Int64, _ delSMPQueues: Bool, viewPwd: String?) asyn
 }
 
 func apiStartChat(ctrl: chat_ctrl? = nil) throws -> Bool {
-    let r: ChatResponse0 = try chatSendCmdSync(.startChat(mainApp: true, enableSndFiles: true), ctrl: ctrl)
+    // Check if any user has client service enabled
+    let serviceRequests: Bool
+    if let users = try? listUsers() {
+        serviceRequests = users.contains { $0.user.clientService }
+    } else {
+        serviceRequests = false
+    }
+    
+    let r: ChatResponse0 = try chatSendCmdSync(.startChat(mainApp: true, enableSndFiles: true, serviceRequests: serviceRequests), ctrl: ctrl)
     switch r {
     case .chatStarted: return true
     case .chatRunning: return false
@@ -477,7 +478,9 @@ func apiStopChat() async throws {
 
 // Spec: spec/architecture.md#apiActivateChat
 func apiActivateChat() {
-    chatReopenStore()
+    // POPOPX: chatReopenStore calls Haskell FFI (chat_reopen_store) which can have
+    // deep call chains. Dispatch to ffiQueue to avoid main thread stack overflow.
+    ffiQueue.sync { chatReopenStore() }
     do {
         try sendCommandOkRespSync(.apiActivateChat(restoreChat: true))
     } catch {
@@ -882,7 +885,7 @@ func getUserServers() async throws -> [UserOperatorServers] {
 func apiGetBinThereBots(botType: String = "binthere") async throws -> [BinThereBotInfo] {
     let userId = try await currentUserId("apiGetBinThereBots")
     let r: ChatResponse0 = try await chatSendCmd(.apiGetBinThereBots(userId: userId, botType: botType))
-    if case let .binThereBots(_, bots) = r {
+    if case let .binThereBotsList(_, bots) = r {
         logger.debug("apiGetBinThereBots: loaded \(bots.count) bots")
         return bots
     }
@@ -920,6 +923,30 @@ func apiSyncBotDirectory(json: String) async throws {
         return
     }
     logger.error("apiSyncBotDirectory error: \(String(describing: r))")
+    throw r.unexpected
+}
+
+// MARK: - Service Request/Response API
+
+func apiSendServiceRequest(sendTarget: String, request: String, requestTimeout: Double? = nil, signKey: String? = nil) async throws -> String {
+    let userId = try await currentUserId("apiSendServiceRequest")
+    let r: ChatResponse2 = try await chatSendCmd(.apiSendServiceRequest(userId: userId, sendTarget: sendTarget, requestTimeout: requestTimeout, signKey: signKey, request: request))
+    if case let .serviceResponse(_, responseData) = r {
+        logger.debug("apiSendServiceRequest: got response")
+        return responseData
+    }
+    logger.error("apiSendServiceRequest error: \(String(describing: r))")
+    throw r.unexpected
+}
+
+func apiSendServiceResponse(requestId: String, responseData: String) async throws -> String {
+    let userId = try await currentUserId("apiSendServiceResponse")
+    let r: ChatResponse2 = try await chatSendCmd(.apiSendServiceResponse(userId: userId, requestId: requestId, responseData: responseData))
+    if case let .serviceReplyAccepted(_, connectionId) = r {
+        logger.debug("apiSendServiceResponse: accepted, connId=\(connectionId)")
+        return connectionId
+    }
+    logger.error("apiSendServiceResponse error: \(String(describing: r))")
     throw r.unexpected
 }
 
@@ -1886,13 +1913,25 @@ func currentUserId(_ funcName: String) throws -> Int64 {
 @MainActor
 func initializeChat(start: Bool, confirmStart: Bool = false, dbKey: String? = nil, refreshInvitations: Bool = true, confirmMigrations: MigrationConfirmation? = nil) async throws {
     let m = ChatModel.shared
+    // POPOPX: Re-entrancy guard — prevent concurrent initialization from multiple callers.
+    // All callers are @MainActor so this is a sequential check, not a race.
+    // If another call is already in progress, wait for it to finish then return.
+    if m.ctrlInitInProgress {
+        logger.warning("initializeChat: already in progress, deferring")
+        return
+    }
     m.ctrlInitInProgress = true
     defer { m.ctrlInitInProgress = false }
     
     logger.debug("initializeChat: STARTING - start=\(start), confirmStart=\(confirmStart)")
     logger.debug("initializeChat: Before chatMigrateInit - chatInitialized=\(m.chatInitialized)")
     
-    (m.chatDbEncrypted, m.chatDbStatus) = chatMigrateInit(dbKey, confirmMigrations: confirmMigrations)
+    // POPOPX: Run migration FFI on ffiQueue to avoid main thread stack overflow (1MB limit).
+    // The Haskell migration code uses deep call chains that exceed the main thread stack.
+    let migrationResult: (Bool, DBMigrationResult) = ffiQueue.sync {
+        chatMigrateInit(dbKey, confirmMigrations: confirmMigrations)
+    }
+    (m.chatDbEncrypted, m.chatDbStatus) = migrationResult
     
     logger.debug("initializeChat: After chatMigrateInit - chatDbStatus=\(String(describing: m.chatDbStatus)), chatDbEncrypted=\((m.chatDbEncrypted ?? false) ? "true" : "false")")
 

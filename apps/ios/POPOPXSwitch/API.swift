@@ -11,6 +11,22 @@
 import Foundation
 import os
 
+// MARK: - FFI Queue Management
+
+/// Dedicated serial queue for synchronous FFI calls.
+/// Prevents blocking the GCD cooperative thread pool which can cause thread explosion and priority inversions.
+private let ffiQueueKey = DispatchSpecificKey<Void>()
+public let ffiQueue: DispatchQueue = {
+    let q = DispatchQueue(label: "chat.popopx.ffi", qos: .userInitiated)
+    q.setSpecific(key: ffiQueueKey, value: ())
+    return q
+}()
+
+/// Check if currently executing on ffiQueue (to avoid deadlock when calling ffiQueue.sync from within ffiQueue).
+public func isOnFFIQueue() -> Bool {
+    return DispatchQueue.getSpecific(key: ffiQueueKey) != nil
+}
+
 // MARK: - Corrupt DB Backup Helpers
 
 private func backupPathForCorruptDB(_ path: String, timestamp: TimeInterval) -> String {
@@ -567,7 +583,9 @@ public func chatInitTemporaryDatabase(url: URL, key: String? = nil, confirmation
         return (.errorNotADatabase(dbFile: dbPath), nil)
     }
     var cKey = dbKey.cString(using: .utf8)!
-    let cjson = chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &temporaryController)
+    let cjson = isOnFFIQueue()
+        ? chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &temporaryController)
+        : ffiQueue.sync { chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &temporaryController) }
     zeroize(&cPath); zeroize(&cConfirm)
     guard let cjson else {
         return (.errorNotADatabase(dbFile: dbPath), nil)
@@ -594,7 +612,9 @@ public func chatInitControllerRemovingDatabases() {
     }
     var newController: chat_ctrl? = nil
     var cKey = dbKey.cString(using: .utf8)!
-    let cjson = chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &newController)
+    let cjson = isOnFFIQueue()
+        ? chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &newController)
+        : ffiQueue.sync { chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &newController) }
     if let cjson {
         free(cjson)
     }
@@ -668,7 +688,10 @@ public func chatCloseStore() {
         return
     }
     defer { chatControllerLock.sync { chatController = nil } }
-    guard let result = chat_close_store(ctrl) else {
+    let result: UnsafeMutablePointer<CChar>? = isOnFFIQueue()
+        ? chat_close_store(ctrl)
+        : ffiQueue.sync { chat_close_store(ctrl) }
+    guard let result else {
         logger.error("chatCloseStore: returned null")
         return
     }
@@ -683,7 +706,10 @@ public func chatReopenStore() {
         logger.error("chatReopenStore: chatCtrl is nil")
         return
     }
-    guard let result = chat_reopen_store(ctrl) else {
+    let result: UnsafeMutablePointer<CChar>? = isOnFFIQueue()
+        ? chat_reopen_store(ctrl)
+        : ffiQueue.sync { chat_reopen_store(ctrl) }
+    guard let result else {
         logger.error("chatReopenStore: returned null")
         return
     }
@@ -694,6 +720,12 @@ public func chatReopenStore() {
 }
 
 public func resetChatCtrl() {
+    // POPOPX: We intentionally do NOT call chat_close_store here.
+    // initializeChat has await points after the FFI call (apiSetAppFilePaths, apiGetActiveUser)
+    // where another @MainActor task could call resetChatCtrl. Closing the store at that point
+    // would invalidate the controller those post-FFI API calls need.
+    // The old StablePtr is leaked but will be freed when the process exits.
+    // This matches the original upstream behavior.
     chatControllerLock.sync {
         chatController = nil
         migrationResult = nil
@@ -997,6 +1029,7 @@ public func chatErrorString(_ err: ChatError) -> String {
 public enum DBMigrationResult: Equatable {
     case ok
     case invalidConfirmation
+    case invalidQueueSize
     case errorNotADatabase(dbFile: String)
     case errorMigration(dbFile: String, migrationError: MigrationError)
     case errorSQL(dbFile: String, migrationSQLError: String)
@@ -1008,7 +1041,7 @@ public enum DBMigrationResult: Equatable {
 
 extension DBMigrationResult: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case _owsf, ok, invalidConfirmation, errorNotADatabase,
+        case _owsf, ok, invalidConfirmation, invalidQueueSize, errorNotADatabase,
              errorMigration, errorSQL, errorKeychain, errorKeyGeneration, errorAgent
     }
 
@@ -1036,6 +1069,8 @@ extension DBMigrationResult: Decodable {
                 self = .ok
             case "invalidConfirmation":
                 self = .invalidConfirmation
+            case "invalidQueueSize":
+                self = .invalidQueueSize
             case "errorNotADatabase":
                 let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: CodingKeys(stringValue: key)!)
                 let dbFile = try nested.decode(String.self, forKey: .dbFile)
@@ -1067,6 +1102,8 @@ extension DBMigrationResult: Decodable {
                 self = .ok
             } else if container.contains(.invalidConfirmation) {
                 self = .invalidConfirmation
+            } else if container.contains(.invalidQueueSize) {
+                self = .invalidQueueSize
             } else if container.contains(.errorNotADatabase) {
                 let nested = try container.nestedContainer(keyedBy: DBMDataKeys.self, forKey: .errorNotADatabase)
                 let dbFile = try nested.decode(String.self, forKey: .dbFile)
