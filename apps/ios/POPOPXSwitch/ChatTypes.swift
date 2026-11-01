@@ -21,7 +21,19 @@ public let REPORTS_VERSION = 12
 // support group knocking (MsgScope)
 public let GROUP_KNOCKING_VERSION = 15
 
-public var contentModerationPostLink: URL = URL(string: "https://popopxchat.com/content-moderation") ?? URL(string: "https://popopxchat.com")!
+// version to support call reconnection
+public let CALL_RECONNECT_VERSION = 22
+
+public var contentModerationPostLink: URL = {
+    if let url = URL(string: "https://popopxchat.com/content-moderation") {
+        return url
+    }
+    // Fallback - this should never fail for a valid URL string
+    guard let url = URL(string: "https://popopxchat.com") else {
+        fatalError("Invalid fallback URL")
+    }
+    return url
+}()
 
 public struct User: Identifiable, Decodable, UserLike, NamedChat, Hashable {
     public var userId: Int64
@@ -643,13 +655,46 @@ public struct BadgeAlertPrice: Codable, Hashable {
     public var currency: String
 }
 
-public enum BadgeAlertKind: String, Codable, Hashable {
+public enum BadgeAlertKind: Codable, Hashable {
     case renewalApproaching
     case paymentIssue
+    case subscriptionCancelled
     case subscriptionEnded
     case prepaidEnding
     case supportEnded
     case issueFailed
+    case unknown(String)
+
+    public var text: String {
+        switch self {
+        case .renewalApproaching: "renewalApproaching"
+        case .paymentIssue: "paymentIssue"
+        case .subscriptionCancelled: "subscriptionCancelled"
+        case .subscriptionEnded: "subscriptionEnded"
+        case .prepaidEnding: "prepaidEnding"
+        case .supportEnded: "supportEnded"
+        case .issueFailed: "issueFailed"
+        case let .unknown(s): s
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        switch try decoder.singleValueContainer().decode(String.self) {
+        case "renewalApproaching": self = .renewalApproaching
+        case "paymentIssue": self = .paymentIssue
+        case "subscriptionCancelled": self = .subscriptionCancelled
+        case "subscriptionEnded": self = .subscriptionEnded
+        case "prepaidEnding": self = .prepaidEnding
+        case "supportEnded": self = .supportEnded
+        case "issueFailed": self = .issueFailed
+        case let s: self = .unknown(s)
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(text)
+    }
 }
 
 // the wire proof carried on a profile - opaque to the UI, only round-tripped back to the core (apiPrepareContact)
@@ -2651,6 +2696,7 @@ public struct Contact: Identifiable, Decodable, NamedChat, Hashable {
     public var sndReady: Bool { get { ready || activeConn?.connStatus == .sndReady } }
     public var active: Bool { get { contactStatus == .active } }
     public var nextSendGrpInv: Bool { get { contactGroupMemberId != nil && !contactGrpInvSent } }
+    public var callReconnectSupported: Bool { (activeConn?.peerChatVRange.maxVersion ?? 0) >= CALL_RECONNECT_VERSION }
     public var nextConnectPrepared: Bool { active && preparedContact != nil && (activeConn == nil || activeConn?.connStatus == .prepared) }
     public var profileChangeProhibited: Bool { activeConn != nil }
     public var nextAcceptContactRequest: Bool {
@@ -6293,7 +6339,7 @@ extension ReportReason: Encodable {
         var container = encoder.singleValueContainer()
         switch self {
         case .spam: try container.encode("spam")
-        case .illegal: try container.encode("illegal")
+        case .illegal: try container.encode("content")
         case .community: try container.encode("community")
         case .profile: try container.encode("profile")
         case .other: try container.encode("other")
@@ -6308,11 +6354,24 @@ extension ReportReason: Decodable {
         let type = try container.decode(String.self)
         switch type {
         case "spam": self = .spam
-        case "illegal": self = .illegal
+        case "content": self = .illegal
         case "community": self = .community
         case "profile": self = .profile
         case "other": self = .other
         default: self = .unknown(type: type)
+        }
+    }
+}
+
+extension ReportReason: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .spam: return "spam"
+        case .illegal: return "content"
+        case .community: return "community"
+        case .profile: return "profile"
+        case .other: return "other"
+        case let .unknown(type): return type
         }
     }
 }
