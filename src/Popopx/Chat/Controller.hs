@@ -118,7 +118,7 @@ versionString :: String -> String
 versionString ver = "POPOPX Chat v" <> ver
 
 updateStr :: String
-updateStr = "To update run: curl -o- https://raw.githubusercontent.com/popopx-chat/popopx-chat/master/install.sh | bash"
+updateStr = "To update run: curl -o- https://raw.githubusercontent.com/popopx/popopx-chat/master/install.sh | bash"
 
 popopxmqCommitQ :: Q Exp
 popopxmqCommitQ = do

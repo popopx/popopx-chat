@@ -185,7 +185,7 @@ fun checkForUpdate() {
   }
   val client = setupHttpClient()
   try {
-    val request = Request.Builder().url("https://api.github.com/repos/popopx-chat/popopx-chat/releases").addHeader("User-agent", "curl").build()
+    val request = Request.Builder().url("https://api.github.com/repos/popopx/popopx-chat/releases").addHeader("User-agent", "curl").build()
     client.newCall(request).execute().use { response ->
       response.body?.use {
         val body = it.string()
