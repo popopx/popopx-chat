@@ -91,7 +91,7 @@ popopxChatRelays =
 
 popopxXFTPServers :: [NewUserServer 'PXFTP]
 popopxXFTPServers =
-  [ "xftp://YmYwI998zl-R1tK-7DFf_lrO0YTlCRJnagS1cie-Adc=@xftp1.popopxchat.com,j4ztwwbv6yzobdebh3mrzmjwcktv6bt4iwtc2gc7or5gxepkqsf4s6ad.onion",
-    "xftp://WTlITyAC1urEAEPzUwwR0BxYrLnS7vo5Dwi9aTVIVdA=@xftp6.popopxchat.com,pitpbrrovecq5vdix5ivrkszrkpevntvklxln6x4ux44zcukwwgggnqd.onion",
-    "xftp://t4D0UWJEElxdFmtAIJheq3c2qX-qOhohtaShi2SBwLw=@xftp8.popopxchat.com,erzzwgnoliml75nkgkucfbf575b6vg6fjixmkz636x7f3n4qpyut3lyd.onion"
+  [ newUserServer "xftp://YmYwI998zl-R1tK-7DFf_lrO0YTlCRJnagS1cie-Adc=@xftp1.popopxchat.com,j4ztwwbv6yzobdebh3mrzmjwcktv6bt4iwtc2gc7or5gxepkqsf4s6ad.onion",
+    newUserServer "xftp://WTlITyAC1urEAEPzUwwR0BxYrLnS7vo5Dwi9aTVIVdA=@xftp6.popopxchat.com,pitpbrrovecq5vdix5ivrkszrkpevntvklxln6x4ux44zcukwwgggnqd.onion",
+    newUserServer "xftp://t4D0UWJEElxdFmtAIJheq3c2qX-qOhohtaShi2SBwLw=@xftp8.popopxchat.com,erzzwgnoliml75nkgkucfbf575b6vg6fjixmkz636x7f3n4qpyut3lyd.onion"
   ]
