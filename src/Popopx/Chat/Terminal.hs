@@ -25,7 +25,6 @@ import Popopx.Chat.Operators.Presets (operatorPopopXChat, popopxChatRelays, popo
 import Popopx.Chat.Options
 import Popopx.Chat.Terminal.Input
 import Popopx.Chat.Terminal.Output
-import Popopx.FileTransfer.Client.Presets (defaultXFTPServers)
 import Popopx.Messaging.Client (NetworkConfig (..), SMPProxyFallback (..), SMPProxyMode (..), defaultNetworkConfig)
 import Popopx.Messaging.Util (raceAny_)
 #if !defined(dbPostgres)

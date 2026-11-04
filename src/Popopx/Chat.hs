@@ -42,7 +42,6 @@ import Popopx.Chat.Store.Profiles
 import Popopx.Chat.Types
 import Popopx.Chat.Types.Shared (GroupMemberRole (..))
 import Popopx.Chat.Util (shuffle)
-import Popopx.FileTransfer.Client.Presets (defaultXFTPServers)
 import Popopx.Messaging.Agent
 import Popopx.Messaging.Agent.Env.SQLite (AgentConfig (..), InitialAgentServers (..), ServerCfg (..), allRoles, createAgentStore, defaultAgentConfig, presetServerCfg)
 import Popopx.Messaging.Agent.RetryInterval (RetryInterval (..))
@@ -75,6 +74,8 @@ defaultChatConfig =
       badgeCurrentTime = getCurrentTime,
       badgeRetryInterval = RetryInterval {initialInterval = 30_000000, increaseAfter = 0, maxInterval = 3600_000000},
       badgeConsecutiveRetries = 3,
+      badgeDevRequests = False,
+      badgeDevRequestInterval = Nothing,
       confirmMigrations = MCConsole,
       -- this property should NOT use operator = Nothing
       -- non-operator servers can be passed via options
@@ -85,7 +86,7 @@ defaultChatConfig =
                   { operator = Just operatorPopopXChat,
                     smp = popopxChatSMPServers,
                     useSMP = 4,
-                    xftp = map (presetServer True) $ L.toList defaultXFTPServers,
+                    xftp = map (presetServer True) popopxXFTPServers,
                     useXFTP = 3,
                     chatRelays = popopxChatRelays,
                     useChatRelays = 2
@@ -98,7 +99,7 @@ defaultChatConfig =
       -- to have a different set of servers on the receiving end and on the sending end.
       -- To preserve backward compatibility receiving end should update before the sending.
       shortLinkPresetServers = allPresetServers,
-      presetDomains = [".popopx.im"],
+      presetDomains = [".popopxchat.com", ".popopx.im"],
       tbqSize = 1024,
       maxChats = 5000,
       fileChunkSize = 15780, -- do not change
