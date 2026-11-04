@@ -28,7 +28,7 @@ struct PXDiscoverTabView: View {
             } label: {
                 discoverRow(
                     icon: "bubble.left.and.bubble.right.fill",
-                    iconGradient: [Color(hex: "#FF6B6B"), Color(hex: "#FF8E53")],
+                    iconGradient: [QuantumColors.coralRed, QuantumColors.warmOrange],
                     title: NSLocalizedString("discover_treehole", comment: "TreeHole / anonymous broadcast"),
                     subtitle: NSLocalizedString("discover_treehole_subtitle", comment: "TreeHole subtitle")
                 )
@@ -41,7 +41,7 @@ struct PXDiscoverTabView: View {
             } label: {
                 discoverRow(
                     icon: "antenna.radiowaves.left.and.right.circle.fill",
-                    iconGradient: [Color(hex: "#00B4D8"), Color(hex: "#00FFD2")],
+                    iconGradient: [QuantumColors.oceanBlue, QuantumColors.accentSecondary],
                     title: NSLocalizedString("discover_channels", comment: "Channels"),
                     subtitle: NSLocalizedString("discover_channels_subtitle", comment: "Channels subtitle")
                 )
@@ -54,7 +54,7 @@ struct PXDiscoverTabView: View {
             } label: {
                 discoverRow(
                     icon: "globe.asia.australia.fill",
-                    iconGradient: [Color(hex: "#6E25C4"), Color(hex: "#A855F7")],
+                    iconGradient: [QuantumColors.accent, QuantumColors.vividPurple],
                     title: NSLocalizedString("discover_community", comment: "Community"),
                     subtitle: NSLocalizedString("discover_community_subtitle", comment: "Community subtitle")
                 )
@@ -132,7 +132,7 @@ struct PXChannelsListView: View {
                 } label: {
                     Image(systemName: "plus.circle.fill")
                         .font(.title3)
-                        .foregroundStyle(Color(hex: "#6E25C4"))
+                        .foregroundStyle(QuantumColors.accent)
                 }
             }
         }
@@ -155,7 +155,7 @@ struct PXChannelsListView: View {
                     .foregroundStyle(theme.colors.secondary.opacity(0.5))
 
                 Text(NSLocalizedString("channels_empty_title", comment: "Channels empty state title"))
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(QuantumFonts.bodySemibold)
                     .foregroundStyle(theme.colors.primary)
 
                 Text(NSLocalizedString("channels_empty_subtitle", comment: "Channels empty state subtitle"))
@@ -173,7 +173,7 @@ struct PXChannelsListView: View {
                         .padding(.vertical, 10)
                         .background(
                             Capsule()
-                                .fill(LinearGradient(colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")], startPoint: .leading, endPoint: .trailing))
+                                .fill(LinearGradient(colors: [QuantumColors.accent, QuantumColors.accentSecondary], startPoint: .leading, endPoint: .trailing))
                         )
                 }
                 .padding(.top, 4)
@@ -198,7 +198,7 @@ struct PXChannelsListView: View {
         HStack(spacing: 12) {
             Image(systemName: "antenna.radiowaves.left.and.right.circle.fill")
                 .font(.system(size: 32))
-                .foregroundStyle(Color(hex: "#00B4D8"))
+                .foregroundStyle(QuantumColors.oceanBlue)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(chat.chatInfo.chatViewName)
@@ -232,7 +232,7 @@ struct CommunityHubView: View {
                             .foregroundStyle(theme.colors.secondary.opacity(0.5))
 
                         Text(NSLocalizedString("community_empty_title", comment: "Community empty title"))
-                            .font(.system(size: 17, weight: .semibold))
+                            .font(QuantumFonts.bodySemibold)
                             .foregroundStyle(theme.colors.primary)
 
                         Text(NSLocalizedString("community_empty_subtitle", comment: "Community empty subtitle"))

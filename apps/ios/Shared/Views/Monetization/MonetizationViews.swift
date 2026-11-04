@@ -39,7 +39,7 @@ struct GlassCard: ViewModifier {
         
         content
             .background(isDark ? AnyShapeStyle(.ultraThinMaterial) : AnyShapeStyle(.thickMaterial))
-            .background(isDark ? Color(hex: "#181829").opacity(0.85) : Color(hex: "#F1ECF7").opacity(0.85))
+            .background(isDark ? QuantumColors.deepVoid.opacity(0.85) : QuantumColors.lightSurface.opacity(0.85))
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
@@ -129,7 +129,7 @@ struct SubscriptionView: View {
     var body: some View {
         ZStack {
             // Ambient obsidian background with subtle orb glow
-            Color(hex: "#0A0A14")
+            QuantumColors.voidBlack
                 .ignoresSafeArea()
             RadialGradient(
                 colors: [QuantumColors.accent.opacity(0.08), QuantumColors.accentSecondary.opacity(0.04), Color.clear],
@@ -281,7 +281,7 @@ struct SubscriptionView: View {
     private var header: some View {
         VStack(spacing: 8) {
             Image(systemName: "shield.lefthalf.filled")
-                .font(.system(size: 44))
+                .font(QuantumFonts.iconLarge)
                 .foregroundStyle(quantumGradient)
                 .shadow(color: QuantumColors.accent.opacity(0.6), radius: 16, x: 0, y: 0)
                 .shadow(color: QuantumColors.accentSecondary.opacity(0.4), radius: 24, x: 0, y: 0)
@@ -525,7 +525,7 @@ struct SubscriptionView: View {
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color(hex: "#1A1A2E"))
+                        .fill(QuantumColors.darkSurface)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -570,7 +570,7 @@ struct SubscriptionView: View {
 
     private var voucherSuccessOverlay: some View {
         ZStack {
-            Color(hex: "#0A0A14").opacity(0.8).ignoresSafeArea()
+            QuantumColors.voidBlack.opacity(0.8).ignoresSafeArea()
             RadialGradient(
                 colors: [QuantumColors.accentSecondary.opacity(0.15), QuantumColors.accent.opacity(0.08), Color.clear],
                 center: .center,
@@ -635,7 +635,7 @@ struct SubscriptionView: View {
             .background(
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
                     .fill(.ultraThinMaterial)
-                    .background(Color(hex: "#181829").opacity(0.85))
+                    .background(QuantumColors.deepVoid.opacity(0.85))
                     .overlay(
                         RoundedRectangle(cornerRadius: 24, style: .continuous)
                             .strokeBorder(
@@ -685,7 +685,7 @@ struct SubscriptionView: View {
 
     private var subscriptionSuccessOverlay: some View {
         ZStack {
-            Color(hex: "#0A0A14").opacity(0.8).ignoresSafeArea()
+            QuantumColors.voidBlack.opacity(0.8).ignoresSafeArea()
             RadialGradient(
                 colors: [QuantumColors.accent.opacity(0.15), QuantumColors.accentSecondary.opacity(0.08), Color.clear],
                 center: .center,
@@ -736,7 +736,7 @@ struct SubscriptionView: View {
             .background(
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
                     .fill(.ultraThinMaterial)
-                    .background(Color(hex: "#181829").opacity(0.85))
+                    .background(QuantumColors.deepVoid.opacity(0.85))
                     .overlay(
                         RoundedRectangle(cornerRadius: 24, style: .continuous)
                             .strokeBorder(quantumGradient.opacity(0.6), lineWidth: 1)
@@ -786,7 +786,7 @@ struct ComputeStoreView: View {
     var body: some View {
         ZStack {
             // Ambient obsidian background with subtle orb glow
-            Color(hex: "#0A0A14")
+            QuantumColors.voidBlack
                 .ignoresSafeArea()
             RadialGradient(
                 colors: [QuantumColors.accentWarm.opacity(0.06), QuantumColors.accentSecondary.opacity(0.03), Color.clear],
@@ -941,7 +941,7 @@ struct ComputeStoreView: View {
 
     private var successOverlay: some View {
         ZStack {
-            Color(hex: "#0A0A14").opacity(0.8).ignoresSafeArea()
+            QuantumColors.voidBlack.opacity(0.8).ignoresSafeArea()
             RadialGradient(
                 colors: [QuantumColors.accentWarm.opacity(0.12), QuantumColors.accentSecondary.opacity(0.06), Color.clear],
                 center: .center,
@@ -999,7 +999,7 @@ struct ComputeStoreView: View {
             .background(
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
                     .fill(.ultraThinMaterial)
-                    .background(Color(hex: "#181829").opacity(0.85))
+                    .background(QuantumColors.deepVoid.opacity(0.85))
                     .overlay(
                         RoundedRectangle(cornerRadius: 24, style: .continuous)
                             .strokeBorder(quantumGoldGradient.opacity(0.6), lineWidth: 1)
@@ -1213,7 +1213,7 @@ struct SubscriptionRenewalView: View {
     var body: some View {
         ZStack {
             // Ambient obsidian background
-            Color(hex: "#0A0A14")
+            QuantumColors.voidBlack
                 .ignoresSafeArea()
             RadialGradient(
                 colors: [Color(0xFFFFB74D).opacity(0.1), Color(0xFFFF5470).opacity(0.06), Color.clear],

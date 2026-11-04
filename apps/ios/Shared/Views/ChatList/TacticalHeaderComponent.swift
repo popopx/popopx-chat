@@ -23,11 +23,11 @@ struct BrandTitleView: View {
         HStack(spacing: 0) {
             Text("popop")
                 .font(.system(size: 20, weight: .heavy, design: .monospaced))
-                .foregroundColor(Color(hex: "#6E25C4"))
+                .foregroundColor(QuantumColors.accent)
             if reduceMotion {
                 Text("x")
                     .font(.system(size: 20, weight: .heavy, design: .monospaced))
-                    .foregroundColor(Color(hex: "#6E25C4"))
+                    .foregroundColor(QuantumColors.accent)
             } else {
                 TimelineView(.animation(minimumInterval: 1.0/10.0, paused: powerMode.isLowPowerMode || scenePhase != .active || !popCoordinator.isPopping)) { context in
                     let phase = popCoordinator.isPopping
@@ -36,9 +36,9 @@ struct BrandTitleView: View {
                     let opacity = popCoordinator.isPopping ? 0.3 + phase * 0.7 : 1.0
                     Text("x")
                         .font(.system(size: 20, weight: .heavy, design: .monospaced))
-                        .foregroundColor(Color(hex: "#6E25C4"))
+                        .foregroundColor(QuantumColors.accent)
                         .opacity(opacity)
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.5 * opacity), radius: 4, x: 0, y: 0)
+                        .shadow(color: QuantumColors.accent.opacity(0.5 * opacity), radius: 4, x: 0, y: 0)
                 }
             }
         }
@@ -60,7 +60,7 @@ struct HeaderNeedlePinView: View {
             showExtractions = true
         } label: {
             if reduceMotion {
-                let pinColor = threatState.isThreatActive ? Color(red: 1.0, green: 0.23, blue: 0.19) : Color(hex: "#6E25C4")
+                let pinColor = threatState.isThreatActive ? Color(red: 1.0, green: 0.23, blue: 0.19) : QuantumColors.accent
                 Image(systemName: "pin.fill")
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(pinColor)
@@ -72,7 +72,7 @@ struct HeaderNeedlePinView: View {
                     let isThreat = threatState.isThreatActive
                     let threatCycle = isThreat ? t.truncatingRemainder(dividingBy: 0.3) / 0.3 : 0.0
                     let glowOpacity = isThreat ? 0.4 + 0.4 * sin(threatCycle * .pi) : 0.3 + 0.3 * sin(t * 2.0 * .pi / 2.0)
-                    let pinColor = isThreat ? Color(red: 1.0, green: 0.23, blue: 0.19) : Color(hex: "#6E25C4")
+                    let pinColor = isThreat ? Color(red: 1.0, green: 0.23, blue: 0.19) : QuantumColors.accent
 
                     Image(systemName: "pin.fill")
                         .font(.system(size: 16, weight: .semibold))
@@ -100,11 +100,11 @@ struct QuickActionButton: View {
         } label: {
             Image(systemName: "plus")
                 .font(.system(size: 18, weight: .bold))
-                .foregroundColor(Color(hex: "#6E25C4"))
+                .foregroundColor(QuantumColors.accent)
                 .frame(width: 32, height: 32)
                 .background(
                     Circle()
-                        .strokeBorder(Color(hex: "#6E25C4").opacity(0.3), lineWidth: 1)
+                        .strokeBorder(QuantumColors.accent.opacity(0.3), lineWidth: 1)
                 )
         }
         .accessibilityLabel(NSLocalizedString("new_chat_accessibility", comment: "New chat accessibility label"))
@@ -123,11 +123,11 @@ struct MeshButton: View {
         } label: {
             Image(systemName: "antenna.radiowaves.left.and.right")
                 .font(.system(size: 18, weight: .bold))
-                .foregroundColor(Color(hex: "#6E25C4"))
+                .foregroundColor(QuantumColors.accent)
                 .frame(width: 32, height: 32)
                 .background(
                     Circle()
-                        .strokeBorder(Color(hex: "#6E25C4").opacity(0.3), lineWidth: 1)
+                        .strokeBorder(QuantumColors.accent.opacity(0.3), lineWidth: 1)
                 )
         }
         .accessibilityLabel(NSLocalizedString("switch_to_mesh_accessibility", comment: "Switch to mesh network accessibility label"))
@@ -146,11 +146,11 @@ struct DiscoverButton: View {
         } label: {
             Image(systemName: "safari.fill")
                 .font(.system(size: 18, weight: .bold))
-                .foregroundColor(Color(hex: "#6E25C4"))
+                .foregroundColor(QuantumColors.accent)
                 .frame(width: 32, height: 32)
                 .background(
                     Circle()
-                        .strokeBorder(Color(hex: "#6E25C4").opacity(0.3), lineWidth: 1)
+                        .strokeBorder(QuantumColors.accent.opacity(0.3), lineWidth: 1)
                 )
         }
         .accessibilityLabel(NSLocalizedString("switch_to_discover_accessibility", comment: "Switch to discover accessibility label"))

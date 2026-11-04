@@ -437,6 +437,7 @@ public struct BadgeState: Decodable, Hashable {
     public var alert: BadgeAlert?
     public var issueError: BadgeIssueError?
     public var nextWakeAt: Date?
+    public var subscription: BadgeSubscription?
 
     public var paidThroughText: String { badgeDateText(paidThrough) }
 }
@@ -445,6 +446,43 @@ public struct BadgeIssueError: Decodable, Hashable {
     public var failedSince: Date
     public var lastAttemptAt: Date
     public var reason: BadgeIssueFailure
+}
+
+public struct BadgeSubscription: Decodable, Hashable {
+    public var planMonths: Int
+    // nil until the service or the device's store has been asked
+    public var status: BadgeSubscriptionState?
+    // the store's reference: Apple's original transaction id, or a hash of Play's token
+    public var transactionRef: String?
+}
+
+public enum BadgeSubscriptionState: Decodable, Hashable {
+    case renewing
+    case cancelled
+    case billingRetry
+    case ended
+    case unknown
+
+    // as /_badge subscription takes it, which accepts only the four known states
+    public var text: String {
+        switch self {
+        case .renewing: "renewing"
+        case .cancelled: "cancelled"
+        case .billingRetry: "billingRetry"
+        case .ended: "ended"
+        case .unknown: "unknown"
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        switch try decoder.singleValueContainer().decode(String.self) {
+        case "renewing": self = .renewing
+        case "cancelled": self = .cancelled
+        case "billingRetry": self = .billingRetry
+        case "ended": self = .ended
+        default: self = .unknown
+        }
+    }
 }
 
 public enum BadgeIssueFailure: Decodable, Hashable {

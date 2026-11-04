@@ -57,6 +57,11 @@ class FaceGuardianMonitor: ObservableObject {
     // ARKit backend state
     private var arSession: ARSession?
     private var arSessionHandler: ARSessionHandler?
+    
+    // Vision supplement for ARKit (multi-person detection)
+    private var visionRequestHandler: VNSequenceRequestHandler?
+    private var lastVisionCheckTime: CFTimeInterval = 0
+    private let visionCheckInterval: CFTimeInterval = 1.0  // Check every 1 second
 
     // Shared state
     private var consecutiveNotLookingFrames = 0
@@ -212,6 +217,7 @@ class FaceGuardianMonitor: ObservableObject {
         session.delegate = handler
         arSession = session
         arSessionHandler = handler
+        visionRequestHandler = VNSequenceRequestHandler()
 
         let configuration = ARFaceTrackingConfiguration()
         configuration.isLightEstimationEnabled = false
@@ -219,7 +225,7 @@ class FaceGuardianMonitor: ObservableObject {
         sessionQueue.async { [session, configuration] in
             session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
         }
-        logger.info("ARKit backend started")
+        logger.info("ARKit backend started with Vision supplement for multi-person detection")
     }
 
     fileprivate func handleARFrame(anchor: ARFaceAnchor) {
@@ -265,6 +271,43 @@ class FaceGuardianMonitor: ObservableObject {
         }
     }
 
+    // MARK: - Vision Supplement for ARKit (Multi-person Detection)
+
+    /// Performs Vision-based face detection to supplement ARKit's single-person tracking.
+    /// This allows detection of multiple faces which ARKit cannot handle alone.
+    /// Note: ARKit doesn't provide CMSampleBuffer, so violation evidence capture is not available
+    /// in ARKit backend mode. The Vision backend (used on non-TrueDepth devices) does capture evidence.
+    fileprivate func performVisionSupplementCheck(pixelBuffer: CVPixelBuffer) {
+        let now = CACurrentMediaTime()
+        guard now - lastVisionCheckTime >= visionCheckInterval else { return }
+        lastVisionCheckTime = now
+
+        let request = VNDetectFaceRectanglesRequest { [weak self] request, error in
+            if let error {
+                self?.logger.warning("Vision supplement face detection error: \(error)")
+                return
+            }
+            guard let self else { return }
+            let observations = request.results as? [VNFaceObservation] ?? []
+            
+            // If Vision detects multiple faces, override ARKit's single-face tracking
+            if observations.count > 1 {
+                self.status = .multipleFaces
+                self.consecutiveNotLookingFrames = 0
+                self.consecutiveLookingFrames = 0
+                // Note: Cannot capture evidence without CMSampleBuffer in ARKit mode
+                self.logger.info("Vision supplement detected \(observations.count) faces - triggering multi-person protection")
+            }
+        }
+
+        let handler = visionRequestHandler ?? VNSequenceRequestHandler()
+        do {
+            try handler.perform([request], on: pixelBuffer, orientation: .up)
+        } catch {
+            logger.warning("Vision supplement check failed: \(error)")
+        }
+    }
+
     // MARK: - Helpers
 
     private static func radians(_ degrees: Double) -> Float {
@@ -307,6 +350,13 @@ private class ARSessionHandler: NSObject, ARSessionDelegate {
         } else {
             Task { @MainActor [weak monitor] in
                 monitor?.handleNoFaceDetected()
+            }
+        }
+        
+        // Vision supplement: check for multiple faces using the AR frame's captured image
+        if let pixelBuffer = frame.capturedImage as CVPixelBuffer? {
+            Task { @MainActor [weak monitor] in
+                monitor?.performVisionSupplementCheck(pixelBuffer: pixelBuffer)
             }
         }
     }

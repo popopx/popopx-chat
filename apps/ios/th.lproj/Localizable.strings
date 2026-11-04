@@ -14,7 +14,7 @@
 "!1 colored!" = "!1 มีสี!";
 
 /* No comment provided by engineer. */
-"[Send us email](mailto:chat@simplex.chat)" = "[ส่งอีเมลถึงเรา](mailto:chat@simplex.chat)";
+"[Send us email](mailto:chat@popopxchat.com)" = "[ส่งอีเมลถึงเรา](mailto:chat@popopxchat.com)";
 
 /* No comment provided by engineer. */
 "**e2e encrypted** audio call" = "การโทรเสียงแบบ **encrypted จากต้นจนจบ**";
@@ -23,16 +23,16 @@
 "**e2e encrypted** video call" = "**encrypted จากต้นจนจบ** การสนทนาทางวิดีโอ";
 
 /* No comment provided by engineer. */
-"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**เป็นส่วนตัวมากขึ้น**: ตรวจสอบข้อความใหม่ทุกๆ 20 นาที โทเค็นอุปกรณ์แชร์กับเซิร์ฟเวอร์ SimpleX Chat แต่ไม่ระบุจำนวนผู้ติดต่อหรือข้อความที่คุณมี";
+"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**เป็นส่วนตัวมากขึ้น**: ตรวจสอบข้อความใหม่ทุกๆ 20 นาที โทเค็นอุปกรณ์แชร์กับเซิร์ฟเวอร์ POPOPX Chat แต่ไม่ระบุจำนวนผู้ติดต่อหรือข้อความที่คุณมี";
 
 /* No comment provided by engineer. */
-"**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**ส่วนตัวที่สุด**: ไม่ใช้เซิร์ฟเวอร์การแจ้งเตือนของ SimpleX Chat ตรวจสอบข้อความเป็นระยะในพื้นหลัง (ขึ้นอยู่กับความถี่ที่คุณใช้แอป)";
+"**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**ส่วนตัวที่สุด**: ไม่ใช้เซิร์ฟเวอร์การแจ้งเตือนของ POPOPX Chat ตรวจสอบข้อความเป็นระยะในพื้นหลัง (ขึ้นอยู่กับความถี่ที่คุณใช้แอป)";
 
 /* No comment provided by engineer. */
 "**Please note**: you will NOT be able to recover or change passphrase if you lose it." = "**โปรดทราบ**: คุณจะไม่สามารถกู้คืนหรือเปลี่ยนรหัสผ่านได้หากคุณทำรหัสผ่านหาย";
 
 /* No comment provided by engineer. */
-"**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." = "**แนะนำ**: โทเค็นอุปกรณ์และการแจ้งเตือนจะถูกส่งไปยังเซิร์ฟเวอร์การแจ้งเตือนของ SimpleX Chat แต่ไม่ใช่เนื้อหาข้อความ ขนาด หรือผู้ที่ส่ง";
+"**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." = "**แนะนำ**: โทเค็นอุปกรณ์และการแจ้งเตือนจะถูกส่งไปยังเซิร์ฟเวอร์การแจ้งเตือนของ POPOPX Chat แต่ไม่ใช่เนื้อหาข้อความ ขนาด หรือผู้ที่ส่ง";
 
 /* No comment provided by engineer. */
 "**Warning**: Instant push notifications require passphrase saved in Keychain." = "**คำเตือน**: การแจ้งเตือนแบบพุชทันทีจำเป็นต้องบันทึกรหัสผ่านไว้ใน Keychain";
@@ -149,7 +149,7 @@
 "`a + b`" = "\\`a + b`";
 
 /* email text */
-"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via SimpleX Chat</a></p>" = "<p>สวัสดี!</p>\n<p><a href=\"%@\">เชื่อมต่อกับฉันผ่าน SimpleX Chat</a></p>";
+"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via POPOPX Chat</a></p>" = "<p>สวัสดี!</p>\n<p><a href=\"%@\">เชื่อมต่อกับฉันผ่าน POPOPX Chat</a></p>";
 
 /* No comment provided by engineer. */
 "~strike~" = "\\~ตี~";
@@ -206,7 +206,7 @@ time interval */
 "Abort changing address?" = "ยกเลิกการเปลี่ยนที่อยู่?";
 
 /* No comment provided by engineer. */
-"About SimpleX Chat" = "เกี่ยวกับ SimpleX Chat";
+"About POPOPX Chat" = "เกี่ยวกับ POPOPX Chat";
 
 /* No comment provided by engineer. */
 "above, then choose:" = "ด้านบน จากนั้นเลือก:";
@@ -450,7 +450,7 @@ swipe action */
 "Both you and your contact can send voice messages." = "ทั้งคุณและผู้ติดต่อของคุณสามารถส่งข้อความเสียงได้";
 
 /* No comment provided by engineer. */
-"By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "ตามโปรไฟล์แชท (ค่าเริ่มต้น) หรือ [โดยการเชื่อมต่อ](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (เบต้า)";
+"By chat profile (default) or [by connection](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "ตามโปรไฟล์แชท (ค่าเริ่มต้น) หรือ [โดยการเชื่อมต่อ](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (เบต้า)";
 
 /* No comment provided by engineer. */
 "Call already ended!" = "สิ้นสุดการโทรแล้ว!";
@@ -613,7 +613,7 @@ server test step */
 "Connect" = "เชื่อมต่อ";
 
 /* No comment provided by engineer. */
-"connect to SimpleX Chat developers." = "เชื่อมต่อกับนักพัฒนา SimpleX Chat";
+"connect to POPOPX Chat developers." = "เชื่อมต่อกับนักพัฒนา POPOPX Chat";
 
 /* new chat sheet title */
 "Connect via link" = "เชื่อมต่อผ่านลิงก์";
@@ -724,7 +724,7 @@ server test step */
 "Create queue" = "สร้างคิว";
 
 /* No comment provided by engineer. */
-"Create SimpleX address" = "สร้างที่อยู่ SimpleX";
+"Create POPOPX address" = "สร้างที่อยู่ POPOPX";
 
 /* No comment provided by engineer. */
 "Create your profile" = "สร้างโปรไฟล์ของคุณ";
@@ -943,10 +943,10 @@ alert button */
 "Device" = "อุปกรณ์";
 
 /* No comment provided by engineer. */
-"Device authentication is disabled. Turning off SimpleX Lock." = "การตรวจสอบสิทธิ์อุปกรณ์ถูกปิดใช้งาน กำลังปิด SimpleX Lock";
+"Device authentication is disabled. Turning off POPOPX Lock." = "การตรวจสอบสิทธิ์อุปกรณ์ถูกปิดใช้งาน กำลังปิด POPOPX Lock";
 
 /* No comment provided by engineer. */
-"Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." = "การตรวจสอบอุปกรณ์ไม่ได้ถูกเปิดใช้งาน คุณสามารถเปิด SimpleX Lock ผ่านการตั้งค่าได้ เมื่อคุณเปิดใช้งานการตรวจสอบอุปกรณ์แล้ว";
+"Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." = "การตรวจสอบอุปกรณ์ไม่ได้ถูกเปิดใช้งาน คุณสามารถเปิด POPOPX Lock ผ่านการตั้งค่าได้ เมื่อคุณเปิดใช้งานการตรวจสอบอุปกรณ์แล้ว";
 
 /* No comment provided by engineer. */
 "different migration in the app/database: %@ / %@" = "การโยกย้ายที่แตกต่างกันในแอป/ฐานข้อมูล: %@ / %@";
@@ -970,7 +970,7 @@ alert button */
 "Disable for all" = "ปิดการใช้งานสำหรับทุกคน";
 
 /* authentication reason */
-"Disable SimpleX Lock" = "ปิดการใช้งาน SimpleX Lock";
+"Disable POPOPX Lock" = "ปิดการใช้งาน POPOPX Lock";
 
 /* No comment provided by engineer. */
 "Disappearing message" = "ข้อความที่จะหายไปหลังเวลาที่กําหนด (disappearing message)";
@@ -997,7 +997,7 @@ alert button */
 "Do it later" = "ทำในภายหลัง";
 
 /* No comment provided by engineer. */
-"Do NOT use SimpleX for emergency calls." = "อย่าใช้ SimpleX สําหรับการโทรฉุกเฉิน";
+"Do NOT use POPOPX for emergency calls." = "อย่าใช้ POPOPX สําหรับการโทรฉุกเฉิน";
 
 /* No comment provided by engineer. */
 "Don't create address" = "อย่าสร้างที่อยู่";
@@ -1060,7 +1060,7 @@ alert button */
 "Enable self-destruct passcode" = "เปิดใช้งานรหัสผ่านแบบทําลายตัวเอง";
 
 /* authentication reason */
-"Enable SimpleX Lock" = "เปิดใช้งาน SimpleX Lock";
+"Enable POPOPX Lock" = "เปิดใช้งาน POPOPX Lock";
 
 /* No comment provided by engineer. */
 "Enable TCP keep-alive" = "เปิดใช้งาน TCP Keep-alive";
@@ -1487,7 +1487,7 @@ server test error */
 "hours" = "ชั่วโมง";
 
 /* No comment provided by engineer. */
-"How SimpleX works" = "วิธีการ SimpleX ทํางานอย่างไร";
+"How POPOPX works" = "วิธีการ POPOPX ทํางานอย่างไร";
 
 /* No comment provided by engineer. */
 "How to" = "วิธี";
@@ -1586,7 +1586,7 @@ server test error */
 "Initial role" = "บทบาทเริ่มต้น";
 
 /* No comment provided by engineer. */
-"Install SimpleX Chat for terminal" = "ติดตั้ง SimpleX Chat สำหรับเทอร์มินัล";
+"Install POPOPX Chat for terminal" = "ติดตั้ง POPOPX Chat สำหรับเทอร์มินัล";
 
 /* No comment provided by engineer. */
 "Instant" = "ทันที";
@@ -1718,7 +1718,7 @@ server test error */
 "left" = "ออกแล้ว";
 
 /* email subject */
-"Let's talk in SimpleX Chat" = "มาคุยกันใน SimpleX Chat";
+"Let's talk in POPOPX Chat" = "มาคุยกันใน POPOPX Chat";
 
 /* No comment provided by engineer. */
 "Light" = "สว่าง";
@@ -1841,7 +1841,7 @@ server test error */
 "Migration error:" = "ข้อผิดพลาดในการย้ายข้อมูล:";
 
 /* No comment provided by engineer. */
-"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." = "การย้ายข้อมูลล้มเหลว แตะ **ข้าม** ด้านล่างเพื่อใช้ฐานข้อมูลปัจจุบันต่อไป โปรดรายงานปัญหาให้นักพัฒนาแอปทราบผ่านทางแชทหรืออีเมล [chat@simplex.chat](mailto:chat@simplex.chat)";
+"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat.com](mailto:chat@popopxchat.com)." = "การย้ายข้อมูลล้มเหลว แตะ **ข้าม** ด้านล่างเพื่อใช้ฐานข้อมูลปัจจุบันต่อไป โปรดรายงานปัญหาให้นักพัฒนาแอปทราบผ่านทางแชทหรืออีเมล [chat@popopxchat.com](mailto:chat@popopxchat.com)";
 
 /* No comment provided by engineer. */
 "Migration is completed" = "การโยกย้ายเสร็จสมบูรณ์";
@@ -2589,40 +2589,40 @@ chat item action */
 "Show:" = "แสดง:";
 
 /* No comment provided by engineer. */
-"SimpleX address" = "ที่อยู่ SimpleX";
+"POPOPX address" = "ที่อยู่ POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Address" = "ที่อยู่ SimpleX";
+"POPOPX Address" = "ที่อยู่ POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Chat security was audited by Trail of Bits." = "ความปลอดภัยของ SimpleX Chat ได้รับการตรวจสอบโดย Trail of Bits";
+"POPOPX Chat security was audited by Trail of Bits." = "ความปลอดภัยของ POPOPX Chat ได้รับการตรวจสอบโดย Trail of Bits";
 
-/* simplex link type */
-"SimpleX contact address" = "ที่อยู่ติดต่อ SimpleX";
+/* popopx link type */
+"POPOPX contact address" = "ที่อยู่ติดต่อ POPOPX";
 
 /* notification */
-"SimpleX encrypted message or connection event" = "ข้อความ encrypt ของ SimpleX หรือเหตุการณ์การเชื่อมต่อ";
+"POPOPX encrypted message or connection event" = "ข้อความ encrypt ของ POPOPX หรือเหตุการณ์การเชื่อมต่อ";
 
-/* simplex link type */
-"SimpleX group link" = "ลิงค์กลุ่ม SimpleX";
+/* popopx link type */
+"POPOPX group link" = "ลิงค์กลุ่ม POPOPX";
 
 /* chat feature */
-"SimpleX links" = "ลิงก์ SimpleX";
+"POPOPX links" = "ลิงก์ POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Lock" = "ล็อค SimpleX";
+"POPOPX Lock" = "ล็อค POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Lock mode" = "โหมดล็อค SimpleX";
+"POPOPX Lock mode" = "โหมดล็อค POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Lock not enabled!" = "ไม่ได้เปิดใช้งาน SimpleX Lock!";
+"POPOPX Lock not enabled!" = "ไม่ได้เปิดใช้งาน POPOPX Lock!";
 
 /* No comment provided by engineer. */
-"SimpleX Lock turned on" = "SimpleX Lock เปิดอยู่";
+"POPOPX Lock turned on" = "POPOPX Lock เปิดอยู่";
 
-/* simplex link type */
-"SimpleX one-time invitation" = "คำเชิญ SimpleX แบบครั้งเดียว";
+/* popopx link type */
+"POPOPX one-time invitation" = "คำเชิญ POPOPX แบบครั้งเดียว";
 
 /* No comment provided by engineer. */
 "Skip" = "ข้าม";
@@ -2673,7 +2673,7 @@ chat item action */
 "Stop sharing address?" = "หยุดแชร์ที่อยู่ไหม?";
 
 /* authentication reason */
-"Stop SimpleX" = "หยุด SimpleX";
+"Stop POPOPX" = "หยุด POPOPX";
 
 /* No comment provided by engineer. */
 "strike" = "ตี";
@@ -2728,10 +2728,10 @@ server test failure */
 "Tests failed!" = "การทดสอบล้มเหลว!";
 
 /* No comment provided by engineer. */
-"Thank you for installing SimpleX Chat!" = "ขอบคุณสำหรับการติดตั้ง SimpleX Chat!";
+"Thank you for installing POPOPX Chat!" = "ขอบคุณสำหรับการติดตั้ง POPOPX Chat!";
 
 /* No comment provided by engineer. */
-"Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "ขอบคุณผู้ใช้ – [มีส่วนร่วมผ่าน Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!";
+"Thanks to the users – [contribute via Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "ขอบคุณผู้ใช้ – [มีส่วนร่วมผ่าน Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!";
 
 /* No comment provided by engineer. */
 "Thanks to the users – contribute via Weblate!" = "ขอบคุณผู้ใช้ – มีส่วนร่วมผ่าน Weblate!";
@@ -2815,10 +2815,10 @@ server test failure */
 "To protect timezone, image/voice files use UTC." = "ไฟล์ภาพ/เสียงใช้ UTC เพื่อป้องกันเขตเวลา";
 
 /* No comment provided by engineer. */
-"To protect your information, turn on SimpleX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "เพื่อปกป้องข้อมูลของคุณ ให้เปิด SimpleX Lock\nคุณจะได้รับแจ้งให้ยืนยันตัวตนให้เสร็จสมบูรณ์ก่อนที่จะเปิดใช้งานคุณลักษณะนี้";
+"To protect your information, turn on POPOPX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "เพื่อปกป้องข้อมูลของคุณ ให้เปิด POPOPX Lock\nคุณจะได้รับแจ้งให้ยืนยันตัวตนให้เสร็จสมบูรณ์ก่อนที่จะเปิดใช้งานคุณลักษณะนี้";
 
 /* No comment provided by engineer. */
-"To protect your privacy, SimpleX uses separate IDs for each of your contacts." = "เพื่อปกป้องความเป็นส่วนตัว แทนที่จะใช้ ID ผู้ใช้เหมือนที่แพลตฟอร์มอื่นๆใช้ SimpleX มีตัวระบุสำหรับคิวข้อความ โดยแยกจากกันสำหรับผู้ติดต่อแต่ละราย";
+"To protect your privacy, POPOPX uses separate IDs for each of your contacts." = "เพื่อปกป้องความเป็นส่วนตัว แทนที่จะใช้ ID ผู้ใช้เหมือนที่แพลตฟอร์มอื่นๆใช้ POPOPX มีตัวระบุสำหรับคิวข้อความ โดยแยกจากกันสำหรับผู้ติดต่อแต่ละราย";
 
 /* No comment provided by engineer. */
 "To record voice message please grant permission to use Microphone." = "ในการบันทึกข้อความเสียง โปรดให้สิทธิ์ในการใช้ไมโครโฟน";
@@ -2923,10 +2923,10 @@ server test failure */
 "Use server" = "ใช้เซิร์ฟเวอร์";
 
 /* No comment provided by engineer. */
-"Use SimpleX Chat servers?" = "ใช้เซิร์ฟเวอร์ SimpleX Chat ไหม?";
+"Use POPOPX Chat servers?" = "ใช้เซิร์ฟเวอร์ POPOPX Chat ไหม?";
 
 /* No comment provided by engineer. */
-"Using SimpleX Chat servers." = "กำลังใช้เซิร์ฟเวอร์ SimpleX Chat อยู่";
+"Using POPOPX Chat servers." = "กำลังใช้เซิร์ฟเวอร์ POPOPX Chat อยู่";
 
 /* No comment provided by engineer. */
 "Verify connection security" = "ตรวจสอบความปลอดภัยในการเชื่อมต่อ";
@@ -3094,7 +3094,7 @@ server test failure */
 "You can start chat via app Settings / Database or by restarting the app" = "คุณสามารถเริ่มแชทผ่านการตั้งค่าแอป / ฐานข้อมูล หรือโดยการรีสตาร์ทแอป";
 
 /* No comment provided by engineer. */
-"You can turn on SimpleX Lock via Settings." = "คุณสามารถเปิด SimpleX Lock ผ่านการตั้งค่า";
+"You can turn on POPOPX Lock via Settings." = "คุณสามารถเปิด POPOPX Lock ผ่านการตั้งค่า";
 
 /* No comment provided by engineer. */
 "You can use markdown to format messages:" = "คุณสามารถใช้มาร์กดาวน์เพื่อจัดรูปแบบข้อความ:";
@@ -3217,7 +3217,7 @@ server test failure */
 "Your profile is stored on your device and only shared with your contacts." = "โปรไฟล์นี้แชร์กับผู้ติดต่อของคุณเท่านั้น";
 
 /* No comment provided by engineer. */
-"Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." = "โปรไฟล์ของคุณจะถูกจัดเก็บไว้ในอุปกรณ์ของคุณและแชร์กับผู้ติดต่อของคุณเท่านั้น เซิร์ฟเวอร์ SimpleX ไม่สามารถดูโปรไฟล์ของคุณได้";
+"Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." = "โปรไฟล์ของคุณจะถูกจัดเก็บไว้ในอุปกรณ์ของคุณและแชร์กับผู้ติดต่อของคุณเท่านั้น เซิร์ฟเวอร์ POPOPX ไม่สามารถดูโปรไฟล์ของคุณได้";
 
 /* No comment provided by engineer. */
 "Your random profile" = "โปรไฟล์แบบสุ่มของคุณ";
@@ -3229,5 +3229,5 @@ server test failure */
 "Your settings" = "การตั้งค่าของคุณ";
 
 /* No comment provided by engineer. */
-"Your SimpleX address" = "ที่อยู่ SimpleX ของคุณ";
+"Your POPOPX address" = "ที่อยู่ POPOPX ของคุณ";
 

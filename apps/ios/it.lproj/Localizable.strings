@@ -5,7 +5,7 @@
 "_italic_" = "\\_corsivo_";
 
 /* No comment provided by engineer. */
-"- connect to [directory service](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- connessione al [servizio directory](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- ricevute di consegna (fino a 20 membri).\n- più veloce e più stabile.";
+"- connect to [directory service](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- connessione al [servizio directory](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- ricevute di consegna (fino a 20 membri).\n- più veloce e più stabile.";
 
 /* No comment provided by engineer. */
 "- more stable message delivery.\n- a bit better groups.\n- and more!" = "- recapito dei messaggi più stabile.\n- gruppi un po' migliorati.\n- e altro ancora!";
@@ -32,7 +32,7 @@
 "(this device v%@)" = "(questo dispositivo v%@)";
 
 /* No comment provided by engineer. */
-"[Send us email](mailto:chat@simplex.chat)" = "[Inviaci un'e-mail](mailto:chat@simplex.chat)";
+"[Send us email](mailto:chat@popopxchat.com)" = "[Inviaci un'e-mail](mailto:chat@popopxchat.com)";
 
 /* No comment provided by engineer. */
 "**Create 1-time link**: to create and share a new invitation link." = "**Aggiungi contatto**: per creare un nuovo link di invito.";
@@ -47,10 +47,10 @@
 "**e2e encrypted** video call" = "Videochiamata **crittografata e2e**";
 
 /* No comment provided by engineer. */
-"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**Più privato**: controlla messaggi nuovi ogni 20 minuti. Viene condiviso il token del dispositivo con il server di SimpleX Chat, ma non quanti contatti o messaggi hai.";
+"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**Più privato**: controlla messaggi nuovi ogni 20 minuti. Viene condiviso il token del dispositivo con il server di POPOPX Chat, ma non quanti contatti o messaggi hai.";
 
 /* No comment provided by engineer. */
-"**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**Il più privato**: non usare il server di notifica di SimpleX Chat, controlla i messaggi periodicamente in secondo piano (dipende da quanto spesso usi l'app).";
+"**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**Il più privato**: non usare il server di notifica di POPOPX Chat, controlla i messaggi periodicamente in secondo piano (dipende da quanto spesso usi l'app).";
 
 /* No comment provided by engineer. */
 "**Please note**: using the same database on two devices will break the decryption of messages from your connections, as a security protection." = "**Nota bene**: usare lo stesso database su due dispositivi bloccherà la decifrazione dei messaggi dalle tue connessioni, come misura di sicurezza.";
@@ -59,7 +59,7 @@
 "**Please note**: you will NOT be able to recover or change passphrase if you lose it." = "**Nota bene**: NON potrai recuperare o cambiare la password se la perdi.";
 
 /* No comment provided by engineer. */
-"**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." = "**Consigliato**: vengono inviati il token del dispositivo e le notifiche al server di notifica di SimpleX Chat, ma non il contenuto del messaggio,la sua dimensione o il suo mittente.";
+"**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." = "**Consigliato**: vengono inviati il token del dispositivo e le notifiche al server di notifica di POPOPX Chat, ma non il contenuto del messaggio,la sua dimensione o il suo mittente.";
 
 /* No comment provided by engineer. */
 "**Scan / Paste link**: to connect via a link you received." = "**Scansiona / Incolla link**: per connetterti tramite un link che hai ricevuto.";
@@ -119,7 +119,7 @@
 "%@ downloaded" = "%@ scaricati";
 
 /* badge alert */
-"%@ invested in SimpleX Chat crowdfunding." = "%@ ha investito nella raccolta fondi di SimpleX Chat.";
+"%@ invested in POPOPX Chat crowdfunding." = "%@ ha investito nella raccolta fondi di POPOPX Chat.";
 
 /* notification title */
 "%@ is connected!" = "%@ è connesso/a!";
@@ -137,7 +137,7 @@
 "%@ servers" = "%@ server";
 
 /* badge alert */
-"%@ supports SimpleX Chat." = "%@ sostiene SimpleX Chat.";
+"%@ supports POPOPX Chat." = "%@ sostiene POPOPX Chat.";
 
 /* No comment provided by engineer. */
 "%@ uploaded" = "%@ caricati";
@@ -158,7 +158,7 @@
 "%@:" = "%@:";
 
 /* badge alert */
-"%1$@ supported SimpleX Chat. The badge expired on %2$@." = "%1$@ ha sostenuto SimpleX Chat. La targhetta è scaduta il %2$@.";
+"%1$@ supported POPOPX Chat. The badge expired on %2$@." = "%1$@ ha sostenuto POPOPX Chat. La targhetta è scaduta il %2$@.";
 
 /* countdown */
 "%02d hrs %02d min %02d sec" = "%1$02d ore %2$02d min %3$02d sec";
@@ -331,7 +331,7 @@ channel relay bar */
 "`a + b`" = "\\`a + b`";
 
 /* email text */
-"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via SimpleX Chat</a></p>" = "<p>Ciao!</p>\n<p><a href=\"%@\">Connettiti a me via SimpleX Chat</a></p>";
+"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via POPOPX Chat</a></p>" = "<p>Ciao!</p>\n<p><a href=\"%@\">Connettiti a me via POPOPX Chat</a></p>";
 
 /* No comment provided by engineer. */
 "~strike~" = "\\~barrato~";
@@ -412,7 +412,7 @@ time interval */
 "About operators" = "Info sugli operatori";
 
 /* No comment provided by engineer. */
-"About SimpleX Chat" = "Riguardo SimpleX Chat";
+"About POPOPX Chat" = "Riguardo POPOPX Chat";
 
 /* No comment provided by engineer. */
 "above, then choose:" = "sopra, quindi scegli:";
@@ -491,7 +491,7 @@ swipe action */
 "Add" = "Aggiungi";
 
 /* No comment provided by engineer. */
-"Add address to your profile, so that your SimpleX contacts can share it with other people. Profile update will be sent to your SimpleX contacts." = "Aggiungi l'indirizzo al tuo profilo, in modo che i tuoi contatti di SimpleX possano condividerlo con altre persone. L'aggiornamento del profilo verrà inviato ai tuoi contatti di SimpleX.";
+"Add address to your profile, so that your POPOPX contacts can share it with other people. Profile update will be sent to your POPOPX contacts." = "Aggiungi l'indirizzo al tuo profilo, in modo che i tuoi contatti di POPOPX possano condividerlo con altre persone. L'aggiornamento del profilo verrà inviato ai tuoi contatti di POPOPX.";
 
 /* No comment provided by engineer. */
 "Add contributors." = "Aggiungi collaboratori.";
@@ -722,7 +722,7 @@ swipe action */
 "Allow to send files and media." = "Consenti l'invio di file e contenuti multimediali.";
 
 /* No comment provided by engineer. */
-"Allow to send SimpleX links." = "Consenti di inviare link di SimpleX.";
+"Allow to send POPOPX links." = "Consenti di inviare link di POPOPX.";
 
 /* No comment provided by engineer. */
 "Allow to send voice messages." = "Permetti l'invio di messaggi vocali.";
@@ -1053,7 +1053,7 @@ marked deleted chat item preview text */
 "Broadcast" = "Trasmetti";
 
 /* No comment provided by engineer. */
-"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "Bulgaro, finlandese, tailandese e ucraino - grazie agli utenti e a [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!";
+"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "Bulgaro, finlandese, tailandese e ucraino - grazie agli utenti e a [Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!";
 
 /* chat link info line */
 "Business address" = "Indirizzo di lavoro";
@@ -1068,7 +1068,7 @@ marked deleted chat item preview text */
 "Businesses" = "Lavorative";
 
 /* No comment provided by engineer. */
-"By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "Per profilo di chat (predefinito) o [per connessione](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"By chat profile (default) or [by connection](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "Per profilo di chat (predefinito) o [per connessione](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
 
 /* No comment provided by engineer. */
 "call" = "chiama";
@@ -1237,7 +1237,7 @@ alert subtitle */
 "Channel profile was changed. If you save it, the updated profile will be sent to channel subscribers." = "Il profilo del canale è stato cambiato. Se lo salvi, il profilo aggiornato verrà inviato agli iscritti di canale.";
 
 /* No comment provided by engineer. */
-"Channel SimpleX name" = "Nome SimpleX per il canale";
+"Channel POPOPX name" = "Nome POPOPX per il canale";
 
 /* alert title */
 "Channel temporarily unavailable" = "Canale non disponibile temporaneamente";
@@ -1515,7 +1515,7 @@ server test step */
 "Connect to desktop" = "Connetti al desktop";
 
 /* No comment provided by engineer. */
-"connect to SimpleX Chat developers." = "connettiti agli sviluppatori di SimpleX Chat.";
+"connect to POPOPX Chat developers." = "connettiti agli sviluppatori di POPOPX Chat.";
 
 /* No comment provided by engineer. */
 "Connect to your friends faster." = "Connettiti più velocemente ai tuoi amici.";
@@ -1524,7 +1524,7 @@ server test step */
 "Connect to yourself?\nThis is your own one-time link!" = "Connettersi a te stesso?\nQuesto è il tuo link una tantum!";
 
 /* new chat sheet title */
-"Connect to yourself?\nThis is your own SimpleX address!" = "Connettersi a te stesso?\nQuesto è il tuo indirizzo SimpleX!";
+"Connect to yourself?\nThis is your own POPOPX address!" = "Connettersi a te stesso?\nQuesto è il tuo indirizzo POPOPX!";
 
 /* new chat sheet title */
 "Connect via contact address" = "Connettere via indirizzo del contatto";
@@ -1770,7 +1770,7 @@ server test step */
 "Create list" = "Crea elenco";
 
 /* No comment provided by engineer. */
-"Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" = "Crea un nuovo profilo nell'[app desktop](https://simplex.chat/downloads/). 💻";
+"Create new profile in [desktop app](https://popopxchat.com/downloads/). 💻" = "Crea un nuovo profilo nell'[app desktop](https://popopxchat.com/downloads/). 💻";
 
 /* No comment provided by engineer. */
 "Create profile" = "Crea profilo";
@@ -1782,7 +1782,7 @@ server test step */
 "Create queue" = "Crea coda";
 
 /* No comment provided by engineer. */
-"Create SimpleX address" = "Crea indirizzo SimpleX";
+"Create POPOPX address" = "Crea indirizzo POPOPX";
 
 /* No comment provided by engineer. */
 "Create web preview." = "Crea un'anteprima web.";
@@ -1821,7 +1821,7 @@ server test step */
 "creator" = "creatore";
 
 /* No comment provided by engineer. */
-"Crowdfunding investors can reserve names before the sale starts: [simplex.domains](https://simplex.domains/)" = "Gli investitori della raccolta fondi possono prenotare i nomi prima che inizi la vendita: [simplex.domains](https://simplex.domains/)";
+"Crowdfunding investors can reserve names before the sale starts: [popopx.domains](https://popopx.domains/)" = "Gli investitori della raccolta fondi possono prenotare i nomi prima che inizi la vendita: [popopx.domains](https://popopx.domains/)";
 
 /* No comment provided by engineer. */
 "Crowdfunding on Wefunder" = "Raccolta fondi su Wefunder";
@@ -2175,10 +2175,10 @@ alert button */
 "Device" = "Dispositivo";
 
 /* No comment provided by engineer. */
-"Device authentication is disabled. Turning off SimpleX Lock." = "L'autenticazione del dispositivo è disabilitata. Disattivazione di SimpleX Lock.";
+"Device authentication is disabled. Turning off POPOPX Lock." = "L'autenticazione del dispositivo è disabilitata. Disattivazione di POPOPX Lock.";
 
 /* No comment provided by engineer. */
-"Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." = "L'autenticazione del dispositivo non è abilitata. Puoi attivare SimpleX Lock tramite le impostazioni, dopo aver abilitato l'autenticazione del dispositivo.";
+"Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." = "L'autenticazione del dispositivo non è abilitata. Puoi attivare POPOPX Lock tramite le impostazioni, dopo aver abilitato l'autenticazione del dispositivo.";
 
 /* No comment provided by engineer. */
 "different migration in the app/database: %@ / %@" = "migrazione diversa nell'app/nel database: %@ / %@";
@@ -2217,7 +2217,7 @@ alert button */
 "Disable for all" = "Disattiva per tutti";
 
 /* authentication reason */
-"Disable SimpleX Lock" = "Disattiva SimpleX Lock";
+"Disable POPOPX Lock" = "Disattiva POPOPX Lock";
 
 /* No comment provided by engineer. */
 "disabled" = "disattivato";
@@ -2277,7 +2277,7 @@ alert button */
 "Do NOT use private routing." = "NON usare l'instradamento privato.";
 
 /* No comment provided by engineer. */
-"Do NOT use SimpleX for emergency calls." = "NON usare SimpleX per chiamate di emergenza.";
+"Do NOT use POPOPX for emergency calls." = "NON usare POPOPX per chiamate di emergenza.";
 
 /* No comment provided by engineer. */
 "Documents:" = "Documenti:";
@@ -2419,7 +2419,7 @@ chat item action */
 "Enable self-destruct passcode" = "Attiva il codice di autodistruzione";
 
 /* authentication reason */
-"Enable SimpleX Lock" = "Attiva SimpleX Lock";
+"Enable POPOPX Lock" = "Attiva POPOPX Lock";
 
 /* No comment provided by engineer. */
 "Enable TCP keep-alive" = "Attiva il keep-alive TCP";
@@ -3037,7 +3037,7 @@ servers warning */
 "For console" = "Per console";
 
 /* No comment provided by engineer. */
-"For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server." = "Ad esempio, se il tuo contatto riceve messaggi tramite un server di SimpleX Chat, la tua app li consegnerà tramite un server Flux.";
+"For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server." = "Ad esempio, se il tuo contatto riceve messaggi tramite un server di POPOPX Chat, la tua app li consegnerà tramite un server Flux.";
 
 /* No comment provided by engineer. */
 "For me" = "Per me";
@@ -3124,7 +3124,7 @@ servers warning */
 "Get notified when mentioned." = "Ricevi una notifica quando menzionato.";
 
 /* No comment provided by engineer. */
-"Get SimpleX name (BETA)" = "Ottieni nome SimpleX (BETA)";
+"Get POPOPX name (BETA)" = "Ottieni nome POPOPX (BETA)";
 
 /* No comment provided by engineer. */
 "Get started" = "Cominciamo";
@@ -3271,7 +3271,7 @@ servers warning */
 "How it works" = "Come funziona";
 
 /* No comment provided by engineer. */
-"How SimpleX works" = "Come funziona SimpleX";
+"How POPOPX works" = "Come funziona POPOPX";
 
 /* No comment provided by engineer. */
 "How to" = "Come si fa";
@@ -3424,7 +3424,7 @@ servers warning */
 "Initial role" = "Ruolo iniziale";
 
 /* No comment provided by engineer. */
-"Install SimpleX Chat for terminal" = "Installa Simplex Chat per terminale";
+"Install POPOPX Chat for terminal" = "Installa Popopx Chat per terminale";
 
 /* No comment provided by engineer. */
 "Instant" = "Istantaneamente";
@@ -3664,7 +3664,7 @@ servers warning */
 "Less traffic on mobile networks." = "Meno traffico sulle reti mobili.";
 
 /* No comment provided by engineer. */
-"Let people connect to you via name registered with your SimpleX address." = "Consenti alle persone di collegarsi tramite il nome registrato con il tuo indirizzo SimpleX.";
+"Let people connect to you via name registered with your POPOPX address." = "Consenti alle persone di collegarsi tramite il nome registrato con il tuo indirizzo POPOPX.";
 
 /* No comment provided by engineer. */
 "Let people join via name registered with this channel link." = "Consenti alle persone di entrare attraverso il nome registrato con questo link del canale.";
@@ -3673,7 +3673,7 @@ servers warning */
 "Let someone connect to you" = "Lascia che qualcuno si connetta a te";
 
 /* email subject */
-"Let's talk in SimpleX Chat" = "Parliamo in SimpleX Chat";
+"Let's talk in POPOPX Chat" = "Parliamo in POPOPX Chat";
 
 /* No comment provided by engineer. */
 "Light" = "Chiaro";
@@ -3832,7 +3832,7 @@ servers warning */
 "Members can send files and media." = "I membri del gruppo possono inviare file e contenuti multimediali.";
 
 /* No comment provided by engineer. */
-"Members can send SimpleX links." = "I membri del gruppo possono inviare link di Simplex.";
+"Members can send POPOPX links." = "I membri del gruppo possono inviare link di Popopx.";
 
 /* No comment provided by engineer. */
 "Members can send voice messages." = "I membri del gruppo possono inviare messaggi vocali.";
@@ -3979,7 +3979,7 @@ servers warning */
 "Migration error:" = "Errore di migrazione:";
 
 /* No comment provided by engineer. */
-"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." = "Migrazione fallita. Tocca **Salta** qua sotto per continuare a usare il database attuale. Segnala il problema agli sviluppatori dell'app tramite chat o email [chat@simplex.chat](mailto:chat@simplex.chat).";
+"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat.com](mailto:chat@popopxchat.com)." = "Migrazione fallita. Tocca **Salta** qua sotto per continuare a usare il database attuale. Segnala il problema agli sviluppatori dell'app tramite chat o email [chat@popopxchat.com](mailto:chat@popopxchat.com).";
 
 /* No comment provided by engineer. */
 "Migration is completed" = "La migrazione è completata";
@@ -4291,7 +4291,7 @@ servers warning */
 "Non-profit governance" = "Organizzazione non a scopo di lucro";
 
 /* No comment provided by engineer. */
-"None of your servers are set to resolve SimpleX names. Configure servers, or use a connection link." = "Nessuno dei tuoi server è impostato per risolvere i nomi SimpleX. Configura i server o usa un link di connessione.";
+"None of your servers are set to resolve POPOPX names. Configure servers, or use a connection link." = "Nessuno dei tuoi server è impostato per risolvere i nomi POPOPX. Configura i server o usa un link di connessione.";
 
 /* No comment provided by engineer. */
 "Not a better lock on someone else's door. Not a nicer landlord that respects your privacy, but still keeps the record of all visitors. You are not a guest. You are home. No king can enter it - you are sovereign." = "Non una serratura migliore sulla porta di qualcun altro. Non un padrone di casa più gentile che rispetta la tua privacy, ma che continua a tenere traccia di tutti i visitatori. Non sei un ospite. Sei a casa tua. Nessun re può entrarvi: sei tu il sovrano.";
@@ -4778,7 +4778,7 @@ alert button */
 
 /* alert message
 alert title */
-"Profile update will be sent to your SimpleX contacts." = "L'aggiornamento del profilo verrà inviato ai tuoi contatti di SimpleX.";
+"Profile update will be sent to your POPOPX contacts." = "L'aggiornamento del profilo verrà inviato ai tuoi contatti di POPOPX.";
 
 /* No comment provided by engineer. */
 "Prohibit audio/video calls." = "Proibisci le chiamate audio/video.";
@@ -4811,7 +4811,7 @@ alert title */
 "Prohibit sending files and media." = "Proibisci l'invio di file e contenuti multimediali.";
 
 /* No comment provided by engineer. */
-"Prohibit sending SimpleX links." = "Vieta l'invio di link di SimpleX.";
+"Prohibit sending POPOPX links." = "Vieta l'invio di link di POPOPX.";
 
 /* No comment provided by engineer. */
 "Prohibit sending voice messages." = "Proibisci l'invio di messaggi vocali.";
@@ -4925,7 +4925,7 @@ alert title */
 "Receiving via" = "Ricezione via";
 
 /* No comment provided by engineer. */
-"Recent history and improved [directory bot](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." = "Cronologia recente e [bot della directory](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) migliorato.";
+"Recent history and improved [directory bot](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." = "Cronologia recente e [bot della directory](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) migliorato.";
 
 /* No comment provided by engineer. */
 "Recipient(s) can't see who this message is from." = "I destinatari non possono vedere da chi proviene questo messaggio.";
@@ -5340,7 +5340,7 @@ chat item action */
 "Save servers?" = "Salvare i server?";
 
 /* alert title */
-"Save SimpleX name?" = "Salvare il nome SimpleX?";
+"Save POPOPX name?" = "Salvare il nome POPOPX?";
 
 /* alert title */
 "Save webpage settings?" = "Salvare le impostazioni della pagina web?";
@@ -5412,7 +5412,7 @@ chat item action */
 "Search links" = "Cerca link";
 
 /* No comment provided by engineer. */
-"Search or paste SimpleX link" = "Cerca o incolla un link SimpleX";
+"Search or paste POPOPX link" = "Cerca o incolla un link POPOPX";
 
 /* No comment provided by engineer. */
 "Search videos" = "Cerca video";
@@ -5529,7 +5529,7 @@ chat item action */
 "Send request without message" = "Invia richiesta senza messaggio";
 
 /* No comment provided by engineer. */
-"Send the link via any messenger - it's secure. Ask to paste into SimpleX." = "Invia il link tramite qualsiasi messenger, è sicuro. Chiedi di incollarlo in SimpleX.";
+"Send the link via any messenger - it's secure. Ask to paste into POPOPX." = "Invia il link tramite qualsiasi messenger, è sicuro. Chiedi di incollarlo in POPOPX.";
 
 /* No comment provided by engineer. */
 "Send them from gallery or custom keyboards." = "Inviali dalla galleria o dalle tastiere personalizzate.";
@@ -5743,7 +5743,7 @@ chat item action */
 "Share address publicly" = "Condividi indirizzo pubblicamente";
 
 /* alert title */
-"Share address with SimpleX contacts?" = "Condividere l'indirizzo con i contatti di SimpleX?";
+"Share address with POPOPX contacts?" = "Condividere l'indirizzo con i contatti di POPOPX?";
 
 /* No comment provided by engineer. */
 "Share channel" = "Condividi canale";
@@ -5767,19 +5767,19 @@ chat item action */
 "Share relay address" = "Condividi l'indirizzo del relay";
 
 /* No comment provided by engineer. */
-"Share SimpleX address on social media." = "Condividi l'indirizzo SimpleX sui social media.";
+"Share POPOPX address on social media." = "Condividi l'indirizzo POPOPX sui social media.";
 
 /* No comment provided by engineer. */
 "Share this 1-time invite link" = "Condividi questo link di invito una tantum";
 
 /* No comment provided by engineer. */
-"Share to SimpleX" = "Condividi in SimpleX";
+"Share to POPOPX" = "Condividi in POPOPX";
 
 /* No comment provided by engineer. */
 "Share via chat" = "Condividi via chat";
 
 /* No comment provided by engineer. */
-"Share with SimpleX contacts" = "Condividi con i contatti di SimpleX";
+"Share with POPOPX contacts" = "Condividi con i contatti di POPOPX";
 
 /* No comment provided by engineer. */
 "Share your address" = "Condividi il tuo indirizzo";
@@ -5791,7 +5791,7 @@ chat item action */
 "Short link" = "Link breve";
 
 /* No comment provided by engineer. */
-"Short SimpleX address" = "Indirizzo breve di SimpleX";
+"Short POPOPX address" = "Indirizzo breve di POPOPX";
 
 /* No comment provided by engineer. */
 "Show → on messages sent via private routing." = "Mostra → nei messaggi inviati via instradamento privato.";
@@ -5843,85 +5843,85 @@ copied message info */
 "Signing proves you authored this message and can't be denied later." = "La firma dimostra che hai scritto questo messaggio e non può essere negato più tardi.";
 
 /* No comment provided by engineer. */
-"SimpleX" = "SimpleX";
+"POPOPX" = "POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX address" = "Indirizzo SimpleX";
+"POPOPX address" = "Indirizzo POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Address" = "Indirizzo SimpleX";
+"POPOPX Address" = "Indirizzo POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX address and 1-time links are safe to share via any messenger." = "L'indirizzo SimpleX e i link una tantum sono sicuri da condividere tramite qualsiasi messenger.";
+"POPOPX address and 1-time links are safe to share via any messenger." = "L'indirizzo POPOPX e i link una tantum sono sicuri da condividere tramite qualsiasi messenger.";
 
 /* No comment provided by engineer. */
-"SimpleX address or 1-time link?" = "Indirizzo SimpleX o link una tantum?";
+"POPOPX address or 1-time link?" = "Indirizzo POPOPX o link una tantum?";
 
 /* alert title */
-"SimpleX address settings" = "Accetta automaticamente le impostazioni";
+"POPOPX address settings" = "Accetta automaticamente le impostazioni";
 
-/* simplex link type */
-"SimpleX channel link" = "Link del canale SimpleX";
-
-/* No comment provided by engineer. */
-"SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app." = "SimpleX Chat e Flux hanno concluso un accordo per includere server gestiti da Flux nell'app.";
+/* popopx link type */
+"POPOPX channel link" = "Link del canale POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Chat security was audited by Trail of Bits." = "La sicurezza di SimpleX Chat è stata verificata da Trail of Bits.";
+"POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app." = "POPOPX Chat e Flux hanno concluso un accordo per includere server gestiti da Flux nell'app.";
 
-/* simplex link type */
-"SimpleX contact address" = "Indirizzo di contatto SimpleX";
+/* No comment provided by engineer. */
+"POPOPX Chat security was audited by Trail of Bits." = "La sicurezza di POPOPX Chat è stata verificata da Trail of Bits.";
+
+/* popopx link type */
+"POPOPX contact address" = "Indirizzo di contatto POPOPX";
 
 /* notification */
-"SimpleX encrypted message or connection event" = "Messaggio crittografato di SimpleX o evento di connessione";
+"POPOPX encrypted message or connection event" = "Messaggio crittografato di POPOPX o evento di connessione";
 
-/* simplex link type */
-"SimpleX group link" = "Link gruppo SimpleX";
+/* popopx link type */
+"POPOPX group link" = "Link gruppo POPOPX";
 
 /* chat feature */
-"SimpleX links" = "Link di SimpleX";
+"POPOPX links" = "Link di POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX links are prohibited." = "I link di SimpleX sono vietati in questo gruppo.";
+"POPOPX links are prohibited." = "I link di POPOPX sono vietati in questo gruppo.";
 
 /* No comment provided by engineer. */
-"SimpleX links not allowed" = "Link di SimpleX non consentiti";
+"POPOPX links not allowed" = "Link di POPOPX non consentiti";
 
 /* No comment provided by engineer. */
-"SimpleX Lock" = "SimpleX Lock";
+"POPOPX Lock" = "POPOPX Lock";
 
 /* No comment provided by engineer. */
-"SimpleX Lock mode" = "Modalità di SimpleX Lock";
+"POPOPX Lock mode" = "Modalità di POPOPX Lock";
 
 /* No comment provided by engineer. */
-"SimpleX Lock not enabled!" = "SimpleX Lock non attivato!";
+"POPOPX Lock not enabled!" = "POPOPX Lock non attivato!";
 
 /* No comment provided by engineer. */
-"SimpleX Lock turned on" = "SimpleX Lock attivato";
+"POPOPX Lock turned on" = "POPOPX Lock attivato";
 
 /* No comment provided by engineer. */
-"SimpleX name" = "Nome SimpleX";
+"POPOPX name" = "Nome POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX name error" = "Errore del nome SimpleX";
+"POPOPX name error" = "Errore del nome POPOPX";
 
 /* alert title */
-"SimpleX name not verified" = "Nome SimpleX non verificato";
+"POPOPX name not verified" = "Nome POPOPX non verificato";
 
 /* No comment provided by engineer. */
-"SimpleX name sale starts in" = "La vendita di nomi SimpleX inizia in";
+"POPOPX name sale starts in" = "La vendita di nomi POPOPX inizia in";
 
-/* simplex link type */
-"SimpleX one-time invitation" = "Invito SimpleX una tantum";
-
-/* No comment provided by engineer. */
-"SimpleX protocols reviewed by Trail of Bits." = "Protocolli di SimpleX esaminati da Trail of Bits.";
+/* popopx link type */
+"POPOPX one-time invitation" = "Invito POPOPX una tantum";
 
 /* No comment provided by engineer. */
-"SimpleX public names (BETA)" = "Nomi pubblici SimpleX (BETA)";
+"POPOPX protocols reviewed by Trail of Bits." = "Protocolli di POPOPX esaminati da Trail of Bits.";
 
-/* simplex link type */
-"SimpleX relay address" = "Indirizzo del relay SimpleX";
+/* No comment provided by engineer. */
+"POPOPX public names (BETA)" = "Nomi pubblici POPOPX (BETA)";
+
+/* popopx link type */
+"POPOPX relay address" = "Indirizzo del relay POPOPX";
 
 /* No comment provided by engineer. */
 "Simplified incognito mode" = "Modalità incognito semplificata";
@@ -6027,7 +6027,7 @@ report reason */
 "Stop sharing address?" = "Smettere di condividere l'indirizzo?";
 
 /* authentication reason */
-"Stop SimpleX" = "Ferma SimpleX";
+"Stop POPOPX" = "Ferma POPOPX";
 
 /* No comment provided by engineer. */
 "Stopping chat" = "Arresto della chat";
@@ -6084,7 +6084,7 @@ report reason */
 "Subscribers can send files and media." = "Gli iscritti al canale possono inviare file e contenuti multimediali.";
 
 /* No comment provided by engineer. */
-"Subscribers can send SimpleX links." = "Gli iscritti al canale possono inviare link di Simplex.";
+"Subscribers can send POPOPX links." = "Gli iscritti al canale possono inviare link di Popopx.";
 
 /* No comment provided by engineer. */
 "Subscribers can send voice messages." = "Gli iscritti al canale possono inviare messaggi vocali.";
@@ -6205,10 +6205,10 @@ server test failure */
 "Tests failed!" = "Test falliti!";
 
 /* No comment provided by engineer. */
-"Thank you for installing SimpleX Chat!" = "Grazie per aver installato SimpleX Chat!";
+"Thank you for installing POPOPX Chat!" = "Grazie per aver installato POPOPX Chat!";
 
 /* No comment provided by engineer. */
-"Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "Grazie agli utenti – [contribuite via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!";
+"Thanks to the users – [contribute via Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "Grazie agli utenti – [contribuite via Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!";
 
 /* No comment provided by engineer. */
 "Thanks to the users – contribute via Weblate!" = "Grazie agli utenti – contribuite via Weblate!";
@@ -6238,7 +6238,7 @@ server test failure */
 "The channel required this message to be signed, but the signature is missing." = "Il canale ha richiesto di firmare questo messaggio, ma la firma non è presente.";
 
 /* No comment provided by engineer. */
-"The code you scanned is not a SimpleX link QR code." = "Il codice che hai scansionato non è un codice QR di link SimpleX.";
+"The code you scanned is not a POPOPX link QR code." = "Il codice che hai scansionato non è un codice QR di link POPOPX.";
 
 /* conn error description */
 "The connection reached the limit of undelivered messages" = "La connessione ha raggiunto il limite di messaggi non consegnati";
@@ -6310,19 +6310,19 @@ server test failure */
 "The servers for new files of your current chat profile **%@**." = "I server per nuovi file del tuo profilo di chat attuale **%@**.";
 
 /* alert message */
-"The SimpleX name @%@ is registered without SimpleX address. Add your SimpleX address to the name via the registration page." = "Il nome SimpleX @%@ è registrato senza indirizzo SimpleX. Aggiungi il tuo indirizzo SimpleX al nome tramite la pagina di registrazione.";
+"The POPOPX name @%@ is registered without POPOPX address. Add your POPOPX address to the name via the registration page." = "Il nome POPOPX @%@ è registrato senza indirizzo POPOPX. Aggiungi il tuo indirizzo POPOPX al nome tramite la pagina di registrazione.";
 
 /* alert message */
-"The SimpleX name #%@ is registered without channel link. Add channel link to the name via the registration page." = "Il nome SimpleX #%@ è registrato senza link del canale. Aggiungi il link del canale al nome tramite la pagina di registrazione.";
+"The POPOPX name #%@ is registered without channel link. Add channel link to the name via the registration page." = "Il nome POPOPX #%@ è registrato senza link del canale. Aggiungi il link del canale al nome tramite la pagina di registrazione.";
 
 /* No comment provided by engineer. */
-"The SimpleX name %@ is registered, but it has no valid link." = "Il nome SimpleX %@ è registrato, ma non ha alcun link valido.";
+"The POPOPX name %@ is registered, but it has no valid link." = "Il nome POPOPX %@ è registrato, ma non ha alcun link valido.";
 
 /* No comment provided by engineer. */
-"The SimpleX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner." = "Il nome SimpleX %@ è registrato, ma non aggiunto al profilo. Aggiungilo al profilo del tuo indirizzo o canale, se sei il proprietario.";
+"The POPOPX name %@ is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner." = "Il nome POPOPX %@ è registrato, ma non aggiunto al profilo. Aggiungilo al profilo del tuo indirizzo o canale, se sei il proprietario.";
 
 /* No comment provided by engineer. */
-"The text you pasted is not a SimpleX link." = "Il testo che hai incollato non è un link SimpleX.";
+"The text you pasted is not a POPOPX link." = "Il testo che hai incollato non è un link POPOPX.";
 
 /* No comment provided by engineer. */
 "The uploaded database archive will be permanently removed from the servers." = "L'archivio del database caricato verrà rimosso definitivamente dai server.";
@@ -6407,7 +6407,7 @@ alert subtitle */
 "This setting applies to messages in your current chat profile **%@**." = "Questa impostazione si applica ai messaggi del profilo di chat attuale **%@**.";
 
 /* No comment provided by engineer. */
-"This SimpleX name is not registered. Please check the name." = "Questo nome SimpleX non è registrato. Controlla il nome.";
+"This POPOPX name is not registered. Please check the name." = "Questo nome POPOPX non è registrato. Controlla il nome.";
 
 /* No comment provided by engineer. */
 "Time to disappear is set only for new contacts." = "Il tempo di scomparsa è impostato solo per i contatti nuovi.";
@@ -6428,7 +6428,7 @@ alert subtitle */
 "To make a new connection" = "Per creare una nuova connessione";
 
 /* No comment provided by engineer. */
-"To make SimpleX Network last." = "Per la sostenibilità della rete di SimpleX.";
+"To make POPOPX Network last." = "Per la sostenibilità della rete di POPOPX.";
 
 /* No comment provided by engineer. */
 "To protect against your link being replaced, you can compare contact security codes." = "Per proteggerti dalla sostituzione del tuo link, puoi confrontare i codici di sicurezza del contatto.";
@@ -6437,13 +6437,13 @@ alert subtitle */
 "To protect timezone, image/voice files use UTC." = "Per proteggere il fuso orario, i file immagine/vocali usano UTC.";
 
 /* No comment provided by engineer. */
-"To protect your information, turn on SimpleX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "Per proteggere le tue informazioni, attiva SimpleX Lock.\nTi verrà chiesto di completare l'autenticazione prima di attivare questa funzionalità.";
+"To protect your information, turn on POPOPX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "Per proteggere le tue informazioni, attiva POPOPX Lock.\nTi verrà chiesto di completare l'autenticazione prima di attivare questa funzionalità.";
 
 /* No comment provided by engineer. */
 "To protect your IP address, private routing uses your SMP servers to deliver messages." = "Per proteggere il tuo indirizzo IP, l'instradamento privato usa i tuoi server SMP per consegnare i messaggi.";
 
 /* No comment provided by engineer. */
-"To protect your privacy, SimpleX uses separate IDs for each of your contacts." = "Per proteggere la privacy, invece degli ID utente utilizzati da tutte le altre piattaforme, SimpleX ha identificatori per le code di messaggi, separati per ciascuno dei tuoi contatti.";
+"To protect your privacy, POPOPX uses separate IDs for each of your contacts." = "Per proteggere la privacy, invece degli ID utente utilizzati da tutte le altre piattaforme, POPOPX ha identificatori per le code di messaggi, separati per ciascuno dei tuoi contatti.";
 
 /* No comment provided by engineer. */
 "To receive" = "Per ricevere";
@@ -6614,7 +6614,7 @@ alert subtitle */
 "Unsupported connection link" = "Link di connessione non supportato";
 
 /* No comment provided by engineer. */
-"until you can register a SimpleX domain" = "fino a quando potrai registrare un dominio SimpleX";
+"until you can register a POPOPX domain" = "fino a quando potrai registrare un dominio POPOPX";
 
 /* badge alert title */
 "Unverified badge" = "Targhetta non verificata";
@@ -6638,7 +6638,7 @@ alert subtitle */
 "Update settings?" = "Aggiornare le impostazioni?";
 
 /* No comment provided by engineer. */
-"Update the app to register a SimpleX domain" = "Aggiorna l'app per registrare un dominio SimpleX";
+"Update the app to register a POPOPX domain" = "Aggiorna l'app per registrare un dominio POPOPX";
 
 /* rcv group event chat item */
 "updated channel profile" = "profilo del canale aggiornato";
@@ -6747,7 +6747,7 @@ alert title */
 "Use servers" = "Usa i server";
 
 /* No comment provided by engineer. */
-"Use SimpleX Chat servers?" = "Usare i server di SimpleX Chat?";
+"Use POPOPX Chat servers?" = "Usare i server di POPOPX Chat?";
 
 /* No comment provided by engineer. */
 "Use SOCKS proxy" = "Usa proxy SOCKS";
@@ -6780,7 +6780,7 @@ alert title */
 "Username" = "Nome utente";
 
 /* No comment provided by engineer. */
-"Using SimpleX Chat servers." = "Utilizzo dei server SimpleX Chat.";
+"Using POPOPX Chat servers." = "Utilizzo dei server POPOPX Chat.";
 
 /* No comment provided by engineer. */
 "v%@" = "v%@";
@@ -6813,7 +6813,7 @@ alert title */
 "Verify security code" = "Verifica codice di sicurezza";
 
 /* No comment provided by engineer. */
-"Verify SimpleX names" = "Verifica nomi SimpleX";
+"Verify POPOPX names" = "Verifica nomi POPOPX";
 
 /* relay hostname */
 "via %@" = "via %@";
@@ -6975,7 +6975,7 @@ alert title */
 "When you share an incognito profile with somebody, this profile will be used for the groups they invite you to." = "Quando condividi un profilo in incognito con qualcuno, questo profilo verrà utilizzato per i gruppi a cui ti invitano.";
 
 /* No comment provided by engineer. */
-"Why SimpleX is built." = "Perché costruiamo SimpleX.";
+"Why POPOPX is built." = "Perché costruiamo POPOPX.";
 
 /* No comment provided by engineer. */
 "WiFi" = "WiFi";
@@ -7128,16 +7128,16 @@ alert title */
 "You can hide or mute a user profile - swipe it to the right." = "Puoi nascondere o silenziare un profilo utente - scorrilo verso destra.";
 
 /* No comment provided by engineer. */
-"You can make it visible to your SimpleX contacts via Settings." = "Puoi renderlo visibile ai tuoi contatti SimpleX nelle impostazioni.";
+"You can make it visible to your POPOPX contacts via Settings." = "Puoi renderlo visibile ai tuoi contatti POPOPX nelle impostazioni.";
 
 /* notification body */
 "You can now chat with %@" = "Ora puoi inviare messaggi a %@";
 
 /* No comment provided by engineer. */
-"You can now invest in SimpleX Chat" = "Ora puoi investire in SimpleX Chat";
+"You can now invest in POPOPX Chat" = "Ora puoi investire in POPOPX Chat";
 
 /* No comment provided by engineer. */
-"You can now invest in SimpleX Chat! 🚀" = "Ora puoi investire in SimpleX Chat! 🚀";
+"You can now invest in POPOPX Chat! 🚀" = "Ora puoi investire in POPOPX Chat! 🚀";
 
 /* No comment provided by engineer. */
 "You can send messages to %@ from Archived contacts." = "Puoi inviare messaggi a %@ dai contatti archiviati.";
@@ -7164,7 +7164,7 @@ alert title */
 "You can still view conversation with %@ in the list of chats." = "Puoi ancora vedere la conversazione con %@ nell'elenco delle chat.";
 
 /* No comment provided by engineer. */
-"You can turn on SimpleX Lock via Settings." = "Puoi attivare SimpleX Lock tramite le impostazioni.";
+"You can turn on POPOPX Lock via Settings." = "Puoi attivare POPOPX Lock tramite le impostazioni.";
 
 /* No comment provided by engineer. */
 "You can use markdown to format messages:" = "Puoi usare il markdown per formattare i messaggi:";
@@ -7377,7 +7377,7 @@ alert title */
 "Your profile is stored on your device and only shared with your contacts." = "Il profilo è condiviso solo con i tuoi contatti.";
 
 /* No comment provided by engineer. */
-"Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." = "Il tuo profilo è memorizzato sul tuo dispositivo e condiviso solo con i tuoi contatti. I server di SimpleX non possono vedere il tuo profilo.";
+"Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." = "Il tuo profilo è memorizzato sul tuo dispositivo e condiviso solo con i tuoi contatti. I server di POPOPX non possono vedere il tuo profilo.";
 
 /* alert message */
 "Your profile was changed. If you save it, the updated profile will be sent to all your contacts." = "Il tuo profilo è stato cambiato. Se lo salvi, il profilo aggiornato verrà inviato a tutti i tuoi contatti.";
@@ -7404,8 +7404,8 @@ alert title */
 "Your settings" = "Le tue impostazioni";
 
 /* No comment provided by engineer. */
-"Your SimpleX address" = "Il tuo indirizzo SimpleX";
+"Your POPOPX address" = "Il tuo indirizzo POPOPX";
 
 /* No comment provided by engineer. */
-"Your SimpleX name" = "Il tuo nome SimpleX";
+"Your POPOPX name" = "Il tuo nome POPOPX";
 

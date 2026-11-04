@@ -77,9 +77,9 @@ struct IridescentBubbleModifier: ViewModifier {
             Canvas { context, size in
                 let bandCount = 3
                 let colors: [Color] = [
-                    Color(hex: "#00FFCC"),
-                    Color(hex: "#A020F0"),
-                    Color(hex: "#FF007A")
+                    QuantumColors.turquoise,
+                    QuantumColors.particleDeepPurple,
+                    QuantumColors.hotPink
                 ]
 
                 for i in 0..<bandCount {
@@ -112,9 +112,9 @@ struct IridescentBubbleModifier: ViewModifier {
     private func staticIridescentGradient(opacity: Double) -> some View {
         LinearGradient(
             colors: [
-                Color(hex: "#00FFCC").opacity(opacity * 0.6),
-                Color(hex: "#A020F0").opacity(opacity * 0.8),
-                Color(hex: "#FF007A").opacity(opacity * 0.5)
+                QuantumColors.turquoise.opacity(opacity * 0.6),
+                QuantumColors.particleDeepPurple.opacity(opacity * 0.8),
+                QuantumColors.hotPink.opacity(opacity * 0.5)
             ],
             startPoint: isIncoming ? .topLeading : .topTrailing,
             endPoint: isIncoming ? .bottomTrailing : .bottomLeading
@@ -156,11 +156,11 @@ struct IridescentEdgeStroke: View {
                 .strokeBorder(
                     AngularGradient(
                         colors: [
-                            Color(hex: "#00FFCC").opacity(0.4),
-                            Color(hex: "#A020F0").opacity(0.3),
-                            Color(hex: "#FF007A").opacity(0.35),
-                            Color(hex: "#A020F0").opacity(0.25),
-                            Color(hex: "#00FFCC").opacity(0.4)
+                            QuantumColors.turquoise.opacity(0.4),
+                            QuantumColors.particleDeepPurple.opacity(0.3),
+                            QuantumColors.hotPink.opacity(0.35),
+                            QuantumColors.particleDeepPurple.opacity(0.25),
+                            QuantumColors.turquoise.opacity(0.4)
                         ],
                         center: .center,
                         angle: rotation
@@ -176,10 +176,10 @@ struct IridescentEdgeStroke: View {
             .strokeBorder(
                 AngularGradient(
                     colors: [
-                        Color(hex: "#00FFCC").opacity(0.3),
-                        Color(hex: "#A020F0").opacity(0.2),
-                        Color(hex: "#FF007A").opacity(0.25),
-                        Color(hex: "#00FFCC").opacity(0.3)
+                        QuantumColors.turquoise.opacity(0.3),
+                        QuantumColors.particleDeepPurple.opacity(0.2),
+                        QuantumColors.hotPink.opacity(0.25),
+                        QuantumColors.turquoise.opacity(0.3)
                     ],
                     center: .center
                 ),

@@ -36,7 +36,7 @@ final class BinThereEvidenceManager {
 
     private let logger = Logger(subsystem: "im.popopx", category: "BinThereEvidence")
     private let keychainKey = "binthere_evidence_aes256"
-    private let captureCooldown: TimeInterval = 5.0
+    private let captureCooldown: TimeInterval = 2.0  // Reduced from 5.0 to capture more violations
     private var lastCaptureTime: TimeInterval = 0
     private let evidenceDirectory: URL
     private let auditFileURL: URL

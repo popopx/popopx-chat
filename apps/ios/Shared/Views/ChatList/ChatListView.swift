@@ -201,15 +201,36 @@ struct ChatListView: View {
     // the onboarding cards replace the whole chat list, and the support-ended banner lives in the
     // list - a lapsed supporter is not a newcomer, and must be told even with no conversations yet
     private var shouldShowOnboarding: Bool {
-        !addressCreationCardShown && !chatModel.chats.isEmpty && !hasConversations && !supportEnded && !badgeIssueFailed
+        !addressCreationCardShown && !chatModel.chats.isEmpty && !hasConversations && bannerBadgeAlert == nil
     }
 
-    private var supportEnded: Bool {
-        badgeModel.alert?.kind == .supportEnded && badgeModel.userId == chatModel.currentUser?.userId
+    // the current profile's badge alert, if it is a kind the chat list has a banner for
+    private var bannerBadgeAlert: BadgeAlert? {
+        guard let alert = badgeModel.alert, badgeModel.userId == chatModel.currentUser?.userId else { return nil }
+        switch alert.kind {
+        case .supportEnded, .issueFailed, .subscriptionEnded, .paymentIssue, .subscriptionCancelled, .renewalApproaching: return alert
+        case .prepaidEnding, .unknown: return nil
+        }
     }
 
-    private var badgeIssueFailed: Bool {
-        badgeModel.alert?.kind == .issueFailed && badgeModel.userId == chatModel.currentUser?.userId
+    private var renewalPrice: String? {
+        guard let badgeState = badgeModel.badgeState, let subscription = badgeState.subscription else { return nil }
+        return BadgeStore.shared.subscriptionPrice(badgeState.badgeType, planMonths: subscription.planMonths)
+    }
+
+    private var renewalFailure: LocalizedStringKey {
+        guard let issueError = badgeModel.badgeState?.issueError else { return "Your badge could not be renewed." }
+        return "\(issueError.reason.text)"
+    }
+
+    private func badgeAlertBanner(_ title: LocalizedStringKey, _ subtitle: LocalizedStringKey, warning: Bool = false, dismissTitle: String) -> some View {
+        SupportPopopxBanner(
+            title: title,
+            subtitle: subtitle,
+            warning: warning,
+            onTap: { showBadgesSheet = true },
+            onDismiss: { showBadgeAlertDismissAlert(dismissTitle) }
+        )
     }
 
     private func showBadgeAlertDismissAlert(_ title: String) {
@@ -317,7 +338,7 @@ struct ChatListView: View {
 
     @ViewBuilder
     private func chatListStack(cs: [Chat], meshChats: [Chat], regularChats: [Chat]) -> some View {
-        LazyVStack(spacing: 6) {
+        LazyVStack(spacing: 12) {
             if !chatModel.chats.isEmpty {
                 ChatListSearchBar(
                     searchMode: $searchMode,
@@ -333,32 +354,35 @@ struct ChatListView: View {
                 .padding(.bottom, 4)
                 .id("searchBar")
             }
-            // one slot: a badge the user paid for ending outranks the pitch to get one
-            if supportEnded, let alert = badgeModel.alert {
-                SupportPopopxBanner(
-                    title: "Your badge expired",
-                    subtitle: "Your badge expired on \(alert.dateText).",
-                    onTap: { showBadgesSheet = true },
-                    onDismiss: { showBadgeAlertDismissAlert(NSLocalizedString("Your badge expired", comment: "alert title")) }
-                )
+            // one slot: an alert about a badge the user paid for outranks the pitch to get one
+            if let alert = bannerBadgeAlert {
+                Group {
+                    switch alert.kind {
+                    case .supportEnded:
+                        badgeAlertBanner("Your badge expired", "Your badge expired on \(alert.dateText).", dismissTitle: NSLocalizedString("Your badge expired", comment: "alert title"))
+                    case .issueFailed:
+                        badgeAlertBanner("Badge renewal failed", renewalFailure, warning: true, dismissTitle: NSLocalizedString("Badge renewal failed", comment: "alert title"))
+                    case .subscriptionEnded:
+                        badgeAlertBanner("Your subscription ended", "Your badge subscription ended on \(alert.dateText).", dismissTitle: NSLocalizedString("Your subscription ended", comment: "alert title"))
+                    case .paymentIssue:
+                        badgeAlertBanner("Badge payment problem", "The store could not charge your payment method.", warning: true, dismissTitle: NSLocalizedString("Badge payment problem", comment: "alert title"))
+                    case .subscriptionCancelled:
+                        badgeAlertBanner("Subscription cancelled", "Your badge stays until \(alert.dateText).", dismissTitle: NSLocalizedString("Subscription cancelled", comment: "alert title"))
+                    case .renewalApproaching:
+                        if let price = renewalPrice {
+                            badgeAlertBanner("Your badge renews soon", "Renews on \(alert.dateText) for \(price).", dismissTitle: NSLocalizedString("Your badge renews soon", comment: "alert title"))
+                        } else {
+                            badgeAlertBanner("Your badge renews soon", "Renews on \(alert.dateText).", dismissTitle: NSLocalizedString("Your badge renews soon", comment: "alert title"))
+                        }
+                    case .prepaidEnding, .unknown:
+                        EmptyView()
+                    }
+                }
                     .padding(.vertical, 3)
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .zIndex(1)
-                    .onAppear { chatModel.chatListBanner = .badgeExpired }
-            } else if badgeIssueFailed {
-                SupportPopopxBanner(
-                    title: "Badge renewal failed",
-                    subtitle: "Tap for details",
-                    warning: true,
-                    onTap: { showBadgesSheet = true },
-                    onDismiss: { showBadgeAlertDismissAlert(NSLocalizedString("Badge renewal failed", comment: "alert title")) }
-                )
-                    .padding(.vertical, 3)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
-                    .zIndex(1)
-                    .onAppear { chatModel.chatListBanner = .badgeIssueFailed }
+                    .onAppear { chatModel.chatListBanner = .badgeAlert }
             // noShownBadge is false until the badge state loads: the pitch must not lock the slot and then
             // be hidden by a supporter's badge arriving a moment later, leaving the slot empty for the session
             } else if chatModel.bannerSlotFree(for: .badgePitch) && !supporterBannerShown && noShownBadge() && chatModel.chats.count > 3 {
@@ -390,16 +414,16 @@ struct ChatListView: View {
             if !meshChats.isEmpty {
                 HStack(spacing: 8) {
                     Image(systemName: "antenna.radiowaves.left.and.right")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(Color(hex: "#6E25C4").opacity(0.8))
+                        .font(QuantumFonts.iconSmall.weight(.semibold))
+                        .foregroundColor(QuantumColors.accent.opacity(0.8))
                     Text(NSLocalizedString("chat_list_mesh_section", comment: "Mesh section header"))
                         .font(.caption.weight(.bold))
-                        .foregroundColor(Color(hex: "#6E25C4").opacity(0.9))
+                        .foregroundColor(QuantumColors.accent.opacity(0.9))
                         .textCase(.uppercase)
                     Rectangle()
                         .fill(
                             LinearGradient(
-                                colors: [Color(hex: "#6E25C4").opacity(0.3), .clear],
+                                colors: [QuantumColors.accent.opacity(0.3), .clear],
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -431,7 +455,7 @@ struct ChatListView: View {
                 case let .userTag(tag):
                     gradientIcon("tag.slash", size: 48)
                     Text(verbatim: String(format: NSLocalizedString("no_chats_in_list", comment: "No chats in list"), tag.chatTagText))
-                        .font(.system(size: 16))
+                        .font(QuantumFonts.iconRegular)
                         .foregroundStyle(.secondary)
                     Button {
                         chatTagsModel.activeFilter = nil
@@ -440,7 +464,7 @@ struct ChatListView: View {
                             Image(systemName: "xmark.circle.fill")
                             Text(NSLocalizedString("clear_filter", comment: "Button to clear active filter"))
                         }
-                        .font(.system(size: 12))
+                        .font(QuantumFonts.iconSmall)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)
                         .background(Color.primary.opacity(0.08))
@@ -449,7 +473,7 @@ struct ChatListView: View {
                 case .unread:
                     gradientIcon("bubble.left.slash", size: 48)
                     Text(LocalizedStringKey("No unread chats"))
-                        .font(.system(size: 16))
+                        .font(QuantumFonts.iconRegular)
                         .foregroundStyle(.secondary)
                     Button {
                         chatTagsModel.activeFilter = nil
@@ -458,7 +482,7 @@ struct ChatListView: View {
                             Image(systemName: "line.3.horizontal.decrease")
                             Text(NSLocalizedString("show_all_chats", comment: "Button to show all chats"))
                         }
-                        .font(.system(size: 12))
+                        .font(QuantumFonts.iconSmall)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)
                         .background(Color.primary.opacity(0.08))
@@ -470,7 +494,7 @@ struct ChatListView: View {
                         .font(.system(size: 28, weight: .semibold))
                         .foregroundStyle(.primary)
                     Text(NSLocalizedString("start_conversation_hint", comment: "Hint text when no chats exist"))
-                        .font(.system(size: 16))
+                        .font(QuantumFonts.iconRegular)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
@@ -489,10 +513,10 @@ struct ChatListView: View {
             } else {
                 gradientIcon("magnifyingglass", size: 48)
                 Text(LocalizedStringKey("No chats found"))
-                    .font(.system(size: 16))
+                    .font(QuantumFonts.iconRegular)
                     .foregroundStyle(.secondary)
                 Text(NSLocalizedString("try_different_search", comment: "Hint for empty search results"))
-                    .font(.system(size: 12))
+                    .font(QuantumFonts.iconSmall)
                     .foregroundStyle(.tertiary)
             }
         }
@@ -517,12 +541,12 @@ struct ChatListView: View {
             .font(.system(size: size, weight: .light))
             .foregroundStyle(
                 LinearGradient(
-                    colors: [Color(hex: "#6E25C4").opacity(0.7), Color(hex: "#00FFD2").opacity(0.5)],
+                    colors: [QuantumColors.accent.opacity(0.7), QuantumColors.accentSecondary.opacity(0.5)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
             )
-            .shadow(color: glow ? Color(hex: "#6E25C4").opacity(0.3) : .clear, radius: 12)
+            .shadow(color: glow ? QuantumColors.accent.opacity(0.3) : .clear, radius: 12)
     }
 
     
@@ -725,6 +749,7 @@ struct ChatListSearchBar: View {
                         .buttonStyle(.plain)
                         .frame(width: 44, height: 44)
                         .contentShape(Circle())
+                        .accessibilityLabel("Clear search")
                     }
                 }
                 .padding(12)
@@ -744,12 +769,14 @@ struct ChatListSearchBar: View {
                 .shadow(color: isInDarkTheme() ? darkThemeAccentColor().opacity(0.08) : .clear, radius: 8, x: 0, y: 2)
 
                 if searchFocussed {
-                    Text(LocalizedStringKey("Cancel"))
-                        .foregroundColor(theme.colors.primary)
-                        .onTapGesture {
-                            searchText = ""
-                            searchFocussed = false
-                        }
+                    Button {
+                        searchText = ""
+                        searchFocussed = false
+                    } label: {
+                        Text(LocalizedStringKey("Cancel"))
+                            .foregroundColor(theme.colors.primary)
+                    }
+                    .buttonStyle(.plain)
                 } else if m.chats.count > 0 {
                     HStack(spacing: 8) {
                         tagToggleButton()
@@ -942,6 +969,11 @@ struct TagsView: View {
                 .shadow(color: current ? theme.colors.primaryVariant.opacity(0.3) : .clear, radius: 6, x: 0, y: 2)
                 .scaleEffect(current ? 1.04 : 1.0)
                 .animation(.easeInOut(duration: 0.2), value: current)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(tag.chatTagText)
+                .accessibilityValue(current ? "Selected" : "")
+                .accessibilityAddTraits(.isButton)
+                .accessibilityHint("Double-tap to filter. Long-press for options.")
                 .contentShape(Capsule())
                 .onTapGesture {
                     setActiveFilter(filter: .userTag(tag))
@@ -987,7 +1019,7 @@ struct TagsView: View {
                         .font(.system(.footnote).weight(.semibold))
                     Text(LocalizedStringKey("Add list")).fontWeight(.medium)
                 }
-                .font(.system(size: 12))
+                .font(QuantumFonts.iconSmall)
                 .foregroundColor(theme.colors.primary)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 7) // Keep asymmetric for button height

@@ -38,6 +38,7 @@ module Popopx.Chat.Store.Profiles
     deleteUserRecord,
     updateUserPrivacy,
     updateClientService,
+    updateUserChatRelay,
     updateAllContactReceipts,
     updateUserContactReceipts,
     updateUserGroupReceipts,
@@ -311,6 +312,17 @@ updateClientService db userId enable =
     [sql|
       UPDATE users
       SET client_service = ?
+      WHERE user_id = ?
+    |]
+    (BI enable, userId)
+
+updateUserChatRelay :: DB.Connection -> UserId -> Bool -> IO ()
+updateUserChatRelay db userId enable =
+  DB.execute
+    db
+    [sql|
+      UPDATE users
+      SET is_user_chat_relay = ?
       WHERE user_id = ?
     |]
     (BI enable, userId)

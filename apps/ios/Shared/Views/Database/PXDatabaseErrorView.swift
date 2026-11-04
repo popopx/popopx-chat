@@ -198,6 +198,9 @@ struct DatabaseErrorView: View {
         case .invalidConfirmation:
             titleText(NSLocalizedString("dberr_invalid_confirmation", comment: "invalid migration confirmation title"))
             errorView()
+        case .invalidQueueSize:
+            titleText(NSLocalizedString("dberr_invalid_confirmation", comment: "invalid migration confirmation title"))
+            errorView()
         case let .unknown(json):
             titleText(NSLocalizedString("dberr_title", comment: "database error title"))
             errorView(Text(String(format: NSLocalizedString("Unknown database error: %@", comment: "unknown database error with details"), json)))
@@ -353,6 +356,8 @@ struct DatabaseErrorView: View {
                 let am = AlertManager.shared
                 switch s {
                 case .invalidConfirmation:
+                    am.showAlert(Alert(title: Text(NSLocalizedString("dberr_invalid_confirmation", comment: "invalid migration confirmation title"))))
+                case .invalidQueueSize:
                     am.showAlert(Alert(title: Text(NSLocalizedString("dberr_invalid_confirmation", comment: "invalid migration confirmation title"))))
                 case .errorNotADatabase:
                     am.showAlertMsg(

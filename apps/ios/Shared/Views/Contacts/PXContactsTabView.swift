@@ -45,7 +45,7 @@ struct PXContactsTabView: View {
                 } label: {
                     Image(systemName: "person.badge.plus")
                         .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(Color(hex: "#6E25C4"))
+                        .foregroundStyle(QuantumColors.accent)
                 }
             }
         }
@@ -99,7 +99,7 @@ struct PXContactsTabView: View {
             } label: {
                 quickActionRow(
                     icon: "person.badge.plus",
-                    iconGradient: [Color(hex: "#FF6B6B"), Color(hex: "#FF8E53")],
+                    iconGradient: [QuantumColors.coralRed, QuantumColors.warmOrange],
                     title: NSLocalizedString("contacts_new_friends", comment: "New friends entry")
                 )
             }
@@ -112,7 +112,7 @@ struct PXContactsTabView: View {
             } label: {
                 quickActionRow(
                     icon: "person.3.fill",
-                    iconGradient: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")],
+                    iconGradient: [QuantumColors.accent, QuantumColors.accentSecondary],
                     title: NSLocalizedString("contacts_group_chats", comment: "Group chats entry")
                 )
             }
@@ -125,7 +125,7 @@ struct PXContactsTabView: View {
             } label: {
                 quickActionRow(
                     icon: "antenna.radiowaves.left.and.right",
-                    iconGradient: [Color(hex: "#00B4D8"), Color(hex: "#00FFD2")],
+                    iconGradient: [QuantumColors.oceanBlue, QuantumColors.accentSecondary],
                     title: NSLocalizedString("contacts_channels", comment: "Channels entry")
                 )
             }

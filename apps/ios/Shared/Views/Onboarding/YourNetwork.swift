@@ -60,11 +60,11 @@ struct YourNetworkView: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 15)
                         .foregroundColor(.white)
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 12, x: 0, y: 2)
+                        .shadow(color: QuantumColors.accent.opacity(0.4), radius: 12, x: 0, y: 2)
 
                     Text(NSLocalizedString("Network routers cannot know\nwho talks to whom", comment: "Network privacy subtitle"))
-                        .font(.system(size: 15, weight: .medium, design: .monospaced))
-                        .foregroundColor(Color(hex: "#C4BFD6"))
+                        .font(QuantumFonts.monoBody.weight(.medium))
+                        .foregroundColor(QuantumColors.textSecondary)
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
 
@@ -80,9 +80,9 @@ struct YourNetworkView: View {
                     if operatorsLoadFailed && serverOperators.isEmpty {
                         VStack(spacing: 12) {
                             Text(NSLocalizedString("Unable to load server operators. Please check your connection and try again.", comment: "operators load error"))
-                                .font(.system(size: 13, design: .monospaced))
+                                .font(QuantumFonts.monoCaption)
                                 .multilineTextAlignment(.center)
-                                .foregroundColor(Color(hex: "#C4BFD6"))
+                                .foregroundColor(QuantumColors.textSecondary)
                             Button {
                                 reloadOperators()
                             } label: {
@@ -163,21 +163,23 @@ struct YourNetworkView: View {
     // MARK: - Central Visual Content (Needle Ring + X Logo)
 
     private func centralVisualContent(g: GeometryProxy) -> some View {
-        VStack(spacing: 0) {
+        let safeW = max(1, g.size.width)
+        
+        return VStack(spacing: 0) {
             Spacer(minLength: 40)
 
             // Needle ring with inner glow circle and X logo particles centered independently
             ZStack(alignment: .center) {
-                LiquidSilverNeedleRing(diameter: min(300, g.size.width * 0.7))
+                LiquidSilverNeedleRing(diameter: min(300, safeW * 0.7))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 // Inner glow circle - centered
-                InnerGlowCircle(diameter: min(140, g.size.width * 0.35))
-                    .frame(width: min(140, g.size.width * 0.35), height: min(140, g.size.width * 0.35))
+                InnerGlowCircle(diameter: max(1, min(140, safeW * 0.35)))
+                    .frame(width: max(1, min(140, safeW * 0.35)), height: max(1, min(140, safeW * 0.35)))
                 
                 // X logo particles - centered on top
-                XLogoParticles(size: min(140, g.size.width * 0.35))
-                    .frame(width: min(140, g.size.width * 0.35), height: min(140, g.size.width * 0.35))
+                XLogoParticles(size: max(1, min(140, safeW * 0.35)))
+                    .frame(width: max(1, min(140, safeW * 0.35)), height: max(1, min(140, safeW * 0.35)))
             }
             .scaleEffect(isConfigComplete ? 1.0 : 0.85)
             .opacity(isConfigComplete ? 1.0 : 0.5)
@@ -200,9 +202,9 @@ struct YourNetworkView: View {
         } label: {
             HStack(spacing: 12) {
                 Image(systemName: "bubble.left.and.bubble.right")
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.system(size: 18, weight: .semibold, design: .rounded))
                 Text(NSLocalizedString("ENTER THE BUBBLE", comment: "Enter bubble network button"))
-                    .font(.system(size: 16, weight: .bold, design: .default))
+                    .font(QuantumFonts.sectionHeader.weight(.bold))
                     .tracking(1.5)
             }
             .foregroundColor(.white)
@@ -216,8 +218,8 @@ struct YourNetworkView: View {
                             .fill(
                                 LinearGradient(
                                     colors: [
-                                        Color(hex: "#6E25C4").opacity(0.6),
-                                        Color(hex: "#8B5CF6").opacity(0.4)
+                                        QuantumColors.accent.opacity(0.6),
+                                        QuantumColors.particleViolet.opacity(0.4)
                                     ],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
@@ -230,9 +232,9 @@ struct YourNetworkView: View {
                     .strokeBorder(
                         LinearGradient(
                             colors: [
-                                Color(hex: "#6E25C4").opacity(0.8),
-                                Color(hex: "#00FFD2").opacity(0.5),
-                                Color(hex: "#6E25C4").opacity(0.8)
+                                QuantumColors.accent.opacity(0.8),
+                                QuantumColors.accentSecondary.opacity(0.5),
+                                QuantumColors.accent.opacity(0.8)
                             ],
                             startPoint: .leading,
                             endPoint: .trailing
@@ -240,8 +242,8 @@ struct YourNetworkView: View {
                         lineWidth: 2
                     )
             )
-            .shadow(color: Color(hex: "#6E25C4").opacity(0.5), radius: 12, x: 0, y: 4)
-            .shadow(color: Color(hex: "#00FFD2").opacity(0.3), radius: 8, x: 0, y: 2)
+            .shadow(color: QuantumColors.accent.opacity(0.5), radius: 12, x: 0, y: 4)
+            .shadow(color: QuantumColors.accentSecondary.opacity(0.3), radius: 8, x: 0, y: 2)
         }
         .disabled(!isConfigComplete || isProcessing)
         .opacity(isConfigComplete ? 1.0 : 0.5)
@@ -300,7 +302,7 @@ struct YourNetworkView: View {
         } label: {
             HStack(spacing: 6) {
                 Image(systemName: "server.rack")
-                    .foregroundColor(Color(hex: "#00FFD2"))
+                    .foregroundColor(QuantumColors.accentSecondary)
                 Text(NSLocalizedString("Setup routers", comment: "Setup routers button"))
                     .fontWeight(.medium)
                     .foregroundColor(.white)
@@ -317,13 +319,13 @@ struct YourNetworkView: View {
             .padding(.vertical, 14)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(hex: "#141021"))
+                    .fill(QuantumColors.surfaceElevated)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .strokeBorder(
                         LinearGradient(
-                            colors: [Color(hex: "#6E25C4").opacity(0.4), Color(hex: "#00FFD2").opacity(0.2)],
+                            colors: [QuantumColors.accent.opacity(0.4), QuantumColors.accentSecondary.opacity(0.2)],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
@@ -339,25 +341,25 @@ struct YourNetworkView: View {
         } label: {
             HStack(spacing: 4) {
                 Image(systemName: "bell.badge")
-                    .foregroundColor(Color(hex: "#00FFD2"))
+                    .foregroundColor(QuantumColors.accentSecondary)
                 Text(NSLocalizedString("Setup notifications", comment: "Setup notifications button"))
                     .fontWeight(.medium)
                     .foregroundColor(.white)
                 Spacer()
                 Image(systemName: notificationMode.icon)
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .foregroundColor(QuantumColors.textSecondary)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(hex: "#141021"))
+                    .fill(QuantumColors.surfaceElevated)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .strokeBorder(
                         LinearGradient(
-                            colors: [Color(hex: "#6E25C4").opacity(0.4), Color(hex: "#00FFD2").opacity(0.2)],
+                            colors: [QuantumColors.accent.opacity(0.4), QuantumColors.accentSecondary.opacity(0.2)],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
@@ -477,10 +479,10 @@ struct ParticleExpansionOverlay: View {
     
     private func generateParticles(in size: CGSize) {
         let colors: [Color] = [
-            Color(hex: "#6E25C4"),
-            Color(hex: "#8B5CF6"),
-            Color(hex: "#A020F0"),
-            Color(hex: "#00FFD2").opacity(0.7),
+            QuantumColors.accent,
+            QuantumColors.particleViolet,
+            QuantumColors.particleDeepPurple,
+            QuantumColors.accentSecondary.opacity(0.7),
             Color.white.opacity(0.5)
         ]
         

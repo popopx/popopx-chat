@@ -41,9 +41,9 @@ struct PX3DBubbleStyle: ViewModifier {
     }
 
     private var glowColor: Color {
-        if isTTLActive { return Color(hex: "#FF00A0") }
-        if isUnread { return Color(hex: "#00FFD2") }
-        return Color(hex: "#6E25C4")
+        if isTTLActive { return QuantumColors.accentWarm }
+        if isUnread { return QuantumColors.accentSecondary }
+        return QuantumColors.accent
     }
 
     private var tiltAngle: Angle {

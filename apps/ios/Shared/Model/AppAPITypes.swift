@@ -34,7 +34,7 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
     case apiMuteUser(userId: Int64)
     case apiUnmuteUser(userId: Int64)
     case apiDeleteUser(userId: Int64, delSMPQueues: Bool, viewPwd: String?)
-    case startChat(mainApp: Bool, enableSndFiles: Bool)
+    case startChat(mainApp: Bool, enableSndFiles: Bool, serviceRequests: Bool = false)
     case checkChatRunning
     case apiStopChat
     case apiActivateChat(restoreChat: Bool)
@@ -53,7 +53,7 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
     case apiGetChat(chatId: ChatId, scope: GroupChatScope?, contentTag: MsgContentTag?, pagination: ChatPagination, search: String)
     case apiGetChatContentTypes(chatId: ChatId, scope: GroupChatScope?)
     case apiGetChatItemInfo(type: ChatType, id: Int64, scope: GroupChatScope?, itemId: Int64)
-    case apiSendMessages(type: ChatType, id: Int64, scope: GroupChatScope?, sendAsGroup: Bool, live: Bool, ttl: Int?, composedMessages: [ComposedMessage])
+    case apiSendMessages(type: ChatType, id: Int64, scope: GroupChatScope?, sendAsGroup: Bool, live: Bool, ttl: Int?, sign: Bool, burnAfterRead: Int?, composedMessages: [ComposedMessage])
     case apiCreateChatTag(tag: ChatTagData)
     case apiSetChatTags(type: ChatType, id: Int64, tagIds: [Int64])
     case apiDeleteChatTag(tagId: Int64)
@@ -111,6 +111,8 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
     case apiInsertBinThereBot(userId: Int64, address: String, name: String?, botType: String)
     case apiReportBinThereBotUse(userId: Int64, botId: Int64)
     case apiSyncBotDirectory(userId: Int64, json: String)
+    case apiSendServiceRequest(userId: Int64, sendTarget: String, requestTimeout: Double?, signKey: String?, request: String)
+    case apiSendServiceResponse(userId: Int64, requestId: String, responseData: String)
     case apiGetComputeBalance(userId: Int64)
     case apiRecordComputePurchase(userId: Int64, purchase: ComputePurchaseFFI)
     case apiGetComputePurchases(userId: Int64)
@@ -204,6 +206,9 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
     case apiGetBadgeState(userId: Int64)
     case apiGetBadgeLedger(userId: Int64, badgePurchaseId: Int64)
     case apiAckBadgeAlert(userId: Int64, badgePurchaseId: Int64, alertKind: BadgeAlertKind, snooze: Bool, episode: String)
+    case apiPurchaseBadge(userId: Int64, echoedInvoiceId: String?, origin: StoreReceiptOrigin, payment: ServicePayment)
+    case apiSetBadgeSubscriptionStatus(status: BadgeSubscriptionState, payment: ServicePayment)
+    case apiCreateBadgeInvoice(userId: Int64)
     // misc
     case showVersion
     case getAgentSubsTotal(userId: Int64)
@@ -240,7 +245,7 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
             case let .apiMuteUser(userId): return "/_mute user \(userId)"
             case let .apiUnmuteUser(userId): return "/_unmute user \(userId)"
             case let .apiDeleteUser(userId, delSMPQueues, viewPwd): return "/_delete user \(userId) del_smp=\(onOff(delSMPQueues))\(maybePwd(viewPwd))"
-            case let .startChat(mainApp, enableSndFiles): return "/_start main=\(onOff(mainApp)) snd_files=\(onOff(enableSndFiles))"
+            case let .startChat(mainApp, enableSndFiles, serviceRequests): return "/_start main=\(onOff(mainApp)) snd_files=\(onOff(enableSndFiles)) service_requests=\(onOff(serviceRequests))"
             case .checkChatRunning: return "/_check running"
             case .apiStopChat: return "/_stop"
             case let .apiActivateChat(restore): return "/_app activate restore=\(onOff(restore))"
@@ -261,11 +266,13 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
                 return "/_get chat \(chatId)\(scopeRef(scope))\(tag) \(pagination.cmdString)" + (search == "" ? "" : " search=\(search)")
             case let .apiGetChatContentTypes(chatId, scope): return "/_get content types \(chatId)\(scopeRef(scope))"
             case let .apiGetChatItemInfo(type, id, scope, itemId): return "/_get item info \(ref(type, id, scope: scope)) \(itemId)"
-            case let .apiSendMessages(type, id, scope, sendAsGroup, live, ttl, composedMessages):
+            case let .apiSendMessages(type, id, scope, sendAsGroup, live, ttl, sign, burnAfterRead, composedMessages):
                 let msgs = encodeJSON(composedMessages)
                 let ttlStr = ttl != nil ? "\(ttl ?? 0)" : "default"
                 let asGroup = sendAsGroup ? "(as_group=on)" : ""
-                return "/_send \(ref(type, id, scope: scope))\(asGroup) live=\(onOff(live)) ttl=\(ttlStr) json \(msgs)"
+                let signStr = " sign=\(onOff(sign))"
+                let burnStr = " burn=\(burnAfterRead != nil ? onOff(true) : onOff(false))"
+                return "/_send \(ref(type, id, scope: scope))\(asGroup) live=\(onOff(live)) ttl=\(ttlStr)\(signStr)\(burnStr) json \(msgs)"
             case let .apiCreateChatTag(tag): return "/_create tag \(encodeJSON(tag))"
             case let .apiSetChatTags(type, id, tagIds): return "/_tags \(ref(type, id, scope: nil)) \(tagIds.map({ "\($0)" }).joined(separator: ","))"
             case let .apiDeleteChatTag(tagId): return "/_delete tag \(tagId)"
@@ -328,10 +335,20 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
             case let .apiGetUserServers(userId): return "/_servers \(userId)"
             case let .apiSetUserServers(userId, userServers): return "/_servers \(userId) \(encodeJSON(userServers))"
             case let .apiValidateServers(userId, userServers): return "/_validate_servers \(userId) \(encodeJSON(userServers))"
-            case let .apiGetBinThereBots(userId, botType): return "/_binthere_bots \(userId) \(botType)"
-            case let .apiInsertBinThereBot(userId, address, name, botType): return "/_binthere_bot_add \(userId) \(address) \(name ?? "") \(botType)"
-            case let .apiReportBinThereBotUse(userId, botId): return "/_binthere_bot_use \(userId) \(botId)"
-            case let .apiSyncBotDirectory(userId, json): return "/_bot_directory_sync \(userId) \(json)"
+            case let .apiGetBinThereBots(userId, _): return "/_list_binthere_bots \(userId)"
+            case let .apiInsertBinThereBot(userId, address, name, botType):
+                var botDict: [String: String] = ["address": address, "botType": botType]
+                if let name { botDict["name"] = name }
+                return "/_add_binthere_bot \(userId) \(encodeJSON(botDict))"
+            case let .apiReportBinThereBotUse(userId, botId): return "/_report_binthere_bot_use \(userId) \(botId)"
+            case let .apiSyncBotDirectory(userId, json): return "/_sync_bot_directory \(userId) \(json)"
+            case let .apiSendServiceRequest(userId, sendTarget, requestTimeout, signKey, request):
+                var cmd = "/_service_request \(userId) \(sendTarget)"
+                if let timeout = requestTimeout { cmd += " timeout=\(timeout)" }
+                if let key = signKey { cmd += " sign_key=\(key)" }
+                cmd += " \(request)"
+                return cmd
+            case let .apiSendServiceResponse(userId, requestId, responseData): return "/_service_response \(userId) \(requestId) \(responseData)"
             case let .apiGetComputeBalance(userId): return "/_compute_balance \(userId)"
             case let .apiRecordComputePurchase(userId, purchase): return "/_compute_purchase_record \(userId) \(encodeJSON(purchase))"
             case let .apiGetComputePurchases(userId): return "/_compute_purchases \(userId)"
@@ -430,6 +447,10 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
             case let .apiDownloadStandaloneFile(userId, link, file): return "/_download \(userId) \(sanitizeFFIParam(link, maxLen: 4096)) \(sanitizeFFIParam(file.filePath, maxLen: 4096))"
             case let .apiStandaloneFileInfo(link): return "/_download info \(sanitizeFFIParam(link, maxLen: 4096))"
             case let .apiRedeemBadgeCode(userId, code): return "/_redeem_badge_code \(userId) \(code)"
+            case let .apiPurchaseBadge(userId, echoedInvoiceId, origin, payment):
+                return "/_badge purchase \(userId)\(echoedInvoiceId.map { " invoice=\($0)" } ?? "")\(storeReceiptOriginParam(origin)) \(encodeJSON(payment))"
+            case let .apiSetBadgeSubscriptionStatus(status, payment): return "/_badge subscription \(status.text) \(encodeJSON(payment))"
+            case let .apiCreateBadgeInvoice(userId): return "/_badge invoice \(userId)"
             case let .apiGetBadgeState(userId): return "/_badge state \(userId)"
             case let .apiGetBadgeLedger(userId, badgePurchaseId): return "/_badge ledger \(userId) \(badgePurchaseId)"
             case let .apiAckBadgeAlert(userId, badgePurchaseId, alertKind, snooze, episode):
@@ -621,6 +642,9 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
             case .apiGetBadgeState: return "apiGetBadgeState"
             case .apiGetBadgeLedger: return "apiGetBadgeLedger"
             case .apiAckBadgeAlert: return "apiAckBadgeAlert"
+            case .apiPurchaseBadge: return "apiPurchaseBadge"
+            case .apiSetBadgeSubscriptionStatus: return "apiSetBadgeSubscriptionStatus"
+            case .apiCreateBadgeInvoice: return "apiCreateBadgeInvoice"
             case .showVersion: return "showVersion"
             case .getAgentSubsTotal: return "getAgentSubsTotal"
             case .getAgentServersSummary: return "getAgentServersSummary"
@@ -630,6 +654,8 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
             case .apiInsertBinThereBot: return "apiInsertBinThereBot"
             case .apiReportBinThereBotUse: return "apiReportBinThereBotUse"
             case .apiSyncBotDirectory: return "apiSyncBotDirectory"
+            case .apiSendServiceRequest: return "apiSendServiceRequest"
+            case .apiSendServiceResponse: return "apiSendServiceResponse"
             case .apiGetComputeBalance: return "apiGetComputeBalance"
             case .apiRecordComputePurchase: return "apiRecordComputePurchase"
             case .apiGetComputePurchases: return "apiGetComputePurchases"
@@ -715,10 +741,20 @@ enum ChatCommand: ChatCmdProtocol, @unchecked Sendable {
         switch kind {
         case .renewalApproaching: "renewal_approaching"
         case .paymentIssue: "payment_issue"
+        case .subscriptionCancelled: "subscription_cancelled"
         case .subscriptionEnded: "subscription_ended"
         case .prepaidEnding: "prepaid_ending"
         case .supportEnded: "support_ended"
         case .issueFailed: "issue_failed"
+        case let .unknown(s): s
+        }
+    }
+
+    private func storeReceiptOriginParam(_ origin: StoreReceiptOrigin) -> String {
+        switch origin {
+        case .purchased: ""
+        case .listed: " listed"
+        case .restored: " restored"
         }
     }
 
@@ -750,7 +786,10 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
     case chatRelayTestResult(user: UserRef, relayProfile: RelayProfile?, relayTestFailure: RelayTestFailure?)
     case serverOperatorConditions(conditions: ServerOperatorConditions)
     case userServers(user: UserRef, userServers: [UserOperatorServers])
-    case binThereBots(user: UserRef, bots: [BinThereBotInfo])
+    case binThereBotsList(user: UserRef, bots: [BinThereBotInfo])
+    case binThereBotAdded(user: UserRef, bot: BinThereBotInfo)
+    case binThereBotUpdated(user: UserRef, bot: BinThereBotInfo)
+    case binThereBotDeleted(user: UserRef, botId: Int64)
     case computeBalance(user: UserRef, computeBalance: ComputeBalanceFFI)
     case computePurchaseRecorded(user: UserRef, computeBalance: ComputeBalanceFFI)
     case computePurchases(user: UserRef, purchases: [ComputePurchaseFFI])
@@ -779,6 +818,12 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
     case broadcastSent(user: UserRef, successes: Int64)  // CRBroadcastSent - broadcast message sent confirmation
     case chatHelp(helpSection: String)  // CRChatHelp - help documentation response
     case welcome(user: UserRef)  // CRWelcome - welcome with user reference
+    case userProfile(user: UserRef, profile: Profile)  // CRUserProfile - user profile response
+    case userProfileImage(user: UserRef, profile: Profile)  // CRUserProfileImage - user profile with image
+    case groupProfile(user: UserRef, groupInfo: GroupInfo)  // CRGroupProfile - group profile response
+    case groupsList(user: UserRef, groups: [GroupInfo])  // CRGroupsList - list of groups
+    case badgeInvoice(user: UserRef, invoiceId: String)  // CRBadgeInvoice - badge purchase invoice
+    case fileTransferStatus(user: UserRef, fileTransfer: String)  // CRFileTransferStatus - file transfer status (simplified)
 
     var responseType: String {
         switch self {
@@ -796,7 +841,10 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
         case .chatRelayTestResult: "chatRelayTestResult"
         case .serverOperatorConditions: "serverOperatorConditions"
         case .userServers: "userServers"
-        case .binThereBots: "binThereBots"
+        case .binThereBotsList: "binThereBotsList"
+        case .binThereBotAdded: "binThereBotAdded"
+        case .binThereBotUpdated: "binThereBotUpdated"
+        case .binThereBotDeleted: "binThereBotDeleted"
         case .computeBalance: "computeBalance"
         case .computePurchaseRecorded: "computePurchaseRecorded"
         case .computePurchases: "computePurchases"
@@ -824,6 +872,12 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
         case .broadcastSent: "broadcastSent"
         case .chatHelp: "chatHelp"
         case .welcome: "welcome"
+        case .userProfile: "userProfile"
+        case .userProfileImage: "userProfileImage"
+        case .groupProfile: "groupProfile"
+        case .groupsList: "groupsList"
+        case .badgeInvoice: "badgeInvoice"
+        case .fileTransferStatus: "fileTransferStatus"
         }
     }
 
@@ -843,7 +897,10 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
         case let .chatRelayTestResult(u, relayProfile, relayTestFailure): return withUser(u, "relayProfile: \(String(describing: relayProfile))\nresult: \(String(describing: relayTestFailure))")
         case let .serverOperatorConditions(conditions): return "conditions: \(String(describing: conditions))"
         case let .userServers(u, userServers): return withUser(u, "userServers: \(String(describing: userServers))")
-        case let .binThereBots(u, bots): return withUser(u, "binThereBots: \(String(describing: bots))")
+        case let .binThereBotsList(u, bots): return withUser(u, "binThereBotsList: \(String(describing: bots))")
+        case let .binThereBotAdded(u, bot): return withUser(u, "binThereBotAdded: \(String(describing: bot))")
+        case let .binThereBotUpdated(u, bot): return withUser(u, "binThereBotUpdated: \(String(describing: bot))")
+        case let .binThereBotDeleted(u, botId): return withUser(u, "binThereBotDeleted: \(botId)")
         case let .computeBalance(u, bal): return withUser(u, "computeBalance: \(String(describing: bal))")
         case let .computePurchaseRecorded(u, bal): return withUser(u, "computePurchaseRecorded: \(String(describing: bal))")
         case let .computePurchases(u, purchases): return withUser(u, "computePurchases: \(String(describing: purchases))")
@@ -874,6 +931,12 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
         case let .broadcastSent(u, successes): return withUser(u, "successes: \(successes)")
         case let .chatHelp(section): return "helpSection: \(section.prefix(100))"
         case let .welcome(u): return withUser(u, "welcome")
+        case let .userProfile(u, profile): return withUser(u, "profile: \(String(describing: profile))")
+        case let .userProfileImage(u, profile): return withUser(u, "profile: \(String(describing: profile))")
+        case let .groupProfile(u, groupInfo): return withUser(u, "groupInfo: \(String(describing: groupInfo))")
+        case let .groupsList(u, groups): return withUser(u, "groups: \(String(describing: groups))")
+        case let .badgeInvoice(u, invoiceId): return withUser(u, "invoiceId: \(invoiceId)")
+        case let .fileTransferStatus(u, fileTransfer): return withUser(u, "fileTransfer: \(fileTransfer)")
         }
     }
 
@@ -965,12 +1028,71 @@ enum ChatResponse0: Decodable, ChatAPIResult, @unchecked Sendable {
             let relayProfile: RelayProfile? = (jRelay["relayProfile"] as? NSDictionary).flatMap { try? decodeObject($0) }
             let relayTestFailure: RelayTestFailure? = (jRelay["relayTestFailure"] as? NSDictionary).flatMap { try? decodeObject($0) }
             return .chatRelayTestResult(user: user, relayProfile: relayProfile, relayTestFailure: relayTestFailure)
-        } else if type == "binThereBots" {
-            guard let jVal = json["binThereBots"] as? NSDictionary,
+        } else if type == "binThereBotsList" {
+            guard let jVal = json["binThereBotsList"] as? NSDictionary,
                   let userObj = jVal["user"],
                   let user: UserRef = try? decodeObject(userObj) else { return nil }
             let bots: [BinThereBotInfo] = (jVal["bots"] as? [Any])?.compactMap { try? decodeObject($0) } ?? []
-            return .binThereBots(user: user, bots: bots)
+            return .binThereBotsList(user: user, bots: bots)
+        } else if type == "binThereBotAdded" {
+            guard let jVal = json["binThereBotAdded"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let botDict = jVal["bot"] as? NSDictionary,
+                  let bot: BinThereBotInfo = try? decodeObject(botDict) else { return nil }
+            return .binThereBotAdded(user: user, bot: bot)
+        } else if type == "binThereBotUpdated" {
+            guard let jVal = json["binThereBotUpdated"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let botDict = jVal["bot"] as? NSDictionary,
+                  let bot: BinThereBotInfo = try? decodeObject(botDict) else { return nil }
+            return .binThereBotUpdated(user: user, bot: bot)
+        } else if type == "binThereBotDeleted" {
+            guard let jVal = json["binThereBotDeleted"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let botId = jVal["botId"] as? Int64 else { return nil }
+            return .binThereBotDeleted(user: user, botId: botId)
+        } else if type == "userProfile" {
+            guard let jVal = json["userProfile"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let profileDict = jVal["profile"] as? NSDictionary,
+                  let profile: Profile = try? decodeObject(profileDict) else { return nil }
+            return .userProfile(user: user, profile: profile)
+        } else if type == "userProfileImage" {
+            guard let jVal = json["userProfileImage"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let profileDict = jVal["profile"] as? NSDictionary,
+                  let profile: Profile = try? decodeObject(profileDict) else { return nil }
+            return .userProfileImage(user: user, profile: profile)
+        } else if type == "groupProfile" {
+            guard let jVal = json["groupProfile"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let groupInfoDict = jVal["groupInfo"] as? NSDictionary,
+                  let groupInfo: GroupInfo = try? decodeObject(groupInfoDict) else { return nil }
+            return .groupProfile(user: user, groupInfo: groupInfo)
+        } else if type == "groupsList" {
+            guard let jVal = json["groupsList"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            let groups: [GroupInfo] = (jVal["groups"] as? [Any])?.compactMap { try? decodeObject($0) } ?? []
+            return .groupsList(user: user, groups: groups)
+        } else if type == "badgeInvoice" {
+            guard let jVal = json["badgeInvoice"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let invoiceId = jVal["invoiceId"] as? String else { return nil }
+            return .badgeInvoice(user: user, invoiceId: invoiceId)
+        } else if type == "fileTransferStatus" {
+            guard let jVal = json["fileTransferStatus"] as? NSDictionary,
+                  let userObj = jVal["user"],
+                  let user: UserRef = try? decodeObject(userObj) else { return nil }
+            let fileTransfer = String(describing: jVal)
+            return .fileTransferStatus(user: user, fileTransfer: fileTransfer)
         } else if type == "computeBalance" {
             guard let jVal = json["computeBalance"] as? NSDictionary,
                   let userObj = jVal["user"],
@@ -1721,6 +1843,9 @@ enum ChatResponse2: Decodable, ChatAPIResult, @unchecked Sendable {
     case badgeRedeemed(user: User, redeemedBadge: LocalBadge, newBadge: Bool, badgeState: BadgeState?)
     case badgeState(user: UserRef, badgeState: BadgeState?)
     case badgeLedger(user: UserRef, badgeLedger: [StatementEntry])
+    // service request/response
+    case serviceResponse(user: UserRef, responseData: String)
+    case serviceReplyAccepted(user: UserRef, connectionId: String)
     // domain verification events
     case contactDomainVerified(user: UserRef, contact: Contact, verificationFailure: String?)
     case groupDomainVerified(user: UserRef, groupInfo: GroupInfo, verificationFailure: String?)
@@ -1776,6 +1901,8 @@ enum ChatResponse2: Decodable, ChatAPIResult, @unchecked Sendable {
         case .badgeRedeemed: "badgeRedeemed"
         case .badgeState: "badgeState"
         case .badgeLedger: "badgeLedger"
+        case .serviceResponse: "serviceResponse"
+        case .serviceReplyAccepted: "serviceReplyAccepted"
         case .relayGroupAllowed: "relayGroupAllowed"
         case .memberSupportChats: "memberSupportChats"
         case .contactDomainVerified: "contactDomainVerified"
@@ -1836,6 +1963,8 @@ enum ChatResponse2: Decodable, ChatAPIResult, @unchecked Sendable {
         case let .badgeRedeemed(u, redeemedBadge, newBadge, badgeState): return withUser(u, "redeemedBadge: \(String(describing: redeemedBadge))\nnewBadge: \(newBadge)\nbadgeState: \(String(describing: badgeState))")
         case let .badgeState(u, badgeState): return withUser(u, String(describing: badgeState))
         case let .badgeLedger(u, badgeLedger): return withUser(u, String(describing: badgeLedger))
+        case let .serviceResponse(u, responseData): return withUser(u, "responseData: \(responseData)")
+        case let .serviceReplyAccepted(u, connectionId): return withUser(u, "connectionId: \(connectionId)")
         case let .contactDomainVerified(u, contact, verificationFailure): return withUser(u, "contact: \(String(describing: contact))\nverificationFailure: \(String(describing: verificationFailure))")
         case let .groupDomainVerified(u, groupInfo, verificationFailure): return withUser(u, "groupInfo: \(String(describing: groupInfo))\nverificationFailure: \(String(describing: verificationFailure))")
         }
@@ -2207,6 +2336,22 @@ enum ChatResponse2: Decodable, ChatAPIResult, @unchecked Sendable {
             guard let errorsData = data["archiveErrors"] as? [Any],
                   let archiveErrors = try? errorsData.compactMap({ try decodeObject($0) as ArchiveError }) else { return nil }
             return .archiveImported(archiveErrors: archiveErrors)
+        case "serviceResponse":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let responseDataObj = data["responseData"] else { return nil }
+            let responseData: String
+            if let jsonData = try? JSONSerialization.data(withJSONObject: responseDataObj) {
+                responseData = String(data: jsonData, encoding: .utf8) ?? "{}"
+            } else {
+                responseData = "{}"
+            }
+            return .serviceResponse(user: user, responseData: responseData)
+        case "serviceReplyAccepted":
+            guard let userObj = data["user"],
+                  let user: UserRef = try? decodeObject(userObj),
+                  let connectionId = data["connectionId"] as? String else { return nil }
+            return .serviceReplyAccepted(user: user, connectionId: connectionId)
         default:
             return nil
         }
@@ -3675,7 +3820,7 @@ enum RemoteCtrlSessionState: Decodable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
-            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            let key = c.allKeys.first { $0.stringValue != "_owsf" }
             switch key?.stringValue {
             case "starting": self = .starting
             case "searching": self = .searching
@@ -3715,7 +3860,7 @@ enum RemoteCtrlStopReason: Decodable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
-            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            let key = c.allKeys.first { $0.stringValue != "_owsf" }
             switch key?.stringValue {
             case "discoveryFailed":
                 let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
@@ -3753,7 +3898,7 @@ public enum RHKey: Decodable, Hashable {
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
-            if let allKeys = try? c.allKeys.first(where: { $0.stringValue != "_owsf" }) {
+            if let allKeys = c.allKeys.first(where: { $0.stringValue != "_owsf" }) {
                 switch allKeys.stringValue {
                 case "rhNew": self = .rhNew
                 case "rhId":
@@ -3792,7 +3937,7 @@ enum RemoteHostSessionState: Decodable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
-            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            let key = c.allKeys.first { $0.stringValue != "_owsf" }
             switch key?.stringValue {
             case "starting": self = .starting
             case "connecting":
@@ -3848,7 +3993,7 @@ public enum RemoteHostError: Decodable, Hashable {
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
-            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            let key = c.allKeys.first { $0.stringValue != "_owsf" }
             switch key?.stringValue {
             case "missing": self = .missing
             case "inactive": self = .inactive
@@ -3899,7 +4044,7 @@ enum RemoteHostStopReason: Decodable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
-            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            let key = c.allKeys.first { $0.stringValue != "_owsf" }
             switch key?.stringValue {
             case "connectionFailed":
                 let nested = try c.nestedContainer(keyedBy: DataKeys.self, forKey: key!)
@@ -5452,6 +5597,37 @@ struct AgentNtfServerStatsData: Codable {
     var _ntfCheckAttempts: Int
     var _ntfDeleted: Int
     var _ntfDelAttempts: Int
+}
+
+enum ServicePayment: Encodable {
+    case apple(jws: String)
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case let .apple(jws):
+            try container.encode("apple", forKey: .type)
+            try container.encode(jws, forKey: .jws)
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case type, jws
+    }
+}
+
+enum StoreReceiptOrigin {
+    case purchased
+    // found in the store's list rather than bought or restored here, so core records it only into a record it has
+    case listed
+    // Restore: core claims it for this profile, moving it from another device or profile it was credited to
+    case restored
+}
+
+struct OpenStorePurchase: Decodable {
+    var invoiceId: String?
+    var transactionRef: String?
+    var creditError: BadgeIssueFailure?
 }
 
 private func sanitizeFFIParam(_ input: String, maxLen: Int) -> String {

@@ -26,7 +26,7 @@ enum QuantumWallpaper: String, CaseIterable, Identifiable {
         case .quantumField:
             return LinearGradient(
                 colors: [
-                    Color(0xFF0A0A14),
+                    QuantumColors.voidBlack,
                     Color(0xFF131320),
                     Color(0xFF0D0D18)
                 ],
@@ -46,9 +46,9 @@ enum QuantumWallpaper: String, CaseIterable, Identifiable {
         case .shieldMatrix:
             return LinearGradient(
                 colors: [
-                    Color(0xFF0D0D11),
+                    QuantumColors.darkSurfaceBase,
                     Color(0xFF161622),
-                    Color(0xFF0D0D11)
+                    QuantumColors.darkSurfaceBase
                 ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
@@ -161,8 +161,8 @@ struct DataStreamEffect: View {
                     path.addLine(to: CGPoint(x: x, y: size.height + 10))
 
                     let color = i % 3 == 0
-                        ? Color(0xFF8B5CF6).opacity(alpha)
-                        : (i % 3 == 1 ? Color(0xFF818CF8).opacity(alpha) : Color(0xFF7C3AED).opacity(alpha * 0.7))
+                        ? QuantumColors.particleViolet.opacity(alpha)
+                        : (i % 3 == 1 ? QuantumColors.encryptionStandard.opacity(alpha) : Color(0xFF7C3AED).opacity(alpha * 0.7))
 
                     context.stroke(path, with: .color(color), lineWidth: 1.5)
 
@@ -205,7 +205,7 @@ struct ShieldMatrixPattern: View {
                     }
                     path.closeSubpath()
 
-                    context.stroke(path, with: .color(Color(0xFF8B5CF6).opacity(0.06)), lineWidth: 0.5)
+                    context.stroke(path, with: .color(QuantumColors.particleViolet.opacity(0.06)), lineWidth: 0.5)
                 }
             }
         }
@@ -234,8 +234,8 @@ struct StarFieldEffect: View {
 
                     let rect = CGRect(x: x - radius, y: y - radius, width: radius * 2, height: radius * 2)
                     let color = i % 4 == 0
-                        ? Color(0xFF8B5CF6).opacity(twinkle)
-                        : (i % 4 == 1 ? Color(0xFF818CF8).opacity(twinkle * 0.8) : Color.white.opacity(twinkle * 0.6))
+                        ? QuantumColors.particleViolet.opacity(twinkle)
+                        : (i % 4 == 1 ? QuantumColors.encryptionStandard.opacity(twinkle * 0.8) : Color.white.opacity(twinkle * 0.6))
 
                     context.fill(Path(ellipseIn: rect), with: .color(color))
                 }
@@ -246,7 +246,7 @@ struct StarFieldEffect: View {
                 context.fill(
                     Path(ellipseIn: nebulaRect),
                     with: .radialGradient(
-                        Gradient(colors: [Color(0xFF8B5CF6).opacity(0.08), .clear]),
+                        Gradient(colors: [QuantumColors.particleViolet.opacity(0.08), .clear]),
                         center: CGPoint(x: nebulaX, y: nebulaY),
                         startRadius: 0,
                         endRadius: 80

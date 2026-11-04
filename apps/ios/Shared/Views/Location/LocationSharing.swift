@@ -73,7 +73,7 @@ struct LocationPickerView: View {
                 }
                     .ignoresSafeArea()
                 Image(systemName: "mappin.and.ellipse")
-                    .font(.system(size: 36))
+                    .font(QuantumFonts.iconMedium)
                     .foregroundStyle(quantumGradient)
                     .shadow(radius: 4)
                     .offset(y: -18)

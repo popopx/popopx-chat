@@ -2,9 +2,8 @@
 //  ChatBubbleRow.swift
 //  POPOPX
 //
-//  3D capsule-shaped floating bubble with CoreMotion gravity coupling,
-//  TTL countdown, unread glow, self-destruct visual, and long-press
-//  radial action menu.
+//  Modern card-based chat list row with rounded corners, gradient backgrounds,
+//  TTL countdown, unread glow, and long-press radial action menu.
 //  Copyright © 2026 POPOPX. All rights reserved.
 //
 
@@ -102,7 +101,7 @@ struct ChatBubbleRow: View {
 
     private var bubbleButton: some View {
         bubbleContent
-            .contentShape(Capsule())
+            .contentShape(RoundedRectangle(cornerSize: .init(width: 16, height: 16), style: .continuous))
             .onTapGesture {
                 guard SwipeCoordinator.shared.activeSwipeChatId != chat.chatInfo.id else { return }
                 if !showRadialMenu {
@@ -180,7 +179,7 @@ struct ChatBubbleRow: View {
 
                     if chat.chatInfo.chatSettings?.favorite == true {
                         Image(systemName: "star.fill")
-                            .font(.system(size: 10))
+                            .font(.caption2)
                             .minimumScaleFactor(0.7)
                             .foregroundColor(QuantumColors.success)
                     }
@@ -239,19 +238,19 @@ struct ChatBubbleRow: View {
         .frame(minHeight: rowHeight)
         .frame(maxWidth: .infinity)
         .background(
-            Capsule(style: .continuous)
-                .fill(Color(hex: "#1E1433").opacity(0.85)) // POPOPX: 方案1 — ultraThinMaterial → solid for battery
+            RoundedRectangle(cornerSize: .init(width: 16, height: 16), style: .continuous)
+                .fill(QuantumColors.darkPurpleShadow.opacity(0.85))
         )
         .background(
-            Capsule(style: .continuous)
-                .fill(Color(hex: "#6E25C4").opacity(0.08))
+            RoundedRectangle(cornerSize: .init(width: 16, height: 16), style: .continuous)
+                .fill(QuantumColors.accent.opacity(0.06))
         )
         .overlay(
-            Capsule(style: .continuous)
+            RoundedRectangle(cornerSize: .init(width: 16, height: 16), style: .continuous)
                 .strokeBorder(
                     isTTLActive
                         ? LinearGradient(
-                            colors: [Color(hex: "#FF00A0").opacity(0.6), Color(hex: "#FF00A0").opacity(0.2)],
+                            colors: [QuantumColors.accentWarm.opacity(0.6), QuantumColors.accentWarm.opacity(0.2)],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -272,8 +271,8 @@ struct ChatBubbleRow: View {
                 Rectangle().fill(.black)
             }
         }
-        .compositingGroup() // POPOPX: flatten before shadow
-        .shadow(color: isUnread ? Color(hex: "#00FFD2").opacity(0.35) : .clear, radius: 8)
+        .compositingGroup()
+        .shadow(color: isUnread ? QuantumColors.accentSecondary.opacity(0.3) : QuantumColors.voidBlack.opacity(0.15), radius: isUnread ? 10 : 6, x: 0, y: 2)
         .padding(.horizontal, 12)
         .padding(.vertical, 4)
     }
@@ -283,20 +282,23 @@ struct ChatBubbleRow: View {
         if isUnread {
             let count = chat.chatStats.unreadCount
             Text(count > 0 ? "\(count)" : "•")
-                .font(.system(size: 11, weight: .bold))
+                .font(.caption2.weight(.bold))
                 .minimumScaleFactor(0.7)
                 .foregroundColor(.white)
-                .frame(minWidth: 18, minHeight: 18)
+                .frame(minWidth: 20, minHeight: 20)
                 .background(
-                    Capsule().fill(
+                    Circle().fill(
                         LinearGradient(
-                            colors: [Color(hex: "#00FFD2"), Color(hex: "#6E25C4")],
+                            colors: [QuantumColors.accent, QuantumColors.accentSecondary],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
                     )
                 )
-                .shadow(color: Color(hex: "#00FFD2").opacity(0.4), radius: 4)
+                .overlay(
+                    Circle().strokeBorder(Color.white.opacity(0.25), lineWidth: 0.5)
+                )
+                .padding(.horizontal, 2)
         }
     }
 
@@ -305,13 +307,13 @@ struct ChatBubbleRow: View {
             let remaining = pxTTLRemaining(ttl: ttl, lastActivity: chat.chatInfo.chatTs)
             HStack(spacing: 3) {
                 Image(systemName: "clock")
-                    .font(.system(size: 9))
+                    .font(.caption2)
                     .minimumScaleFactor(0.7)
                 Text(pxFormatTTL(remaining))
-                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .font(.caption2.weight(.medium).monospaced())
                     .minimumScaleFactor(0.7)
             }
-            .foregroundColor(Color(hex: "#FF00A0"))
+            .foregroundColor(QuantumColors.accentWarm)
         }
     }
 

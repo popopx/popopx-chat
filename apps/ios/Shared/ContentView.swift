@@ -57,8 +57,9 @@ struct ContentView: View {
     @State private var renewalReminderShown = false
     @State private var trialBannerDismissed = false
     @State private var showTrialSubscribe = false
-    @State private var initTimeoutReached = false
     @State private var launchComplete = false
+
+    @ObservedObject var launchCoordinator = LaunchCoordinator.shared
 
     private let callTopPadding: CGFloat = 40
 
@@ -361,7 +362,7 @@ struct ContentView: View {
                     .shadow(color: QuantumColors.accent.opacity(0.4), radius: 8, x: 0, y: 1)
                     .padding()
 
-                if initTimeoutReached {
+                if launchCoordinator.timeoutReached {
                     Text(NSLocalizedString("Taking longer than expected. You can retry or wait.", comment: "init timeout message"))
                         .font(.callout)
                         .foregroundColor(QuantumColors.textSecondary)
@@ -369,7 +370,6 @@ struct ContentView: View {
                         .padding(.horizontal, 40)
 
                     Button {
-                        initTimeoutReached = false
                         retryInitialization()
                     } label: {
                         Text(NSLocalizedString("Retry", comment: "Retry button"))
@@ -379,14 +379,6 @@ struct ContentView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-        .task {
-            if !initTimeoutReached {
-                try? await Task.sleep(nanoseconds: 15_000_000000)
-                if !Task.isCancelled && chatModel.chatDbStatus == nil && appState.onboardingStage == nil {
-                    initTimeoutReached = true
-                }
-            }
         }
     }
 

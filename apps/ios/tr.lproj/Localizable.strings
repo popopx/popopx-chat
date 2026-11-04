@@ -5,7 +5,7 @@
 "_italic_" = "\\_italik_";
 
 /* No comment provided by engineer. */
-"- connect to [directory service](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- [dizin hizmeti] 'ne bağlan(simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- çoklu mesaj gönderimi (20 kişiye kadar).\n- daha hızlı ve daha stabil.";
+"- connect to [directory service](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- [dizin hizmeti] 'ne bağlan(popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- çoklu mesaj gönderimi (20 kişiye kadar).\n- daha hızlı ve daha stabil.";
 
 /* No comment provided by engineer. */
 "- more stable message delivery.\n- a bit better groups.\n- and more!" = "- daha stabil mesaj gönderimi.\n- birazcık daha iyi gruplar.\n- ve fazlası!";
@@ -26,7 +26,7 @@
 "(this device v%@)" = "(bu cihaz v%@)";
 
 /* No comment provided by engineer. */
-"[Send us email](mailto:chat@simplex.chat)" = "[Bize e-posta gönder](mailto:chat@simplex.chat)";
+"[Send us email](mailto:chat@popopxchat.com)" = "[Bize e-posta gönder](mailto:chat@popopxchat.com)";
 
 /* No comment provided by engineer. */
 "**Create 1-time link**: to create and share a new invitation link." = "**Kişi ekle**: yeni bir davet bağlantısı oluşturmak için, ya da aldığın bağlantıyla bağlan.";
@@ -41,10 +41,10 @@
 "**e2e encrypted** video call" = "**uçtan uca şifrelenmiş** görüntülü arama";
 
 /* No comment provided by engineer. */
-"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**Daha gizli**: her 20 dakikada yeni mesajlar için kontrol et. Cihaz jetonu SimpleX Chat sunucusuyla paylaşılacak, ama ne kadar kişi veya mesaja sahip olduğun paylaşılmayacak.";
+"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**Daha gizli**: her 20 dakikada yeni mesajlar için kontrol et. Cihaz jetonu POPOPX Chat sunucusuyla paylaşılacak, ama ne kadar kişi veya mesaja sahip olduğun paylaşılmayacak.";
 
 /* No comment provided by engineer. */
-"**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**En gizli**: SimpleX Chat bildirim sunucusunu kullanma, arkaplanda mesajları periyodik olarak kontrol edin (uygulamayı ne sıklıkta kullandığınıza bağlıdır).";
+"**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**En gizli**: POPOPX Chat bildirim sunucusunu kullanma, arkaplanda mesajları periyodik olarak kontrol edin (uygulamayı ne sıklıkta kullandığınıza bağlıdır).";
 
 /* No comment provided by engineer. */
 "**Please note**: using the same database on two devices will break the decryption of messages from your connections, as a security protection." = "**Lütfen dikkat**: Aynı veritabanını iki cihazda kullanmak, güvenlik koruması olarak bağlantılarınızdaki mesajların şifresinin çözülmesini engelleyecektir.";
@@ -53,7 +53,7 @@
 "**Please note**: you will NOT be able to recover or change passphrase if you lose it." = "**Lütfen aklınızda bulunsun**: eğer parolanızı kaybederseniz parolanızı değiştirme veya geri kurtarma ihtimaliniz YOKTUR.";
 
 /* No comment provided by engineer. */
-"**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." = "**Önerilen**: cihaz tokeni ve bildirimler SimpleX Chat bildirim sunucularına gönderilir, ama mesajın içeriği, boyutu veya kimden geldiği gönderilmez.";
+"**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." = "**Önerilen**: cihaz tokeni ve bildirimler POPOPX Chat bildirim sunucularına gönderilir, ama mesajın içeriği, boyutu veya kimden geldiği gönderilmez.";
 
 /* No comment provided by engineer. */
 "**Scan / Paste link**: to connect via a link you received." = "edindiğiniz bağlantı aracılığıyla bağlanmak için **Linki tarayın/yapıştırın**.";
@@ -110,7 +110,7 @@
 "%@ downloaded" = "%@ indirildi";
 
 /* badge alert */
-"%@ invested in SimpleX Chat crowdfunding." = "%@, SimpleX Chat kitle fonlamasına yatırım yaptı.";
+"%@ invested in POPOPX Chat crowdfunding." = "%@, POPOPX Chat kitle fonlamasına yatırım yaptı.";
 
 /* notification title */
 "%@ is connected!" = "%@ bağlandı!";
@@ -128,7 +128,7 @@
 "%@ servers" = "%@ sunucular";
 
 /* badge alert */
-"%@ supports SimpleX Chat." = "%@, SimpleX Chat'i destekliyor.";
+"%@ supports POPOPX Chat." = "%@, POPOPX Chat'i destekliyor.";
 
 /* No comment provided by engineer. */
 "%@ uploaded" = "%@ yüklendi";
@@ -149,7 +149,7 @@
 "%@:" = "%@:";
 
 /* badge alert */
-"%1$@ supported SimpleX Chat. The badge expired on %2$@." = "%1$@, SimpleX Chat'i destekledi. Rozetin süresi %2$@ tarihinde doldu.";
+"%1$@ supported POPOPX Chat. The badge expired on %2$@." = "%1$@, POPOPX Chat'i destekledi. Rozetin süresi %2$@ tarihinde doldu.";
 
 /* time interval */
 "%d days" = "%d gün";
@@ -304,7 +304,7 @@ channel relay bar */
 "`a + b`" = "\\`a + b`";
 
 /* email text */
-"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via SimpleX Chat</a></p>" = "<p>Merhaba!</p>\n<p><a href=\"%@\">SimpleX Chat ile bana bağlanın</a></p>";
+"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via POPOPX Chat</a></p>" = "<p>Merhaba!</p>\n<p><a href=\"%@\">POPOPX Chat ile bana bağlanın</a></p>";
 
 /* No comment provided by engineer. */
 "~strike~" = "\\~çizik~";
@@ -379,7 +379,7 @@ time interval */
 "About operators" = "Operatörler hakkında";
 
 /* No comment provided by engineer. */
-"About SimpleX Chat" = "SimpleX Chat hakkında";
+"About POPOPX Chat" = "POPOPX Chat hakkında";
 
 /* No comment provided by engineer. */
 "above, then choose:" = "yukarı çıkın, ardından seçin:";
@@ -632,7 +632,7 @@ swipe action */
 "Allow to send files and media." = "Dosya ve medya göndermeye izin ver.";
 
 /* No comment provided by engineer. */
-"Allow to send SimpleX links." = "SimpleX bağlantıları göndilmesine izin ver.";
+"Allow to send POPOPX links." = "POPOPX bağlantıları göndilmesine izin ver.";
 
 /* No comment provided by engineer. */
 "Allow to send voice messages." = "Sesli mesaj göndermeye izin ver.";
@@ -930,7 +930,7 @@ marked deleted chat item preview text */
 "Both you and your contact can send voice messages." = "Sen ve konuştuğun kişi sesli mesaj gönderebilir.";
 
 /* No comment provided by engineer. */
-"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "Bulgarca, Fince, Tayca ve Ukraynaca - kullanıcılara ve [Weblate] e teşekkürler! (https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!";
+"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "Bulgarca, Fince, Tayca ve Ukraynaca - kullanıcılara ve [Weblate] e teşekkürler! (https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!";
 
 /* chat link info line */
 "Business address" = "İş adresi";
@@ -945,7 +945,7 @@ marked deleted chat item preview text */
 "Businesses" = "İşletmeler";
 
 /* No comment provided by engineer. */
-"By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "Sohbet profiline göre (varsayılan) veya [bağlantıya göre](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"By chat profile (default) or [by connection](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "Sohbet profiline göre (varsayılan) veya [bağlantıya göre](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
 
 /* No comment provided by engineer. */
 "call" = "Ara";
@@ -1286,7 +1286,7 @@ server test step */
 "Connect to desktop" = "Bilgisayara bağlan";
 
 /* No comment provided by engineer. */
-"connect to SimpleX Chat developers." = "SimpleX Chat geliştiricilerine bağlan.";
+"connect to POPOPX Chat developers." = "POPOPX Chat geliştiricilerine bağlan.";
 
 /* No comment provided by engineer. */
 "Connect to your friends faster." = "Arkadaşlarınıza daha hızlı bağlanın.";
@@ -1295,7 +1295,7 @@ server test step */
 "Connect to yourself?\nThis is your own one-time link!" = "Kendine mi bağlanacaksın?\nBu senin kendi tek kullanımlık bağlantın!";
 
 /* new chat sheet title */
-"Connect to yourself?\nThis is your own SimpleX address!" = "Kendine mi bağlanacaksın?\nBu senin kendi SimpleX adresin!";
+"Connect to yourself?\nThis is your own POPOPX address!" = "Kendine mi bağlanacaksın?\nBu senin kendi POPOPX adresin!";
 
 /* new chat sheet title */
 "Connect via contact address" = "Kişi adresi aracılığıyla bağlan";
@@ -1517,7 +1517,7 @@ server test step */
 "Create list" = "Liste oluştur";
 
 /* No comment provided by engineer. */
-"Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" = "[bilgisayar uygulaması] nda yeni bir profil oluştur(https://simplex.chat/downloads/). 💻";
+"Create new profile in [desktop app](https://popopxchat.com/downloads/). 💻" = "[bilgisayar uygulaması] nda yeni bir profil oluştur(https://popopxchat.com/downloads/). 💻";
 
 /* No comment provided by engineer. */
 "Create profile" = "Profil oluştur";
@@ -1526,7 +1526,7 @@ server test step */
 "Create queue" = "Sıra oluştur";
 
 /* No comment provided by engineer. */
-"Create SimpleX address" = "SimpleX adresi oluştur";
+"Create POPOPX address" = "POPOPX adresi oluştur";
 
 /* No comment provided by engineer. */
 "Create your address" = "Adresinizi oluşturun";
@@ -1874,10 +1874,10 @@ alert button */
 "Device" = "Cihaz";
 
 /* No comment provided by engineer. */
-"Device authentication is disabled. Turning off SimpleX Lock." = "Cihaz kimlik doğrulaması devre dışı. SimpleX Kilidi kapatılıyor.";
+"Device authentication is disabled. Turning off POPOPX Lock." = "Cihaz kimlik doğrulaması devre dışı. POPOPX Kilidi kapatılıyor.";
 
 /* No comment provided by engineer. */
-"Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." = "Cihaz kimlik doğrulaması etkin değil. Cihaz kimlik doğrulamasını etkinleştirdikten sonra SimpleX Kilidini Ayarlar üzerinden açabilirsiniz.";
+"Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." = "Cihaz kimlik doğrulaması etkin değil. Cihaz kimlik doğrulamasını etkinleştirdikten sonra POPOPX Kilidini Ayarlar üzerinden açabilirsiniz.";
 
 /* No comment provided by engineer. */
 "different migration in the app/database: %@ / %@" = "uygulamada/veritabanında farklı geçiş: %@ / %@";
@@ -1910,7 +1910,7 @@ alert button */
 "Disable for all" = "Herkes için devre dışı bırak";
 
 /* authentication reason */
-"Disable SimpleX Lock" = "SimpleX Kilidini devre dışı bırak";
+"Disable POPOPX Lock" = "POPOPX Kilidini devre dışı bırak";
 
 /* No comment provided by engineer. */
 "disabled" = "devre dışı";
@@ -1964,7 +1964,7 @@ alert button */
 "Do NOT use private routing." = "Gizli yönlendirmeyi KULLANMA.";
 
 /* No comment provided by engineer. */
-"Do NOT use SimpleX for emergency calls." = "Acil aramalar için SimpleX'i KULLANMAYIN.";
+"Do NOT use POPOPX for emergency calls." = "Acil aramalar için POPOPX'i KULLANMAYIN.";
 
 /* No comment provided by engineer. */
 "Documents:" = "Belgeler:";
@@ -2082,7 +2082,7 @@ chat item action */
 "Enable self-destruct passcode" = "Kendini imha şifresini etkinleştir";
 
 /* authentication reason */
-"Enable SimpleX Lock" = "SimpleX Kilidini etkinleştir";
+"Enable POPOPX Lock" = "POPOPX Kilidini etkinleştir";
 
 /* No comment provided by engineer. */
 "Enable TCP keep-alive" = "TCP canlı tutmayı etkinleştir";
@@ -2627,7 +2627,7 @@ servers warning */
 "For console" = "Konsol için";
 
 /* No comment provided by engineer. */
-"For example, if your contact receives messages via a SimpleX Chat server, your app will deliver them via a Flux server." = "Örneğin, eğer kişiniz SimpleX Sohbet sunucusundan mesajları alıyorsa, uygulamanız bu mesajları Flux sunucusundan iletecektir.";
+"For example, if your contact receives messages via a POPOPX Chat server, your app will deliver them via a Flux server." = "Örneğin, eğer kişiniz POPOPX Sohbet sunucusundan mesajları alıyorsa, uygulamanız bu mesajları Flux sunucusundan iletecektir.";
 
 /* No comment provided by engineer. */
 "For me" = "Benim için";
@@ -2837,7 +2837,7 @@ servers warning */
 "How it works" = "Nasıl çalışır";
 
 /* No comment provided by engineer. */
-"How SimpleX works" = "SimpleX nasıl çalışır";
+"How POPOPX works" = "POPOPX nasıl çalışır";
 
 /* No comment provided by engineer. */
 "How to" = "Nasıl yapılır";
@@ -2978,7 +2978,7 @@ servers warning */
 "Initial role" = "Başlangıç rolü";
 
 /* No comment provided by engineer. */
-"Install SimpleX Chat for terminal" = "Terminal için SimpleX Chat'i indir";
+"Install POPOPX Chat for terminal" = "Terminal için POPOPX Chat'i indir";
 
 /* No comment provided by engineer. */
 "Instant" = "Anında";
@@ -3191,7 +3191,7 @@ servers warning */
 "Less traffic on mobile networks." = "Mobil ağlarda daha az trafik.";
 
 /* email subject */
-"Let's talk in SimpleX Chat" = "Hadi SimpleX Chat'te konuşalım";
+"Let's talk in POPOPX Chat" = "Hadi POPOPX Chat'te konuşalım";
 
 /* No comment provided by engineer. */
 "Light" = "Açık";
@@ -3332,7 +3332,7 @@ servers warning */
 "Members can send files and media." = "Grup üyeleri dosyalar ve medya gönderebilir.";
 
 /* No comment provided by engineer. */
-"Members can send SimpleX links." = "Grup üyeleri SimpleX bağlantıları gönderebilir.";
+"Members can send POPOPX links." = "Grup üyeleri POPOPX bağlantıları gönderebilir.";
 
 /* No comment provided by engineer. */
 "Members can send voice messages." = "Grup üyeleri sesli mesajlar gönderebilir.";
@@ -3461,7 +3461,7 @@ servers warning */
 "Migration error:" = "Geçiş hatası:";
 
 /* No comment provided by engineer. */
-"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." = "Geçiş başarısız oldu. Alttaki **Geç** tuşuna basarak şu anki veritabanını kullanabilirsiniz. Lütfen sorunu sohbet veya e-posta yoluyla uygulama geliştiricilerine bildirin[chat@simplex.chat](mailto:chat@simplex.chat).";
+"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat.com](mailto:chat@popopxchat.com)." = "Geçiş başarısız oldu. Alttaki **Geç** tuşuna basarak şu anki veritabanını kullanabilirsiniz. Lütfen sorunu sohbet veya e-posta yoluyla uygulama geliştiricilerine bildirin[chat@popopxchat.com](mailto:chat@popopxchat.com).";
 
 /* No comment provided by engineer. */
 "Migration is completed" = "Geçiş tamamlandı";
@@ -4166,7 +4166,7 @@ alert button */
 "Prohibit sending files and media." = "Dosyalar ve medya gönderimlerini yasakla.";
 
 /* No comment provided by engineer. */
-"Prohibit sending SimpleX links." = "SimpleX bağlantısı gönderimini yasakla.";
+"Prohibit sending POPOPX links." = "POPOPX bağlantısı gönderimini yasakla.";
 
 /* No comment provided by engineer. */
 "Prohibit sending voice messages." = "Sesli mesajların gönderimini yasakla.";
@@ -4274,7 +4274,7 @@ alert button */
 "Receiving via" = "Aracılığıyla alınıyor";
 
 /* No comment provided by engineer. */
-"Recent history and improved [directory bot](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." = "Yakın geçmiş ve geliştirilmiş [dizin botu](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex. im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
+"Recent history and improved [directory bot](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion)." = "Yakın geçmiş ve geliştirilmiş [dizin botu](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopx. im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion).";
 
 /* No comment provided by engineer. */
 "Recipient(s) can't see who this message is from." = "Alıcı(lar) bu mesajın kimden geldiğini göremez.";
@@ -4668,7 +4668,7 @@ chat item action */
 "Search bar accepts invitation links." = "Arama çubuğu davet bağlantılarını kabul eder.";
 
 /* No comment provided by engineer. */
-"Search or paste SimpleX link" = "Ara veya SimpleX bağlantısını yapıştır";
+"Search or paste POPOPX link" = "Ara veya POPOPX bağlantısını yapıştır";
 
 /* network option */
 "sec" = "sn";
@@ -4984,13 +4984,13 @@ chat item action */
 "Share profile" = "Profil paylaş";
 
 /* No comment provided by engineer. */
-"Share SimpleX address on social media." = "SimpleX adresini sosyal medyada paylaşın.";
+"Share POPOPX address on social media." = "POPOPX adresini sosyal medyada paylaşın.";
 
 /* No comment provided by engineer. */
 "Share this 1-time invite link" = "Bu tek kullanımlık bağlantı davetini paylaş";
 
 /* No comment provided by engineer. */
-"Share to SimpleX" = "SimpleX ile paylaş";
+"Share to POPOPX" = "POPOPX ile paylaş";
 
 /* No comment provided by engineer. */
 "Share your address" = "Adresini paylaş";
@@ -5002,7 +5002,7 @@ chat item action */
 "Short link" = "Kısa bağlantı";
 
 /* No comment provided by engineer. */
-"Short SimpleX address" = "Kısa SimpleX adresi";
+"Short POPOPX address" = "Kısa POPOPX adresi";
 
 /* No comment provided by engineer. */
 "Show → on messages sent via private routing." = "Gizli yönlendirme yoluyla gönderilen mesajlarda → işaretini göster.";
@@ -5032,67 +5032,67 @@ chat item action */
 "Show:" = "Göster:";
 
 /* No comment provided by engineer. */
-"SimpleX" = "SimpleX";
+"POPOPX" = "POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX address" = "SimpleX adresi";
+"POPOPX address" = "POPOPX adresi";
 
 /* No comment provided by engineer. */
-"SimpleX Address" = "SimpleX Adresi";
+"POPOPX Address" = "POPOPX Adresi";
 
 /* No comment provided by engineer. */
-"SimpleX address and 1-time links are safe to share via any messenger." = "SimpleX adresi ve 1 defaya mahsus bağlantılar, herhangi bir mesajlaşma uygulaması aracılığıyla paylaşmak için güvenlidir.";
+"POPOPX address and 1-time links are safe to share via any messenger." = "POPOPX adresi ve 1 defaya mahsus bağlantılar, herhangi bir mesajlaşma uygulaması aracılığıyla paylaşmak için güvenlidir.";
 
 /* No comment provided by engineer. */
-"SimpleX address or 1-time link?" = "SimpleX adresi mi yoksa 1 defaya mahsus bağlantı mı?";
+"POPOPX address or 1-time link?" = "POPOPX adresi mi yoksa 1 defaya mahsus bağlantı mı?";
 
 /* alert title */
-"SimpleX address settings" = "Ayarları otomatik olarak kabul et";
+"POPOPX address settings" = "Ayarları otomatik olarak kabul et";
 
-/* simplex link type */
-"SimpleX channel link" = "SimpleX kanal bağlantısı";
-
-/* No comment provided by engineer. */
-"SimpleX Chat and Flux made an agreement to include Flux-operated servers into the app." = "SimpleX Chat ve Flux, Flux tarafından işletilen sunucuları uygulamaya dahil etmek için bir anlaşma yaptı.";
+/* popopx link type */
+"POPOPX channel link" = "POPOPX kanal bağlantısı";
 
 /* No comment provided by engineer. */
-"SimpleX Chat security was audited by Trail of Bits." = "SimpleX Chat güvenliği Trails of Bits tarafından denetlenmiştir.";
+"POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app." = "POPOPX Chat ve Flux, Flux tarafından işletilen sunucuları uygulamaya dahil etmek için bir anlaşma yaptı.";
 
-/* simplex link type */
-"SimpleX contact address" = "SimpleX kişi adresi";
+/* No comment provided by engineer. */
+"POPOPX Chat security was audited by Trail of Bits." = "POPOPX Chat güvenliği Trails of Bits tarafından denetlenmiştir.";
+
+/* popopx link type */
+"POPOPX contact address" = "POPOPX kişi adresi";
 
 /* notification */
-"SimpleX encrypted message or connection event" = "SimpleX şifrelenmiş mesaj veya bağlantı etkinliği";
+"POPOPX encrypted message or connection event" = "POPOPX şifrelenmiş mesaj veya bağlantı etkinliği";
 
-/* simplex link type */
-"SimpleX group link" = "SimpleX grup bağlantısı";
+/* popopx link type */
+"POPOPX group link" = "POPOPX grup bağlantısı";
 
 /* chat feature */
-"SimpleX links" = "SimpleX bağlantıları";
+"POPOPX links" = "POPOPX bağlantıları";
 
 /* No comment provided by engineer. */
-"SimpleX links are prohibited." = "SimpleX bağlantıları bu grupta yasaklandı.";
+"POPOPX links are prohibited." = "POPOPX bağlantıları bu grupta yasaklandı.";
 
 /* No comment provided by engineer. */
-"SimpleX links not allowed" = "SimpleX bağlantılarına izin verilmiyor";
+"POPOPX links not allowed" = "POPOPX bağlantılarına izin verilmiyor";
 
 /* No comment provided by engineer. */
-"SimpleX Lock" = "SimpleX Kilidi";
+"POPOPX Lock" = "POPOPX Kilidi";
 
 /* No comment provided by engineer. */
-"SimpleX Lock mode" = "SimpleX Kilidi modu";
+"POPOPX Lock mode" = "POPOPX Kilidi modu";
 
 /* No comment provided by engineer. */
-"SimpleX Lock not enabled!" = "SimpleX Kilidi etkinleştirilmedi!";
+"POPOPX Lock not enabled!" = "POPOPX Kilidi etkinleştirilmedi!";
 
 /* No comment provided by engineer. */
-"SimpleX Lock turned on" = "SimpleX Kilidi açıldı";
+"POPOPX Lock turned on" = "POPOPX Kilidi açıldı";
 
-/* simplex link type */
-"SimpleX one-time invitation" = "SimpleX tek kullanımlık davet";
+/* popopx link type */
+"POPOPX one-time invitation" = "POPOPX tek kullanımlık davet";
 
 /* No comment provided by engineer. */
-"SimpleX protocols reviewed by Trail of Bits." = "SimpleX protokolleri Trail of Bits tarafından incelenmiştir.";
+"POPOPX protocols reviewed by Trail of Bits." = "POPOPX protokolleri Trail of Bits tarafından incelenmiştir.";
 
 /* No comment provided by engineer. */
 "Simplified incognito mode" = "Basitleştirilmiş gizli mod";
@@ -5195,7 +5195,7 @@ report reason */
 "Stop sharing address?" = "Adresi paylaşmak durdurulsun mu?";
 
 /* authentication reason */
-"Stop SimpleX" = "SimpleX'i durdur";
+"Stop POPOPX" = "POPOPX'i durdur";
 
 /* No comment provided by engineer. */
 "Stopping chat" = "Sohbeti durdurma";
@@ -5313,10 +5313,10 @@ server test failure */
 "Tests failed!" = "Testler başarısız oldu!";
 
 /* No comment provided by engineer. */
-"Thank you for installing SimpleX Chat!" = "SimpleX Chat'i indirdiğin için teşekkürler!";
+"Thank you for installing POPOPX Chat!" = "POPOPX Chat'i indirdiğin için teşekkürler!";
 
 /* No comment provided by engineer. */
-"Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "Kullanıcılar için teşekkürler - [Weblate aracılığıyla katkıda bulun](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!";
+"Thanks to the users – [contribute via Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "Kullanıcılar için teşekkürler - [Weblate aracılığıyla katkıda bulun](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!";
 
 /* No comment provided by engineer. */
 "Thanks to the users – contribute via Weblate!" = "Kullanıcılar için teşekkürler - Weblate aracılığıyla katkıda bulun!";
@@ -5337,7 +5337,7 @@ server test failure */
 "The attempt to change database passphrase was not completed." = "Veritabanı parolasını değiştirme girişimi tamamlanmadı.";
 
 /* No comment provided by engineer. */
-"The code you scanned is not a SimpleX link QR code." = "Taradığınız kod bir SimpleX bağlantı QR kodu değildir.";
+"The code you scanned is not a POPOPX link QR code." = "Taradığınız kod bir POPOPX bağlantı QR kodu değildir.";
 
 /* No comment provided by engineer. */
 "The connection reached the limit of undelivered messages, your contact may be offline." = "Bağlantı, teslim edilmemiş mesajlar limitine ulaştı, kişiniz çevrimdışı olabilir.";
@@ -5400,7 +5400,7 @@ server test failure */
 "The servers for new files of your current chat profile **%@**." = "Mevcut sohbet profiliniz için yeni dosyaların sunucuları **%@**.";
 
 /* No comment provided by engineer. */
-"The text you pasted is not a SimpleX link." = "Yapıştırdığın metin bir SimpleX bağlantısı değildir.";
+"The text you pasted is not a POPOPX link." = "Yapıştırdığın metin bir POPOPX bağlantısı değildir.";
 
 /* No comment provided by engineer. */
 "The uploaded database archive will be permanently removed from the servers." = "Yüklenen veritabanı arşivi sunuculardan kalıcı olarak kaldırılacaktır.";
@@ -5487,13 +5487,13 @@ server test failure */
 "To protect timezone, image/voice files use UTC." = "Zaman bölgesini korumak için,fotoğraf/ses dosyaları UTC kullanır.";
 
 /* No comment provided by engineer. */
-"To protect your information, turn on SimpleX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "Bilgilerinizi korumak için SimpleX Lock özelliğini açın.\nBu özellik etkinleştirilmeden önce kimlik doğrulamayı tamamlamanız istenecektir.";
+"To protect your information, turn on POPOPX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "Bilgilerinizi korumak için POPOPX Lock özelliğini açın.\nBu özellik etkinleştirilmeden önce kimlik doğrulamayı tamamlamanız istenecektir.";
 
 /* No comment provided by engineer. */
 "To protect your IP address, private routing uses your SMP servers to deliver messages." = "IP adresinizi korumak için,gizli yönlendirme mesajları iletmek için SMP sunucularınızı kullanır.";
 
 /* No comment provided by engineer. */
-"To protect your privacy, SimpleX uses separate IDs for each of your contacts." = "Gizliliği korumak için, diğer tüm platformlar gibi kullanıcı kimliği kullanmak yerine, SimpleX mesaj kuyrukları için kişilerinizin her biri için ayrı tanımlayıcılara sahiptir.";
+"To protect your privacy, POPOPX uses separate IDs for each of your contacts." = "Gizliliği korumak için, diğer tüm platformlar gibi kullanıcı kimliği kullanmak yerine, POPOPX mesaj kuyrukları için kişilerinizin her biri için ayrı tanımlayıcılara sahiptir.";
 
 /* No comment provided by engineer. */
 "To receive" = "Almak için";
@@ -5758,7 +5758,7 @@ alert title */
 "Use servers" = "Sunucuları kullan";
 
 /* No comment provided by engineer. */
-"Use SimpleX Chat servers?" = "SimpleX Chat sunucuları kullanılsın mı?";
+"Use POPOPX Chat servers?" = "POPOPX Chat sunucuları kullanılsın mı?";
 
 /* No comment provided by engineer. */
 "Use SOCKS proxy" = "SOCKS vekili kullan";
@@ -5785,7 +5785,7 @@ alert title */
 "Username" = "Kullanıcı Adı";
 
 /* No comment provided by engineer. */
-"Using SimpleX Chat servers." = "SimpleX Chat sunucuları kullanılıyor.";
+"Using POPOPX Chat servers." = "POPOPX Chat sunucuları kullanılıyor.";
 
 /* No comment provided by engineer. */
 "v%@" = "v%@";
@@ -6079,7 +6079,7 @@ alert title */
 "You can hide or mute a user profile - swipe it to the right." = "Bir kullanıcı profilini gizleyebilir veya sessize alabilirsiniz - sağa kaydırın.";
 
 /* No comment provided by engineer. */
-"You can make it visible to your SimpleX contacts via Settings." = "Ayarlardan SimpleX kişilerinize görünür yapabilirsiniz.";
+"You can make it visible to your POPOPX contacts via Settings." = "Ayarlardan POPOPX kişilerinize görünür yapabilirsiniz.";
 
 /* notification body */
 "You can now chat with %@" = "Artık %@ adresine mesaj gönderebilirsin";
@@ -6106,7 +6106,7 @@ alert title */
 "You can still view conversation with %@ in the list of chats." = "Sohbet listesinde %@ ile konuşmayı görüntülemeye devam edebilirsiniz.";
 
 /* No comment provided by engineer. */
-"You can turn on SimpleX Lock via Settings." = "SimpleX Kilidini Ayarlar üzerinden açabilirsiniz.";
+"You can turn on POPOPX Lock via Settings." = "POPOPX Kilidini Ayarlar üzerinden açabilirsiniz.";
 
 /* No comment provided by engineer. */
 "You can use markdown to format messages:" = "Mesajları biçimlendirmek için markdown kullanabilirsiniz:";
@@ -6292,7 +6292,7 @@ alert title */
 "Your profile is stored on your device and only shared with your contacts." = "Profil sadece kişilerinle paylaşılacak.";
 
 /* No comment provided by engineer. */
-"Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." = "Profiliniz cihazınızda saklanır ve sadece kişilerinizle paylaşılır. SimpleX sunucuları profilinizi göremez.";
+"Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." = "Profiliniz cihazınızda saklanır ve sadece kişilerinizle paylaşılır. POPOPX sunucuları profilinizi göremez.";
 
 /* alert message */
 "Your profile was changed. If you save it, the updated profile will be sent to all your contacts." = "Profiliniz değiştirildi. Kaydederseniz, güncellenmiş profil tüm kişilerinize gönderilecektir.";
@@ -6310,5 +6310,5 @@ alert title */
 "Your settings" = "Ayarlarınız";
 
 /* No comment provided by engineer. */
-"Your SimpleX address" = "SimpleX adresin";
+"Your POPOPX address" = "POPOPX adresin";
 

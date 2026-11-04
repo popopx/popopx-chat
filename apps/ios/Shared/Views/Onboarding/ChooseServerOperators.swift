@@ -79,8 +79,8 @@ struct OnboardingConditionsView: View {
                     if operatorFetchError {
                     VStack(spacing: 8) {
                         Text(NSLocalizedString("Unable to load server operators. Please check your connection and try again.", comment: "Operator fetch error message"))
-                            .font(.system(size: 13, design: .monospaced))
-                            .foregroundColor(Color(hex: "#C4BFD6"))
+                            .font(QuantumFonts.monoCaption)
+                            .foregroundColor(QuantumColors.textSecondary)
                             .multilineTextAlignment(.center)
                         Button {
                             retryFetchOperators()
@@ -99,21 +99,21 @@ struct OnboardingConditionsView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .fixedSize(horizontal: false, vertical: true)
                     .foregroundColor(.white)
-                    .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 12, x: 0, y: 2)
+                    .shadow(color: QuantumColors.accent.opacity(0.4), radius: 12, x: 0, y: 2)
 
                 Text(NSLocalizedString("Operators commit to:\n- Be independent\n- Minimize metadata usage\n- Run verified open-source code", comment: "Operator commitments"))
-                    .font(.system(size: 14, design: .monospaced))
+                    .font(QuantumFonts.monoBody)
                     .lineSpacing(4)
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .foregroundColor(QuantumColors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 4)
                     .padding(.top, 10)
                     .fixedSize(horizontal: false, vertical: true)
 
                 Text(NSLocalizedString("You commit to:\n- Only legal content in public groups\n- Respect other users - no spam", comment: "User commitments"))
-                    .font(.system(size: 14, design: .monospaced))
+                    .font(QuantumFonts.monoBody)
                     .lineSpacing(4)
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .foregroundColor(QuantumColors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 4)
                     .padding(.top, 10)
@@ -124,7 +124,7 @@ struct OnboardingConditionsView: View {
                 } label: {
                     Text(NSLocalizedString("Privacy policy and conditions of use.", comment: "Privacy policy link"))
                         .fontWeight(.medium)
-                        .foregroundColor(Color(hex: "#00FFD2"))
+                        .foregroundColor(QuantumColors.accentSecondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -140,9 +140,9 @@ struct OnboardingConditionsView: View {
                     HStack(spacing: 8) {
                         Image(systemName: ageConfirmed ? "checkmark.circle.fill" : "circle")
                             .font(.title3)
-                            .foregroundColor(ageConfirmed ? Color(hex: "#00FFD2") : Color(hex: "#C4BFD6"))
+                            .foregroundColor(ageConfirmed ? QuantumColors.accentSecondary : QuantumColors.textSecondary)
                         Text(NSLocalizedString("I confirm that I am at least 13 years of age", comment: "COPPA age verification"))
-                            .font(.system(size: 14, design: .monospaced))
+                            .font(QuantumFonts.monoBody)
                             .foregroundColor(.white)
                     }
                 }
@@ -226,14 +226,16 @@ struct OnboardingConditionsView: View {
     }
 
     private func conditionsBubbleContent(g: GeometryProxy) -> some View {
-        ZStack {
+        let safeW = max(1, g.size.width)
+        
+        return ZStack {
             if popController.isPopping {
-                BubblePopCanvas(particles: popController.particles)
-                    .frame(width: g.size.width, height: 180)
+                BubblePopCanvas(particles: popController.particles, startTime: popController.startTime)
+                    .frame(width: safeW, height: 180)
             } else {
                 ZStack(alignment: .bottomTrailing) {
                     // Use XBalloon3D instead of CompactBubble3D for Accept animation
-                    XBalloon3D(diameter: min(160, g.size.width * 0.4))
+                    XBalloon3D(diameter: min(160, safeW * 0.4))
                         .scaleEffect(showBubble ? 1.0 : 0.8)
                         .opacity(showBubble ? 1.0 : 0.0)
                         .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showBubble)
@@ -255,8 +257,8 @@ struct OnboardingConditionsView: View {
 
                 if !popController.isPopping && showBubble {
                     Text(NSLocalizedString("tap_commitments_hint", comment: "Hint text for commitments bubble"))
-                        .font(.system(size: 12, weight: .medium, design: .monospaced))
-                        .foregroundColor(Color(hex: "#C4BFD6"))
+                        .font(QuantumFonts.monoCaptionMedium)
+                        .foregroundColor(QuantumColors.textSecondary)
                         .offset(y: 100)
                 }
             }
@@ -459,7 +461,7 @@ struct ChooseServerOperators: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 25)
                         .foregroundColor(.white)
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 10, x: 0, y: 2)
+                        .shadow(color: QuantumColors.accent.opacity(0.4), radius: 10, x: 0, y: 2)
 
                     infoText()
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -473,8 +475,8 @@ struct ChooseServerOperators: View {
                         Text(NSLocalizedString("POPOPX Chat and Flux made an agreement to include Flux-operated servers into the app.", comment: "Server agreement")).padding(.bottom, 8)
                         Text(NSLocalizedString("You can configure servers via settings.", comment: "Server configuration hint"))
                     }
-                    .font(.system(size: 13, design: .monospaced))
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .font(QuantumFonts.monoCaption)
+                    .foregroundColor(QuantumColors.textSecondary)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal, 16)
@@ -508,14 +510,14 @@ struct ChooseServerOperators: View {
         } label: {
             Label(NSLocalizedString("How it helps privacy", comment: "Privacy info label"), systemImage: "info.circle")
                 .font(.headline)
-                .foregroundColor(Color(hex: "#00FFD2"))
+                .foregroundColor(QuantumColors.accentSecondary)
         }
     }
 
     private func operatorCheckView(_ serverOperator: ServerOperator) -> some View {
         let checked = selectedOperatorIds.contains(serverOperator.operatorId)
         let icon = checked ? "checkmark.circle.fill" : "circle"
-        let iconColor = checked ? Color(hex: "#00FFD2") : Color(hex: "#C4BFD6")
+        let iconColor = checked ? QuantumColors.accentSecondary : QuantumColors.textSecondary
         return HStack(spacing: 10) {
             Image(serverOperator.largeLogo(colorScheme))
                 .resizable()
@@ -528,7 +530,7 @@ struct ChooseServerOperators: View {
                 .frame(width: 26, height: 26)
                 .foregroundColor(iconColor)
         }
-        .background(Color(hex: "#141021"))
+        .background(QuantumColors.surfaceElevated)
         .padding()
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
@@ -536,15 +538,15 @@ struct ChooseServerOperators: View {
                 .strokeBorder(
                     LinearGradient(
                         colors: checked
-                            ? [Color(hex: "#6E25C4").opacity(0.6), Color(hex: "#00FFD2").opacity(0.3)]
-                            : [Color(hex: "#6E25C4").opacity(0.2), Color(hex: "#00FFD2").opacity(0.1)],
+                            ? [QuantumColors.accent.opacity(0.6), QuantumColors.accentSecondary.opacity(0.3)]
+                            : [QuantumColors.accent.opacity(0.2), QuantumColors.accentSecondary.opacity(0.1)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
                     lineWidth: 1
                 )
         )
-        .shadow(color: Color(hex: "#6E25C4").opacity(checked ? 0.2 : 0.08), radius: 8, x: 0, y: 4)
+        .shadow(color: QuantumColors.accent.opacity(checked ? 0.2 : 0.08), radius: 8, x: 0, y: 4)
         .padding(.horizontal, 2)
         .onTapGesture {
             if checked {

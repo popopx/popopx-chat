@@ -16,6 +16,12 @@ module Popopx.Chat.Mobile.File
     cChatReadFile,
     cChatEncryptFile,
     cChatDecryptFile,
+    cChatResizeImageUri,
+    cChatResizeImage,
+    cChatResizeImageFileUri,
+    cChatResizeImageFile,
+    cChatResizeImageFdUri,
+    cChatResizeImageFd,
     WriteFileResult (..),
     ReadFileResult (..),
     chatWriteFile,
@@ -23,6 +29,7 @@ module Popopx.Chat.Mobile.File
   )
 where
 
+import Codec.Picture (DynamicImage)
 import Control.Monad
 import Control.Monad.Except
 import Control.Monad.IO.Class
@@ -30,6 +37,7 @@ import qualified Data.Aeson as J
 import qualified Data.Aeson.TH as JQ
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as B
+import qualified Data.ByteString.Base64.Lazy as LB64
 import qualified Data.ByteString.Lazy as LB
 import qualified Data.ByteString.Lazy.Char8 as LB'
 import Data.Char (chr)
@@ -40,7 +48,9 @@ import Foreign.Marshal.Alloc (mallocBytes)
 import Foreign.Ptr
 import Foreign.StablePtr
 import Foreign.Storable (poke, pokeByteOff)
+import GHC.IO.Handle.FD (fdToHandle)
 import Popopx.Chat.Controller (ChatController (..))
+import Popopx.Chat.Image (ColourProfile, ImageFormat (..), decodeResizable, imageFormat, maxDecodeMemoryMB, resizeImage, resizeImageDataUri)
 import Popopx.Chat.Mobile.Shared
 import Popopx.Chat.Util (chunkSize, encryptFile)
 import Popopx.Messaging.Crypto.File (CryptoFile (..), CryptoFileArgs (..), CryptoFileHandle, FTCryptoError (..))
@@ -48,7 +58,8 @@ import qualified Popopx.Messaging.Crypto.File as CF
 import Popopx.Messaging.Encoding.String
 import Popopx.Messaging.Parsers (dropPrefix, sumTypeJSON)
 import Popopx.Messaging.Util (catchAll)
-import UnliftIO (Handle, IOMode (..), atomically, withFile)
+import System.Posix.Internals (c_close)
+import UnliftIO (Handle, IOMode (..), atomically, bracket, hClose, hFileSize, onException, tryIO, withBinaryFile, withFile)
 
 data WriteFileResult
   = WFResult {cryptoArgs :: CryptoFileArgs}
@@ -144,6 +155,62 @@ chatDecryptFile fromPath keyStr nonceStr toPath = fromLeft "" <$> runCatchExcept
       when (B.length ch /= chSize') $ throwError $ FTCEFileIOError "encrypting file: unexpected EOF"
       liftIO $ B.hPut w ch
       when (size' > 0) $ decryptChunks r w size'
+
+cChatResizeImageUri :: Ptr Word8 -> CInt -> CInt -> IO CString
+cChatResizeImageUri ptr len = cResizeImageUri $ getByteString ptr len
+
+cChatResizeImage :: Ptr Word8 -> CInt -> CInt -> CInt -> IO CString
+cChatResizeImage ptr len = cResizeImageData $ getByteString ptr len
+
+cChatResizeImageFileUri :: CString -> CInt -> IO CString
+cChatResizeImageFileUri = cResizeImageUri . readFilePath
+
+cChatResizeImageFile :: CString -> CInt -> CInt -> IO CString
+cChatResizeImageFile = cResizeImageData . readFilePath
+
+cChatResizeImageFdUri :: CInt -> CInt -> IO CString
+cChatResizeImageFdUri = cResizeImageUri . readFd
+
+cChatResizeImageFd :: CInt -> CInt -> CInt -> IO CString
+cChatResizeImageFd = cResizeImageData . readFd
+
+readFilePath :: CString -> IO ByteString
+readFilePath cPath = do
+  path <- peekCString cPath
+  withBinaryFile path ReadMode hGetImage
+
+readFd :: CInt -> IO ByteString
+readFd fd = bracket (fdToHandle fd `onException` c_close fd) hClose hGetImage
+
+hGetImage :: Handle -> IO ByteString
+hGetImage h =
+  tryIO (hFileSize h) >>= \case
+    Right size
+      | size > fromIntegral maxSize -> tooLarge
+      | otherwise -> B.hGet h $ fromIntegral size
+    Left _ -> do
+      s <- LB.hGet h $ maxSize + 1
+      if LB.length s > fromIntegral maxSize then tooLarge else pure $ LB.toStrict s
+  where
+    maxSize = maxDecodeMemoryMB * 1048576
+    tooLarge = fail "image file is too large"
+
+cResizeImageUri :: IO ByteString -> CInt -> IO CString
+cResizeImageUri input maxSize = cResizeImage id (resizeImageDataUri $ fromIntegral maxSize) input
+
+cResizeImageData :: IO ByteString -> CInt -> CInt -> IO CString
+cResizeImageData input maxSize png = cResizeImage LB64.encode resize input
+  where
+    resize img = resizeImage (format img) (fromIntegral maxSize) img
+    format img = case compare png 0 of
+      LT -> imageFormat img
+      EQ -> IFJpeg
+      GT -> IFPng
+
+cResizeImage :: (LB.ByteString -> LB.ByteString) -> (DynamicImage -> ColourProfile -> IO (Either String LB.ByteString)) -> IO ByteString -> IO CString
+cResizeImage encode resize input = do
+  r <- runCatchExceptT $ ExceptT . uncurry resize =<< ExceptT (decodeResizable =<< input)
+  newCStringFromLazyBS $ either (const "") encode r
 
 runCatchExceptT :: ExceptT String IO a -> IO (Either String a)
 runCatchExceptT action = runExceptT action `catchAll` (pure . Left . show)

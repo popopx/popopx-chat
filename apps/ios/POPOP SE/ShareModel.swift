@@ -306,6 +306,8 @@ class ShareModel: ObservableObject {
             )
         case .invalidConfirmation:
             ErrorAlert(LocalizedStringKey(NSLocalizedString("se_invalid_migration_confirm", comment: "invalid migration confirmation error")))
+        case .invalidQueueSize:
+            ErrorAlert(LocalizedStringKey(NSLocalizedString("se_invalid_migration_confirm", comment: "invalid migration confirmation error")))
         case let .unknown(json):
             ErrorAlert(
                 title: LocalizedStringKey(NSLocalizedString("se_db_error", comment: "database error title")),

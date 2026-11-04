@@ -38,7 +38,7 @@ struct SwipeToPopModifier: ViewModifier {
             }
             .overlay {
                 if isPopping {
-                    Color(hex: "#6E25C4")
+                    QuantumColors.accent
                         .opacity(0.6)
                         .blendMode(.screen)
                         .allowsHitTesting(false)
@@ -92,9 +92,9 @@ struct SwipeToPopModifier: ViewModifier {
             LinearGradient(
                 colors: [
                     .clear,
-                    Color(hex: "#C0C0C0").opacity(0.4),
+                    QuantumColors.silver.opacity(0.4),
                     Color.white.opacity(0.95),
-                    Color(hex: "#C0C0C0").opacity(0.4),
+                    QuantumColors.silver.opacity(0.4),
                     .clear
                 ],
                 startPoint: .leading,

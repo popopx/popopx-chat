@@ -38,7 +38,7 @@ var NoteFolderIconColor: Color {
     if Thread.isMainThread {
         return MainActor.assumeIsolated { AppTheme.shared.appColors.primaryVariant2 }
     }
-    return Color(0xFF934CFA)
+    return Color(0xFF00C4A6) // Teal fallback
 }
 
 func isInDarkTheme() -> Bool { !CurrentColors.colors.isLight }
@@ -60,7 +60,7 @@ func applyOLEDOverride() {
 
 // Returns the brand accent color for dark mode UI elements
 func darkThemeAccentColor() -> Color {
-    Color(0xFF6E25C4) // Popop Purple - brand primary for dark mode
+    Color(0xFF00B4D8) // Ocean Blue - brand primary for dark mode
 }
 
 // Returns the header font style for dark mode
@@ -70,7 +70,7 @@ func darkThemeHeaderFont() -> Font {
 
 // Returns the secondary brand color for gradients
 func neonGradientSecondary() -> Color {
-    Color(0xFF934CFA) // Bright purple - secondary accent for gradients
+    Color(0xFF00C4A6) // Teal - secondary accent for gradients
 }
 
 // Flash effect configuration based on current theme
@@ -96,7 +96,7 @@ func currentFlashConfig() -> FlashEffectConfig {
     } else {
         return FlashEffectConfig(
             coreColor: Color.white, // Crystal transparent white
-            outerColor: Color(0xFF6E25C4).opacity(0.15), // Logo purple shadow
+            outerColor: Color(0xFF00B4D8).opacity(0.15), // Ocean Blue shadow
             blendMode: .overlay,
             maxOpacity: 0.35,
             duration: 0.15, // 18 frames at 120Hz

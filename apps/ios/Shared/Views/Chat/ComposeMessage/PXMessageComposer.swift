@@ -96,7 +96,7 @@ struct ComposeView: View {
         }
         .background {
             ZStack(alignment: .top) {
-                Color(hex: "#110D1A").opacity(0.1)
+                QuantumColors.midnightPurple.opacity(0.1)
                     .overlay(.ultraThinMaterial)
                 if isInDarkTheme() {
                     LinearGradient(
@@ -786,10 +786,10 @@ struct ComposeView: View {
             .padding(.vertical, 12)
             .background(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(colorScheme == .light ? Color.white.opacity(0.95) : Color(hex: "#110D1A"))
+                    .fill(colorScheme == .light ? Color.white.opacity(0.95) : QuantumColors.midnightPurple)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .strokeBorder(Color(hex: "#00FFD2").opacity(0.7), lineWidth: 1.0)
+                            .strokeBorder(QuantumColors.accentSecondary.opacity(0.7), lineWidth: 1.0)
                     )
             )
         }

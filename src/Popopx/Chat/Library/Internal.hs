@@ -3038,13 +3038,13 @@ saveRcvChatItemNoParse user cd msg brokerTs = saveRcvChatItem user cd msg broker
 
 saveRcvChatItem :: (ChatTypeI c, ChatTypeQuotable c) => User -> ChatDirection c 'MDRcv -> RcvMessage -> UTCTime -> (CIContent 'MDRcv, (Text, ParsedMarkdown)) -> CM (ChatItem c 'MDRcv, ChatInfo c)
 saveRcvChatItem user cd msg@RcvMessage {sharedMsgId_} brokerTs content =
-  saveRcvChatItem' user cd msg sharedMsgId_ brokerTs content Nothing Nothing False M.empty
+  saveRcvChatItem' user cd msg sharedMsgId_ brokerTs content Nothing Nothing False False M.empty
 
 ciContentNoParse :: CIContent 'MDRcv -> (CIContent 'MDRcv, (Text, ParsedMarkdown))
 ciContentNoParse content = (content, (ciContentToText content, ParsedMarkdown Nothing Nothing))
 
-saveRcvChatItem' :: (ChatTypeI c, ChatTypeQuotable c) => User -> ChatDirection c 'MDRcv -> RcvMessage -> Maybe SharedMsgId -> UTCTime -> (CIContent 'MDRcv, (Text, ParsedMarkdown)) -> Maybe (CIFile 'MDRcv) -> Maybe CITimed -> Bool -> Map MemberName MsgMention -> CM (ChatItem c 'MDRcv, ChatInfo c)
-saveRcvChatItem' user cd msg@RcvMessage {chatMsgEvent, msgSigned, forwardedByMember} sharedMsgId_ brokerTs (content, ts@(_, ParsedMarkdown ft_ _)) ciFile itemTimed live mentions = do
+saveRcvChatItem' :: (ChatTypeI c, ChatTypeQuotable c) => User -> ChatDirection c 'MDRcv -> RcvMessage -> Maybe SharedMsgId -> UTCTime -> (CIContent 'MDRcv, (Text, ParsedMarkdown)) -> Maybe (CIFile 'MDRcv) -> Maybe CITimed -> Bool -> Bool -> Map MemberName MsgMention -> CM (ChatItem c 'MDRcv, ChatInfo c)
+saveRcvChatItem' user cd msg@RcvMessage {chatMsgEvent, msgSigned, forwardedByMember} sharedMsgId_ brokerTs (content, ts@(_, ParsedMarkdown ft_ _)) ciFile itemTimed live burnAfterRead mentions = do
   createdAt <- liftIO getCurrentTime
   cxt <- chatStoreCxt
   withStore' $ \db -> do
@@ -3058,7 +3058,7 @@ saveRcvChatItem' user cd msg@RcvMessage {chatMsgEvent, msgSigned, forwardedByMem
     let showAsGroup = case cd of CDChannelRcv {} -> True; _ -> False
         hasLink_ = ciContentHasLink content ft_
     itemForwarded <- rcvForwardedFrom db user cd msg
-    (ciId, quotedItem) <- createNewRcvChatItem db user cd msg sharedMsgId_ content itemForwarded itemTimed live userMention hasLink_ False brokerTs createdAt
+    (ciId, quotedItem) <- createNewRcvChatItem db user cd msg sharedMsgId_ content itemForwarded itemTimed live userMention hasLink_ burnAfterRead brokerTs createdAt
     forM_ ciFile $ \CIFile {fileId} -> updateFileTransferChatItemId db fileId ciId createdAt
     let ci = mkChatItem_ cd showAsGroup ciId content ts ciFile quotedItem sharedMsgId_ itemForwarded itemTimed live userMention hasLink_ False brokerTs forwardedByMember (toMsgVerified (signMessagesRequired cd) msgSigned) createdAt
     ci' <- case toChatInfo cd of

@@ -15,6 +15,7 @@ struct OnboardingWelcomeIdentityView: View {
     @EnvironmentObject var m: ChatModel
     @EnvironmentObject var theme: AppTheme
     @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @StateObject private var popController = BubblePopController()
     @State private var showBubble = false
     @State private var showProfileForm = false
@@ -76,106 +77,120 @@ struct OnboardingWelcomeIdentityView: View {
     // MARK: - Welcome Content (Phase 1: logo + bubble, Phase 2: profile form)
 
     private var welcomeContent: some View {
-        GeometryReader { g in
+        GeometryReader { geometry in
+            let screenWidth = max(0, geometry.size.width)
+            let screenHeight = max(0, geometry.size.height)
+            let logoWidth = max(1, (screenWidth - 50) * 0.50)
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     Image(colorScheme == .light ? "logo" : "logo-light")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: max(0, (g.size.width - 50)) * 0.50)
-                        .padding(.leading, 4)
-                        .frame(maxWidth: .infinity, minHeight: 40, alignment: .top)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: logoWidth)
+                    .padding(.leading, 4)
+                    .frame(maxWidth: .infinity, minHeight: 40, alignment: .top)
 
-                    Text(NSLocalizedString("Be free\nin your network", comment: "Onboarding title"))
-                        .font(.system(size: 38, weight: .bold, design: .rounded))
-                        .multilineTextAlignment(.center)
-                        .tracking(1.5)
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [QuantumColors.accent, QuantumColors.accentSecondary],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
+                Text(NSLocalizedString("Be free\nin your network", comment: "Onboarding title"))
+                    .font(QuantumFonts.display)
+                    .multilineTextAlignment(.center)
+                    .tracking(1.5)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [QuantumColors.accent, QuantumColors.accentSecondary],
+                            startPoint: .leading,
+                            endPoint: .trailing
                         )
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.3), radius: 20)
-                        .frame(maxWidth: .infinity)
+                    )
+                    .shadow(color: QuantumColors.accent.opacity(0.3), radius: 20)
+                    .frame(maxWidth: .infinity)
 
-                    Text(NSLocalizedString("Private and secure messaging.", comment: "Onboarding subtitle"))
-                        .font(.system(size: 16, weight: .medium, design: .rounded))
-                        .tracking(0.5)
-                        .foregroundColor(QuantumColors.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
+                Text(NSLocalizedString("Private and secure messaging.", comment: "Onboarding subtitle"))
+                    .font(QuantumFonts.body.weight(.medium))
+                    .tracking(0.5)
+                    .foregroundColor(QuantumColors.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
 
-                    Spacer(minLength: 16)
+                Spacer(minLength: 16)
 
-                    bubbleSection(g: g)
+                bubbleSection(screenWidth: screenWidth, screenHeight: screenHeight)
 
-                    if showProfileForm {
-                        profileFormSection
-                            .transition(.opacity.combined(with: .move(edge: .bottom)))
-                    }
-
-                    Spacer(minLength: 24)
+                if showProfileForm {
+                    profileFormSection
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
-                .padding(.horizontal, 25)
-                .padding(.top, 28)
-                .padding(.bottom, 20)
-                .frame(minHeight: g.size.height)
-                .frame(maxWidth: g.size.width)
+
+                Spacer(minLength: 24)
             }
-            .scrollBounceBehavior(.basedOnSize)
+            .padding(.horizontal, 25)
+            .padding(.top, 28)
+            .padding(.bottom, 20)
+            .frame(minHeight: max(1, screenHeight))
+            .frame(maxWidth: max(1, screenWidth))
+        }
+        .scrollBounceBehavior(.basedOnSize)
         }
     }
 
     // MARK: - Bubble Section
 
     @ViewBuilder
-    private func bubbleSection(g: GeometryProxy) -> some View {
+    private func bubbleSection(screenWidth: CGFloat, screenHeight: CGFloat) -> some View {
+        let safeWidth = max(1, screenWidth)
+        let safeHeight = max(1, screenHeight * 0.40)
+        
         ZStack {
             if popController.isPopping {
-                BubblePopCanvas(particles: popController.particles)
-                    .frame(width: g.size.width, height: g.size.height * 0.40)
+                BubblePopCanvas(particles: popController.particles, startTime: popController.startTime)
+                    .frame(width: safeWidth, height: safeHeight)
+                    .accessibilityHidden(true)
             } else if !showProfileForm {
-                BubbleComponent(diameter: min(260, g.size.width * 0.65))
+                BubbleComponent(diameter: max(1, min(260, screenWidth * 0.65)))
                     .scaleEffect(showBubble ? 1.0 : 0.8)
                     .opacity(showBubble ? 1.0 : 0.0)
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showBubble)
+                    .animation(reduceMotion ? .easeIn(duration: 0.3) : .spring(response: 0.5, dampingFraction: 0.7), value: showBubble)
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                             showBubble = true
                         }
                     }
                     .onTapGesture {
-                        triggerBubblePop(in: g)
+                        triggerBubblePop(containerSize: CGSize(width: screenWidth, height: screenHeight))
                     }
+                    .accessibilityElement()
+                    .accessibilityLabel(Text(NSLocalizedString("Welcome bubble", comment: "Accessibility label for welcome bubble")))
+                    .accessibilityHint(Text(NSLocalizedString("Double-tap to pop the bubble and continue", comment: "Accessibility hint for bubble tap")))
+                    .accessibilityAddTraits(.isButton)
             }
         }
-        .frame(height: showProfileForm ? 0 : g.size.height * 0.40)
+        .frame(height: showProfileForm ? 0 : max(1, screenHeight * 0.40))
         .animation(.easeInOut(duration: 0.4), value: showProfileForm)
 
         if !popController.isPopping && showBubble && !showProfileForm {
             Text(NSLocalizedString("tap_bubble_hint", comment: "Hint text below bubble animation"))
-                .font(.system(size: 12, weight: .regular, design: .monospaced))
-                .foregroundColor(Color(hex: "#C4BFD6"))
+                .font(QuantumFonts.mono)
+                .foregroundColor(QuantumColors.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color(hex: "#00FFD2").opacity(0.2), lineWidth: 1)
+                        .stroke(QuantumColors.accentSecondary.opacity(0.2), lineWidth: 1)
                 )
                 .transition(.opacity.combined(with: .scale))
+                .accessibilityHidden(true)
         }
 
         if !showProfileForm && !popController.isPopping && showBubble {
             Button {
-                triggerBubblePopForNavigation(in: g)
+                triggerBubblePopForNavigation(containerSize: CGSize(width: screenWidth, height: screenHeight))
             } label: {
                 Text(NSLocalizedString("Get started", comment: "Get started button"))
             }
             .buttonStyle(OnboardingButtonStyle(isDisabled: false))
             .padding(.vertical, 10)
+            .accessibilityLabel(Text(NSLocalizedString("Get started with POPOPX", comment: "Accessibility label for get started button")))
         }
     }
 
@@ -184,7 +199,7 @@ struct OnboardingWelcomeIdentityView: View {
     private var profileFormSection: some View {
         VStack(alignment: .center, spacing: 14) {
             Text(NSLocalizedString("Your alias", comment: "Profile creation title"))
-                .font(.system(size: 26, weight: .bold, design: .rounded))
+                .font(QuantumFonts.sectionTitle)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .foregroundStyle(
@@ -196,7 +211,7 @@ struct OnboardingWelcomeIdentityView: View {
                 )
 
             Text(NSLocalizedString("On your device, not on servers.", comment: "Profile storage explanation"))
-                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .font(QuantumFonts.callout.weight(.medium))
                 .foregroundColor(QuantumColors.textSecondary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
@@ -205,8 +220,8 @@ struct OnboardingWelcomeIdentityView: View {
 
             if displayName.trimmingCharacters(in: .whitespaces).isEmpty {
                 Text(NSLocalizedString("Please enter your name", comment: "Hint to enter profile name"))
-                    .font(.system(size: 13, design: .monospaced))
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .font(QuantumFonts.mono)
+                    .foregroundColor(QuantumColors.textSecondary)
                     .padding(.top, 4)
             }
 
@@ -235,24 +250,24 @@ struct OnboardingWelcomeIdentityView: View {
     private func privacyPill(icon: String, label: String) -> some View {
         HStack(spacing: 4) {
             Image(systemName: icon)
-                .font(.system(size: 11))
-                .foregroundColor(Color(hex: "#00FFD2"))
+                .font(QuantumFonts.iconTiny)
+                .foregroundColor(QuantumColors.accentSecondary)
             Text(label)
-                .font(.system(size: 11, weight: .medium, design: .rounded))
-                .foregroundColor(Color(hex: "#C4BFD6"))
+                .font(QuantumFonts.caption.weight(.medium))
+                .foregroundColor(QuantumColors.textSecondary)
                 .lineLimit(1)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color(hex: "#141021"))
+                .fill(QuantumColors.surfaceElevated)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 8)
                 .strokeBorder(
                     LinearGradient(
-                        colors: [Color(hex: "#6E25C4").opacity(0.25), Color(hex: "#00FFD2").opacity(0.15)],
+                        colors: [QuantumColors.accent.opacity(0.25), QuantumColors.accentSecondary.opacity(0.15)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -269,11 +284,11 @@ struct OnboardingWelcomeIdentityView: View {
         } label: {
             HStack(spacing: 6) {
                 Text(NSLocalizedString("Why we built this", comment: "Why built link"))
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .font(QuantumFonts.callout.weight(.medium))
+                    .foregroundColor(QuantumColors.textSecondary)
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .font(QuantumFonts.iconTiny.weight(.semibold))
+                    .foregroundColor(QuantumColors.textSecondary)
             }
             .padding(.vertical, 8)
         }
@@ -287,54 +302,54 @@ struct OnboardingWelcomeIdentityView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     Text(NSLocalizedString("You were born without an account", comment: "WhyPOPOPX title"))
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(QuantumFonts.sectionTitle)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 8)
 
                     Text(NSLocalizedString("Nobody tracked your conversations. No one drew a map of where you'd been. Privacy was never a feature - it was the way of life.", comment: "WhyPOPOPX paragraph 1"))
-                        .font(.system(size: 16, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8E4F0"))
+                        .font(QuantumFonts.body)
+                        .foregroundColor(QuantumColors.textBody)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text(NSLocalizedString("Then we moved online, and every platform asked for a piece of you - your name, your number, your friends. We accepted that the price of talking to others is letting someone know who we talk to. Every generation, people and tech, had it this way - telephone, email, messengers, social media. It seemed the only way possible.", comment: "WhyPOPOPX paragraph 2"))
-                        .font(.system(size: 16, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8E4F0"))
+                        .font(QuantumFonts.body)
+                        .foregroundColor(QuantumColors.textBody)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text(NSLocalizedString("There is another way. A network with no phone numbers. No usernames. No accounts. No user identities of any kind. A network that connects people and carries encrypted messages without knowing who is connected.", comment: "WhyPOPOPX paragraph 3"))
-                        .font(.system(size: 16, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8E4F0"))
+                        .font(QuantumFonts.body)
+                        .foregroundColor(QuantumColors.textBody)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text(NSLocalizedString("Not a better lock on someone else's door. Not a nicer landlord that respects your privacy, but still keeps the record of all visitors. You are not a guest. You are home. No king can enter it - you are sovereign.", comment: "WhyPOPOPX paragraph 4"))
-                        .font(.system(size: 16, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8E4F0"))
+                        .font(QuantumFonts.body)
+                        .foregroundColor(QuantumColors.textBody)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text(NSLocalizedString("Your conversations belong to you, as it had always been before the Internet. The network is not a place you visit. It is a place you create and own. And nobody can take it from you, whether you make it private or public.", comment: "WhyPOPOPX paragraph 5"))
-                        .font(.system(size: 16, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8E4F0"))
+                        .font(QuantumFonts.body)
+                        .foregroundColor(QuantumColors.textBody)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text(NSLocalizedString("The oldest human freedom - to speak to another person without being watched - built on infrastructure that cannot betray it.", comment: "WhyPOPOPX paragraph 6"))
-                        .font(.system(size: 16, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8E4F0"))
+                        .font(QuantumFonts.body)
+                        .foregroundColor(QuantumColors.textBody)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text(NSLocalizedString("Because we destroyed the power to know who you are. So that your power can never be taken.", comment: "WhyPOPOPX paragraph 7"))
-                        .font(.system(size: 16, design: .rounded))
-                        .foregroundColor(Color(hex: "#E8E4F0"))
+                        .font(QuantumFonts.body)
+                        .foregroundColor(QuantumColors.textBody)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text(NSLocalizedString("Be free in your network.", comment: "WhyPOPOPX closing"))
-                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                        .foregroundColor(Color(hex: "#00FFD2"))
+                        .font(QuantumFonts.body.weight(.semibold))
+                        .foregroundColor(QuantumColors.accentSecondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(24)
             }
-            .background(Color(hex: "#0A0814"))
+            .background(QuantumColors.background)
             .navigationTitle(NSLocalizedString("Why we built this", comment: "Why built sheet title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -342,10 +357,10 @@ struct OnboardingWelcomeIdentityView: View {
                     Button(NSLocalizedString("Done", comment: "Done button")) {
                         showWhySheet = false
                     }
-                    .foregroundColor(Color(hex: "#00FFD2"))
+                    .foregroundColor(QuantumColors.accentSecondary)
                 }
             }
-            .toolbarBackground(Color(hex: "#0A0814"), for: .navigationBar)
+            .toolbarBackground(QuantumColors.background, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
         }
         .presentationDetents([.medium, .large])
@@ -363,11 +378,11 @@ struct OnboardingWelcomeIdentityView: View {
         } label: {
             HStack(spacing: 4) {
                 Image(systemName: "tray.and.arrow.down")
-                    .font(.system(size: 12))
+                    .font(QuantumFonts.iconSmall)
                 Text(NSLocalizedString("Migrate from another device", comment: "Migrate link"))
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .font(QuantumFonts.caption.weight(.medium))
             }
-            .foregroundColor(Color(hex: "#6E6585"))
+            .foregroundColor(QuantumColors.textTertiary)
         }
     }
 
@@ -383,25 +398,27 @@ struct OnboardingWelcomeIdentityView: View {
                 .padding(.trailing, name != validName ? 36 : 16)
                 .padding(.vertical, 14)
                 .foregroundColor(.white)
-                .tint(Color(hex: "#00FFD2"))
+                .tint(QuantumColors.accentSecondary)
                 .background(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color(hex: "#141021"))
+                        .fill(QuantumColors.surfaceElevated)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
                         .strokeBorder(
                             LinearGradient(
-                                colors: [Color(hex: "#6E25C4").opacity(0.5), Color(hex: "#00FFD2").opacity(0.3)],
+                                colors: [QuantumColors.accent.opacity(0.5), QuantumColors.accentSecondary.opacity(0.3)],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),
                             lineWidth: 1.5
                         )
                 )
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.2), radius: 8, x: 0, y: 4)
+                .shadow(color: QuantumColors.accent.opacity(0.2), radius: 8, x: 0, y: 4)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
+                .accessibilityLabel(Text(NSLocalizedString("Profile name", comment: "Accessibility label for profile name input")))
+                .accessibilityHint(Text(NSLocalizedString("Enter your display name. This will be shown to your contacts.", comment: "Accessibility hint for profile name input")))
             if name != validName {
                 Button {
                     showAlert(.invalidNameError(validName: validName))
@@ -410,6 +427,7 @@ struct OnboardingWelcomeIdentityView: View {
                         .foregroundColor(theme.colors.error)
                         .padding(.horizontal, 10)
                         .accessibilityLabel(Text(NSLocalizedString("Invalid name", comment: "accessibility label for invalid name error")))
+                        .accessibilityHint(Text(NSLocalizedString("Double-tap to see why the name is invalid", comment: "accessibility hint for invalid name button")))
                 }
             }
         }
@@ -426,15 +444,18 @@ struct OnboardingWelcomeIdentityView: View {
             if creatingProfile {
                 ProgressView()
                     .tint(.white)
+                    .accessibilityLabel(Text(NSLocalizedString("Creating profile", comment: "Accessibility label for progress indicator")))
             } else {
                 Text(NSLocalizedString("onboarding_create_encrypt", comment: "Create profile and encrypt button"))
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(QuantumFonts.body.weight(.semibold))
                     .foregroundColor(.white)
             }
         }
         .buttonStyle(QuantumButtonStyle(primary: true))
         .disabled(creatingProfile || !canCreate)
         .frame(maxWidth: .infinity, minHeight: 52)
+        .accessibilityLabel(Text(NSLocalizedString("Create and encrypt profile", comment: "Accessibility label for create profile button")))
+        .accessibilityHint(Text(NSLocalizedString("Double-tap to create your profile and encrypt your identity", comment: "Accessibility hint for create profile button")))
     }
 
     // MARK: - Encrypt Animation Content
@@ -455,8 +476,8 @@ struct OnboardingWelcomeIdentityView: View {
             ZStack {
                 RadialGradient(
                     colors: [
-                        Color(hex: "#6E25C4").opacity(0.15),
-                        Color(hex: "#6E25C4").opacity(0.08),
+                        QuantumColors.accent.opacity(0.15),
+                        QuantumColors.accent.opacity(0.08),
                         Color.clear
                     ],
                     center: .center,
@@ -486,21 +507,21 @@ struct OnboardingWelcomeIdentityView: View {
                 }
 
                 Text(NSLocalizedString("onboarding_encrypting_alias", comment: "Encrypting alias status text"))
-                    .font(.system(size: 15, weight: .semibold, design: .monospaced))
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .font(QuantumFonts.callout.weight(.semibold))
+                    .foregroundColor(QuantumColors.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
                     .padding(.vertical, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color(hex: "#141021").opacity(0.7))
+                            .fill(QuantumColors.surfaceElevated.opacity(0.7))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(
                                         LinearGradient(
                                             colors: [
-                                                Color(hex: "#00FFD2").opacity(0.5),
-                                                Color(hex: "#6E25C4").opacity(0.4)
+                                                QuantumColors.accentSecondary.opacity(0.5),
+                                                QuantumColors.accent.opacity(0.4)
                                             ],
                                             startPoint: .leading,
                                             endPoint: .trailing
@@ -508,7 +529,7 @@ struct OnboardingWelcomeIdentityView: View {
                                         lineWidth: 2
                                     )
                             )
-                            .shadow(color: Color(hex: "#00FFD2").opacity(0.3), radius: 10, x: 0, y: 0)
+                            .shadow(color: QuantumColors.accentSecondary.opacity(0.3), radius: 10, x: 0, y: 0)
                     )
                     .opacity(bubbleRising ? 1.0 : 0.0)
                     .position(x: geo.size.width / 2, y: geo.size.height - 110)
@@ -519,10 +540,10 @@ struct OnboardingWelcomeIdentityView: View {
 
     // MARK: - Actions
 
-    private func triggerBubblePop(in g: GeometryProxy) {
-        let bubbleCenterY = g.size.height * 0.28
+    private func triggerBubblePop(containerSize: CGSize) {
+        let bubbleCenterY = containerSize.height * 0.28
         popController.triggerPop(
-            containerSize: g.size,
+            containerSize: containerSize,
             bubbleCenterY: bubbleCenterY,
             onComplete: {
                 Task { @MainActor in
@@ -537,8 +558,8 @@ struct OnboardingWelcomeIdentityView: View {
         )
     }
 
-    private func triggerBubblePopForNavigation(in g: GeometryProxy) {
-        triggerBubblePop(in: g)
+    private func triggerBubblePopForNavigation(containerSize: CGSize) {
+        triggerBubblePop(containerSize: containerSize)
     }
 
     private func startCreateProfileFlow() {
@@ -559,7 +580,7 @@ struct OnboardingWelcomeIdentityView: View {
     private func advanceToNextStep() {
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 100_000_000)
-            advanceOnboarding(to: .step2_NetworkAndCommitments)
+            advanceOnboarding(to: .step2_CreateProfile)
         }
     }
 

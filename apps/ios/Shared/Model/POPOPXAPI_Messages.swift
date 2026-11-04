@@ -50,8 +50,8 @@ private func isSendSuccess<R: ChatAPIResult>(_ result: APIResult<R>) -> Bool {
     return false
 }
 
-func apiSendMessages(type: ChatType, id: Int64, scope: GroupChatScope?, sendAsGroup: Bool = false, live: Bool = false, ttl: Int? = nil, composedMessages: [ComposedMessage]) async -> [ChatItem]? {
-    let cmd: ChatCommand = .apiSendMessages(type: type, id: id, scope: scope, sendAsGroup: sendAsGroup, live: live, ttl: ttl, composedMessages: composedMessages)
+func apiSendMessages(type: ChatType, id: Int64, scope: GroupChatScope?, sendAsGroup: Bool = false, live: Bool = false, ttl: Int? = nil, sign: Bool = true, burnAfterRead: Int? = nil, composedMessages: [ComposedMessage]) async -> [ChatItem]? {
+    let cmd: ChatCommand = .apiSendMessages(type: type, id: id, scope: scope, sendAsGroup: sendAsGroup, live: live, ttl: ttl, sign: sign, burnAfterRead: burnAfterRead, composedMessages: composedMessages)
     return await processSendMessageCmd(toChatType: type, cmd: cmd)
 }
 
@@ -744,6 +744,15 @@ func processReceivedMsg(_ res: ChatEvent) async {
                 BadgeModel.shared.setAlert(userId: user.userId, alert: badgeAlert)
             }
         }
+    case let .serviceRequest(user, requestId, signerKey, requestData):
+        if active(user) {
+            logger.info("Service request received: requestId=\(requestId), from user=\(user.userId)")
+            await MainActor.run {
+                m.serviceRequests.append(ServiceRequestData(user: user, requestId: requestId, signerKey: signerKey, requestData: requestData))
+            }
+        }
+    case let .serviceReplySent(connectionId):
+        logger.info("Service reply sent: connectionId=\(connectionId)")
     default:
         logger.warning("Unhandled ChatEvent: \(res.responseType)")
     }

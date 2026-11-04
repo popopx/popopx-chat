@@ -43,7 +43,7 @@ struct ProfileTabView: View {
                                     .padding(.vertical, 4)
                                     .background(
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .fill(isDark ? Color(hex: "#181829").opacity(0.6) : Color(hex: "#FFFFFF").opacity(0.7))
+                                            .fill(isDark ? QuantumColors.deepVoid.opacity(0.6) : Color.white.opacity(0.7))
                                     )
                             }
                         }

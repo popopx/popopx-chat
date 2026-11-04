@@ -31,7 +31,7 @@ struct PXProfilerAvatar: View {
             Circle()
                 .strokeBorder(
                     LinearGradient(
-                        colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")],
+                        colors: [QuantumColors.accent, QuantumColors.accentSecondary],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -51,14 +51,14 @@ struct PXProfilerAvatar: View {
                     .font(.system(size: 16, weight: .medium))
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")],
+                            colors: [QuantumColors.accent, QuantumColors.accentSecondary],
                             startPoint: .top,
                             endPoint: .bottom
                         )
                     )
             }
         }
-        .shadow(color: Color(hex: "#6E25C4").opacity(0.3), radius: 4, x: 0, y: 0)
+        .shadow(color: QuantumColors.accent.opacity(0.3), radius: 4, x: 0, y: 0)
         .rotation3DEffect(
             .degrees(revolverAngle),
             axis: (x: 0.2, y: 1, z: 0.1),
@@ -125,7 +125,7 @@ struct RevolverWheelView: View {
                     .frame(width: wheelRadius * 2 + itemSize + 20)
                     .overlay(
                         Circle()
-                            .strokeBorder(Color(hex: "#6E25C4").opacity(0.3), lineWidth: 1)
+                            .strokeBorder(QuantumColors.accent.opacity(0.3), lineWidth: 1)
                     )
                     .shadow(color: .black.opacity(0.5), radius: 12, y: 4)
 
@@ -192,12 +192,12 @@ struct RevolverWheelView: View {
 
                     if isActive {
                         Circle()
-                            .stroke(Color(hex: "#00FFD2"), lineWidth: 2)
+                            .stroke(QuantumColors.accentSecondary, lineWidth: 2)
                             .frame(width: itemSize + 4, height: itemSize + 4)
-                            .shadow(color: Color(hex: "#00FFD2").opacity(0.5), radius: 6)
+                            .shadow(color: QuantumColors.accentSecondary.opacity(0.5), radius: 6)
                     } else {
                         Circle()
-                            .strokeBorder(Color(hex: "#6E25C4").opacity(0.4), lineWidth: 1)
+                            .strokeBorder(QuantumColors.accent.opacity(0.4), lineWidth: 1)
                             .frame(width: itemSize, height: itemSize)
                     }
 
@@ -209,7 +209,7 @@ struct RevolverWheelView: View {
                             .font(.system(size: 14, weight: .medium))
                             .foregroundStyle(
                                 LinearGradient(
-                                    colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")],
+                                    colors: [QuantumColors.accent, QuantumColors.accentSecondary],
                                     startPoint: .top,
                                     endPoint: .bottom
                                 )
@@ -238,12 +238,12 @@ struct RevolverWheelView: View {
                     .frame(width: itemSize, height: itemSize)
                     .overlay(
                         Circle()
-                            .strokeBorder(Color(hex: "#6E25C4").opacity(0.4), lineWidth: 1)
+                            .strokeBorder(QuantumColors.accent.opacity(0.4), lineWidth: 1)
                     )
 
                 Image(systemName: "plus.circle.fill")
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(Color(hex: "#6E25C4"))
+                    .foregroundColor(QuantumColors.accent)
             }
         }
         .buttonStyle(.plain)

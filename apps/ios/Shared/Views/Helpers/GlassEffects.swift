@@ -37,9 +37,9 @@ enum QuantumGlass {
     static func iridescentBorderGradient(opacity: Double = 0.25) -> LinearGradient {
         LinearGradient(
             colors: [
-                Color(hex: "#00FFCC").opacity(opacity),
-                Color(hex: "#A020F0").opacity(opacity * 0.8),
-                Color(hex: "#FF007A").opacity(opacity * 0.6)
+                QuantumColors.turquoise.opacity(opacity),
+                QuantumColors.particleDeepPurple.opacity(opacity * 0.8),
+                QuantumColors.hotPink.opacity(opacity * 0.6)
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -83,7 +83,7 @@ struct GlassBackground: ViewModifier {
                     .strokeBorder(
                         LinearGradient(
                             colors: isInDarkTheme()
-                            ? [Color(hex: "#00FFCC").opacity(0.2), Color(hex: "#A020F0").opacity(0.15), Color(hex: "#FF007A").opacity(0.1)]
+                            ? [QuantumColors.turquoise.opacity(0.2), QuantumColors.particleDeepPurple.opacity(0.15), QuantumColors.hotPink.opacity(0.1)]
                             : [
                                 Color.white.opacity(0.4),
                                 Color.white.opacity(0.15)
@@ -122,7 +122,7 @@ struct GlassSurface: ViewModifier {
                     .strokeBorder(
                         LinearGradient(
                             colors: isInDarkTheme()
-                            ? [Color(hex: "#00FFCC").opacity(0.25), Color(hex: "#A020F0").opacity(0.18), Color(hex: "#FF007A").opacity(0.12)]
+                            ? [QuantumColors.turquoise.opacity(0.25), QuantumColors.particleDeepPurple.opacity(0.18), QuantumColors.hotPink.opacity(0.12)]
                             : [
                                 QuantumGlass.borderHighlight,
                                 QuantumGlass.borderSubtle
@@ -152,7 +152,7 @@ struct GlassInnerHighlight: ViewModifier {
                     .strokeBorder(
                         LinearGradient(
                             colors: isInDarkTheme()
-                            ? [Color(hex: "#00FFCC").opacity(0.3), Color.clear]
+                            ? [QuantumColors.turquoise.opacity(0.3), Color.clear]
                             : [Color.white.opacity(0.5), Color.clear],
                             startPoint: .top,
                             endPoint: .center
@@ -320,7 +320,7 @@ struct GlassAlertView: View {
                     .strokeBorder(
                         LinearGradient(
                             colors: isInDarkTheme()
-                            ? [Color(hex: "#00FFCC").opacity(0.35), Color(hex: "#A020F0").opacity(0.25), Color(hex: "#FF007A").opacity(0.15)]
+                            ? [QuantumColors.turquoise.opacity(0.35), QuantumColors.particleDeepPurple.opacity(0.25), QuantumColors.hotPink.opacity(0.15)]
                             : [QuantumGlass.borderAlert, QuantumGlass.borderAlertSecondary],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -470,7 +470,7 @@ struct GlassConfirmationDialog: View {
                     .strokeBorder(
                         LinearGradient(
                             colors: isInDarkTheme()
-                            ? [Color(hex: "#00FFCC").opacity(0.35), Color(hex: "#A020F0").opacity(0.25), Color(hex: "#FF007A").opacity(0.15)]
+                            ? [QuantumColors.turquoise.opacity(0.35), QuantumColors.particleDeepPurple.opacity(0.25), QuantumColors.hotPink.opacity(0.15)]
                             : [QuantumGlass.borderAlert, QuantumGlass.borderAlertSecondary],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -586,7 +586,7 @@ struct GlassActionSheet: View {
                     .strokeBorder(
                         LinearGradient(
                             colors: isInDarkTheme()
-                            ? [Color(hex: "#00FFCC").opacity(0.35), Color(hex: "#A020F0").opacity(0.25), Color(hex: "#FF007A").opacity(0.15)]
+                            ? [QuantumColors.turquoise.opacity(0.35), QuantumColors.particleDeepPurple.opacity(0.25), QuantumColors.hotPink.opacity(0.15)]
                             : [QuantumGlass.borderAlert, QuantumGlass.borderAlertSecondary],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -640,7 +640,7 @@ struct GlassSheetHeader: View {
                     .foregroundStyle(
                         LinearGradient(
                             colors: isInDarkTheme()
-                            ? [Color(hex: "#00FFCC"), Color(hex: "#A020F0"), Color(hex: "#FF007A")]
+                            ? [QuantumColors.turquoise, QuantumColors.particleDeepPurple, QuantumColors.hotPink]
                             : [.primary.opacity(0.8), .primary.opacity(0.5)],
                             startPoint: .top, endPoint: .bottom
                         )
@@ -812,7 +812,7 @@ struct GlassCapsule: View {
                 .strokeBorder(
                     LinearGradient(
                         colors: isInDarkTheme()
-                        ? [Color(hex: "#00FFCC").opacity(0.25), Color(hex: "#A020F0").opacity(0.18), Color(hex: "#FF007A").opacity(0.1)]
+                        ? [QuantumColors.turquoise.opacity(0.25), QuantumColors.particleDeepPurple.opacity(0.18), QuantumColors.hotPink.opacity(0.1)]
                         : [QuantumGlass.borderProminent, QuantumGlass.borderSubtle],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -869,7 +869,7 @@ struct GlassSearchField: View {
                 .strokeBorder(
                     LinearGradient(
                         colors: isInDarkTheme()
-                        ? [Color(hex: "#00FFCC").opacity(0.12), Color(hex: "#A020F0").opacity(0.08), Color(hex: "#FF007A").opacity(0.04)]
+                        ? [QuantumColors.turquoise.opacity(0.12), QuantumColors.particleDeepPurple.opacity(0.08), QuantumColors.hotPink.opacity(0.04)]
                         : [Color.white.opacity(0.5), Color.white.opacity(0.15)],
                         startPoint: .top,
                         endPoint: .bottom
@@ -889,7 +889,7 @@ struct GlassDivider: View {
             .fill(
                 LinearGradient(
                     colors: isInDarkTheme()
-                    ? [Color.clear, Color(hex: "#00FFCC").opacity(0.1), Color(hex: "#FF007A").opacity(0.08), Color.clear]
+                    ? [Color.clear, QuantumColors.turquoise.opacity(0.1), QuantumColors.hotPink.opacity(0.08), Color.clear]
                     : [Color.clear, Color.white.opacity(0.3), Color.clear],
                     startPoint: .leading,
                     endPoint: .trailing

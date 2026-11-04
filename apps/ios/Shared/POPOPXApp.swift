@@ -58,10 +58,15 @@ struct POPOPXApp: App {
         Task {
             // TODO [TODO-FEATURE: high] cleanupOrphanedMigrationTempFiles not implemented
             // cleanupOrphanedMigrationTempFiles()
+            
             NtfManager.shared.registerCategories()
+            
             await TransportManager.shared.initialize()
+            
             NeedleProcessor.shared.initialize()
+            
             DeadMansSwitch.shared.recordActivity()
+            
             await WKWebsiteDataStore.default().removeData(
                 ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
                 modifiedSince: Date.distantPast
@@ -140,8 +145,8 @@ struct POPOPXApp: App {
                         NeonLaunchView(isVisible: $showNeonSplash)
                             .onAppear {
                                 Task {
-                                    try? await Task.sleep(for: .seconds(1.5))
-                                    withAnimation(.easeOut(duration: 0.5)) {
+                                    try? await Task.sleep(for: .seconds(1.2))
+                                    withAnimation(.easeOut(duration: 0.4)) {
                                         showNeonSplash = false
                                     }
                                 }

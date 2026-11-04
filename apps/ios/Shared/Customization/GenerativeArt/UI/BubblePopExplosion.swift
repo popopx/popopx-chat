@@ -34,19 +34,19 @@ struct BubblePopExplosion: View {
         if isInDarkTheme() {
             // Dark Mode: Neon Extinguish - 50% #6E25C4 + 30% #00FFD2 + 20% #FF00A0
             return [
-                Color(hex: "#6E25C4"), // Popop Purple (50% weight)
-                Color(hex: "#6E25C4"),
-                Color(hex: "#00FFD2"), // Aura Cyan (30% weight)
-                Color(hex: "#FF00A0"), // Transient Pink (20% weight)
+                QuantumColors.accent, // Popop Purple (50% weight)
+                QuantumColors.accent,
+                QuantumColors.accentSecondary, // Aura Cyan (30% weight)
+                QuantumColors.accentWarm, // Transient Pink (20% weight)
                 Color.white
             ]
         } else {
             // Light Mode: Water Pearl Splash - 60% #A570EB + 20% #00C4A6 + 20% #FFFFFF
             return [
-                Color(hex: "#A570EB"), // Bright purple water drop (60% weight)
-                Color(hex: "#A570EB"),
-                Color(hex: "#A570EB"),
-                Color(hex: "#00C4A6"), // Thin mint green (20% weight)
+                QuantumColors.lavenderBright, // Bright purple water drop (60% weight)
+                QuantumColors.lavenderBright,
+                QuantumColors.lavenderBright,
+                QuantumColors.tealAccent, // Thin mint green (20% weight)
                 Color.white // High-gloss white pearl (20% weight)
             ]
         }

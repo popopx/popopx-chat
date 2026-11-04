@@ -65,11 +65,11 @@ struct BinThereMosaicDissolve: View {
                         let color: Color
                         switch hueShift {
                         case 0:
-                            color = Color(hex: "#06040A")
+                            color = QuantumColors.background
                         case 1:
-                            color = Color(hex: "#141021")
+                            color = QuantumColors.surfaceElevated
                         default:
-                            color = Color(hex: "#6E25C4").opacity(0.15)
+                            color = QuantumColors.accent.opacity(0.15)
                         }
 
                         context.fill(Path(rect), with: .color(color.opacity(localAlpha)))

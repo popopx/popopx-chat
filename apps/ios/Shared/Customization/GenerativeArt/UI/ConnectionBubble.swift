@@ -17,10 +17,10 @@ struct ConnectionBubbleView: View {
     @State private var showShareSheet = false
 
     private let palette: [Color] = [
-        Color(hex: "#00FFFF"),
-        Color(hex: "#8B5CF6"),
-        Color(hex: "#FF00FF"),
-        Color(hex: "#818CF8")
+        QuantumColors.pureCyan,
+        QuantumColors.particleViolet,
+        QuantumColors.pureMagenta,
+        QuantumColors.encryptionStandard
     ]
 
     var body: some View {
@@ -39,7 +39,7 @@ struct ConnectionBubbleView: View {
         }
         .frame(width: bubbleSize, height: bubbleSize)
         .clipShape(Circle())
-        .shadow(color: Color(hex: "#8B5CF6").opacity(0.3), radius: 8, x: 0, y: 4)
+        .shadow(color: QuantumColors.particleViolet.opacity(0.3), radius: 8, x: 0, y: 4)
         .offset(dragOffset)
         .rotationEffect(.degrees(rotation))
         .scaleEffect(isPickedUp ? 1.15 : 1.0)

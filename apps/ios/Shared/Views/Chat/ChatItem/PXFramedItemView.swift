@@ -94,7 +94,7 @@ struct FramedItemView: View {
                                     LinearGradient(
                                         colors: [
                                             Color.clear,
-                                            Color(hex: "#00FFFF").opacity(0.15 * (1.0 - ttlProgress))
+                                            QuantumColors.pureCyan.opacity(0.15 * (1.0 - ttlProgress))
                                         ],
                                         startPoint: .top,
                                         endPoint: .bottom
@@ -124,7 +124,7 @@ struct FramedItemView: View {
                         if remaining < 10.0 && remaining > 0 {
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
                                 .strokeBorder(
-                                    Color(hex: "#FF00FF").opacity(0.3 + flashIntensity * 0.7),
+                                    QuantumColors.pureMagenta.opacity(0.3 + flashIntensity * 0.7),
                                     lineWidth: 1.5
                                 )
                         }
@@ -192,6 +192,7 @@ struct FramedItemView: View {
 
                 if let qi = chatItem.quotedItem {
                     ciQuoteView(qi)
+                        .accessibilityHint("Navigates to quoted message")
                         .simultaneousGesture(TapGesture().onEnded {
                             if let ci = im.reversedChatItems.first(where: { $0.id == qi.itemId }) {
                                 withAnimation {
@@ -277,6 +278,23 @@ struct FramedItemView: View {
         // POPOPX: Add padding to VStack so content is inset from bubble edge
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel({
+                var parts = [String]()
+                if chatItem.chatDir.sent { parts.append("Sent") } else { parts.append("Received") }
+                if let text = chatItem.content.msgContent?.text, !text.isEmpty { parts.append(text) }
+                if let file = chatItem.file { parts.append(file.fileName) }
+                if chatItem.meta.itemDeleted != nil { parts.append("Deleted") }
+                if chatItem.isReport { parts.append("Report") }
+                return parts.joined(separator: ", ")
+            }())
+            .accessibilityAddTraits(chatItem.chatDir.sent ? .isStaticText : .isStaticText)
+            .accessibilityValue({
+                if let timed = chatItem.meta.itemTimed, timed.ttl > 0 {
+                    return "Timed message, \(timed.ttl) seconds"
+                }
+                return ""
+            }())
             .background {
                 let baseColor = chatItemFrameColorMaybeImageOrVideo(chatItem, theme)
                 if CyberThemeManager.shared.isCyberMode {
@@ -286,8 +304,8 @@ struct FramedItemView: View {
                             .strokeBorder(
                                 LinearGradient(
                                     colors: !chatItem.chatDir.sent
-                                        ? [Color(hex: "#00FFD2").opacity(0.7), Color(hex: "#6E25C4").opacity(0.5)] // Aura cyan to Popop purple gradient
-                                        : [Color(hex: "#6E25C4").opacity(0.7), Color(hex: "#934CFA").opacity(0.5)], // Popop purple to bright purple
+                                        ? [QuantumColors.accentSecondary.opacity(0.7), QuantumColors.accent.opacity(0.5)] // Teal to Ocean Blue gradient
+                                        : [QuantumColors.accent.opacity(0.7), QuantumColors.primaryEnd.opacity(0.5)], // Ocean Blue to Light Blue
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
@@ -302,15 +320,15 @@ struct FramedItemView: View {
 
                         // Gradient overlay for sent/received bubbles based on theme
                         if isInDarkTheme() {
-                            // Dark Mode: Obsidian & Purple Abyss
+                            // Dark Mode: Ocean Blue & Teal
                             if chatItem.chatDir.sent {
-                                // Sent: Brand purple gradient #6E25C4 → #934CFA
+                                // Sent: Ocean Blue gradient #00B4D8 → #5BC8FD
                                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                                     .fill(
                                         LinearGradient(
                                             colors: [
-                                                Color(hex: "#6E25C4"),
-                                                Color(hex: "#934CFA")
+                                                QuantumColors.accent,
+                                                QuantumColors.primaryEnd
                                             ],
                                             startPoint: .bottomLeading,
                                             endPoint: .topTrailing
@@ -323,26 +341,26 @@ struct FramedItemView: View {
                             } else {
                                 // Received: Glassmorphism #1F162E @ 55% with .ultraThinMaterial blur
                                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .fill(Color(hex: "#1F162E").opacity(0.55))
+                                    .fill(QuantumColors.darkPurpleDeep2.opacity(0.55))
 
                                 // Frost overlay: solid color替代 ultraThinMaterial 节省 GPU
                                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .fill(Color(hex: "#2A1F3D").opacity(0.6))
+                                    .fill(QuantumColors.darkPurpleMid.opacity(0.6))
 
                                 // Full-opacity aura cyan (#00FFD2) 0.5pt border
                                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .strokeBorder(Color(hex: "#00FFD2"), lineWidth: 0.5)
+                                    .strokeBorder(QuantumColors.accentSecondary, lineWidth: 0.5)
                             }
                         } else {
-                            // Light Mode: Hydro-Iridescence
+                            // Light Mode: Fresh Blue-Green
                             if chatItem.chatDir.sent {
-                                // Sent: Soft purple gradient #8A43E6 → #B680FF
+                                // Sent: Ocean Blue gradient #00B4D8 → #2AABEE
                                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                                     .fill(
                                         LinearGradient(
                                             colors: [
-                                                Color(hex: "#8A43E6"),
-                                                Color(hex: "#B680FF")
+                                                QuantumColors.electricPurple,
+                                                QuantumColors.brightPurple
                                             ],
                                             startPoint: .bottomLeading,
                                             endPoint: .topTrailing
@@ -353,7 +371,7 @@ struct FramedItemView: View {
                                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                                     .fill(Color.white.opacity(0.75))
                                     .shadow(
-                                        color: Color(hex: "#6E25C4").opacity(0.06),
+                                        color: QuantumColors.accent.opacity(0.06),
                                         radius: 25,
                                         x: 0,
                                         y: 4
@@ -391,14 +409,14 @@ struct FramedItemView: View {
                             // Outer halo: 12px cyan glow
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
                                 .fill(Color.clear)
-                                .shadow(color: Color(hex: "#00FFFF").opacity(0.12), radius: 12, x: 0, y: 0)
+                                .shadow(color: QuantumColors.pureCyan.opacity(0.12), radius: 12, x: 0, y: 0)
                         }
                     }
                 }
             )
             .compositingGroup() // POPOPX: flatten before shadow to reduce GPU passes
             .shadow(color: isInDarkTheme()
-                ? (chatItem.chatDir.sent ? Color(hex: "#934CFA").opacity(0.12) : Color(hex: "#00FFD2").opacity(0.12))
+                ? (chatItem.chatDir.sent ? QuantumColors.primaryEnd.opacity(0.12) : QuantumColors.accentSecondary.opacity(0.12))
                 : .clear, radius: 7, x: 0, y: 1)
             // POPOPX: liquidFloat removed for battery — chat-list float preserved
             // Bubble generation animation for new messages

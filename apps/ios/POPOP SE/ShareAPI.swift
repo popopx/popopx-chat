@@ -24,7 +24,8 @@ func apiGetActiveUser() throws -> User? {
 }
 
 func apiStartChat() throws -> Bool {
-    let r: APIResult<SEChatResponse> = sendPopopxCmd(SEChatCommand.startChat(mainApp: false, enableSndFiles: true))
+    // Share extension doesn't need service requests
+    let r: APIResult<SEChatResponse> = sendPopopxCmd(SEChatCommand.startChat(mainApp: false, enableSndFiles: true, serviceRequests: false))
     switch r {
     case .result(.chatStarted, _): return true
     case .result(.chatRunning, _): return false
@@ -73,6 +74,8 @@ func apiSendMessages(
             sendAsGroup: chatInfo.sendAsGroup,
             live: false,
             ttl: nil,
+            sign: true,
+            burnAfterRead: nil,
             composedMessages: composedMessages
         )
     )
@@ -113,7 +116,7 @@ func apiSuspendChat(expired: Bool) {
 
 enum SEChatCommand: ChatCmdProtocol {
     case showActiveUser
-    case startChat(mainApp: Bool, enableSndFiles: Bool)
+    case startChat(mainApp: Bool, enableSndFiles: Bool, serviceRequests: Bool = false)
     case apiActivateChat(restoreChat: Bool)
     case apiSuspendChat(timeoutMicroseconds: Int)
     case apiSetNetworkConfig(networkConfig: NetCfg)
@@ -121,12 +124,12 @@ enum SEChatCommand: ChatCmdProtocol {
     case apiSetEncryptLocalFiles(enable: Bool)
     case apiGetChats(userId: Int64)
     case apiCreateChatItems(noteFolderId: Int64, composedMessages: [ComposedMessage])
-    case apiSendMessages(type: ChatType, id: Int64, scope: GroupChatScope?, sendAsGroup: Bool, live: Bool, ttl: Int?, composedMessages: [ComposedMessage])
+    case apiSendMessages(type: ChatType, id: Int64, scope: GroupChatScope?, sendAsGroup: Bool, live: Bool, ttl: Int?, sign: Bool, burnAfterRead: Int?, composedMessages: [ComposedMessage])
     
     var cmdString: String {
         switch self {
         case .showActiveUser: return "/u"
-        case let .startChat(mainApp, enableSndFiles): return "/_start main=\(onOff(mainApp)) snd_files=\(onOff(enableSndFiles))"
+        case let .startChat(mainApp, enableSndFiles, serviceRequests): return "/_start main=\(onOff(mainApp)) snd_files=\(onOff(enableSndFiles)) service_requests=\(onOff(serviceRequests))"
         case let .apiActivateChat(restore): return "/_app activate restore=\(onOff(restore))"
         case let .apiSuspendChat(timeoutMicroseconds): return "/_app suspend \(timeoutMicroseconds)"
         case let .apiSetNetworkConfig(networkConfig): return "/_network \(encodeJSON(networkConfig))"
@@ -137,11 +140,13 @@ enum SEChatCommand: ChatCmdProtocol {
         case let .apiCreateChatItems(noteFolderId, composedMessages):
             let msgs = encodeJSON(composedMessages)
             return "/_create *\(noteFolderId) json \(msgs)"
-        case let .apiSendMessages(type, id, scope, sendAsGroup, live, ttl, composedMessages):
+        case let .apiSendMessages(type, id, scope, sendAsGroup, live, ttl, sign, burnAfterRead, composedMessages):
             let msgs = encodeJSON(composedMessages)
             let ttlStr = ttl.map { "\($0)" } ?? "default"
             let asGroup = sendAsGroup ? "(as_group=on)" : ""
-            return "/_send \(ref(type, id, scope: scope))\(asGroup) live=\(onOff(live)) ttl=\(ttlStr) json \(msgs)"
+            let signStr = " sign=\(onOff(sign))"
+            let burnStr = " burn=\(burnAfterRead != nil ? onOff(true) : onOff(false))"
+            return "/_send \(ref(type, id, scope: scope))\(asGroup) live=\(onOff(live)) ttl=\(ttlStr)\(signStr)\(burnStr) json \(msgs)"
         }
     }
     

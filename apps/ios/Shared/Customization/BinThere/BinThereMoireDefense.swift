@@ -10,18 +10,22 @@
 //  to the naked eye but cause visible Moiré interference when captured
 //  by an external camera (phone, DSLR) due to rolling shutter interaction.
 //
-//  Based on the industrial approach from safescreen.rtf:
+//  Based on the industrial solution from safescreen.rtf:
 //  "以高于肉眼、但低于主流手机相机快门同步率的频率快速交替扰动纹理"
 //
 
 import SwiftUI
+import os
+
+private let moireLogger = Logger(subsystem: "im.popopx", category: "MoireDefense")
 
 struct BinThereMoireDefense: View {
     @ObservedObject private var powerMode = PowerModeObserver.shared
     @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var performanceMonitor = MoirePerformanceMonitor()
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: powerMode.isLowPowerMode || scenePhase != .active)) { timeline in
+        TimelineView(.animation(minimumInterval: performanceMonitor.targetFrameInterval, paused: shouldPause)) { timeline in
             Canvas(opaque: false, rendersAsynchronously: true) { context, size in
                 let t = timeline.date.timeIntervalSinceReferenceDate
                 let lineCount = Int(size.height * 0.8)
@@ -46,9 +50,86 @@ struct BinThereMoireDefense: View {
                 let scanRect = CGRect(x: 0, y: scanY, width: size.width, height: 2)
                 context.fill(Path(scanRect), with: .color(.white.opacity(0.02)))
             }
+            .onChange(of: timeline.date) { _, newDate in
+                performanceMonitor.recordFrame(at: newDate)
+            }
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)
         .accessibilityHidden(true)
+        .onAppear {
+            performanceMonitor.startMonitoring()
+        }
+        .onDisappear {
+            performanceMonitor.stopMonitoring()
+        }
+    }
+
+    private var shouldPause: Bool {
+        powerMode.isLowPowerMode || scenePhase != .active || performanceMonitor.shouldReduceQuality
+    }
+}
+
+// MARK: - Performance Monitor
+
+@MainActor
+class MoirePerformanceMonitor: ObservableObject {
+    @Published private(set) var currentFPS: Double = 0
+    @Published private(set) var shouldReduceQuality: Bool = false
+    
+    private var frameTimes: [Date] = []
+    private var lastAdjustmentTime: Date = .distantPast
+    private let adjustmentInterval: TimeInterval = 2.0
+    private let lowFPSThreshold: Double = 20.0
+    private let highFPSThreshold: Double = 50.0
+    
+    var targetFrameInterval: TimeInterval {
+        shouldReduceQuality ? 1.0 / 15.0 : 1.0 / 30.0
+    }
+    
+    func recordFrame(at date: Date) {
+        frameTimes.append(date)
+        
+        // Keep only last 2 seconds of frame times
+        let cutoff = date.addingTimeInterval(-2.0)
+frameTimes = frameTimes.filter { $0 > cutoff }
+        
+        // Calculate FPS every 0.5 seconds
+        if frameTimes.count >= 2 {
+            let elapsed = date.timeIntervalSince(frameTimes.first!)
+            if elapsed > 0 {
+                let fps = Double(frameTimes.count) / elapsed
+                updateFPS(fps)
+            }
+        }
+    }
+    
+    private func updateFPS(_ fps: Double) {
+        currentFPS = fps
+        
+        let now = Date()
+        guard now.timeIntervalSince(lastAdjustmentTime) >= adjustmentInterval else { return }
+        
+        // Adjust quality based on FPS
+        if fps < lowFPSThreshold && !shouldReduceQuality {
+            shouldReduceQuality = true
+            lastAdjustmentTime = now
+            moireLogger.warning("Low FPS detected (\(fps)), reducing quality")
+        } else if fps > highFPSThreshold && shouldReduceQuality {
+            shouldReduceQuality = false
+            lastAdjustmentTime = now
+            moireLogger.info("FPS recovered (\(fps)), restoring quality")
+        }
+    }
+    
+    func startMonitoring() {
+        moireLogger.debug("Performance monitoring started")
+    }
+    
+    func stopMonitoring() {
+        frameTimes.removeAll()
+        currentFPS = 0
+        shouldReduceQuality = false
+        moireLogger.debug("Performance monitoring stopped")
     }
 }

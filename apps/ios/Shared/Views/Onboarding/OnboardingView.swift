@@ -26,35 +26,19 @@ struct OnboardingView: View {
                 switch currentStage {
                 case .step1_WelcomeIdentity:
                     OnboardingWelcomeIdentityView()
-                        .background(Color(hex: "#06040A").ignoresSafeArea())
-                case .step2_NetworkAndCommitments:
-                    OnboardingNetworkCommitmentsView()
-                        .navigationBarBackButtonHidden(true)
-                        .background(Color(hex: "#06040A").ignoresSafeArea())
-                case .step1_AppInfoView:
-                    AppInfoView(onboarding: true)
-                        .modifier(ThemedBackground(glass: true))
+                        .background(QuantumColors.background.ignoresSafeArea())
                 case .step2_CreateProfile:
                     CreateFirstProfile()
                         .navigationBarBackButtonHidden(true)
                         .modifier(ThemedBackground(glass: true))
-                case .step3_LegacyAddressCreation:
-                    CreateFirstProfile()
-                        .modifier(ThemedBackground(glass: true))
-                case .step3_ChooseServerOperators:
-                    YourNetworkView()
+                case .step3_PrivacyChoice:
+                    PrivacyChoiceView()
                         .navigationBarBackButtonHidden(true)
                         .modifier(ThemedBackground(glass: true))
-                case .step4_SetNotificationsMode:
-                    OnboardingConditionsView(initialOperatorIds: Set(chatModel.conditions.serverOperators.filter { $0.enabled }.map { $0.operatorId }))
+                case .step4_GetStarted:
+                    GetStartedView()
                         .navigationBarBackButtonHidden(true)
                         .modifier(ThemedBackground(glass: true))
-                        .onAppear { reloadConditionsIfNeeded() }
-                case .step4_NetworkCommitments:
-                    OnboardingConditionsView(initialOperatorIds: Set(chatModel.conditions.serverOperators.filter { $0.enabled }.map { $0.operatorId }))
-                        .navigationBarBackButtonHidden(true)
-                        .modifier(ThemedBackground(glass: true))
-                        .onAppear { reloadConditionsIfNeeded() }
                 case .onboardingComplete:
                     VStack(spacing: 16) {
                         ProgressView()
@@ -63,6 +47,30 @@ struct OnboardingView: View {
                             .font(.body)
                             .foregroundColor(.secondary)
                     }
+                // Deprecated stages - redirect to new flow
+                case .step2_NetworkAndCommitments:
+                    PrivacyChoiceView()
+                        .navigationBarBackButtonHidden(true)
+                        .modifier(ThemedBackground(glass: true))
+                case .step1_AppInfoView:
+                    OnboardingWelcomeIdentityView()
+                        .background(QuantumColors.background.ignoresSafeArea())
+                case .step3_LegacyAddressCreation:
+                    CreateFirstProfile()
+                        .navigationBarBackButtonHidden(true)
+                        .modifier(ThemedBackground(glass: true))
+                case .step3_ChooseServerOperators:
+                    PrivacyChoiceView()
+                        .navigationBarBackButtonHidden(true)
+                        .modifier(ThemedBackground(glass: true))
+                case .step4_SetNotificationsMode:
+                    PrivacyChoiceView()
+                        .navigationBarBackButtonHidden(true)
+                        .modifier(ThemedBackground(glass: true))
+                case .step4_NetworkCommitments:
+                    PrivacyChoiceView()
+                        .navigationBarBackButtonHidden(true)
+                        .modifier(ThemedBackground(glass: true))
                 }
             }
         }
@@ -91,12 +99,16 @@ func onboardingButtonPlaceholder() -> some View {
 
 // Spec: spec/client/navigation.md#onboardingStage
 enum OnboardingStage: String, Identifiable {
+    // New simplified 4-step flow
     case step1_WelcomeIdentity
-    case step2_NetworkAndCommitments
-    case onboardingComplete
-    // Deprecated — mapped via migratePersistedValue
-    case step1_AppInfoView
     case step2_CreateProfile
+    case step3_PrivacyChoice
+    case step4_GetStarted
+    case onboardingComplete
+
+    // Deprecated — mapped via migratePersistedValue
+    case step2_NetworkAndCommitments
+    case step1_AppInfoView
     case step3_LegacyAddressCreation
     case step3_ChooseServerOperators
     case step4_SetNotificationsMode
@@ -109,11 +121,12 @@ enum OnboardingStage: String, Identifiable {
         switch raw {
         case "step1_PopopXInfo": return "step1_WelcomeIdentity"
         case "step1_AppInfoView": return "step1_WelcomeIdentity"
-        case "step2_CreateProfile": return "step1_WelcomeIdentity"
-        case "step3_LegacyAddressCreation": return "step2_NetworkAndCommitments"
-        case "step3_ChooseServerOperators": return "step2_NetworkAndCommitments"
-        case "step4_SetNotificationsMode": return "step2_NetworkAndCommitments"
-        case "step4_NetworkCommitments": return "step2_NetworkAndCommitments"
+        case "step2_CreateProfile": return "step2_CreateProfile"
+        case "step3_LegacyAddressCreation": return "step2_CreateProfile"
+        case "step3_ChooseServerOperators": return "step3_PrivacyChoice"
+        case "step4_SetNotificationsMode": return "step3_PrivacyChoice"
+        case "step4_NetworkCommitments": return "step3_PrivacyChoice"
+        case "step2_NetworkAndCommitments": return "step3_PrivacyChoice"
         default: return raw
         }
     }

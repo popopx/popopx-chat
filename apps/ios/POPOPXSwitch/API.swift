@@ -346,23 +346,35 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
     let confirm = confirmMigrations ?? defaultMigrationConfirmation()
     logger.info("chatMigrateInit: preparing FFI call - dbPath=.../\(URL(fileURLWithPath: dbPath).lastPathComponent), confirm=\(confirm.rawValue), keyLength=\(dbKey.count), dbExists=\(hasDB)")
     logger.debug("chatMigrateInit DB path: .../\(URL(fileURLWithPath: dbPath).lastPathComponent), confirm: \(confirm.rawValue)")
-    guard var cPath = dbPath.cString(using: .utf8),
-          var cKey = dbKey.cString(using: .utf8),
-          var cConfirm = confirm.rawValue.cString(using: .utf8) else {
-        logger.error("chatMigrateInit: string encoding failed")
-        chatControllerLock.sync { finishInitializing() }
-        return (false, .errorNotADatabase(dbFile: dbPath))
-    }
+    
     var newController: chat_ctrl? = nil
-    logger.info("chatMigrateInit: calling FFI chat_migrate_init_key with keyLength=\(dbKey.count)")
-    let cjson = chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, backgroundMode ? 1 : 0, &newController)
-    zeroize(&cPath); zeroize(&cConfirm)
+    
+    // Use withCString to lock memory, then create mutable copies for FFI
+    let cjson: UnsafeMutablePointer<CChar>?
+    cjson = dbPath.withCString { cPathPtr in
+        dbKey.withCString { cKeyPtr in
+            confirm.rawValue.withCString { cConfirmPtr in
+                // Create mutable copies for FFI (FFI expects UnsafeMutablePointer)
+                var cPath = [CChar](UnsafeBufferPointer(start: cPathPtr, count: strlen(cPathPtr) + 1))
+                var cKey = [CChar](UnsafeBufferPointer(start: cKeyPtr, count: strlen(cKeyPtr) + 1))
+                var cConfirm = [CChar](UnsafeBufferPointer(start: cConfirmPtr, count: strlen(cConfirmPtr) + 1))
+                
+                logger.info("chatMigrateInit: calling FFI chat_migrate_init_key with keyLength=\(dbKey.count)")
+                let result = chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, backgroundMode ? 1 : 0, &newController)
+                zeroize(&cPath); zeroize(&cConfirm)
+                return result
+            }
+        }
+    }
+    
     guard let cjson else {
         logger.error("chatMigrateInit: chat_migrate_init_key returned null, dbPath=\(dbPath, privacy: .private), keyEmpty=\(dbKey.isEmpty, privacy: .private), background=\(backgroundMode, privacy: .private)")
         chatControllerLock.sync { finishInitializing() }
         return (false, .errorNotADatabase(dbFile: dbPath))
     }
-    let dbRes = dbMigrationResult(dataFromCString(cjson))
+    let rawData = dataFromCString(cjson)
+    logger.info("chatMigrateInit: raw FFI JSON data: \(rawData.flatMap { String(data: $0, encoding: .utf8) } ?? "nil", privacy: .private)")
+    let dbRes = dbMigrationResult(rawData)
     let encrypted = dbKey != ""
     logger.info("chatMigrateInit: FFI result - dbRes=\(String(describing: dbRes)), controllerSet=\(newController != nil)")
 
@@ -382,15 +394,22 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
             if let freshKey = randomDatabasePassword() {
                 dbKey = freshKey
                 initialRandomDBPassphraseGroupDefault.set(true)
-                guard var cPath2 = dbPath.cString(using: .utf8),
-                      var cKey2 = dbKey.cString(using: .utf8),
-                      var cConfirm2 = confirm.rawValue.cString(using: .utf8) else {
-                    logger.error("chatMigrateInit: retry string encoding failed")
-                    chatControllerLock.sync { finishInitializing() }
-                    return (false, .errorNotADatabase(dbFile: dbPath))
+                
+                let cjson2: UnsafeMutablePointer<CChar>?
+                cjson2 = dbPath.withCString { cPathPtr in
+                    dbKey.withCString { cKeyPtr in
+                        confirm.rawValue.withCString { cConfirmPtr in
+                            var cPath2 = [CChar](UnsafeBufferPointer(start: cPathPtr, count: strlen(cPathPtr) + 1))
+                            var cKey2 = [CChar](UnsafeBufferPointer(start: cKeyPtr, count: strlen(cKeyPtr) + 1))
+                            var cConfirm2 = [CChar](UnsafeBufferPointer(start: cConfirmPtr, count: strlen(cConfirmPtr) + 1))
+                            
+                            let result = chat_migrate_init_key(&cPath2, &cKey2, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
+                            zeroize(&cPath2); zeroize(&cConfirm2)
+                            return result
+                        }
+                    }
                 }
-                let cjson2 = chat_migrate_init_key(&cPath2, &cKey2, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
-                zeroize(&cPath2); zeroize(&cConfirm2)
+                
                 guard let cjson2 else {
                     logger.error("chatMigrateInit: retry FFI call also returned null")
                     chatControllerLock.sync { finishInitializing() }
@@ -464,15 +483,22 @@ public func chatMigrateInit(_ useKey: String? = nil, confirmMigrations: Migratio
                     return (false, .errorKeychain)
                 }
                 logger.info("chatMigrateInit: fresh key successfully written to Keychain")
-                guard var cPath2 = dbPath.cString(using: .utf8),
-                      var cKey2 = dbKey.cString(using: .utf8),
-                      var cConfirm2 = confirm.rawValue.cString(using: .utf8) else {
-                    logger.error("chatMigrateInit: retry string encoding failed")
-                    chatControllerLock.sync { finishInitializing() }
-                    return (false, .errorSQL(dbFile: dbPath, migrationSQLError: "Retry string encoding failed"))
+                
+                let cjson2: UnsafeMutablePointer<CChar>?
+                cjson2 = dbPath.withCString { cPathPtr in
+                    dbKey.withCString { cKeyPtr in
+                        confirm.rawValue.withCString { cConfirmPtr in
+                            var cPath2 = [CChar](UnsafeBufferPointer(start: cPathPtr, count: strlen(cPathPtr) + 1))
+                            var cKey2 = [CChar](UnsafeBufferPointer(start: cKeyPtr, count: strlen(cKeyPtr) + 1))
+                            var cConfirm2 = [CChar](UnsafeBufferPointer(start: cConfirmPtr, count: strlen(cConfirmPtr) + 1))
+                            
+                            let result = chat_migrate_init_key(&cPath2, &cKey2, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
+                            zeroize(&cPath2); zeroize(&cConfirm2)
+                            return result
+                        }
+                    }
                 }
-                let cjson2 = chat_migrate_init_key(&cPath2, &cKey2, 1, &cConfirm2, backgroundMode ? 1 : 0, &newController)
-                zeroize(&cPath2); zeroize(&cConfirm2)
+                
                 if let cjson2 {
                     let dbRes2 = dbMigrationResult(dataFromCString(cjson2))
                     logger.info("chatMigrateInit: retry FFI result - dbRes=\(String(describing: dbRes2))")
@@ -578,15 +604,21 @@ public func chatInitTemporaryDatabase(url: URL, key: String? = nil, confirmation
     }
     logger.debug("chatInitTemporaryDatabase path: \(dbPath)")
     var temporaryController: chat_ctrl? = nil
-    guard var cPath = dbPath.cString(using: .utf8),
-          var cConfirm = confirmation.rawValue.cString(using: .utf8) else {
-        return (.errorNotADatabase(dbFile: dbPath), nil)
+    
+    let cjson: UnsafeMutablePointer<CChar>?
+    cjson = dbPath.withCString { cPathPtr in
+        dbKey.withCString { cKeyPtr in
+            confirmation.rawValue.withCString { cConfirmPtr in
+                var cPath = [CChar](UnsafeBufferPointer(start: cPathPtr, count: strlen(cPathPtr) + 1))
+                var cKey = [CChar](UnsafeBufferPointer(start: cKeyPtr, count: strlen(cKeyPtr) + 1))
+                var cConfirm = [CChar](UnsafeBufferPointer(start: cConfirmPtr, count: strlen(cConfirmPtr) + 1))
+                
+                let call = { chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &temporaryController) }
+                return isOnFFIQueue() ? call() : ffiQueue.sync { call() }
+            }
+        }
     }
-    var cKey = dbKey.cString(using: .utf8)!
-    let cjson = isOnFFIQueue()
-        ? chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &temporaryController)
-        : ffiQueue.sync { chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &temporaryController) }
-    zeroize(&cPath); zeroize(&cConfirm)
+    
     guard let cjson else {
         return (.errorNotADatabase(dbFile: dbPath), nil)
     }
@@ -605,20 +637,24 @@ public func chatInitControllerRemovingDatabases() {
         return
     }
     logger.debug("chatInitControllerRemovingDatabases path: \(dbPath)")
-    guard var cPath = dbPath.cString(using: .utf8),
-          var cConfirm = MigrationConfirmation.error.rawValue.cString(using: .utf8) else {
-        logger.error("chatInitControllerRemovingDatabases: string encoding failed")
-        return
-    }
     var newController: chat_ctrl? = nil
-    var cKey = dbKey.cString(using: .utf8)!
-    let cjson = isOnFFIQueue()
-        ? chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &newController)
-        : ffiQueue.sync { chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &newController) }
-    if let cjson {
-        free(cjson)
+    
+    dbPath.withCString { cPathPtr in
+        dbKey.withCString { cKeyPtr in
+            MigrationConfirmation.error.rawValue.withCString { cConfirmPtr in
+                var cPath = [CChar](UnsafeBufferPointer(start: cPathPtr, count: strlen(cPathPtr) + 1))
+                var cKey = [CChar](UnsafeBufferPointer(start: cKeyPtr, count: strlen(cKeyPtr) + 1))
+                var cConfirm = [CChar](UnsafeBufferPointer(start: cConfirmPtr, count: strlen(cConfirmPtr) + 1))
+                
+                let call = { chat_migrate_init_key(&cPath, &cKey, 1, &cConfirm, 0, &newController) }
+                let cjson = isOnFFIQueue() ? call() : ffiQueue.sync { call() }
+                if let cjson {
+                    free(cjson)
+                }
+            }
+        }
     }
-    zeroize(&cPath); zeroize(&cConfirm)
+    
     chatControllerLock.sync { chatController = newController }
 
     // We need only controller, not databases
@@ -750,11 +786,13 @@ public func sendPopopxCmd<R: ChatAPIResult>(_ cmd: ChatCmdProtocol, _ ctrl: chat
 @inline(__always)
 public func sendPopopxCmdStr(_ cmd: String, _ ctrl: chat_ctrl? = nil, retryNum: Int32) -> Data? {
     guard let controller = ctrl ?? getChatCtrl() else { return nil }
-    guard var c = cmd.cString(using: .utf8) else { return nil }
-    return if let cjson = chat_send_cmd_retry(controller, &c, retryNum) {
-        dataFromCString(cjson)
-    } else {
-        nil
+    return cmd.withCString { cPtr -> Data? in
+        var c = [CChar](UnsafeBufferPointer(start: cPtr, count: strlen(cPtr) + 1))
+        if let cjson = chat_send_cmd_retry(controller, &c, retryNum) {
+            return dataFromCString(cjson)
+        } else {
+            return nil
+        }
     }
 }
 
@@ -773,31 +811,38 @@ public func recvPopopxMsg<R: ChatAPIResult>(_ ctrl: chat_ctrl? = nil, messageTim
 }
 
 public func parseMarkdown(_ s: String) -> [FormattedText]? {
-    guard var c = s.cString(using: .utf8) else { return nil }
-    if let cjson = chat_parse_markdown(&c) {
-        if let d = dataFromCString(cjson) {
-            do {
-                let r = try jsonDecoder.decode(ParsedMarkdown.self, from: d)
-                return r.formattedText
-            } catch {
-                logger.error("parseMarkdown jsonDecoder.decode error: \(error.localizedDescription)")
+    return s.withCString { cPtr in
+        var c = [CChar](UnsafeBufferPointer(start: cPtr, count: strlen(cPtr) + 1))
+        if let cjson = chat_parse_markdown(&c) {
+            if let d = dataFromCString(cjson) {
+                do {
+                    let r = try jsonDecoder.decode(ParsedMarkdown.self, from: d)
+                    return r.formattedText
+                } catch {
+                    logger.error("parseMarkdown jsonDecoder.decode error: \(error.localizedDescription)")
+                }
             }
         }
+        return nil
     }
-    return nil
 }
 
 public func chatJsonLength(_ s: String) -> Int {
-    guard var c = s.cString(using: .utf8) else { return 0 }
-    return Int(chat_json_length(&c))
+    return s.withCString { cPtr in
+        var c = [CChar](UnsafeBufferPointer(start: cPtr, count: strlen(cPtr) + 1))
+        return Int(chat_json_length(&c))
+    }
 }
 
 // the code in core's canonical form (prefix and 20 characters, no separators), or nil when core rejects it.
 // The check character is verified by core via FFI, not re-implemented here, so the two cannot disagree.
 public func parseBadgeCode(_ s: String) -> String? {
-    var c = s.cString(using: .utf8)!
-    let canonical = fromCString(chat_parse_badge_code(&c)!)
-    return canonical.isEmpty ? nil : canonical
+    return s.withCString { cPtr in
+        var c = [CChar](UnsafeBufferPointer(start: cPtr, count: strlen(cPtr) + 1))
+        guard let result = chat_parse_badge_code(&c) else { return nil }
+        let canonical = fromCString(result)
+        return canonical.isEmpty ? nil : canonical
+    }
 }
 
 struct ParsedMarkdown: Decodable {
@@ -805,18 +850,20 @@ struct ParsedMarkdown: Decodable {
 }
 
 public func parseServerAddress(_ s: String) -> ServerAddress? {
-    guard var c = s.cString(using: .utf8) else { return nil }
-    if let cjson = chat_parse_server(&c) {
-         if let d = dataFromCString(cjson) {
-            do {
-                let r = try jsonDecoder.decode(ParsedServerAddress.self, from: d)
-                return r.serverAddress
-            } catch {
-                logger.error("parseServerAddress jsonDecoder.decode error: \(error.localizedDescription)")
+    return s.withCString { cPtr in
+        var c = [CChar](UnsafeBufferPointer(start: cPtr, count: strlen(cPtr) + 1))
+        if let cjson = chat_parse_server(&c) {
+            if let d = dataFromCString(cjson) {
+                do {
+                    let r = try jsonDecoder.decode(ParsedServerAddress.self, from: d)
+                    return r.serverAddress
+                } catch {
+                    logger.error("parseServerAddress jsonDecoder.decode error: \(error.localizedDescription)")
+                }
             }
         }
+        return nil
     }
-    return nil
 }
 
 struct ParsedServerAddress: Decodable {
@@ -825,17 +872,19 @@ struct ParsedServerAddress: Decodable {
 }
 
 public func parseSanitizeUri(_ s: String, safe: Bool) -> ParsedUri? {
-    guard var c = s.cString(using: .utf8) else { return nil }
-    if let cjson = chat_parse_uri(&c, safe ? 1 : 0) {
-         if let d = dataFromCString(cjson) {
-            do {
-                return try jsonDecoder.decode(ParsedUri.self, from: d)
-            } catch {
-                logger.error("parseSanitizeUri jsonDecoder.decode error: \(error.localizedDescription)")
+    return s.withCString { cPtr in
+        var c = [CChar](UnsafeBufferPointer(start: cPtr, count: strlen(cPtr) + 1))
+        if let cjson = chat_parse_uri(&c, safe ? 1 : 0) {
+            if let d = dataFromCString(cjson) {
+                do {
+                    return try jsonDecoder.decode(ParsedUri.self, from: d)
+                } catch {
+                    logger.error("parseSanitizeUri jsonDecoder.decode error: \(error.localizedDescription)")
+                }
             }
         }
+        return nil
     }
-    return nil
 }
 
 public struct ParsedUri: Decodable {

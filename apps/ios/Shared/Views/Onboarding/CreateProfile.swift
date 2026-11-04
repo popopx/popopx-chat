@@ -216,7 +216,7 @@ struct CreateProfile: View {
                 Task { @MainActor in
                     try? await Task.sleep(nanoseconds: 100_000_000)
                     withAnimation {
-                        advanceOnboarding(to: .step2_NetworkAndCommitments)
+                        advanceOnboarding(to: .step3_PrivacyChoice)
                     }
                 }
             } else {
@@ -295,7 +295,7 @@ struct CreateFirstProfile: View {
                         endPoint: gp.end
                     )
                     Image(systemName: "person.crop.rectangle")
-                        .font(.system(size: 72))
+                        .font(QuantumFonts.iconExtraLarge)
                         .foregroundStyle(
                             LinearGradient(
                                 colors: [QuantumColors.accent, QuantumColors.accentSecondary],
@@ -345,7 +345,7 @@ struct CreateFirstProfile: View {
 
                 Text(NSLocalizedString("No account. No phone. No email. No ID.\nEnd-to-end encrypted.", comment: "Privacy features description"))
                     .font(.footnote)
-                    .foregroundColor(Color(hex: "#887FA0"))
+                    .foregroundColor(QuantumColors.textDescription)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
 
@@ -355,8 +355,8 @@ struct CreateFirstProfile: View {
 
                 if displayName.trimmingCharacters(in: .whitespaces).isEmpty {
                     Text(NSLocalizedString("Please enter your name", comment: "Hint to enter profile name"))
-                        .font(.system(size: 13, design: .monospaced))
-                        .foregroundColor(Color(hex: "#C4BFD6"))
+                        .font(QuantumFonts.monoCaption)
+                        .foregroundColor(QuantumColors.textSecondary)
                         .padding(.top, 8)
                 }
 
@@ -412,24 +412,27 @@ struct CreateFirstProfile: View {
 
     private func bubbleWrapContent() -> some View {
         GeometryReader { geo in
+            let safeW = max(1, geo.size.width)
+            let safeH = max(1, geo.size.height)
+            
             ZStack {
                 // Ambient background glow during bubble stage
                 RadialGradient(
                     colors: [
-                        Color(hex: "#6E25C4").opacity(0.15),
-                        Color(hex: "#6E25C4").opacity(0.08),
+                        QuantumColors.accent.opacity(0.15),
+                        QuantumColors.accent.opacity(0.08),
                         Color.clear
                     ],
                     center: .center,
                     startRadius: 100,
-                    endRadius: max(geo.size.width, geo.size.height) * 0.6
+                    endRadius: max(safeW, safeH) * 0.6
                 )
                 .ignoresSafeArea()
 
                 // Falling text field (dramatic disappearance)
                 if textFieldFalling {
                     profileNameField()
-                        .offset(y: geo.size.height * 0.5)
+                        .offset(y: safeH * 0.5)
                         .opacity(0.25)
                         .scaleEffect(0.85)
                         .blur(radius: 8)
@@ -439,14 +442,14 @@ struct CreateFirstProfile: View {
                 // Rising bubble with nickname - CENTERED and DRAMATIC
                 EncryptedAliasBubble(
                     alias: displayName.trimmingCharacters(in: .whitespaces),
-                    diameter: min(geo.size.width * 0.6, 260), // Even larger for impact
+                    diameter: min(safeW * 0.6, 260), // Even larger for impact
                     onTap: {
                         triggerGravitationalCollapse()
                     }
                 )
                 .scaleEffect(bubbleRising ? 1.0 : 0.15)
                 .opacity(bubbleRising ? 1.0 : 0.0)
-                .position(x: geo.size.width / 2, y: geo.size.height * 0.38) // Slightly lower for better balance
+                .position(x: safeW / 2, y: safeH * 0.38) // Slightly lower for better balance
                 .animation(.spring(response: 1.0, dampingFraction: 0.45), value: bubbleRising)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -456,21 +459,21 @@ struct CreateFirstProfile: View {
 
                 // Bottom hint text - enhanced visibility with glow
                 Text(NSLocalizedString("pop_to_encrypt_hint", comment: "Bubble wrap stage hint text"))
-                    .font(.system(size: 15, weight: .semibold, design: .monospaced))
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .font(QuantumFonts.monoBodySemibold)
+                    .foregroundColor(QuantumColors.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
                     .padding(.vertical, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color(hex: "#141021").opacity(0.7))
+                            .fill(QuantumColors.surfaceElevated.opacity(0.7))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(
                                         LinearGradient(
                                             colors: [
-                                                Color(hex: "#00FFD2").opacity(0.5),
-                                                Color(hex: "#6E25C4").opacity(0.4)
+                                                QuantumColors.accentSecondary.opacity(0.5),
+                                                QuantumColors.accent.opacity(0.4)
                                             ],
                                             startPoint: .leading,
                                             endPoint: .trailing
@@ -478,10 +481,10 @@ struct CreateFirstProfile: View {
                                         lineWidth: 2
                                     )
                             )
-                            .shadow(color: Color(hex: "#00FFD2").opacity(0.3), radius: 10, x: 0, y: 0)
+                            .shadow(color: QuantumColors.accentSecondary.opacity(0.3), radius: 10, x: 0, y: 0)
                     )
                     .opacity(bubbleRising ? 1.0 : 0.0)
-                    .position(x: geo.size.width / 2, y: geo.size.height - 110) // Fixed position at bottom
+                    .position(x: safeW / 2, y: safeH - 110) // Fixed position at bottom
                     .animation(.easeOut(duration: 0.6).delay(0.6), value: bubbleRising)
             }
         }
@@ -497,28 +500,28 @@ struct CreateFirstProfile: View {
                 .padding(.trailing, name != validName ? 36 : 16)
                 .padding(.vertical, 14)
                 .foregroundColor(.white)
-                .tint(Color(hex: "#00FFD2"))
+                .tint(QuantumColors.accentSecondary)
                 .background(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color(hex: "#141021"))
+                        .fill(QuantumColors.surfaceElevated)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .strokeBorder(
                             LinearGradient(
-                                colors: [Color(hex: "#6E25C4").opacity(0.5), Color(hex: "#00FFD2").opacity(0.3)],
+                                colors: [QuantumColors.accent.opacity(0.5), QuantumColors.accentSecondary.opacity(0.3)],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),
                             lineWidth: 1.5
                         )
                 )
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.2), radius: 8, x: 0, y: 4)
+                .shadow(color: QuantumColors.accent.opacity(0.2), radius: 8, x: 0, y: 4)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
             Text(NSLocalizedString("profile_name_placeholder", comment: "Profile name input placeholder"))
-                .font(.system(size: 17))
-                .foregroundColor(Color(hex: "#C4BFD6"))
+                .font(QuantumFonts.bodyLarge)
+                .foregroundColor(QuantumColors.textSecondary)
                 .padding(.horizontal, 16)
                 .allowsHitTesting(false)
                 .opacity(displayName.isEmpty ? 1.0 : 0.0)
@@ -544,7 +547,7 @@ struct CreateFirstProfile: View {
                     .tint(.white)
             } else {
                 Text(String(localized: "Create & Encrypt"))
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(QuantumFonts.bodySemibold)
                     .foregroundColor(.white)
             }
         }
@@ -577,7 +580,7 @@ struct CreateFirstProfile: View {
     private func advanceToNextStep() {
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 100_000_000)
-            advanceOnboarding(to: .step2_NetworkAndCommitments)
+            advanceOnboarding(to: .step3_PrivacyChoice)
         }
     }
 

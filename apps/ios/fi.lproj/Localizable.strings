@@ -14,7 +14,7 @@
 "!1 colored!" = "!1 värillinen!";
 
 /* No comment provided by engineer. */
-"[Send us email](mailto:chat@simplex.chat)" = "[Lähetä meille sähköpostia](mailto:chat@simplex.chat)";
+"[Send us email](mailto:chat@popopxchat.com)" = "[Lähetä meille sähköpostia](mailto:chat@popopxchat.com)";
 
 /* No comment provided by engineer. */
 "**e2e encrypted** audio call" = "**e2e-salattu** äänipuhelu";
@@ -23,16 +23,16 @@
 "**e2e encrypted** video call" = "**e2e-salattu** videopuhelu";
 
 /* No comment provided by engineer. */
-"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**Yksityisempi**: tarkista uudet viestit 20 minuutin välein. Laitetunnus jaetaan SimpleX Chat -palvelimen kanssa, mutta ei sitä, kuinka monta yhteystietoa tai viestiä sinulla on.";
+"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**Yksityisempi**: tarkista uudet viestit 20 minuutin välein. Laitetunnus jaetaan POPOPX Chat -palvelimen kanssa, mutta ei sitä, kuinka monta yhteystietoa tai viestiä sinulla on.";
 
 /* No comment provided by engineer. */
-"**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**Yksityisin**: älä käytä SimpleX Chat -ilmoituspalvelinta, tarkista viestit ajoittain taustalla (riippuu siitä, kuinka usein käytät sovellusta).";
+"**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**Yksityisin**: älä käytä POPOPX Chat -ilmoituspalvelinta, tarkista viestit ajoittain taustalla (riippuu siitä, kuinka usein käytät sovellusta).";
 
 /* No comment provided by engineer. */
 "**Please note**: you will NOT be able to recover or change passphrase if you lose it." = "**Huomaa**: et voi palauttaa tai muuttaa tunnuslausetta, jos kadotat sen.";
 
 /* No comment provided by engineer. */
-"**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." = "**Suositus**: laitetunnus ja ilmoitukset lähetetään SimpleX Chat -ilmoituspalvelimelle, mutta ei viestin sisältöä, kokoa tai sitä, keneltä se on peräisin.";
+"**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." = "**Suositus**: laitetunnus ja ilmoitukset lähetetään POPOPX Chat -ilmoituspalvelimelle, mutta ei viestin sisältöä, kokoa tai sitä, keneltä se on peräisin.";
 
 /* No comment provided by engineer. */
 "**Warning**: Instant push notifications require passphrase saved in Keychain." = "**Varoitus**: Välittömät push-ilmoitukset vaativat tunnuslauseen, joka on tallennettu Keychainiin.";
@@ -167,7 +167,7 @@
 "`a + b`" = "\\`a + b`";
 
 /* email text */
-"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via SimpleX Chat</a></p>" = "<p> Hei! </p>\n<p> <a href=\"%@\"> Ollaan yhteydessä SimpleX Chatin kautta</a></p>";
+"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via POPOPX Chat</a></p>" = "<p> Hei! </p>\n<p> <a href=\"%@\"> Ollaan yhteydessä POPOPX Chatin kautta</a></p>";
 
 /* No comment provided by engineer. */
 "~strike~" = "\\~strike~";
@@ -227,7 +227,7 @@ time interval */
 "Abort changing address?" = "Keskeytä osoitteenvaihto?";
 
 /* No comment provided by engineer. */
-"About SimpleX Chat" = "Tietoja SimpleX Chatistä";
+"About POPOPX Chat" = "Tietoja POPOPX Chatistä";
 
 /* No comment provided by engineer. */
 "above, then choose:" = "edellä, valitse sitten:";
@@ -474,7 +474,7 @@ swipe action */
 "Both you and your contact can send voice messages." = "Sekä sinä että kontaktisi voitte lähettää ääniviestejä.";
 
 /* No comment provided by engineer. */
-"By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "Chat-profiilin mukaan (oletus) tai [yhteyden mukaan](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"By chat profile (default) or [by connection](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "Chat-profiilin mukaan (oletus) tai [yhteyden mukaan](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
 
 /* No comment provided by engineer. */
 "Call already ended!" = "Puhelu on jo päättynyt!";
@@ -637,7 +637,7 @@ server test step */
 "Connect" = "Yhdistä";
 
 /* No comment provided by engineer. */
-"connect to SimpleX Chat developers." = "ole yhteydessä SimpleX Chat -kehittäjiin.";
+"connect to POPOPX Chat developers." = "ole yhteydessä POPOPX Chat -kehittäjiin.";
 
 /* new chat sheet title */
 "Connect via link" = "Yhdistä linkin kautta";
@@ -748,7 +748,7 @@ server test step */
 "Create link" = "Luo linkki";
 
 /* No comment provided by engineer. */
-"Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" = "Luo uusi profiili [työpöytäsovelluksessa](https://simplex.chat/downloads/). 💻";
+"Create new profile in [desktop app](https://popopxchat.com/downloads/). 💻" = "Luo uusi profiili [työpöytäsovelluksessa](https://popopxchat.com/downloads/). 💻";
 
 /* No comment provided by engineer. */
 "Create profile" = "Luo profiilisi";
@@ -757,7 +757,7 @@ server test step */
 "Create queue" = "Luo jono";
 
 /* No comment provided by engineer. */
-"Create SimpleX address" = "Luo SimpleX-osoite";
+"Create POPOPX address" = "Luo POPOPX-osoite";
 
 /* No comment provided by engineer. */
 "Create your profile" = "Luo profiilisi";
@@ -979,10 +979,10 @@ alert button */
 "Device" = "Laite";
 
 /* No comment provided by engineer. */
-"Device authentication is disabled. Turning off SimpleX Lock." = "Laitteen todennus on poistettu käytöstä. SimpleX Lock kytketään pois päältä.";
+"Device authentication is disabled. Turning off POPOPX Lock." = "Laitteen todennus on poistettu käytöstä. POPOPX Lock kytketään pois päältä.";
 
 /* No comment provided by engineer. */
-"Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." = "Laitteen todennus ei ole käytössä. Voit ottaa SimpleX Lockin käyttöön Asetuksista, kun olet ottanut laitteen todennuksen käyttöön.";
+"Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." = "Laitteen todennus ei ole käytössä. Voit ottaa POPOPX Lockin käyttöön Asetuksista, kun olet ottanut laitteen todennuksen käyttöön.";
 
 /* No comment provided by engineer. */
 "different migration in the app/database: %@ / %@" = "eri siirtyminen sovelluksessa/tietokannassa: %@ / %@";
@@ -1006,7 +1006,7 @@ alert button */
 "Disable for all" = "Poista käytöstä kaikilta";
 
 /* authentication reason */
-"Disable SimpleX Lock" = "Poista SimpleX Lock käytöstä";
+"Disable POPOPX Lock" = "Poista POPOPX Lock käytöstä";
 
 /* No comment provided by engineer. */
 "disabled" = "ei käytössä";
@@ -1039,7 +1039,7 @@ alert button */
 "Do it later" = "Tee myöhemmin";
 
 /* No comment provided by engineer. */
-"Do NOT use SimpleX for emergency calls." = "Älä käytä SimpleX-sovellusta hätäpuheluihin.";
+"Do NOT use POPOPX for emergency calls." = "Älä käytä POPOPX-sovellusta hätäpuheluihin.";
 
 /* No comment provided by engineer. */
 "Don't create address" = "Älä luo osoitetta";
@@ -1102,7 +1102,7 @@ alert button */
 "Enable self-destruct passcode" = "Ota itsetuhoava pääsykoodi käyttöön";
 
 /* authentication reason */
-"Enable SimpleX Lock" = "Ota SimpleX Lock käyttöön";
+"Enable POPOPX Lock" = "Ota POPOPX Lock käyttöön";
 
 /* No comment provided by engineer. */
 "Enable TCP keep-alive" = "Ota TCP-säilytys käyttöön";
@@ -1535,7 +1535,7 @@ server test error */
 "hours" = "tuntia";
 
 /* No comment provided by engineer. */
-"How SimpleX works" = "Miten SimpleX toimii";
+"How POPOPX works" = "Miten POPOPX toimii";
 
 /* No comment provided by engineer. */
 "How to" = "Miten";
@@ -1637,7 +1637,7 @@ server test error */
 "Initial role" = "Alkuperäinen rooli";
 
 /* No comment provided by engineer. */
-"Install SimpleX Chat for terminal" = "Asenna SimpleX Chat terminaalille";
+"Install POPOPX Chat for terminal" = "Asenna POPOPX Chat terminaalille";
 
 /* No comment provided by engineer. */
 "Instant" = "Heti";
@@ -1772,7 +1772,7 @@ server test error */
 "left" = "poistunut";
 
 /* email subject */
-"Let's talk in SimpleX Chat" = "Jutellaan SimpleX Chatissa";
+"Let's talk in POPOPX Chat" = "Jutellaan POPOPX Chatissa";
 
 /* No comment provided by engineer. */
 "Light" = "Vaalea";
@@ -1895,7 +1895,7 @@ server test error */
 "Migration error:" = "Siirtovirhe:";
 
 /* No comment provided by engineer. */
-"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." = "Siirto epäonnistui. Jatka nykyisen tietokannan käyttöä napauttamalla alla **Poistu**. Ilmoita ongelmasta sovelluskehittäjille keskustelussa tai sähköpostitse [chat@simplex.chat](mailto:chat@simplex.chat).";
+"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat.com](mailto:chat@popopxchat.com)." = "Siirto epäonnistui. Jatka nykyisen tietokannan käyttöä napauttamalla alla **Poistu**. Ilmoita ongelmasta sovelluskehittäjille keskustelussa tai sähköpostitse [chat@popopxchat.com](mailto:chat@popopxchat.com).";
 
 /* No comment provided by engineer. */
 "Migration is completed" = "Siirto on valmis";
@@ -2670,40 +2670,40 @@ chat item action */
 "Show:" = "Näytä:";
 
 /* No comment provided by engineer. */
-"SimpleX address" = "SimpleX-osoite";
+"POPOPX address" = "POPOPX-osoite";
 
 /* No comment provided by engineer. */
-"SimpleX Address" = "SimpleX-osoite";
+"POPOPX Address" = "POPOPX-osoite";
 
 /* No comment provided by engineer. */
-"SimpleX Chat security was audited by Trail of Bits." = "Trail of Bits on tarkastanut SimpleX Chatin tietoturvan.";
+"POPOPX Chat security was audited by Trail of Bits." = "Trail of Bits on tarkastanut POPOPX Chatin tietoturvan.";
 
-/* simplex link type */
-"SimpleX contact address" = "SimpleX-yhteystiedot";
+/* popopx link type */
+"POPOPX contact address" = "POPOPX-yhteystiedot";
 
 /* notification */
-"SimpleX encrypted message or connection event" = "SimpleX-salattu viesti tai yhteystapahtuma";
+"POPOPX encrypted message or connection event" = "POPOPX-salattu viesti tai yhteystapahtuma";
 
-/* simplex link type */
-"SimpleX group link" = "SimpleX-ryhmän linkki";
+/* popopx link type */
+"POPOPX group link" = "POPOPX-ryhmän linkki";
 
 /* chat feature */
-"SimpleX links" = "SimpleX-linkit";
+"POPOPX links" = "POPOPX-linkit";
 
 /* No comment provided by engineer. */
-"SimpleX Lock" = "SimpleX Lock";
+"POPOPX Lock" = "POPOPX Lock";
 
 /* No comment provided by engineer. */
-"SimpleX Lock mode" = "SimpleX Lock -tila";
+"POPOPX Lock mode" = "POPOPX Lock -tila";
 
 /* No comment provided by engineer. */
-"SimpleX Lock not enabled!" = "SimpleX Lock ei ole käytössä!";
+"POPOPX Lock not enabled!" = "POPOPX Lock ei ole käytössä!";
 
 /* No comment provided by engineer. */
-"SimpleX Lock turned on" = "SimpleX Lock päällä";
+"POPOPX Lock turned on" = "POPOPX Lock päällä";
 
-/* simplex link type */
-"SimpleX one-time invitation" = "SimpleX-kertakutsu";
+/* popopx link type */
+"POPOPX one-time invitation" = "POPOPX-kertakutsu";
 
 /* No comment provided by engineer. */
 "Skip" = "Ohita";
@@ -2757,7 +2757,7 @@ chat item action */
 "Stop sharing address?" = "Lopeta osoitteen jakaminen?";
 
 /* authentication reason */
-"Stop SimpleX" = "Lopeta SimpleX";
+"Stop POPOPX" = "Lopeta POPOPX";
 
 /* No comment provided by engineer. */
 "strike" = "soita";
@@ -2812,10 +2812,10 @@ server test failure */
 "Tests failed!" = "Testit epäonnistuivat!";
 
 /* No comment provided by engineer. */
-"Thank you for installing SimpleX Chat!" = "Kiitos SimpleX Chatin asentamisesta!";
+"Thank you for installing POPOPX Chat!" = "Kiitos POPOPX Chatin asentamisesta!";
 
 /* No comment provided by engineer. */
-"Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "Kiitos käyttäjille - [osallistu Weblaten avulla](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!";
+"Thanks to the users – [contribute via Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "Kiitos käyttäjille - [osallistu Weblaten avulla](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!";
 
 /* No comment provided by engineer. */
 "Thanks to the users – contribute via Weblate!" = "Kiitokset käyttäjille – osallistu Weblaten kautta!";
@@ -2905,10 +2905,10 @@ server test failure */
 "To protect timezone, image/voice files use UTC." = "Aikavyöhykkeen suojaamiseksi kuva-/äänitiedostot käyttävät UTC:tä.";
 
 /* No comment provided by engineer. */
-"To protect your information, turn on SimpleX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "Suojaa tietosi ottamalla SimpleX Lock käyttöön.\nSinua kehotetaan suorittamaan todennus loppuun, ennen kuin tämä ominaisuus otetaan käyttöön.";
+"To protect your information, turn on POPOPX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "Suojaa tietosi ottamalla POPOPX Lock käyttöön.\nSinua kehotetaan suorittamaan todennus loppuun, ennen kuin tämä ominaisuus otetaan käyttöön.";
 
 /* No comment provided by engineer. */
-"To protect your privacy, SimpleX uses separate IDs for each of your contacts." = "Yksityisyyden suojaamiseksi kaikkien muiden alustojen käyttämien käyttäjätunnusten sijaan SimpleX käyttää viestijonojen tunnisteita, jotka ovat kaikille kontakteille erillisiä.";
+"To protect your privacy, POPOPX uses separate IDs for each of your contacts." = "Yksityisyyden suojaamiseksi kaikkien muiden alustojen käyttämien käyttäjätunnusten sijaan POPOPX käyttää viestijonojen tunnisteita, jotka ovat kaikille kontakteille erillisiä.";
 
 /* No comment provided by engineer. */
 "To record voice message please grant permission to use Microphone." = "Jos haluat nauhoittaa ääniviestin, anna lupa käyttää mikrofonia.";
@@ -3019,10 +3019,10 @@ server test failure */
 "Use server" = "Käytä palvelinta";
 
 /* No comment provided by engineer. */
-"Use SimpleX Chat servers?" = "Käytä SimpleX Chat palvelimia?";
+"Use POPOPX Chat servers?" = "Käytä POPOPX Chat palvelimia?";
 
 /* No comment provided by engineer. */
-"Using SimpleX Chat servers." = "Käyttää SimpleX Chat -palvelimia.";
+"Using POPOPX Chat servers." = "Käyttää POPOPX Chat -palvelimia.";
 
 /* No comment provided by engineer. */
 "Verify connection security" = "Tarkista yhteyden suojaus";
@@ -3190,7 +3190,7 @@ server test failure */
 "You can start chat via app Settings / Database or by restarting the app" = "Voit aloittaa keskustelun sovelluksen Asetukset / Tietokanta kautta tai käynnistämällä sovelluksen uudelleen";
 
 /* No comment provided by engineer. */
-"You can turn on SimpleX Lock via Settings." = "Voit ottaa SimpleX Lockin käyttöön Asetusten kautta.";
+"You can turn on POPOPX Lock via Settings." = "Voit ottaa POPOPX Lockin käyttöön Asetusten kautta.";
 
 /* No comment provided by engineer. */
 "You can use markdown to format messages:" = "Voit käyttää markdownia viestien muotoiluun:";
@@ -3319,7 +3319,7 @@ server test failure */
 "Your profile is stored on your device and only shared with your contacts." = "Profiili jaetaan vain kontaktiesi kanssa.";
 
 /* No comment provided by engineer. */
-"Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." = "Profiilisi tallennetaan laitteeseesi ja jaetaan vain yhteystietojesi kanssa. SimpleX-palvelimet eivät näe profiiliasi.";
+"Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." = "Profiilisi tallennetaan laitteeseesi ja jaetaan vain yhteystietojesi kanssa. POPOPX-palvelimet eivät näe profiiliasi.";
 
 /* No comment provided by engineer. */
 "Your random profile" = "Satunnainen profiilisi";
@@ -3331,5 +3331,5 @@ server test failure */
 "Your settings" = "Asetuksesi";
 
 /* No comment provided by engineer. */
-"Your SimpleX address" = "SimpleX-osoitteesi";
+"Your POPOPX address" = "POPOPX-osoitteesi";
 

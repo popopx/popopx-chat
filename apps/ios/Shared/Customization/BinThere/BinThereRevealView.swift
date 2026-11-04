@@ -12,6 +12,7 @@
 
 import SwiftUI
 import UIKit
+import AVFoundation
 
 struct BinThereRevealView: View {
     @EnvironmentObject var theme: AppTheme
@@ -26,6 +27,8 @@ struct BinThereRevealView: View {
     @State private var pxScreenshotObserver: NSObjectProtocol?
     @State private var pxRecordingObserver: NSObjectProtocol?
     @State private var mosaicActive = false
+    @State private var cameraPermissionGranted = false
+    @State private var showPermissionAlert = false
     @AppStorage(DEFAULT_BINTHERE_SECURITY) private var securityEnhanced = true
 
     var body: some View {
@@ -83,10 +86,21 @@ struct BinThereRevealView: View {
                 BinThereMoireDefense()
             }
         }
+        .alert("Camera Access Required", isPresented: $showPermissionAlert) {
+            Button("Open Settings") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("Continue Without Protection", role: .cancel) {}
+        } message: {
+            Text("Face detection security requires camera access. Without it, multi-person viewing protection will be disabled.")
+        }
         .onAppear {
             registerScreenshotDetection()
             registerRecordingDetection()
-            if securityEnhanced {
+            requestCameraPermissionIfNeeded()
+            if securityEnhanced && cameraPermissionGranted {
                 faceGuardian.onViolationCapture = { reason, sampleBuffer in
                     BinThereEvidenceManager.shared.handleViolation(reason: reason, sampleBuffer: sampleBuffer)
                 }
@@ -145,7 +159,7 @@ struct BinThereRevealView: View {
             object: nil,
             queue: .main
         ) { _ in
-            warningMsg = NSLocalizedString("Screenshots are disabled for this message", comment: "")
+            warningMsg = NSLocalizedString("⚠️ Screenshot detected! Content will be destroyed.", comment: "Screenshot detected warning - content will be destroyed")
             triggerMosaicDissolve()
         }
     }
@@ -166,6 +180,31 @@ struct BinThereRevealView: View {
     private func triggerMosaicDissolve() {
         withAnimation(.easeIn(duration: 0.3)) {
             mosaicActive = true
+        }
+    }
+
+    private func requestCameraPermissionIfNeeded() {
+        guard securityEnhanced else { return }
+        
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    cameraPermissionGranted = granted
+                    if !granted {
+                        showPermissionAlert = true
+                    }
+                }
+            }
+        case .restricted, .denied:
+            cameraPermissionGranted = false
+            showPermissionAlert = true
+        case .authorized:
+            cameraPermissionGranted = true
+        @unknown default:
+            cameraPermissionGranted = false
         }
     }
 }

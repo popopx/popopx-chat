@@ -24,7 +24,7 @@ struct AppInfoView: View {
 
     var body: some View {
         ZStack {
-            Color(hex: "#06040A")
+            QuantumColors.background
                 .ignoresSafeArea()
             RadialGradient(
                 colors: [QuantumColors.accent.opacity(0.08), QuantumColors.accentSecondary.opacity(0.04), Color.clear],
@@ -35,12 +35,15 @@ struct AppInfoView: View {
             .ignoresSafeArea()
 
             GeometryReader { g in
+                let safeW = max(1, g.size.width)
+                let safeH = max(1, g.size.height)
+                
                 ZStack {
                     VStack(alignment: .center, spacing: 10) {
                         Image(colorScheme == .light ? "logo" : "logo-light")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: max(0, (g.size.width - 50)) * 0.55)
+                            .frame(width: max(1, (safeW - 50)) * 0.55)
                             .padding(.leading, 4)
                             .frame(maxWidth: .infinity, minHeight: 48, alignment: .top)
 
@@ -67,7 +70,7 @@ struct AppInfoView: View {
 
                             Text(NSLocalizedString("The first network where you own\nyour contacts and groups.", comment: "Onboarding description"))
                                 .font(.footnote)
-                                .foregroundColor(Color(hex: "#887FA0"))
+                                .foregroundColor(QuantumColors.textDescription)
                                 .multilineTextAlignment(.center)
                                 .fixedSize(horizontal: false, vertical: true)
 
@@ -75,10 +78,10 @@ struct AppInfoView: View {
 
                             ZStack {
                                 if popController.isPopping {
-                                    BubblePopCanvas(particles: popController.particles)
-                                        .frame(width: g.size.width, height: g.size.height * 0.5)
+                                    BubblePopCanvas(particles: popController.particles, startTime: popController.startTime)
+                                        .frame(width: safeW, height: safeH * 0.5)
                                 } else {
-                                    BubbleComponent(diameter: min(260, g.size.width * 0.65))
+                                    BubbleComponent(diameter: max(1, min(260, safeW * 0.65)))
                                         .scaleEffect(showBubble ? 1.0 : 0.8)
                                         .opacity(showBubble ? 1.0 : 0.0)
                                         .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showBubble)
@@ -92,20 +95,20 @@ struct AppInfoView: View {
                                         }
                                 }
                             }
-                            .frame(height: g.size.height * 0.4)
+                            .frame(height: max(1, safeH * 0.4))
 
                             Spacer(minLength: 10)
 
                             if !popController.isPopping && showBubble {
                                 Text(NSLocalizedString("tap_bubble_hint", comment: "Hint text below bubble animation"))
-                                    .font(.system(size: 12, weight: .regular, design: .monospaced))
-                                    .foregroundColor(Color(hex: "#C4BFD6"))
+                                    .font(QuantumFonts.monoSmall)
+                                    .foregroundColor(QuantumColors.textSecondary)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 8)
                                     .background(
                                         RoundedRectangle(cornerRadius: 8)
-                                            .stroke(Color(hex: "#00FFD2").opacity(0.2), lineWidth: 1)
+                                            .stroke(QuantumColors.accentSecondary.opacity(0.2), lineWidth: 1)
                                     )
                                     .transition(.opacity.combined(with: .scale))
                             }
@@ -129,7 +132,7 @@ struct AppInfoView: View {
                     .padding(.horizontal, 25)
                     .padding(.top, 28)
                     .padding(.bottom, 20)
-                    .frame(minHeight: g.size.height)
+                    .frame(minHeight: safeH)
 
                     PurpleFlashOverlay(isActive: popController.flashActive)
                 }
@@ -184,7 +187,7 @@ struct AppInfoView: View {
                     endPoint: .bottomTrailing
                 )
                 Image(systemName: "lock.shield.fill")
-                    .font(.system(size: 72))
+                    .font(QuantumFonts.iconExtraLarge)
                     .foregroundStyle(
                         LinearGradient(
                             colors: [QuantumColors.accent, QuantumColors.accentSecondary],
@@ -234,14 +237,15 @@ struct AppInfoView: View {
 
             Text(NSLocalizedString("The first network where you own\nyour contacts and groups.", comment: "App description"))
                 .font(.system(.footnote).weight(.regular))
-                .foregroundColor(Color(hex: "#887FA0"))
+                .foregroundColor(QuantumColors.textDescription)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
 
     private func triggerBubblePop(in g: GeometryProxy) {
-        let bubbleCenterY = g.size.height * 0.28
+        let safeH = max(1, g.size.height)
+        let bubbleCenterY = safeH * 0.28
         popController.triggerPop(
             containerSize: g.size,
             bubbleCenterY: bubbleCenterY,

@@ -61,6 +61,7 @@ import Popopx.Chat.Store.Postgres.Migrations.M20261010_invite_member_via_group
 import Popopx.Chat.Store.Postgres.Migrations.M20261012_delivery_job_notification
 import Popopx.Chat.Store.Postgres.Migrations.M20261016_badge_store_receipts
 import Popopx.Chat.Store.Postgres.Migrations.M20261019_chat_layout
+import Popopx.Chat.Store.Postgres.Migrations.M20261021_badge_subscriptions
 import Popopx.Chat.Store.Postgres.Migrations.M20261029_compute_purchases
 import Popopx.Messaging.Agent.Store.Shared (Migration (..))
 
@@ -123,6 +124,7 @@ schemaMigrations =
     ("20261012_delivery_job_notification", m20261012_delivery_job_notification, Just down_m20261012_delivery_job_notification),
     ("20261016_badge_store_receipts", m20261016_badge_store_receipts, Just down_m20261016_badge_store_receipts),
     ("20261019_chat_layout", m20261019_chat_layout, Just down_m20261019_chat_layout),
+    ("20261021_badge_subscriptions", m20261021_badge_subscriptions, Just down_m20261021_badge_subscriptions),
     ("20261029_compute_purchases", m20261029_compute_purchases, Just down_m20261029_compute_purchases)
   ]
 

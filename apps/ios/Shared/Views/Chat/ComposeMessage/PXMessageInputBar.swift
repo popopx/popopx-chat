@@ -140,7 +140,7 @@ struct SendMessageView: View {
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .strokeBorder(
                             AngularGradient(
-                                colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2"), Color(hex: "#FF00A0"), Color(hex: "#6E25C4")],
+                                colors: [QuantumColors.accent, QuantumColors.accentSecondary, QuantumColors.accentWarm, QuantumColors.accent],
                                 center: .center,
                                 angle: angle
                             ).opacity(0.5),
@@ -276,7 +276,7 @@ struct SendMessageView: View {
                     .frame(width: 28, height: 28)
                     .scaleEffect(pxPopScale)
                     .frame(width: 36, height: 36)
-                    .shadow(color: Color(hex: "#6E25C4").opacity(0.6), radius: 8)
+                    .shadow(color: QuantumColors.accent.opacity(0.6), radius: 8)
                     .opacity(composeState.message.isEmpty ? 0.4 : 1)
             }
         }
@@ -307,7 +307,7 @@ struct SendMessageView: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color(hex: "#A855F7"), Color(hex: "#6E25C4"), Color(hex: "#4A1A8A")],
+                        colors: [QuantumColors.vividPurple, QuantumColors.accent, QuantumColors.darkPurpleDeep],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 1,
                         endRadius: 14
@@ -327,7 +327,7 @@ struct SendMessageView: View {
                 .offset(x: -3, y: -4)
 
             Circle()
-                .fill(Color(hex: "#6E25C4"))
+                .fill(QuantumColors.accent)
                 .frame(width: 3, height: 3)
                 .offset(y: 12)
         }

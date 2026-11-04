@@ -50,4 +50,22 @@ extern char *chat_encrypt_file(chat_ctrl ctl, char *fromPath, char *toPath);
 // chat_decrypt_file returns null-terminated string with the error message
 extern char *chat_decrypt_file(char *fromPath, char *key, char *nonce, char *toPath);
 
+// chat_resize_image_uri returns a data URI with the resized image
+extern char *chat_resize_image_uri(char *data, int len, int maxSize);
+
+// chat_resize_image returns base64-encoded resized image data
+extern char *chat_resize_image(char *data, int len, int maxSize, int png);
+
+// chat_resize_image_file_uri returns a data URI with the resized image from file path
+extern char *chat_resize_image_file_uri(char *path, int maxSize);
+
+// chat_resize_image_file returns base64-encoded resized image data from file path
+extern char *chat_resize_image_file(char *path, int maxSize, int png);
+
+// chat_resize_image_fd_uri returns a data URI with the resized image from file descriptor
+extern char *chat_resize_image_fd_uri(int fd, int maxSize);
+
+// chat_resize_image_fd returns base64-encoded resized image data from file descriptor
+extern char *chat_resize_image_fd(int fd, int maxSize, int png);
+
 #endif /* Popopx_h */

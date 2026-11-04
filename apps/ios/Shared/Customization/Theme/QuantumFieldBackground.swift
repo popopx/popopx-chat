@@ -11,10 +11,12 @@ struct QuantumFieldBackground: View {
 
     var particleCount: Int = 40
     var speed: Double = 1.0
+    var isLaunchScreen: Bool = false
 
     var body: some View {
-        // POPOPX: Reduced from 20fps to 1fps for battery efficiency
-        TimelineView(.animation(minimumInterval: 1.0 / 1.0, paused: powerMode.isLowPowerMode || reduceMotion || scenePhase != .active)) { timeline in
+        // POPOPX: 15fps for launch screen, 1fps for background (battery efficiency)
+        let targetFPS = isLaunchScreen ? 15.0 : 1.0
+        TimelineView(.animation(minimumInterval: 1.0 / targetFPS, paused: powerMode.isLowPowerMode || reduceMotion || scenePhase != .active)) { timeline in
             Canvas { context, size in
                 let time = timeline.date.timeIntervalSinceReferenceDate * speed
                 drawParticles(context: &context, size: size, time: time)
@@ -47,8 +49,8 @@ struct QuantumFieldBackground: View {
             let radius = 1.5 + 1.0 * sin(time * 0.3 + Double(i) * 0.7)
 
             let color: Color = i % 3 == 0
-                ? Color(0xFF8B5CF6).opacity(alpha)
-                : (i % 3 == 1 ? Color(0xFF7C3AED).opacity(alpha) : Color(0xFF818CF8).opacity(alpha * 0.8))
+                ? QuantumColors.particleViolet.opacity(alpha)
+                : (i % 3 == 1 ? Color(0xFF7C3AED).opacity(alpha) : QuantumColors.encryptionStandard.opacity(alpha * 0.8))
 
             let rect = CGRect(x: px - radius, y: py - radius, width: radius * 2, height: radius * 2)
             context.fill(Path(ellipseIn: rect), with: .color(color))
@@ -72,8 +74,8 @@ struct QuantumFieldBackground: View {
 
             let alpha = 0.06 + 0.04 * sin(time * 0.3 + Double(i))
             let color: Color = i % 2 == 0
-                ? Color(0xFF8B5CF6).opacity(alpha)
-                : Color(0xFF818CF8).opacity(alpha)
+                ? QuantumColors.particleViolet.opacity(alpha)
+                : QuantumColors.encryptionStandard.opacity(alpha)
 
             context.stroke(path, with: .color(color), lineWidth: 1.0)
         }

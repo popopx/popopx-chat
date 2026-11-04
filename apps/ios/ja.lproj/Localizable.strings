@@ -5,7 +5,7 @@
 "_italic_" = "\\_斜体_";
 
 /* No comment provided by engineer. */
-"- connect to [directory service](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- [ディレクトリサービス](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) に接続 (ベータ)!\n- 配信証明を送信する (最大 20 人まで)。\n- より速く、より安定。";
+"- connect to [directory service](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- [ディレクトリサービス](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) に接続 (ベータ)!\n- 配信証明を送信する (最大 20 人まで)。\n- より速く、より安定。";
 
 /* No comment provided by engineer. */
 "- more stable message delivery.\n- a bit better groups.\n- and more!" = "- より安定したメッセージ配信。\n- 改良されたグループ。\n- などなど！";
@@ -26,7 +26,7 @@
 "(this device v%@)" = "(このデバイス v%@)";
 
 /* No comment provided by engineer. */
-"[Send us email](mailto:chat@simplex.chat)" = "[メールを送信](mailto:chat@simplex.chat)";
+"[Send us email](mailto:chat@popopxchat.com)" = "[メールを送信](mailto:chat@popopxchat.com)";
 
 /* No comment provided by engineer. */
 "**Create 1-time link**: to create and share a new invitation link." = "**コンタクトの追加**: 新しい招待リンクを作成するか、受け取ったリンクから接続します。";
@@ -41,10 +41,10 @@
 "**e2e encrypted** video call" = "**エンドツーエンド暗号化済み**の テレビ電話 通話";
 
 /* No comment provided by engineer. */
-"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**よりプライベート**: 20 分ごとに新しいメッセージを確認します。 デバイス トークンは SimpleX Chat サーバーと共有されますが、連絡先やメッセージの数は共有されません。";
+"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**よりプライベート**: 20 分ごとに新しいメッセージを確認します。 デバイス トークンは POPOPX Chat サーバーと共有されますが、連絡先やメッセージの数は共有されません。";
 
 /* No comment provided by engineer. */
-"**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**最もプライベート**: SimpleX Chat 通知サーバーを使用せず、バックグラウンドで定期的にメッセージをチェックします (アプリの使用頻度によって異なります)。";
+"**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**最もプライベート**: POPOPX Chat 通知サーバーを使用せず、バックグラウンドで定期的にメッセージをチェックします (アプリの使用頻度によって異なります)。";
 
 /* No comment provided by engineer. */
 "**Please note**: using the same database on two devices will break the decryption of messages from your connections, as a security protection." = "**注意**: 2つの端末で同じデータベースを使用すると、セキュリティ保護として、あなたが接続しているメッセージの復号化が解除されます。";
@@ -53,7 +53,7 @@
 "**Please note**: you will NOT be able to recover or change passphrase if you lose it." = "**注意**: パスフレーズを紛失すると、パスフレーズを復元または変更できなくなります。";
 
 /* No comment provided by engineer. */
-"**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." = "**推奨**: デバイス トークンと通知は SimpleX Chat 通知サーバーに送信されますが、メッセージの内容、サイズ、送信者は送信されません。";
+"**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." = "**推奨**: デバイス トークンと通知は POPOPX Chat 通知サーバーに送信されますが、メッセージの内容、サイズ、送信者は送信されません。";
 
 /* No comment provided by engineer. */
 "**Scan / Paste link**: to connect via a link you received." = "**QRスキャン / リンクの貼り付け**: 受け取ったリンクで接続する。";
@@ -281,7 +281,7 @@ channel relay bar */
 "`a + b`" = "\\`a + b`";
 
 /* email text */
-"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via SimpleX Chat</a></p>" = "<p>こんにちは!</p>\n<p><a href=\"%@\">SimpleX Chatでつながろう</a></p>";
+"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via POPOPX Chat</a></p>" = "<p>こんにちは!</p>\n<p><a href=\"%@\">POPOPX Chatでつながろう</a></p>";
 
 /* No comment provided by engineer. */
 "~strike~" = "\\~取り消し線~";
@@ -356,7 +356,7 @@ time interval */
 "About operators" = "オペレーターについて";
 
 /* No comment provided by engineer. */
-"About SimpleX Chat" = "SimpleX Chat について";
+"About POPOPX Chat" = "POPOPX Chat について";
 
 /* No comment provided by engineer. */
 "above, then choose:" = "上で選んでください：";
@@ -537,7 +537,7 @@ swipe action */
 "Allow to send files and media." = "ファイルやメディアの送信を許可する。";
 
 /* No comment provided by engineer. */
-"Allow to send SimpleX links." = "SimpleXリンクの送信を許可。";
+"Allow to send POPOPX links." = "POPOPXリンクの送信を許可。";
 
 /* No comment provided by engineer. */
 "Allow to send voice messages." = "音声メッセージの送信を許可する。";
@@ -708,10 +708,10 @@ swipe action */
 "Both you and your contact can send voice messages." = "あなたと連絡相手が音声メッセージを送信できます。";
 
 /* No comment provided by engineer. */
-"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "ブルガリア語、フィンランド語、タイ語、ウクライナ語 - ユーザーと [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)に感謝します！";
+"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "ブルガリア語、フィンランド語、タイ語、ウクライナ語 - ユーザーと [Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)に感謝します！";
 
 /* No comment provided by engineer. */
-"By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "チャット プロファイル経由 (デフォルト) または [接続経由](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"By chat profile (default) or [by connection](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "チャット プロファイル経由 (デフォルト) または [接続経由](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
 
 /* No comment provided by engineer. */
 "Call already ended!" = "通話は既に終了してます！";
@@ -913,7 +913,7 @@ server test step */
 "Connect to desktop" = "デスクトップに接続";
 
 /* No comment provided by engineer. */
-"connect to SimpleX Chat developers." = "SimpleX Chat 開発者に接続します。";
+"connect to POPOPX Chat developers." = "POPOPX Chat 開発者に接続します。";
 
 /* No comment provided by engineer. */
 "Connect to your friends faster." = "友達ともっと速くつながりましょう。";
@@ -1054,7 +1054,7 @@ server test step */
 "Create link" = "リンクを生成する";
 
 /* No comment provided by engineer. */
-"Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" = "[デスクトップアプリ](https://simplex.chat/downloads/)で新しいプロファイルを作成します。 💻";
+"Create new profile in [desktop app](https://popopxchat.com/downloads/). 💻" = "[デスクトップアプリ](https://popopxchat.com/downloads/)で新しいプロファイルを作成します。 💻";
 
 /* No comment provided by engineer. */
 "Create profile" = "プロフィールを作成する";
@@ -1063,7 +1063,7 @@ server test step */
 "Create queue" = "キューの作成";
 
 /* No comment provided by engineer. */
-"Create SimpleX address" = "SimpleXアドレスの作成";
+"Create POPOPX address" = "POPOPXアドレスの作成";
 
 /* No comment provided by engineer. */
 "Create your profile" = "プロフィールを作成する";
@@ -1300,10 +1300,10 @@ alert button */
 "Device" = "端末";
 
 /* No comment provided by engineer. */
-"Device authentication is disabled. Turning off SimpleX Lock." = "端末認証がオフです。SimpleXロックを解除します。";
+"Device authentication is disabled. Turning off POPOPX Lock." = "端末認証がオフです。POPOPXロックを解除します。";
 
 /* No comment provided by engineer. */
-"Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." = "端末認証が起動してません。起動したら、設定でSimpleXロックをオンにできます。";
+"Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." = "端末認証が起動してません。起動したら、設定でPOPOPXロックをオンにできます。";
 
 /* No comment provided by engineer. */
 "different migration in the app/database: %@ / %@" = "アプリ/データベースで異なる移行：%@ / %@";
@@ -1327,7 +1327,7 @@ alert button */
 "Disable for all" = "すべて無効";
 
 /* authentication reason */
-"Disable SimpleX Lock" = "SimpleXロックを無効にする";
+"Disable POPOPX Lock" = "POPOPXロックを無効にする";
 
 /* No comment provided by engineer. */
 "disabled" = "無効";
@@ -1360,7 +1360,7 @@ alert button */
 "Do it later" = "後で行う";
 
 /* No comment provided by engineer. */
-"Do NOT use SimpleX for emergency calls." = "緊急通報にSimpleXを使用しないでください。";
+"Do NOT use POPOPX for emergency calls." = "緊急通報にPOPOPXを使用しないでください。";
 
 /* No comment provided by engineer. */
 "Don't create address" = "アドレスを作成しない";
@@ -1444,7 +1444,7 @@ alert button */
 "Enable self-destruct passcode" = "自己破壊パスコードを有効にする";
 
 /* authentication reason */
-"Enable SimpleX Lock" = "SimpleXロックを有効にする";
+"Enable POPOPX Lock" = "POPOPXロックを有効にする";
 
 /* No comment provided by engineer. */
 "Enable TCP keep-alive" = "TCP keep-aliveを有効にする";
@@ -1880,7 +1880,7 @@ server test error */
 "hours" = "時間";
 
 /* No comment provided by engineer. */
-"How SimpleX works" = "SimpleX の仕組み";
+"How POPOPX works" = "POPOPX の仕組み";
 
 /* No comment provided by engineer. */
 "How to" = "使い方";
@@ -1982,7 +1982,7 @@ server test error */
 "Initial role" = "初期の役割";
 
 /* No comment provided by engineer. */
-"Install SimpleX Chat for terminal" = "インストール ターミナル用SimpleX Chat";
+"Install POPOPX Chat for terminal" = "インストール ターミナル用POPOPX Chat";
 
 /* No comment provided by engineer. */
 "Instant" = "即時";
@@ -2117,7 +2117,7 @@ server test error */
 "left" = "脱退";
 
 /* email subject */
-"Let's talk in SimpleX Chat" = "SimpleXチャットで会話しよう";
+"Let's talk in POPOPX Chat" = "POPOPXチャットで会話しよう";
 
 /* No comment provided by engineer. */
 "Light" = "ライトテーマ";
@@ -2243,7 +2243,7 @@ server test error */
 "Migration error:" = "移行エラー：";
 
 /* No comment provided by engineer. */
-"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." = "移行に失敗しました。現在のデータベースの使用を続けるには、下の **スキップ**をタップします。 チャットまたはメール [chat@simplex.chat](mailto:chat@simplex.chat) でアプリ開発者に問題を報告してください。";
+"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat.com](mailto:chat@popopxchat.com)." = "移行に失敗しました。現在のデータベースの使用を続けるには、下の **スキップ**をタップします。 チャットまたはメール [chat@popopxchat.com](mailto:chat@popopxchat.com) でアプリ開発者に問題を報告してください。";
 
 /* No comment provided by engineer. */
 "Migration is completed" = "移行が完了しました";
@@ -3004,40 +3004,40 @@ chat item action */
 "Show:" = "表示する：";
 
 /* No comment provided by engineer. */
-"SimpleX address" = "SimpleXアドレス";
+"POPOPX address" = "POPOPXアドレス";
 
 /* No comment provided by engineer. */
-"SimpleX Address" = "SimpleXアドレス";
+"POPOPX Address" = "POPOPXアドレス";
 
 /* No comment provided by engineer. */
-"SimpleX Chat security was audited by Trail of Bits." = "SimpleX Chat のセキュリティは Trail of Bits によって監査されました。";
+"POPOPX Chat security was audited by Trail of Bits." = "POPOPX Chat のセキュリティは Trail of Bits によって監査されました。";
 
-/* simplex link type */
-"SimpleX contact address" = "SimpleX連絡先アドレス";
+/* popopx link type */
+"POPOPX contact address" = "POPOPX連絡先アドレス";
 
 /* notification */
-"SimpleX encrypted message or connection event" = "SimpleX 暗号化メッセージまたは接続イベント";
+"POPOPX encrypted message or connection event" = "POPOPX 暗号化メッセージまたは接続イベント";
 
-/* simplex link type */
-"SimpleX group link" = "SimpleXグループリンク";
+/* popopx link type */
+"POPOPX group link" = "POPOPXグループリンク";
 
 /* chat feature */
-"SimpleX links" = "SimpleXリンク";
+"POPOPX links" = "POPOPXリンク";
 
 /* No comment provided by engineer. */
-"SimpleX Lock" = "SimpleXロック";
+"POPOPX Lock" = "POPOPXロック";
 
 /* No comment provided by engineer. */
-"SimpleX Lock mode" = "SimpleXロックモード";
+"POPOPX Lock mode" = "POPOPXロックモード";
 
 /* No comment provided by engineer. */
-"SimpleX Lock not enabled!" = "SimpleXは ロックされていません!";
+"POPOPX Lock not enabled!" = "POPOPXは ロックされていません!";
 
 /* No comment provided by engineer. */
-"SimpleX Lock turned on" = "SimpleXロック：オン";
+"POPOPX Lock turned on" = "POPOPXロック：オン";
 
-/* simplex link type */
-"SimpleX one-time invitation" = "SimpleX使い捨て招待リンク";
+/* popopx link type */
+"POPOPX one-time invitation" = "POPOPX使い捨て招待リンク";
 
 /* No comment provided by engineer. */
 "Simplified incognito mode" = "シークレットモードの簡素化";
@@ -3094,7 +3094,7 @@ chat item action */
 "Stop sharing address?" = "アドレスの共有を停止しますか？";
 
 /* authentication reason */
-"Stop SimpleX" = "SimpleX を停止";
+"Stop POPOPX" = "POPOPX を停止";
 
 /* No comment provided by engineer. */
 "strike" = "取り消し線";
@@ -3149,10 +3149,10 @@ server test failure */
 "Tests failed!" = "テストは失敗しました！";
 
 /* No comment provided by engineer. */
-"Thank you for installing SimpleX Chat!" = "SimpleX Chatをインストールしていただき、ありがとうございます！";
+"Thank you for installing POPOPX Chat!" = "POPOPX Chatをインストールしていただき、ありがとうございます！";
 
 /* No comment provided by engineer. */
-"Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "ユーザーに感謝します – [Weblate 経由で貢献してください](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translation-simplex-chat)！";
+"Thanks to the users – [contribute via Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "ユーザーに感謝します – [Weblate 経由で貢献してください](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translation-popopx-chat)！";
 
 /* No comment provided by engineer. */
 "Thanks to the users – contribute via Weblate!" = "ユーザーに感謝します – Weblate 経由で貢献してください!";
@@ -3239,10 +3239,10 @@ server test failure */
 "To protect timezone, image/voice files use UTC." = "時間帯を漏らさないために、画像と音声ファイルはUTCを使います。";
 
 /* No comment provided by engineer. */
-"To protect your information, turn on SimpleX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "あなたのデータを守るために、SimpleXロックをオンにしてください。\nオンにするには、認証ステップが行われます。";
+"To protect your information, turn on POPOPX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "あなたのデータを守るために、POPOPXロックをオンにしてください。\nオンにするには、認証ステップが行われます。";
 
 /* No comment provided by engineer. */
-"To protect your privacy, SimpleX uses separate IDs for each of your contacts." = "プライバシーを保護するために、SimpleX には、他のすべてのプラットフォームで使用されるユーザー ID の代わりに、連絡先ごとに個別のメッセージ キューの識別子があります。";
+"To protect your privacy, POPOPX uses separate IDs for each of your contacts." = "プライバシーを保護するために、POPOPX には、他のすべてのプラットフォームで使用されるユーザー ID の代わりに、連絡先ごとに個別のメッセージ キューの識別子があります。";
 
 /* No comment provided by engineer. */
 "To record voice message please grant permission to use Microphone." = "音声メッセージを録音する場合は、マイクの使用を許可してください。";
@@ -3353,10 +3353,10 @@ server test failure */
 "Use server" = "サーバを使う";
 
 /* No comment provided by engineer. */
-"Use SimpleX Chat servers?" = "SimpleX チャット サーバーを使用しますか?";
+"Use POPOPX Chat servers?" = "POPOPX チャット サーバーを使用しますか?";
 
 /* No comment provided by engineer. */
-"Using SimpleX Chat servers." = "SimpleX チャット サーバーを使用する。";
+"Using POPOPX Chat servers." = "POPOPX チャット サーバーを使用する。";
 
 /* No comment provided by engineer. */
 "Verify connection security" = "接続のセキュリティを確認";
@@ -3509,7 +3509,7 @@ server test failure */
 "You can hide or mute a user profile - swipe it to the right." = "ユーザープロファイルを右にスワイプすると、非表示またはミュートにすることができます。";
 
 /* No comment provided by engineer. */
-"You can make it visible to your SimpleX contacts via Settings." = "設定でSimpleXの連絡先に表示させることができます。";
+"You can make it visible to your POPOPX contacts via Settings." = "設定でPOPOPXの連絡先に表示させることができます。";
 
 /* notification body */
 "You can now chat with %@" = "%@ にメッセージを送信できるようになりました";
@@ -3527,7 +3527,7 @@ server test failure */
 "You can start chat via app Settings / Database or by restarting the app" = "アプリの設定/データベースから、またはアプリを再起動することでチャットを開始できます";
 
 /* No comment provided by engineer. */
-"You can turn on SimpleX Lock via Settings." = "設定からSimpleXのロックをオンにすることができます。";
+"You can turn on POPOPX Lock via Settings." = "設定からPOPOPXのロックをオンにすることができます。";
 
 /* No comment provided by engineer. */
 "You can use markdown to format messages:" = "メッセージの書式にmarkdownを使用することができます：";
@@ -3656,7 +3656,7 @@ server test failure */
 "Your profile is stored on your device and only shared with your contacts." = "プロフィールは連絡先にしか共有されません。";
 
 /* No comment provided by engineer. */
-"Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." = "プロフィールはデバイスに保存され、連絡先とのみ共有されます。 SimpleX サーバーはあなたのプロファイルを参照できません。";
+"Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." = "プロフィールはデバイスに保存され、連絡先とのみ共有されます。 POPOPX サーバーはあなたのプロファイルを参照できません。";
 
 /* No comment provided by engineer. */
 "Your random profile" = "あなたのランダム・プロフィール";
@@ -3668,5 +3668,5 @@ server test failure */
 "Your settings" = "あなたの設定";
 
 /* No comment provided by engineer. */
-"Your SimpleX address" = "あなたのSimpleXアドレス";
+"Your POPOPX address" = "あなたのPOPOPXアドレス";
 

@@ -103,7 +103,7 @@ struct BotSettingsView: View {
         VStack(spacing: 12) {
             HStack {
                 Image(systemName: "wrench.and.screwdriver.fill")
-                    .font(.system(size: 36))
+                    .font(QuantumFonts.iconMedium)
                     .foregroundColor(QuantumColors.accent)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(NSLocalizedString("bot_platform_title", comment: "Bot platform section header title"))

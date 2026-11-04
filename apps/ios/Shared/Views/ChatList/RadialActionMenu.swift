@@ -52,7 +52,7 @@ struct RadialActionMenu: View {
             ZStack {
                 Circle()
                     .strokeBorder(
-                        isUnread ? Color(hex: "#00FFD2").opacity(0.4) : Color(hex: "#6E25C4").opacity(0.4),
+                        isUnread ? QuantumColors.accentSecondary.opacity(0.4) : QuantumColors.accent.opacity(0.4),
                         style: StrokeStyle(lineWidth: 0.5, dash: [3, 3])
                     )
                     .frame(width: dynamicRadius * 2, height: dynamicRadius * 2)
@@ -186,7 +186,7 @@ struct RadialActionMenu: View {
             RadialAction(
                 icon: isUnread ? "checkmark" : "circlebadge.fill",
                 label: isUnread ? NSLocalizedString("mark_read", comment: "Button to mark chat as read") : NSLocalizedString("mark_unread", comment: "Button to mark chat as unread"),
-                tint: Color(hex: "#6E25C4")
+                tint: QuantumColors.accent
             ) {
                 dismiss {
                     Task {
@@ -208,7 +208,7 @@ struct RadialActionMenu: View {
             RadialAction(
                 icon: notificationIcon,
                 label: notificationLabel,
-                tint: Color(hex: "#00FFD2")
+                tint: QuantumColors.accentSecondary
             ) {
                 dismiss {
                     if let nextMode = chat.chatInfo.nextNtfMode {

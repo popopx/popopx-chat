@@ -34,11 +34,11 @@ enum LaunchPhase: Int, Comparable, CaseIterable {
 
     var progress: Double {
         switch self {
-        case .haskellRuntime: return 0.1
-        case .databaseMigration: return 0.3
-        case .chatInitialization: return 0.5
-        case .serverConditions: return 0.7
-        case .transportSetup: return 0.9
+        case .haskellRuntime: return 0.15
+        case .databaseMigration: return 0.35
+        case .chatInitialization: return 0.55
+        case .serverConditions: return 0.75
+        case .transportSetup: return 0.92
         case .complete: return 1.0
         }
     }
@@ -50,60 +50,93 @@ final class LaunchCoordinator: ObservableObject {
 
     @Published var phase: LaunchPhase = .haskellRuntime
     @Published var isComplete = false
+    @Published var timeoutReached = false
     @Published var error: String?
 
-    private var observationTask: Task<Void, Never>?
+    private var cancellables = Set<AnyCancellable>()
+    private var timeoutTask: Task<Void, Never>?
+    private var retryCount = 0
+    private let maxRetries = 3
 
     private init() {}
 
     func runInitialization() async {
         error = nil
         phase = .haskellRuntime
+        timeoutReached = false
+
+        logger.debug("LaunchCoordinator: starting initialization")
+
+        timeoutTask?.cancel()
+        timeoutTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(15))
+            guard !Task.isCancelled else { return }
+            await MainActor.run {
+                self?.timeoutReached = true
+                logger.warning("LaunchCoordinator: timeout reached after 15s")
+            }
+        }
+
         startObserving()
+        
         await initChatAndMigrate()
+        timeoutTask?.cancel()
+        timeoutReached = false
         phase = .complete
         isComplete = true
-        observationTask?.cancel()
+        retryCount = 0
+        cancellables.removeAll()
+        logger.debug("LaunchCoordinator: initialization complete")
     }
 
     func retry() async {
+        guard self.retryCount < self.maxRetries else {
+            logger.error("LaunchCoordinator: max retries (\(self.maxRetries)) exceeded")
+            error = "Unable to initialize after multiple attempts. Please restart the app."
+            return
+        }
+        
+        self.retryCount += 1
+        logger.debug("LaunchCoordinator: retry attempt \(self.retryCount)/\(self.maxRetries)")
         isComplete = false
+        timeoutReached = false
         ChatModel.shared.chatInitialized = false
         _initChatInProgress = false
         await runInitialization()
     }
 
     private func startObserving() {
-        observationTask?.cancel()
-        let m = ChatModel.shared
-        observationTask = Task { [weak self] in
-            let maxPolls = 240 // 2 min timeout
-            var polls = 0
-            while !Task.isCancelled && polls < maxPolls {
-                try? await Task.sleep(nanoseconds: 500_000_000)
-                guard let self else { return }
-                polls += 1
-
-                if ProcessInfo.processInfo.isLowPowerModeEnabled || UIApplication.shared.connectedScenes.allSatisfy({ $0.activationState != .foregroundActive }) {
-                    continue
-                }
-
-                if m.chatInitialized {
-                    if self.phase < .serverConditions {
-                        self.phase = .serverConditions
-                    }
-                } else if m.chatDbStatus != nil {
-                    if self.phase < .chatInitialization {
-                        self.phase = .chatInitialization
-                    }
-                }
-
-                if m.chatRunning == true || m.onboardingStage != nil {
-                    if self.phase < .transportSetup {
-                        self.phase = .transportSetup
-                    }
-                }
+        cancellables.removeAll()
+        let db = AppStateModel.shared.database
+        let onboarding = AppStateModel.shared.onboarding
+        let _ = AppStateModel.shared.mesh
+        
+        db.$chatInitialized
+            .sink { [weak self] initialized in
+                guard let self, initialized, self.phase < .serverConditions else { return }
+                self.phase = .serverConditions
             }
-        }
+            .store(in: &cancellables)
+        
+        db.$chatDbStatus
+            .sink { [weak self] status in
+                guard let self, status != nil, self.phase < .chatInitialization else { return }
+                self.phase = .chatInitialization
+            }
+            .store(in: &cancellables)
+        
+        db.$chatRunning
+            .sink { [weak self] running in
+                guard let self, running == true, self.phase < .transportSetup else { return }
+                self.phase = .transportSetup
+            }
+            .store(in: &cancellables)
+        
+        onboarding.$onboardingStage
+            .sink { [weak self] stage in
+                guard let self, stage != nil, self.phase < .transportSetup else { return }
+                self.phase = .transportSetup
+            }
+            .store(in: &cancellables)
     }
 }

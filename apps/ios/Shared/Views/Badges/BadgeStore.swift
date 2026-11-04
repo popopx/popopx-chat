@@ -11,6 +11,7 @@
 import Foundation
 import Combine
 import StoreKit
+import POPOPXSwitch
 
 // TODO [badges] product ids will come from app config and prices from the badge service catalog;
 // hardcoded here so the App Store integration can be tested before the purchase API lands.
@@ -97,6 +98,16 @@ final class BadgeStore: ObservableObject {
         let saved = (year - annual.price) / year * 100
         let percent = Int(NSDecimalNumber(decimal: saved).doubleValue.rounded())
         return percent > 0 ? percent : nil
+    }
+
+    func subscriptionPrice(_ badgeType: BadgeType, planMonths: Int) -> String? {
+        let period: BadgePeriod? = switch planMonths {
+        case 1: .monthly
+        case 12: .annual
+        default: nil
+        }
+        guard let period, let level = BadgeLevel.allCases.first(where: { $0.badgeType == badgeType }) else { return nil }
+        return products[badgeProductId(level, period)]?.displayPrice
     }
 
     func load() async {

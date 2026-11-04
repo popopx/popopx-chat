@@ -14,11 +14,10 @@ struct LaunchScreenView: View {
     @State private var isTransitioning = false
     @State private var logoScale: CGFloat = 0.8
     @State private var logoOpacity: Double = 0.0
-    @State private var initTimeoutReached = false
 
     var body: some View {
         ZStack {
-            QuantumFieldBackground(particleCount: 30, speed: 0.6)
+            QuantumFieldBackground(particleCount: 30, speed: 0.6, isLaunchScreen: true)
 
             VStack(spacing: 24) {
                 Spacer()
@@ -31,7 +30,7 @@ struct LaunchScreenView: View {
 
                 Spacer()
 
-                if initTimeoutReached {
+                if coordinator.timeoutReached {
                     retrySection
                 }
             }
@@ -54,12 +53,6 @@ struct LaunchScreenView: View {
             try? await Task.sleep(nanoseconds: 800_000000)
             if !Task.isCancelled {
                 minimumTimeElapsed = true
-            }
-            if !initTimeoutReached {
-                try? await Task.sleep(for: .seconds(14.2))
-                if !Task.isCancelled && !coordinator.isComplete {
-                    initTimeoutReached = true
-                }
             }
         }
         .onChange(of: coordinator.isComplete) { _, complete in
@@ -107,7 +100,7 @@ struct LaunchScreenView: View {
     private var statusSection: some View {
         VStack(spacing: 8) {
             Text("POPOPX")
-                .font(.system(size: 28, weight: .bold))
+                .font(QuantumFonts.title)
                 .foregroundStyle(
                     LinearGradient(
                         colors: [QuantumColors.accent, QuantumColors.accentSecondary],
@@ -117,7 +110,7 @@ struct LaunchScreenView: View {
                 )
 
             Text(coordinator.phase.statusText)
-                .font(.system(.subheadline).weight(.medium))
+                .font(QuantumFonts.callout.weight(.medium))
                 .foregroundColor(QuantumColors.textPrimary)
                 .contentTransition(.opacity)
                 .animation(.easeInOut(duration: 0.3), value: coordinator.phase)
@@ -150,7 +143,6 @@ struct LaunchScreenView: View {
                 .multilineTextAlignment(.center)
 
             Button {
-                initTimeoutReached = false
                 Task { await coordinator.retry() }
             } label: {
                 Text(NSLocalizedString("Retry", comment: "Retry button"))

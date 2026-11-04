@@ -4,6 +4,26 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:popopx.chat</string>
+		<string>applinks:www.popopx.chat</string>
+		<string>applinks:popopx.chat?mode=developer</string>
+		<string>applinks:*.popopxchat.com</string>
+		<string>applinks:*.popopxchat.com?mode=developer</string>
+		<string>applinks:*.popopchat.com</string>
+		<string>applinks:*.popopchat.com?mode=developer</string>
+		<string>applinks:*.popopx.xyz</string>
+		<string>applinks:*.popopx.xyz?mode=developer</string>
+		<string>applinks:*.popopxchat.xyz</string>
+		<string>applinks:*.popopxchat.xyz?mode=developer</string>
+		<string>applinks:*.popopchat.xyz</string>
+		<string>applinks:*.popopchat.xyz?mode=developer</string>
+		<string>applinks:*.popopx.cc</string>
+		<string>applinks:*.popopx.cc?mode=developer</string>
+		<string>applinks:*.parrotlink.xyz</string>
+		<string>applinks:*.parrotlink.xyz?mode=developer</string>
+	</array>
 	<key>com.apple.developer.usernotifications.communication</key>
 	<true/>
 	<key>com.apple.developer.usernotifications.time-sensitive</key>

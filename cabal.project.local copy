@@ -1,0 +1,18 @@
+ignore-project: False
+
+package popopx-chat
+    flags: +swift +client_library
+    static: True
+    shared: False
+    ghc-options: -threaded -DIOS
+
+package popopxmq
+    flags: +swift +client_library +commoncrypto
+    extra-include-dirs: /opt/homebrew/opt/openssl@3/include
+    extra-lib-dirs: /opt/homebrew/opt/openssl@3/lib
+
+package direct-sqlcipher
+    flags: +commoncrypto
+
+package entropy
+    flags: +DoNotGetEntropy

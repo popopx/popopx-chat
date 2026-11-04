@@ -148,6 +148,8 @@ public func createErrorNtf(_ dbStatus: DBMigrationResult, _ badgeCount: Int) -> 
         title = NSLocalizedString("Encrypted message: unexpected error", comment: "notification")
     case .invalidConfirmation:
         title = NSLocalizedString("Encrypted message or another event", comment: "notification")
+    case .invalidQueueSize:
+        title = NSLocalizedString("Encrypted message or another event", comment: "notification")
     case .errorKeyGeneration:
         title = NSLocalizedString("Encrypted message: cannot generate passphrase", comment: "notification")
     case .errorAgent:

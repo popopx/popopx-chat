@@ -50,7 +50,7 @@ struct MeshChatListView: View {
                 .foregroundStyle(.primary)
             
             Text(NSLocalizedString("Enable mesh transport to discover nearby peers and chat without internet", comment: "Mesh chat empty state description"))
-                .font(.system(size: 16))
+                .font(QuantumFonts.iconRegular)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)

@@ -135,7 +135,7 @@ struct NtfModeSelector: View {
     private var pxIsCurrentlySelected: Bool { selection == mode }
     private var pxIconTint: Color { pxIsCurrentlySelected ? QuantumColors.accent : QuantumColors.textSecondary }
     private var pxLabelTint: Color { pxIsCurrentlySelected ? QuantumColors.textPrimary : QuantumColors.textSecondary }
-    private var pxDescriptionTint: Color { Color(hex: "#887FA0") }
+    private var pxDescriptionTint: Color { QuantumColors.textDescription }
 
     private var pxIconWidth: CGFloat {
         mode.icon == "bolt" ? PxNotifIconMetrics.boltWidth : PxNotifIconMetrics.standardSize

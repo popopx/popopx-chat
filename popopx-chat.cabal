@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           popopx-chat
-version:        7.1.0.14
+version:        7.1.0.17
 category:       Web, System, Services, Cryptography
 homepage:       https://github.com/popopx/popopx-chat#readme
 author:         popopx.chat
@@ -18,6 +18,7 @@ extra-source-files:
     README.md
     PRIVACY.md
     cabal.project
+    src/Popopx/Chat/Image/DisplayP3-v4.icc
 
 flag swift
   description: Enable swift JSON format
@@ -43,6 +44,7 @@ library
       Popopx.Chat.Badges.Code
       Popopx.Chat.Badges.Ledger
       Popopx.Chat.Badges.Service
+      Popopx.Chat.Badges.StorePlan
       Popopx.Chat.Badges.Types
       Popopx.Chat.BinThere.Protocol
       Popopx.Chat.Names
@@ -50,6 +52,7 @@ library
       Popopx.Chat.Controller
       Popopx.Chat.Delivery
       Popopx.Chat.Files
+      Popopx.Chat.Image
       Popopx.Chat.Library.Commands
       Popopx.Chat.Library.Internal
       Popopx.Chat.Library.Subscriber
@@ -181,6 +184,7 @@ library
           Popopx.Chat.Store.Postgres.Migrations.M20261012_delivery_job_notification
           Popopx.Chat.Store.Postgres.Migrations.M20261016_badge_store_receipts
           Popopx.Chat.Store.Postgres.Migrations.M20261019_chat_layout
+          Popopx.Chat.Store.Postgres.Migrations.M20261021_badge_subscriptions
           Popopx.Chat.Store.Postgres.Migrations.M20261029_compute_purchases
   else
       exposed-modules:
@@ -368,6 +372,7 @@ library
           Popopx.Chat.Store.SQLite.Migrations.M20261016_badge_store_receipts
           Popopx.Chat.Store.SQLite.Migrations.M20261018_autoincrement_ids
           Popopx.Chat.Store.SQLite.Migrations.M20261019_chat_layout
+          Popopx.Chat.Store.SQLite.Migrations.M20261021_badge_subscriptions
           Popopx.Chat.Store.SQLite.Migrations.M20261029_compute_purchases
   other-modules:
       Paths_popopx_chat
@@ -396,6 +401,10 @@ library
     , filepath ==1.4.*
     , http-types ==0.12.*
     , http2 >=4.2.2 && <4.3
+    , JuicyPixels ==3.3.*
+    , JuicyPixels-jpeg-turbo ==0.1.*
+    , JuicyPixels-spng ==0.1.*
+    , JuicyPixels-stbir ==0.1.*
     , memory ==0.18.*
     , mtl >=2.3.1 && <3.0
     , network >=3.1.2.7 && <3.2
@@ -414,11 +423,14 @@ library
     , unliftio-core ==0.2.*
     , uri-bytestring >=0.3.3.1 && <0.4
     , uuid ==1.3.*
+    , vector ==0.13.*
     , zip ==2.2.*
     , zstd ==0.1.3.*
   default-language: Haskell2010
   if flag(swift)
     cpp-options: -DswiftJSON
+  if flag(swift) || os(android)
+    cpp-options: -DmobileBuild
   if flag(client_postgres)
     build-depends:
         postgresql-libpq >=0.10.0.0
@@ -762,6 +774,8 @@ test-suite popopx-chat-test
     , http-client ==0.7.*
     , http-client-tls ==0.3.*
     , ini ==0.4.1
+    , JuicyPixels ==3.3.*
+    , JuicyPixels-jpeg-turbo ==0.1.*
     , memory ==0.18.*
     , mtl >=2.3.1 && <3.0
     , network ==3.1.*

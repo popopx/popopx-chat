@@ -15,6 +15,15 @@ import Combine
 import SwiftUI
 import POPOPXSwitch
 
+struct ServiceRequestData: Identifiable {
+    let id = UUID()
+    let user: UserRef
+    let requestId: String
+    let signerKey: String?
+    let requestData: [String: String]
+    let receivedAt: Date = Date()
+}
+
 actor TerminalItems {
     private var terminalItems: [TerminalItem] = []
 
@@ -424,8 +433,7 @@ class BadgeModel: ObservableObject {
 }
 
 enum ChatListBanner {
-    case badgeExpired
-    case badgeIssueFailed
+    case badgeAlert
     case badgePitch
     case getStake
 }
@@ -596,6 +604,8 @@ final class ChatModel: ObservableObject {
     }
 
     @Published var filesToDelete: Set<URL> = []
+
+    @Published var serviceRequests: [ServiceRequestData] = []
 
     // the banner kind the chat list showed this app session: it keeps the slot until restart, so dismissing it never puts
     // another in its place; only the badge alert shows regardless. Set while rendering, so not published.

@@ -5,7 +5,7 @@
 "_italic_" = "\\_kurzíva_";
 
 /* No comment provided by engineer. */
-"- connect to [directory service](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- připojit k [adresářová služba](simplex:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.simplex.im%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- doručenky (až 20 členů).\n- Rychlejší a stabilnější.";
+"- connect to [directory service](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- delivery receipts (up to 20 members).\n- faster and more stable." = "- připojit k [adresářová služba](popopx:/contact#/?v=1-4&smp=smp%3A%2F%2Fu2dS9sG8nMNURyZwqASV4yROM28Er0luVTx5X1CsMrU%3D%40smp4.popopxchat.com%2FeXSPwqTkKyDO3px4fLf1wx3MvPdjdLW3%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAaiv6MkMH44L2TcYrt_CsX3ZvM11WgbMEUn0hkIKTOho%253D%26srv%3Do5vmywmrnaxalvz6wi3zicyftgio6psuvyniis6gco6bp6ekl4cqj4id.onion) (BETA)!\n- doručenky (až 20 členů).\n- Rychlejší a stabilnější.";
 
 /* No comment provided by engineer. */
 "- more stable message delivery.\n- a bit better groups.\n- and more!" = "- více stabilní doručování zpráv.\n- o trochu lepší skupiny.\n- a více!";
@@ -32,7 +32,7 @@
 "(this device v%@)" = "(toto zařízení v%@)";
 
 /* No comment provided by engineer. */
-"[Send us email](mailto:chat@simplex.chat)" = "[Pošlete nám e-mail](mailto:chat@simplex.chat)";
+"[Send us email](mailto:chat@popopxchat.com)" = "[Pošlete nám e-mail](mailto:chat@popopxchat.com)";
 
 /* No comment provided by engineer. */
 "**Create 1-time link**: to create and share a new invitation link." = "**Vytvořit jednorázový odkaz**: pro vytvoření a sdílení nové pozvánky.";
@@ -47,10 +47,10 @@
 "**e2e encrypted** video call" = "**e2e šifrovaný** videohovor";
 
 /* No comment provided by engineer. */
-"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**Soukromější**: kontrolovat nové zprávy každých 20 minut. Token zařízení je sdílen se serverem SimpleX Chat, ale ne kolik máte kontaktů nebo zpráv.";
+"**More private**: check new messages every 20 minutes. Only device token is shared with our push server. It doesn't see how many contacts you have, or any message metadata." = "**Soukromější**: kontrolovat nové zprávy každých 20 minut. Token zařízení je sdílen se serverem POPOPX Chat, ale ne kolik máte kontaktů nebo zpráv.";
 
 /* No comment provided by engineer. */
-"**Most private**: do not use SimpleX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**Nejsoukromější**: nepoužívejte server oznámení SimpleX Chat, pravidelně kontrolujte zprávy na pozadí (závisí na tom, jak často aplikaci používáte).";
+"**Most private**: do not use POPOPX Chat push server. The app will check messages in background, when the system allows it, depending on how often you use the app." = "**Nejsoukromější**: nepoužívejte server oznámení POPOPX Chat, pravidelně kontrolujte zprávy na pozadí (závisí na tom, jak často aplikaci používáte).";
 
 /* No comment provided by engineer. */
 "**Please note**: using the same database on two devices will break the decryption of messages from your connections, as a security protection." = "**Čtěte prosím**: Jako ochrana zabezpečení, použití stejné databáze na dvou zařízeních rozbije dešifrování zpráv z vašich připojení.";
@@ -59,7 +59,7 @@
 "**Please note**: you will NOT be able to recover or change passphrase if you lose it." = "**Upozornění**: Pokud heslo ztratíte, NEBUDETE jej moci obnovit ani změnit.";
 
 /* No comment provided by engineer. */
-"**Recommended**: device token and end-to-end encrypted notifications are sent to SimpleX Chat push server, but it does not see the message content, size or who it is from." = "**Doporučeno**: Token zařízení a oznámení se odesílají na oznamovací server SimpleX Chat, ale nikoli obsah, velikost nebo od koho jsou zprávy.";
+"**Recommended**: device token and end-to-end encrypted notifications are sent to POPOPX Chat push server, but it does not see the message content, size or who it is from." = "**Doporučeno**: Token zařízení a oznámení se odesílají na oznamovací server POPOPX Chat, ale nikoli obsah, velikost nebo od koho jsou zprávy.";
 
 /* No comment provided by engineer. */
 "**Scan / Paste link**: to connect via a link you received." = "**Skenovat / Vložit odkaz**: pro připojení pomocí odkazu který jste obdrželi.";
@@ -116,7 +116,7 @@
 "%@ downloaded" = "%@ staženo";
 
 /* badge alert */
-"%@ invested in SimpleX Chat crowdfunding." = "%@ investoval do SimpleX Chat crowdfunding.";
+"%@ invested in POPOPX Chat crowdfunding." = "%@ investoval do POPOPX Chat crowdfunding.";
 
 /* notification title */
 "%@ is connected!" = "%@ je připojen!";
@@ -134,7 +134,7 @@
 "%@ servers" = "%@ servery";
 
 /* badge alert */
-"%@ supports SimpleX Chat." = "%@ podporuje SimpleX Chat.";
+"%@ supports POPOPX Chat." = "%@ podporuje POPOPX Chat.";
 
 /* No comment provided by engineer. */
 "%@ uploaded" = "%@ nahrán";
@@ -318,7 +318,7 @@ channel relay bar */
 "`a + b`" = "\\`a + b`";
 
 /* email text */
-"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via SimpleX Chat</a></p>" = "<p>Ahoj!</p>\n<p><a href=\"%@\"> Připojte se ke mne přes SimpleX Chat</a></p>";
+"<p>Hi!</p>\n<p><a href=\"%@\">Connect to me via POPOPX Chat</a></p>" = "<p>Ahoj!</p>\n<p><a href=\"%@\"> Připojte se ke mne přes POPOPX Chat</a></p>";
 
 /* No comment provided by engineer. */
 "~strike~" = "\\~stávka~";
@@ -396,7 +396,7 @@ time interval */
 "About operators" = "O operátorech";
 
 /* No comment provided by engineer. */
-"About SimpleX Chat" = "O SimpleX chat";
+"About POPOPX Chat" = "O POPOPX chat";
 
 /* No comment provided by engineer. */
 "above, then choose:" = "výše, pak vyberte:";
@@ -604,7 +604,7 @@ swipe action */
 "Allow to send files and media." = "Povolit odesílání souborů a médii.";
 
 /* No comment provided by engineer. */
-"Allow to send SimpleX links." = "Povolit odesílání SimpleX odkazů.";
+"Allow to send POPOPX links." = "Povolit odesílání POPOPX odkazů.";
 
 /* No comment provided by engineer. */
 "Allow to send voice messages." = "Povolit odesílání hlasových zpráv.";
@@ -826,13 +826,13 @@ swipe action */
 "Both you and your contact can send voice messages." = "Hlasové zprávy můžete posílat vy i váš kontakt.";
 
 /* No comment provided by engineer. */
-"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "Bulharský, finský, thajský a ukrajinský - díky uživatelům a [Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!";
+"Bulgarian, Finnish, Thai and Ukrainian - thanks to the users and [Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "Bulharský, finský, thajský a ukrajinský - díky uživatelům a [Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!";
 
 /* chat link info line */
 "Business address" = "Obchodní adresa";
 
 /* No comment provided by engineer. */
-"By chat profile (default) or [by connection](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "Podle profilu chatu (výchozí) nebo [podle připojení](https://simplex.chat/blog/20230204-simplex-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
+"By chat profile (default) or [by connection](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA)." = "Podle profilu chatu (výchozí) nebo [podle připojení](https://popopxchat.com/blog/20230204-popopx-chat-v4-5-user-chat-profiles.html#transport-isolation) (BETA).";
 
 /* No comment provided by engineer. */
 "Call already ended!" = "Hovor již skončil!";
@@ -1046,7 +1046,7 @@ server test step */
 "Connect automatically" = "Připojit automaticky";
 
 /* No comment provided by engineer. */
-"connect to SimpleX Chat developers." = "připojit se k vývojářům SimpleX Chat.";
+"connect to POPOPX Chat developers." = "připojit se k vývojářům POPOPX Chat.";
 
 /* new chat sheet title */
 "Connect to yourself?\nThis is your own one-time link!" = "Připojit se k sobě?\nToto je váš vlastní jednorázový odkaz!";
@@ -1160,7 +1160,7 @@ server test step */
 "Create link" = "Vytvořit odkaz";
 
 /* No comment provided by engineer. */
-"Create new profile in [desktop app](https://simplex.chat/downloads/). 💻" = "Vytvořit nový profil v [desktop app](https://simplex.chat/downloads/). 💻";
+"Create new profile in [desktop app](https://popopxchat.com/downloads/). 💻" = "Vytvořit nový profil v [desktop app](https://popopxchat.com/downloads/). 💻";
 
 /* No comment provided by engineer. */
 "Create profile" = "Vytvořte si profil";
@@ -1169,7 +1169,7 @@ server test step */
 "Create queue" = "Vytvořit frontu";
 
 /* No comment provided by engineer. */
-"Create SimpleX address" = "Vytvořit SimpleX adresu";
+"Create POPOPX address" = "Vytvořit POPOPX adresu";
 
 /* No comment provided by engineer. */
 "Create your profile" = "Vytvořte si profil";
@@ -1391,10 +1391,10 @@ alert button */
 "Device" = "Zařízení";
 
 /* No comment provided by engineer. */
-"Device authentication is disabled. Turning off SimpleX Lock." = "Ověřování zařízení je zakázáno. Vypnutí zámku SimpleX Lock.";
+"Device authentication is disabled. Turning off POPOPX Lock." = "Ověřování zařízení je zakázáno. Vypnutí zámku POPOPX Lock.";
 
 /* No comment provided by engineer. */
-"Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication." = "Ověřování zařízení není povoleno. Jakmile povolíte ověřování zařízení, můžete zámek SimpleX Lock zapnout prostřednictvím Nastavení.";
+"Device authentication is not enabled. You can turn on POPOPX Lock via Settings, once you enable device authentication." = "Ověřování zařízení není povoleno. Jakmile povolíte ověřování zařízení, můžete zámek POPOPX Lock zapnout prostřednictvím Nastavení.";
 
 /* No comment provided by engineer. */
 "different migration in the app/database: %@ / %@" = "různé migrace v aplikaci/databázi: %@ / %@";
@@ -1418,7 +1418,7 @@ alert button */
 "Disable for all" = "Vypnout pro všechny";
 
 /* authentication reason */
-"Disable SimpleX Lock" = "Vypnutí zámku SimpleX";
+"Disable POPOPX Lock" = "Vypnutí zámku POPOPX";
 
 /* No comment provided by engineer. */
 "disabled" = "vypnut";
@@ -1451,7 +1451,7 @@ alert button */
 "Do it later" = "Udělat později";
 
 /* No comment provided by engineer. */
-"Do NOT use SimpleX for emergency calls." = "NEpoužívejte SimpleX pro tísňová volání.";
+"Do NOT use POPOPX for emergency calls." = "NEpoužívejte POPOPX pro tísňová volání.";
 
 /* No comment provided by engineer. */
 "Don't create address" = "Nevytvářet adresu";
@@ -1514,7 +1514,7 @@ alert button */
 "Enable self-destruct passcode" = "Povolit sebedestrukční heslo";
 
 /* authentication reason */
-"Enable SimpleX Lock" = "Zapnutí zámku SimpleX";
+"Enable POPOPX Lock" = "Zapnutí zámku POPOPX";
 
 /* No comment provided by engineer. */
 "Enable TCP keep-alive" = "Povolit TCP keep-alive";
@@ -1956,7 +1956,7 @@ server test error */
 "hours" = "hodin";
 
 /* No comment provided by engineer. */
-"How SimpleX works" = "Jak SimpleX funguje";
+"How POPOPX works" = "Jak POPOPX funguje";
 
 /* No comment provided by engineer. */
 "How to" = "Jak";
@@ -2058,7 +2058,7 @@ server test error */
 "Initial role" = "Počáteční role";
 
 /* No comment provided by engineer. */
-"Install SimpleX Chat for terminal" = "Nainstalujte SimpleX Chat pro terminál";
+"Install POPOPX Chat for terminal" = "Nainstalujte POPOPX Chat pro terminál";
 
 /* No comment provided by engineer. */
 "Instant" = "Okamžitě";
@@ -2193,7 +2193,7 @@ server test error */
 "left" = "opustil";
 
 /* email subject */
-"Let's talk in SimpleX Chat" = "Promluvme si v SimpleX Chatu";
+"Let's talk in POPOPX Chat" = "Promluvme si v POPOPX Chatu";
 
 /* No comment provided by engineer. */
 "Light" = "Světlo";
@@ -2316,7 +2316,7 @@ server test error */
 "Migration error:" = "Chyba přenášení:";
 
 /* No comment provided by engineer. */
-"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@simplex.chat](mailto:chat@simplex.chat)." = "Migrace se nezdařila. Klepnutím na **Přeskočit** níže pokračujte v používání aktuální databáze. Nahlaste prosím problém vývojářům aplikace prostřednictvím chatu nebo e-mailu [chat@simplex.chat](mailto:chat@simplex.chat).";
+"Migration failed. Tap **Skip** below to continue using the current database. Please report the issue to the app developers via chat or email [chat@popopxchat.com](mailto:chat@popopxchat.com)." = "Migrace se nezdařila. Klepnutím na **Přeskočit** níže pokračujte v používání aktuální databáze. Nahlaste prosím problém vývojářům aplikace prostřednictvím chatu nebo e-mailu [chat@popopxchat.com](mailto:chat@popopxchat.com).";
 
 /* No comment provided by engineer. */
 "Migration is completed" = "Přenesení dokončeno";
@@ -3107,40 +3107,40 @@ chat item action */
 "Show:" = "Zobrazit:";
 
 /* No comment provided by engineer. */
-"SimpleX address" = "Adresa SimpleX";
+"POPOPX address" = "Adresa POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Address" = "SimpleX Adresa";
+"POPOPX Address" = "POPOPX Adresa";
 
 /* No comment provided by engineer. */
-"SimpleX Chat security was audited by Trail of Bits." = "Zabezpečení SimpleX chatu bylo auditováno společností Trail of Bits.";
+"POPOPX Chat security was audited by Trail of Bits." = "Zabezpečení POPOPX chatu bylo auditováno společností Trail of Bits.";
 
-/* simplex link type */
-"SimpleX contact address" = "SimpleX kontaktní adresa";
+/* popopx link type */
+"POPOPX contact address" = "POPOPX kontaktní adresa";
 
 /* notification */
-"SimpleX encrypted message or connection event" = "SimpleX šifrovaná zpráva nebo událost připojení";
+"POPOPX encrypted message or connection event" = "POPOPX šifrovaná zpráva nebo událost připojení";
 
-/* simplex link type */
-"SimpleX group link" = "Skupinový odkaz SimpleX";
+/* popopx link type */
+"POPOPX group link" = "Skupinový odkaz POPOPX";
 
 /* chat feature */
-"SimpleX links" = "Odkazy na SimpleX";
+"POPOPX links" = "Odkazy na POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Lock" = "Zámek SimpleX";
+"POPOPX Lock" = "Zámek POPOPX";
 
 /* No comment provided by engineer. */
-"SimpleX Lock mode" = "SimpleX zámek";
+"POPOPX Lock mode" = "POPOPX zámek";
 
 /* No comment provided by engineer. */
-"SimpleX Lock not enabled!" = "Zámek SimpleX není povolen!";
+"POPOPX Lock not enabled!" = "Zámek POPOPX není povolen!";
 
 /* No comment provided by engineer. */
-"SimpleX Lock turned on" = "Zapnutý zámek SimpleX Lock";
+"POPOPX Lock turned on" = "Zapnutý zámek POPOPX Lock";
 
-/* simplex link type */
-"SimpleX one-time invitation" = "Jednorázová pozvánka SimpleX";
+/* popopx link type */
+"POPOPX one-time invitation" = "Jednorázová pozvánka POPOPX";
 
 /* No comment provided by engineer. */
 "Simplified incognito mode" = "Zjednodušený inkognito režim";
@@ -3197,7 +3197,7 @@ chat item action */
 "Stop sharing address?" = "Přestat sdílet adresu?";
 
 /* authentication reason */
-"Stop SimpleX" = "Zastavit SimpleX";
+"Stop POPOPX" = "Zastavit POPOPX";
 
 /* No comment provided by engineer. */
 "strike" = "stávka";
@@ -3252,10 +3252,10 @@ server test failure */
 "Tests failed!" = "Testy selhaly!";
 
 /* No comment provided by engineer. */
-"Thank you for installing SimpleX Chat!" = "Děkujeme, že jste si nainstalovali SimpleX Chat!";
+"Thank you for installing POPOPX Chat!" = "Děkujeme, že jste si nainstalovali POPOPX Chat!";
 
 /* No comment provided by engineer. */
-"Thanks to the users – [contribute via Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!" = "Díky uživatelům - [přispějte přes Weblate](https://github.com/simplex-chat/simplex-chat/tree/stable#help-translating-simplex-chat)!";
+"Thanks to the users – [contribute via Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!" = "Díky uživatelům - [přispějte přes Weblate](https://github.com/popopx-chat/popopx-chat/tree/stable#help-translating-popopx-chat)!";
 
 /* No comment provided by engineer. */
 "Thanks to the users – contribute via Weblate!" = "Díky uživatelům - přispívejte prostřednictvím Weblate!";
@@ -3354,10 +3354,10 @@ server test failure */
 "To protect timezone, image/voice files use UTC." = "K ochraně časového pásma používají obrazové/hlasové soubory UTC.";
 
 /* No comment provided by engineer. */
-"To protect your information, turn on SimpleX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "Chcete-li chránit své informace, zapněte zámek SimpleX Lock.\nPřed zapnutím této funkce budete vyzváni k dokončení ověření.";
+"To protect your information, turn on POPOPX Lock.\nYou will be prompted to complete authentication before this feature is enabled." = "Chcete-li chránit své informace, zapněte zámek POPOPX Lock.\nPřed zapnutím této funkce budete vyzváni k dokončení ověření.";
 
 /* No comment provided by engineer. */
-"To protect your privacy, SimpleX uses separate IDs for each of your contacts." = "Pro ochranu soukromí namísto ID uživatelů používaných všemi ostatními platformami má SimpleX identifikátory pro fronty zpráv, oddělené pro každý z vašich kontaktů.";
+"To protect your privacy, POPOPX uses separate IDs for each of your contacts." = "Pro ochranu soukromí namísto ID uživatelů používaných všemi ostatními platformami má POPOPX identifikátory pro fronty zpráv, oddělené pro každý z vašich kontaktů.";
 
 /* No comment provided by engineer. */
 "To record voice message please grant permission to use Microphone." = "Chcete-li nahrávat hlasové zprávy, udělte povolení k použití mikrofonu.";
@@ -3471,10 +3471,10 @@ server test failure */
 "Use server" = "Použít server";
 
 /* No comment provided by engineer. */
-"Use SimpleX Chat servers?" = "Používat servery SimpleX Chat?";
+"Use POPOPX Chat servers?" = "Používat servery POPOPX Chat?";
 
 /* No comment provided by engineer. */
-"Using SimpleX Chat servers." = "Používat servery SimpleX Chat.";
+"Using POPOPX Chat servers." = "Používat servery POPOPX Chat.";
 
 /* No comment provided by engineer. */
 "Verify connection security" = "Ověření zabezpečení připojení";
@@ -3642,7 +3642,7 @@ server test failure */
 "You can start chat via app Settings / Database or by restarting the app" = "Chat můžete zahájit prostřednictvím aplikace Nastavení / Databáze nebo restartováním aplikace";
 
 /* No comment provided by engineer. */
-"You can turn on SimpleX Lock via Settings." = "Zámek SimpleX můžete zapnout v Nastavení.";
+"You can turn on POPOPX Lock via Settings." = "Zámek POPOPX můžete zapnout v Nastavení.";
 
 /* No comment provided by engineer. */
 "You can use markdown to format messages:" = "K formátování zpráv můžete použít markdown:";
@@ -3777,7 +3777,7 @@ server test failure */
 "Your profile is stored on your device and only shared with your contacts." = "Profil je sdílen pouze s vašimi kontakty.";
 
 /* No comment provided by engineer. */
-"Your profile is stored on your device and shared only with your contacts. SimpleX servers cannot see your profile." = "Váš profil je uložen ve vašem zařízení a sdílen pouze s vašimi kontakty. Servery SimpleX nevidí váš profil.";
+"Your profile is stored on your device and shared only with your contacts. POPOPX servers cannot see your profile." = "Váš profil je uložen ve vašem zařízení a sdílen pouze s vašimi kontakty. Servery POPOPX nevidí váš profil.";
 
 /* No comment provided by engineer. */
 "Your random profile" = "Váš náhodný profil";
@@ -3789,5 +3789,5 @@ server test failure */
 "Your settings" = "Vaše nastavení";
 
 /* No comment provided by engineer. */
-"Your SimpleX address" = "Vaše SimpleX adresa";
+"Your POPOPX address" = "Vaše POPOPX adresa";
 

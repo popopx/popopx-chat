@@ -43,19 +43,19 @@ struct GlowAvatarView<Content: View>: View {
                 .strokeBorder(
                     AngularGradient(
                         colors: [
-                            Color(hex: "#00FFFF"),
-                            Color(hex: "#8B5CF6"),
-                            Color(hex: "#FF00FF"),
-                            Color(hex: "#818CF8"),
-                            Color(hex: "#00FFFF")
+                            QuantumColors.pureCyan,
+                            QuantumColors.particleViolet,
+                            QuantumColors.pureMagenta,
+                            QuantumColors.encryptionStandard,
+                            QuantumColors.pureCyan
                         ],
                         center: .center,
                         angle: angle
                     ),
                     lineWidth: 3
                 )
-                .shadow(color: Color(hex: "#8B5CF6").opacity(0.4), radius: 8)
-                .shadow(color: Color(hex: "#00FFFF").opacity(0.2), radius: 12)
+                .shadow(color: QuantumColors.particleViolet.opacity(0.4), radius: 8)
+                .shadow(color: QuantumColors.pureCyan.opacity(0.2), radius: 12)
         }
     }
 
@@ -64,16 +64,16 @@ struct GlowAvatarView<Content: View>: View {
             .strokeBorder(
                 AngularGradient(
                     colors: [
-                        Color(hex: "#00FFFF"),
-                        Color(hex: "#8B5CF6"),
-                        Color(hex: "#FF00FF"),
-                        Color(hex: "#00FFFF")
+                        QuantumColors.pureCyan,
+                        QuantumColors.particleViolet,
+                        QuantumColors.pureMagenta,
+                        QuantumColors.pureCyan
                     ],
                     center: .center
                 ),
                 lineWidth: 3
             )
-            .shadow(color: Color(hex: "#8B5CF6").opacity(0.3), radius: 6)
+            .shadow(color: QuantumColors.particleViolet.opacity(0.3), radius: 6)
     }
 
     private var innerRing: some View {

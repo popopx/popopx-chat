@@ -55,15 +55,15 @@ struct NeonTabIndicator: View {
                 .fill(
                     LinearGradient(
                         colors: [
-                            Color(hex: "#6E25C4"),
-                            Color(hex: "#FF00A0")
+                            QuantumColors.accent,
+                            QuantumColors.accentWarm
                         ],
                         startPoint: .leading,
                         endPoint: .trailing
                     )
                 )
                 .frame(width: 20, height: 3)
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.6), radius: 4)
+                .shadow(color: QuantumColors.accent.opacity(0.6), radius: 4)
                 .transition(.scale.combined(with: .opacity))
         }
     }
@@ -79,14 +79,14 @@ struct NeonTabIcon: View {
             if isActive {
                 Image(systemName: systemName)
                     .font(.system(size: 22, weight: .medium))
-                    .foregroundColor(Color(hex: "#6E25C4"))
+                    .foregroundColor(QuantumColors.accent)
                     .blur(radius: 6)
                     .opacity(0.5)
             }
 
             Image(systemName: systemName)
                 .font(.system(size: 22, weight: isActive ? .semibold : .medium))
-                .foregroundColor(isActive ? Color(hex: "#6E25C4") : Color(white: 0.75))
+                .foregroundColor(isActive ? QuantumColors.accent : Color(white: 0.75))
         }
         .scaleEffect(!reduceMotion && isActive ? 1.08 : 1.0)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.7), value: isActive)

@@ -65,7 +65,7 @@ struct ComplianceSettingsView: View {
         VStack(spacing: 12) {
             HStack {
                 Image(systemName: "checkmark.shield.fill")
-                    .font(.system(size: 36))
+                    .font(QuantumFonts.iconMedium)
                     .foregroundColor(QuantumColors.accent)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(NSLocalizedString("Compliance", comment: "compliance section header"))

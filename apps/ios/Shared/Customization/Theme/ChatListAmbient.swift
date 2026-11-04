@@ -10,16 +10,16 @@ struct AmbientOrbBackground: View {
     @Environment(\.scenePhase) private var scenePhase // POPOPX: 方案2
 
     private let orbs: [AmbientOrb] = [
-        AmbientOrb(color: Color(hex: "#00FFFF"), opacity: 0.20, size: 280, period: 20, startOffset: 0),
-        AmbientOrb(color: Color(hex: "#00FFFF"), opacity: 0.12, size: 220, period: 25, startOffset: 7),
-        AmbientOrb(color: Color(hex: "#FF00FF"), opacity: 0.10, size: 200, period: 30, startOffset: 14),
-        AmbientOrb(color: Color(hex: "#A020F0"), opacity: 0.08, size: 180, period: 22, startOffset: 3)
+        AmbientOrb(color: QuantumColors.pureCyan, opacity: 0.20, size: 280, period: 20, startOffset: 0),
+        AmbientOrb(color: QuantumColors.pureCyan, opacity: 0.12, size: 220, period: 25, startOffset: 7),
+        AmbientOrb(color: QuantumColors.pureMagenta, opacity: 0.10, size: 200, period: 30, startOffset: 14),
+        AmbientOrb(color: QuantumColors.particleDeepPurple, opacity: 0.08, size: 180, period: 22, startOffset: 3)
     ]
 
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                Color(hex: "#0D0D11").ignoresSafeArea()
+                QuantumColors.darkSurfaceBase.ignoresSafeArea()
 
                 if reduceMotion {
                     staticOrbs(in: geo.size)
@@ -97,16 +97,16 @@ struct CosmicAbyssBackground: View {
     var body: some View {
         ZStack {
             if colorScheme == .dark {
-                Color(hex: "#000000").ignoresSafeArea()
+                Color.black.ignoresSafeArea()
                 RadialGradient(
-                    colors: [Color(hex: "#A855F7").opacity(0.03), Color.clear],
+                    colors: [QuantumColors.vividPurple.opacity(0.03), Color.clear],
                     center: .center,
                     startRadius: 50,
                     endRadius: 400
                 )
                 .ignoresSafeArea()
                 RadialGradient(
-                    colors: [Color(hex: "#A855F7").opacity(0.015), Color.clear],
+                    colors: [QuantumColors.vividPurple.opacity(0.015), Color.clear],
                     center: UnitPoint(x: 0.3, y: 0.7),
                     startRadius: 100,
                     endRadius: 600
@@ -116,7 +116,7 @@ struct CosmicAbyssBackground: View {
                 // POPOPX: Always use static star field to save battery
                 staticStarField
             } else {
-                Color(hex: "#F7F5FA").ignoresSafeArea()
+                QuantumColors.background.ignoresSafeArea()
             }
         }
     }
@@ -136,7 +136,7 @@ struct CosmicAbyssBackground: View {
                     let twinkle = 0.7 + 0.3 * sin(t * (0.5 + Double(i) * 0.1) + Double(i))
                     let finalOpacity = p.opacity * twinkle
                     let rect = CGRect(x: x - p.size / 2, y: y - p.size / 2, width: p.size, height: p.size)
-                    context.fill(Path(ellipseIn: rect), with: .color(Color(hex: "#A855F7").opacity(finalOpacity)))
+                    context.fill(Path(ellipseIn: rect), with: .color(QuantumColors.vividPurple.opacity(finalOpacity)))
                 }
             }
             .ignoresSafeArea()
@@ -150,7 +150,7 @@ struct CosmicAbyssBackground: View {
                 let x = p.startX * size.width
                 let y = p.startY * size.height
                 let rect = CGRect(x: x - p.size / 2, y: y - p.size / 2, width: p.size, height: p.size)
-                context.fill(Path(ellipseIn: rect), with: .color(Color(hex: "#A855F7").opacity(p.opacity)))
+                context.fill(Path(ellipseIn: rect), with: .color(QuantumColors.vividPurple.opacity(p.opacity)))
             }
         }
         .ignoresSafeArea()
@@ -206,7 +206,7 @@ private struct GlassCardBase: ViewModifier {
             )
             .background(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(Color(hex: "#6E25C4").opacity(isDarkTheme ? 0.10 : 0.05))
+                    .fill(QuantumColors.accent.opacity(isDarkTheme ? 0.10 : 0.05))
             )
     }
 }
@@ -224,7 +224,7 @@ private struct GlassCardOverlays: ViewModifier {
             .overlay(specularHighlight)
             .overlay(unreadIndicator, alignment: .leading)
             .shadow(
-                color: isUnread && isDarkTheme ? Color(hex: "#00FFD2").opacity(0.12) : .clear,
+                color: isUnread && isDarkTheme ? QuantumColors.accentSecondary.opacity(0.12) : .clear,
                 radius: 8, x: 0, y: 2
             )
     }
@@ -233,9 +233,9 @@ private struct GlassCardOverlays: ViewModifier {
         RoundedRectangle(cornerRadius: 18, style: .continuous)
             .strokeBorder(
                 isUnread && isDarkTheme
-                    ? Color(hex: "#00FFD2").opacity(0.5)
+                    ? QuantumColors.accentSecondary.opacity(0.5)
                     : isDarkTheme
-                        ? Color(hex: "#00FFD2").opacity(0.15)
+                        ? QuantumColors.accentSecondary.opacity(0.15)
                         : Color.white.opacity(0.2),
                 lineWidth: 0.5
             )
@@ -277,14 +277,14 @@ private struct GlassCardOverlays: ViewModifier {
             Capsule()
                 .fill(
                     LinearGradient(
-                        colors: [Color(hex: "#00FFD2"), Color(hex: "#6E25C4")],
+                        colors: [QuantumColors.accentSecondary, QuantumColors.accent],
                         startPoint: .top,
                         endPoint: .bottom
                     )
                 )
                 .frame(width: 2, height: 32)
                 .offset(x: -1)
-                .shadow(color: Color(hex: "#00FFD2").opacity(0.5), radius: 4)
+                .shadow(color: QuantumColors.accentSecondary.opacity(0.5), radius: 4)
         }
     }
 }

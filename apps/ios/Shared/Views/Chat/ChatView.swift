@@ -143,7 +143,7 @@ struct ChatView: View {
                 }
             }
         }
-        .toolbarBackground(Color(hex: "#0D0D11").opacity(0.92), for: .navigationBar)
+        .toolbarBackground(QuantumColors.darkSurfaceBase.opacity(0.92), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .navigationTitle(
             memberSupportChat == nil
@@ -392,13 +392,13 @@ struct ChatView: View {
         let wallpaperType = theme.wallpaper.type
         let backgroundColor = theme.wallpaper.background ?? wallpaperType.defaultBackgroundColor(theme.base, theme.colors.background)
         let tintColor = theme.wallpaper.tint ?? wallpaperType.defaultTintColor(theme.base)
-        // RTF spec: Obsidian Void background (#000000 + 2% #6E25C4 purple glow for dark, #F7F5FA for light)
+        // RTF spec: Obsidian Void background (#000000 + 2% Ocean Blue glow for dark, #F7F5FA for light)
         ZStack {
             if isInDarkTheme() {
-                Color(hex: "#000000")
-                Color(hex: "#6E25C4").opacity(0.02)
+                Color.black
+                QuantumColors.accent.opacity(0.02)
             } else {
-                Color(hex: "#F7F5FA")
+                QuantumColors.background
             }
         }
         .ignoresSafeArea(.all)
@@ -493,10 +493,10 @@ struct ChatView: View {
         // POPOPX: Obsidian Void theme background (particle field removed for battery)
         ZStack {
             if isInDarkTheme() {
-                Color(hex: "#000000")
-                Color(hex: "#6E25C4").opacity(0.02)
+                Color.black
+                QuantumColors.accent.opacity(0.02)
             } else {
-                Color(hex: "#F7F5FA")
+                QuantumColors.background
             }
         }
     }

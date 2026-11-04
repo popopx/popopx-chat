@@ -18,11 +18,13 @@ class ChatPopCoordinator: ObservableObject {
         var isPopping = false
         var particles: [SandParticle] = []
         var flashOpacity: Double = 0
+        var startTime: Date = Date()
     }
 
     var isPopping: Bool { snapshot.isPopping }
     var particles: [SandParticle] { snapshot.particles }
     var flashOpacity: Double { snapshot.flashOpacity }
+    var startTime: Date { snapshot.startTime }
 
     private var particleTimer: Timer?
     private var flashTimer: Timer?
@@ -45,16 +47,16 @@ class ChatPopCoordinator: ObservableObject {
         let centerY = screenSize.height * 0.45
 
         let rainbowColors: [Color] = [
-            Color(hex: "#FF3B30"),
-            Color(hex: "#FF9500"),
+            QuantumColors.error,
+            QuantumColors.warning,
             Color(hex: "#FFCC00"),
-            Color(hex: "#34C759"),
-            Color(hex: "#00FFD2"),
+            QuantumColors.success,
+            QuantumColors.accentSecondary,
             Color(hex: "#007AFF"),
             Color(hex: "#AF52DE"),
             Color(hex: "#FF2D55"),
-            Color(hex: "#6E25C4"),
-            Color(hex: "#00FFD2"),
+            QuantumColors.accent,
+            QuantumColors.accentSecondary,
         ]
 
         snapshot.particles = (0..<particleCount).map { i in
@@ -123,7 +125,7 @@ struct ChatPopOverlayView: View {
     var body: some View {
         ZStack {
             if coordinator.flashOpacity > 0 {
-                Color(hex: "#6E25C4")
+                QuantumColors.accent
                     .opacity(coordinator.flashOpacity)
                     .blendMode(.screen)
                     .ignoresSafeArea()
@@ -131,7 +133,7 @@ struct ChatPopOverlayView: View {
             }
 
             if coordinator.isPopping && !coordinator.particles.isEmpty {
-                BubblePopCanvas(particles: coordinator.particles)
+                BubblePopCanvas(particles: coordinator.particles, startTime: coordinator.startTime)
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
             }

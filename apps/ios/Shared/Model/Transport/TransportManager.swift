@@ -42,7 +42,7 @@ class TransportManager {
         ChatModel.shared.meshAutoSwitch = meshAutoSwitchGroupDefault.get()
         ChatModel.shared.meshGatewayEnabled = meshGatewayEnabledGroupDefault.get()
 
-        ChatModel.shared.appState.$meshTransportEnabled
+        ChatModel.shared.appState.mesh.$meshTransportEnabled
             .sink { [weak self] enabled in
                 if enabled {
                     self?.startBluetooth()

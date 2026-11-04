@@ -27,8 +27,8 @@ struct GenerativeBubbleModifier: ViewModifier {
     private var neonBorderGradient: LinearGradient {
         LinearGradient(
             colors: isIncoming
-                ? [Color(hex: "#00FFFF").opacity(0.7), Color(hex: "#8B5CF6").opacity(0.5)]
-                : [Color(hex: "#8B5CF6").opacity(0.7), Color(hex: "#FF00FF").opacity(0.5)],
+                ? [QuantumColors.pureCyan.opacity(0.7), QuantumColors.particleViolet.opacity(0.5)]
+                : [QuantumColors.particleViolet.opacity(0.7), QuantumColors.pureMagenta.opacity(0.5)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
@@ -49,8 +49,8 @@ struct BreathingGlow: View {
                 .strokeBorder(
                     LinearGradient(
                         colors: [
-                            Color(hex: "#00FFFF").opacity(0.25 + pulse * 0.3), // POPOPX: 方案4 — increased opacity to compensate for blur removal
-                            Color(hex: "#FF00FF").opacity(0.2 + pulse * 0.2)
+                            QuantumColors.pureCyan.opacity(0.25 + pulse * 0.3), // POPOPX: 方案4 — increased opacity to compensate for blur removal
+                            QuantumColors.pureMagenta.opacity(0.2 + pulse * 0.2)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -72,13 +72,13 @@ struct CyberBubbleStyle: ViewModifier {
                 .background(
                     ZStack {
                         RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .fill(Color(hex: "#1A1228").opacity(0.7)) // POPOPX: solid替代 ultraThinMaterial
+                            .fill(QuantumColors.darkSurfaceDeep.opacity(0.7)) // POPOPX: solid替代 ultraThinMaterial
                         RoundedRectangle(cornerRadius: 16, style: .continuous)
                             .fill(
                                 LinearGradient(
                                     colors: [
-                                        Color(hex: "#8B5CF6").opacity(0.08),
-                                        Color(hex: "#818CF8").opacity(0.05)
+                                        QuantumColors.particleViolet.opacity(0.08),
+                                        QuantumColors.encryptionStandard.opacity(0.05)
                                     ],
                                     startPoint: .top,
                                     endPoint: .bottom
@@ -91,8 +91,8 @@ struct CyberBubbleStyle: ViewModifier {
                         .strokeBorder(
                             LinearGradient(
                                 colors: [
-                                    Color(hex: "#8B5CF6").opacity(0.4),
-                                    Color(hex: "#818CF8").opacity(0.15)
+                                    QuantumColors.particleViolet.opacity(0.4),
+                                    QuantumColors.encryptionStandard.opacity(0.15)
                                 ],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing

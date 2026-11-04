@@ -15,9 +15,9 @@ struct SendRippleEffect: View {
     }
 
     private let colors: [Color] = [
-        Color(hex: "#00FFFF"),
-        Color(hex: "#8B5CF6"),
-        Color(hex: "#FF00FF")
+        QuantumColors.pureCyan,
+        QuantumColors.particleViolet,
+        QuantumColors.pureMagenta
     ]
 
     var body: some View {
@@ -95,7 +95,7 @@ struct ReceiveGlowEffect: ViewModifier {
 
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .strokeBorder(
-                    Color(hex: "#8B5CF6").opacity(0.3 * pulse),
+                    QuantumColors.particleViolet.opacity(0.3 * pulse),
                     lineWidth: 1.5
                 )
                 .blur(radius: 1)
@@ -133,7 +133,7 @@ struct PXBalloon3D: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color(hex: "#A855F7"), Color(hex: "#6E25C4"), Color(hex: "#4A1A8A")],
+                        colors: [QuantumColors.vividPurple, QuantumColors.accent, QuantumColors.darkPurpleDeep],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 2,
                         endRadius: balloonDiameter * 0.7
@@ -175,7 +175,7 @@ struct PXBalloon3D: View {
 
             // Tie knot
             Circle()
-                .fill(Color(hex: "#6E25C4"))
+                .fill(QuantumColors.accent)
                 .frame(width: balloonDiameter * 0.15, height: balloonDiameter * 0.15)
                 .offset(y: balloonDiameter * 0.575)
 
@@ -206,7 +206,7 @@ struct PXBubbleFlyUpView: View {
 
     var body: some View {
         PXBalloon3D(text: text)
-            .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 12)
+            .shadow(color: QuantumColors.accent.opacity(0.4), radius: 12)
             .scaleEffect(animate ? 1.1 : 0.5)
             .opacity(animate ? 0.3 : 1.0)
             .offset(y: animate ? -80 : 120)

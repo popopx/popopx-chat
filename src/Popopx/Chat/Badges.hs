@@ -29,6 +29,7 @@ module Popopx.Chat.Badges
     defaultFileSizeLimits,
     maxXFTPFileSize,
     maxSndXFTPFileSize,
+    badgeGraceInterval,
     badgeSndGraceInterval,
     badgeServerCredential,
     maxFileSizeSupporter,

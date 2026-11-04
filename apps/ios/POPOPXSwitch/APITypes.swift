@@ -127,19 +127,19 @@ private func transformOWSF(_ value: Any) -> Any {
         }
         return value
     }
-    var result = NSMutableDictionary()
+    let result = NSMutableDictionary()
     for (key, val) in dict {
         guard let k = key as? String else { continue }
         if k == "_owsf" { continue }
         result[k] = transformOWSF(val)
     }
     if let owsf = dict["_owsf"] as? String {
-        var inner = NSMutableDictionary()
+        let inner = NSMutableDictionary()
         for (key, val) in result {
             guard let k = key as? String else { continue }
             inner[k] = val
         }
-        var wrapped = NSMutableDictionary()
+        let wrapped = NSMutableDictionary()
         wrapped[owsf] = inner
         return wrapped
     }
@@ -877,7 +877,7 @@ public enum RHKey: Decodable, Hashable {
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
-            if let allKeys = try? c.allKeys.first(where: { $0.stringValue != "_owsf" }) {
+            if let allKeys = c.allKeys.first(where: { $0.stringValue != "_owsf" }) {
                 switch allKeys.stringValue {
                 case "rhNew": self = .rhNew
                 case "rhId":
@@ -916,7 +916,7 @@ public enum RemoteHostError: Decodable, Hashable {
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         if c.contains(._owsf) {
-            let key = try c.allKeys.first { $0.stringValue != "_owsf" }
+            let key = c.allKeys.first { $0.stringValue != "_owsf" }
             switch key?.stringValue {
             case "missing": self = .missing
             case "inactive": self = .inactive

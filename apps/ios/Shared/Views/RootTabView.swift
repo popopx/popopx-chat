@@ -272,7 +272,7 @@ struct RootTabView: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color(hex: "#A855F7"), Color(hex: "#6E25C4"), Color(hex: "#4A1A8A")],
+                        colors: [QuantumColors.vividPurple, QuantumColors.accent, QuantumColors.darkPurpleDeep],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 2,
                         endRadius: 28
@@ -305,12 +305,12 @@ struct RootTabView: View {
             .stroke(Color.white.opacity(0.06), lineWidth: 1)
 
             Circle()
-                .fill(Color(hex: "#6E25C4"))
+                .fill(QuantumColors.accent)
                 .frame(width: 12, height: 12)
                 .offset(y: 46)
         }
-        .shadow(color: Color(hex: "#6E25C4").opacity(0.5), radius: 20)
-        .shadow(color: Color(hex: "#00FFD2").opacity(0.3), radius: 30)
+        .shadow(color: QuantumColors.accent.opacity(0.5), radius: 20)
+        .shadow(color: QuantumColors.accentSecondary.opacity(0.3), radius: 30)
     }
 }
 
@@ -332,13 +332,13 @@ struct CustomCapsuleTabBar: View {
                         Image(systemName: tab.icon)
                             .font(.system(size: 22, weight: selectedTab == tab ? .semibold : .medium))
                             .minimumScaleFactor(0.5)
-                            .foregroundColor(selectedTab == tab ? Color(hex: "#6E25C4") : Color(white: 0.75))
-                            .shadow(color: selectedTab == tab ? Color(hex: "#6E25C4").opacity(0.5) : .clear, radius: 4)
+                            .foregroundColor(selectedTab == tab ? QuantumColors.accent : Color(white: 0.75))
+                            .shadow(color: selectedTab == tab ? QuantumColors.accent.opacity(0.5) : .clear, radius: 4)
 
                         Text(tab.title)
                             .font(.system(size: 10, weight: selectedTab == tab ? .semibold : .regular))
                             .minimumScaleFactor(0.5)
-                            .foregroundColor(selectedTab == tab ? Color(hex: "#6E25C4") : Color(white: 0.75))
+                            .foregroundColor(selectedTab == tab ? QuantumColors.accent : Color(white: 0.75))
 
                         NeonTabIndicator(isActive: selectedTab == tab)
                     }
@@ -358,11 +358,11 @@ struct CustomCapsuleTabBar: View {
         }
         .background(
             Capsule()
-                .fill(Color(hex: "#0D0A16").opacity(0.85))
+                .fill(QuantumColors.darkSurfaceCard.opacity(0.85))
                 .overlay(
                     Capsule()
                         .strokeBorder(
-                            Color(hex: "#6E25C4").opacity(0.15),
+                            QuantumColors.accent.opacity(0.15),
                             lineWidth: 0.5
                         )
                 )

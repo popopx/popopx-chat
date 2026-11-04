@@ -42,6 +42,8 @@ struct OnboardingNetworkCommitmentsView: View {
 
     var body: some View {
         GeometryReader { geo in
+            let safeH = max(1, geo.size.height)
+            
             ZStack {
                 Color.clear
 
@@ -70,8 +72,9 @@ struct OnboardingNetworkCommitmentsView: View {
                         .disabled(!canAccept)
                         .padding(.horizontal, 16)
                         .padding(.bottom, 16)
+                        .safeAreaPadding(.bottom)
                 }
-                .frame(minHeight: geo.size.height)
+                .frame(minHeight: safeH)
 
                 if particleExpansionActive {
                     ParticleExpansionOverlay()
@@ -119,17 +122,17 @@ struct OnboardingNetworkCommitmentsView: View {
     private var headerSection: some View {
         VStack(spacing: 4) {
             Text(NSLocalizedString("Your network", comment: "Your network title"))
-                .font(.system(size: 26, weight: .bold, design: .rounded))
+                .font(QuantumFonts.sectionTitle)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .tracking(1.0)
                 .foregroundColor(.white)
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 12, x: 0, y: 2)
+                .shadow(color: QuantumColors.accent.opacity(0.4), radius: 12, x: 0, y: 2)
 
             Text(NSLocalizedString("Network routers cannot know\nwho talks to whom", comment: "Network privacy subtitle"))
-                .font(.system(size: 12, weight: .medium, design: .monospaced))
+                .font(QuantumFonts.mono.weight(.medium))
                 .lineSpacing(2)
-                .foregroundColor(Color(hex: "#C4BFD6"))
+                .foregroundColor(QuantumColors.textSecondary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -147,7 +150,7 @@ struct OnboardingNetworkCommitmentsView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "server.rack")
-                        .foregroundColor(Color(hex: "#00FFD2"))
+                        .foregroundColor(QuantumColors.accentSecondary)
                     Text(NSLocalizedString("Setup routers", comment: "Setup routers button"))
                         .fontWeight(.medium)
                         .foregroundColor(.white)
@@ -160,8 +163,8 @@ struct OnboardingNetworkCommitmentsView: View {
                             .grayscale(selectedOperatorIds.contains(op.operatorId) ? 0.0 : 1.0)
                     }
                     Image(systemName: "chevron.down")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(Color(hex: "#C4BFD6"))
+                        .font(QuantumFonts.iconSmall.weight(.semibold))
+                        .foregroundColor(QuantumColors.textSecondary)
                         .rotationEffect(.degrees(operatorsExpanded ? 180 : 0))
                 }
                 .padding(.horizontal, 14)
@@ -172,9 +175,9 @@ struct OnboardingNetworkCommitmentsView: View {
                 VStack(spacing: 8) {
                     if operatorsLoadFailed && serverOperators.isEmpty {
                         Text(NSLocalizedString("Unable to load server operators. Please check your connection and try again.", comment: "operators load error"))
-                            .font(.system(size: 13, design: .monospaced))
+                            .font(QuantumFonts.monoCaption)
                             .multilineTextAlignment(.center)
-                            .foregroundColor(Color(hex: "#C4BFD6"))
+                            .foregroundColor(QuantumColors.textSecondary)
                             .padding(.vertical, 8)
                         Button {
                             reloadOperators()
@@ -196,13 +199,13 @@ struct OnboardingNetworkCommitmentsView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(Color(hex: "#141021"))
+                .fill(QuantumColors.surfaceElevated)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .strokeBorder(
                     LinearGradient(
-                        colors: [Color(hex: "#6E25C4").opacity(0.4), Color(hex: "#00FFD2").opacity(0.2)],
+                        colors: [QuantumColors.accent.opacity(0.4), QuantumColors.accentSecondary.opacity(0.2)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -214,7 +217,7 @@ struct OnboardingNetworkCommitmentsView: View {
     private func inlineOperatorRow(_ serverOperator: ServerOperator) -> some View {
         let checked = selectedOperatorIds.contains(serverOperator.operatorId)
         let icon = checked ? "checkmark.circle.fill" : "circle"
-        let iconColor = checked ? Color(hex: "#00FFD2") : Color(hex: "#C4BFD6")
+        let iconColor = checked ? QuantumColors.accentSecondary : QuantumColors.textSecondary
         return HStack(spacing: 10) {
             Image(serverOperator.largeLogo(colorScheme))
                 .resizable()
@@ -231,15 +234,15 @@ struct OnboardingNetworkCommitmentsView: View {
         .padding(.horizontal, 10)
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(hex: "#0D0A16"))
+                .fill(QuantumColors.surface)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .strokeBorder(
                     LinearGradient(
                         colors: checked
-                            ? [Color(hex: "#6E25C4").opacity(0.5), Color(hex: "#00FFD2").opacity(0.25)]
-                            : [Color(hex: "#6E25C4").opacity(0.15), Color(hex: "#00FFD2").opacity(0.08)],
+                            ? [QuantumColors.accent.opacity(0.5), QuantumColors.accentSecondary.opacity(0.25)]
+                            : [QuantumColors.accent.opacity(0.15), QuantumColors.accentSecondary.opacity(0.08)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -261,13 +264,13 @@ struct OnboardingNetworkCommitmentsView: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 4) {
                 Image(systemName: "bell.badge")
-                    .foregroundColor(Color(hex: "#00FFD2"))
+                    .foregroundColor(QuantumColors.accentSecondary)
                 Text(NSLocalizedString("Notifications", comment: "Notifications config label"))
                     .fontWeight(.medium)
                     .foregroundColor(.white)
                 Spacer()
                 Image(systemName: notificationMode.icon)
-                    .foregroundColor(Color(hex: "#C4BFD6"))
+                    .foregroundColor(QuantumColors.textSecondary)
             }
             .padding(.horizontal, 14)
             .padding(.top, 10)
@@ -286,13 +289,13 @@ struct OnboardingNetworkCommitmentsView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(Color(hex: "#141021"))
+                .fill(QuantumColors.surfaceElevated)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .strokeBorder(
                     LinearGradient(
-                        colors: [Color(hex: "#6E25C4").opacity(0.4), Color(hex: "#00FFD2").opacity(0.2)],
+                        colors: [QuantumColors.accent.opacity(0.4), QuantumColors.accentSecondary.opacity(0.2)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -308,8 +311,8 @@ struct OnboardingNetworkCommitmentsView: View {
             binaryBubble
 
             Text(NSLocalizedString("Your encrypted bubble", comment: "Bubble label"))
-                .font(.system(size: 12, weight: .medium, design: .monospaced))
-                .foregroundColor(Color(hex: "#C4BFD6"))
+                .font(QuantumFonts.mono.weight(.medium))
+                .foregroundColor(QuantumColors.textSecondary)
                 .multilineTextAlignment(.center)
         }
         .padding(.vertical, 16)
@@ -322,7 +325,7 @@ struct OnboardingNetworkCommitmentsView: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color(hex: "#00FFD2").opacity(0.15), Color.clear],
+                        colors: [QuantumColors.accentSecondary.opacity(0.15), Color.clear],
                         center: .center,
                         startRadius: 40,
                         endRadius: 80
@@ -337,8 +340,8 @@ struct OnboardingNetworkCommitmentsView: View {
                     RadialGradient(
                         colors: [
                             Color.white.opacity(0.12),
-                            Color(hex: "#6E25C4").opacity(0.08),
-                            Color(hex: "#0A0A14").opacity(0.6)
+                            QuantumColors.accent.opacity(0.08),
+                            QuantumColors.surface.opacity(0.6)
                         ],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 5,
@@ -348,7 +351,7 @@ struct OnboardingNetworkCommitmentsView: View {
                 .frame(width: 120, height: 120)
                 .overlay(
                     Circle()
-                        .fill(Color(hex: "#1A1228").opacity(0.5))
+                        .fill(QuantumColors.surfaceElevated.opacity(0.5))
                         .opacity(0.5)
                 )
                 .overlay(
@@ -371,7 +374,7 @@ struct OnboardingNetworkCommitmentsView: View {
                     Circle()
                         .stroke(
                             LinearGradient(
-                                colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")],
+                                colors: [QuantumColors.accent, QuantumColors.accentSecondary],
                                 startPoint: .topTrailing,
                                 endPoint: .bottomLeading
                             ),
@@ -379,7 +382,7 @@ struct OnboardingNetworkCommitmentsView: View {
                         )
                 )
                 .compositingGroup()
-                .shadow(color: Color(hex: "#00FFD2").opacity(0.35), radius: 15, x: 0, y: 0)
+                .shadow(color: QuantumColors.accentSecondary.opacity(0.35), radius: 15, x: 0, y: 0)
 
             // Binary data inside bubble
             VStack(spacing: 4) {
@@ -387,8 +390,8 @@ struct OnboardingNetworkCommitmentsView: View {
                 Text(generateBinaryLine())
                 Text(generateBinaryLine())
             }
-            .font(.system(size: 8, design: .monospaced))
-            .foregroundColor(Color(hex: "#00FFD2"))
+            .font(QuantumFonts.monoTiny)
+            .foregroundColor(QuantumColors.accentSecondary)
             .opacity(0.7)
         }
     }
@@ -403,12 +406,12 @@ struct OnboardingNetworkCommitmentsView: View {
     private var commitmentsSection: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(NSLocalizedString("Network commitments", comment: "Network commitments title"))
-                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .font(QuantumFonts.callout.weight(.bold))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .fixedSize(horizontal: false, vertical: true)
                 .foregroundColor(.white)
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 12, x: 0, y: 2)
+                .shadow(color: QuantumColors.accent.opacity(0.4), radius: 12, x: 0, y: 2)
 
             HStack(alignment: .top, spacing: 10) {
                 commitmentCard(
@@ -436,7 +439,7 @@ struct OnboardingNetworkCommitmentsView: View {
             } label: {
                 Text(NSLocalizedString("Privacy policy and conditions of use.", comment: "Privacy policy link"))
                     .fontWeight(.medium)
-                    .foregroundColor(Color(hex: "#00FFD2"))
+                    .foregroundColor(QuantumColors.accentSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -448,21 +451,21 @@ struct OnboardingNetworkCommitmentsView: View {
     private func commitmentCard(icon: String, title: String, items: [String]) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Image(systemName: icon)
-                .font(.system(size: 16))
-                .foregroundColor(Color(hex: "#00FFD2"))
+                .font(QuantumFonts.iconRegular)
+                .foregroundColor(QuantumColors.accentSecondary)
 
             Text(title)
-                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .font(QuantumFonts.caption.weight(.bold))
                 .foregroundColor(.white)
 
             ForEach(items, id: \.self) { item in
                 HStack(spacing: 4) {
                     Text("•")
-                        .font(.system(size: 11))
-                        .foregroundColor(Color(hex: "#00FFD2"))
+                        .font(QuantumFonts.iconTiny)
+                        .foregroundColor(QuantumColors.accentSecondary)
                     Text(item)
-                        .font(.system(size: 11, design: .rounded))
-                        .foregroundColor(Color(hex: "#C4BFD6"))
+                        .font(QuantumFonts.caption)
+                        .foregroundColor(QuantumColors.textSecondary)
                 }
             }
         }
@@ -470,13 +473,13 @@ struct OnboardingNetworkCommitmentsView: View {
         .padding(10)
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(Color(hex: "#141021"))
+                .fill(QuantumColors.surfaceElevated)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .strokeBorder(
                     LinearGradient(
-                        colors: [Color(hex: "#6E25C4").opacity(0.3), Color(hex: "#00FFD2").opacity(0.15)],
+                        colors: [QuantumColors.accent.opacity(0.3), QuantumColors.accentSecondary.opacity(0.15)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -494,9 +497,9 @@ struct OnboardingNetworkCommitmentsView: View {
             HStack(spacing: 8) {
                 Image(systemName: ageConfirmed ? "checkmark.circle.fill" : "circle")
                     .font(.title3)
-                    .foregroundColor(ageConfirmed ? Color(hex: "#00FFD2") : Color(hex: "#C4BFD6"))
+                    .foregroundColor(ageConfirmed ? QuantumColors.accentSecondary : QuantumColors.textSecondary)
                 Text(NSLocalizedString("I confirm that I am at least 13 years of age", comment: "COPPA age verification"))
-                    .font(.system(size: 13, design: .monospaced))
+                    .font(QuantumFonts.mono)
                     .foregroundColor(.white)
             }
         }
@@ -515,9 +518,9 @@ struct OnboardingNetworkCommitmentsView: View {
                         .tint(.white)
                 } else {
                     Image(systemName: "bubble.left.and.bubble.right")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(QuantumFonts.iconRegular.weight(.semibold))
                     Text(NSLocalizedString("ACCEPT & ENTER THE BUBBLE", comment: "Accept and enter button"))
-                        .font(.system(size: 14, weight: .bold, design: .default))
+                        .font(QuantumFonts.callout.weight(.bold))
                         .tracking(1.2)
                 }
             }
@@ -526,14 +529,14 @@ struct OnboardingNetworkCommitmentsView: View {
             .frame(height: 50)
             .background(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(Color(hex: "#2D1B5E").opacity(0.8))
+                    .fill(QuantumColors.buttonDarkPurple.opacity(0.8))
                     .overlay(
                         RoundedRectangle(cornerRadius: 16)
                             .fill(
                                 LinearGradient(
                                     colors: [
-                                        Color(hex: "#6E25C4").opacity(0.6),
-                                        Color(hex: "#8B5CF6").opacity(0.4)
+                                        QuantumColors.accent.opacity(0.6),
+                                        QuantumColors.particleViolet.opacity(0.4)
                                     ],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
@@ -546,9 +549,9 @@ struct OnboardingNetworkCommitmentsView: View {
                     .strokeBorder(
                         LinearGradient(
                             colors: [
-                                Color(hex: "#6E25C4").opacity(0.8),
-                                Color(hex: "#00FFD2").opacity(0.5),
-                                Color(hex: "#6E25C4").opacity(0.8)
+                                QuantumColors.accent.opacity(0.8),
+                                QuantumColors.accentSecondary.opacity(0.5),
+                                QuantumColors.accent.opacity(0.8)
                             ],
                             startPoint: .leading,
                             endPoint: .trailing
@@ -557,7 +560,7 @@ struct OnboardingNetworkCommitmentsView: View {
                     )
             )
             .compositingGroup()
-            .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 10, x: 0, y: 3)
+            .shadow(color: QuantumColors.accent.opacity(0.4), radius: 10, x: 0, y: 3)
         }
         .opacity(canAccept ? 1.0 : 0.5)
         .scaleEffect(accepting ? 0.95 : 1.0)

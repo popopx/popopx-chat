@@ -47,7 +47,7 @@ struct BlowBubbleButton: View {
             blowingIndicator
         }
         .frame(width: 56, height: 56)
-        .shadow(color: Color(hex: "#00FFD2").opacity(0.2), radius: 4)
+        .shadow(color: QuantumColors.accentSecondary.opacity(0.2), radius: 4)
         .onLongPressGesture(
             minimumDuration: 0.3,
             perform: {
@@ -80,7 +80,7 @@ struct BlowBubbleButton: View {
     private var blowingIndicator: some View {
         ZStack {
             Circle()
-                .fill(Color(hex: "#1E1433"))
+                .fill(QuantumColors.darkPurpleShadow)
                 .frame(width: 56, height: 56)
                 .overlay(
                     // POPOPX: Replaced repeatForever(60fps) with TimelineView 1fps for battery efficiency
@@ -89,7 +89,7 @@ struct BlowBubbleButton: View {
                         let pulse = 0.2 + 0.3 * (0.5 + 0.5 * sin(t * .pi / 1.5))
                         Circle()
                             .strokeBorder(
-                                Color(hex: "#00FFD2").opacity(pulse),
+                                QuantumColors.accentSecondary.opacity(pulse),
                                 lineWidth: 1.5
                             )
                     }
@@ -98,7 +98,7 @@ struct BlowBubbleButton: View {
             blowingIcon
                 .foregroundStyle(
                     LinearGradient(
-                        colors: [Color(hex: "#00FFD2"), Color(hex: "#6E25C4")],
+                        colors: [QuantumColors.accentSecondary, QuantumColors.accent],
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -132,7 +132,7 @@ struct BlowBubbleButton: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color(hex: "#A855F7"), Color(hex: "#6E25C4"), Color(hex: "#4A1A8A")],
+                        colors: [QuantumColors.vividPurple, QuantumColors.accent, QuantumColors.darkPurpleDeep],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 2,
                         endRadius: 28
@@ -165,11 +165,11 @@ struct BlowBubbleButton: View {
             .stroke(Color.white.opacity(0.06), lineWidth: 1)
 
             Circle()
-                .fill(Color(hex: "#6E25C4"))
+                .fill(QuantumColors.accent)
                 .frame(width: 12, height: 12)
                 .offset(y: 46)
         }
-        .shadow(color: Color(hex: "#6E25C4").opacity(0.5), radius: 20)
-        .shadow(color: Color(hex: "#00FFD2").opacity(0.3), radius: 30)
+        .shadow(color: QuantumColors.accent.opacity(0.5), radius: 20)
+        .shadow(color: QuantumColors.accentSecondary.opacity(0.3), radius: 30)
     }
 }

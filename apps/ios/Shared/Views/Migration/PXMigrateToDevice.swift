@@ -946,6 +946,8 @@ private func showErrorOnMigrationIfNeeded(_ status: DBMigrationResult, _ alert: 
     switch status {
     case .invalidConfirmation:
         alert.wrappedValue = .invalidConfirmation()
+    case .invalidQueueSize:
+        alert.wrappedValue = .invalidConfirmation()
     case .errorNotADatabase:
         alert.wrappedValue = .wrongPassphrase()
     case .errorKeychain:

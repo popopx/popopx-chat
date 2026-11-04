@@ -91,7 +91,7 @@ struct DataMarketView: View {
         VStack(spacing: 12) {
             HStack {
                 Image(systemName: "cart.fill")
-                    .font(.system(size: 36))
+                    .font(QuantumFonts.iconMedium)
                     .foregroundColor(QuantumColors.accent)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(NSLocalizedString("data_market", comment: ""))

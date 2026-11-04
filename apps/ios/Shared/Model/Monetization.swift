@@ -539,7 +539,7 @@ final class SubscriptionManager: ObservableObject {
     }
 
     private func monitorSubscriptionStatus() -> Task<Void, Never> {
-        Task { [weak self] in
+        Task {
             // Subscription status monitoring simplified - rely on transaction updates
             logger.info("Monetization: Subscription status monitoring started")
         }
@@ -976,7 +976,7 @@ final class ComputeStore: ObservableObject {
                     
                     logger.info("Monetization: Consumable purchase completed - \(product.title), \(product.tokenAmount) tokens")
                 } catch {
-                    await self?.credit(product.tokenAmount)
+                    self?.credit(product.tokenAmount)
                     logger.error("Monetization: FFI consumable record failed, credited locally: \(error)")
                     
                     // Record purchase with local fallback

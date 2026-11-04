@@ -18,10 +18,10 @@ struct NeedlePinView: View {
                 robotAvatar
                     .overlay(
                         Circle()
-                            .stroke(Color(hex: "#00FFFF"), lineWidth: 2)
+                            .stroke(QuantumColors.pureCyan, lineWidth: 2)
                             .opacity(0.6)
                             .frame(width: 42, height: 42)
-                            .shadow(color: Color(hex: "#00FFFF").opacity(0.3), radius: 8)
+                            .shadow(color: QuantumColors.pureCyan.opacity(0.3), radius: 8)
                     )
                     .position(x: x, y: y)
             } else {
@@ -34,13 +34,13 @@ struct NeedlePinView: View {
                         .overlay(
                             Circle()
                                 .stroke(
-                                    Color(hex: "#00FFFF"),
+                                    QuantumColors.pureCyan,
                                     lineWidth: 2 + breathePhase * 0.5
                                 )
                                 .opacity(0.4 + breathePhase * 0.4)
                                 .frame(width: 42, height: 42)
                                 .shadow(
-                                    color: Color(hex: "#00FFFF").opacity(0.2 + breathePhase * 0.3),
+                                    color: QuantumColors.pureCyan.opacity(0.2 + breathePhase * 0.3),
                                     radius: 6 + breathePhase * 4
                                 )
                         )
@@ -67,9 +67,9 @@ struct NeedlePinView: View {
                 .fill(
                     RadialGradient(
                         colors: [
-                            Color(hex: "#E8E8F0"),
-                            Color(hex: "#A0A0B8"),
-                            Color(hex: "#606078")
+                            QuantumColors.paleLilac,
+                            QuantumColors.darkSilverGray,
+                            QuantumColors.darkPurpleGray
                         ],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 1,
@@ -98,14 +98,14 @@ struct NeedlePinView: View {
             .offset(y: -1)
 
             Circle()
-                .fill(Color(hex: "#00FFFF").opacity(0.5))
+                .fill(QuantumColors.pureCyan.opacity(0.5))
                 .frame(width: 3, height: 3)
                 .offset(y: 4)
 
             Rectangle()
                 .fill(
                     LinearGradient(
-                        colors: [Color(hex: "#C0C0D0"), Color(hex: "#808098")],
+                        colors: [QuantumColors.lavenderSilver, QuantumColors.mutedPurpleGray],
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -114,9 +114,9 @@ struct NeedlePinView: View {
                 .offset(y: -14)
 
             Circle()
-                .fill(Color(hex: "#00FFFF"))
+                .fill(QuantumColors.pureCyan)
                 .frame(width: 4, height: 4)
-                .shadow(color: Color(hex: "#00FFFF").opacity(0.8), radius: 3)
+                .shadow(color: QuantumColors.pureCyan.opacity(0.8), radius: 3)
                 .offset(y: -17)
         }
         .offset(y: -4)
@@ -126,14 +126,14 @@ struct NeedlePinView: View {
         Circle()
             .fill(
                 RadialGradient(
-                    colors: [Color(hex: "#00FFFF"), Color(hex: "#008B8B")],
+                    colors: [QuantumColors.pureCyan, QuantumColors.deepTeal],
                     center: .center,
                     startRadius: 0,
                     endRadius: 3
                 )
             )
             .frame(width: 5, height: 5)
-            .shadow(color: Color(hex: "#00FFFF").opacity(0.6), radius: 2)
+            .shadow(color: QuantumColors.pureCyan.opacity(0.6), radius: 2)
     }
 
     private var robotBody: some View {
@@ -141,9 +141,9 @@ struct NeedlePinView: View {
             .fill(
                 LinearGradient(
                     colors: [
-                        Color(hex: "#B0B0C8"),
-                        Color(hex: "#808098"),
-                        Color(hex: "#606078")
+                        QuantumColors.silverGray,
+                        QuantumColors.mutedPurpleGray,
+                        QuantumColors.darkPurpleGray
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
@@ -152,13 +152,13 @@ struct NeedlePinView: View {
             .frame(width: 16, height: 12)
             .overlay(
                 RoundedRectangle(cornerRadius: 4)
-                    .stroke(Color(hex: "#00FFFF").opacity(0.25), lineWidth: 0.5)
+                    .stroke(QuantumColors.pureCyan.opacity(0.25), lineWidth: 0.5)
             )
             .overlay(
                 Circle()
-                    .fill(Color(hex: "#00FFFF").opacity(0.4))
+                    .fill(QuantumColors.pureCyan.opacity(0.4))
                     .frame(width: 4, height: 4)
-                    .shadow(color: Color(hex: "#00FFFF").opacity(0.5), radius: 2)
+                    .shadow(color: QuantumColors.pureCyan.opacity(0.5), radius: 2)
             )
             .shadow(color: .black.opacity(0.2), radius: 1, x: 0, y: 1)
             .offset(y: 10)

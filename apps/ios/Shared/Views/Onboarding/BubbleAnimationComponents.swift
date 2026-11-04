@@ -16,7 +16,7 @@ import POPOPXSwitch
 struct OnboardingBubbleBackground: View {
     var body: some View {
         ZStack {
-            Color(hex: "#06040A")
+            QuantumColors.background
                 .ignoresSafeArea()
 
             RadialGradient(
@@ -56,7 +56,7 @@ struct BubbleComponent: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color(hex: "#00FFD2").opacity(0.15), Color.clear],
+                        colors: [QuantumColors.accentSecondary.opacity(0.15), Color.clear],
                         center: .center,
                         startRadius: diameter * 0.3,
                         endRadius: diameter * 0.7
@@ -71,8 +71,8 @@ struct BubbleComponent: View {
                     RadialGradient(
                         colors: [
                             Color.white.opacity(0.12),
-                            Color(hex: "#6E25C4").opacity(0.08),
-                            Color(hex: "#0A0A14").opacity(0.6)
+                            QuantumColors.accent.opacity(0.08),
+                            QuantumColors.surface.opacity(0.6)
                         ],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 5,
@@ -81,7 +81,7 @@ struct BubbleComponent: View {
                 )
                 .overlay(
                     Circle()
-                        .fill(Color(hex: "#1A1228").opacity(0.5))
+                        .fill(QuantumColors.surfaceElevated.opacity(0.5))
                         .opacity(0.5)
                 )
                 .frame(width: diameter, height: diameter)
@@ -106,10 +106,10 @@ struct BubbleComponent: View {
                         .stroke(
                             AngularGradient(
                                 colors: [
-                                    Color(hex: "#6E25C4").opacity(0.0),
-                                    Color(hex: "#00FFD2").opacity(0.5),
-                                    Color(hex: "#6E25C4").opacity(0.3),
-                                    Color(hex: "#00FFD2").opacity(0.0)
+                                    QuantumColors.accent.opacity(0.0),
+                                    QuantumColors.accentSecondary.opacity(0.5),
+                                    QuantumColors.accent.opacity(0.3),
+                                    QuantumColors.accentSecondary.opacity(0.0)
                                 ],
                                 center: .center,
                                 startAngle: .degrees(180),
@@ -124,7 +124,7 @@ struct BubbleComponent: View {
                     Circle()
                         .stroke(
                             LinearGradient(
-                                colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")],
+                                colors: [QuantumColors.accent, QuantumColors.accentSecondary],
                                 startPoint: .topTrailing,
                                 endPoint: .bottomLeading
                             ),
@@ -132,7 +132,7 @@ struct BubbleComponent: View {
                         )
                 )
                 .compositingGroup()
-                .shadow(color: Color(hex: "#00FFD2").opacity(0.35), radius: 20, x: 0, y: 0)
+                .shadow(color: QuantumColors.accentSecondary.opacity(0.35), radius: 20, x: 0, y: 0)
 
             // Metadata text inside bubble (flashing red server data)
             VStack(spacing: 8) {
@@ -140,8 +140,8 @@ struct BubbleComponent: View {
                 metadataRow(label: NSLocalizedString("bubble_meta_location", comment: "Bubble metadata label"), value: "NY")
                 metadataRow(label: NSLocalizedString("bubble_meta_userid", comment: "Bubble metadata label"), value: "9482...")
             }
-            .font(.system(size: 13, design: .monospaced))
-            .foregroundColor(Color(hex: "#FF0000"))
+            .font(QuantumFonts.monoCaption)
+            .foregroundColor(QuantumColors.metadataRed)
             .opacity(0.5)
         }
         .offset(y: floatOffset)
@@ -170,7 +170,7 @@ struct BubbleComponent: View {
 struct CompactBubble3D: View {
     var diameter: CGFloat = 180
     var symbol: String = "server.rack"
-    var symbolColor: Color = Color(hex: "#00FFD2")
+    var symbolColor: Color = QuantumColors.accentSecondary
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var floatOffset: CGFloat = 0
     @State private var pulseScale: CGFloat = 1.0
@@ -180,7 +180,7 @@ struct CompactBubble3D: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color.white.opacity(0.12), Color(hex: "#6E25C4").opacity(0.08), Color(hex: "#0A0A14").opacity(0.6)],
+                        colors: [Color.white.opacity(0.12), QuantumColors.accent.opacity(0.08), QuantumColors.surface.opacity(0.6)],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 5,
                         endRadius: diameter * 0.5
@@ -196,15 +196,15 @@ struct CompactBubble3D: View {
                         .blur(radius: 4)
                 )
                 .overlay(
-                    Circle().stroke(LinearGradient(colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")], startPoint: .topTrailing, endPoint: .bottomLeading), lineWidth: 2)
+                    Circle().stroke(LinearGradient(colors: [QuantumColors.accent, QuantumColors.accentSecondary], startPoint: .topTrailing, endPoint: .bottomLeading), lineWidth: 2)
                 )
-                .shadow(color: Color(hex: "#00FFD2").opacity(0.4), radius: 20, x: 0, y: 0)
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.3), radius: 30, x: 0, y: 0)
+                .shadow(color: QuantumColors.accentSecondary.opacity(0.4), radius: 20, x: 0, y: 0)
+                .shadow(color: QuantumColors.accent.opacity(0.3), radius: 30, x: 0, y: 0)
 
             Image(systemName: symbol)
-                .font(.system(size: diameter * 0.28, weight: .bold))
+                .font(QuantumFonts.scaledIcon(diameter))
                 .foregroundStyle(
-                    LinearGradient(colors: [Color(hex: "#6E25C4"), symbolColor], startPoint: .top, endPoint: .bottom)
+                    LinearGradient(colors: [QuantumColors.accent, symbolColor], startPoint: .top, endPoint: .bottom)
                 )
                 .shadow(color: symbolColor.opacity(0.5), radius: 8, x: 0, y: 0)
         }
@@ -232,15 +232,15 @@ struct FingerTapAnimation: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color(hex: "#00FFD2").opacity(0.4), lineWidth: 2)
+                .stroke(QuantumColors.accentSecondary.opacity(0.4), lineWidth: 2)
                 .frame(width: 60, height: 60)
                 .scaleEffect(tapScale)
                 .opacity(1.0 - (tapScale - 1.0) * 0.5)
 
             Image(systemName: "hand.point.up.left.fill")
-                .font(.system(size: 36))
-                .foregroundColor(Color(hex: "#00FFD2"))
-                .shadow(color: Color(hex: "#00FFD2").opacity(0.6), radius: 8, x: 0, y: 0)
+                .font(QuantumFonts.iconMedium)
+                .foregroundColor(QuantumColors.accentSecondary)
+                .shadow(color: QuantumColors.accentSecondary.opacity(0.6), radius: 8, x: 0, y: 0)
                 .rotationEffect(.degrees(rotationDegrees))
                 .offset(y: fingerOffset + dragOffset.height)
         }
@@ -293,17 +293,36 @@ struct FingerTapAnimation: View {
 
 struct BubblePopCanvas: View {
     let particles: [SandParticle]
-
+    let startTime: Date
+    
     var body: some View {
-        Canvas { context, size in
-            for particle in particles {
-                let rect = CGRect(
-                    x: particle.x - particle.size / 2,
-                    y: particle.y - particle.size / 2,
-                    width: particle.size,
-                    height: particle.size
-                )
-                context.fill(Path(rect), with: .color(particle.color.opacity(particle.opacity)))
+        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: false)) { timeline in
+            Canvas { context, size in
+                let elapsed = timeline.date.timeIntervalSince(startTime)
+                
+                for particle in particles {
+                    let gravity = 0.3
+                    let friction = 0.98
+                    let fadeRate = 0.015
+                    let shrinkRate = 0.02
+                    
+                    let vy = particle.vy + gravity * elapsed
+                    let vx = particle.vx * pow(friction, elapsed * 30)
+                    
+                    let x = particle.x + vx * elapsed * 30
+                    let y = particle.y + vy * elapsed * 30
+                    
+                    let opacity = max(0, particle.opacity - fadeRate * elapsed * 30)
+                    let particleSize = max(0.5, particle.size - shrinkRate * elapsed * 30)
+                    
+                    let rect = CGRect(
+                        x: x - particleSize / 2,
+                        y: y - particleSize / 2,
+                        width: particleSize,
+                        height: particleSize
+                    )
+                    context.fill(Path(rect), with: .color(particle.color.opacity(opacity)))
+                }
             }
         }
     }
@@ -317,7 +336,7 @@ struct PurpleFlashOverlay: View {
 
     var body: some View {
         if isActive {
-            Color(hex: "#6E25C4")
+            QuantumColors.accent
                 .opacity(flashOpacity)
                 .blendMode(.screen)
                 .ignoresSafeArea()
@@ -347,7 +366,7 @@ enum PopStyle {
 @MainActor
 class BubblePopController: ObservableObject {
     @Published private(set) var snapshot = PopSnapshot()
-    private var particleTimer: Timer?
+    @Published var startTime: Date = Date()
 
     struct PopSnapshot {
         var isPopping = false
@@ -374,15 +393,15 @@ class BubblePopController: ObservableObject {
 
         switch style {
         case .standard:
-            colors = [Color(hex: "#00FFD2"), Color(hex: "#6E25C4")]
+            colors = [QuantumColors.accentSecondary, QuantumColors.accent]
             speedRange = 2...8
             vyBias = -3
         case .network:
-            colors = [Color(hex: "#00FFD2"), Color(hex: "#8B5CF6"), Color(hex: "#06B6D4")]
+            colors = [QuantumColors.accentSecondary, QuantumColors.particleViolet, QuantumColors.networkCyan]
             speedRange = 3...10
             vyBias = -4
         case .commitments:
-            colors = [Color(hex: "#00FFD2"), Color(hex: "#A020F0"), Color(hex: "#FFFFFF")]
+            colors = [QuantumColors.accentSecondary, QuantumColors.particleDeepPurple, .white]
             speedRange = 2...7
             vyBias = -2
         }
@@ -403,7 +422,7 @@ class BubblePopController: ObservableObject {
         }
 
         snapshot.particles = newParticles
-        animateParticles()
+        startTime = Date()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
             self?.snapshot.flashActive = false
@@ -415,30 +434,7 @@ class BubblePopController: ObservableObject {
         }
     }
 
-    private func animateParticles() {
-        particleTimer?.invalidate()
-        particleTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 30.0, repeats: true) { [weak self] timer in
-            Task { @MainActor in
-                guard let self else { timer.invalidate(); return }
-                var allFinished = true
-                for i in self.snapshot.particles.indices {
-                    self.snapshot.particles[i].vy += 0.3
-                    self.snapshot.particles[i].vx *= 0.98
-                    self.snapshot.particles[i].x += self.snapshot.particles[i].vx
-                    self.snapshot.particles[i].y += self.snapshot.particles[i].vy
-                    self.snapshot.particles[i].opacity = max(0, self.snapshot.particles[i].opacity - 0.015)
-                    self.snapshot.particles[i].size = max(0.5, self.snapshot.particles[i].size - 0.02)
-                    if self.snapshot.particles[i].opacity > 0 { allFinished = false }
-                }
-                if allFinished { timer.invalidate() }
-                self.objectWillChange.send()
-            }
-        }
-    }
-
     func reset() {
-        particleTimer?.invalidate()
-        particleTimer = nil
         snapshot = PopSnapshot()
     }
 }
@@ -465,8 +461,8 @@ struct GravitationalCollapseWithEnclave: View {
                 if !collapsedHash.isEmpty {
                     ForEach(Array(collapsedHash.enumerated()), id: \.offset) { index, char in
                         Text(String(char))
-                            .font(.system(size: 22, weight: .bold, design: .monospaced)) // Even larger for full-screen visibility
-                            .foregroundColor(Color(hex: "#00FF00")) // Pure green per spec
+                            .font(QuantumFonts.monoHashLarge) // Even larger for full-screen visibility
+                            .foregroundColor(QuantumColors.hashGreen) // Pure green per spec
                             .position(
                                 x: geo.size.width / 2 + (index < meteorHorizontalDrift.count ? meteorHorizontalDrift[index] : 0),
                                 y: geo.size.height * 0.35 + (index < meteorOffsets.count ? meteorOffsets[index] : 0) // Start from bubble position
@@ -483,11 +479,11 @@ struct GravitationalCollapseWithEnclave: View {
                     Spacer(minLength: 60)
                     
                     Text(String(localized: "Encrypting your identity.\nZero knowledge. Zero trace."))
-                        .font(.system(size: 24, weight: .bold, design: .default))
+                        .font(QuantumFonts.animationTitle)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .tracking(0.5)
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.4), radius: 12, x: 0, y: 2)
+                        .shadow(color: QuantumColors.accent.opacity(0.4), radius: 12, x: 0, y: 2)
                     
                     Spacer()
                 }
@@ -495,7 +491,7 @@ struct GravitationalCollapseWithEnclave: View {
                 // Bubble burst flash effect at center
                 if !collapsedHash.isEmpty {
                     Circle()
-                        .fill(Color(hex: "#6E25C4").opacity(0.4))
+                        .fill(QuantumColors.accent.opacity(0.4))
                         .frame(width: 250, height: 250)
                         .position(x: geo.size.width / 2, y: geo.size.height * 0.35)
                         .scaleEffect(bubbleBurstScale)
@@ -506,21 +502,21 @@ struct GravitationalCollapseWithEnclave: View {
                 // Secure Enclave icon at absolute bottom
                 if showSecureEnclave {
                     Image(systemName: "lock.shield.fill")
-                        .font(.system(size: 72)) // Even larger icon
+                        .font(QuantumFonts.iconExtraLarge) // Even larger icon
                         .foregroundStyle(
                             LinearGradient(
-                                colors: [Color(hex: "#00FF00"), Color(hex: "#6E25C4")],
+                                colors: [QuantumColors.hashGreen, QuantumColors.accent],
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
                         )
-                        .shadow(color: Color(hex: "#00FF00").opacity(0.9), radius: 28, x: 0, y: 0)
+                        .shadow(color: QuantumColors.hashGreen.opacity(0.9), radius: 28, x: 0, y: 0)
                         .position(x: geo.size.width / 2, y: geo.size.height - 80) // Bottom position
                         .transition(.scale.combined(with: .opacity))
 
                     if showRipple {
                         Circle()
-                            .stroke(Color(hex: "#6E25C4").opacity(0.5), lineWidth: 5)
+                            .stroke(QuantumColors.accent.opacity(0.5), lineWidth: 5)
                             .frame(width: 140, height: 140)
                             .position(x: geo.size.width / 2, y: geo.size.height - 80)
                             .scaleEffect(3.5)
@@ -528,7 +524,7 @@ struct GravitationalCollapseWithEnclave: View {
                             .animation(.easeOut(duration: 1.6), value: showRipple)
 
                         Circle()
-                            .stroke(Color(hex: "#6E25C4").opacity(0.4), lineWidth: 4)
+                            .stroke(QuantumColors.accent.opacity(0.4), lineWidth: 4)
                             .frame(width: 180, height: 180)
                             .position(x: geo.size.width / 2, y: geo.size.height - 80)
                             .scaleEffect(2.8)
@@ -536,7 +532,7 @@ struct GravitationalCollapseWithEnclave: View {
                             .animation(.easeOut(duration: 1.4).delay(0.15), value: showRipple)
 
                         Circle()
-                            .stroke(Color(hex: "#6E25C4").opacity(0.3), lineWidth: 3)
+                            .stroke(QuantumColors.accent.opacity(0.3), lineWidth: 3)
                             .frame(width: 220, height: 220)
                             .position(x: geo.size.width / 2, y: geo.size.height - 80)
                             .scaleEffect(2.2)
@@ -625,31 +621,31 @@ struct GravitationalCollapseView: View {
                 HStack(spacing: 2) {
                     ForEach(Array(collapsedHash.enumerated()), id: \.offset) { index, char in
                         Text(String(char))
-                            .font(.system(size: 16, weight: .bold, design: .monospaced))
-                            .foregroundColor(Color(hex: "#00FF00")) // Pure green per spec
+                            .font(QuantumFonts.monoHash)
+                            .foregroundColor(QuantumColors.hashGreen) // Pure green per spec
                             .offset(y: index < meteorOffsets.count ? meteorOffsets[index] : 0)
                             .opacity(index < meteorOffsets.count ? Double(max(0, 1.0 - abs(meteorOffsets[index]) / 200.0)) : 1.0)
                     }
                 }
-                .shadow(color: Color(hex: "#00FF00").opacity(0.5), radius: 10, x: 0, y: 0)
+                .shadow(color: QuantumColors.hashGreen.opacity(0.5), radius: 10, x: 0, y: 0)
             }
 
             if showSecureEnclave {
                 Image(systemName: "lock.shield.fill")
-                    .font(.system(size: 44))
+                    .font(QuantumFonts.iconLarge)
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [Color(hex: "#00FFD2"), Color(hex: "#6E25C4")],
+                            colors: [QuantumColors.accentSecondary, QuantumColors.accent],
                             startPoint: .top,
                             endPoint: .bottom
                         )
                     )
-                    .shadow(color: Color(hex: "#6E25C4").opacity(0.5), radius: 12, x: 0, y: 0)
+                    .shadow(color: QuantumColors.accent.opacity(0.5), radius: 12, x: 0, y: 0)
                     .transition(.scale.combined(with: .opacity))
 
                 if showRipple {
                     Circle()
-                        .stroke(Color(hex: "#6E25C4").opacity(0.4), lineWidth: 2)
+                        .stroke(QuantumColors.accent.opacity(0.4), lineWidth: 2)
                         .frame(width: 80, height: 80)
                         .scaleEffect(2.0)
                         .opacity(0)
@@ -721,8 +717,8 @@ struct EncryptedAliasBubble: View {
                 .fill(
                     RadialGradient(
                         colors: [
-                            Color(hex: "#6E25C4").opacity(0.25),
-                            Color(hex: "#6E25C4").opacity(0.1),
+                            QuantumColors.accent.opacity(0.25),
+                            QuantumColors.accent.opacity(0.1),
                             Color.clear
                         ],
                         center: .center,
@@ -738,9 +734,9 @@ struct EncryptedAliasBubble: View {
                 .fill(
                     RadialGradient(
                         colors: [
-                            Color(hex: "#6E25C4").opacity(0.35),
-                            Color(hex: "#6E25C4").opacity(0.2),
-                            Color(hex: "#6E25C4").opacity(0.08)
+                            QuantumColors.accent.opacity(0.35),
+                            QuantumColors.accent.opacity(0.2),
+                            QuantumColors.accent.opacity(0.08)
                         ],
                         center: UnitPoint(x: 0.4, y: 0.35), // Offset for 3D effect
                         startRadius: diameter * 0.05,
@@ -768,7 +764,7 @@ struct EncryptedAliasBubble: View {
                     Circle()
                         .stroke(
                             LinearGradient(
-                                colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")],
+                                colors: [QuantumColors.accent, QuantumColors.accentSecondary],
                                 startPoint: .topTrailing,
                                 endPoint: .bottomLeading
                             ),
@@ -776,13 +772,13 @@ struct EncryptedAliasBubble: View {
                         )
                 )
                 .compositingGroup()
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.5), radius: 25, x: 0, y: 0)
+                .shadow(color: QuantumColors.accent.opacity(0.5), radius: 25, x: 0, y: 0)
 
             // Nickname centered in bubble
             Text(alias)
-                .font(.system(size: max(28, diameter * 0.16), weight: .bold))
+                .font(QuantumFonts.bubbleAlias(diameter: diameter))
                 .foregroundColor(.white)
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.8), radius: 10, x: 0, y: 2)
+                .shadow(color: QuantumColors.accent.opacity(0.8), radius: 10, x: 0, y: 2)
         }
         .offset(y: floatOffset)
         .contentShape(Circle())
@@ -812,7 +808,7 @@ struct AliasBubbleView: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color.white.opacity(0.12), Color(hex: "#6E25C4").opacity(0.08), Color(hex: "#0A0A14").opacity(0.6)],
+                        colors: [Color.white.opacity(0.12), QuantumColors.accent.opacity(0.08), QuantumColors.surface.opacity(0.6)],
                         center: UnitPoint(x: 0.35, y: 0.3),
                         startRadius: 5,
                         endRadius: diameter * 0.5
@@ -828,9 +824,9 @@ struct AliasBubbleView: View {
                         .blur(radius: 4)
                 )
                 .overlay(
-                    Circle().stroke(LinearGradient(colors: [Color(hex: "#6E25C4"), Color(hex: "#00FFD2")], startPoint: .topTrailing, endPoint: .bottomLeading), lineWidth: 1.5)
+                    Circle().stroke(LinearGradient(colors: [QuantumColors.accent, QuantumColors.accentSecondary], startPoint: .topTrailing, endPoint: .bottomLeading), lineWidth: 1.5)
                 )
-                .shadow(color: Color(hex: "#00FFD2").opacity(0.3), radius: 15, x: 0, y: 0)
+                .shadow(color: QuantumColors.accentSecondary.opacity(0.3), radius: 15, x: 0, y: 0)
 
             Text(alias)
                 .font(.system(.title2, weight: .bold))
@@ -862,9 +858,9 @@ struct BubbleRiseView: View {
 
             if showHash {
                 Text(String(format: "%016llx", UInt64(bitPattern: Int64(alias.hashValue))).prefix(16))
-                    .font(.system(size: 14, weight: .bold, design: .monospaced))
-                    .foregroundColor(Color(hex: "#00FFD2"))
-                    .shadow(color: Color(hex: "#00FFD2").opacity(0.5), radius: 8)
+                    .font(QuantumFonts.monoBody.weight(.bold))
+                    .foregroundColor(QuantumColors.accentSecondary)
+                    .shadow(color: QuantumColors.accentSecondary.opacity(0.5), radius: 8)
                     .opacity(hashOpacity)
             }
         }
@@ -907,9 +903,9 @@ struct LiquidSilverNeedleRing: View {
                     AngularGradient(
                         colors: [
                             Color.white.opacity(0.1),
-                            Color(hex: "#C0C0C0").opacity(0.6),
+                            QuantumColors.silver.opacity(0.6),
                             Color.white.opacity(0.2),
-                            Color(hex: "#E8E8E8").opacity(0.7),
+                            QuantumColors.silverLight.opacity(0.7),
                             Color.white.opacity(0.1)
                         ],
                         center: .center,
@@ -926,11 +922,11 @@ struct LiquidSilverNeedleRing: View {
                 .stroke(
                     LinearGradient(
                         colors: [
-                            Color(hex: "#F0F0F0"),
-                            Color(hex: "#C0C0C0"),
+                            QuantumColors.silverLighter,
+                            QuantumColors.silver,
                             Color.white,
-                            Color(hex: "#D8D8D8"),
-                            Color(hex: "#A8A8A8")
+                            QuantumColors.silverMedium,
+                            QuantumColors.silverDark
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -939,7 +935,7 @@ struct LiquidSilverNeedleRing: View {
                 )
                 .frame(width: safeDiameter, height: safeDiameter)
                 .shadow(color: Color.white.opacity(0.6), radius: 10, x: 0, y: 0)
-                .shadow(color: Color(hex: "#C0C0C0").opacity(0.4), radius: 15, x: 0, y: 0)
+                .shadow(color: QuantumColors.silver.opacity(0.4), radius: 15, x: 0, y: 0)
 
             // Specular highlights for liquid metal effect
             ForEach(0..<4) { i in
@@ -995,9 +991,9 @@ struct InnerGlowCircle: View {
                 .fill(
                     RadialGradient(
                         colors: [
-                            Color(hex: "#6E25C4").opacity(0.5 + alphaPulse * 0.3),
-                            Color(hex: "#8B5CF6").opacity(0.3),
-                            Color(hex: "#A020F0").opacity(0.15),
+                            QuantumColors.accent.opacity(0.5 + alphaPulse * 0.3),
+                            QuantumColors.particleViolet.opacity(0.3),
+                            QuantumColors.particleDeepPurple.opacity(0.15),
                             Color.clear
                         ],
                         center: .center,
@@ -1011,7 +1007,7 @@ struct InnerGlowCircle: View {
             // Secondary glow ring for depth
             Circle()
                 .stroke(
-                    Color(hex: "#6E25C4").opacity(0.4 + alphaPulse * 0.2),
+                    QuantumColors.accent.opacity(0.4 + alphaPulse * 0.2),
                     lineWidth: 2
                 )
                 .frame(width: diameter * 1.5, height: diameter * 1.5)
@@ -1023,8 +1019,8 @@ struct InnerGlowCircle: View {
                     RadialGradient(
                         colors: [
                             Color.white.opacity(0.95),
-                            Color(hex: "#D8BFD8").opacity(0.9),
-                            Color(hex: "#A020F0").opacity(0.7),
+                            QuantumColors.thistle.opacity(0.9),
+                            QuantumColors.particleDeepPurple.opacity(0.7),
                             Color.clear
                         ],
                         center: .center,
@@ -1033,7 +1029,7 @@ struct InnerGlowCircle: View {
                     )
                 )
                 .frame(width: 32, height: 32)
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.9), radius: 12)
+                .shadow(color: QuantumColors.accent.opacity(0.9), radius: 12)
                 .shadow(color: Color.white.opacity(0.5), radius: 8)
 
             // Outer pulsing ring
@@ -1041,9 +1037,9 @@ struct InnerGlowCircle: View {
                 .stroke(
                     LinearGradient(
                         colors: [
-                            Color(hex: "#00FFD2").opacity(0.6 + alphaPulse * 0.3),
-                            Color(hex: "#6E25C4").opacity(0.4),
-                            Color(hex: "#00FFD2").opacity(0.6 + alphaPulse * 0.3)
+                            QuantumColors.accentSecondary.opacity(0.6 + alphaPulse * 0.3),
+                            QuantumColors.accent.opacity(0.4),
+                            QuantumColors.accentSecondary.opacity(0.6 + alphaPulse * 0.3)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -1095,25 +1091,25 @@ struct XLogoParticles: View {
                 // Left diagonal stroke
                 ForEach(0..<35) { i in
                     Circle()
-                        .fill(Color(hex: "#D8BFD8").opacity(0.9 + alphaPulse * 0.1))
+                        .fill(QuantumColors.thistle.opacity(0.9 + alphaPulse * 0.1))
                         .frame(width: 4, height: 4)
                         .position(
                             x: size / 2 - size * 0.22 + CGFloat(i) * (size * 0.44 / 34),
                             y: size / 2 - size * 0.22 + CGFloat(i) * (size * 0.44 / 34)
                         )
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.8), radius: 6)
+                        .shadow(color: QuantumColors.accent.opacity(0.8), radius: 6)
                 }
 
                 // Right diagonal stroke
                 ForEach(0..<35) { i in
                     Circle()
-                        .fill(Color(hex: "#D8BFD8").opacity(0.9 + alphaPulse * 0.1))
+                        .fill(QuantumColors.thistle.opacity(0.9 + alphaPulse * 0.1))
                         .frame(width: 4, height: 4)
                         .position(
                             x: size / 2 + size * 0.22 - CGFloat(i) * (size * 0.44 / 34),
                             y: size / 2 - size * 0.22 + CGFloat(i) * (size * 0.44 / 34)
                         )
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.8), radius: 6)
+                        .shadow(color: QuantumColors.accent.opacity(0.8), radius: 6)
                 }
             }
             .rotationEffect(.degrees(rotationAngle))
@@ -1138,11 +1134,11 @@ struct XLogoParticles: View {
 
     private func particleColor(for index: Int) -> Color {
         let colors: [Color] = [
-            Color(hex: "#6E25C4"),
-            Color(hex: "#8B5CF6"),
-            Color(hex: "#A020F0"),
-            Color(hex: "#9370DB"),
-            Color(hex: "#D8BFD8"),
+            QuantumColors.accent,
+            QuantumColors.particleViolet,
+            QuantumColors.particleDeepPurple,
+            QuantumColors.particleMidPurple,
+            QuantumColors.thistle,
             Color.white.opacity(0.7)
         ]
         return colors[index % colors.count]
@@ -1189,9 +1185,9 @@ struct WaitingIndicator: View {
                     .stroke(
                         AngularGradient(
                             colors: [
-                                Color(hex: "#6E25C4").opacity(0.2),
-                                Color(hex: "#00FFD2"),
-                                Color(hex: "#6E25C4").opacity(0.2)
+                                QuantumColors.accent.opacity(0.2),
+                                QuantumColors.accentSecondary,
+                                QuantumColors.accent.opacity(0.2)
                             ],
                             center: .center,
                             startAngle: .degrees(rotation),
@@ -1203,14 +1199,14 @@ struct WaitingIndicator: View {
 
                 // Pulsing center dot
                 Circle()
-                    .fill(Color(hex: "#00FFD2"))
+                    .fill(QuantumColors.accentSecondary)
                     .frame(width: 8, height: 8)
                     .opacity(pulseOpacity)
             }
 
             Text(NSLocalizedString("Processing...", comment: "Waiting indicator text"))
-                .font(.system(size: 14, weight: .medium, design: .monospaced))
-                .foregroundColor(Color(hex: "#938EA0"))
+                .font(QuantumFonts.monoBodyMedium)
+                .foregroundColor(QuantumColors.textMetadata)
         }
         .onAppear {
             withAnimation(.linear(duration: 1.5).repeatForever(autoreverses: false)) {
@@ -1240,9 +1236,9 @@ struct XBalloon3D: View {
                 .fill(
                     RadialGradient(
                         colors: [
-                            Color(hex: "#8B5CF6").opacity(0.8),
-                            Color(hex: "#6E25C4"),
-                            Color(hex: "#4A1A8F")
+                            QuantumColors.particleViolet.opacity(0.8),
+                            QuantumColors.accent,
+                            QuantumColors.bubblePurpleDeep
                         ],
                         center: UnitPoint(x: 0.3, y: 0.3),
                         startRadius: diameter * 0.1,
@@ -1250,14 +1246,14 @@ struct XBalloon3D: View {
                     )
                 )
                 .frame(width: diameter, height: diameter)
-                .shadow(color: Color(hex: "#6E25C4").opacity(0.6), radius: 20, x: 0, y: 10)
+                .shadow(color: QuantumColors.accent.opacity(0.6), radius: 20, x: 0, y: 10)
                 .scaleEffect(scalePulse)
 
             // Inner glow ring
             Circle()
                 .stroke(
                     LinearGradient(
-                        colors: [Color(hex: "#00FFD2").opacity(0.6), Color.clear],
+                        colors: [QuantumColors.accentSecondary.opacity(0.6), Color.clear],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -1277,7 +1273,7 @@ struct XBalloon3D: View {
                             x: diameter / 2 - diameter * 0.15 + CGFloat(i) * (diameter * 0.3 / 19),
                             y: diameter / 2 - diameter * 0.15 + CGFloat(i) * (diameter * 0.3 / 19)
                         )
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.8), radius: 3)
+                        .shadow(color: QuantumColors.accent.opacity(0.8), radius: 3)
                 }
 
                 ForEach(0..<20) { i in
@@ -1288,7 +1284,7 @@ struct XBalloon3D: View {
                             x: diameter / 2 + diameter * 0.15 - CGFloat(i) * (diameter * 0.3 / 19),
                             y: diameter / 2 - diameter * 0.15 + CGFloat(i) * (diameter * 0.3 / 19)
                         )
-                        .shadow(color: Color(hex: "#6E25C4").opacity(0.8), radius: 3)
+                        .shadow(color: QuantumColors.accent.opacity(0.8), radius: 3)
                 }
             }
             .frame(width: diameter, height: diameter) // Constrain to balloon bounds so particles center correctly

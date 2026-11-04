@@ -13,13 +13,12 @@
 extern void hs_init_with_rtsopts(int * argc, char **argv[]);
 
 void haskell_init(void) {
-    int argc = 5;
+    int argc = 4;
     char *argv[] = {
         "popopx",
         "+RTS", // requires `hs_init_with_rtsopts`
         "-A64m", // chunk size for new allocations
         "-H64m", // initial heap size
-        "-xn", // non-moving GC
         0
     };
     char **pargv = argv;

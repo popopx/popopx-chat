@@ -82,7 +82,7 @@ struct MeshBoardView: View {
                 .foregroundStyle(.primary)
             
             Text(NSLocalizedString("mesh_no_posts_description", comment: "Description for empty board state"))
-                .font(.system(size: 16))
+                .font(QuantumFonts.iconRegular)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)

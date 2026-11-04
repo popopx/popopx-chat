@@ -7,37 +7,39 @@ struct NeonLaunchView: View {
     @Binding var isVisible: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var logoOpacity: Double = 0.6
+    @State private var logoOpacity: Double = 0.0
+    @State private var logoScale: CGFloat = 0.85
     @State private var hasAppeared = false
 
     var body: some View {
         if isVisible {
             ZStack {
-                Color(hex: "#0D0D11")
+                QuantumColors.background
                     .ignoresSafeArea()
 
                 ambientDrift
 
                 logoText
+                    .scaleEffect(logoScale)
                     .opacity(logoOpacity)
 
                 VStack {
                     Spacer()
                     Text(NSLocalizedString("launch_private_messaging", comment: "Launch splash subtitle describing the app"))
-                        .font(.system(size: 12, weight: .light, design: .rounded))
+                        .font(QuantumFonts.caption.weight(.light))
                         .minimumScaleFactor(0.5)
-                        .foregroundColor(Color(hex: "#00FFFF").opacity(0.8))
-                        .padding(.bottom, 60)
+                        .foregroundColor(QuantumColors.accentSecondary.opacity(0.8))
+                        .padding(.bottom, 20)
                 }
+                .safeAreaPadding(.bottom)
+                .opacity(logoOpacity)
             }
             .onAppear {
                 hasAppeared = true
-                if reduceMotion {
+                let animation: Animation = reduceMotion ? .easeOut(duration: 0.4) : .spring(response: 0.5, dampingFraction: 0.7)
+                withAnimation(animation) {
                     logoOpacity = 1.0
-                } else {
-                    withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
-                        logoOpacity = 1.0
-                    }
+                    logoScale = 1.0
                 }
             }
         }
@@ -45,33 +47,32 @@ struct NeonLaunchView: View {
 
     private var logoText: some View {
         Text("POPOPX")
-            .font(.system(size: 42, weight: .bold, design: .rounded))
+            .font(QuantumFonts.display)
             .minimumScaleFactor(0.5)
             .foregroundStyle(
                 LinearGradient(
                     colors: [
-                        Color(hex: "#00FFFF"),
-                        Color(hex: "#00FFFF")
+                        QuantumColors.accentSecondary,
+                        QuantumColors.accentSecondary
                     ],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
             )
-            .shadow(color: Color(hex: "#00FFFF").opacity(0.6), radius: 20)
-            .shadow(color: Color(hex: "#00FFFF").opacity(0.4), radius: 40)
-            .shadow(color: Color(hex: "#00FFFF").opacity(0.2), radius: 60)
+            .shadow(color: QuantumColors.accentSecondary.opacity(0.6), radius: 20)
+            .shadow(color: QuantumColors.accentSecondary.opacity(0.3), radius: 40)
     }
 
     private var ambientDrift: some View {
-        TimelineView(.periodic(from: .now, by: reduceMotion ? .infinity : 2.0)) { timeline in
+        TimelineView(.animation(minimumInterval: reduceMotion ? .infinity : 1.0 / 15.0)) { timeline in
             let t = timeline.date.timeIntervalSinceReferenceDate
 
             Canvas { context, size in
                 let orbs: [(Color, Double, CGFloat, Double)] = [
-                    (Color(hex: "#00FFFF"), 0.15, 200, 18),
-                    (Color(hex: "#00FFFF"), 0.10, 160, 22),
-                    (Color(hex: "#FF00FF"), 0.08, 140, 26),
-                    (Color(hex: "#A020F0"), 0.06, 120, 20)
+                    (QuantumColors.accentSecondary, 0.15, 200, 18),
+                    (QuantumColors.accentSecondary, 0.10, 160, 22),
+                    (QuantumColors.accentWarm, 0.08, 140, 26),
+                    (QuantumColors.accent, 0.06, 120, 20)
                 ]
 
                 for (i, orb) in orbs.enumerated() {
